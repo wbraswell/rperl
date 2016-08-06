@@ -12818,25 +12818,65 @@ Normal Perl provides a special literal value C<undef>, along with a built-in fun
 
 Data types make your code much more readable and much, much faster.  Learn to love data types.  Now.
 
-=head3 Section 2.4.x: Choosing Good Variable Names
+=head3 Section 2.4.1: Choosing Good Variable Names
 
-START HERE
-START HERE
-START HERE
+Your choice of variable names will have a significant impact on the readability of your source code, whether written in Perl or any other programming language.  If the names of your variables make sense, then it will be much easier for other programmers to understand your code.  Also, good variable names will help you to understand your own code, after not looking at it for a few months or years.  Variable names may include letters, numbers, and underscores.
 
-=for comment [ INSERT CONTENT ]
+I<BEST PRACTICES>
 
-=head3 Section 2.4.x: Bool Data Type
+=over
 
-The most efficient data type is C<boolean>, which stores a single I<"bit"> (binary digit) of information.  A C<boolean> may only hold the values of exactly 0 or 1.
+=item * I<Variable names should be comprised of lowercase letters, numerals, and underscore characters only.>
+
+=item * I<Variable names containing multiple words should use underscores to separate each word.>
+
+=back
+
+You may not choose to utilize an all-uppercase variable name, because RPerl reserves that format for the names of constants; please see L</Section 2.5: Constant Data> for more info.  If you really insist, then RPerl will allow you to use mostly-uppercase variable names, as long as at least one lowercase letter is included.  Also, instead of underscores you may choose to utilize "CamelCase" in order to separate words in your variable names.  However, neither of these variable naming practices are recommended.
+
+In addition to the best practices listed above, a good variable name should also fulfill all 3 of the following:
+
+I<BEST PRACTICES>
+
+=over
+
+=item * I<Meaningful: Actually describe what data the variable will hold.>
+
+=item * I<Medium Length: Not too long, and definitely not too short.>
+
+=item * I<Simple: Two or three common words separated by underscores is better than one obscure word.>
+
+=back
+
+The first of these three best practices is for your variable names to be meaningful, so you should never actually choose C<$foo> or C<$bar> as your variable names, unless you are writing a programming textbook and need to make up a bunch of small stand-alone code examples.  When first choosing a variable's name, take a moment and simply think of the most descriptive word or words which explain what it is you plan to use the variable for.  Don't worry if your variable name starts out a bit too long, you can always shorten it later if appropriate.
+
+The second best practice is for your variable names to be of medium length, so you should usually not choose either C<$r> (too short) or C<$rounding_error_from_perl_arithmetic_operators> (too long); instead, how about C<$rounding_error> (just right)?  To be fair, there are a number of commonly-accepted single-letter variable names including C<$i> and C<$j> and C<$k> for loop iterators (see L</Section 2.9.1: Loop Iterator Variables> for more info), as well as traditional mathematics variables such as C<$n> (a "number" of items) and C<$x> and C<$y> and C<$z> (Cartesian coordinates).
+
+The third and final best practice is for your variable names to be simple, so you should usually choose C<$golden_ratio> instead of C<$phi> because more people will understand what the "golden ratio" is, and also the greek letter "phi" is ambiguous as it is traditionally used for multiple different mathematical purposes.  On the other hand, most people will understand what you mean if you give a numeric variable the name C<$circumference>, so you probably do not need to utilize the longer name C<$perimeter_length> instead.
+
+Try your best to choose good variable names, you will thank yourself for it later.
+
+=head3 Section 2.4.2: Bool Data Type
+
+The most efficient data type is C<boolean>, which is a numeric type which stores a single I<"bit"> (binary digit) of information.  A C<boolean> may only hold the values of exactly 0 or 1.
 
     my boolean $foo = 0;     # fine
     my boolean $bar = 1;     # fine
     my boolean $baz = -1.5;  # error in RPerl, compiled (non-test) modes
 
-=head3 Section 2.4.x: Integer Data Type
+=head3 Section 2.4.3: Unsigneed Integer Data Type
 
-The next most efficient data type is C<integer>, which stores a single whole (non-decimal) number.  An C<integer> may hold any positive or negative whole number, within the data size limits of your operating system and computer hardware.
+The second most efficient numeric data type is C<unsigned_integer>, which stores a single whole (non-decimal) number which must have a value of 0 or greater.  An C<unsigned_integer> may not hold a negative number, within the data size limits of your operating system and computer memory hardware.
+
+    my integer $foo  = -23;     # error in RPerl, compiled (non-test) modes
+    my integer $bar  = 0;       # fine
+    my integer $baz  = 42_230;  # fine
+    my integer $bax  = 42.1;    # error in RPerl, compiled (non-test) modes
+    my integer $quux = 999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999;  # likely error or data corruption, outside limits
+
+=head3 Section 2.4.4: Integer Data Type
+
+The third most efficient data type is C<integer>, which stores a single whole (non-decimal) number.  An C<integer> may hold any positive or negative whole number, within memory limits.
 
     my integer $foo  = -23;     # fine
     my integer $bar  = 0;       # fine
@@ -12844,7 +12884,13 @@ The next most efficient data type is C<integer>, which stores a single whole (no
     my integer $bax  = 42.1;    # error in RPerl, compiled (non-test) modes
     my integer $quux = -999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999;  # likely error or data corruption, outside limits
 
-=head3 Section 2.4.x: Number Data Type
+=head3 Section 2.4.5: GMP Integer Data Type
+
+FOO NEED ADD CONTENT
+FOO NEED ADD CONTENT
+FOO NEED ADD CONTENT
+
+=head3 Section 2.4.6: Number Data Type
 
 The C<number> data type stores a single floating-point (decimal) number, and may hold any real number within your computer's limits.
 
@@ -12854,7 +12900,19 @@ The C<number> data type stores a single floating-point (decimal) number, and may
     my number $bax  = 42;         # fine
     my number $quux = -4_123.456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456;  # likely error or data loss, outside limits
 
-=head3 Section 2.4.x: Type Conversion
+=head3 Section 2.4.7: Character Data Type
+
+FOO NEED ADD CONTENT
+FOO NEED ADD CONTENT
+FOO NEED ADD CONTENT
+
+=head3 Section 2.4.8: String Data Type
+
+FOO NEED ADD CONTENT
+FOO NEED ADD CONTENT
+FOO NEED ADD CONTENT
+
+=head3 Section 2.4.9: Type Conversion
 
 START HERE: explain this section better, continue editing & adding content in next section
 
@@ -12891,9 +12949,8 @@ To convert from one data type to another, we use the RPerl type conversion subro
 
     my number $foo  = 23.42;
     my integer $bar = number_to_integer($foo);  # fine, $bar is now 23
- 
 
-=head3 Section 2.4.x Scope, Type, Name, Value
+=head3 Section 2.4.10 Scope, Type, Name, Value
 
 The I<"scope"> of a variable is either local using the C<my> keyword, or global using the C<our> keyword.  Local variables are only usable within their own enclosing code block such as a conditional (section xxx), loop (xxx), or subroutine (chapter 4).
 
@@ -12903,7 +12960,7 @@ Except for certain special circumstances, all variables in RPerl are locally-sco
 
 =for comment [ INSERT SCOPE TYPE NAME VALUE ]
 
-=head3 Section 2.4.x: Binary Assignment Operators
+=head3 Section 2.4.11: Binary Assignment Operators
 
     OP19_VARIABLE_ASSIGN_BY   = /(\+=|-=|\*=|\/=)/            # precedence 19 infix: add assign '+=', subtract assign '-=', multiply assign '*=', divide assign '/='
     %token OP19_VARIABLE_ASSIGN_BY   = /(\.=)/        # precedence 19 infix: string concatenation assign '.='
@@ -13312,7 +13369,7 @@ Add 1 to operand, then return incremented value
     # NEED ADD EXAMPLES
     ++$i  # 0
 
-=head3 Section 2.4.x: Chomp & Chop Operators
+=head3 Section 2.4.12: Chomp & Chop Operators
 
 Often you will want to remove the special newline character C<"\n"> from the end of a string variable, which can be achieved safely by using the C<chomp> operator.  When you pass some variable as the operand to C<chomp>, the operator will do nothing if the operand's final character is not a newline.  Chomp knows how to use the correct newline character for each operating system, thanks to Perl's magic C<$INPUT_RECORD_SEPARATOR> variable.
 
