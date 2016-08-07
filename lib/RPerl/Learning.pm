@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.110_000;
+our $VERSION = 0.111_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -12856,7 +12856,7 @@ The third and final best practice is for your variable names to be simple, so yo
 
 Try your best to choose good variable names, you will thank yourself for it later.
 
-=head3 Section 2.4.2: Bool Data Type
+=head3 Section 2.4.2: Boolean Data Type
 
 The most efficient data type is C<boolean>, which is a numeric type which stores a single I<"bit"> (binary digit) of information.  A C<boolean> may only hold the values of exactly 0 or 1.
 
@@ -12864,7 +12864,7 @@ The most efficient data type is C<boolean>, which is a numeric type which stores
     my boolean $bar = 1;     # fine
     my boolean $baz = -1.5;  # error in RPerl, compiled (non-test) modes
 
-=head3 Section 2.4.3: Unsigneed Integer Data Type
+=head3 Section 2.4.3: Unsigned Integer Data Type
 
 The second most efficient numeric data type is C<unsigned_integer>, which stores a single whole (non-decimal) number which must have a value of 0 or greater.  An C<unsigned_integer> may not hold a negative number, and must fit within the data size limits of the data types supported by your operating system software and computer hardware.
 
@@ -14045,7 +14045,6 @@ Add 1 to operand, then return incremented value
 
 =back
 
-    # NEED ADD EXAMPLES
     ++$i  # 0
 
 =head3 Section 2.4.13: Chomp & Chop Operators
