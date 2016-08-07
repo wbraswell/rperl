@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.108_000;
+our $VERSION = 0.109_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -12816,7 +12816,7 @@ On the other hand, RPerl I<requires> the use of data types for each and every va
 
 Normal Perl provides a special literal value C<undef>, along with a built-in function named C<defined> which is used to test if a variable contains the special C<undef> value.  RPerl does not support C<undef> or C<defined>, because C++ does not fully support the concept of undefined values, and RPerl's high-speed components are written using C++.
 
-Data types make your code much more readable and much, much faster.  Learn to love data types.  Now.
+Data types make your code much more readable and much, much faster.  Learn to love data types.  Now.  :-)
 
 =head3 Section 2.4.1: Choosing Good Variable Names
 
@@ -12866,51 +12866,89 @@ The most efficient data type is C<boolean>, which is a numeric type which stores
 
 =head3 Section 2.4.3: Unsigneed Integer Data Type
 
-The second most efficient numeric data type is C<unsigned_integer>, which stores a single whole (non-decimal) number which must have a value of 0 or greater.  An C<unsigned_integer> may not hold a negative number, within the data size limits of your operating system and computer memory hardware.
+The second most efficient numeric data type is C<unsigned_integer>, which stores a single whole (non-decimal) number which must have a value of 0 or greater.  An C<unsigned_integer> may not hold a negative number, and must fit within the data size limits of the data types supported by your operating system software and computer hardware.
 
     my integer $foo  = -23;     # error in RPerl, compiled (non-test) modes
     my integer $bar  = 0;       # fine
     my integer $baz  = 42_230;  # fine
     my integer $bax  = 42.1;    # error in RPerl, compiled (non-test) modes
-    my integer $quux = 999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999;  # likely error or data corruption, outside limits
+    my integer $quux = 999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999;  # likely error or data corruption, outside data type limits
 
 =head3 Section 2.4.4: Integer Data Type
 
-The third most efficient data type is C<integer>, which stores a single whole (non-decimal) number.  An C<integer> may hold any positive or negative whole number, within memory limits.
+The third most efficient data type is C<integer>, which stores a single whole (non-decimal) number.  An C<integer> may hold any positive or negative whole number, within your computer's data type limits.
 
     my integer $foo  = -23;     # fine
     my integer $bar  = 0;       # fine
     my integer $baz  = 42_230;  # fine
     my integer $bax  = 42.1;    # error in RPerl, compiled (non-test) modes
-    my integer $quux = -999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999;  # likely error or data corruption, outside limits
+    my integer $quux = -999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999;  # likely error or data corruption, outside data type limits
 
 =head3 Section 2.4.5: GMP Integer Data Type
 
-FOO NEED ADD CONTENT
-FOO NEED ADD CONTENT
-FOO NEED ADD CONTENT
+The GNU Multi-Precision (GMP) library provides an arbitrary-precision integer data type which is accessible in RPerl as the C<gmp_integer> type, and which does not need to fit within your computer's data type limits.  All RPerl source code files which make use of GMP features must include the C<use rperlgmp;> command.  This tells RPerl to load the GMP library and other supporting software components, which are not normally loaded by the RPerl compiler.
+
+The GMP integer data type works differently than the other normal data types, because a C<gmp_integer> can be considered a combination of a normal C<integer> data type and a special software component known as an I<"object">.  (Please see L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES> for more info on objects.)
+
+When we declare a new variable of the C<gmp_integer> data type, there is a 2-part initialization procedure, as opposed to a normal variable which can be declared and initialized as part of a single RPerl statement.  The first initialization statement is to declare our new C<gmp_integer> variable and pre-initialize it with a special subroutine called a I<"constructor">, which is achieved by calling C<gmp_integer-E<gt>new()> in your RPerl source code.  The second initialization statement completes the procedure by calling one of the three following GMP initialization subroutines:
+
+=over
+
+=item * C<gmp_init($new_gmp_var)>
+
+=item * C<gmp_init_set_unsigned_integer($new_gmp_var, POSITIVE_INTEGER_VALUE)>
+
+=item * C<gmp_init_set_signed_integer($new_gmp_var, INTEGER_VALUE)>
+
+=back
+
+The C<gmp_init()> subroutine sets the variable's value to a default of C<0>.  The C<gmp_init_set_unsigned_integer()> and C<gmp_init_set_signed_integer()> subroutines set the variable's value to the provided numeric literal value.  When you utilize the three example subroutine calls above, you should replace C<$new_gmp_var> with the name of your own C<gmp_integer> variable which has already been pre-initialized via C<gmp_integer-E<gt>new()>, and also replace C<POSITIVE_INTEGER_VALUE> or C<INTEGER_VALUE> with an actual numeric literal value.
+
+In the source code example below, we create three new C<gmp_integer> variables which are named C<$foo>, C<$bar>, and C<$baz>, and which are initialized to the values of C<0>, C<23>, and C<-23> respectively.
+
+    use rperlgmp;
+
+    my gmp_integer $foo  = gmp_integer->new();
+    my gmp_integer $bar  = gmp_integer->new();
+    my gmp_integer $baz  = gmp_integer->new();
+
+    gmp_init($foo);
+    gmp_init_set_unsigned_integer( $bar, 23 );
+    gmp_init_set_signed_integer( $baz, -23 );
+
+Please see L</Section 2.4.14: GMP Integer Operators> for more info.
 
 =head3 Section 2.4.6: Number Data Type
 
-The C<number> data type stores a single floating-point (decimal) number, and may hold any real number within your computer's limits.
+The C<number> data type stores a single floating-point (decimal) number, and may hold any real number within your computer's data type limit.
 
     my number $foo  = -23.42;     # fine
     my number $bar  = 0.000_001;  # fine
     my number $baz  = 42.23;      # fine
     my number $bax  = 42;         # fine
-    my number $quux = -4_123.456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456;  # likely error or data loss, outside limits
+    my number $quux = -4_123.456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456_789_123_456;  # likely error or data loss, outside data type limits
 
 =head3 Section 2.4.7: Character Data Type
 
-FOO NEED ADD CONTENT
-FOO NEED ADD CONTENT
-FOO NEED ADD CONTENT
+The C<character> data type stores a single text character, which may include any letter or number or special character, and which must not be empty.
+
+    my character $empty = '';    # error in RPerl, compiled (non-test) modes, can't be empty
+    my character $foo   = 'f';   # fine
+    my character $bar   = q{b};  # fine
+    my character $baz   = '7';   # fine
+    my character $bax   = "\n";  # fine, newline counts as a single character
+    my character $quux  = 'ab';  # error in RPerl, compiled (non-test) modes, too many characters
 
 =head3 Section 2.4.8: String Data Type
 
-FOO NEED ADD CONTENT
-FOO NEED ADD CONTENT
-FOO NEED ADD CONTENT
+The C<string> data type stores one or more text characters, which may include any letter or number or special character, and which may be empty.
+
+    my string $empty = '';         # fine
+    my string $foo   = 'f';        # fine
+    my string $bar   = q{bar};     # fine
+    my string $baz   = '7baz';     # fine
+    my string $bax   = "\n\n\t";   # fine, counts as 3 characters
+    my string $quux  = 'abcdefg';  # fine
 
 =head3 Section 2.4.9: Type Conversion
 
@@ -12921,6 +12959,13 @@ START HERE: explain this section better, continue editing & adding content in ne
 START HERE: explain this section better, continue editing & adding content in next section
 
 To convert from one data type to another, we use the RPerl type conversion subroutines, shown below for numeric types only:
+
+
+
+    gmp_integer_to_boolean gmp_integer_to_unsigned_integer gmp_integer_to_integer gmp_integer_to_number gmp_integer_to_character gmp_integer_to_string
+    boolean_to_gmp_integer integer_to_gmp_integer unsigned_integer_to_gmp_integer number_to_gmp_integer character_to_gmp_integer string_to_gmp_integer
+
+
 
 =over
 
@@ -12965,7 +13010,7 @@ Except for certain special circumstances, all variables in RPerl are locally-sco
     OP19_VARIABLE_ASSIGN_BY   = /(\+=|-=|\*=|\/=)/            # precedence 19 infix: add assign '+=', subtract assign '-=', multiply assign '*=', divide assign '/='
     %token OP19_VARIABLE_ASSIGN_BY   = /(\.=)/        # precedence 19 infix: string concatenation assign '.='
 
-=head3 Section 2.4.x: Increment & Decrement Operators
+=head3 Section 2.4.12: Increment & Decrement Operators
 
 =begin text
 
@@ -13369,7 +13414,7 @@ Add 1 to operand, then return incremented value
     # NEED ADD EXAMPLES
     ++$i  # 0
 
-=head3 Section 2.4.12: Chomp & Chop Operators
+=head3 Section 2.4.13: Chomp & Chop Operators
 
 Often you will want to remove the special newline character C<"\n"> from the end of a string variable, which can be achieved safely by using the C<chomp> operator.  When you pass some variable as the operand to C<chomp>, the operator will do nothing if the operand's final character is not a newline.  Chomp knows how to use the correct newline character for each operating system, thanks to Perl's magic C<$INPUT_RECORD_SEPARATOR> variable.
 
@@ -13420,6 +13465,50 @@ The trailing newline character is trimmed on the first call to C<chop>, and then
     howdyhowdyhowdhowd
 
 =for rperl X</noncode>
+
+=head3 Section 2.4.14: GMP Integer Operators
+
+The GMP library provides a large number of operators which are only for use with variables of the C<gmp_integer> data type, and these GMP operators are made available in RPerl as subroutines which all begin with "gmp_".  These GMP operator subroutines are loaded by the C<use rperlgmp;> command.
+
+START HERE: NEED ADD TABLES & EXAMPLES
+START HERE: NEED ADD TABLES & EXAMPLES
+START HERE: NEED ADD TABLES & EXAMPLES
+
+gmp_integer_to_boolean
+gmp_integer_to_unsigned_integer
+gmp_integer_to_integer
+gmp_integer_to_number
+gmp_integer_to_character
+gmp_integer_to_string
+boolean_to_gmp_integer
+integer_to_gmp_integer
+unsigned_integer_to_gmp_integer
+number_to_gmp_integer
+character_to_gmp_integer
+string_to_gmp_integer
+
+gmp_init
+gmp_init_set_unsigned_integer
+gmp_init_set_signed_integer
+
+gmp_set
+gmp_set_unsigned_integer
+gmp_set_signed_integer
+gmp_set_number gmp_set_string
+gmp_get_unsigned_integer
+gmp_get_signed_integer
+gmp_get_number
+gmp_get_string
+gmp_add
+gmp_sub
+gmp_mul
+gmp_mul_unsigned_integer
+gmp_mul_signed_integer
+gmp_sub_mul_unsigned_integer
+gmp_add_mul_unsigned_integer
+gmp_neg
+gmp_div_truncate_quotient
+gmp_cmp
 
 =head2 Section 2.5: Constant Data
 
@@ -14702,6 +14791,7 @@ Two possible executions of this exercise follow, one with an even input integer,
 I<HINT: Use the modulo C<%> operator to check for odd input integers; if found, initialize a temporary variable named C<$n_odd> to the value of C<$n>, decrement C<$n> to become even, and add C<$n_odd> to your original C<$sum> result.>
 
 X<br>
+
 
 =head1 CHAPTER 3: LISTS & ARRAYS
 
