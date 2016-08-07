@@ -130,6 +130,7 @@ UNSIGNED INTEGER FIX
     CPPOPS_CPPTYPES conversion routines
 
 TESTS
+    TypeConversion, all 42 normal conversions plus to_string()
     add EXECUTE_SUCCESS to *good*.pl
     uncompile w/ corrupted or missing PMC, CPP, H files
     RPerl::EPSILON()

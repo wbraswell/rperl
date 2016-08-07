@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.109_000;
+our $VERSION = 0.110_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -12769,11 +12769,11 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-START HERE: continue adding data structure errors, then go back and check if additional data type errors needs to be found in *.cpp or *.pm files
+=for comment [ START HERE: continue adding data structure errors, then go back and check if additional data type errors needs to be found in *.cpp or *.pm files ]
 
-START HERE: continue adding data structure errors, then go back and check if additional data type errors needs to be found in *.cpp or *.pm files
+=for comment [ START HERE: continue adding data structure errors, then go back and check if additional data type errors needs to be found in *.cpp or *.pm files ]
 
-START HERE: continue adding data structure errors, then go back and check if additional data type errors needs to be found in *.cpp or *.pm files
+=for comment [ START HERE: continue adding data structure errors, then go back and check if additional data type errors needs to be found in *.cpp or *.pm files ]
 
     BAZ_PROBLEM_MESSAGE
 
@@ -12952,36 +12952,188 @@ The C<string> data type stores one or more text characters, which may include an
 
 =head3 Section 2.4.9: Type Conversion
 
-START HERE: explain this section better, continue editing & adding content in next section
-
-START HERE: explain this section better, continue editing & adding content in next section
-
-START HERE: explain this section better, continue editing & adding content in next section
-
-To convert from one data type to another, we use the RPerl type conversion subroutines, shown below for numeric types only:
-
-
-
-    gmp_integer_to_boolean gmp_integer_to_unsigned_integer gmp_integer_to_integer gmp_integer_to_number gmp_integer_to_character gmp_integer_to_string
-    boolean_to_gmp_integer integer_to_gmp_integer unsigned_integer_to_gmp_integer number_to_gmp_integer character_to_gmp_integer string_to_gmp_integer
-
-
+To convert from one data type to another, we use the RPerl data type conversion subroutines, which are automatically available for use in all RPerl source code.  All 7 RPerl data types can be converted to any of the other 6 RPerl data types, so in total there are 42 type conversion subroutines.  Remember the 7 RPerl data types are as follows:
 
 =over
 
+=item * boolean
+
+=item * unsigned_integer
+
+=item * integer
+
+=item * gmp_integer
+
+=item * number
+
+=item * character
+
+=item * string
+
+=back
+
+The name and calling convention of each subroutine takes the form C<SOURCE_to_DESTINATION(INPUT)>, where C<SOURCE> is replaced by the current data type from which you are converting, C<DESTINATION> is replaced by the future data type to which you wish to convert, and the argument C<INPUT> is replaced by the input data which should have the data type of C<SOURCE>.  Your C<INPUT> can be any source of scalar data such as a variable, a literal, a constant, or a subroutine which returns a scalar value.  The return value of each type conversion subroutine has a data type of C<DESTINATION>, so if you want to store the newly-converted return value for later use, then you will need to make sure you utilize a variable with the correct type.
+
+For example, if you want to convert from the input of a C<string> variable named C<$foo> to the output of a C<number> data type, then you simply call C<string_to_number($foo)>.  If you want to store the C<number> return value of this type conversion, then you must utilize a variable of C<number> type to do so.  Thus, if you are providing a variable as the input argument for a type conversion subroutine, and if you are also storing the type conversion's return value in a variable, then these must always be two different variables because they will always have two different data types. 
+
+    #!/usr/bin/perl
+
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
+
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+    my string $foo = '723.555_777';
+    my number $bar = string_to_number($foo);
+    my number $double_bar = $bar * 2;
+    print 'have $bar = ', number_to_string($bar), "\n";
+    print 'have $double_bar = ', number_to_string($double_bar), "\n";
+
+If we run our code example above, we should receive the following output, which correctly displays the underscore digit separator for long numbers:
+
+=for rperl X<noncode>
+
+    have $bar = 723.555_777
+    have $double_bar = 1_447.111_554
+
+=for rperl X</noncode>
+
+I<BEST PRACTICES>
+
+=over
+
+=item * I<Numeric data types should always be converted to a C<string> data type before being passed to C<print> or otherwise displayed or saved.>
+
+=back
+
+If we do not call the C<number_to_string()> subroutine before the values of C<$bar> and C<$double_bar> are processed by the C<print> operator, then our output will be missing the proper underscore separators:
+
+    print 'have $bar = ', $bar, "\n";                # no number_to_string(), not best practices
+    print 'have $double_bar = ', $double_bar, "\n";  # no number_to_string(), not best practices
+
+We no longer receive the exact output desired:
+
+=for rperl X<noncode>
+
+    have $bar = 723.555777
+    have $double_bar = 1447.111554
+
+=for rperl X</noncode>
+
+In most cases, the shorthand subroutine C<to_string()> may be used instead of one of the other C<SOURCE_to_string()> type conversion subroutines.  The special C<to_string()> data type conversion subroutine will attempt to automatically detect the data type of the input argument value.  We will receive the correct desired output if we replace C<number_to_string()> with C<to_string()> in our example above:
+
+    print 'have $bar = ', to_string($bar), "\n";
+    print 'have $double_bar = ', number_to_string($double_bar), "\n";
+
+I<BEST PRACTICES>
+
+=over
+
+=item * I<Numeric data should always include proper underscore separators, even when stored inside a C<string> data type.>
+
+=back
+
+If the variable C<$foo> was a C<number> instead of a C<string>, then RPerl would give an C<ERROR ECOPARP00> parse error and complain of C<Long number not separated with underscores>.  However, since C<$foo> is of the C<string> data type, then it is not checked for proper numeric underscores, and thus we can omit the underscore in the value of C<$foo> without errors and with the proper output as seen above.  However, this is not best practices, and we should consider the underscore to be missing in the following:
+
+    my string $foo = '723.555777';  # no underscore, not best practices
+
+Following is a list of all 42 RPerl data type conversion subroutines, not counting the special shorthand C<to_string()> subroutine:
+
+=over
+
+=item * C<boolean_to_unsigned_integer()>
+
 =item * C<boolean_to_integer()>
+
+=item * C<boolean_to_gmp_integer()>
 
 =item * C<boolean_to_number()>
 
+=item * C<boolean_to_character()>
+
+=item * C<boolean_to_string()>
+
+=item * C<unsigned_integer_to_boolean()>
+
+=item * C<unsigned_integer_to_integer()>
+
+=item * C<unsigned_integer_to_gmp_integer()>
+
+=item * C<unsigned_integer_to_number()>
+
+=item * C<unsigned_integer_to_character()>
+
+=item * C<unsigned_integer_to_string()>
+
 =item * C<integer_to_boolean()>
+
+=item * C<integer_to_unsigned_integer()>
+
+=item * C<integer_to_gmp_integer()>
 
 =item * C<integer_to_number()>
 
+=item * C<integer_to_character()>
+
+=item * C<integer_to_string()>
+
+=item * C<gmp_integer_to_boolean()>
+
+=item * C<gmp_integer_to_unsigned_integer()>
+
+=item * C<gmp_integer_to_integer()>
+
+=item * C<gmp_integer_to_number()>
+
+=item * C<gmp_integer_to_character()>
+
+=item * C<gmp_integer_to_string()>
+
 =item * C<number_to_boolean()>
+
+=item * C<number_to_unsigned_integer()>
 
 =item * C<number_to_integer()>
 
+=item * C<number_to_gmp_integer()>
+
+=item * C<number_to_character()>
+
+=item * C<number_to_string()>
+
+=item * C<character_to_boolean()>
+
+=item * C<character_to_unsigned_integer()>
+
+=item * C<character_to_integer()>
+
+=item * C<character_to_gmp_integer()>
+
+=item * C<character_to_number()>
+
+=item * C<character_to_string()>
+
+=item * C<string_to_boolean()>
+
+=item * C<string_to_unsigned_integer()>
+
+=item * C<string_to_integer()>
+
+=item * C<string_to_gmp_integer()>
+
+=item * C<string_to_number()>
+
+=item * C<string_to_character()>
+
 =back
+
+You must utilize type conversions when you are assigning the value of one variable to another variable of a different data type, otherwise you will have a type mismatch which will probably cause an RPerl sub-compile error.  Be aware that you may experience data loss when converting to a data type capable of storing less information:
 
     my integer $foo = 23;
     my number $bar  = $foo;  # error in RPerl, compiled (non-test) modes, type mismatch
@@ -12993,24 +13145,500 @@ To convert from one data type to another, we use the RPerl type conversion subro
     my integer $bar = $foo;  # error in RPerl, compiled (non-test) modes, type mismatch
 
     my number $foo  = 23.42;
-    my integer $bar = number_to_integer($foo);  # fine, $bar is now 23
+    my integer $bar = number_to_integer($foo);  # fine, $bar is now 23, data loss has occurred
 
 =head3 Section 2.4.10 Scope, Type, Name, Value
 
 The I<"scope"> of a variable is either local using the C<my> keyword, or global using the C<our> keyword.  Local variables are only usable within their own enclosing code block such as a conditional (section xxx), loop (xxx), or subroutine (chapter 4).
 
-and global variables are usable within any code block accessible by the Perl interpreter or (RPerl compiler).
+Global variables are usable within any code block accessible by the Perl interpreter or (RPerl compiler).
 
 Except for certain special circumstances, all variables in RPerl are locally-scoped using C<my>.
 
-=for comment [ INSERT SCOPE TYPE NAME VALUE ]
+=for comment [ START HERE: need finish content above ]
+
+=for comment [ START HERE: need finish content above ]
+
+=for comment [ START HERE: need finish content above ]
 
 =head3 Section 2.4.11: Binary Assignment Operators
 
-    OP19_VARIABLE_ASSIGN_BY   = /(\+=|-=|\*=|\/=)/            # precedence 19 infix: add assign '+=', subtract assign '-=', multiply assign '*=', divide assign '/='
-    %token OP19_VARIABLE_ASSIGN_BY   = /(\.=)/        # precedence 19 infix: string concatenation assign '.='
+=for comment [ START HERE: need add pre-table content ]
+
+=for comment [ START HERE: need add pre-table content ]
+
+=for comment [ START HERE: need add pre-table content ]
+
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice [split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.4.x.1-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Increment & Decrement Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }], 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Add Assign
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
++=
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+19
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Right
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Subtract Assign
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+-=
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+19
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Right
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Multiply Assign
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+*=
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+19
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Right
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Divide Assign
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+/=
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+19
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Right
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice [split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+String Concatenate Assign
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+.=
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+19
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Right
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }], 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=for comment [ START HERE: need add post-table examples ]
+
+=for comment [ START HERE: need add post-table examples ]
+
+=for comment [ START HERE: need add post-table examples ]
 
 =head3 Section 2.4.12: Increment & Decrement Operators
+
+=for comment [ START HERE: need add pre-table content ]
+
+=for comment [ START HERE: need add pre-table content ]
+
+=for comment [ START HERE: need add pre-table content ]
 
 =begin text
 
@@ -13403,6 +14031,12 @@ $z = q{<<< END TEXT EVAL >>>};
 
 =for docbook </tbody></tgroup></table>
 
+=for comment [ START HERE: need add post-table examples ]
+
+=for comment [ START HERE: need add post-table examples ]
+
+=for comment [ START HERE: need add post-table examples ]
+
 =over
 
 =item * B<Pre-Increment>
@@ -13415,6 +14049,12 @@ Add 1 to operand, then return incremented value
     ++$i  # 0
 
 =head3 Section 2.4.13: Chomp & Chop Operators
+
+=for comment [ START HERE: need add tables ]
+
+=for comment [ START HERE: need add tables ]
+
+=for comment [ START HERE: need add tables ]
 
 Often you will want to remove the special newline character C<"\n"> from the end of a string variable, which can be achieved safely by using the C<chomp> operator.  When you pass some variable as the operand to C<chomp>, the operator will do nothing if the operand's final character is not a newline.  Chomp knows how to use the correct newline character for each operating system, thanks to Perl's magic C<$INPUT_RECORD_SEPARATOR> variable.
 
@@ -13470,9 +14110,11 @@ The trailing newline character is trimmed on the first call to C<chop>, and then
 
 The GMP library provides a large number of operators which are only for use with variables of the C<gmp_integer> data type, and these GMP operators are made available in RPerl as subroutines which all begin with "gmp_".  These GMP operator subroutines are loaded by the C<use rperlgmp;> command.
 
-START HERE: NEED ADD TABLES & EXAMPLES
-START HERE: NEED ADD TABLES & EXAMPLES
-START HERE: NEED ADD TABLES & EXAMPLES
+=for comment [ START HERE: need add tables & examples ]
+
+=for comment [ START HERE: need add tables & examples ]
+
+=for comment [ START HERE: need add tables & examples ]
 
 gmp_integer_to_boolean
 gmp_integer_to_unsigned_integer
@@ -17597,89 +18239,90 @@ X<br>
 
 =head1 APPENDIX C: RPERL CRITICS
 
-START HERE: add content and descriptions to all critics below
+=for comment [ START HERE: need add content and descriptions to all critics below ]
 
-START HERE: add content and descriptions to all critics below
+=for comment [ START HERE: need add content and descriptions to all critics below ]
 
-START HERE: add content and descriptions to all critics below
+=for comment [ START HERE: need add content and descriptions to all critics below ]
 
+=for rperl X<noncode>
 
-# DEV NOTE: disable RequireTidyCode because Perl::Tidy is not perfect and may complain even if the code is tidy;
+    # DEV NOTE: disable RequireTidyCode because Perl::Tidy is not perfect and may complain even if the code is tidy;
+    
+    # disable PodSpelling because calling the external spellchecker can cause errors such as aspell's "No word lists can be found for the language FOO";
+    
+    # disable RequireExplicitPackage because 'use RPerl;' comes before package name(s), and Grammar.eyp will catch any other violations
+    
+    '-exclude'  => ['RequireTidyCode', 'PodSpelling', 'RequireExplicitPackage'],
+    
+    
+    # [[[ CRITICS ]]]
+    
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+    
+    ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+    
+    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
+    
+    ## no critic qw(RequireBriefOpen)  # USER DEFAULT 5: allow open() in perltidy-expanded code
+    
+    ## no critic qw(ProhibitCStyleForLoops)  # USER DEFAULT 6: allow C-style for() loop headers
+    
+    ## no critic qw(RequireTrailingCommas)  # USER DEFAULT X: no trailing commas in RPerl lists  # NEED ANSWER: RPerl is mostly array refs, do we even need this?
+    
+    
+    ## no critic qw(ProhibitUselessNoCritic PodSpelling)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code, must be on line 1
+    
+    ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd)  # DEVELOPER DEFAULT 1b: allow POD & unreachable or POD-commented code, must be after line 1
+    
+    ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
+    
+    
+    ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
+    
+    ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 2: allow argument-handling logic
+    
+    ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
+    
+    ## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 4: allow eval() test code blocks
+    
+    
+    ## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
+    
+    ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @_
+    
+    ## no critic qw(ProhibitParensWithBuiltins ProhibitNoisyQuotes)  # SYSTEM SPECIAL 3: allow auto-generated code
+    
+    ## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
+    
+    ## no critic qw(ProhibitExcessComplexity)  # SYSTEM SPECIAL 5: allow complex code inside subroutines, must be after line 1
+    
+    ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+    
+    ## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 7: allow deeply-nested code
+    
+    ## no critic qw(ProhibitNoStrict)  # SYSTEM SPECIAL 8: allow no strict
+    
+    ## no critic qw(RequireUseStrict)  # SYSTEM SPECIAL 9: allow omitted strict
+    
+    ## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 10: allow complex processing with open filehandle
+    
+    ## no critic qw(ProhibitBacktickOperators)  # SYSTEM SPECIAL 11: allow system command execution
+    
+    ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 12: allow complex conditional logic
+    
+    ## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
+    
+    ## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 14: allow global exports from Config.pm
+    
+    
+    # COMBO CRITICS
+    
+    ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
 
-# disable PodSpelling because calling the external spellchecker can cause errors such as aspell's "No word lists can be found for the language FOO";
-
-# disable RequireExplicitPackage because 'use RPerl;' comes before package name(s), and Grammar.eyp will catch any other violations
-
-'-exclude'  => ['RequireTidyCode', 'PodSpelling', 'RequireExplicitPackage'],
-
-
-# [[[ CRITICS ]]]
-
-## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
-
-## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
-
-## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
-
-## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
-
-## no critic qw(RequireBriefOpen)  # USER DEFAULT 5: allow open() in perltidy-expanded code
-
-## no critic qw(ProhibitCStyleForLoops)  # USER DEFAULT 6: allow C-style for() loop headers
-
-## no critic qw(RequireTrailingCommas)  # USER DEFAULT X: no trailing commas in RPerl lists  # NEED ANSWER: RPerl is mostly array refs, do we even need this?
-
-
-## no critic qw(ProhibitUselessNoCritic PodSpelling)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code, must be on line 1
-
-## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd)  # DEVELOPER DEFAULT 1b: allow POD & unreachable or POD-commented code, must be after line 1
-
-## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
-
-
-## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
-
-## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 2: allow argument-handling logic
-
-## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
-
-## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 4: allow eval() test code blocks
-
-
-## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
-
-## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @_
-
-## no critic qw(ProhibitParensWithBuiltins ProhibitNoisyQuotes)  # SYSTEM SPECIAL 3: allow auto-generated code
-
-## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
-
-## no critic qw(ProhibitExcessComplexity)  # SYSTEM SPECIAL 5: allow complex code inside subroutines, must be after line 1
-
-## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
-
-## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 7: allow deeply-nested code
-
-## no critic qw(ProhibitNoStrict)  # SYSTEM SPECIAL 8: allow no strict
-
-## no critic qw(RequireUseStrict)  # SYSTEM SPECIAL 9: allow omitted strict
-
-## no critic qw(RequireBriefOpen)  # SYSTEM SPECIAL 10: allow complex processing with open filehandle
-
-## no critic qw(ProhibitBacktickOperators)  # SYSTEM SPECIAL 11: allow system command execution
-
-## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 12: allow complex conditional logic
-
-## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
-
-## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 14: allow global exports from Config.pm
-
-
-# COMBO CRITICS
-
-## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
-
-
+=for rperl X</noncode>
 
 =head1 APPENDIX D: RPERL GRAMMAR
 
