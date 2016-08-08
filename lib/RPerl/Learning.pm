@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.111_000;
+our $VERSION = 0.112_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13149,11 +13149,27 @@ You must utilize type conversions when you are assigning the value of one variab
 
 =head3 Section 2.4.10 Scope, Type, Name, Value
 
-The I<"scope"> of a variable is either local using the C<my> keyword, or global using the C<our> keyword.  Local variables are only usable within their own enclosing code block such as a conditional (section xxx), loop (xxx), or subroutine (chapter 4).
+Every variable has 4 primary qualities, all of which are provided during variable initialization:
 
-Global variables are usable within any code block accessible by the Perl interpreter or (RPerl compiler).
+=over
 
-Except for certain special circumstances, all variables in RPerl are locally-scoped using C<my>.
+=item * I<"Scope"> is the region of source code within which a variable may be utilized.
+
+=item * I<"Type"> is the kind of data stored in the variable, such as C<integer> or C<number> or C<string>.
+
+=item * I<"Name"> is how you access the variable, such as C<$foo> or C<$bar>.
+
+=item * I<"Value"> is the the data stored in the variable.
+
+=back
+
+The I<"scope"> of a variable describes where in the source code the variable is valid and available for use.  In normal Perl, you will find a combination of locally-scoped variables which are declared the C<my> keyword, globally-scoped variables declared using the C<our> keyword, and state variables declared using the C<state> keyword.  (Old Perl 4 programmers also made use of the C<local> keyword, now replaced by C<my>.)
+
+Local variables are only usable within their own enclosing code block, such as the body of a conditional statement, loop, or subroutine.  If a local variable is declared in the main operations section of an RPerl program file, then it is considered to be outside of any code block, and it may only be utilized in the operations section of its own program file.
+
+Global variables are usable within any code block accessible by Perl.  Except for certain special variables such as C<our $VERSION>, all variables in RPerl are locally-scoped using the C<my> keyword.  RPerl does not currently support C<state> variables.
+
+The I<"type"> of a variable is simply the data type which is stored inside the variable, as described in detail throughout the preceeding subsections of L</Section 2.4: Scalar Variables>.  A variable's type must be set during declaration and may not be altered thereafter.  Remember there are 7 scalar data types in RPerl: C<boolean>, C<unsigned_integer>, C<integer>, C<number>, C<character>, and C<string>.
 
 =for comment [ START HERE: need finish content above ]
 
