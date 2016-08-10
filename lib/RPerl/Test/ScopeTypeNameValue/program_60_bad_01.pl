@@ -1,9 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'howdy' >>>
-# <<< EXECUTE_SUCCESS: 'my string $foo = 'howdy';' >>>
-# <<< EXECUTE_SUCCESS: '$foo' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
+# <<< PARSE_ERROR: 'Global symbol "$bax" requires explicit package name' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -17,20 +16,20 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string $foo = 'howdy';
-print $foo, "\n";
-print scope_type_name_value($foo), "\n";
-print name($foo), "\n\n";
+#my string $foo = 'howdy';
+#print $foo, "\n";
+#print scope_type_name_value($foo), "\n";
+#print name($foo), "\n\n";
 
 #$::bar = 'dowdy';
 #print $::bar, "\n";
 #print scope_type_name_value($::bar), "\n";
 #print name($::bar), "\n\n";
 
-#$bax = 'dowdy';
-#print $bax, "\n";
-#print scope_type_name_value($bax), "\n";
-#print name($bax), "\n\n";
+$bax = 'dowdy';
+print $bax, "\n";
+print scope_type_name_value($bax), "\n";
+print name($bax), "\n\n";
 
 #our $baz = 'dowdy';
 #print $baz, "\n";

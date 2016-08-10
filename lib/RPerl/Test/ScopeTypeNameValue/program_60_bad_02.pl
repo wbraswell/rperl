@@ -1,9 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'howdy' >>>
-# <<< EXECUTE_SUCCESS: 'my string $foo = 'howdy';' >>>
-# <<< EXECUTE_SUCCESS: '$foo' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::Variables::ProhibitPackageVars' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -17,10 +16,10 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string $foo = 'howdy';
-print $foo, "\n";
-print scope_type_name_value($foo), "\n";
-print name($foo), "\n\n";
+#my string $foo = 'howdy';
+#print $foo, "\n";
+#print scope_type_name_value($foo), "\n";
+#print name($foo), "\n\n";
 
 #$::bar = 'dowdy';
 #print $::bar, "\n";
@@ -32,9 +31,7 @@ print name($foo), "\n\n";
 #print scope_type_name_value($bax), "\n";
 #print name($bax), "\n\n";
 
-#our $baz = 'dowdy';
-#print $baz, "\n";
-#print scope_type_name_value($baz), "\n";
-#print name($baz), "\n\n";
-
-
+our $baz = 'dowdy';
+print $baz, "\n";
+print scope_type_name_value($baz), "\n";
+print name($baz), "\n\n";

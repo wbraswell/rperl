@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.113_000;
+our $VERSION = 0.114_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13163,7 +13163,7 @@ Every variable has 4 primary qualities, all of which are provided during variabl
 
 =back
 
-The I<"scope"> of a variable describes where in the source code the variable is valid and available for use.  In normal Perl, you will find a combination of locally-scoped variables which are declared the C<my> keyword, globally-scoped variables declared using the C<our> keyword, and state variables declared using the C<state> keyword.  (Old Perl 4 programmers also made use of the C<local> keyword, now replaced by C<my>.)
+The I<"scope"> of a variable describes where in the source code the variable is valid and available for use, and does not change after your RPerl software starts to execute.  In normal Perl, you will find a combination of locally-scoped variables which are declared the C<my> keyword, globally-scoped variables declared using the C<our> keyword, and state variables declared using the C<state> keyword.  (Old Perl 4 programmers also made use of the C<local> keyword, now replaced by C<my>.)
 
 Local variables are only usable within their own enclosing code block, such as the body of a conditional statement, loop, or subroutine.  If a local variable is declared in the main operations section of an RPerl program file, then it is considered to be outside of any code block, and it may only be utilized in the operations section of its own program file.
 
@@ -13171,7 +13171,9 @@ Global variables are usable within any code block accessible by Perl.  Except fo
 
 The I<"type"> of a variable is simply the data type which is stored inside the variable, as described in detail throughout the preceeding subsections of L</Section 2.4: Scalar Variables>.  A variable's type must be set during declaration and may not be altered thereafter.  Remember there are 7 scalar data types in RPerl: C<boolean>, C<unsigned_integer>, C<integer>, C<gmp_integer>, C<number>, C<character>, and C<string>.
 
-The I<"name"> of a variable is the word or phrase you type after a dollar sign C<$> character, in order to access the variable.
+The I<"name"> of a variable is the word or phrase you type after a dollar sign C<$> character, in order to access the variable.  Like the scope and type, a variable's name may not be changed after the point of variable declaration, when the software begins execution.  Closely related is the I<"namespace"> of a variable, which is a named group of variables and constants and possibly other things; except where specified in L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES>, all RPerl variables exist outside of any namespace, which is to say that normal RPerl variables do not have a namespace.  
+
+The I<"value"> of a variable is the actual data which has been stored inside of the variable, and which may be accessed or modified as your RPerl software is running.
 
 =for comment [ START HERE: need finish content above ]
 
