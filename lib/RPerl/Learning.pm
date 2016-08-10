@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.112_000;
+our $VERSION = 0.113_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13169,7 +13169,9 @@ Local variables are only usable within their own enclosing code block, such as t
 
 Global variables are usable within any code block accessible by Perl.  Except for certain special variables such as C<our $VERSION>, all variables in RPerl are locally-scoped using the C<my> keyword.  RPerl does not currently support C<state> variables.
 
-The I<"type"> of a variable is simply the data type which is stored inside the variable, as described in detail throughout the preceeding subsections of L</Section 2.4: Scalar Variables>.  A variable's type must be set during declaration and may not be altered thereafter.  Remember there are 7 scalar data types in RPerl: C<boolean>, C<unsigned_integer>, C<integer>, C<number>, C<character>, and C<string>.
+The I<"type"> of a variable is simply the data type which is stored inside the variable, as described in detail throughout the preceeding subsections of L</Section 2.4: Scalar Variables>.  A variable's type must be set during declaration and may not be altered thereafter.  Remember there are 7 scalar data types in RPerl: C<boolean>, C<unsigned_integer>, C<integer>, C<gmp_integer>, C<number>, C<character>, and C<string>.
+
+The I<"name"> of a variable is the word or phrase you type after a dollar sign C<$> character, in order to access the variable.
 
 =for comment [ START HERE: need finish content above ]
 
