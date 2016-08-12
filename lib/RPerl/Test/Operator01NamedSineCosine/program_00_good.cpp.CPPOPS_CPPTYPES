@@ -1,0 +1,46 @@
+//!/usr/bin/rperl
+
+
+
+
+
+
+
+// [[[ HEADER ]]]
+#include <rperlstandalone.h>
+#ifndef __CPP__INCLUDED__program_00_good_cpp
+#define __CPP__INCLUDED__program_00_good_cpp 0.001_000
+# ifdef __CPP__TYPES
+
+
+int main() {
+    // [[[ OPERATIONS HEADER ]]]
+
+// [[[ OPERATIONS ]]]
+    number op_sin = sin(2);
+    number op_cos = cos(2);
+    print "have $op_sin = " << number_to_string(op_sin) << endl;
+    print "have $op_cos = " << number_to_string(op_cos) << endl;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // [[[ OPERATIONS FOOTER ]]]
+    return 0;
+}
+
+// [[[ FOOTER ]]]
+# elif defined __PERL__TYPES
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+# endif
+#endif

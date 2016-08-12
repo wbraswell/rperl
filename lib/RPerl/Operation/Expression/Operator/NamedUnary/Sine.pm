@@ -75,8 +75,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my object $operator_named, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
-    RPerl::diag( 'in NamedUnary::Scalar->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-    RPerl::diag( 'in NamedUnary::Scalar->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n");
+    #RPerl::diag( 'in NamedUnary::Scalar->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    #RPerl::diag( 'in NamedUnary::Scalar->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n");
 
     my string $operator_named_class = ref $operator_named;
 
@@ -92,15 +92,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
 	$cpp_source_group->{CPP} .= $operator_named->{children}->[0];
 	$cpp_source_group->{CPP} .= '(';
-	RPerl::diag( 'XXX - subexpression_class = ' . RPerl::Parser::rperl_ast__dump($subexpression_class) . "\n");
+	#RPerl::diag( 'XXX - subexpression_class = ' . RPerl::Parser::rperl_ast__dump($subexpression_class) . "\n");
 	if ( $subexpression_class eq 'SubExpression_138' ) { # Dealing with a Literal
-	    RPerl::diag( 'XXX - X -- ' . $subexpression_class . "\n" );
+	    #RPerl::diag( 'XXX - X -- ' . $subexpression_class . "\n" );
 	    my object $subsubexpression = $subexpression->{children}->[0];
 	    my string $subsubexpression_class = ref $subsubexpression;
-	    RPerl::diag( 'XXX - X - X -- ' . $subsubexpression_class . "\n" );
-	    RPerl::diag( 'XXX - X - X -- subsubexpression_class = ' . RPerl::Parser::rperl_ast__dump($subsubexpression_class) . "\n");
+	    #RPerl::diag( 'XXX - X - X -- ' . $subsubexpression_class . "\n" );
+	    #RPerl::diag( 'XXX - X - X -- subsubexpression_class = ' . RPerl::Parser::rperl_ast__dump($subsubexpression_class) . "\n");
 	    if ( $subsubexpression_class eq 'Literal_235' ) { # Dealing with type Number
-		RPerl::diag( 'XXX - X - X -- subsubexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($subsubexpression) . "\n");
+		#RPerl::diag( 'XXX - X - X -- subsubexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($subsubexpression) . "\n");
 		$cpp_source_group->{CPP} .= $subsubexpression->{children}->[0];
 	    }
 	}
