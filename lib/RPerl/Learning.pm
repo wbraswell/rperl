@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.114_000;
+our $VERSION = 0.115_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13173,7 +13173,11 @@ The I<"type"> of a variable is simply the data type which is stored inside the v
 
 The I<"name"> of a variable is the word or phrase you type after a dollar sign C<$> character, in order to access the variable.  Like the scope and type, a variable's name may not be changed after the point of variable declaration, when the software begins execution.  Closely related is the I<"namespace"> of a variable, which is a named group of variables and constants and possibly other things; except where specified in L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES>, all RPerl variables exist outside of any namespace, which is to say that normal RPerl variables do not have a namespace.  
 
-The I<"value"> of a variable is the actual data which has been stored inside of the variable, and which may be accessed or modified as your RPerl software is running.
+The I<"value"> of a variable is the actual data which has been stored inside of the variable, and which may be accessed or modified as your RPerl software is running.  A variable's value must be compatible with its type, otherwise an error or undefined behavior may occur.
+
+    name()
+
+    scope_type_name_value()
 
 =for comment [ START HERE: need finish content above ]
 
