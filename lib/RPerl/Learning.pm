@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.115_000;
+our $VERSION = 0.116_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13149,7 +13149,7 @@ You must utilize type conversions when you are assigning the value of one variab
 
 =head3 Section 2.4.10 Scope, Type, Name, Value
 
-Every variable has 4 primary qualities, all of which are provided during variable initialization:
+Every variable has 4 primary qualities, all of which are provided during variable initialization, in the following order:
 
 =over
 
@@ -13175,15 +13175,41 @@ The I<"name"> of a variable is the word or phrase you type after a dollar sign C
 
 The I<"value"> of a variable is the actual data which has been stored inside of the variable, and which may be accessed or modified as your RPerl software is running.  A variable's value must be compatible with its type, otherwise an error or undefined behavior may occur.
 
-    name()
+When your RPerl application is running in normal interpreted mode AKA test mode (Perl operations and Perl data types), then you will be able to access the special subroutines C<type()>, C<types()>, C<name()> and C<scope_type_name_value()>.  These four subroutines provide the ability to perform I<"introspection"> on RPerl variables, which means your RPerl application can access information about itself, specifically about its own variables.  The C<types()> subroutine is not used for scalar data types as discussed in this chapter, please see L</CHAPTER 3: LISTS & ARRAYS> and L</CHAPTER 6: HASHES> for more info.
 
-    scope_type_name_value()
+The following source code example shows a simple C<string> variable named C<$foo> (as usual), which we then pass as an argument to the introspection subroutines and display the results:
 
-=for comment [ START HERE: need finish content above ]
+    #!/usr/bin/perl
 
-=for comment [ START HERE: need finish content above ]
+    # [[[ HEADER ]]]
+    use RPerl;
+    use strict;
+    use warnings;
+    our $VERSION = 0.001_000;
 
-=for comment [ START HERE: need finish content above ]
+    # [[[ CRITICS ]]]
+    ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+    ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+    # [[[ OPERATIONS ]]]
+
+    my string $foo = 'howdy';
+    print 'have $foo = ', $foo, "\n";
+    print 'have type($foo) = ', type($foo), "\n";
+    print 'have name($foo) = ', name($foo), "\n";
+    print 'have scope_type_name_value($foo) = ', "\n", scope_type_name_value($foo), "\n\n";
+
+When this example is executed, the following output is produced:
+
+=for rperl X<noncode>
+
+    have $foo = howdy
+    have type($foo) = string
+    have name($foo) = $foo
+    have scope_type_name_value($foo) = 
+    my string $foo = 'howdy';
+
+=for rperl X</noncode>
 
 =head3 Section 2.4.11: Binary Assignment Operators
 
@@ -15466,6 +15492,7 @@ I<"Square brackets"> are also known as just I<"brackets"> for short.
 
 Closely related to the loop concept of an iterator variable is that of an C<"index">, and depending upon the usage you may argue the "i" in C<$i> stands for either "iterator" or "index".  The main difference between an iterator and an index are usage: an iterator is an integer variable used to count loop iterations; whereas an index is a numeric value used to specify an array element, and may be either an integer variable or a hard-coded integer literal.  An iterator can always be used as an index, but an index by definition is not meant to be used as an iterator.
 
+types() introspection subroutine
 
 =for comment [ INSERT CHAPTER ]
 
@@ -15498,6 +15525,8 @@ X<br>
 =head1 CHAPTER 6: HASHES
 
 A hash may not be a constant.
+
+types() introspection subroutine
 
 =for comment [ INSERT CHAPTER ]
 

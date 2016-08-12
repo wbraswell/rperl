@@ -1,9 +1,11 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'howdy' >>>
-# <<< EXECUTE_SUCCESS: 'my string $foo = 'howdy';' >>>
-# <<< EXECUTE_SUCCESS: '$foo' >>>
+# <<< EXECUTE_SUCCESS: 'have $foo = howdy' >>>
+# <<< EXECUTE_SUCCESS: 'have type($foo) = string' >>>
+# <<< EXECUTE_SUCCESS: 'have name($foo) = $foo' >>>
+# <<< EXECUTE_SUCCESS: 'have scope_type_name_value($foo) = ' >>>
+# <<< EXECUTE_SUCCESS: "my string $foo = 'howdy';" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -18,9 +20,10 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my string $foo = 'howdy';
-print $foo, "\n";
-print scope_type_name_value($foo), "\n";
-print name($foo), "\n\n";
+print 'have $foo = ', $foo, "\n";
+print 'have type($foo) = ', type($foo), "\n";
+print 'have name($foo) = ', name($foo), "\n";
+print 'have scope_type_name_value($foo) = ', "\n", scope_type_name_value($foo), "\n\n";
 
 #$::bar = 'dowdy';
 #print $::bar, "\n";
