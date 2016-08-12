@@ -8,8 +8,8 @@
 
 // [[[ HEADER ]]]
 #include <rperlstandalone.h>
-#ifndef __CPP__INCLUDED__program_00_good_cpp
-#define __CPP__INCLUDED__program_00_good_cpp 0.001_000
+#ifndef __CPP__INCLUDED__RPerl__Test__Operator01NamedSineCosine__program_00_good_cpp
+#define __CPP__INCLUDED__RPerl__Test__Operator01NamedSineCosine__program_00_good_cpp 0.001_000
 # ifdef __CPP__TYPES
 
 
