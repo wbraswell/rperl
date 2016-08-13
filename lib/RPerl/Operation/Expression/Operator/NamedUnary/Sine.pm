@@ -8,7 +8,7 @@ package RPerl::Operation::Expression::Operator::NamedUnary::Sine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_500;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator::NamedUnary);
@@ -92,18 +92,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
 	$cpp_source_group->{CPP} .= $operator_named->{children}->[0];
 	$cpp_source_group->{CPP} .= '(';
-	#RPerl::diag( 'XXX - subexpression_class = ' . RPerl::Parser::rperl_ast__dump($subexpression_class) . "\n");
-	if ( $subexpression_class eq 'SubExpression_138' ) { # Dealing with a Literal
-	    #RPerl::diag( 'XXX - X -- ' . $subexpression_class . "\n" );
-	    my object $subsubexpression = $subexpression->{children}->[0];
-	    my string $subsubexpression_class = ref $subsubexpression;
-	    #RPerl::diag( 'XXX - X - X -- ' . $subsubexpression_class . "\n" );
-	    #RPerl::diag( 'XXX - X - X -- subsubexpression_class = ' . RPerl::Parser::rperl_ast__dump($subsubexpression_class) . "\n");
-	    if ( $subsubexpression_class eq 'Literal_235' ) { # Dealing with type Number
-		#RPerl::diag( 'XXX - X - X -- subsubexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($subsubexpression) . "\n");
-		$cpp_source_group->{CPP} .= $subsubexpression->{children}->[0];
-	    }
-	}
+	my string_hashref $cpp_source_subgroup = $operator_named->{children}->[1]->ast_to_cpp__generate__CPPOPS_CPPTYPES( $modes, $self );
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
 	$cpp_source_group->{CPP} .= ')';
     }
     elsif ( $operator_named_class eq 'Operator_101' ) {    # Operator -> OP10_NAMED_UNARY
