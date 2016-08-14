@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.117_000;
+our $VERSION = 0.118_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13221,13 +13221,7 @@ We can shorten this example from two operators to only one by utilizing a I<"bin
 
     $foo += 1;
 
-L</Section 2.4.12: Increment & Decrement Operators>
-
-=for comment [ START HERE: need add pre-table content ]
-
-=for comment [ START HERE: need add pre-table content ]
-
-=for comment [ START HERE: need add pre-table content ]
+We can achieve this effect for the four arithmetic operators addition C<+>, subtraction C<->, multiplication C<*>, and division C</>, as well as the string concatenation C<.> operator.  The right-hand side argument is not limited to numeric literals such as C<1> in the above example, any expression can be utilized as long as it is of a compatible data type, as always.
 
 =begin text
 
@@ -13699,6 +13693,19 @@ $z = q{<<< END TEXT EVAL >>>};
 =for comment [ START HERE: need add pre-table content ]
 
 =for comment [ START HERE: need add pre-table content ]
+
+
+Recall the example from the previous section, regarding the use of binary assignment operators, where we first see long-hand source code using two operators:
+
+    $foo = $foo + 1;
+
+Then we shorten from two operators to only one operator:
+
+    $foo += 1;
+
+Now, for the special case of incrementing by a hard-coded integer value of C<1>, we can shorten this example even further to eliminate the numeric literal.  This is achieved by using the post-increment C<++> operator:
+
+    $foo++;
 
 =begin text
 
