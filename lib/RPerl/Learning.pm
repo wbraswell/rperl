@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.116_000;
+our $VERSION = 0.117_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13212,6 +13212,16 @@ When this example is executed, the following output is produced:
 =for rperl X</noncode>
 
 =head3 Section 2.4.11: Binary Assignment Operators
+
+Often you will want to increase a numeric variable by some value, which can be achieved by calling the addition C<+> operator, followed by the assignment C<=> operator:
+
+    $foo = $foo + 1;
+
+We can shorten this example from two operators to only one by utilizing a I<"binary assignment operator">, in this case the I<"plus-equals"> C<+=> operator:
+
+    $foo += 1;
+
+L</Section 2.4.12: Increment & Decrement Operators>
 
 =for comment [ START HERE: need add pre-table content ]
 
