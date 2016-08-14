@@ -1,5 +1,5 @@
 #ifndef __CPP__INCLUDED__rperloperations_h
-#define __CPP__INCLUDED__rperloperations_h 0.002_000
+#define __CPP__INCLUDED__rperloperations_h 0.003_001
 
 #include <rperltypes_mode.h>
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
@@ -14,6 +14,8 @@
 
 // DEV NOTE, CORRELATION #rp020: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named*/* also add in Named*.pm and rperloperations.*
 #define abs std::abs  // DEV NOTE, CORRELATION #rp110: C++ std::abs is the most versatile choice of C++ operator, and is equivalent to Perl abs
+#define sin std::sin
+#define cos std::cos
 
 // [[[ STATEMENTS ]]]
 
