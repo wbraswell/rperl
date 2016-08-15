@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'near "sine 2"' >>>
+# <<< PARSE_ERROR: 'near "expo 2"' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -15,4 +15,4 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-my number $op_sin = expo 2;
+my number $op_exp = expo 2;
