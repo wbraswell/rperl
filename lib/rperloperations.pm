@@ -3,7 +3,7 @@ package  # hide from PAUSE indexing
     rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 use strict;
 use warnings;
-our $VERSION = 0.001_300;
+our $VERSION = 0.001_400;
 use Carp;
 
 # NEED UPGRADE: make Grammars first-class citizens for full Perl 6 compatibility, we should have it done by Christmas  XD
@@ -42,6 +42,7 @@ use RPerl::Operation::Expression::Operator::Arithmetic::Power;
 use RPerl::Operation::Expression::Operator::Named;
 use RPerl::Operation::Expression::Operator::Named::AbsoluteValue;
 use RPerl::Operation::Expression::Operator::Named::Chomp;
+use RPerl::Operation::Expression::Operator::Named::Exp;
 use RPerl::Operation::Expression::Operator::Named::Keys;
 use RPerl::Operation::Expression::Operator::Named::Join;
 use RPerl::Operation::Expression::Operator::Named::Pop;
@@ -61,6 +62,7 @@ use RPerl::Operation::Expression::Operator::NamedUnary::FileReadable;
 use RPerl::Operation::Expression::Operator::NamedUnary::FileRegular;
 use RPerl::Operation::Expression::Operator::NamedUnary::FileText;
 use RPerl::Operation::Expression::Operator::NamedUnary::Length;
+use RPerl::Operation::Expression::Operator::NamedUnary::Log;
 use RPerl::Operation::Expression::Operator::NamedUnary::Random;
 use RPerl::Operation::Expression::Operator::NamedUnary::Scalar;
 use RPerl::Operation::Expression::Operator::NamedUnary::Sine;
