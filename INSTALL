@@ -1,5 +1,5 @@
 # RPerl Install Notes
-# Last Updated July 13, 2016
+# Last Updated August 14, 2016
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEP 1 IS ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -51,7 +51,7 @@ $ sudo urpmi gmpxx-devel
 # visit https://gmplib.org/
 
 # PLUTO POLYCC
-$ sudo apt-get install texinfo
+$ sudo apt-get install texinfo flex bison
 $ wget https://github.com/wbraswell/pluto-mirror/raw/master/backup/pluto-0.11.4.tar.gz
 $ tar -xzvf pluto-0.11.4.tar.gz
 $ cd pluto-0.11.4/
