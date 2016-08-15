@@ -19,9 +19,9 @@ int main() {
     number op_log_1 = log(1);
     number op_log_2 = log(2);
     number op_log_10 = log(10);
-    print "have $op_log = " << number_to_string(op_log_1) << endl;
-    print "have $op_log = " << number_to_string(op_log_2) << endl;
-    print "have $op_log = " << number_to_string(op_log_10) << endl;
+    print "have $op_log_1 = " << number_to_string(op_log_1) << endl;
+    print "have $op_log_2 = " << number_to_string(op_log_2) << endl;
+    print "have $op_log_10 = " << number_to_string(op_log_10) << endl;
 
 
 

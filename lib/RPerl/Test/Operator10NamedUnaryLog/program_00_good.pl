@@ -20,7 +20,7 @@ my number $op_log_1  = log 1;
 my number $op_log_2  = log 2;
 my number $op_log_10 = log 10;
 
-print 'have $op_log = ', number_to_string($op_log_1), "\n";
-print 'have $op_log = ', number_to_string($op_log_2), "\n";
-print 'have $op_log = ', number_to_string($op_log_10), "\n";
+print 'have $op_log_1 = ', number_to_string($op_log_1), "\n";
+print 'have $op_log_2 = ', number_to_string($op_log_2), "\n";
+print 'have $op_log_10 = ', number_to_string($op_log_10), "\n";
 
