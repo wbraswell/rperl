@@ -1,5 +1,5 @@
 # RPerl Install Notes
-# Last Updated August 14, 2016
+# Last Updated August 15, 2016
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # NOTE: STEP 1 IS ONLY FOR SINGLE-USER INSTALL, NOT SYSTEM-WIDE INSTALL
@@ -9,7 +9,7 @@
 
 ################################################################################
 # STEP 0. PRE-INSTALL; UPDATE & INSTALL 
-# LIBC & LIBPERL & GCC & MAKEMAKER & GMP & POLYCC & CURL & ASTYLE
+# LIBC & LIBPERL & ZLIB & GCC & MAKEMAKER & GMP & POLYCC & CURL & ASTYLE
 ################################################################################
 
 # LIBC: libcrypt.(a|so) used for compiling programs
@@ -17,6 +17,9 @@ $ sudo apt-get install libc6-dev
 
 # LIBPERL: libperl.(a|so) used for compiling programs
 $ sudo apt-get install libperl-dev
+
+# ZLIB: zlib.h is a subdependency of SDL.pm
+$ sudo apt-get install zlib1g-dev
 
 # GCC
 $ g++ --version
