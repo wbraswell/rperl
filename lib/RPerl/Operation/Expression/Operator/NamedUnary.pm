@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::NamedUnary;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_300;
+our $VERSION = 0.002_400;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator);
@@ -28,6 +28,7 @@ our string_hashref $NAMES = {
     '-f'      => 'RPerl::Operation::Expression::Operator::NamedUnary::FileRegular',
     '-T'      => 'RPerl::Operation::Expression::Operator::NamedUnary::FileText',
     'length'  => 'RPerl::Operation::Expression::Operator::NamedUnary::Length',
+    'log'     => 'RPerl::Operation::Expression::Operator::NamedUnary::Log',
     'rand'    => 'RPerl::Operation::Expression::Operator::NamedUnary::Random',
     'scalar'  => 'RPerl::Operation::Expression::Operator::NamedUnary::Scalar',
     'sin'     => 'RPerl::Operation::Expression::Operator::NamedUnary::Sine'
