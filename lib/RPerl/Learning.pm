@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.118_000;
+our $VERSION = 0.119_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13679,6 +13679,22 @@ $z = q{<<< END TEXT EVAL >>>};
 =for html </table>
 
 =for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<Add Assign>
+
+    $VARIABLE += VALUE
+
+$VARIABLE is a numeric variable;
+
+VALUE is numeric value;
+
+Add VALUE to existing $VARIABLE, store result back in $VARIABLE
+
+	$foo += 3;
+
+=back
 
 =for comment [ START HERE: need add post-table examples ]
 
