@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::NamedUnary;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_400;
+our $VERSION = 0.002_500;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator);
@@ -31,7 +31,8 @@ our string_hashref $NAMES = {
     'log'     => 'RPerl::Operation::Expression::Operator::NamedUnary::Log',
     'rand'    => 'RPerl::Operation::Expression::Operator::NamedUnary::Random',
     'scalar'  => 'RPerl::Operation::Expression::Operator::NamedUnary::Scalar',
-    'sin'     => 'RPerl::Operation::Expression::Operator::NamedUnary::Sine'
+    'sin'     => 'RPerl::Operation::Expression::Operator::NamedUnary::Sine',
+    'sqrt'    => 'RPerl::Operation::Expression::Operator::NamedUnary::SquareRoot'
 };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
