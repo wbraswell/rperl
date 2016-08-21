@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.121_000;
+our $VERSION = 0.122_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -510,7 +510,7 @@ Please support the Perl community by purchasing a copy of B<Learning Perl> from 
 
 =end html
 
-L<http://shop.oreilly.com/product/0636920018452.do>
+L<http://shop.oreilly.com/product/0636920049517.do>
 
 =head2 Section 1.3: Is This Book Right For You?
 
