@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.120_000;
+our $VERSION = 0.121_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13690,7 +13690,9 @@ $VARIABLE is a numeric variable;
 
 VALUE is numeric value;
 
-Add VALUE to existing $VARIABLE, store result back in $VARIABLE
+Add VALUE to existing $VARIABLE, store result back in $VARIABLE;
+
+Also known as the I<"Plus Equal"> operator
 
 	my integer $foo = 2;
 	print '$foo = ', $foo, "\n";
@@ -13704,6 +13706,37 @@ Running the code example above will produce the following output:
 
 	$foo = 2
 	$foo = 5
+
+=for rperl X</noncode>
+
+=back
+
+=over
+
+=item * B<Subtract Assign>
+
+    $VARIABLE -= VALUE
+
+$VARIABLE is a numeric variable;
+
+VALUE is numeric value;
+
+Subtract VALUE from existing $VARIABLE, store result back in $VARIABLE;
+
+Also known as the I<"Minus Equal"> operator
+
+	my integer $foo = 5;
+	print '$foo = ', $foo, "\n";
+
+	$foo -= 3;
+	print '$foo = ', $foo, "\n";
+
+Running the code example above will produce the following output:
+
+=for rperl X<noncode>
+
+	$foo = 5
+	$foo = 2
 
 =for rperl X</noncode>
 
