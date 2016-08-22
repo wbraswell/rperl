@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.122_000;
+our $VERSION = 0.123_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -496,7 +496,7 @@ This book is purposefully patterned after the popular educational text B<Learnin
 
 This book copies the same chapter topics as B<Learning Perl>, but all content is re-written for RPerl.  B<Learning RPerl> also copies the same exercise concepts as B<Learning Perl>, but all solutions are re-written in RPerl.  Both books are canonical and may be used together in the classroom; the source code solutions are meant to be compared side-by-side as textbook examples of normal Perl versus optimized Perl.
 
-Please support the Perl community by purchasing a copy of B<Learning Perl> from our friends at O'Reilly:
+Please support the Perl community by purchasing a copy of B<Learning Perl, 7th Edition> from our friends at O'Reilly:
 
 =end text
 
@@ -506,7 +506,7 @@ Please support the Perl community by purchasing a copy of B<Learning Perl> from 
 
 <p>This book copies the same chapter topics as <u><b>Learning Perl</b></u>, but all content is re-written for RPerl.  <u><b>Learning RPerl</b></u> also copies the same exercise concepts as <u><b>Learning Perl</b></u>, but all solutions are re-written in RPerl.  Both books are canonical and may be used together in the classroom; the source code solutions are meant to be compared side-by-side as textbook examples of normal Perl versus optimized Perl.</p>
 
-<p>Please support the Perl community by purchasing a copy of <u><b>Learning Perl</b></u> from our friends at O'Reilly:</p>
+<p>Please support the Perl community by purchasing a copy of <u><b>Learning Perl, 7th Edition</b></u> from our friends at O'Reilly:</p>
 
 =end html
 
