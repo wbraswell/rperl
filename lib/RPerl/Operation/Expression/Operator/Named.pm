@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::Named;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_300;
+our $VERSION = 0.001_400;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator);
@@ -20,6 +20,7 @@ our hashref $properties = {};
 # DEV NOTE, CORRELATION #rp020: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named*/* also add in Named*.pm and rperloperations.*
 our string_hashref $NAMES = {
     'abs'     => 'RPerl::Operation::Expression::Operator::Named::AbsoluteValue',
+    'atan2'   => 'RPerl::Operation::Expression::Operator::Named::Atan2',
     'chomp'   => 'RPerl::Operation::Expression::Operator::Named::Chomp',
     'exp'     => 'RPerl::Operation::Expression::Operator::Named::Exp',
     'join'    => 'RPerl::Operation::Expression::Operator::Named::Join',

@@ -1,5 +1,5 @@
 #ifndef __CPP__INCLUDED__rperloperations_h
-#define __CPP__INCLUDED__rperloperations_h 0.003_003
+#define __CPP__INCLUDED__rperloperations_h 0.003_004
 
 #include <rperltypes_mode.h>
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
@@ -19,6 +19,7 @@
 #define exp std::exp
 #define log std::log
 #define sqrt std::sqrt
+#define atan2 std::atan2
 
 // [[[ STATEMENTS ]]]
 
