@@ -1,6 +1,6 @@
 # RPerl System Developers
 # Getting Started, A How-To Guide
-# Last Updated 20160725 2016.207
+# Last Updated 20160824 2016.208
 
 Welcome to RPerl, and thank you for your interest in joining the RPerl system developers!
 
@@ -315,22 +315,21 @@ Of course, please run the full RPerl test suite on your local machine to make su
 $ perl Makefile.PL; make realclean; perl Makefile.PL; make test
 
 DEBUGGING NOTES #2:
-You can temporarily disable all tests except for your new 'abs' tests, but don't forget to re-enable them again when you are done debugging!
 Your new tests will be automatically accessed by 3 parts of the RPerl system test suite: t/09, t/12, and t/13.
 https://github.com/wbraswell/rperl/blob/master/t/09_interpret_execute.t
 https://github.com/wbraswell/rperl/blob/master/t/12_parse.t
 https://github.com/wbraswell/rperl/blob/master/t/13_generate.t
-Near the top of each of these 3 files, you will see a constant named 'PATH_TESTS' being set to a value ending in '/RPerl/Test'.
-Simply change this value to instead end with '/RPerl/Test/Operator01NamedAbsoluteValue'.
-Also, in t/13 only you will need to disable the constant 'PATH_PRECOMPILED' by changing it's value to end with an invalid path such as '/RPerl/FOO'.
+In t/13 only you will need to disable the constant 'PATH_PRECOMPILED' by changing it's value to end with an invalid path such as '/RPerl/FOO'.
 You may safely ignore any warnings about "/RPerl/FOO" being an invalid path while t/13 is running.
-Now you can just run 1 test file at a time, using the environmental variables to enable verbose and debugging output:
+You can run tests for your new 'abs' operator only.
+You can just run 1 test at a time, using the environmental variables to enable verbose and debugging output:
 $ export RPERL_VERBOSE=1
 $ export RPERL_DEBUG=1
-$ perl ./t/09_interpret_execute.t
-$ perl ./t/12_parse.t
-$ perl ./t/13_generate.t
-Don't forget to reverse all temporary changes made to these 3 test files before moving on to step 8!
+$
+$ #### you may want to use perl switches '-Mblib' and '-Mlib=lib' ####
+$ perl ./t/09_interpret_execute.t Operator01NamedAbsoluteValue
+$ perl ./t/12_parse.t Operator01NamedAbsoluteValue
+$ perl ./t/13_generate.t Operator01NamedAbsoluteValue
 
 You should see over 3,300 tests pass without 1 single failure when the entire test suite runs correctly via the `make test` command above.  Feels good, doesn't it?
 
