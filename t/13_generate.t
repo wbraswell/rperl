@@ -95,7 +95,7 @@ find(
             return;
         }
     },
-    PATH_TESTS()
+    (defined $ARGV[0]) ? PATH_TESTS() . q{/} . $ARGV[0] : PATH_TESTS()
 );
 
 # locate all *.*OPS_*TYPES pre-compiled files in PATH_PRECOMPILED directory

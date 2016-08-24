@@ -104,7 +104,7 @@ find(
             return;
         }
     },
-    PATH_TESTS()
+    (defined $ARGV[0]) ? PATH_TESTS() . q{/} . $ARGV[0] : PATH_TESTS()
 );
 
 # trim unnecessary (and possibly problematic) absolute paths from input file names

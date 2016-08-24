@@ -81,7 +81,7 @@ find(
             return;
         }
     },
-    PATH_TESTS()
+    (defined $ARGV[0]) ? PATH_TESTS() . q{/} . $ARGV[0] : PATH_TESTS()
 );
 
 my integer $number_of_test_files = scalar keys %{$test_files};
