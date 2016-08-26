@@ -235,6 +235,11 @@ WINDOWS
     pass tests on appveyor activperl
     pass tests on activestate activeperl
     Appveyor  http://blogs.perl.org/users/eserte/2016/04/testing-with-appveyor.html
+    fix EU::MM + GNU make, missing slash; test building all of Perl & RPerl using gmake, CORRELATION #rp200
+        gmake: No rule to make target 'C:\...\libConfig.pm', needed by 'Makefile'.  Stop.
+        http://www.perlmonks.org/bare/?node_id=843384
+        https://rt.cpan.org/Public/Bug/Display.html?id=21129
+        http://stackoverflow.com/questions/9454961/extutilsmakemaker-and-supported-make-programs-on-windows
 
 MOBILEPERL
     Android   http://blogs.perl.org/users/flavio_s_glock/2016/04/android-app-with-perl5-to-java-compiler.html

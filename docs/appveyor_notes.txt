@@ -1,4 +1,9 @@
-choco install strawberryperl --forceX86 && set PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;C:\windows\system32;C:\windows; && gcc -v && g++ -v && perl -V && dmake -V || perl Makefile.PL && perl -e"require CPAN;CPAN::Shell->notest('install','App::cpanminus');" && cpanm -n -v --installdeps . & set RPERL_DEBUG=1 && set RPERL_VERBOSE=1 && dmake test
+# dmake
+
+choco install strawberryperl --forceX86 && set PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;C:\windows\system32;C:\windows; && gcc -v && g++ -v && perl -V && dmake -V && perl Makefile.PL && perl -e"require CPAN;CPAN::Shell->notest('install','App::cpanminus');" && cpanm -n -v --installdeps . && set RPERL_DEBUG=1 && set RPERL_VERBOSE=1 && dmake test
 
 
-choco install strawberryperl --forceX86 && set PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;C:\windows\system32;C:\windows; && gcc -v && g++ -v && perl -V && gmake || perl Makefile.PL && perl -e"require CPAN;CPAN::Shell->notest('install','App::cpanminus');" && cpanm -n -v --installdeps . & set RPERL_DEBUG=1 && set RPERL_VERBOSE=1 && gmake test
+# gmake
+# CORRELATION #rp200, Windows + EU::MM + GNU make
+
+choco install strawberryperl --forceX86 && set PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;C:\windows\system32;C:\windows; && gcc -v && g++ -v && perl -V && gmake -v && perl Makefile.PL && perl -e"require CPAN;CPAN::Shell->notest('install','App::cpanminus');" && cpanm -n -v --installdeps . && set RPERL_DEBUG=1 && set RPERL_VERBOSE=1 && gmake test
