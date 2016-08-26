@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.003_900;
+our $VERSION = 0.004_000;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -18,6 +18,7 @@ WriteMakefile(
     LICENSE          => 'perl_5',
     EXE_FILES        => ['script/rperl'],
     MIN_PERL_VERSION => '5.10.0',  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
+	MAKE             => 'gmake',   # force GNU make in Windows, dmake hangs and nmake is untested
     PREREQ_PM        => {
         # RPERL USER DEPENDENCIES
         'ExtUtils::MakeMaker' => 7.04,     # for compatibility with Inline::C >= v0.75
