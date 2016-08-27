@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.123_000;
+our $VERSION = 0.124_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -66,6 +66,166 @@ Learning RPerl
 
 =head1 BOOK TITLE
 
+=begin text
+
+    .;,..                                                                                                                                               
+    .2prp02;'.                                                                                                                                          
+      ,0LRRRLLp1;.                                                                                                                                      
+      .,20LRPEEPRL02'.                                                                                                                                  
+        .'2rREEEEPRRLp1:,.                                                                                                                              
+           .1pLRPEEEPRRLLrl;.                                                                                                                           
+            .;2lpLREEEEEPRRLpl2,.                                                                                                                       
+             .':lrLPEEEPPPPPRRLLpl:,.                                                                                                                   
+                .'20LRPPPPPPPEEPRLLrpl:'.                                                                                                               
+                    .2rLRPPRRPPPEEPRRLLrp1;'.                                                                                                           
+                      .;lpLRRRRRPPPEEEPLLLrr0:'.                                                                                                        
+                         .,1LRRRLLRPPPRRRRLLLrr01,.                                                                                                     
+                            .,1pLRRRRLLRRRRRLLLLrrpl:'.                                                                                                 
+                                .:lrLRRLLRLLLLLLLrrrrp02,.                                                                                              
+                                   ..:lpLRRRRLLLLLLLrppp002,.                                                                                           
+                                       .';1pLLRRLLLrpprpp0ppl2,.                                                                                        
+                                           .'1prLRRLLrpprLrrrLLL0:.                                                        ....                         
+                                             ..;1pLLLLLLLLLLLLLLLLr0:.                                                   '0LLLLr01;..                   
+                                                .;20rrrLLLLLLLLrprLLLrl:'.                                              'rEEEEEEEEPRL1,.                
+                                                   .':10pLLLLLLLLLrp0pprp02;..                                          ;LPPEPPEEPPPRLLp2.              
+                                                       .';1rLLrrrrpppp0000pp0l1;'..            ...',;::2222222::;,'..    2REEPPPPPPRRLLrrp2.            
+                                                           .,20rLLrrrrrpppppprrrrrrrpl2:221lppprLLRPPPPEEEEEEEEEEPERLL021LEEPPLrprrprrpppLL0.           
+                                                               .,1prprprrrLLLLRPPPEEEEPPPPPPRPPRRRRRLLRRPE333EEEE3EE33333EPRPERLpppprp000prLp1:,..      
+                                                                  .,20rrppLRPPEEEEEEEEEEEEPPRRRRLLLLLLLRRPPPPPRRRPPEE33333PREEEEEPRLppp0pplll0p0001:'.  
+                                                                     .';20LPEEEEEEEEE3EEEEEPPRRLLLLLLLLLLRRLLLLLLLRPPEPPEEERLLLLLLLrrrpl0l;'..'',;;::,. 
+                                                                         '0LPEEEEEEEEEEPRRPPPRRRRLLLLrrLLrrLrprLLLrrLLLrLLL010prrLLrpp00:.              
+                                                                           ;rRPEE3EPPEERLLLLRPPLLLLLrrp0ll0p0l0p0l112:1lll2:1lll0l0pLLRp.               
+                                                                            ':lREPPEPPPRLRPEERLLLLrprLLLr0ll01:1l1::12::::2::2::::1120L0.               
+                                                                          .:0prLPPPPRLLRPPRRLLLrrrLLLLRRPLpll2:;::;,:12::::,,,;;;::;:200,               
+                                                                        .:0LLRRRPRPEPLLLLRRLrrLRRRRRLLLLrpp00l2:2222112211:,,,'',;:,,2l0,               
+                                                                         ...'',:1lpLRRLRLLLLLLLREEEEERrppppp0ppl11lp0pp0012:;;,,;;;,;2l1.               
+                                                                                   .,1rRPPPPPPRRPEEEEPLrLLrrpprLLLLrrrLrrp1:;;,;::;;20l;                
+                                                                                      .:LEEEPRrpppppppppprLLRPPPRRRRRLrrp0l2222::22101'                 
+                                                                                        'rPPPLplll121llll0pprrrpppprLr0l12222221lll2'.                  
+                                                                                         .;0PPRLLrpll11222:;;,,,,:10rrrrrrrp0ll1:;.                     
+                                                                                           .1RLrRRLLr02:;,........,;:;;;;;,'..                          
+                                                                                             2r22rLrpp1;.                                               
+                                                                                             .lL2;1l12'                                                 
+                                                                                              .0L;.2L0.                                                 
+                                                                                         ,2:'. ,rp;,0L0.   .,2;..                                       
+                                                                                         .:1l00pLLrprRPp2221ll,.                                        
+                                                                                          .',,;;;,,;:10Lr1'.                                            
+                                                                                                       '0l'                                             
+                                                                                                        .ll'                                            
+                                                                                                    ':::2pp1:,.....',.                                  
+                                                                                                 ..'';2ll1;,;::21l111;..                                
+                                                                                                 ..,'...       ...',;;...                               
+
+=end text
+
+=begin man
+
+    .;,..                                                                                                                                               
+    .2prp02;'.                                                                                                                                          
+      ,0LRRRLLp1;.                                                                                                                                      
+      .,20LRPEEPRL02'.                                                                                                                                  
+        .'2rREEEEPRRLp1:,.                                                                                                                              
+           .1pLRPEEEPRRLLrl;.                                                                                                                           
+            .;2lpLREEEEEPRRLpl2,.                                                                                                                       
+             .':lrLPEEEPPPPPRRLLpl:,.                                                                                                                   
+                .'20LRPPPPPPPEEPRLLrpl:'.                                                                                                               
+                    .2rLRPPRRPPPEEPRRLLrp1;'.                                                                                                           
+                      .;lpLRRRRRPPPEEEPLLLrr0:'.                                                                                                        
+                         .,1LRRRLLRPPPRRRRLLLrr01,.                                                                                                     
+                            .,1pLRRRRLLRRRRRLLLLrrpl:'.                                                                                                 
+                                .:lrLRRLLRLLLLLLLrrrrp02,.                                                                                              
+                                   ..:lpLRRRRLLLLLLLrppp002,.                                                                                           
+                                       .';1pLLRRLLLrpprpp0ppl2,.                                                                                        
+                                           .'1prLRRLLrpprLrrrLLL0:.                                                        ....                         
+                                             ..;1pLLLLLLLLLLLLLLLLr0:.                                                   '0LLLLr01;..                   
+                                                .;20rrrLLLLLLLLrprLLLrl:'.                                              'rEEEEEEEEPRL1,.                
+                                                   .':10pLLLLLLLLLrp0pprp02;..                                          ;LPPEPPEEPPPRLLp2.              
+                                                       .';1rLLrrrrpppp0000pp0l1;'..            ...',;::2222222::;,'..    2REEPPPPPPRRLLrrp2.            
+                                                           .,20rLLrrrrrpppppprrrrrrrpl2:221lppprLLRPPPPEEEEEEEEEEPERLL021LEEPPLrprrprrpppLL0.           
+                                                               .,1prprprrrLLLLRPPPEEEEPPPPPPRPPRRRRRLLRRPE333EEEE3EE33333EPRPERLpppprp000prLp1:,..      
+                                                                  .,20rrppLRPPEEEEEEEEEEEEPPRRRRLLLLLLLRRPPPPPRRRPPEE33333PREEEEEPRLppp0pplll0p0001:'.  
+                                                                     .';20LPEEEEEEEEE3EEEEEPPRRLLLLLLLLLLRRLLLLLLLRPPEPPEEERLLLLLLLrrrpl0l;'..'',;;::,. 
+                                                                         '0LPEEEEEEEEEEPRRPPPRRRRLLLLrrLLrrLrprLLLrrLLLrLLL010prrLLrpp00:.              
+                                                                           ;rRPEE3EPPEERLLLLRPPLLLLLrrp0ll0p0l0p0l112:1lll2:1lll0l0pLLRp.               
+                                                                            ':lREPPEPPPRLRPEERLLLLrprLLLr0ll01:1l1::12::::2::2::::1120L0.               
+                                                                          .:0prLPPPPRLLRPPRRLLLrrrLLLLRRPLpll2:;::;,:12::::,,,;;;::;:200,               
+                                                                        .:0LLRRRPRPEPLLLLRRLrrLRRRRRLLLLrpp00l2:2222112211:,,,'',;:,,2l0,               
+                                                                         ...'',:1lpLRRLRLLLLLLLREEEEERrppppp0ppl11lp0pp0012:;;,,;;;,;2l1.               
+                                                                                   .,1rRPPPPPPRRPEEEEPLrLLrrpprLLLLrrrLrrp1:;;,;::;;20l;                
+                                                                                      .:LEEEPRrpppppppppprLLRPPPRRRRRLrrp0l2222::22101'                 
+                                                                                        'rPPPLplll121llll0pprrrpppprLr0l12222221lll2'.                  
+                                                                                         .;0PPRLLrpll11222:;;,,,,:10rrrrrrrp0ll1:;.                     
+                                                                                           .1RLrRRLLr02:;,........,;:;;;;;,'..                          
+                                                                                             2r22rLrpp1;.                                               
+                                                                                             .lL2;1l12'                                                 
+                                                                                              .0L;.2L0.                                                 
+                                                                                         ,2:'. ,rp;,0L0.   .,2;..                                       
+                                                                                         .:1l00pLLrprRPp2221ll,.                                        
+                                                                                          .',,;;;,,;:10Lr1'.                                            
+                                                                                                       '0l'                                             
+                                                                                                        .ll'                                            
+                                                                                                    ':::2pp1:,.....',.                                  
+                                                                                                 ..'';2ll1;,;::21l111;..                                
+                                                                                                 ..,'...       ...',;;...                               
+
+=end man
+
+=for man
+
+=begin docbook
+
+    .;,..                                                                                                                                               
+    .2prp02;'.                                                                                                                                          
+      ,0LRRRLLp1;.                                                                                                                                      
+      .,20LRPEEPRL02'.                                                                                                                                  
+        .'2rREEEEPRRLp1:,.                                                                                                                              
+           .1pLRPEEEPRRLLrl;.                                                                                                                           
+            .;2lpLREEEEEPRRLpl2,.                                                                                                                       
+             .':lrLPEEEPPPPPRRLLpl:,.                                                                                                                   
+                .'20LRPPPPPPPEEPRLLrpl:'.                                                                                                               
+                    .2rLRPPRRPPPEEPRRLLrp1;'.                                                                                                           
+                      .;lpLRRRRRPPPEEEPLLLrr0:'.                                                                                                        
+                         .,1LRRRLLRPPPRRRRLLLrr01,.                                                                                                     
+                            .,1pLRRRRLLRRRRRLLLLrrpl:'.                                                                                                 
+                                .:lrLRRLLRLLLLLLLrrrrp02,.                                                                                              
+                                   ..:lpLRRRRLLLLLLLrppp002,.                                                                                           
+                                       .';1pLLRRLLLrpprpp0ppl2,.                                                                                        
+                                           .'1prLRRLLrpprLrrrLLL0:.                                                        ....                         
+                                             ..;1pLLLLLLLLLLLLLLLLr0:.                                                   '0LLLLr01;..                   
+                                                .;20rrrLLLLLLLLrprLLLrl:'.                                              'rEEEEEEEEPRL1,.                
+                                                   .':10pLLLLLLLLLrp0pprp02;..                                          ;LPPEPPEEPPPRLLp2.              
+                                                       .';1rLLrrrrpppp0000pp0l1;'..            ...',;::2222222::;,'..    2REEPPPPPPRRLLrrp2.            
+                                                           .,20rLLrrrrrpppppprrrrrrrpl2:221lppprLLRPPPPEEEEEEEEEEPERLL021LEEPPLrprrprrpppLL0.           
+                                                               .,1prprprrrLLLLRPPPEEEEPPPPPPRPPRRRRRLLRRPE333EEEE3EE33333EPRPERLpppprp000prLp1:,..      
+                                                                  .,20rrppLRPPEEEEEEEEEEEEPPRRRRLLLLLLLRRPPPPPRRRPPEE33333PREEEEEPRLppp0pplll0p0001:'.  
+                                                                     .';20LPEEEEEEEEE3EEEEEPPRRLLLLLLLLLLRRLLLLLLLRPPEPPEEERLLLLLLLrrrpl0l;'..'',;;::,. 
+                                                                         '0LPEEEEEEEEEEPRRPPPRRRRLLLLrrLLrrLrprLLLrrLLLrLLL010prrLLrpp00:.              
+                                                                           ;rRPEE3EPPEERLLLLRPPLLLLLrrp0ll0p0l0p0l112:1lll2:1lll0l0pLLRp.               
+                                                                            ':lREPPEPPPRLRPEERLLLLrprLLLr0ll01:1l1::12::::2::2::::1120L0.               
+                                                                          .:0prLPPPPRLLRPPRRLLLrrrLLLLRRPLpll2:;::;,:12::::,,,;;;::;:200,               
+                                                                        .:0LLRRRPRPEPLLLLRRLrrLRRRRRLLLLrpp00l2:2222112211:,,,'',;:,,2l0,               
+                                                                         ...'',:1lpLRRLRLLLLLLLREEEEERrppppp0ppl11lp0pp0012:;;,,;;;,;2l1.               
+                                                                                   .,1rRPPPPPPRRPEEEEPLrLLrrpprLLLLrrrLrrp1:;;,;::;;20l;                
+                                                                                      .:LEEEPRrpppppppppprLLRPPPRRRRRLrrp0l2222::22101'                 
+                                                                                        'rPPPLplll121llll0pprrrpppprLr0l12222221lll2'.                  
+                                                                                         .;0PPRLLrpll11222:;;,,,,:10rrrrrrrp0ll1:;.                     
+                                                                                           .1RLrRRLLr02:;,........,;:;;;;;,'..                          
+                                                                                             2r22rLrpp1;.                                               
+                                                                                             .lL2;1l12'                                                 
+                                                                                              .0L;.2L0.                                                 
+                                                                                         ,2:'. ,rp;,0L0.   .,2;..                                       
+                                                                                         .:1l00pLLrprRPp2221ll,.                                        
+                                                                                          .',,;;;,,;:10Lr1'.                                            
+                                                                                                       '0l'                                             
+                                                                                                        .ll'                                            
+                                                                                                    ':::2pp1:,.....',.                                  
+                                                                                                 ..'';2ll1;,;::21l111;..                                
+                                                                                                 ..,'...       ...',;;...                               
+
+=end docbook
+
+=for html <img src="http://www.rperl.org/images/roadrunner_engraving.png" width="100%">
+
 =for html <u>
 
 B<Learning RPerl>
@@ -77,6 +237,14 @@ B<Learning RPerl>
 =for html <u>
 
 B<Let's Write Fast Perl!>
+
+=for html </u>
+
+~ affectionately known as ~
+
+=for html <u>
+
+B<The Roadrunner Book>
 
 =for html </u>
 
