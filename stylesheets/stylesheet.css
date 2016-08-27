@@ -1,3 +1,9 @@
+/*
+    Edited for RPerl.org
+    Changes Copyright (c) 2013, 2014, 2015, 2016, William N. Braswell, Jr.
+    v20160827 2016.240
+*/
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -241,6 +247,30 @@ aside a.button_download {
   background: transparent url(../images/button_download.png) 0 0 no-repeat;
   margin-bottom: 20px;
   font-size: 21px;
+}
+
+/* BUTTON, LEARNING RPERL */
+a.button_learning_rperl {
+  width: 250px;
+/*  height: 100px; */
+/*  line-height: 1.2; */
+  font-size: 21px;
+  color: #000;
+/*  padding-left: 10px; /* replaced by text-align:center; below */
+  text-align: center;
+  padding-top: 160px;
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  margin-left: auto;
+  margin-right: auto;
+}
+a.button_learning_rperl small {
+  display: block;
+  font-size: 11px;
+}
+aside a.button_learning_rperl {
+  display: block; 
+  background: transparent url(../images/button_roadrunner_engraving.png) 0 0 no-repeat;
+  margin-bottom: 20px;
 }
 
 /* BUTTON, HOME */
