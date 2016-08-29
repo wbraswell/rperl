@@ -4,6 +4,9 @@
 <link href="stylesheets/metacpan_rperl.css" rel="stylesheet" type="text/css">
 <script src="javascripts/metacpan_rperl.js" type="text/javascript"></script>
 
+<!-- NEED REMOVE HARD-CODED; hide full TOC until all content is loaded, to avoid expanded-then-collapsed issue -->
+<style>.wait_for_javascript { display: none; }</style>
+
 </head>
 <body>
 <div class="pod content anchors">
@@ -23,8 +26,10 @@
 -->
 
 <!-- start doc -->
-<a name='___top' class='dummyTopAnchor' ></a>
+<!-- NEED REMOVE HARD-CODED; hide full TOC until all content is loaded, to avoid expanded-then-collapsed issue -->
+<div id="full_table_of_contents" class="hide_full_table_of_contents wait_for_javascript">
 
+<a name='___top' class='dummyTopAnchor' ></a>
 <ul id="index">
   <li><a href='#NAME'>NAME</a>
   <li><a href='#BOOK_TITLE'>BOOK TITLE</a>
@@ -323,6 +328,10 @@
   <li><a href='#SEE_ALSO'>SEE ALSO</a>
   <li><a href='#AUTHOR'>AUTHOR</a>
 </ul></li>
+
+<!-- NEED REMOVE HARD-CODED; hide full TOC until all content is loaded, to avoid expanded-then-collapsed issue -->
+</div>
+
 <div id="scoped-content"><style type="text/css" scoped>
 
 table.rperl {
@@ -17648,4 +17657,10 @@ name="AUTHOR"
 <!-- end doc -->
 
 </div> <!-- END class="pod content anchors": SyntaxHighlighter applied to code within this div -->
+
+<!-- NEED REMOVE HARD-CODED; hide full TOC until all content is loaded, to avoid expanded-then-collapsed issue -->
+<script>
+    document.getElementById('full_table_of_contents').className = 'hide_full_table_of_contents';
+</script>
+
 </body></html>
