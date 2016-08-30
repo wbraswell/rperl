@@ -8,7 +8,7 @@ package RPerl::Operation::Expression::Operator::NamedUnary::Length;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator::NamedUnary);
@@ -72,10 +72,42 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group = { CPP => q{// <<< RP::O::E::O::NU::L __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
+    ( my object $self, my object $operator_named, my string_hashref $modes) = @_;
+    my string_hashref $cpp_source_group = { CPP => q{} };
 
-    #...
+    #RPerl::diag( 'in NamedUnary::Scalar->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    #RPerl::diag( 'in NamedUnary::Scalar->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n");
+
+    my string $operator_named_class = ref $operator_named;
+
+    if ( $operator_named_class eq 'Operation_81' ) {    # Operation -> OP10_NAMED_UNARY_SCOLON
+	die RPerl::Parser::rperl_rule__replace( 'ERROR EC0GEASCP16, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator '
+	    	. q{'} . $operator_named->{children}->[0] . q{'}
+		. ' requires exactly one argument, dying' )
+	    . "\n";
+    }
+    elsif ( $operator_named_class eq 'Operator_100' ) {    # Operator -> OP10_NAMED_UNARY SubExpression
+	my object $subexpression       = $operator_named->{children}->[1];
+
+	$cpp_source_group->{CPP} .= '(';
+	my string_hashref $cpp_source_subgroup = $operator_named->{children}->[1]->ast_to_cpp__generate__CPPOPS_CPPTYPES( $modes, $self );
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+	$cpp_source_group->{CPP} .= ')';
+	$cpp_source_group->{CPP} .= q{.} . $operator_named->{children}->[0] . q{()};
+    }
+    elsif ( $operator_named_class eq 'Operator_101' ) {    # Operator -> OP10_NAMED_UNARY
+	die RPerl::Parser::rperl_rule__replace( 'ERROR EC0GEASCP16, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator '
+	    . $operator_named->{children}->[0]
+	    . ' requires exactly one argument, dying' )
+	. "\n";
+    }
+    else {
+	die RPerl::Parser::rperl_rule__replace( 'ERROR EC0GEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+	    	. ($operator_named_class)
+	    	. ' found where Operation_81, Operator_100, or Operator_101 expected, dying' )
+	    . "\n";
+    }
+
     return $cpp_source_group;
 };
 
