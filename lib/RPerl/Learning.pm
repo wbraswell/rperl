@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.125_000;
+our $VERSION = 0.126_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -307,37 +307,37 @@ X<br>
 
 =item * L</CHAPTER 1: INTRODUCTION>
 
-=item * L</CHAPTER 2: SCALAR DATA>
+=item * L</CHAPTER 2: SCALAR VALUES & VARIABLES (NUMBERS & TEXT)>
 
-=item * L</CHAPTER 3: LISTS & ARRAYS>
+=item * L</CHAPTER 3: ARRAY VALUES & VARIABLES>
 
-=item * L</CHAPTER 4: SUBROUTINES>
+=item * L</CHAPTER 4: ORGANIZING BY SUBROUTINES>
 
-=item * L</CHAPTER 5: INPUT & OUTPUT>
+=item * L</CHAPTER 5: READING & WRITING FILES>
 
-=item * L</CHAPTER 6: HASHES>
+=item * L</CHAPTER 6: HASH VALUES & VARIABLES>
 
-=item * L</CHAPTER 7: REGULAR EXPRESSIONS>
+=item * L</CHAPTER 7: THE REGULAR EXPRESSION SUB-LANGUAGE>
 
-=item * L</CHAPTER 8: REGULAR EXPRESSIONS MATCHING>
+=item * L</CHAPTER 8: MATCHING BY REGULAR EXPRESSIONS>
 
-=item * L</CHAPTER 9: REGULAR EXPRESSIONS PROCESSING>
+=item * L</CHAPTER 9: PROCESSING BY REGULAR EXPRESSIONS>
 
-=item * L</CHAPTER 10: CONTROL STRUCTURES>
+=item * L</CHAPTER 10: ADDITIONAL CONTROL STRUCTURES>
 
 =item * L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES>
 
-=item * L</CHAPTER 12: FILE TESTS>
+=item * L</CHAPTER 12: FILE TEST OPERATORS>
 
-=item * L</CHAPTER 13: DIRECTORY OPERATIONS>
+=item * L</CHAPTER 13: DIRECTORY OPERATORS>
 
-=item * L</CHAPTER 14: STRINGS & SORTING>
+=item * L</CHAPTER 14: SORTING TEXT VALUES>
 
-=item * L</CHAPTER 15: SMART MATCHING & GIVEN-WHEN>
+=item * L</CHAPTER 15: ADDITIONAL SPECIAL OPERATORS>
 
-=item * L</CHAPTER 16: PROCESS MANAGEMENT>
+=item * L</CHAPTER 16: MANAGING OPERATING SYSTEM PROCESSES>
 
-=item * L</CHAPTER 17: SOME ADVANCED TECHNIQUES>
+=item * L</CHAPTER 17: ADDITIONAL ADVANCED TECHNIQUES>
 
 =item * L</APPENDIX A: EXERCISE ANSWERS>
 
@@ -680,7 +680,7 @@ Please support the Perl community by purchasing a copy of B<Learning Perl, 7th E
 
 L<http://shop.oreilly.com/product/0636920049517.do>
 
-=head2 Section 1.3: Is This Book Right For You?
+=head2 Section 1.3: Is This Book A Good Choice For You?
 
 =over
 
@@ -708,7 +708,7 @@ If you hate Perl, or only love slow software, or wish all computers would explod
 
 This is a purposefully simple book, in the same way RPerl is a purposefully simple subset of the full Perl 5 programming language.
 
-=head2 Section 1.5: What About The Exercises & Their Answers?
+=head2 Section 1.5: What About Educational Programming Exercises?
 
 There are one or more programming exercises at the end of every chapter, and full answers to each problem are given near the end of the book in Appendix A.
 
@@ -716,23 +716,21 @@ For maximum educational effect, we suggest you attempt to write each piece of co
 
 If you are using this as an official textbook for certification or academic credit, such as at LAMPuniversity.org or a traditional school, you are obviously expected to write all your own code without refering to our or anyone else's solutions whatsoever.  We suggest you enclose Appendix A with a paperclip or discard it altogether to avoid the potential for accidental academic dishonesty.
 
-=head2 Section 1.6: What Do Those Numbers At The Start Of The Exercise Mean?
+=head2 Section 1.6: How Long Should Each Exercise Take To Complete?
 
-=for text The original authors of B<Learning Perl> meant the numbers at each exercise to indicate the approximate number of minutes required for an average person to reach a full working solution.  If it takes you less time, good for you!  If it takes you more time, don't worry, it's no big deal; learning technical skills requires time and dedication.  All experts were once novices.
+The numbers at the beginning of each exercise indicate the approximate number of minutes required for an average person to reach a full working solution.  If it takes you less time, good for you!  If it takes you more time, don't worry, it's no big deal; learning technical skills requires time and dedication.  All experts were once novices.
 
-=for html <p>The original authors of <u><b>Learning Perl</b></u> meant the numbers at each exercise to indicate the approximate number of minutes required for an average person to reach a full working solution.  If it takes you less time, good for you!  If it takes you more time, don't worry, it's no big deal; learning technical skills requires time and dedication.  All experts were once novices.</p>
-
-=head2 Section 1.7: What If I'm An RPerl Course Instructor?
+=head2 Section 1.7: What If I Want To Teach RPerl?
 
 Thank you for helping spread the love of Perl and the speed of RPerl!
 
-As previously mentioned, this book may either be used solo or combined with Learning Perl.  For students who are not already familiar with Perl, you may wish to use this text alone in order to simplify and ease the learning experience.  For students who are already familiar with Perl or other dynamic programming languages like the snake or the red gemstone, you may wish to use both textbooks for a more in-depth compare-and-contrast approach.
+As previously mentioned, this book may either be used solo or combined with the Llama Book.  For students who are not already familiar with Perl, you may wish to use this text alone in order to simplify and ease the learning experience.  For students who are already familiar with Perl or other dynamic programming languages like the snake or the red gemstone, you may wish to use both textbooks for a more in-depth compare-and-contrast approach.
 
-=head2 Section 1.8: What Does RPerl Stand For?
+=head2 Section 1.8: What Does The Name RPerl Actually Mean?
 
 RPerl stands for I<"Restricted Perl">, in that we restrict our use of Perl to those parts which can be made to run fast.  RPerl also stands for I<"Revolutionary Perl">, in that we hope RPerl's speed will revolutionize the software development industry, or at least the Perl community.  RPerl might even stand for I<"Roadrunner Perl">, in that it I<runs really fast>.
 
-=head2 Section 1.9: Why Did Will Create RPerl?
+=head2 Section 1.9: Why Did Will Invent RPerl?
 
 Will loves Perl and the Perl community.
 
@@ -742,7 +740,7 @@ Will doesn't like the hassle of writing code in C or C++ or XS or Inline::C or I
 
 Will waited a decade or two before realizing he had to do it himself.
 
-=head2 Section 1.10: Why Didn't Will Just Use Normal Perl Or Some Other Language?
+=head2 Section 1.10: Why Didn't Will Just Use Normal Perl?
 
 Dynamic languages like Perl are fast at running some kinds of computational actions, such as regular expressions (text data pattern matching) and reading from a database.
 
@@ -754,9 +752,9 @@ RPerl's goal is to keep all of Perl's power and ease-of-use, while removing the 
 
 The most complex and flexible parts of Perl are called I<"high magic">, so RPerl is focused on supporting the I<"low magic"> parts of Perl which can be made to run fast.
 
-=head2 Section 1.11: Is RPerl Easy Or Hard?
+=head2 Section 1.11: Is RPerl Simple Or Complicated?
 
-RPerl is specifically designed to remove the confusing and complicated parts of Perl.
+RPerl is specifically designed to remove the confusing and overly-complicated parts of Perl.
 
 RPerl also introduces a number of additional rules and templates which are not present in normal Perl, notably including the use of real data types.
 
@@ -764,7 +762,7 @@ The net effect of removing Perl complexity and adding RPerl rules falls in favor
 
 In other words, RPerl is easier to learn and use than dynamic languages like normal Perl, and most any other language in general.
 
-=head2 Section 1.12: How Did RPerl Get To Be So Popular?
+=head2 Section 1.12: How Is RPerl Being Promoted?
 
 The RPerl team has been regularly promoting RPerl in a number of physical and digital venues, including but not limited to:
 
@@ -792,7 +790,7 @@ The RPerl team has been regularly promoting RPerl in a number of physical and di
 
 =back
 
-=head2 Section 1.13: What Is Happening With RPerl Now?
+=head2 Section 1.13: What Is The RPerl Community Up To?
 
 As of US Independence Day 2016, RPerl v2.0 (codename I<Pioneer>) has been publicly released and is in use by a number of early adopters around the world.
 
@@ -806,7 +804,7 @@ L<RPerl App Devs Group On Facebook|https://www.facebook.com/groups/1551887621787
 
 L<RPerl App Devs Intake Board On Trello|https://trello.com/b/XmmPJQJj/austin-pm-rperl-app-devs-intake>
 
-=head2 Section 1.14: What Is RPerl Really Good For?
+=head2 Section 1.14: What Is RPerl Meant To Do?
 
 RPerl is a general-purpose programming language, which means you can use RPerl to efficiently and effectively implement virtually any kind of software you can imagine.
 
@@ -814,11 +812,11 @@ RPerl is especially well-suited for building software which benefits from speed,
 
 RPerl is also good for building software which utilizes Perl's strong-suit of string manipulation; RPerl currently supports basic string operators, with full regular expression support to be added in an upcoming version.
 
-=head2 Section 1.15: What Is RPerl Not Good For?
+=head2 Section 1.15: What Is RPerl Not Meant To Do?
 
 RPerl has purposefully disabled the most complex features of Perl, such as runtime code evaluation, secret operators, and punctuation variables.  If you have purposefully designed your Perl software to depend on these high-magic features, or you are unconditionally committed to continue using high-magic language features, then maybe RPerl isn't for you.
 
-=head2 Section 1.16: How Can I Get RPerl?
+=head2 Section 1.16: How Can I Download & Install RPerl?
 
 Installing RPerl ranges from easy to difficult, depending on how well your operating system supports Perl and C++.
 
@@ -856,7 +854,7 @@ You may find the latest development release of RPerl (possibly unstable) on Gith
 
 L<https://github.com/wbraswell/rperl>
 
-=head2 Section 1.17: What Is CPAN?
+=head2 Section 1.17: Where Is Perl Software Stored Online?
 
 CPAN is the I<"Comprehensive Perl Archive Network">, the world's most successful and mature centralized software network.
 
@@ -868,7 +866,7 @@ L<http://www.cpan.org>
 
 Several other programming language communities have copied the success and implementation of CPAN, including JSAN for Javascript, CRAN for R, and CCAN for C.
 
-=head2 Section 1.18: How Can I Get Support For RPerl?
+=head2 Section 1.18: How Can I Obtain Technical Support For RPerl?
 
 Official RPerl technical support is provided through Auto-Parallel Technologies, Inc.
 
@@ -876,7 +874,7 @@ To request more information, please send an e-mail to the following address:
 
 william DOT braswell AT autoparallel DOT com
 
-=head2 Section 1.19: Are There Any Other Kinds Of Support?
+=head2 Section 1.19: Are There Any Free Technical Support Options?
 
 Free technical support for non-commercial users is provided by the RPerl community through Internet Relay Chat.
 
@@ -886,7 +884,11 @@ Channel: #perl11
 
 Easy Web Chat: L<http://irc.lc/magnet/perl11/rperl_newbie@@@>
 
-=head2 Section 1.20: What If I Find A Bug In RPerl?
+=head2 Section 1.20: Are There Any Bugs In RPerl?
+
+All software has small (or large) problems called I<"bugs">, and depending on who is marketing the software, they may even tell you some of the bugs are actuallyl "features"!
+
+RPerl is a work in progress, and may contain a number of bugs, both known and unknown.  If you find a bug in RPerl, we would love to hear about it!
 
 The primary bug-tracking platform for RPerl is Github Issues, where you may file a new bug report ("new issue") if it is not already listed:
 
@@ -910,7 +912,7 @@ Although Github Issues is strongly preferred, the RPerl development team also su
 
 L<https://rt.cpan.org/Public/Dist/Display.html?Name=RPerl>
 
-=head2 Section 1.21: How Do I Make An RPerl Program?
+=head2 Section 1.21: How Can I Write A Program Using RPerl?
 
 Computer programs written using the RPerl language are plain text files, which means you can use any text editor to create and modify your RPerl source code.  Examples of common text editors include Notepad, Pico, and Vi.
 
@@ -926,7 +928,7 @@ L<http://padre.perlide.org>
 
 L<http://komodoide.com/perl>
 
-=head2 Section 1.22: A Simple RPerl Program
+=head2 Section 1.22: A Sample RPerl Program
 
     #!/usr/bin/perl
     
@@ -950,7 +952,7 @@ L<http://komodoide.com/perl>
     print 'have $bar = ', to_string($bar), "\n";
     print 'have $baz = ', to_string($baz), "\n";
 
-=head2 Section 1.23: What Is Inside That RPerl Program?
+=head2 Section 1.23: What Are The Parts Of That Sample RPerl Program?
 
 This program is separated by blank lines into 4 sections: shebang, header, critics, and operations.  
 
@@ -966,7 +968,7 @@ The I<"operations"> section is required and contains 1 or more lines of general-
 
 The C<print 'have $foo = ', $foo, "\n";> and following 2 lines will display on screen (not send to paper printer) the labeled values of C<$foo>, C<$bar>, and C<$baz> respectively.  The C<,> comma is used to separate multiple arguments passed to the C<print> operator.  The C<to_string()> RPerl type conversion subroutine converts the numeric values to underscore-formatted string values, suitable for use via the C<print> operator.  If the <to_string()> subroutine is not used, then the displayed numeric values will still be human-readable, but will not contain the proper underscores to be accepted back into RPerl as valid numeric data.  The "n" in the C<"\n"> double-quoted string literal values stands for "newline", which inserts a carriage return to place the next piece of printed data down on the following line.
 
-=head2 Section 1.24: How Do I Compile RPerl?
+=head2 Section 1.24: How Do I Run The RPerl Compiler?
 
 Normal Perl source code is executed using a software mechanism known as I<"interpretation">, which is to say that Perl is an I<"interpreted"> language and the F</usr/bin/perl> command is called the I<"Perl interpreter">.  The primary alternative to interpretation is I<"compilation">, so RPerl is a I<"compiled"> subset of the Perl language and the F</usr/bin/rperl> command is called the I<"RPerl compiler">.
 
@@ -1018,7 +1020,7 @@ If the compilation is successful, a new compiled executable file will be created
 Please see L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES> for more information about compiling Perl modules.
 
 
-=head2 Section 1.25: A Whirlwind Tour of RPerl
+=head2 Section 1.25: A Quick Overview of RPerl
 
 =head3 Section 1.25.1: Creator Of RPerl, Will Braswell
 
@@ -1098,7 +1100,11 @@ I<Perlism> is the computer religion dedicated to the use, promotion, and develop
 
 =for html <p>A <i>Perlite</i> is an adherent to the Perlism religion.  Perlism has a revered founder, Saint Larry (himself a devout Christian); a prophet, <i>The Voice In The Wilderness</i> (Will); a monastary and shrine, <i>Perl Monks</i>; commandments, The LMPC; proverbs from Saint Larry including <i>TIMTOWTDI</i>, <i>LMFB</i>, and <i>HTAAOF</i>; and canonical scriptures, including Saint Larry's <u><b>Apocalypses</b></u> and The Voice's <u><b>The Book Of RPerl</b></u>.</p>
 
-=for comment [ INSERT SGML, MAN, OTHER FORMATS ]
+=for comment START HERE: INSERT MAN & DOCBOOK FORMATS
+
+=for comment START HERE: INSERT MAN & DOCBOOK FORMATS
+
+=for comment START HERE: INSERT MAN & DOCBOOK FORMATS
 
 The Book is a description of events surrounding the creation of RPerl and the future of the Internet.  It is intended to both educate and entertain.
 
@@ -1620,7 +1626,7 @@ Run your program thusly:
 X<br>
 
 
-=head1 CHAPTER 2: SCALAR DATA
+=head1 CHAPTER 2: SCALAR VALUES & VARIABLES (NUMBERS & TEXT)
 
 Most programming languages include the basic principles of using named I<"variables"> to store data values such as numbers, text strings, and lists of multiple numbers or strings.  Multiple variables may be created, each with different names such as C<$foo> or C<$bar> or C<$quux>, and each potentially containing a different value.
 
@@ -1674,7 +1680,7 @@ A single group of actual numeric digit(s) or quoted string character(s) is calle
 
     0           # boolean or unsigned_integer or integer or gmp_integer or number
 
-=head2 Section 2.1: Numbers (Numeric Data & Operators)
+=head2 Section 2.1: Numeric Data & Operators
 
 RPerl provides 5 numeric data types:
 
@@ -1728,7 +1734,7 @@ Beyond the built-in math operators in Perl 5, more advanced operators and functi
 
 L<MathPerl on CPAN|https://metacpan.org/release/MathPerl>
 
-=head3 Section 2.1.1: Bool Literals
+=head3 Section 2.1.1: Boolean Literals
 
 The most memory-efficient numeric literal is C<boolean>, which represents a single I<"bit"> (binary digit) of information.  A C<boolean> literal may only give the values of exactly 0 or 1.
 
@@ -6622,7 +6628,7 @@ X<break_code_blocks>
 
 =back
 
-=head2 Section 2.2: Strings (Text Data & Operators)
+=head2 Section 2.2: Text Data & Operators
 
 RPerl provides 2 text data types:
 
@@ -10347,13 +10353,13 @@ This operator is commonly used to secure and check password validity, or compare
 
 =begin text
 
-=head2 Section 2.3: RPerlE<39>s Phases, Built-In Warnings & Errors
+=head2 Section 2.3: RPerlE<39>s Phases, Warnings & Errors
 
 =end text
 
 =begin man
 
-=head2 Section 2.3: RPerlE<39>s Phases, Built-In Warnings & Errors
+=head2 Section 2.3: RPerlE<39>s Phases, Warnings & Errors
 
 =end man
 
@@ -10361,7 +10367,7 @@ This operator is commonly used to secure and check password validity, or compare
 
 =for DEV NOTE: ppod2html does not support E<39> or E<apos>, replaced w/ E<acute>
 
-=head2 Section 2.3: RPerlE<acute>s Phases, Built-In Warnings & Errors
+=head2 Section 2.3: RPerlE<acute>s Phases, Warnings & Errors
 
 =end html
 
@@ -10421,7 +10427,7 @@ A I<"dependency"> is one piece of software which another piece of software requi
 
 A I<"base dependency"> is a software component required for RPerl to function, and is differentiated from a I<"CPAN dependency"> because base dependencies are installed manually or via the operating system package manager instead of via the CPAN Perl software network, as detailed in the next section.  If you have a modern operating system, you may already have most-or-all of these base dependencies either pre-installed or available for easy automatic install via pre-built packages; if not, you may need to manually install one or more of them.  For more information on this phase of installation, please see:
 
-L</Section 1.16: How Can I Get RPerl?>
+L</Section 1.16: How Can I Download & Install RPerl?>
 
 Unique challenges may be posed by every different combination of operating system and hardware platform, because there are many different versions (and even variants) of each base dependency, with no way to predict your computer's behavior ahead of time.  Also, the RPerl development team has little-to-no interaction with the developers of the base dependencies, so it is impossible to provide useful documentation of the countless possible problem messages which you may encounter in this phase.
 
@@ -10443,7 +10449,7 @@ Some common types of problem messages may include:
 
 If you encounter any problems during this step, please consult your operating system's documentation or see:
 
-L</Section 1.18: How Can I Get Support For RPerl?>
+L</Section 1.18: How Can I Obtain Technical Support For RPerl?>
 
 =head3 Section 2.3.2: Install, CPAN Dependencies
 
@@ -10584,11 +10590,11 @@ I<SOLUTION: Check your network connection using the same process as the "Network
 
 Getting RPerl to work correctly does not simply require hitting a moving target, it requires hitting dozens of moving targets simultaneously.  Most of the authors of CPAN distributions are volunteers, and software bugs happen even when the developers are well-paid, so don't be surprised if you encounter a problem during this phase.  If you are convinced that you have found an as-yet undiscovered problem, please see:
 
-L</Section 1.18: How Can I Get Support For RPerl?>
+L</Section 1.18: How Can I Obtain Technical Support For RPerl?>
 
 and
 
-L</Section 1.20: What If I Find A Bug In RPerl?>
+L</Section 1.20: Are There Any Bugs In RPerl?>
 
 The RPerl development team is in communication with the developers of several of the primary CPAN dependencies, so if you find a bug we may be able to help find the right people to fix it.
 
@@ -10596,7 +10602,7 @@ The RPerl development team is in communication with the developers of several of
 
 The final step of installing RPerl is to pass all tests in the RPerl automatic test suite, which can only occur after all base and CPAN dependencies are properly installed.  The RPerl test suite includes a few thousand individual test cases, covering all parts of the RPerl compiler.  If any of the RPerl tests fail or generate a problem message, then there may be a problem with RPerl itself, and we would very much appreciate your help by submitting a bug report:
 
-L</Section 1.20: What If I Find A Bug In RPerl?>
+L</Section 1.20: Are There Any Bugs In RPerl?>
 
 Common problem messages in this phase may include:
 
@@ -11283,11 +11289,11 @@ L</APPENDIX D: RPERL GRAMMAR>
 
 Technical support for commercial RPerl users is provided by APTech, as detailed here:
 
-L</Section 1.18: How Can I Get Support For RPerl?>
+L</Section 1.18: How Can I Obtain Technical Support For RPerl?>
 
 Free technical support for non-commercial users is provided by the RPerl community, as detailed here:
 
-L</Section 1.19: Are There Any Other Kinds Of Support?>
+L</Section 1.19: Are There Any Free Technical Support Options?>
 
 Common problem messages in this phase may include:
 
@@ -12953,7 +12959,7 @@ X<ENABLE_LIST_SPACING>
 
 =back
 
-=head2 Section 2.4: Scalar Variables
+=head2 Section 2.4: Variables With Scalar Values
 
 An RPerl I<"expression"> is any general-purpose language component which either returns a value or is a literal value itself.
 
@@ -12986,7 +12992,7 @@ Normal Perl provides a special literal value C<undef>, along with a built-in fun
 
 Data types make your code much more readable and much, much faster.  Learn to love data types.  Now.  :-)
 
-=head3 Section 2.4.1: Choosing Good Variable Names
+=head3 Section 2.4.1: How To Select Expressive Variable Names
 
 Your choice of variable names will have a significant impact on the readability of your source code, whether written in Perl or any other programming language.  If the names of your variables make sense, then it will be much easier for other programmers to understand your code.  Also, good variable names will help you to understand your own code, after not looking at it for a few months or years.  Variable names may include letters, numbers, and underscores.
 
@@ -13337,13 +13343,13 @@ Local variables are only usable within their own enclosing code block, such as t
 
 Global variables are usable within any code block accessible by Perl.  Except for certain special variables such as C<our $VERSION>, all variables in RPerl are locally-scoped using the C<my> keyword.  RPerl does not currently support C<state> variables.
 
-The I<"type"> of a variable is simply the data type which is stored inside the variable, as described in detail throughout the preceeding subsections of L</Section 2.4: Scalar Variables>.  A variable's type must be set during declaration and may not be altered thereafter.  Remember there are 7 scalar data types in RPerl: C<boolean>, C<unsigned_integer>, C<integer>, C<gmp_integer>, C<number>, C<character>, and C<string>.
+The I<"type"> of a variable is simply the data type which is stored inside the variable, as described in detail throughout the preceeding subsections of L</Section 2.4: Variables With Scalar Values>.  A variable's type must be set during declaration and may not be altered thereafter.  Remember there are 7 scalar data types in RPerl: C<boolean>, C<unsigned_integer>, C<integer>, C<gmp_integer>, C<number>, C<character>, and C<string>.
 
 The I<"name"> of a variable is the word or phrase you type after a dollar sign C<$> character, in order to access the variable.  Like the scope and type, a variable's name may not be changed after the point of variable declaration, when the software begins execution.  Closely related is the I<"namespace"> of a variable, which is a named group of variables and constants and possibly other things; except where specified in L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES>, all RPerl variables exist outside of any namespace, which is to say that normal RPerl variables do not have a namespace.  
 
 The I<"value"> of a variable is the actual data which has been stored inside of the variable, and which may be accessed or modified as your RPerl software is running.  A variable's value must be compatible with its type, otherwise an error or undefined behavior may occur.
 
-When your RPerl application is running in normal interpreted mode AKA test mode (Perl operations and Perl data types), then you will be able to access the special subroutines C<type()>, C<types()>, C<name()> and C<scope_type_name_value()>.  These four subroutines provide the ability to perform I<"introspection"> on RPerl variables, which means your RPerl application can access information about itself, specifically about its own variables.  The C<types()> subroutine is not used for scalar data types as discussed in this chapter, please see L</CHAPTER 3: LISTS & ARRAYS> and L</CHAPTER 6: HASHES> for more info.
+When your RPerl application is running in normal interpreted mode AKA test mode (Perl operations and Perl data types), then you will be able to access the special subroutines C<type()>, C<types()>, C<name()> and C<scope_type_name_value()>.  These four subroutines provide the ability to perform I<"introspection"> on RPerl variables, which means your RPerl application can access information about itself, specifically about its own variables.  The C<types()> subroutine is not used for scalar data types as discussed in this chapter, please see L</CHAPTER 3: ARRAY VALUES & VARIABLES> and L</CHAPTER 6: HASH VALUES & VARIABLES> for more info.
 
 The following source code example shows a simple C<string> variable named C<$foo> (as usual), which we then pass as an argument to the introspection subroutines and display the results:
 
@@ -14477,11 +14483,11 @@ These two constants can be utilized as follows:
     my number $area = PI() * $r ** 2;
     my string $dessert = 'having a nice slice of ' . PIE();
 
-As seen in the examples above, we must first declare each constant to have an all-uppercase name via the C<use constant> command, after which we can access the stored data value by calling the constant name followed by empty parentheses.  (In normal interpreted Perl, a constant is functionally equivalent to a subroutine which accepts no arguments and performs no operations other than to call the C<return> operator with a hard-coded data value; see L</CHAPTER 4: SUBROUTINES> for more info.)
+As seen in the examples above, we must first declare each constant to have an all-uppercase name via the C<use constant> command, after which we can access the stored data value by calling the constant name followed by empty parentheses.  (In normal interpreted Perl, a constant is functionally equivalent to a subroutine which accepts no arguments and performs no operations other than to call the C<return> operator with a hard-coded data value; see L</CHAPTER 4: ORGANIZING BY SUBROUTINES> for more info.)
 
 In all RPerl source code files which contain constants, we must include the "USER DEFAULT 3" C<no critic> command; for numeric constants, we must also include "USER DEFAULT 1", as seen in the code example above.
 
-All constants must utilize names with uppercase-only lettering, in order to distinguish them from similarly-named variables.  Thus, a normal variable may not have an all-uppercase name.  (Special variables called I<"file handles"> must be all-uppercase; see L</CHAPTER 5: INPUT & OUTPUT> for more info.)
+All constants must utilize names with uppercase-only lettering, in order to distinguish them from similarly-named variables.  Thus, a normal variable may not have an all-uppercase name.  (Special variables called I<"file handles"> must be all-uppercase; see L</CHAPTER 5: READING & WRITING FILES> for more info.)
 
     use constant PIE => my string $TYPED_PIE = 'peanut butter';  # fine
     use constant Pie => my string $TYPED_Pie = 'coffee cream';   # error in RPerl, compiled modes
@@ -14520,7 +14526,7 @@ You should use constants whenever possible, because they will always be at least
                         my string $pie       = 'lemon meringue';  # okay
     use constant PIE => my string $TYPED_PIE = 'key lime';        # best
 
-=head2 Section 2.6: Output With C<print>
+=head2 Section 2.6: Displaying Output Using The C<print> Operator
 
 You will often want to display some text output while your RPerl application is running, and for this we use the C<print> operator:
 
@@ -14674,7 +14680,7 @@ Now we don't need any redirection on the command line to suppress C<STDERR> outp
 
 =for rperl X</noncode>
 
-=head2 Section 2.7: The C<if> Control Structure
+=head2 Section 2.7: Controlling Your Program Using The C<if> Conditional Statement
 
 Often you will want to perform a task, but only if some specific I<"condition"> is met; this is called a I<"conditional statement"> or just I<"conditional"> for short, and is implemented using the C<if> statement in Perl.  You may also refer to the C<if> statement as a I<"control structure">, because it is a source code structure used to control the execution flow of a piece of Perl software.  In other words, a conditional statement can control how your software runs, and so your software may run differently depending on your conditional statements.
 
@@ -14821,7 +14827,7 @@ In this case, the same short-circuiting occurs for the C<else> as does for the C
 
 =for rperl X</noncode>
 
-The longest conditional chain allowable by Perl Best Practices is four members long and is comprised of an C<if> statement, followed by two C<elsif> statements, followed by an C<else> statement, as seen in the example above.  If all your conditions test a single variable for equivalence to some specific values, as in our first C<$my_integer> examples in this section, then instead of a conditional chain you may be able to utilize a hash data structure with the keys pre-set to the possible matching values; please see L</CHAPTER 6: HASHES> for more info.
+The longest conditional chain allowable by Perl Best Practices is four members long and is comprised of an C<if> statement, followed by two C<elsif> statements, followed by an C<else> statement, as seen in the example above.  If all your conditions test a single variable for equivalence to some specific values, as in our first C<$my_integer> examples in this section, then instead of a conditional chain you may be able to utilize a hash data structure with the keys pre-set to the possible matching values; please see L</CHAPTER 6: HASH VALUES & VARIABLES> for more info.
 
 If your conditions are not all simple equivalence tests via the equals C<==> operator, as in our C<$heart> examples where the conditions include less-than C<E<lt>> operators, then Perl Best Practices directs us to use a C<given ... when> statement instead of any C<if> or C<elsif> statements at all.  However, RPerl does not yet support C<given ... when>, so if it is unavoidable then you may disable the rule against cascading conditional chains for just one source code file at a time:
 
@@ -14932,7 +14938,7 @@ If we simply remove the last line where C<$bar> is incorrectly accessed, then ou
 
 =for rperl X</noncode>
 
-=head2 Section 2.8: Getting User Input & STDIN
+=head2 Section 2.8: Receiving Input From The User & STDIN
 
 When you want the users of your software to provide some keyboard input, then you will need to use the C<STDIN> keyword in Perl, which represents the I<"standard input"> data stream.  This will allow the user to type one line of input text and numbers, ended by pressing the Enter key.  All user input is received in text format, and should initially be stored in a variable with a C<string> data type.  Unless converted to a different data type via one of RPerl's type conversion subroutines, the string variable should be passed to the C<chomp> operator, which will remove the trailing newline character collected by C<STDIN>. 
 
@@ -15018,7 +15024,7 @@ One possible run of this example produces:
 
 =for rperl X</noncode>
 
-=head2 Section 2.9: The C<while> Control Structure
+=head2 Section 2.9: Controlling Your Program Using The C<while> Loop
 
 Most programs will contain one or more operations which need to be repeated a certain number of times, and for these cases we use a I<"loop statement"> or just a I<"loop"> for short.  Like a conditional statement, a loop statement is a kind of control structure, because they are both used to control the execution flow of your software.
 
@@ -15731,7 +15737,7 @@ I<HINT: Use the modulo C<%> operator to check for odd input integers; if found, 
 X<br>
 
 
-=head1 CHAPTER 3: LISTS & ARRAYS
+=head1 CHAPTER 3: ARRAY VALUES & VARIABLES
 
 An array may not be a constant.
 
@@ -15751,7 +15757,7 @@ types() introspection subroutine
 X<br>
 
 
-=head1 CHAPTER 4: SUBROUTINES
+=head1 CHAPTER 4: ORGANIZING BY SUBROUTINES
 
     our void $SWEET_TOOTH = sub { print 'Yum!  I love ', PIE(), "\n"; };  # error in RPerl, compiled modes
     our void $Sweet_Tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # okay
@@ -15762,14 +15768,14 @@ X<br>
 X<br>
 
 
-=head1 CHAPTER 5: INPUT & OUTPUT
+=head1 CHAPTER 5: READING & WRITING FILES
 
 =for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
-=head1 CHAPTER 6: HASHES
+=head1 CHAPTER 6: HASH VALUES & VARIABLES
 
 A hash may not be a constant.
 
@@ -15780,28 +15786,28 @@ types() introspection subroutine
 X<br>
 
 
-=head1 CHAPTER 7: REGULAR EXPRESSIONS
+=head1 CHAPTER 7: THE REGULAR EXPRESSION SUB-LANGUAGE
 
 =for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
-=head1 CHAPTER 8: REGULAR EXPRESSIONS MATCHING
+=head1 CHAPTER 8: MATCHING BY REGULAR EXPRESSIONS
 
 =for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
-=head1 CHAPTER 9: REGULAR EXPRESSIONS PROCESSING
+=head1 CHAPTER 9: PROCESSING BY REGULAR EXPRESSIONS
 
 =for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
-=head1 CHAPTER 10: CONTROL STRUCTURES
+=head1 CHAPTER 10: ADDITIONAL CONTROL STRUCTURES
 
 =for comment [ INSERT CHAPTER ]
 
@@ -15815,7 +15821,7 @@ X<br>
 X<br>
 
 
-=head1 CHAPTER 12: FILE TESTS
+=head1 CHAPTER 12: FILE TEST OPERATORS
 
 =for comment [ INSERT CHAPTER ]
 
@@ -15826,35 +15832,35 @@ X<br>
 X<br>
 
 
-=head1 CHAPTER 13: DIRECTORY OPERATIONS
+=head1 CHAPTER 13: DIRECTORY OPERATORS
 
 =for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
-=head1 CHAPTER 14: STRINGS & SORTING
+=head1 CHAPTER 14: SORTING TEXT VALUES
 
 =for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
-=head1 CHAPTER 15: SMART MATCHING & GIVEN-WHEN
+=head1 CHAPTER 15: ADDITIONAL SPECIAL OPERATORS
 
 =for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
-=head1 CHAPTER 16: PROCESS MANAGEMENT
+=head1 CHAPTER 16: MANAGING OPERATING SYSTEM PROCESSES
 
 =for comment [ INSERT CHAPTER ]
 
 X<br>
 
 
-=head1 CHAPTER 17: SOME ADVANCED TECHNIQUES
+=head1 CHAPTER 17: ADDITIONAL ADVANCED TECHNIQUES
 
 =for comment [ INSERT CHAPTER ]
 
