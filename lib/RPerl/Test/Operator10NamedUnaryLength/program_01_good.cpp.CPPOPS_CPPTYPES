@@ -1,0 +1,40 @@
+//!/usr/bin/rperl
+
+
+
+
+// [[[ HEADER ]]]
+#include <rperlstandalone.h>
+#ifndef __CPP__INCLUDED__RPerl__Test__Operator10NamedUnaryLength__program_01_good_cpp
+#define __CPP__INCLUDED__RPerl__Test__Operator10NamedUnaryLength__program_01_good_cpp 0.001_000
+# ifdef __CPP__TYPES
+
+
+int main() {
+    // [[[ OPERATIONS HEADER ]]]
+
+// [[[ OPERATIONS ]]]
+    unsigned_integer op_str_length = ((const string) "Hello " + (const string) "RPerl!").length();
+    print "have $op_str_length = " << unsigned_integer_to_string(op_str_length) << endl;
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // [[[ OPERATIONS FOOTER ]]]
+    return 0;
+}
+
+// [[[ FOOTER ]]]
+# elif defined __PERL__TYPES
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+# endif
+#endif
