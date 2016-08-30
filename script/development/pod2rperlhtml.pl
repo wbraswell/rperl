@@ -4,7 +4,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.024_100;
+our $VERSION = 0.025_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -129,6 +129,12 @@ our string_arrayref $pod2cpanhtml_postprocess = sub {
         # CPAN only, not MetaCPAN: help inline code tags stand out more, highlighted background matching the block-indented code
 #        if ($file_line eq '</head>') { push @{$file_lines_modified}, '<style> code { background: #eeeeee; } </style>'; }  # no outline
 #        if ($file_line eq '</head>') { push @{$file_lines_modified}, '<style> code { background: #eeeeee; border: 1px solid #888888; } </style>'; }  # yes outline
+
+        # hide full TOC until all content is loaded, to avoid delayed-collapse issue
+        if ($file_line eq q{</head>}) { push @{$file_lines_modified}, q{<style>.wait_for_javascript { display: none; } </style>}, q{}; }
+        if ($file_line eq q{<a name='___top' class='dummyTopAnchor' ></a>}) { push @{$file_lines_modified}, q{<div id="full_table_of_contents" class="hide_full_table_of_contents wait_for_javascript">}, q{}; }
+        if ($file_line eq q{<div id="scoped-content"><style type="text/css" scoped>}) { push @{$file_lines_modified}, q{}, q{</div>  <!-- id="full_table_of_contents" -->}, q{}; }
+        if ($file_line eq q{</body></html>}) { push @{$file_lines_modified}, q{}, q{<script> document.getElementById('full_table_of_contents').className = 'hide_full_table_of_contents'; </script>}, q{}; }
  
         # Edition: insert Learning.pm $VERSION & date
         if ($file_line eq 'name="EDITION"') {

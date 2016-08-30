@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.124_000;
+our $VERSION = 0.125_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1118,7 +1118,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -1159,7 +1159,7 @@ B<St. Larry's Original Proverb>
 
 B<Will's Corollary Proverb>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -1167,7 +1167,7 @@ B<Will's Corollary Proverb>
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1189,7 +1189,7 @@ LIH (Laziness, Impatience, Hubris)
 
 DPH (Diligence, Patience, Humility)
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -1197,7 +1197,7 @@ DPH (Diligence, Patience, Humility)
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1217,7 +1217,7 @@ TDNNTBMTOWTDI (There Does Not Need To Be More Than One Way To Do It)
 
 TIOFWTDI (There Is One Fastest Way To Do It)
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -1227,7 +1227,7 @@ TIOFWTDI (There Is One Fastest Way To Do It)
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1247,7 +1247,7 @@ LMFB (Let Many Flowers Bloom)
 
 PTBF (Pick The Best Flowers)
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -1257,7 +1257,7 @@ PTBF (Pick The Best Flowers)
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1277,7 +1277,7 @@ HTAAOF (Have The Appropriate Amount Of Fun)
 
 DTAAOW (Do The Appropriate Amount Of Work)
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -1321,7 +1321,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -1362,7 +1362,7 @@ B<Original Catch Phrase>
 
 B<Will's Corollary Catch Phrase>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -1370,7 +1370,7 @@ B<Will's Corollary Catch Phrase>
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1392,7 +1392,7 @@ Perl 6 Is The Butterfly
 
 RPerl Is The Roadrunner
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -1400,7 +1400,7 @@ RPerl Is The Roadrunner
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1418,7 +1418,7 @@ Perl Is The Onion
 
 RPerl Is The Scallion
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -1428,7 +1428,7 @@ RPerl Is The Scallion
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1448,7 +1448,7 @@ Perl Is The Swiss Army Chainsaw
 
 RPerl Is The Sword
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -1458,7 +1458,7 @@ RPerl Is The Sword
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -1480,7 +1480,7 @@ Perl Is A Write-Only Language
 
 RPerl Is Best Practices
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -1994,7 +1994,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -2075,7 +2075,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -2085,7 +2085,7 @@ B<Supported>
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -2145,7 +2145,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -2153,7 +2153,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -2211,7 +2211,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -2219,7 +2219,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -2277,7 +2277,7 @@ Right
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -2285,7 +2285,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -2343,7 +2343,7 @@ Right
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -2351,7 +2351,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -2409,7 +2409,7 @@ Left
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -2417,7 +2417,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -2475,7 +2475,7 @@ Left
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -2483,7 +2483,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -2541,7 +2541,7 @@ Left
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -2549,7 +2549,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -2607,7 +2607,7 @@ Left
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -2615,7 +2615,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -2673,7 +2673,7 @@ Left
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -2681,7 +2681,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -2739,7 +2739,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -2747,7 +2747,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -2805,7 +2805,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -3156,7 +3156,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -3237,7 +3237,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -3245,7 +3245,7 @@ B<Supported>
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -3303,7 +3303,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -3311,7 +3311,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -3369,7 +3369,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -3379,7 +3379,7 @@ Coming Soon
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -3439,7 +3439,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -3547,7 +3547,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -3628,7 +3628,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -3636,7 +3636,7 @@ B<Supported>
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -3694,7 +3694,7 @@ Non
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -3702,7 +3702,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -3760,7 +3760,7 @@ Non
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -3770,7 +3770,7 @@ Yes
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -3830,7 +3830,7 @@ Non
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -3838,7 +3838,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -3896,7 +3896,7 @@ Non
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -3904,7 +3904,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -3962,7 +3962,7 @@ Non
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -3970,7 +3970,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -4028,7 +4028,7 @@ Non
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -4036,7 +4036,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -4094,7 +4094,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -4298,7 +4298,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -4379,7 +4379,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -4387,7 +4387,7 @@ B<Supported>
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -4445,7 +4445,7 @@ Right
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -4453,7 +4453,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -4511,7 +4511,7 @@ Left
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -4521,7 +4521,7 @@ Yes
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -4581,7 +4581,7 @@ Left
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -4591,7 +4591,7 @@ Yes
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -4651,7 +4651,7 @@ Right
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -4661,7 +4661,7 @@ Yes
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -4721,7 +4721,7 @@ Left
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -4731,7 +4731,7 @@ Yes
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -4791,7 +4791,7 @@ Left
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -4801,7 +4801,7 @@ Yes
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -4861,7 +4861,7 @@ Left
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -5020,7 +5020,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -5101,7 +5101,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -5109,7 +5109,7 @@ B<Supported>
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -5167,7 +5167,7 @@ Right
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -5177,7 +5177,7 @@ Yes
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -5237,7 +5237,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -5247,7 +5247,7 @@ Coming Soon
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -5307,7 +5307,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -5315,7 +5315,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -5373,7 +5373,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -5381,7 +5381,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -5439,7 +5439,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -5447,7 +5447,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -5505,7 +5505,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -5927,7 +5927,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -6008,7 +6008,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -6016,7 +6016,7 @@ B<Supported>
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -6074,7 +6074,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -6082,7 +6082,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -6140,7 +6140,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -6148,7 +6148,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -6206,7 +6206,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -6214,7 +6214,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -6272,7 +6272,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -6280,7 +6280,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -6338,7 +6338,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -6348,7 +6348,7 @@ Coming Soon
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -6408,7 +6408,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -7012,7 +7012,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -7093,7 +7093,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -7101,7 +7101,7 @@ B<Supported>
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -7159,7 +7159,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -7167,7 +7167,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -7225,7 +7225,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -7233,7 +7233,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -7291,7 +7291,7 @@ Left
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -7299,7 +7299,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -7357,7 +7357,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -7548,7 +7548,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -7629,7 +7629,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -7637,7 +7637,7 @@ B<Supported>
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -7695,7 +7695,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -7703,7 +7703,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -7761,7 +7761,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -7769,7 +7769,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -7827,7 +7827,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -7835,7 +7835,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -7893,7 +7893,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -8021,7 +8021,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -8102,7 +8102,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -8110,7 +8110,7 @@ B<Supported>
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -8168,7 +8168,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -8176,7 +8176,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -8234,7 +8234,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -8242,7 +8242,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -8300,7 +8300,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -8308,7 +8308,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -8366,7 +8366,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -8374,7 +8374,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -8432,7 +8432,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -8440,7 +8440,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -8498,7 +8498,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -8506,7 +8506,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -8564,7 +8564,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -9016,7 +9016,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -9097,7 +9097,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -9105,7 +9105,7 @@ B<Supported>
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -9163,7 +9163,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -9171,7 +9171,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -9229,7 +9229,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -9337,7 +9337,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -9418,7 +9418,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -9426,7 +9426,7 @@ B<Supported>
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -9484,7 +9484,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -9492,7 +9492,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -9550,7 +9550,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -9653,7 +9653,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -9734,7 +9734,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -9742,7 +9742,7 @@ B<Supported>
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -9800,7 +9800,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -9808,7 +9808,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -9866,7 +9866,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -9874,7 +9874,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -9932,7 +9932,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -9940,7 +9940,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -9998,7 +9998,7 @@ Non
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -10144,7 +10144,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -10225,7 +10225,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -10233,7 +10233,7 @@ B<Supported>
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -10291,7 +10291,7 @@ Left
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -13399,7 +13399,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -13480,7 +13480,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -13490,7 +13490,7 @@ B<Supported>
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -13550,7 +13550,7 @@ Right
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -13558,7 +13558,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -13616,7 +13616,7 @@ Right
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -13624,7 +13624,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -13682,7 +13682,7 @@ Right
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -13690,7 +13690,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -13748,7 +13748,7 @@ Right
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -13756,7 +13756,7 @@ Coming Soon
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -13814,7 +13814,7 @@ Right
 
 Coming Soon
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -13945,7 +13945,7 @@ use Text::ASCIITable;
 
 my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
 
-$table->setCols(splice [split /\s*\n\s*/, q{
+$table->setCols(splice @{[split /\s*\n\s*/, q{
 
 =end text
 
@@ -14026,7 +14026,7 @@ B<Associativity>
 
 B<Supported>
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -14036,7 +14036,7 @@ B<Supported>
 
 =for docbook </thead>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -14096,7 +14096,7 @@ Non
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -14104,7 +14104,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -14162,7 +14162,7 @@ Non
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -14170,7 +14170,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -14228,7 +14228,7 @@ Non
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
@@ -14236,7 +14236,7 @@ Yes
 
 =for docbook </entry></row>
 
-=for text $table->addRow(splice [split /\s*\n\s*/, q{
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
 
 =for man T{
 
@@ -14294,7 +14294,7 @@ Non
 
 Yes
 
-=for text }], 1);
+=for text }]}, 1);
 
 =for man T}
 
