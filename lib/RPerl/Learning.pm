@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.126_000;
+our $VERSION = 0.127_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15739,35 +15739,68 @@ X<br>
 
 =head1 CHAPTER 3: ARRAY VALUES & VARIABLES
 
-In the previous chapter, we explored the many uses of scalar values and variables, which dealt with one number or one string at a time.  In this chapter, we will similarly explore the uses of array values and variables, which are collections of multiple scalars (numbers or strings) grouped together.  A scalar represents exactly one piece of Perl data, and an array represents zero or more pieces of Perl data.
+In the previous chapter, we explored the many uses of scalar values and variables, which dealt with one number or one string at a time.  In this chapter, we will similarly explore the uses of array values and variables, which are collections of multiple scalars (numbers or strings) grouped together.
+
+A scalar represents exactly one piece of Perl data and represents one specific data type.  An array represents zero or more pieces of Perl data and represents a compound I<"data structure">, defined as a combination of two or more subcomponents which may themselves be either normal scalar data types or more compound data structures.  In an array, each individual subcomponent is known as an I<"element">.
+
+In normal Perl, a single array may contain elements with multiple different data types, such as a three-element array containing one string and one integer and one number.  In RPerl, a single array must contain elements of all the same data type, so you can have a three-element array with all strings, but you can't store an integer inside an array of strings, and likewise you can't store a string inside an array of integers, etc.
+
+START HERE: add simple example code & output
+
+START HERE: add simple example code & output
+
+START HERE: add simple example code & output
 
 =head2 Section 3.1: Lists vs Arrays
 
-In Perl, we use the C<,> comma character to separate elements in a C<"list">, which 
+In Perl, we use the C<,> comma character to separate elements in a C<"list">, which may be utilized either as the operands passed as input to an operation, or as the values stored inside an array data structure.
 
 An <"array literal"> must not be confused with an I<"array of literals">, which is where all the elements of an array are literals instead of variables or operations.
 
-How To Access Array Elements
-Array Length & Negative Indices
-C<qw()> Operator
-Array Assignment
-C<push> & C<pop> Operators
-C<shift> & C<unshift> Operators
-Converting From Array To String
-Program Control Using The C<foreach> Loop
-Punctuation Variables & Magic [[[ NEED ADD MAGIC INTRO SECTION SOMEWHERE??? ]]]
-C<reverse> Operator
-C<sort> Operator
-Scalar & Array Contexts
-Array Values In Scalar Context
-Scalar Values In Array Context
-Explicitly Scalar Context
-C<STDIN> & Arrays
-
-
-
+=head2 Section 3.2: Array Data Types
 
 An array may not be a constant.
+
+=head2 Section 3.3: How To Access Array Elements
+
+=head2 Section 3.4: Array Length & Negative Indices
+
+=head2 Section 3.5: Nested Arrays
+
+Because one data structure may contain another data structure as one of its subcomponents, we may thus nest multiple array values within one another.
+
+=head2 Section 3.6: C<qw()> Operator
+
+=head2 Section 3.7: Array Assignment
+
+=head2 Section 3.8: C<push> & C<pop> Operators
+
+=head2 Section 3.9: C<shift> & C<unshift> Operators
+
+=head2 Section 3.10: Converting From Array To String
+
+=head2 Section 3.11: Program Control Using The C<foreach> Loop
+
+=head2 Section 3.12: Punctuation Variables & Magic [[[ NEED ADD MAGIC INTRO SECTION SOMEWHERE??? ]]]
+
+=head2 Section 3.13: C<reverse> Operator
+
+=head2 Section 3.14: C<sort> Operator
+
+=head2 Section 3.15: Scalar & Array Contexts
+
+=head2 Section 3.16: Array Values In Scalar Context
+
+=head2 Section 3.17: Scalar Values In Array Context
+
+=head2 Section 3.18: Explicitly Scalar Context
+
+=head2 Section 3.19: C<STDIN> & Arrays
+
+
+
+
+
 
 I<"Square brackets"> are also known as just I<"brackets"> for short.
 
@@ -15777,7 +15810,7 @@ types() introspection subroutine
 
 =for comment [ INSERT CHAPTER ]
 
-=head3 Section 3.x.x: SSE Operators
+=head3 Section 3.20: SSE Operators
 
     OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
     OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
