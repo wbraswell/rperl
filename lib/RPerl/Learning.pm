@@ -6929,7 +6929,7 @@ I<BEST PRACTICES>
     "a\tx\n"                 # NOT BEST PRACTICE: not newline and tab only
     'a' . "\t" . 'x' . "\n"  #     BEST PRACTICE:     newline and tab only, additional characters in single quotes
 
-=head3 Section 2.2.5: q Quotes
+=head3 Section 2.2.5: C<q> Quotes
 
 Text literals enclosed in I<"q quotes"> begin with lowercase letter q and left I<"curly brace"> characters C<q{>, and end with the right curly brace C<}> character.  You must use q quotes to represent empty text C<q{}> literals, which contain no characters.  Curly braces are also known as I<"curly brackets"> or just I<"braces"> for short.
 
@@ -14350,7 +14350,7 @@ Add 1 to operand, then return incremented value
 
     ++$i  # 0
 
-=head3 Section 2.4.13: Chomp & Chop Operators
+=head3 Section 2.4.13: C<chop> & C<chomp> Operators
 
 =for comment [ START HERE: need add tables ]
 
@@ -14542,7 +14542,7 @@ You can also print the contents of variables and constants.  For example, the 3 
     my string $greeting = 'Hello, world!';
     print $greeting, NEWLINE();
 
-=head3 Section 2.6.1: STDOUT & STDERR
+=head3 Section 2.6.1: C<STDOUT> & C<STDERR>
 
 When you call the C<print> operator, it sends all output to the operating system's default output data stream, which is a special component called I<"standard output"> or just I<"standard out"> for short, written using the C<STDOUT> keyword in Perl.  You may explicitly specify C<STDOUT> for any C<print> operator, although this is not necessary because it is already the default behavior.  When specified, the output stream has an asterisk C<*> character prepended, and is then wrapped in curly braces. 
 
@@ -14680,7 +14680,7 @@ Now we don't need any redirection on the command line to suppress C<STDERR> outp
 
 =for rperl X</noncode>
 
-=head2 Section 2.7: Controlling Your Program Using The C<if> Conditional Statement
+=head2 Section 2.7: Program Control Using The C<if> Conditional Statement
 
 Often you will want to perform a task, but only if some specific I<"condition"> is met; this is called a I<"conditional statement"> or just I<"conditional"> for short, and is implemented using the C<if> statement in Perl.  You may also refer to the C<if> statement as a I<"control structure">, because it is a source code structure used to control the execution flow of a piece of Perl software.  In other words, a conditional statement can control how your software runs, and so your software may run differently depending on your conditional statements.
 
@@ -14938,7 +14938,7 @@ If we simply remove the last line where C<$bar> is incorrectly accessed, then ou
 
 =for rperl X</noncode>
 
-=head2 Section 2.8: Receiving Input From The User & STDIN
+=head2 Section 2.8: Receiving Input From The User & C<STDIN>
 
 When you want the users of your software to provide some keyboard input, then you will need to use the C<STDIN> keyword in Perl, which represents the I<"standard input"> data stream.  This will allow the user to type one line of input text and numbers, ended by pressing the Enter key.  All user input is received in text format, and should initially be stored in a variable with a C<string> data type.  Unless converted to a different data type via one of RPerl's type conversion subroutines, the string variable should be passed to the C<chomp> operator, which will remove the trailing newline character collected by C<STDIN>. 
 
@@ -15024,7 +15024,7 @@ One possible run of this example produces:
 
 =for rperl X</noncode>
 
-=head2 Section 2.9: Controlling Your Program Using The C<while> Loop
+=head2 Section 2.9: Program Control Using The C<while> Loop
 
 Most programs will contain one or more operations which need to be repeated a certain number of times, and for these cases we use a I<"loop statement"> or just a I<"loop"> for short.  Like a conditional statement, a loop statement is a kind of control structure, because they are both used to control the execution flow of your software.
 
@@ -15738,6 +15738,34 @@ X<br>
 
 
 =head1 CHAPTER 3: ARRAY VALUES & VARIABLES
+
+In the previous chapter, we explored the many uses of scalar values and variables, which dealt with one number or one string at a time.  In this chapter, we will similarly explore the uses of array values and variables, which are collections of multiple scalars (numbers or strings) grouped together.  A scalar represents exactly one piece of Perl data, and an array represents zero or more pieces of Perl data.
+
+=head2 Section 3.1: Lists vs Arrays
+
+In Perl, we use the C<,> comma character to separate elements in a C<"list">, which 
+
+An <"array literal"> must not be confused with an I<"array of literals">, which is where all the elements of an array are literals instead of variables or operations.
+
+How To Access Array Elements
+Array Length & Negative Indices
+C<qw()> Operator
+Array Assignment
+C<push> & C<pop> Operators
+C<shift> & C<unshift> Operators
+Converting From Array To String
+Program Control Using The C<foreach> Loop
+Punctuation Variables & Magic [[[ NEED ADD MAGIC INTRO SECTION SOMEWHERE??? ]]]
+C<reverse> Operator
+C<sort> Operator
+Scalar & Array Contexts
+Array Values In Scalar Context
+Scalar Values In Array Context
+Explicitly Scalar Context
+C<STDIN> & Arrays
+
+
+
 
 An array may not be a constant.
 
