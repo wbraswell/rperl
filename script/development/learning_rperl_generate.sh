@@ -1,5 +1,5 @@
 #!/bin/bash
-# v0.045_000
+# v0.046_000
 
 CURRENT_DIR=`pwd`
 TMP_DIR=/tmp/rperl
@@ -125,6 +125,12 @@ cd $CURRENT_DIR
 echo 'DONE'
 echo
 
+
+
+# SKIP ALL DOCBOOK FOR NOW
+if false; then
+
+
 echo '[[[ Docbook ]]]'
 echo '[[[ Docbook ]]]'
 echo '[[[ Docbook ]]]'
@@ -192,4 +198,22 @@ mv learning_rperl__ppod2docbook.pdf learning_rperl__ppod2docbook2pdf.pdf
 cd $CURRENT_DIR
 echo 'DONE'
 echo
+
+
+# DONE SKIPPING DOCKBOOK
+fi
+
+
+
+echo '[[[ Spelling ]]]'
+echo '[[[ Spelling ]]]'
+echo '[[[ Spelling ]]]'
+echo
+
+echo 'ispell...'
+perl -e 'my $m = 0; foreach $l (<>) { if ($l eq q{    ~ or ~} . "\n") { $m = 1; } if ($m) { print $l; } }' $TMP_DIR/learning_rperl__pod2text.txt > $TMP_DIR/learning_rperl__pod2text_stripped.txt
+ispell $TMP_DIR/learning_rperl__pod2text_stripped.txt
+echo 'DONE'
+echo
+
 
