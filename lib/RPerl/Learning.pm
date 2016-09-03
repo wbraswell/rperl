@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.128_000;
+our $VERSION = 0.128_100;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -10912,7 +10912,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X</noncode>
 
-I<SOLUTION: Do not attempt to combine incompatible command-line argument flags.  The uncompile and compile flags enable totally opposite functionality, so obviously they cannot be utilized simultaneously.  The uncompile and execute flags make no sense when utilized together because there would be no compiled code to execute, it being deleted by the uncompile mode.  The uncompile and test flags are incompatible for the same reason as uncompile and compile, because the test mode performs a partial compilation.>
+I<SOLUTION: Do not attempt to combine incompatible command-line argument flags.  The uncompile and compile flags enable totally opposite functionality, so obviously they can not be utilized simultaneously.  The uncompile and execute flags make no sense when utilized together because there would be no compiled code to execute, it being deleted by the uncompile mode.  The uncompile and test flags are incompatible for the same reason as uncompile and compile, because the test mode performs a partial compilation.>
 
 X<ENABLE_LIST_SPACING>
 
@@ -12441,7 +12441,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOCOFI06, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: OPERATING_SYSTEM_ERROR
+    ERROR ECOCOFI06, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', can not write to file,\ncroaking: OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
@@ -12453,7 +12453,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOCOFI07, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot delete existing file,\ncroaking: OPERATING_SYSTEM_ERROR
+    ERROR ECOCOFI07, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', can not delete existing file,\ncroaking: OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
@@ -12465,7 +12465,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOCOFI08, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot open file for writing,\ncroaking: OPERATING_SYSTEM_ERROR
+    ERROR ECOCOFI08, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', can not open file for writing,\ncroaking: OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
@@ -12477,7 +12477,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: OPERATING_SYSTEM_ERROR
+    ERROR ECOCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', can not close file,\ncroaking: OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
@@ -15747,11 +15747,11 @@ In normal Perl, a variable may contain (represent) an array directly I<"by value
 
 In this filing cabinet analogy, an array which is stored by value is like a normal label (array variable), on a normal folder (array data structure), containing normal pages (elements).  An array which is stored by reference is like a special label (scalar variable), affixed to a single piece of paper (scalar data type), upon which is written the location (memory address AKA reference) of a special folder (anonymous array data structure).  Inside the special folder are normal pages (elements), and there is no label (array variable) affixed to the special folder, thus we say the folder is an I<"anonymous array"> because it has no label.
 
-To reiterate, an array stored by reference is actually a scalar variable which contains the memory address of an anonymous array.  When compared to storing an array by data, storing by reference only requires one additional scalar value (one piece of paper in our filing cabinet analogy), which contains the anonymous array's memory address.  Both storing by value and storing by reference are commonly utilized in many different computer programming languages.
+To reiterate, an array stored by reference is actually a scalar variable which contains the memory address of an anonymous array.  When compared to the memory usage of storing an array by data, the memory needs of storing by reference only require one additional scalar value (one piece of paper in our filing cabinet analogy), which contains the anonymous array's memory address.  Both storing by value and storing by reference are commonly utilized in many different computer programming languages.
 
-When an array is stored by value, the corresponding variable has an at sign C<@> as its sigil, and the assigned data is enclosed within parentheses C<( )> characters.  When an array is stored by reference, the corresponding variable has a dollar sign C<$> as its sigil, and the assigned data is enclosed within square bracket C<[ ]> characters.  If an array is stored by value and is then passed as input to an operation, it is said the array was I<"passed by value">; if the array is instead stored by reference and passed to an operation, it is said to be I<"passed by reference">.
+When an array is stored by value, the corresponding variable has an at sign C<@> as its sigil, and the assigned data is enclosed within parentheses C<( )> characters.  When an array is stored by reference, the corresponding variable has a dollar sign C<$> as its sigil, and the assigned data is enclosed within square bracket C<[ ]> characters.  If an array is stored by value and is then passed as input to an operation, it is said the array is I<"passed by value">.  On the other hand, if the array is instead stored by reference and then passed to an operation, it is said to be I<"passed by reference">.
 
-For arrays with more than just a few elements, it may be impractical or impossible to pass by value, because a full copy of each array element must be made in the process, which may fill up all your program's memory or take a prohibitively long time to complete.  Also, Perl allows us to provide explicit data types only when an array is stored by reference, so we can not provide a data type for an array stored by value.  Because of these reasons, all RPerl arrays are stored by reference, and are declared with an explicit RPerl data type ending with C<_arrayref>.
+For arrays with more than just a few elements, it may be impractical or impossible to pass by value, because a full copy of each array element must be made in the process, which may fill up all your program's available memory or take a prohibitively long time to complete.  Also, Perl allows us to provide explicit data types only when an array is stored by reference, so we can not provide a data type for an array stored by value.  Because of these reasons, all RPerl arrays are stored by reference, and are declared with an explicit RPerl data type ending with C<_arrayref>.
 
     my                  @foo_by_value           = (2, 4, 6);  # fine in normal Perl, error in RPerl
     my                  $foo_by_reference       = [2, 4, 6];  # fine in normal Perl, error in RPerl
@@ -18221,7 +18221,7 @@ I<By default, RPerl will set this mode option to match the internal C data type 
 
 I<The data type checking mode option tells RPerl if it should perform additional tests to ensure correct data types are used as "subroutine arguments" (not to be confused with "command-line arguments").  RPerl subroutines can accept 1 or more arguments (AKA "parameters"), each of which must be of a specific data type.>
 
-I<In C++-ops-C++-types mode, all data types must be determined at compile time and thus cannot change (AKA "static"), so the C++ compiler performs all necessary type checking.  In any Perl types mode, the data types can not be determined until runtime and thus can change (AKA "dynamic"), so RPerl must itself perform type checking for subroutine arguments.>
+I<In C++-ops-C++-types mode, all data types must be determined at compile time and thus can not change (AKA "static"), so the C++ compiler performs all necessary type checking.  In any Perl types mode, the data types can not be determined until runtime and thus can change (AKA "dynamic"), so RPerl must itself perform type checking for subroutine arguments.>
 
 I<If the type checking mode is set to TRACE, then the name of the problematic subroutine and argument will be "traced" and provided in the RPerl error message.  This setting can be useful for RPerl application developers and debugging purposes.>
 

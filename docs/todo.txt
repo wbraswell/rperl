@@ -10,6 +10,7 @@ DONE
     enable semi-dynamic auto-config of integer format code for printf & friends in CPPOPS modes, replace %ld by %"INTEGER"
 
 DOING
+    'cannot' -> 'can not' in all docs & source files
     execute via compiled copy not interpreted
     uncompile w/ corrupted or missing PMC, CPP, H files
     uncompile delete EXE files
