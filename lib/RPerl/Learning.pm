@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.128_100;
+our $VERSION = 0.128_200;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15805,7 +15805,7 @@ In Perl, we use the comma C<,> character to separate elements in a C<"list">, wh
 
 =for comment START HERE: add code example
 
-When a list is enclosed within square brackets C<[ ]>, then we have a stored-by-reference I<"array literal">, which represents the literal value which may be assigned to an RPerl variable.  Likewise, when a list is enclosed within parentheses C<( )> characters, and the context tells Perl the parentheses do not represent operation arguments or order-of-operations or some other non-array syntax, then we have a stored-by-data array literal, which may be assigned to a normal Perl variable.
+When a list is enclosed within square brackets C<[ ]>, then we have a stored-by-reference I<"array literal">, which represents the literal value which may be assigned to an RPerl variable.  Likewise, when a list is enclosed within parentheses C<( )> characters and the context tells Perl the parentheses are used as array syntax, then we have a stored-by-data array literal, which may be assigned to a normal Perl variable.  (Depending upon the context of the surrounding source code, the parentheses C<( )> characters have multiple different uses in Perl, including list and array literal values, operation input arguments, and explicit order-of-operations.)  Remember that RPerl only supports arrays which are stored by reference, so all RPerl array literals will be enclosed in square brackets C<[ ]>, not parentheses C<( )>.
 
 =for comment START HERE: add code example
 
