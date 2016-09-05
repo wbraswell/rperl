@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.128_200;
+our $VERSION = 0.129_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15801,9 +15801,13 @@ RPerl currently supports the following array stringification subroutines, with s
 
 =head2 Section 3.1: Lists vs Arrays
 
-In Perl, we use the comma C<,> character to separate elements in a C<"list">, which may then be utilized either as the operands passed as input to an appropriate operation, or as the values stored inside an array data structure.  Thus, a list may be assigned as the value of an array, but the reverse is not necessarily true.  (Please see L</Section 3.7: Array Assignment> for more information.)
+In Perl, we use the comma C<,> character to separate elements in a C<"list">, which may then be utilized either as the operands passed as input to an appropriate operation, or as the values stored inside an array data structure.  Thus, an array variable may be assigned the value of an enclosed list, but in RPerl the reverse is not true.  (Please see L</Section 3.7: Array Assignment> for more information.)
 
-=for comment START HERE: add code example
+    my                 @variable_storing_array_by_value     = ('list', 'enclosed', 'within', 'round',  'parentheses');  # fine in  Perl, error in RPerl, list assigned to array by value
+    my string_arrayref $variable_storing_array_by_reference = ['list', 'enclosed', 'within', 'square', 'brackets'];     # fine in RPerl, fine  in RPerl, list assigned to array by reference
+
+    my ($list, $of, $variables) = @variable_storing_array_by_value;      # fine  in Perl, error in RPerl, array by value     assigned to list
+    my [$list, $of, $variables] = $variable_storing_array_by_reference;  # error in Perl, error in RPerl, array by reference assigned to list
 
 When a list is enclosed within square brackets C<[ ]>, then we have a stored-by-reference I<"array literal">, which represents the literal value which may be assigned to an RPerl variable.  Likewise, when a list is enclosed within parentheses C<( )> characters and the context tells Perl the parentheses are used as array syntax, then we have a stored-by-data array literal, which may be assigned to a normal Perl variable.  (Depending upon the context of the surrounding source code, the parentheses C<( )> characters have multiple different uses in Perl, including list and array literal values, operation input arguments, and explicit order-of-operations.)  Remember that RPerl only supports arrays which are stored by reference, so all RPerl array literals will be enclosed in square brackets C<[ ]>, not parentheses C<( )>.
 
