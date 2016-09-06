@@ -15803,15 +15803,20 @@ RPerl currently supports the following array stringification subroutines, with s
 
 In Perl, we use the comma C<,> character to separate elements in a C<"list">, which may then be utilized either as the operands passed as input to an appropriate operation, or as the values stored inside an array data structure.  Thus, an array variable may be assigned the value of an enclosed list, but in RPerl the reverse is not true.  (Please see L</Section 3.7: Array Assignment> for more information.)
 
-    my                 @variable_storing_array_by_value     = ('list', 'enclosed', 'within', 'round',  'parentheses');  # fine in  Perl, error in RPerl, list assigned to array by value
-    my string_arrayref $variable_storing_array_by_reference = ['list', 'enclosed', 'within', 'square', 'brackets'];     # fine in RPerl, fine  in RPerl, list assigned to array by reference
+    my                 @variable_storing_array_by_value     = ('list', 'enclosed', 'within', 'round',  'parentheses');  # fine in  Perl, error in RPerl, list assigned to stored-by-value     array
+    my string_arrayref $variable_storing_array_by_reference = ['list', 'enclosed', 'within', 'square', 'brackets'];     # fine in RPerl, fine  in RPerl, list assigned to stored-by-reference array
 
-    my ($list, $of, $variables) = @variable_storing_array_by_value;      # fine  in Perl, error in RPerl, array by value     assigned to list
-    my [$list, $of, $variables] = $variable_storing_array_by_reference;  # error in Perl, error in RPerl, array by reference assigned to list
+    my ($list, $of, $variables) = @variable_storing_array_by_value;      # fine  in Perl, error in RPerl, stored-by-value     array assigned to list
+    my [$list, $of, $variables] = $variable_storing_array_by_reference;  # error in Perl, error in RPerl, stored-by-reference array assigned to list
 
-When a list is enclosed within square brackets C<[ ]>, then we have a stored-by-reference I<"array literal">, which represents the literal value which may be assigned to an RPerl variable.  Likewise, when a list is enclosed within parentheses C<( )> characters and the context tells Perl the parentheses are used as array syntax, then we have a stored-by-data array literal, which may be assigned to a normal Perl variable.  (Depending upon the context of the surrounding source code, the parentheses C<( )> characters have multiple different uses in Perl, including list and array literal values, operation input arguments, and explicit order-of-operations.)  Remember that RPerl only supports arrays which are stored by reference, so all RPerl array literals will be enclosed in square brackets C<[ ]>, not parentheses C<( )>.
+As seen in the code example above, when a list is enclosed within square brackets C<[ ]>, then we have a stored-by-reference I<"array literal">, which represents the literal value which may be assigned to an RPerl variable.  Likewise, when a list is enclosed within parentheses C<( )> characters and the context tells Perl the parentheses are used as array syntax, then we have a stored-by-data array literal, which may be assigned to a normal Perl variable.
 
-=for comment START HERE: add code example
+Depending upon the context of the surrounding source code, the parentheses C<( )> characters have multiple different uses in Perl, including list and array literal values, explicit order-of-operations, operation input arguments, and control structure statement headers.  (Remember that RPerl only supports arrays which are stored by reference, so all RPerl array literals will be enclosed in square brackets C<[ ]>, not parentheses C<( )>.)
+
+    my                 @foo = (1,  3,   5);  # fine in Perl, error in RPerl, parentheses enclosing list values to create stored-by-value array
+    my integer         $foo = (1 + 3) * 5;   # fine in Perl, fine  in RPerl, parentheses enclosing arithmetic order-of-operations
+    my string_arrayref $foo = [qw(a c e)];   # fine in Perl, fine  in RPerl, parentheses enclosing input arguments to qw() operation
+    if (1 < 3)         { print   'a c e'; }  # fine in Perl, fine  in RPerl, parentheses enclosing if conditional statement header
 
 An array literal should not be confused with an I<"array of literals">, which is where all the elements of an array are literals instead of variables or operations.
 
