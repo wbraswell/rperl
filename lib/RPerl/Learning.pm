@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.129_000;
+our $VERSION = 0.131_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15818,9 +15818,14 @@ Depending upon the context of the surrounding source code, the parentheses C<( )
     my string_arrayref $foo = [qw(a c e)];   # fine in Perl, fine  in RPerl, parentheses enclosing input arguments to qw() operation
     if (1 < 3)         { print   'a c e'; }  # fine in Perl, fine  in RPerl, parentheses enclosing if conditional statement header
 
-An array literal should not be confused with an I<"array of literals">, which is where all the elements of an array are literals instead of variables or operations.
+Terminology can be confusing at times.  An array literal should not be confused with the similar-sounding I<"array of literals">, which is an array where all the elements are literals instead of variables or operations.  In the source code example below, the data structure C<[$foo, $bar, 23]> is an array literal, even though two of its three elements are variables themselves; remember, an array literal is any enclosed list which can be assigned to a variable.  On the other hand, the data structure C<[22,   13,   24]> below is an array of literals, because all its elements are literal values themselves.  At the same time, the variable C<$frob> can also be considered an array of literals, due to the ambiguity of the term "array" when used without explicit context.
 
-=for comment START HERE: add code example
+    my integer          $foo  = 21;
+    my integer          $bar  = 12;
+    my integer_arrayref $quux = [$foo, $bar, 23];  # array literal     on right side  of = assignment operator
+    my integer_arrayref $frob = [22,   13,   24];  # array of literals on both  sides of = assignment operator
+
+Depending on context, the unqualified term "array" can be taken to have either the general meaning of "array data structure category", or the specific meanings "array literal" or "array assigned to variable".  The phrase "scalar versus array" should be read as "scalar data type category versus array data structure category", because we are referring to the general ideas of "scalar" and "array" instead of specific array literals or variables.  The phrase "array C<[22, 13, 24]>" should be read as "array literal C<[22, 13, 24]>", because we can see an enclosed list of comma-separated values.  The phrase "array C<$frob>" should be read as "array assigned to variable C<$frob>", because we can see a dollar sign C<$> sigil variable name.  (This is just one of many possible confusion points caused by the linguistic subtleties inherent in our particular brand of technical terminology, often rightfully referred to as I<"programming jargon"> or even the mocking I<"techno-babble">.)  Because the stand-alone term "array" is ambiguous, the term "array of literals" can be taken to mean either "array-literal of literals" or "array-assigned-to-variable of literals".  This means we can consider both C<$frob> and C<[22, 13, 24]> to be an "array of literals" in the source code example above.  Hopefully, you will never again experience this specific confusion of jargon, but you must always be wary of subtle language issues when dealing with high-tech concepts such as programming in RPerl.
 
 =head2 Section 3.2: Array Data Types
 
