@@ -22,7 +22,7 @@ WriteMakefile(
     PREREQ_PM        => {
         # RPERL USER DEPENDENCIES
         'ExtUtils::MakeMaker' => 7.04,     # for compatibility with Inline::C >= v0.75
-        'Test::Exception'     => 0.32,
+        'Test::Exception'     => 0.43,
         'Test::CPAN::Changes' => 0.400002,
         'Test::Number::Delta' => 1.06,     # for compatibility with Perls compiled using -Duselongdouble
         'Perl::Critic'        => 1.121,
