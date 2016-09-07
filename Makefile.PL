@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.004_100;
+our $VERSION = 0.004_500;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -46,7 +46,10 @@ WriteMakefile(
         'App::Pod2CpanHtml'   => 0.04,     # Learning RPerl; used by pod2rperlhtml.pl, provides pod2cpanhtml
         'Date::Format'        => 2.24,     # Learning RPerl; used by pod2rperlhtml.pl
         'Pod::PseudoPod'      => 0.18,     # Learning RPerl; provides ppodchecker, ppod2txt, ppod2html, ppod2docbook
-        'Text::ASCIITable'    => 0.20      # Learning RPerl; used by pod2text & ppod2txt
+        'Text::ASCIITable'    => 0.20,     # Learning RPerl; used by pod2text & ppod2txt
+
+	# RPERL ??? (UNKNOWN) DEPENDENCIES
+	'IPC::Run3'           => 0.048     # ???
     },
     META_MERGE => {
         'meta-spec' => {
