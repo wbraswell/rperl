@@ -47,9 +47,7 @@ WriteMakefile(
         'Date::Format'        => 2.24,     # Learning RPerl; used by pod2rperlhtml.pl
         'Pod::PseudoPod'      => 0.18,     # Learning RPerl; provides ppodchecker, ppod2txt, ppod2html, ppod2docbook
         'Text::ASCIITable'    => 0.20,     # Learning RPerl; used by pod2text & ppod2txt
-
-	# RPERL ??? (UNKNOWN) DEPENDENCIES
-	'IPC::Run3'           => 0.048     # ???
+	'IPC::Run3'           => 0.048     # RPerl Compiler; used for internals (subcompile, testing)
     },
     META_MERGE => {
         'meta-spec' => {
