@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.131_000;
+our $VERSION = 0.132_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15829,7 +15829,11 @@ Depending on context, the unqualified term "array" can be taken to have either t
 
 =head2 Section 3.2: Array Data Types
 
-In RPerl, all arrays are stored by reference and have a specific data type which ends with C<_arrayref>.  Perl does not currently support array data structures with constant values, only scalars may be constants.
+In RPerl, all arrays are stored by reference and have a specific data type which ends with C<_arrayref>.  Perl itself does not currently support array data structures with constant values, only scalars may be constants.
+
+    use constant PIE  => my string $TYPED_PIE = 'pecan';  # fine in Perl & RPerl
+
+    use constant DAYS => my string_arrayref $TYPED_DAYS = [ 'Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat' ];  # error in Perl & RPerl
 
 A single scalar may be considered to be a zero-dimensional data point.  When an array's individual elements are each scalars, the array is considered to be one-dimensional (1-D), and may be visualized as multiple data points in a single row.
 
@@ -15845,13 +15849,13 @@ The following 1-D array data types may be utilized in RPerl:
 
 =item * C<integer_arrayref>
 
+=item * C<gmp_integer_arrayref>  Coming Soon
+
 =item * C<number_arrayref>
 
 =item * C<character_arrayref>
 
 =item * C<string_arrayref>
-
-=item * C<integer_arrayref>
 
 =back
 
