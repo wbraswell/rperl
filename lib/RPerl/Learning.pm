@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.132_000;
+our $VERSION = 0.133_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15829,15 +15829,11 @@ Depending on context, the unqualified term "array" can be taken to have either t
 
 =head2 Section 3.2: Array Data Types
 
-In RPerl, all arrays are stored by reference and have a specific data type which ends with C<_arrayref>.  Perl itself does not currently support array data structures with constant values, only scalars may be constants.
+In RPerl, all arrays are stored by reference and have a specific data type which ends with C<_arrayref>.  In the preceeding examples, you have already seen the three most common RPerl array data types, which are C<integer_arrayref>, C<number_arrayref>, and C<string_arrayref>.
 
-    use constant PIE  => my string $TYPED_PIE = 'pecan';  # fine in Perl & RPerl
+A single scalar may be considered to be a zero-dimensional (0-D) data point.  When an array's individual elements are each scalars, the array is considered to be one-dimensional (1-D), and may be visualized as multiple data points in a single I<"row">.  Some additional math and software concepts related to a 1-D array or list are I<"vector">, I<"sequence">, and I<"set">; please see Wikipedia for more information.  (In the MathPerl software suite, which is part of the RPerl Family of software, the C<Vector> data structure is simply a specially-packaged C<number_arrayref>.)
 
-    use constant DAYS => my string_arrayref $TYPED_DAYS = [ 'Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat' ];  # error in Perl & RPerl
-
-A single scalar may be considered to be a zero-dimensional data point.  When an array's individual elements are each scalars, the array is considered to be one-dimensional (1-D), and may be visualized as multiple data points in a single row.
-
-=for comment START HERE: add code example
+    my integer_arrayref $row_1D = [2, 4, 6, 8, 10];
 
 The following 1-D array data types may be utilized in RPerl:
 
@@ -15859,21 +15855,35 @@ The following 1-D array data types may be utilized in RPerl:
 
 =back
 
-When an array's individual elements are each arrays, and each of those arrays is comprised of scalars, then the primary array is considered to be 2-D.  ("Or not 2-D?  That is the question.")  A 2-D array may be visualized as multiple rows, with multiple data points in each row.
+When an array's individual elements are each arrays, and each of those arrays is comprised of scalars, then the primary array is considered to be 2-D.  ("Or not 2-D?  That is the question." ... Okay sorry for that one, haha!)  A 2-D array may be visualized as multiple rows, with multiple data points in each row.
 
 =for comment START HERE: add code example
 
-The following 2-D array data types are currently supported by RPerl, with more to be added soon:
+The following 2-D array data types may be utilized in RPerl:
 
 =over
 
+=item * C<boolean_arrayref_arrayref>  Coming Soon
+
+=item * C<unsigned_integer_arrayref_arrayref>  Coming Soon
+
 =item * C<integer_arrayref_arrayref>
 
+=item * C<gmp_integer_arrayref_arrayref>  Coming Soon
+
 =item * C<number_arrayref_arrayref>
+
+=item * C<character_arrayref_arrayref>  Coming Soon
 
 =item * C<string_arrayref_arrayref>
 
 =back
+
+Perl itself does not currently support array data structures with constant values, so only scalars may be constants.
+
+    use constant PIE  => my string $TYPED_PIE = 'pecan';  # fine in Perl & RPerl
+
+    use constant DAYS => my string_arrayref $TYPED_DAYS = [ 'Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat' ];  # error in Perl & RPerl
 
 =head2 Section 3.3: How To Access Array Elements
 
