@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.133_000;
+our $VERSION = 0.134_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15831,9 +15831,9 @@ Depending on context, the unqualified term "array" can be taken to have either t
 
 In RPerl, all arrays are stored by reference and have a specific data type which ends with C<_arrayref>.  In the preceeding examples, you have already seen the three most common RPerl array data types, which are C<integer_arrayref>, C<number_arrayref>, and C<string_arrayref>.
 
-A single scalar may be considered to be a zero-dimensional (0-D) data point.  When an array's individual elements are each scalars, the array is considered to be one-dimensional (1-D), and may be visualized as multiple data points in a single I<"row">.  Some additional math and software concepts related to a 1-D array or list are I<"vector">, I<"sequence">, and I<"set">; please see Wikipedia for more information.  (In the MathPerl software suite, which is part of the RPerl Family of software, the C<Vector> data structure is simply a specially-packaged C<number_arrayref>.)
+A single scalar may be considered to be a zero-dimensional (0-D) data point.  When an array's individual elements are each scalars, the array is considered to be one-dimensional (1-D), and may be visualized as multiple data points in a single I<"row"> displayed on a single line.  Some additional math and software concepts related to a 1-D array or list are I<"vector">, I<"sequence">, and I<"set">; please see Wikipedia for more information.  (For example, in the MathPerl software suite, which is part of the RPerl Family of software, the C<Vector> data structure is simply a specially-packaged C<number_arrayref>.)
 
-    my integer_arrayref $row_1D = [2, 4, 6, 8, 10];
+    my integer_arrayref $row_1D = [0, 2, 4, 6, 8];  # one row on one line
 
 The following 1-D array data types may be utilized in RPerl:
 
@@ -15855,9 +15855,14 @@ The following 1-D array data types may be utilized in RPerl:
 
 =back
 
-When an array's individual elements are each arrays, and each of those arrays is comprised of scalars, then the primary array is considered to be 2-D.  ("Or not 2-D?  That is the question." ... Okay sorry for that one, haha!)  A 2-D array may be visualized as multiple rows, with multiple data points in each row.
+When an array's individual elements are each arrays, and each of those arrays is comprised of scalars, then the primary array is considered to be 2-D.  ("Or not 2-D?  That is the question." ... Okay sorry for that one, haha!)  A 2-D array may be visualized as multiple rows, with multiple data points in each row, which may optionally be displayed on multiple lines.
 
-=for comment START HERE: add code example
+    my integer_arrayref_arrayref $rows_2D =
+    [[0, 2, 4, 6, 8],
+     [1, 3, 5, 7, 9],
+     [4, 3, 2, 1, 0],
+     [9, 8, 7, 6, 5],
+     [5, 5, 5, 5, 5]];
 
 The following 2-D array data types may be utilized in RPerl:
 
