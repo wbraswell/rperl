@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.135_000;
+our $VERSION = 0.136_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15757,7 +15757,7 @@ For arrays with more than just a few elements, it may be impractical or impossib
     my                  $foo_by_reference       = [2, 4, 6];  # fine in normal Perl, error in RPerl
     my integer_arrayref $foo_by_reference_typed = [2, 4, 6];  # fine in normal Perl, fine  in RPerl
 
-In a few special cases, Perl forces us to provide an array by value instead of by reference, in which case we need to I<"dereference"> our array variable, which is the process of converting from the stored-by-reference memory address to the stored-by-data values.  This is achieved by use of Perl's array dereference syntax, comprised of enclosing the scalar array variable within at sign curly braces C<@{ }>.  Because all arrays in RPerl are stored by reference, only necessary uses of the dereference syntax are supported by the RPerl compiler.  (Please see L</Section 3.8: C<push> & C<pop> Operators> for more information on C<pop>.)
+In a few special cases, Perl forces us to provide an array by value instead of by reference, in which case we need to I<"dereference"> our array variable, which is the process of converting from the stored-by-reference memory address to the stored-by-data values.  This is achieved by use of Perl's closefix array dereference syntax, comprised of enclosing the scalar array variable within at sign curly braces C<@{ }>.  Because all arrays in RPerl are stored by reference, only necessary uses of the dereference syntax are supported by the RPerl compiler.  (Please see L</Section 3.8: C<push> & C<pop> Operators> for more information on C<pop>.)
 
     my integer_arrayref $foo_by_reference_typed = [10, 20, 30];                    # fine in normal Perl, fine  in RPerl
     my integer          $foo_last_element       = pop @{$foo_by_reference_typed};  # fine in normal Perl, fine  in RPerl,   necessary dereference 
@@ -15884,8 +15884,6 @@ The following 2-D array data types may be utilized in RPerl:
 
 =back
 
-=for comment NEED ADD 1-D vs 2-D
-
 Perl itself does not currently support array data structures with constant values, so only scalars may be constants.
 
     use constant PIE  => my string $TYPED_PIE = 'pecan';  # fine in Perl & RPerl
@@ -15894,7 +15892,7 @@ Perl itself does not currently support array data structures with constant value
 
 =head2 Section 3.3: How To Access Array Elements
 
-Each element of a Perl array is numbered, in order, by integers starting at the value of zero and counting upward.  Each such integer is known as an I<"array index">, or just I<"index"> for short.  Thus, what a normal person would think of as being the "first" element in an array is actually not at index value of C<1>, but is actually at index C<0> instead.  This is a common point of confusion for new programmers, or even experienced programmers who may be used to a different computer language which starts at index C<1> insted of index C<0> like Perl.  It may help to think of the "first" element as actually being the "zeroth" element.
+Each element of a Perl array is numbered, in order, by integers starting at the value of zero and counting upward.  Each such integer is known as an I<"array index">, or just I<"index"> for short.  Thus, what a normal person would think of as being the "first" element in an array is actually not at index value of C<1>, but is actually at index C<0> instead.  This is a common point of confusion for new programmers, or even experienced programmers who may be accustomed to a different computer language which starts at index C<1> insted of index C<0> like Perl.  It may help to think of the "first" element as actually being the "zeroth" element.
 
     my string_arrayref $marx_brothers = ['Chico', 'Harpo', 'Groucho', 'Gummo', 'Zeppo'];
     print 'The first born is ',   $marx_brothers->[0], "\n";
@@ -15909,9 +15907,15 @@ Each element of a Perl array is numbered, in order, by integers starting at the 
 
 In the example above, note the "first born" is located at index value of C<0> (not C<1>), and the "middle child" is at index C<2> (not C<3>).
 
-Also, note the thin-arrow-square-brackets C<-E<gt>[ ]> syntax for accessing the individual elements.  The thin arrow C<-E<gt>> is Perl's I<"postfix dereference"> operation, which fetches the array data pointed to by the array's memory address, and is necessary because all RPerl arrays are stored by reference.  When combined with the postfix dereference operation, the square brackets C<[ ]> return the actual element located at the specified index value.
+Also, note the thin-arrow-square-brackets C<-E<gt>[ ]> syntax for accessing the individual elements.  The thin arrow C<-E<gt>> is Perl's I<"postfix dereference"> operation, which fetches the array data pointed to by the array's memory address, and is necessary because all RPerl arrays are stored by reference.  When combined with the postfix dereference operation, the square brackets C<[ ]> return the actual element located at the specified index value.  In the following example, each of the three lines of source code achieves the same goal of returning the array element at index C<2>, although only the last line is valid in RPerl:
 
-=for comment START HERE: add code example
+    $my_element = @my_array[2];        # fine in Perl, error in RPerl, array not stored by reference
+    $my_element = @{$my_arrayref}[2];  # fine in Perl, error in RPerl, unnecessary use of @{} closefix dereference syntax
+    $my_element = $my_arrayref->[2];   # fine in Perl, fine  in RPerl,   necessary use of ->   postfix dereference syntax
+
+It is important not to confuse a 1-D array and a 2-D array with only one row.  
+
+=for comment START HERE ADD MORE INFO
 
 =head2 Section 3.4: Array Length & Negative Indices
 
@@ -19290,7 +19294,7 @@ Operator I<"arity"> is a technical term which means the number of input operands
 
 L<Operator Arity on Wikipedia|https://en.wikipedia.org/wiki/Arity>
 
-Operator I<"fixity"> is the notation form indicating the location of an operator when placed relative to its own input operands.  I<"Prefix"> operators are located before their operands, I<"infix"> between operands, and I<"postfix"> after operands.  Additionally, operators which must be placed both before and after their operands are said to be of I<"closed"> fixity, while operators capable of more than one placement location are called I<"mixfix">.  Prefix notation is also known as I<"Polish notation">, and postfix is called I<"Reverse Polish"> notation.  The C<abs> absolute value is a prefix operator; the C<+> addition operator is infix; and the C<++> increment operator can be called as postfix.  The C<-( )> negative-with-parentheses operator is of closed fixity, because the parentheses component must appear both before and after the enclosed operand.  Parentheses are always of closed fixity; in normal Perl, the C<-> negative (without parentheses) is a prefix operator, but in RPerl we only allow the closed fixity C<-( )> negative-with-parentheses operator in order to avoid grammar ambiguity, because the same C<-> dash (AKA hyphen) character is utilized for both the C<-> negative and C<-> subtraction operators.  The C<++> increment operator may also be called as prefix, so it may be classified as mixfix.
+Operator I<"fixity"> is the notation form indicating the location of an operator when placed relative to its own input operands.  I<"Prefix"> operators are located before their operands, I<"infix"> between operands, and I<"postfix"> after operands.  Additionally, operators which must be placed both before and after their operands are said to be of I<"closed"> fixity (AKA I<"closefix">), while operators capable of more than one placement location are called I<"mixfix">.  Prefix notation is also known as I<"Polish notation">, and postfix is called I<"Reverse Polish"> notation.  The C<abs> absolute value is a prefix operator; the C<+> addition operator is infix; and the C<++> increment operator can be called as postfix.  The C<-( )> negative-with-parentheses operator is of closed fixity, because the parentheses component must appear both before and after the enclosed operand.  Parentheses are always of closed fixity; in normal Perl, the C<-> negative (without parentheses) is a prefix operator, but in RPerl we only allow the closed fixity C<-( )> negative-with-parentheses operator in order to avoid grammar ambiguity, because the same C<-> dash (AKA hyphen) character is utilized for both the C<-> negative and C<-> subtraction operators.  The C<++> increment operator may also be called as prefix, so it may be classified as mixfix.
 
 L<Prefix Notation on Wikipedia|https://en.wikipedia.org/wiki/Prefix_notation>
 
