@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.136_000;
+our $VERSION = 0.137_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15799,6 +15799,8 @@ RPerl currently supports the following array stringification subroutines, with s
 
 =back
 
+=for comment START HERE arrays with length of 0 or 1
+
 =head2 Section 3.1: Lists vs Arrays
 
 In Perl, we use the comma C<,> character to separate elements in a C<"list">, which may then be utilized either as the operands passed as input to an appropriate operation, or as the values stored inside an array data structure.  Thus, an array variable may be assigned the value of an enclosed list, but in RPerl the reverse is not true.  (Please see L</Section 3.7: Array Assignment> for more information.)
@@ -15827,7 +15829,7 @@ Terminology can be confusing at times.  An array literal should not be confused 
 
 Depending on context, the unqualified term "array" can be taken to have either the general meaning of "array data structure category", or the specific meanings "array literal" or "array assigned to variable".  The phrase "scalar versus array" should be read as "scalar data type category versus array data structure category", because we are referring to the general ideas of "scalar" and "array" instead of specific array literals or variables.  The phrase "array C<[22, 13, 24]>" should be read as "array literal C<[22, 13, 24]>", because we can see an enclosed list of comma-separated values.  The phrase "array C<$frob>" should be read as "array assigned to variable C<$frob>", because we can see a dollar sign C<$> sigil variable name.  (This is just one of many possible confusion points caused by the linguistic subtleties inherent in our particular brand of technical terminology, often rightfully referred to as I<"programming jargon"> or even the mocking I<"techno-babble">.)  Because the stand-alone term "array" is ambiguous, the term "array of literals" can be taken to mean either "array-literal of literals" or "array-assigned-to-variable of literals".  This means we can consider both C<$frob> and C<[22, 13, 24]> to be an "array of literals" in the source code example above.  Hopefully, you will never again experience this specific confusion of jargon, but you must always be wary of subtle language issues when dealing with high-tech concepts such as programming in RPerl.
 
-=head2 Section 3.2: Array Data Types
+=head2 Section 3.2: Array Data Types & Constants
 
 In RPerl, all arrays are stored by reference and have a specific data type which ends with C<_arrayref>.  In the preceeding examples, you have already seen the three most common RPerl array data types, which are C<integer_arrayref>, C<number_arrayref>, and C<string_arrayref>.
 
@@ -15855,14 +15857,23 @@ The following 1-D array data types may be utilized in RPerl:
 
 =back
 
-When an array's individual elements are each arrays, and each of those arrays is comprised of scalars, then the primary array is considered to be 2-D.  ("Or not 2-D?  That is the question." ... Okay sorry for that one, haha!)  A 2-D array may be visualized as multiple data points displayed on multiple lines.  In mathematics, the concept of a I<"matrix"> is essentially a 2-D array with an equal number of elements in each row.  Because of this, a matrix will always appear as rectangular or square, and is said to contain both rows and I<"columns">, where the number of columns is defined as the number of elements in each row.  In the example below, the 2-D array can be utilized as a square matrix, because there are an equal number of rows (five) as there are columns (also five). 
+When an array's individual elements are each arrays, and each of those arrays is comprised of scalars, then the primary array is considered to be 2-D.  ("Or not 2-D?  That is the question." ... Okay sorry for that one, haha!)  A 2-D array may be visualized as multiple data points displayed on multiple lines.  In mathematics, the concept of a I<"matrix"> is essentially a 2-D array which usually has an equal number of elements in each row.  Because of this, a matrix can often be visualized as either rectangular or square, and is said to contain both rows and I<"columns">, where the number of columns is defined as the number of elements in each row.  In the example below, the 2-D array can be utilized as a square matrix, because there are an equal number of rows (five) as there are columns (also five).
 
-    my integer_arrayref_arrayref $rows_2D =  # multiple rows and columns on multiple lines
+    my integer_arrayref_arrayref $rows_and_columns_2D =  # fine in RPerl, multiple rows and columns on multiple lines
     [[0, 2, 4, 6, 8],
      [1, 3, 5, 7, 9],
      [4, 3, 2, 1, 0],
      [9, 8, 7, 6, 5],
      [5, 5, 5, 5, 5]];
+
+However, in RPerl we are not limited to only rectangular or square matrices, because we are not required to have the same number of elements in each row of a 2-D array.  Note the acceptable use of rows with only one or zero elements:
+
+    my integer_arrayref_arrayref $rows_and_columns_2D =  # fine in RPerl, irregular row lengths
+    [[0, 2, 4],
+     [1, 3, 5, 7, 9],
+     [],
+     [9, 8, 7, 6],
+     [5]];
 
 The following 2-D array data types may be utilized in RPerl:
 
@@ -15912,6 +15923,8 @@ Also, note the thin-arrow-square-brackets C<-E<gt>[ ]> syntax for accessing the 
     $my_element = @my_array[2];        # fine in Perl, error in RPerl, array not stored by reference
     $my_element = @{$my_arrayref}[2];  # fine in Perl, error in RPerl, unnecessary use of @{} closefix dereference syntax
     $my_element = $my_arrayref->[2];   # fine in Perl, fine  in RPerl,   necessary use of ->   postfix dereference syntax
+
+=for comment START HERE 2-D DOUBLE POSTFIX DEREF, ROW-MAJOR
 
 It is important not to confuse a 1-D array and a 2-D array with only one row.  
 
