@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.137_000;
+our $VERSION = 0.138_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15773,6 +15773,11 @@ In normal Perl, a single array may contain elements with multiple different data
     my  number_arrayref $bar = [5, 10, 'fifteen'];          # error in RPerl, compiled modes
     my  string_arrayref $bat = ['five', 'ten', 15];         # error in RPerl, compiled modes
 
+You can create an array with only one element, sometimes called a I<"singleton">; you can even create an empty array with zero elements:
+
+    my integer_arrayref $foo = [];    # zero elements, empty     array
+    my integer_arrayref $bar = [23];  # one  element,  singleton array
+
 To display the contents of an array, you may utilize the C<*_arrayref_to_string()> family of stringification subroutines:
 
     my integer_arrayref $foo;
@@ -15798,8 +15803,6 @@ RPerl currently supports the following array stringification subroutines, with s
 =item * C<string_arrayref_to_string()>
 
 =back
-
-=for comment START HERE arrays with length of 0 or 1
 
 =head2 Section 3.1: Lists vs Arrays
 
@@ -15866,7 +15869,7 @@ When an array's individual elements are each arrays, and each of those arrays is
      [9, 8, 7, 6, 5],
      [5, 5, 5, 5, 5]];
 
-However, in RPerl we are not limited to only rectangular or square matrices, because we are not required to have the same number of elements in each row of a 2-D array.  Note the acceptable use of rows with only one or zero elements:
+However, in RPerl we are not limited to only rectangular or square matrices, because we are not required to have the same number of elements in each row of a 2-D array.  In the example below, note the acceptable use of rows with only one or zero elements; the empty array C<[ ]> and the singleton array C<[5]> are both valid in RPerl.
 
     my integer_arrayref_arrayref $rows_and_columns_2D =  # fine in RPerl, irregular row lengths
     [[0, 2, 4],
