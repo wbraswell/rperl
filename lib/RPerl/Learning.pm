@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.138_000;
+our $VERSION = 0.139_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15927,7 +15927,9 @@ Also, note the thin-arrow-square-brackets C<-E<gt>[ ]> syntax for accessing the 
     $my_element = @{$my_arrayref}[2];  # fine in Perl, error in RPerl, unnecessary use of @{} closefix dereference syntax
     $my_element = $my_arrayref->[2];   # fine in Perl, fine  in RPerl,   necessary use of ->   postfix dereference syntax
 
-=for comment START HERE 2-D DOUBLE POSTFIX DEREF, ROW-MAJOR
+To access elements in a 2-D array, you must use two postfix dereference operations, which may either be combined into one statement or split across multiple statements.  When a 2-D array is being utilized as a matrix in RPerl, then the data structure is stored in I<"row-major form">, which means the first dereference will give you a whole row, and the second dereference will give you an individual element representing a column from within the selected row.
+
+=for comment START HERE ADD CODE EXAMPLE
 
 It is important not to confuse a 1-D array and a 2-D array with only one row.  
 
