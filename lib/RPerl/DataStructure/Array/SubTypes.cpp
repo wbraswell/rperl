@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes_cpp 0.002_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes_cpp 0.002_010
 
 #include <RPerl/DataStructure/Array/SubTypes.h>		// -> NULL (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option)
 
@@ -249,6 +249,7 @@ string integer_arrayref_to_string(integer_arrayref input_vector)
 		// utilizes i in element retrieval
 		input_vector_element = input_vector[i];
 		if (i_is_0) { i_is_0 = 0; } else { output_stream << ", "; }
+		// NEED FIX: call integer_to_string() instead of just << below, to include underscore separators
 		output_stream << input_vector_element;
 	}
 

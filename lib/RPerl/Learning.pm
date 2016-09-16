@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.127_000;
+our $VERSION = 0.128_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -486,7 +486,7 @@ Significant GitHub commit dates include, but are not limited to the following:
 
 =head2 Section 0.4: TPF Grants
 
-This book was made possible in part by 2 generous grants from The Perl Foundation, as part of the September 2015 and January / Febuary 2016 rounds of funding.
+This book was made possible in part by 2 generous grants from The Perl Foundation, as part of the September 2015 and January / February 2016 rounds of funding.
 
 Special thanks to TPF Grants Committee Secretary, Makoto Nozaki; TPF Grant Manager, Mark Jensen; TPF Grants Committee's various supporting members; and everyone who gave positive feedback on the grant proposals.
 
@@ -714,7 +714,7 @@ There are one or more programming exercises at the end of every chapter, and ful
 
 For maximum educational effect, we suggest you attempt to write each piece of code on your own before looking at our solutions.
 
-If you are using this as an official textbook for certification or academic credit, such as at LAMPuniversity.org or a traditional school, you are obviously expected to write all your own code without refering to our or anyone else's solutions whatsoever.  We suggest you enclose Appendix A with a paperclip or discard it altogether to avoid the potential for accidental academic dishonesty.
+If you are using this as an official textbook for certification or academic credit, such as at LAMPuniversity.org or a traditional school, you are obviously expected to write all your own code without referring to our or anyone else's solutions whatsoever.  We suggest you enclose Appendix A with a paper clip or discard it altogether to avoid the potential for accidental academic dishonesty.
 
 =head2 Section 1.6: How Long Should Each Exercise Take To Complete?
 
@@ -886,7 +886,7 @@ Easy Web Chat: L<http://irc.lc/magnet/perl11/rperl_newbie@@@>
 
 =head2 Section 1.20: Are There Any Bugs In RPerl?
 
-All software has small (or large) problems called I<"bugs">, and depending on who is marketing the software, they may even tell you some of the bugs are actuallyl "features"!
+All software has small (or large) problems called I<"bugs">, and depending on who is marketing the software, they may even tell you some of the bugs are actually "features"!
 
 RPerl is a work in progress, and may contain a number of bugs, both known and unknown.  If you find a bug in RPerl, we would love to hear about it!
 
@@ -1042,7 +1042,7 @@ Will Braswell does more than just create Perl compiler software, he is also very
 
 =item * Astrophysics & Mathematics
 
-=item * Entrepreneuriship & Business
+=item * Entrepreneurship & Business
 
 =item * High-Performance Computing
 
@@ -1080,7 +1080,7 @@ The most condensed answer is that I<"RPerl is really fast.">  Utilizing RPerl's 
 
 The high-magic features of Perl are primarily responsible for how slow Perl runs for general-purpose computations.  The I<"R"> in RPerl stands for I<"Restricted">, in that we restrict ourselves to only use the low-magic features of Perl which can run really fast.
 
-The definitive list of do's and do-nots for high-magic vs low-magic Perl programming is called I<The Low Magic Perl Commandments> (LMPC).  There are 64 total commandments split into 5 groups of Ideals, Magic, Data, Operations, and Object-Orientation.  The "Thou Shalt" commandments appear in the left column, and the "Thou Shalt Nots" appear on the right.
+The definitive list of do's and do-not's for high-magic vs low-magic Perl programming is called I<The Low Magic Perl Commandments> (LMPC).  There are 64 total commandments split into 5 groups of Ideals, Magic, Data, Operations, and Object-Orientation.  The "Thou Shalt" commandments appear in the left column, and the "Thou Shalt Nots" appear on the right.
 
 L<http://rperl.org/the_low_magic_perl_commandments.html>
 
@@ -1096,7 +1096,7 @@ L<http://search.cpan.org/~thaljef/Perl-Critic/lib/Perl/Critic/PolicySummary.pod>
 
 I<Perlism> is the computer religion dedicated to the use, promotion, and development of the Perl family of programming languages.  (Not to be confused with a spiritual religion such as Christianity, a computer religion such as Perlism is an independent and complementary belief structure.)
 
-=for text A I<Perlite> is an adherent to the Perlism religion.  Perlism has a revered founder, Saint Larry (himself a devout Christian); a prophet, I<The Voice In The Wilderness> (Will); a monastary and shrine, I<Perl Monks>; commandments, The LMPC; proverbs from Saint Larry including I<TIMTOWTDI>, I<LMFB>, and I<HTAAOF>; and canonical scriptures, including Saint Larry's B<Apocalypses> and The Voice's B<The Book Of RPerl>.
+=for text A I<Perlite> is an adherent to the Perlism religion.  Perlism has a revered founder, Saint Larry (himself a devout Christian); a prophet, I<The Voice In The Wilderness> (Will); a monastery and shrine, I<Perl Monks>; commandments, The LMPC; proverbs from Saint Larry including I<TIMTOWTDI>, I<LMFB>, and I<HTAAOF>; and canonical scriptures, including Saint Larry's B<Apocalypses> and The Voice's B<The Book Of RPerl>.
 
 =for html <p>A <i>Perlite</i> is an adherent to the Perlism religion.  Perlism has a revered founder, Saint Larry (himself a devout Christian); a prophet, <i>The Voice In The Wilderness</i> (Will); a monastary and shrine, <i>Perl Monks</i>; commandments, The LMPC; proverbs from Saint Larry including <i>TIMTOWTDI</i>, <i>LMFB</i>, and <i>HTAAOF</i>; and canonical scriptures, including Saint Larry's <u><b>Apocalypses</b></u> and The Voice's <u><b>The Book Of RPerl</b></u>.</p>
 
@@ -1524,9 +1524,9 @@ $z = q{<<< END TEXT EVAL >>>};
 
 The single most significant new feature included in RPerl v2.0 is automatic parallelization.  This long-awaited software feature was promised from the very beginning of RPerl's initial development, with RPerl v2.0 being the originally-designated target for release of auto-parallel capabilities.  We stuck to the plan and delivered on time: the 4th of July, 2016.
 
-Automatic parallelization is now enabled on 4 parallel CPU cores by default, because quad-core CPUs are common at this time.  You may utilize the C<--num_cores=8> command-line argument to double the default number of parallel cores, for example.  (Please see L</B.16: Modes, Parallelize> and L</B.17: Modes, Parallelize, Number Of Cores> for more info about auto-parallelization arguments.)
+Automatic parallelization is now enabled on 4 parallel CPU cores by default, because quad-core CPUs are common at this time.  You may utilize the C<--num_cores=8> command-line argument to double the default number of parallel cores, for example.  (Please see L</B.16: Modes, Parallelize> and L</B.17: Modes, Parallelize, Number Of Cores> for more information about auto-parallelization arguments.)
 
-Currently, shared memory parallel hardware platforms are supported, such as multi-core CPUs and supercomputers, by utilizing the L<OpenMP|https://en.wikipedia.org/wiki/OpenMP> parallelization software.  In the near future we will add support for distributed memory platforms, such as clusters and the cloud, by utilizing the L<MPI|https://en.wikipedia.org/wiki/Message_Passing_Interface> parallelization software, as well as GPUs and other speciality hardware by utilizing the L<OpenCL|https://en.wikipedia.org/wiki/OpenCL> parallelization software. 
+Currently, shared memory parallel hardware platforms are supported, such as multi-core CPUs and supercomputers, by utilizing the L<OpenMP|https://en.wikipedia.org/wiki/OpenMP> parallelization software.  In the near future we will add support for distributed memory platforms, such as clusters and the cloud, by utilizing the L<MPI|https://en.wikipedia.org/wiki/Message_Passing_Interface> parallelization software, as well as GPUs and other specialty hardware by utilizing the L<OpenCL|https://en.wikipedia.org/wiki/OpenCL> parallelization software. 
 
 RPerl triggers auto-parallelization by simply including the word 'PARALLEL' in a loop label; everything inside that loop will be automatically parallelized, including multiply-nested loops.  RPerl implements the L<polytope model|https://en.wikipedia.org/wiki/Polytope_model> (AKA L<polyhedral model|http://polyhedral.info>) for loop parallelization, by utilizing the L<Pluto PolyCC|http://pluto-compiler.sourceforge.net> polytope software.
 
@@ -1630,7 +1630,7 @@ X<br>
 
 Most programming languages include the basic principles of using named I<"variables"> to store data values such as numbers, text strings, and lists of multiple numbers or strings.  Multiple variables may be created, each with different names such as C<$foo> or C<$bar> or C<$quux>, and each potentially containing a different value.
 
-A single piece of data, such as one number or one string, is called a I<"scalar">.  Multiple pieces of data combined into a single aggregate structure may be either an I<"array"> or a I<"hash">, described in chapters 3 and 6, respectively.  (Although sharing the same terminology, the I<hash> data structure is not related to the I<hash> C<#> tic-tac-toe character.)  In normal Perl, only scalar variable names begin with the C<$> dollar sign I<"sigil">, while aggregate data structures are stored in variables starting with different sigils like C<@> or C<%>.  In RPerl, all variable names begin the C<$> sigil, both scalar types and aggregate structures alike.
+A single piece of data, such as one number or one string, is called a I<"scalar">.  Multiple pieces of data combined into a single aggregate structure may be either an I<"array"> or a I<"hash">, described in chapters 3 and 6, respectively.  (Although sharing the same terminology, the I<hash> data structure is not related to the I<hash> C<#> tic-tac-toe character.)  In normal Perl, only scalar variable names begin with the dollar sign C<$> I<"sigil">, while aggregate data structures are stored in variables starting with different sigils like C<@> or C<%>.  In RPerl, all variable names begin the C<$> sigil, both scalar types and aggregate structures alike.
 
 RPerl provides 7 scalar data types:
 
@@ -6910,7 +6910,7 @@ I<BEST PRACTICES>
 
 =item * I<Use double-quoted text literals to contain newline C<\n> and tab C<\t> characters only, not other normal characters.>
 
-=item * I<To represent a mixture of normal characters with newline and/or tab characters, enclose the normal characters in single quotes, enclose the newline and tab characters in double quotes, and use the dot C<.> "string concatenation" operator to append one string literal to the other.  (Please see L</Section 2.2.6: Editing Operators> for more info about string concatenation.)>
+=item * I<To represent a mixture of normal characters with newline and/or tab characters, enclose the normal characters in single quotes, enclose the newline and tab characters in double quotes, and use the dot C<.> "string concatenation" operator to append one string literal to the other.  (Please see L</Section 2.2.6: Editing Operators> for more information about string concatenation.)>
 
 =back
 
@@ -13006,7 +13006,7 @@ I<BEST PRACTICES>
 
 =back
 
-You may not choose to utilize an all-uppercase variable name, because RPerl reserves that format for the names of constants; please see L</Section 2.5: Constant Data> for more info.  If you really insist, then RPerl will allow you to use mostly-uppercase variable names, as long as at least one lowercase letter is included.  Also, instead of underscores you may choose to utilize "CamelCase" in order to separate words in your variable names.  However, neither of these variable naming practices are recommended.
+You may not choose to utilize an all-uppercase variable name, because RPerl reserves that format for the names of constants; please see L</Section 2.5: Constant Data> for more information.  If you really insist, then RPerl will allow you to use mostly-uppercase variable names, as long as at least one lowercase letter is included.  Also, instead of underscores you may choose to utilize "CamelCase" in order to separate words in your variable names.  However, neither of these variable naming practices are recommended.
 
 In addition to the best practices listed above, a good variable name should also fulfill all 3 of the following:
 
@@ -13062,7 +13062,7 @@ The third most efficient data type is C<integer>, which stores a single whole (n
 
 The GNU Multi-Precision (GMP) library provides an arbitrary-precision integer data type which is accessible in RPerl as the C<gmp_integer> type, and which does not need to fit within your computer's data type limits.  All RPerl source code files which make use of GMP features must include the C<use rperlgmp;> command.  This tells RPerl to load the GMP library and other supporting software components, which are not normally loaded by the RPerl compiler.
 
-The GMP integer data type works differently than the other normal data types, because a C<gmp_integer> can be considered a combination of a normal C<integer> data type and a special software component known as an I<"object">.  (Please see L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES> for more info on objects.)
+The GMP integer data type works differently than the other normal data types, because a C<gmp_integer> can be considered a combination of a normal C<integer> data type and a special software component known as an I<"object">.  (Please see L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES> for more information on objects.)
 
 When we declare a new variable of the C<gmp_integer> data type, there is a 2-part initialization procedure, as opposed to a normal variable which can be declared and initialized as part of a single RPerl statement.  The first initialization statement is to declare our new C<gmp_integer> variable and pre-initialize it with a special subroutine called a I<"constructor">, which is achieved by calling C<gmp_integer-E<gt>new()> in your RPerl source code.  The second initialization statement completes the procedure by calling one of the three following GMP initialization subroutines:
 
@@ -13090,7 +13090,7 @@ In the source code example below, we create three new C<gmp_integer> variables w
     gmp_init_set_unsigned_integer( $bar, 23 );
     gmp_init_set_signed_integer( $baz, -23 );
 
-Please see L</Section 2.4.14: GMP Integer Operators> for more info.
+Please see L</Section 2.4.14: GMP Integer Operators> for more information.
 
 =head3 Section 2.4.6: Number Data Type
 
@@ -13349,7 +13349,7 @@ The I<"name"> of a variable is the word or phrase you type after a dollar sign C
 
 The I<"value"> of a variable is the actual data which has been stored inside of the variable, and which may be accessed or modified as your RPerl software is running.  A variable's value must be compatible with its type, otherwise an error or undefined behavior may occur.
 
-When your RPerl application is running in normal interpreted mode AKA test mode (Perl operations and Perl data types), then you will be able to access the special subroutines C<type()>, C<types()>, C<name()> and C<scope_type_name_value()>.  These four subroutines provide the ability to perform I<"introspection"> on RPerl variables, which means your RPerl application can access information about itself, specifically about its own variables.  The C<types()> subroutine is not used for scalar data types as discussed in this chapter, please see L</CHAPTER 3: ARRAY VALUES & VARIABLES> and L</CHAPTER 6: HASH VALUES & VARIABLES> for more info.
+When your RPerl application is running in normal interpreted mode AKA test mode (Perl operations and Perl data types), then you will be able to access the special subroutines C<type()>, C<types()>, C<name()> and C<scope_type_name_value()>.  These four subroutines provide the ability to perform I<"introspection"> on RPerl variables, which means your RPerl application can access information about itself, specifically about its own variables.  The C<types()> subroutine is not used for scalar data types as discussed in this chapter, please see L</CHAPTER 3: ARRAY VALUES & VARIABLES> and L</CHAPTER 6: HASH VALUES & VARIABLES> for more information.
 
 The following source code example shows a simple C<string> variable named C<$foo> (as usual), which we then pass as an argument to the introspection subroutines and display the results:
 
@@ -14483,11 +14483,11 @@ These two constants can be utilized as follows:
     my number $area = PI() * $r ** 2;
     my string $dessert = 'having a nice slice of ' . PIE();
 
-As seen in the examples above, we must first declare each constant to have an all-uppercase name via the C<use constant> command, after which we can access the stored data value by calling the constant name followed by empty parentheses.  (In normal interpreted Perl, a constant is functionally equivalent to a subroutine which accepts no arguments and performs no operations other than to call the C<return> operator with a hard-coded data value; see L</CHAPTER 4: ORGANIZING BY SUBROUTINES> for more info.)
+As seen in the examples above, we must first declare each constant to have an all-uppercase name via the C<use constant> command, after which we can access the stored data value by calling the constant name followed by empty parentheses.  (In normal interpreted Perl, a constant is functionally equivalent to a subroutine which accepts no arguments and performs no operations other than to call the C<return> operator with a hard-coded data value; see L</CHAPTER 4: ORGANIZING BY SUBROUTINES> for more information.)
 
 In all RPerl source code files which contain constants, we must include the "USER DEFAULT 3" C<no critic> command; for numeric constants, we must also include "USER DEFAULT 1", as seen in the code example above.
 
-All constants must utilize names with uppercase-only lettering, in order to distinguish them from similarly-named variables.  Thus, a normal variable may not have an all-uppercase name.  (Special variables called I<"file handles"> must be all-uppercase; see L</CHAPTER 5: READING & WRITING FILES> for more info.)
+All constants must utilize names with uppercase-only lettering, in order to distinguish them from similarly-named variables.  Thus, a normal variable may not have an all-uppercase name.  (Special variables called I<"file handles"> must be all-uppercase; see L</CHAPTER 5: READING & WRITING FILES> for more information.)
 
     use constant PIE => my string $TYPED_PIE = 'peanut butter';  # fine
     use constant Pie => my string $TYPED_Pie = 'coffee cream';   # error in RPerl, compiled modes
@@ -14556,7 +14556,7 @@ In addition to C<STDOUT>, there is a second output data stream provided by your 
 
     print {*STDERR} 'WARNING: Danger, Will Robinson!', "\n";
 
-Your software will continue running after you call C<print> to send output to C<STDERR>; if you want execution to immediately stop after displaying an error message, then you will need to explicitly add a termination operator such as C<exit> or C<die> or C<croak>.  The operand value of C<1> passed to the C<exit> operator below is used to inform the operating system that we have encountered an error.  (Please see NEED_ADD_SECTION for more info.)
+Your software will continue running after you call C<print> to send output to C<STDERR>; if you want execution to immediately stop after displaying an error message, then you will need to explicitly add a termination operator such as C<exit> or C<die> or C<croak>.  The operand value of C<1> passed to the C<exit> operator below is used to inform the operating system that we have encountered an error.  (Please see NEED_ADD_SECTION for more information.)
 
     print {*STDERR} 'ERROR: A fatal error or failure has occurred, aborting.', "\n";
     exit 1;
@@ -14684,7 +14684,7 @@ Now we don't need any redirection on the command line to suppress C<STDERR> outp
 
 Often you will want to perform a task, but only if some specific I<"condition"> is met; this is called a I<"conditional statement"> or just I<"conditional"> for short, and is implemented using the C<if> statement in Perl.  You may also refer to the C<if> statement as a I<"control structure">, because it is a source code structure used to control the execution flow of a piece of Perl software.  In other words, a conditional statement can control how your software runs, and so your software may run differently depending on your conditional statements.
 
-Whether or not an C<if> statement's task is actually performed is determined by the truth value of its condition, which is specified in the loop's I<"header">, contained within parentheses immediately after the C<if> keyword; please review L</Section 2.1.9: Truth Values> for more info.  The header of a conditional statement contains only its condition.  The task to be conditionally performed is known as the conditional statement's I<"body">, and is specified within curly braces immediately after the header.
+Whether or not an C<if> statement's task is actually performed is determined by the truth value of its condition, which is specified in the loop's I<"header">, contained within parentheses immediately after the C<if> keyword; please review L</Section 2.1.9: Truth Values> for more information.  The header of a conditional statement contains only its condition.  The task to be conditionally performed is known as the conditional statement's I<"body">, and is specified within curly braces immediately after the header.
 
     if ( $my_integer == 17 ) { print 'I got seventeen!', "\n"; }
 
@@ -14827,7 +14827,7 @@ In this case, the same short-circuiting occurs for the C<else> as does for the C
 
 =for rperl X</noncode>
 
-The longest conditional chain allowable by Perl Best Practices is four members long and is comprised of an C<if> statement, followed by two C<elsif> statements, followed by an C<else> statement, as seen in the example above.  If all your conditions test a single variable for equivalence to some specific values, as in our first C<$my_integer> examples in this section, then instead of a conditional chain you may be able to utilize a hash data structure with the keys pre-set to the possible matching values; please see L</CHAPTER 6: HASH VALUES & VARIABLES> for more info.
+The longest conditional chain allowable by Perl Best Practices is four members long and is comprised of an C<if> statement, followed by two C<elsif> statements, followed by an C<else> statement, as seen in the example above.  If all your conditions test a single variable for equivalence to some specific values, as in our first C<$my_integer> examples in this section, then instead of a conditional chain you may be able to utilize a hash data structure with the keys pre-set to the possible matching values; please see L</CHAPTER 6: HASH VALUES & VARIABLES> for more information.
 
 If your conditions are not all simple equivalence tests via the equals C<==> operator, as in our C<$heart> examples where the conditions include less-than C<E<lt>> operators, then Perl Best Practices directs us to use a C<given ... when> statement instead of any C<if> or C<elsif> statements at all.  However, RPerl does not yet support C<given ... when>, so if it is unavoidable then you may disable the rule against cascading conditional chains for just one source code file at a time:
 
@@ -15741,61 +15741,247 @@ X<br>
 
 In the previous chapter, we explored the many uses of scalar values and variables, which dealt with one number or one string at a time.  In this chapter, we will similarly explore the uses of array values and variables, which are collections of multiple scalars (numbers or strings) grouped together.
 
-A scalar represents exactly one piece of Perl data and represents one specific data type.  An array represents zero or more pieces of Perl data and represents a compound I<"data structure">, defined as a combination of two or more subcomponents which may themselves be either normal scalar data types or more compound data structures.  In an array, each individual subcomponent is known as an I<"element">.
+A scalar represents exactly one piece of Perl data and represents one specific data type.  An array represents zero or more pieces of Perl data and represents a compound I<"data structure">, defined as a combination of two or more subcomponents which may themselves be either normal scalar data types or additional compound data structures.  In an array, each individual subcomponent is known as an I<"element">.
 
-In normal Perl, a single array may contain elements with multiple different data types, such as a three-element array containing one string and one integer and one number.  In RPerl, a single array must contain elements of all the same data type, so you can have a three-element array with all strings, but you can't store an integer inside an array of strings, and likewise you can't store a string inside an array of integers, etc.
+In normal Perl, a variable may contain (represent) an array directly I<"by value">, or indirectly I<"by reference">.  As an analogy, imagine that your computer's memory is like a filing cabinet, your Perl program's memory is like one drawer in the filing cabinet, your array data structure is like one folder in the filing cabinet drawer, your variable is like the label on the folder, and each element of the array is like one page in the folder.
 
-START HERE: add simple example code & output
+In this filing cabinet analogy, an array which is stored by value is like a normal label (array variable), on a normal folder (array data structure), containing normal pages (elements).  An array which is stored by reference is like a special label (scalar variable), affixed to a single piece of paper (scalar data type), upon which is written the location (memory address AKA reference) of a special folder (anonymous array data structure).  Inside the special folder are normal pages (elements), and there is no label (array variable) affixed to the special folder, thus we say the folder is an I<"anonymous array"> because it has no label.
 
-START HERE: add simple example code & output
+To reiterate, an array stored by reference is actually a scalar variable which contains the memory address of an anonymous array.  When compared to storing an array by data, storing by reference only requires one additional scalar value (one piece of paper in our filing cabinet analogy), which contains the anonymous array's memory address.  Both storing by value and storing by reference are commonly utilized in many different computer programming languages.
 
-START HERE: add simple example code & output
+When an array is stored by value, the corresponding variable has an at sign C<@> as its sigil, and the assigned data is enclosed within parentheses C<( )> characters.  When an array is stored by reference, the corresponding variable has a dollar sign C<$> as its sigil, and the assigned data is enclosed within square bracket C<[ ]> characters.  If an array is stored by value and is then passed as input to an operation, it is said the array was I<"passed by value">; if the array is instead stored by reference and passed to an operation, it is said to be I<"passed by reference">.
+
+For arrays with more than just a few elements, it may be impractical or impossible to pass by value, because a full copy of each array element must be made in the process, which may fill up all your program's memory or take a prohibitively long time to complete.  Also, Perl allows us to provide explicit data types only when an array is stored by reference, so we can not provide a data type for an array stored by value.  Because of these reasons, all RPerl arrays are stored by reference, and are declared with an explicit RPerl data type ending with C<_arrayref>.
+
+    my                  @foo_by_value           = (2, 4, 6);  # fine in normal Perl, error in RPerl
+    my                  $foo_by_reference       = [2, 4, 6];  # fine in normal Perl, error in RPerl
+    my integer_arrayref $foo_by_reference_typed = [2, 4, 6];  # fine in normal Perl, fine  in RPerl
+
+In a few special cases, Perl forces us to provide an array by value instead of by reference, in which case we need to I<"dereference"> our array variable, which is the process of converting from the stored-by-reference memory address to the stored-by-data values.  This is achieved by use of Perl's array dereference syntax, comprised of enclosing the scalar array variable within at sign curly braces C<@{ }>.  Because all arrays in RPerl are stored by reference, only necessary uses of the dereference syntax are supported by the RPerl compiler.  (Please see L</Section 3.8: C<push> & C<pop> Operators> for more information on C<pop>.)
+
+    my integer_arrayref $foo_by_reference_typed = [10, 20, 30];                    # fine in normal Perl, fine  in RPerl
+    my integer          $foo_last_element       = pop @{$foo_by_reference_typed};  # fine in normal Perl, fine  in RPerl,   necessary dereference 
+    my                  @foo_by_value           = @{$foo_by_reference_typed};      # fine in normal Perl, error in RPerl, unnecessary dereference
+
+In normal Perl, a single array may contain elements with multiple different data types, such as a three-element array containing one string and one integer and one floating-point number.  In RPerl, a single array must contain elements of all the same data type, so you can have a three-element array with all strings, but you can't store an integer inside an array of strings, and likewise you can't store a string inside an array of integers, etc.
+
+    my integer_arrayref $foo = [5, 10, 15];                 # fine
+    my  number_arrayref $bar = [5, 10, 15.5];               # fine
+    my  string_arrayref $bat = ['five', 'ten', 'fifteen'];  # fine
+
+    my integer_arrayref $foo = [5, 10, 15.5];               # error in RPerl, compiled modes
+    my  number_arrayref $bar = [5, 10, 'fifteen'];          # error in RPerl, compiled modes
+    my  string_arrayref $bat = ['five', 'ten', 15];         # error in RPerl, compiled modes
+
+To display the contents of an array, you may utilize the C<*_arrayref_to_string()> family of stringification subroutines:
+
+    my integer_arrayref $foo;
+    $foo = [23, 42, 2_112];
+    print '$foo = ', integer_arrayref_to_string($foo), "\n";
+
+Running the code example above generates the following output:
+
+=for rperl X<noncode>
+
+    $foo = [23, 42, 2_112]
+
+=for rperl X</noncode>
+
+RPerl currently supports the following array stringification subroutines, with support for all RPerl array data types coming soon:
+
+=over
+
+=item * C<integer_arrayref_to_string()>
+
+=item * C<number_arrayref_to_string()>
+
+=item * C<string_arrayref_to_string()>
+
+=back
 
 =head2 Section 3.1: Lists vs Arrays
 
-In Perl, we use the C<,> comma character to separate elements in a C<"list">, which may be utilized either as the operands passed as input to an operation, or as the values stored inside an array data structure.
+In Perl, we use the comma C<,> character to separate elements in a C<"list">, which may then be utilized either as the operands passed as input to an appropriate operation, or as the values stored inside an array data structure.  Thus, a list may be assigned as the value of an array, but the reverse is not necessarily true.  (Please see L</Section 3.7: Array Assignment> for more information.)
 
-An <"array literal"> must not be confused with an I<"array of literals">, which is where all the elements of an array are literals instead of variables or operations.
+=for comment START HERE: add code example
+
+When a list is enclosed within square brackets C<[ ]>, then we have a stored-by-reference I<"array literal">, which represents the literal value which may be assigned to an RPerl variable.  Likewise, when a list is enclosed within parentheses C<( )> characters, and the context tells Perl the parentheses do not represent operation arguments or order-of-operations or some other non-array syntax, then we have a stored-by-data array literal, which may be assigned to a normal Perl variable.
+
+=for comment START HERE: add code example
+
+An array literal should not be confused with an I<"array of literals">, which is where all the elements of an array are literals instead of variables or operations.
+
+=for comment START HERE: add code example
 
 =head2 Section 3.2: Array Data Types
 
-An array may not be a constant.
+In RPerl, all arrays are stored by reference and have a specific data type which ends with C<_arrayref>.  Perl does not currently support array data structures with constant values, only scalars may be constants.
+
+A single scalar may be considered to be a zero-dimensional data point.  When an array's individual elements are each scalars, the array is considered to be one-dimensional (1-D), and may be visualized as multiple data points in a single row.
+
+=for comment START HERE: add code example
+
+The following 1-D array data types may be utilized in RPerl:
+
+=over
+
+=item * C<boolean_arrayref>
+
+=item * C<unsigned_integer_arrayref>
+
+=item * C<integer_arrayref>
+
+=item * C<number_arrayref>
+
+=item * C<character_arrayref>
+
+=item * C<string_arrayref>
+
+=item * C<integer_arrayref>
+
+=back
+
+When an array's individual elements are each arrays, and each of those arrays is comprised of scalars, then the primary array is considered to be 2-D.  ("Or not 2-D?  That is the question.")  A 2-D array may be visualized as multiple rows, with multiple data points in each row.
+
+=for comment START HERE: add code example
+
+The following 2-D array data types are currently supported by RPerl, with more to be added soon:
+
+=over
+
+=item * C<integer_arrayref_arrayref>
+
+=item * C<number_arrayref_arrayref>
+
+=item * C<string_arrayref_arrayref>
+
+=back
 
 =head2 Section 3.3: How To Access Array Elements
 
+Each element of a Perl array is numbered, in order, by integers starting at the value of zero and counting upward.  Each such integer is known as an I<"array index">, or just I<"index"> for short.  Thus, what a normal person would think of as being the "first" element in an array is actually not at index value of C<1>, but is actually at index C<0> instead.  This is a common point of confusion for new programmers, or even experienced programmers who may be used to a different computer language which starts at index C<1> insted of index C<0> like Perl.  It may help to think of the "first" element as actually being the "zeroth" element.
+
+    my string_arrayref $marx_brothers = ['Chico', 'Harpo', 'Groucho', 'Gummo', 'Zeppo'];
+    print 'The first born is ',   $marx_brothers->[0], "\n";
+    print 'The middle child is ', $marx_brothers->[2], "\n";
+
+=for rperl X<noncode>
+
+    The first born is Chico
+    The middle child is Groucho
+
+=for rperl X</noncode>
+
+In the example above, note the "first born" is located at index value of C<0> (not C<1>), and the "middle child" is at index C<2> (not C<3>).
+
+Also, note the thin-arrow-square-brackets C<-E<gt>[ ]> syntax for accessing the individual elements.  The thin arrow C<-E<gt>> is Perl's I<"postfix dereference"> operation, which fetches the array data pointed to by the array's memory address, and is necessary because all RPerl arrays are stored by reference.  When combined with the postfix dereference operation, the square brackets C<[ ]> return the actual element located at the specified index value.
+
+=for comment START HERE: add code example
+
 =head2 Section 3.4: Array Length & Negative Indices
+
+When we want to count how many elements are in an array, we need to find the array's length.  This is achieved by use of Perl's C<scalar> operator, combined with Perl's closed-fixity at sign curly braces C<@{ }> I<"dereference"> operation.  Both the dereference and postfix dereference operations perform the same task, although they are used in differing scenarios due to their unique syntax.  The C<scalar> operator forces the dereferenced array to be evaluated in I<"scalar context">, which means Perl tries to treat an array as if it were a scalar.  Perl has many complex behaviors when forcing one data type's context upon another different data type, although in the case of forcing an array into scalar context we are simply provided with the length of the array.
+
+    my string_arrayref $greetings        = ['hello', 'hi', 'howdy'];
+    my integer         $greetings_length = scalar @{$greetings};
+    print 'have $greetings_length = ', $greetings_length, "\n";
+
+=for rperl X<noncode>
+
+    have $greetings_length = 3
+
+=for rperl X</noncode>
+
+So, when you want to utilize an array's length to calculate a desired index value, remember that you must subtract one from the length value, because array indices start counting at zero but the array length starts counting at one.  Yes, this is another common trap for new programmers, so watch yourself!
+
+    my string_arrayref $greetings        = ['hello', 'hi', 'howdy'];
+    my integer         $greetings_length = scalar @{$greetings};
+    my string $greeting_final            = $greetings->[($greetings_length - 1)];
+    print 'have $greeting_final = ', $greeting_final, "\n";
+
+=for rperl X<noncode>
+
+    have $greeting_final = howdy
+
+=for rperl X</noncode>
+
+=for comment START HERE: add code example, wrong usage w/out subract-one
+
+In Perl, an array index with a negative value accesses elements beginning from index C<-1> as the final element, and counting backward to end with the zeroth element.  Thus, we may rewrite the previous example to achieve the exact same result by utilizing a negative index instead of the C<scalar> operation, thereby simplifying our code by removing at least three operations and one variable:
+
+    my string_arrayref $greetings        = ['hello', 'hi', 'howdy'];
+    my string $greeting_final            = $greetings->[-1];
+    print 'have $greeting_final = ', $greeting_final, "\n";
+
+=for rperl X<noncode>
+
+    have $greeting_final = howdy
+
+=for rperl X</noncode>
+
+=for comment START HERE: add code example, other negative indices
 
 =head2 Section 3.5: Nested Arrays
 
 Because one data structure may contain another data structure as one of its subcomponents, we may thus nest multiple array values within one another.
 
+START HERE: add content
+
 =head2 Section 3.6: C<qw()> Operator
+
+START HERE: add content
 
 =head2 Section 3.7: Array Assignment
 
+START HERE: add content
+
 =head2 Section 3.8: C<push> & C<pop> Operators
+
+START HERE: add content
 
 =head2 Section 3.9: C<shift> & C<unshift> Operators
 
+START HERE: add content
+
 =head2 Section 3.10: Converting From Array To String
+
+START HERE: add content
 
 =head2 Section 3.11: Program Control Using The C<foreach> Loop
 
+START HERE: add content
+
 =head2 Section 3.12: Punctuation Variables & Magic [[[ NEED ADD MAGIC INTRO SECTION SOMEWHERE??? ]]]
+
+START HERE: add content
 
 =head2 Section 3.13: C<reverse> Operator
 
+START HERE: add content
+
 =head2 Section 3.14: C<sort> Operator
+
+START HERE: add content
 
 =head2 Section 3.15: Scalar & Array Contexts
 
+START HERE: add content
+
 =head2 Section 3.16: Array Values In Scalar Context
+
+START HERE: add content
 
 =head2 Section 3.17: Scalar Values In Array Context
 
+START HERE: add content
+
 =head2 Section 3.18: Explicitly Scalar Context
 
+START HERE: add content
+
 =head2 Section 3.19: C<STDIN> & Arrays
+
+START HERE: add content
 
 
 
@@ -15808,9 +15994,7 @@ Closely related to the loop concept of an iterator variable is that of an C<"ind
 
 types() introspection subroutine
 
-=for comment [ INSERT CHAPTER ]
-
-=head3 Section 3.20: SSE Operators
+=head2 Section 3.20: SSE Operators
 
     OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
     OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
