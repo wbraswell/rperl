@@ -3,7 +3,9 @@
 # Learning RPerl, Section 3.3: How To Access Array Elements
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: "have $column_3 = [6, 7, 1, 6, 5]" >>>
+# <<< EXECUTE_SUCCESS: "have $row_3_column_0_combined = 9" >>>
+# <<< EXECUTE_SUCCESS: "have $row_3 = [9, 8, 7, 6, 5]" >>>
+# <<< EXECUTE_SUCCESS: "have $row_3_column_0_separated = 9" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -24,10 +26,10 @@ my integer_arrayref_arrayref $rows_and_columns_2D =  # fine in RPerl, multiple r
      [9, 8, 7, 6, 5],
      [5, 5, 5, 5, 5]];
 
-my integer_arrayref $column_3 = [];
-$column_3->[0] = $rows_and_columns_2D->[0]->[3];
-$column_3->[1] = $rows_and_columns_2D->[1]->[3];
-$column_3->[2] = $rows_and_columns_2D->[2]->[3];
-$column_3->[3] = $rows_and_columns_2D->[3]->[3];
-$column_3->[4] = $rows_and_columns_2D->[4]->[3];
-print 'have $column_3 = ', integer_arrayref_to_string($column_3), "\n";
+my integer $row_3_column_0_combined = $rows_and_columns_2D->[3]->[0];  # row and column dereferences, combined in one statement
+print 'have $row_3_column_0_combined = ', $row_3_column_0_combined, "\n";
+
+my integer_arrayref $row_3 = $rows_and_columns_2D->[3];                # row dereference only
+print 'have $row_3 = ', integer_arrayref_to_string($row_3), "\n";
+my integer $row_3_column_0_separated = $row_3->[0];                    # column dereference only
+print 'have $row_3_column_0_separated = ', $row_3_column_0_separated, "\n";

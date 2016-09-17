@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.140_000;
+our $VERSION = 0.141_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15927,9 +15927,23 @@ Also, note the thin-arrow-square-brackets C<-E<gt>[ ]> syntax for accessing the 
     $my_element = @{$my_arrayref}[2];  # fine in Perl, error in RPerl, unnecessary use of @{} closefix dereference syntax
     $my_element = $my_arrayref->[2];   # fine in Perl, fine  in RPerl,   necessary use of ->   postfix dereference syntax
 
-To access elements in a 2-D array, you must use two postfix dereference operations, which may either be combined into one statement or split across multiple statements.  When a 2-D array is being utilized as a matrix in RPerl, then the data structure is stored in I<"row-major form">, which means the first dereference operation will give you a whole row, and the second dereference will give you an individual column element from within the selected row.
+To access elements in a 2-D array, you must use two postfix dereference operations, which may either be combined into one statement or separated across multiple statements.  When a 2-D array is being utilized as a matrix in RPerl, then the data structure is stored in I<"row-major form">, which means the first dereference operation will give you a whole row, and the second dereference will give you an individual column element from within the selected row.
 
-=for comment START HERE ADD CODE EXAMPLE
+    my integer $row_3_column_0_combined = $rows_and_columns_2D->[3]->[0];  # row and column dereferences, combined in one statement
+    print 'have $row_3_column_0_combined = ', $row_3_column_0_combined, "\n";
+
+    my integer_arrayref $row_3 = $rows_and_columns_2D->[3];                # row dereference only
+    print 'have $row_3 = ', integer_arrayref_to_string($row_3), "\n";
+    my integer $row_3_column_0_separated = $row_3->[0];                    # column dereference only
+    print 'have $row_3_column_0_separated = ', $row_3_column_0_separated, "\n";
+   
+If you run the code example above with the value of C<$rows_and_columns_2D> given in the previous section, then you should receive the following output:
+
+=for rperl X<noncode>
+
+    have $row_3_column_0_combined = 9
+    have $row_3 = [9, 8, 7, 6, 5]
+    have $row_3_column_0_separated = 9
 
 If you want to select an entire matrix column instead of a row, then you can change the first dereference operation's index to select each row one-at-a-time, while keeping the second dereference's index set to the desired column:
 
@@ -15942,7 +15956,7 @@ If you want to select an entire matrix column instead of a row, then you can cha
     # ... and so on, for each row in $rows_and_columns_2D (if there are more than 5 rows as shown above)
     print 'have $column_3 = ', integer_arrayref_to_string($column_3), "\n";
 
-If you run the code example above with the value of C<$rows_and_columns_2D> given in the previous section, then you should receive the following output:
+Again, if you run the code example above with the value of C<$rows_and_columns_2D> from the previous section, then you should receive the following output:
 
 =for rperl X<noncode>
 
