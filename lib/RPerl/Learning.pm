@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.141_000;
+our $VERSION = 0.142_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15964,9 +15964,22 @@ Again, if you run the code example above with the value of C<$rows_and_columns_2
 
 =for rperl X</noncode>
 
-It is important not to confuse a 1-D array and a 2-D array with only one row.  
+It is important not to confuse a 1-D array with a 2-D array which only contains one row.  A 1-D array will only require one dereference in order to access individual elements, while a 2-D array will require two dereferences to achieve the same thing.  For a 2-D array containing only one row, the first dereference should always be at index C<0> to retrieve the whole row.
 
-=for comment START HERE ADD MORE INFO & CODE EXAMPLE
+    my integer_arrayref          $foo_1D =  [3, 6, 9];
+    my integer_arrayref_arrayref $foo_2D = [[3, 6, 9]];
+
+    print 'have 1-D single dereference = ', $foo_1D->[2],      "\n";
+    print 'have 2-D double dereference = ', $foo_2D->[0]->[2], "\n";
+
+Both dereference statements in the example above should access the numeric value of C<9>, taken from C<$foo_1D> and then C<$foo_2D>, respectively:
+
+=for rperl X<noncode>
+
+    have 1-D single dereference = 9
+    have 2-D double dereference = 9
+
+=for rperl X</noncode>
 
 =head2 Section 3.4: Array Length & Negative Indices
 
