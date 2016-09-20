@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.142_000;
+our $VERSION = 0.142_100;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15983,7 +15983,7 @@ Both dereference statements in the example above should access the numeric value
 
 =head2 Section 3.4: Array Length & Negative Indices
 
-When we want to count how many elements are in an array, we need to find the array's length.  This is achieved by use of Perl's C<scalar> operator, combined with Perl's closed-fixity at sign curly braces C<@{ }> I<"dereference"> operation.  Both the dereference and postfix dereference operations perform the same task, although they are used in differing scenarios due to their unique syntax.  The C<scalar> operator forces the dereferenced array to be evaluated in I<"scalar context">, which means Perl tries to treat an array as if it were a scalar.  Perl has many complex behaviors when forcing one data type's context upon another different data type, although in the case of forcing an array into scalar context we are simply provided with the length of the array.
+When we want to count how many elements are in an array, we need to find the array's length.  This is achieved by use of Perl's C<scalar> operator, combined with Perl's closed-fixity at sign curly braces C<@{ }> dereference operation.  Both the dereference and postfix dereference operations perform the same task, although they are used in differing scenarios due to their unique syntax.  The C<scalar> operator forces the dereferenced array to be evaluated in I<"scalar context">, which means Perl tries to treat an array as if it were a scalar.  Perl has many complex behaviors when forcing one data type's context upon another different data type, although in the case of forcing an array into scalar context we are simply provided with the length of the array.
 
     my string_arrayref $greetings        = ['hello', 'hi', 'howdy'];
     my integer         $greetings_length = scalar @{$greetings};
@@ -16008,7 +16008,7 @@ So, when you want to utilize an array's length to calculate a desired index valu
 
 =for rperl X</noncode>
 
-=for comment START HERE: add code example, wrong usage w/out subract-one
+=for comment START HERE: ADD CODE EXAMPLE, WRONG USAGE W/OUT SUBRACT-ONE
 
 In Perl, an array index with a negative value accesses elements beginning from index C<-1> as the final element, and counting backward to end with the zeroth element.  Thus, we may rewrite the previous example to achieve the exact same result by utilizing a negative index instead of the C<scalar> operation, thereby simplifying our code by removing at least three operations and one variable:
 
@@ -16022,7 +16022,7 @@ In Perl, an array index with a negative value accesses elements beginning from i
 
 =for rperl X</noncode>
 
-=for comment START HERE: add code example, other negative indices
+=for comment START HERE: ADD CODE EXAMPLE, OTHER NEGATIVE INDICES
 
 =head2 Section 3.5: Nested Arrays
 
