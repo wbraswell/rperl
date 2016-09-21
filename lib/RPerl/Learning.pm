@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.142_100;
+our $VERSION = 0.143_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -16008,7 +16008,21 @@ So, when you want to utilize an array's length to calculate a desired index valu
 
 =for rperl X</noncode>
 
-=for comment START HERE: ADD CODE EXAMPLE, WRONG USAGE W/OUT SUBRACT-ONE
+Now let's see what would happen if we simply forgot to subtract one:
+
+    my string_arrayref $greetings        = ['hello', 'hi', 'howdy'];
+    my integer         $greetings_length = scalar @{$greetings};
+    my string $greeting_final            = $greetings->[$greetings_length];
+    print 'have $greeting_final = ', $greeting_final, "\n";
+
+=for rperl X<noncode>
+
+    Use of uninitialized value $greeting_final in print...
+    have $greeting_final =
+
+=for rperl X</noncode>
+
+As you can see in the output above, an attempt to access the C<$greetings> element at index value C<3> results in an C<uninitialized value> error message, because the highest valid index value is actually C<2> in this case.  Don't forget to subtract one when converting from array lengths to array indices!
 
 In Perl, an array index with a negative value accesses elements beginning from index C<-1> as the final element, and counting backward to end with the zeroth element.  Thus, we may rewrite the previous example to achieve the exact same result by utilizing a negative index instead of the C<scalar> operation, thereby simplifying our code by removing at least three operations and one variable:
 
