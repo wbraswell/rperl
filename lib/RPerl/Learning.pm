@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.143_000;
+our $VERSION = 0.143_100;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -16024,7 +16024,7 @@ Now let's see what would happen if we simply forgot to subtract one:
 
 As you can see in the output above, an attempt to access the C<$greetings> element at index value C<3> results in an C<uninitialized value> error message, because the highest valid index value is actually C<2> in this case.  Don't forget to subtract one when converting from array lengths to array indices!
 
-In Perl, an array index with a negative value accesses elements beginning from index C<-1> as the final element, and counting backward to end with the zeroth element.  Thus, we may rewrite the previous example to achieve the exact same result by utilizing a negative index instead of the C<scalar> operation, thereby simplifying our code by removing at least three operations and one variable:
+In Perl, an array index with a negative value will access elements beginning from index C<-1> as the final element of the array, and counting backward to end with the starting (zeroth) element.  Thus, we may rewrite the previous example to achieve the exact same result by utilizing a negative index instead of the C<scalar> operation, thereby simplifying our code by removing at least three operations and one variable:
 
     my string_arrayref $greetings        = ['hello', 'hi', 'howdy'];
     my string $greeting_final            = $greetings->[-1];
