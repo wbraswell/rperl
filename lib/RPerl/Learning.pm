@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.143_100;
+our $VERSION = 0.144_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -16036,7 +16036,20 @@ In Perl, an array index with a negative value will access elements beginning fro
 
 =for rperl X</noncode>
 
-=for comment START HERE: ADD CODE EXAMPLE, OTHER NEGATIVE INDICES
+If you want to access each array element in reverse order, simply count downward with indices starting at C<-1>:
+
+    my string_arrayref $greetings        = ['hello', 'hi', 'howdy'];
+    print 'have $greetings->[-1] = ', $greetings->[-1], "\n";
+    print 'have $greetings->[-2] = ', $greetings->[-2], "\n";
+    print 'have $greetings->[-3] = ', $greetings->[-3], "\n";
+
+=for rperl X<noncode>
+
+    have $greetings->[-1] = howdy
+    have $greetings->[-2] = hi
+    have $greetings->[-3] = hello
+
+=for rperl X</noncode>
 
 =head2 Section 3.5: Nested Arrays
 
