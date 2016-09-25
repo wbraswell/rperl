@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.144_000;
+our $VERSION = 0.145_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15832,7 +15832,7 @@ Terminology can be confusing at times.  An array literal should not be confused 
 
 Depending on context, the unqualified term "array" can be taken to have either the general meaning of "array data structure category", or the specific meanings "array literal" or "array assigned to variable".  The phrase "scalar versus array" should be read as "scalar data type category versus array data structure category", because we are referring to the general ideas of "scalar" and "array" instead of specific array literals or variables.  The phrase "array C<[22, 13, 24]>" should be read as "array literal C<[22, 13, 24]>", because we can see an enclosed list of comma-separated values.  The phrase "array C<$frob>" should be read as "array assigned to variable C<$frob>", because we can see a dollar sign C<$> sigil variable name.  (This is just one of many possible confusion points caused by the linguistic subtleties inherent in our particular brand of technical terminology, often rightfully referred to as I<"programming jargon"> or even the mocking I<"techno-babble">.)  Because the stand-alone term "array" is ambiguous, the term "array of literals" can be taken to mean either "array-literal of literals" or "array-assigned-to-variable of literals".  This means we can consider both C<$frob> and C<[22, 13, 24]> to be an "array of literals" in the source code example above.  Hopefully, you will never again experience this specific confusion of jargon, but you must always be wary of subtle language issues when dealing with high-tech concepts such as programming in RPerl.
 
-=head2 Section 3.2: Array Data Types & Constants
+=head2 Section 3.2: 1-D Array Data Types & Constants
 
 In RPerl, all arrays are stored by reference and have a specific data type which ends with C<_arrayref>.  In the preceeding examples, you have already seen the three most common RPerl array data types, which are C<integer_arrayref>, C<number_arrayref>, and C<string_arrayref>.
 
@@ -15860,49 +15860,13 @@ The following 1-D array data types may be utilized in RPerl:
 
 =back
 
-When an array's individual elements are each arrays, and each of those arrays is comprised of scalars, then the primary array is considered to be 2-D.  ("Or not 2-D?  That is the question." ... Okay sorry for that one, haha!)  A 2-D array may be visualized as multiple data points displayed on multiple lines.  In mathematics, the concept of a I<"matrix"> is essentially a 2-D array which usually has an equal number of elements in each row.  Because of this, a matrix can often be visualized as either rectangular or square, and is said to contain both rows and I<"columns">, where the number of columns is defined as the number of elements in each row.  In the example below, the 2-D array can be utilized as a square matrix, because there are an equal number of rows (five) as there are columns (also five).
-
-    my integer_arrayref_arrayref $rows_and_columns_2D =  # fine in RPerl, multiple rows and columns on multiple lines
-        [[0, 2, 4, 6, 8],
-         [1, 3, 5, 7, 9],
-         [4, 3, 2, 1, 0],
-         [9, 8, 7, 6, 5],
-         [5, 5, 5, 5, 5]];
-
-However, in RPerl we are not limited to only rectangular or square matrices, because we are not required to have the same number of elements in each row of a 2-D array.  In the example below, note the acceptable use of rows with only one or zero elements; the empty array C<[ ]> and the singleton array C<[5]> are both valid in RPerl.
-
-    my integer_arrayref_arrayref $rows_and_columns_2D_irregular =  # fine in RPerl, irregular row lengths
-        [[0, 2, 4],
-         [1, 3, 5, 7, 9],
-         [],
-         [9, 8, 7, 6],
-         [5]];
-
-The following 2-D array data types may be utilized in RPerl:
-
-=over
-
-=item * C<boolean_arrayref_arrayref>  Coming Soon
-
-=item * C<unsigned_integer_arrayref_arrayref>  Coming Soon
-
-=item * C<integer_arrayref_arrayref>
-
-=item * C<gmp_integer_arrayref_arrayref>  Coming Soon
-
-=item * C<number_arrayref_arrayref>
-
-=item * C<character_arrayref_arrayref>  Coming Soon
-
-=item * C<string_arrayref_arrayref>
-
-=back
-
 Perl itself does not currently support array data structures with constant values, so only scalars may be constants.
 
     use constant PIE  => my string $TYPED_PIE = 'pecan';  # fine in Perl & RPerl
 
     use constant DAYS => my string_arrayref $TYPED_DAYS = [ 'Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat' ];  # error in Perl & RPerl
+
+Please see L</Section 3.5: 2-D Array Data Types & Nested Arrays> for more RPerl array data types.
 
 =head2 Section 3.3: How To Access Array Elements
 
@@ -15926,60 +15890,6 @@ Also, note the thin-arrow-square-brackets C<-E<gt>[ ]> syntax for accessing the 
     $my_element = @my_array[2];        # fine in Perl, error in RPerl, array not stored by reference
     $my_element = @{$my_arrayref}[2];  # fine in Perl, error in RPerl, unnecessary use of @{} closefix dereference syntax
     $my_element = $my_arrayref->[2];   # fine in Perl, fine  in RPerl,   necessary use of ->   postfix dereference syntax
-
-To access elements in a 2-D array, you must use two postfix dereference operations, which may either be combined into one statement or separated across multiple statements.  When a 2-D array is being utilized as a matrix in RPerl, then the data structure is stored in I<"row-major form">, which means the first dereference operation will give you a whole row, and the second dereference will give you an individual column element from within the selected row.
-
-    my integer $row_3_column_0_combined = $rows_and_columns_2D->[3]->[0];  # row and column dereferences, combined in one statement
-    print 'have $row_3_column_0_combined = ', $row_3_column_0_combined, "\n";
-
-    my integer_arrayref $row_3 = $rows_and_columns_2D->[3];                # row dereference only
-    print 'have $row_3 = ', integer_arrayref_to_string($row_3), "\n";
-    my integer $row_3_column_0_separated = $row_3->[0];                    # column dereference only
-    print 'have $row_3_column_0_separated = ', $row_3_column_0_separated, "\n";
-   
-If you run the code example above with the value of C<$rows_and_columns_2D> given in the previous section, then you should receive the following output:
-
-=for rperl X<noncode>
-
-    have $row_3_column_0_combined = 9
-    have $row_3 = [9, 8, 7, 6, 5]
-    have $row_3_column_0_separated = 9
-
-If you want to select an entire matrix column instead of a row, then you can change the first dereference operation's index to select each row one-at-a-time, while keeping the second dereference's index set to the desired column:
-
-    my integer_arrayref $column_3 = [];
-    $column_3->[0] = $rows_and_columns_2D->[0]->[3];
-    $column_3->[1] = $rows_and_columns_2D->[1]->[3];
-    $column_3->[2] = $rows_and_columns_2D->[2]->[3];
-    $column_3->[3] = $rows_and_columns_2D->[3]->[3];
-    $column_3->[4] = $rows_and_columns_2D->[4]->[3];
-    # ... and so on, for each row in $rows_and_columns_2D (if there are more than 5 rows as shown above)
-    print 'have $column_3 = ', integer_arrayref_to_string($column_3), "\n";
-
-Again, if you run the code example above with the value of C<$rows_and_columns_2D> from the previous section, then you should receive the following output:
-
-=for rperl X<noncode>
-
-    have $column_3 = [6, 7, 1, 6, 5]
-
-=for rperl X</noncode>
-
-It is important not to confuse a 1-D array with a 2-D array which only contains one row.  A 1-D array will only require one dereference in order to access individual elements, while a 2-D array will require two dereferences to achieve the same thing.  For a 2-D array containing only one row, the first dereference should always be at index C<0> to retrieve the whole row.
-
-    my integer_arrayref          $foo_1D =  [3, 6, 9];
-    my integer_arrayref_arrayref $foo_2D = [[3, 6, 9]];
-
-    print 'have 1-D single dereference = ', $foo_1D->[2],      "\n";
-    print 'have 2-D double dereference = ', $foo_2D->[0]->[2], "\n";
-
-Both dereference statements in the example above should access the numeric value of C<9>, taken from C<$foo_1D> and then C<$foo_2D>, respectively:
-
-=for rperl X<noncode>
-
-    have 1-D single dereference = 9
-    have 2-D double dereference = 9
-
-=for rperl X</noncode>
 
 =head2 Section 3.4: Array Length & Negative Indices
 
@@ -16051,11 +15961,120 @@ If you want to access each array element in reverse order, simply count downward
 
 =for rperl X</noncode>
 
-=head2 Section 3.5: Nested Arrays
+=head2 Section 3.5: 2-D Array Data Types & Nested Arrays
 
-Because one data structure may contain another data structure as one of its subcomponents, we may thus nest multiple array values within one another.
+Because one data structure may contain another data structure as one of its subcomponents, we may thus nest multiple array values within one another.  In normal Perl, any number of arrays may be arbitrarily nested within one another in any syntactically-valid combination; in RPerl, we require the use of explicit data types, which are currently limited to 2-dimensional array-within-array data structures.  Support for 3-dimensional or other nested data structures will be added in a future version of RPerl.
 
-START HERE: add content
+    my integer_arrayref_arrayref $nested_2d =      # fine in normal Perl, fine  in RPerl, 2x3   2-D nested array
+        [[0, 1, 2],
+         [9, 8, 7]];
+    my                           $nested_2d_mix =  # fine in normal Perl, error in RPerl, 2x3   2-D nested array, unmatching integer & string types
+        [[0, 1, 2],
+         ['a', 'b', 'c']];
+    my                           $nested_3d =      # fine in normal Perl, error in RPerl, 3x3x3 3-D nested array, RPerl support coming soon
+        [[[1, 2, 3], 
+          [2, 3, 4], 
+          [3, 4, 5]],
+         [[9, 8, 7],
+          [8, 7, 6],
+          [7, 6, 5]],
+         [[0, 2, 4],
+          [2, 4, 6],
+          [4, 6, 8]]];
+
+When an array's individual elements are each arrays, and each of those arrays is comprised of scalars, then the primary array is considered to be 2-D.  ("Or not 2-D?  That is the question." ... Okay sorry for that one, haha!)  A 2-D array may be visualized as multiple data points displayed on multiple lines.  In mathematics, the concept of a I<"matrix"> is essentially a 2-D array which usually has an equal number of elements in each row.  Because of this, a matrix can often be visualized as either rectangular or square, and is said to contain both rows and I<"columns">, where the number of columns is defined as the number of elements in each row.  In the example below, the 2-D array can be utilized as a square matrix, because there are an equal number of rows (five) as there are columns (also five).
+
+    my integer_arrayref_arrayref $rows_and_columns_2D =  # fine in RPerl, multiple rows and columns on multiple lines
+        [[0, 2, 4, 6, 8],
+         [1, 3, 5, 7, 9],
+         [4, 3, 2, 1, 0],
+         [9, 8, 7, 6, 5],
+         [5, 5, 5, 5, 5]];
+
+However, in RPerl we are not limited to only rectangular or square matrices, because we are not required to have the same number of elements in each row of a 2-D array.  In the example below, note the acceptable use of rows with only one or zero elements; the empty array C<[ ]> and the singleton array C<[5]> are both valid in RPerl.
+
+    my integer_arrayref_arrayref $rows_and_columns_2D_irregular =  # fine in RPerl, irregular row lengths
+        [[0, 2, 4],
+         [1, 3, 5, 7, 9],
+         [],
+         [9, 8, 7, 6],
+         [5]];
+
+The following 2-D array data types may be utilized in RPerl:
+
+=over
+
+=item * C<boolean_arrayref_arrayref>  Coming Soon
+
+=item * C<unsigned_integer_arrayref_arrayref>  Coming Soon
+
+=item * C<integer_arrayref_arrayref>
+
+=item * C<gmp_integer_arrayref_arrayref>  Coming Soon
+
+=item * C<number_arrayref_arrayref>
+
+=item * C<character_arrayref_arrayref>  Coming Soon
+
+=item * C<string_arrayref_arrayref>
+
+=back
+
+To access elements in a 2-D array, you must use two postfix dereference operations, which may either be combined into one statement or separated across multiple statements.  When a 2-D array is being utilized as a matrix in RPerl, then the data structure is stored in I<"row-major form">, which means the first dereference operation will give you a whole row, and the second dereference will give you an individual column element from within the selected row.
+
+    my integer $row_3_column_0_combined = $rows_and_columns_2D->[3]->[0];  # row and column dereferences, combined in one statement
+    print 'have $row_3_column_0_combined = ', $row_3_column_0_combined, "\n";
+
+    my integer_arrayref $row_3 = $rows_and_columns_2D->[3];                # row dereference only
+    print 'have $row_3 = ', integer_arrayref_to_string($row_3), "\n";
+    my integer $row_3_column_0_separated = $row_3->[0];                    # column dereference only
+    print 'have $row_3_column_0_separated = ', $row_3_column_0_separated, "\n";
+
+If you run the code example above with the value of C<$rows_and_columns_2D> given in this section, then you should receive the following output:
+
+=for rperl X<noncode>
+
+    have $row_3_column_0_combined = 9
+    have $row_3 = [9, 8, 7, 6, 5]
+    have $row_3_column_0_separated = 9
+
+=for rperl X</noncode>
+
+If you want to select an entire matrix column instead of a row, then you can change the first dereference operation's index to select each row one-at-a-time, while keeping the second dereference's index set to the desired column:
+
+    my integer_arrayref $column_3 = [];
+    $column_3->[0] = $rows_and_columns_2D->[0]->[3];
+    $column_3->[1] = $rows_and_columns_2D->[1]->[3];
+    $column_3->[2] = $rows_and_columns_2D->[2]->[3];
+    $column_3->[3] = $rows_and_columns_2D->[3]->[3];
+    $column_3->[4] = $rows_and_columns_2D->[4]->[3];
+    # ... and so on, for each row in $rows_and_columns_2D (if there are more than 5 rows as shown above)
+    print 'have $column_3 = ', integer_arrayref_to_string($column_3), "\n";
+
+If you run the code example above, then you should receive the following output:
+
+=for rperl X<noncode>
+
+    have $column_3 = [6, 7, 1, 6, 5]
+
+=for rperl X</noncode>
+
+It is important not to confuse a 1-D array with a 2-D array which only contains one row.  A 1-D array will only require one dereference in order to access individual elements, while a 2-D array will require two dereferences to achieve the same thing.  For a 2-D array containing only one row, the first dereference should always be at index C<0> to retrieve the whole row.
+
+    my integer_arrayref          $foo_1D =  [3, 6, 9];
+    my integer_arrayref_arrayref $foo_2D = [[3, 6, 9]];
+
+    print 'have 1-D single dereference = ', $foo_1D->[2],      "\n";
+    print 'have 2-D double dereference = ', $foo_2D->[0]->[2], "\n";
+
+Both dereference statements in the example above should access the numeric value of C<9>, taken from C<$foo_1D> and then C<$foo_2D>, respectively:
+
+=for rperl X<noncode>
+
+    have 1-D single dereference = 9
+    have 2-D double dereference = 9
+
+=for rperl X</noncode>
 
 =head2 Section 3.6: C<qw()> Operator
 

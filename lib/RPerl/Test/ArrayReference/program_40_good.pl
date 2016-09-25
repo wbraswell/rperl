@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# Learning RPerl, Section 3.3: How To Access Array Elements
+# Learning RPerl, Section 3.5: 2-D Array Data Types & Nested Arrays
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_SUCCESS: "have $row_3_column_0_combined = 9" >>>
