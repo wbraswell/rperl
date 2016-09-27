@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.146_000;
+our $VERSION = 0.147_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15820,7 +15820,7 @@ Depending upon the context of the surrounding source code, the parentheses C<( )
 
     my                 @foo = (1,  3,   5);  # fine in Perl, error in RPerl, parentheses enclosing list values to create stored-by-value array
     my integer         $foo = (1 + 3) * 5;   # fine in Perl, fine  in RPerl, parentheses enclosing arithmetic order-of-operations
-    my string_arrayref $foo = [qw(a c e)];   # fine in Perl, fine  in RPerl, parentheses enclosing input arguments to qw() operation
+    my string_arrayref $foo = [qw(a c e)];   # fine in Perl, fine  in RPerl, parentheses enclosing input arguments to qw() operator
     if (1 < 3)         { print   'a c e'; }  # fine in Perl, fine  in RPerl, parentheses enclosing if conditional statement header
 
 Terminology can be confusing at times.  An array literal should not be confused with the similar-sounding I<"array of literals">, which is an array where all the elements are literals instead of variables or operations.  In the source code example below, the data structure C<[$foo, $bar, 23]> is an array literal, even though two of its three elements are variables themselves; remember, an array literal is any enclosed list which can be assigned to a variable.  On the other hand, the data structure C<[22,   13,   24]> below is an array of literals, because all its elements are literal values themselves.  At the same time, the variable C<$frob> can also be considered an array of literals, due to the ambiguity of the term "array" when used without explicit context.
@@ -16080,7 +16080,33 @@ Both dereference statements in the example above should access the numeric value
 
 =head2 Section 3.6: C<qw()> Operator
 
-START HERE: add content
+Sometimes you will want to create an array which contains multiple string literals, which can be achieved either by normal use of quotes and commas, or by use of the I<"quote word"> C<qw()> operator.  Let's return to a source code example from L</Section 3.1: Lists vs Arrays>, which shows a common use of the C<qw()> operator, compared below with the equivalent code using quotes and commas.
+
+    my string_arrayref $foo_1 = [qw(a c e)];
+    my string_arrayref $bar_1 = ['a', 'c', 'e'];  # 4 characters less
+
+As we can see in the example above, we have can reduce our source code by 4 characters by utilizing the C<qw()> operator.  The benefit of using C<qw()> only increases with the number of array elements.
+
+    my string_arrayref $foo_2 = [qw(a b c d e f g)];
+    my string_arrayref $bar_2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];  # 16 characters less
+ 
+    my string_arrayref $foo_3 = [qw(a b c d e f g h i j k l m)];
+    my string_arrayref $bar_3 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'];  # 34 characters less
+
+Now let's take a look at the data we have stored in our array reference variables:
+
+    print 'have $foo_1 = ', string_arrayref_to_string($foo_1), "\n";
+    print 'have $bar_1 = ', string_arrayref_to_string($bar_1), "\n";
+    print 'have $foo_2 = ', string_arrayref_to_string($foo_2), "\n";
+    print 'have $bar_2 = ', string_arrayref_to_string($bar_2), "\n";
+    print 'have $foo_3 = ', string_arrayref_to_string($foo_3), "\n";
+    print 'have $bar_3 = ', string_arrayref_to_string($bar_3), "\n";
+
+=for rperl X<noncode>
+
+    ADD OUTPUT HERE
+
+=for rperl X</noncode>
 
 =head2 Section 3.7: Array Assignment
 
