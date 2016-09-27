@@ -15965,13 +15965,13 @@ If you want to access each array element in reverse order, simply count downward
 
 Because one data structure may contain another data structure as one of its subcomponents, we may thus nest multiple array values within one another.  In normal Perl, any number of arrays may be arbitrarily nested within one another in any syntactically-valid combination; in RPerl, we require the use of explicit data types, which are currently limited to 2-dimensional array-within-array data structures.  Support for 3-dimensional or other nested data structures will be added in a future version of RPerl.
 
-    my integer_arrayref_arrayref $nested_2d =      # fine in normal Perl, fine  in RPerl, 2x3   2-D nested array
+    my integer_arrayref_arrayref $nested_2d =      # fine in normal Perl, fine  in RPerl, 2x3     2-D nested array
         [[0, 1, 2],
          [9, 8, 7]];
-    my                           $nested_2d_mix =  # fine in normal Perl, error in RPerl, 2x3   2-D nested array, unmatching integer & string types
+    my                           $nested_2d_mix =  # fine in normal Perl, error in RPerl, 2x3     2-D nested array, unmatching integer & string types
         [[0, 1, 2],
          ['a', 'b', 'c']];
-    my                           $nested_3d =      # fine in normal Perl, error in RPerl, 3x3x3 3-D nested array, RPerl support coming soon
+    my                           $nested_3d =      # fine in normal Perl, error in RPerl, 3x3x3   3-D nested array, RPerl support coming soon
         [[[1, 2, 3], 
           [2, 3, 4], 
           [3, 4, 5]],
@@ -15981,6 +15981,8 @@ Because one data structure may contain another data structure as one of its subc
          [[0, 2, 4],
           [2, 4, 6],
           [4, 6, 8]]];
+    my                           $nested_4d =      # fine in normal Perl, error in RPerl, 1x1x1x3 4-D nested array, RPerl support coming soon
+        [[[[23, 42, 2_112]]]];
 
 When an array's individual elements are each arrays, and each of those arrays is comprised of scalars, then the primary array is considered to be 2-D.  ("Or not 2-D?  That is the question." ... Okay sorry for that one, haha!)  A 2-D array may be visualized as multiple data points displayed on multiple lines.  In mathematics, the concept of a I<"matrix"> is essentially a 2-D array which usually has an equal number of elements in each row.  Because of this, a matrix can often be visualized as either rectangular or square, and is said to contain both rows and I<"columns">, where the number of columns is defined as the number of elements in each row.  In the example below, the 2-D array can be utilized as a square matrix, because there are an equal number of rows (five) as there are columns (also five).
 
