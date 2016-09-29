@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.147_000;
+our $VERSION = 0.148_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -16085,7 +16085,7 @@ Sometimes you will want to create an array which contains multiple string litera
     my string_arrayref $foo_1 = [qw(a c e)];
     my string_arrayref $bar_1 = ['a', 'c', 'e'];  # 4 characters less
 
-As we can see in the example above, we have can reduce our source code by 4 characters by utilizing the C<qw()> operator.  The benefit of using C<qw()> only increases with the number of array elements.
+In the example above, we can reduce our source code by 4 characters by utilizing the C<qw()> operator.  The benefit of using C<qw()> only increases with the number of array elements.
 
     my string_arrayref $foo_2 = [qw(a b c d e f g)];
     my string_arrayref $bar_2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];  # 16 characters less
@@ -16104,9 +16104,16 @@ Now let's take a look at the data we have stored in our array reference variable
 
 =for rperl X<noncode>
 
-    ADD OUTPUT HERE
+    have $foo_1 = ['a', 'c', 'e']
+    have $bar_1 = ['a', 'c', 'e']
+    have $foo_2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+    have $bar_2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+    have $foo_3 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']
+    have $bar_3 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']
 
 =for rperl X</noncode>
+
+As we can see in the output above, the data stored by the C<qw()> operator is identical to the data stored by the normal quotes and commas technique, and C<qw()> requires fewer characters of source code when there are at least 2 string array elements.
 
 =head2 Section 3.7: Array Assignment
 
