@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.148_000;
+our $VERSION = 0.149_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -16117,7 +16117,20 @@ As we can see in the output above, the data stored by the C<qw()> operator is id
 
 =head2 Section 3.7: Array Assignment
 
-START HERE: add content
+As mentioned in L</Section 3.1: Lists vs Arrays>, normal Perl allows you to perform a special kind of array assignment with multiple variables on the left (receiving) side of the equal sign C<=> assignment operator.  This is one of Perl's countless shortcuts, allowing a software developer to initialize or modify more than one variable in a single statement.
+
+    my ($x, $y, $z)       = @array_by_value;  # fine in Perl, error in RPerl, stored-by-value array assigned to list of scalar variables
+    my ($foo, $bar, $bat) = (10, 20, 30);     # fine in Perl, error in RPerl, list                  assigned to list of scalar variables
+
+In RPerl, we support exactly one variable on the left side of each assignment operator.  If you need to initialize or modify multiple variables, simply separate each into its own statement.  The source code below achieves the same goals as the code above, without utilizing special array assignment statements.  Each line of source code above has been expanded into three equivalent lines below.
+
+    my integer $x = $array_by_reference->[0];  # fine in Perl, fine in RPerl, stored-by-reference array element assigned to scalar variable
+    my integer $y = $array_by_reference->[1];
+    my integer $z = $array_by_reference->[2];
+
+    my integer $foo = 10;                      # fine in Perl, fine in RPerl, scalar assigned to scalar variable
+    my integer $bar = 20;
+    my integer $bat = 30;
 
 =head2 Section 3.8: C<push> & C<pop> Operators
 
