@@ -16134,7 +16134,339 @@ In RPerl, we support exactly one variable on the left side of each assignment op
 
 =head2 Section 3.8: C<push> & C<pop> Operators
 
-START HERE: add content
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice @{[split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Arithmetic Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Push
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+push
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Variadic
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Pop
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+pop
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<Push>
+
+    push ARRAY, LIST
+
+ARRAY is dereferenced array;
+
+LIST is commma-separated list of expressions;
+
+Append elements of LIST after final element of ARRAY;
+
+In non-void context, return new ARRAY length, operator and operands must be enclosed in parentheses
+
+    my integer_arrayref $foo = [17];
+    push @{$foo}, 21, 12, 23;
+    print 'have $foo = ', integer_arrayref_to_string($foo), "\n";
+
+=for rperl X<noncode>
+
+    have $foo = [17, 21, 12, 23]
+
+=for rperl X</noncode>
+
+    my integer_arrayref $frob = [];
+    my integer $frob_length = ( push @{$frob}, 21, 12, 23 );
+    print 'have $frob = ', integer_arrayref_to_string($frob), "\n";
+    print 'have $frob_length = ', $frob_length, "\n";
+
+=for rperl X<noncode>
+
+    have $frob = [21, 12, 23]
+    have $frob_length = 3
+
+=for rperl X</noncode>
+
+=back
+
+=over
+
+=item * B<Pop>
+
+    pop ARRAY
+
+ARRAY is dereferenced array;
+
+Remove final element of ARRAY and return
+
+    my integer_arrayref $foo = [17, 21, 12, 23];
+    pop @{$foo};
+    print 'have $foo = ', integer_arrayref_to_string($foo), "\n";
+
+=for rperl X<noncode>
+
+    have $foo = [17, 21, 12]
+
+=for rperl X</noncode>
+
+    my integer_arrayref $frob = [21, 12, 23];
+    my integer $frob_pop = pop @{$frob};
+    $frob_length = scalar @{$frob};
+    print 'have $frob_pop = ', $frob_pop, "\n";
+    print 'have $frob = ', integer_arrayref_to_string($frob), "\n";
+    print 'have $frob_length = ', $frob_length, "\n";
+
+=for rperl X<noncode>
+
+    have $frob_pop = 23
+    have $frob = [21, 12]
+    have $frob_length = 2
+
+=for rperl X</noncode>
+
+=back
 
 =head2 Section 3.9: C<shift> & C<unshift> Operators
 
@@ -16322,7 +16654,7 @@ X<br>
     |dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|fcntl;|fileno;|flock;|fork;
     |getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;
     |getprotobynumber;|getprotoent;|getpwent;|getpwnam;|getpwuid;|getservbyname;|getservbyport;|getservent;|getsockname;|getsockopt;|given;|grep;|ioctl;|join;
-    |keys;|kill;|link;|listen;|local;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pipe;|pop;|prototype;|push;|qx;|read;|readdir;
+    |keys;|kill;|link;|listen;|local;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pipe;|prototype;|qx;|read;|readdir;
     |readline;|readpipe;|recv;|rename;|reset;|reverse;|rewinddir;|say;|seek;|seekdir;|select;|semctl;|semget;|semop;|send;|setgrent;|sethostent;|setnetent;
     |setpgrp;|setpriority;|setprotoent;|setpwent;|setservent;|setsockopt;|shift;|shmctl;|shmget;|shmread;|shmwrite;|shutdown;|socket;|socketpair;|sort;|splice;|split;
     |state;|symlink;|syscall;|sysopen;|sysread;|sysseek;|system;|syswrite;|tell;|telldir;|tie;|tied;|time;|times;|truncate;|unless;|unlink;

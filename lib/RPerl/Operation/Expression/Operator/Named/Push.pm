@@ -1,14 +1,13 @@
 # [[[ DOCUMENTATION ]]]
 # http://perldoc.perl.org/functions/push.html
 #     SUPPORTED:  push ARRAY,LIST
-#     SUPPORTED:  push EXPR,LIST
 
 # [[[ HEADER ]]]
 package RPerl::Operation::Expression::Operator::Named::Push;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.002_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator::Named);
