@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.150_000;
+our $VERSION = 0.151_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -16806,7 +16806,17 @@ In non-void context, return new ARRAY length, operator and operands must be encl
 
 =head2 Section 3.10: Converting From Array To String
 
-START HERE: add content
+The terms I<"stringify"> and I<"pretty print"> refer to the conversion from any non-string data type or data structure into a string data type.
+
+=for comment START HERE: need define "function"???
+
+As mentioned in L</INSERT_SECTION>, RPerl provides the following stringification functions:
+
+=for comment START HERE: add list
+
+The C<integer_arrayref_to_string()> function is implemented by the following Perl source code:
+
+=for comment START HERE: add code
 
 =head2 Section 3.11: Program Control Using The C<foreach> Loop
 
