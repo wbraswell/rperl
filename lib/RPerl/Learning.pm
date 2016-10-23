@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.151_000;
+our $VERSION = 0.152_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -224,7 +224,7 @@ Learning RPerl
 
 =end docbook
 
-=for html <img src="http://www.rperl.org/images/roadrunner_engraving.png" width="100%">
+=for html <img src="http://www.rperl.org/images/roadrunner_engraving.jpg" width="90%">
 
 =for html <u>
 
