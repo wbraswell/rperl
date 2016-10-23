@@ -16810,7 +16810,7 @@ The terms I<"stringify"> and I<"pretty print"> refer to the conversion from any 
 
 =for comment START HERE: need define "function"???
 
-As mentioned in L</INSERT_SECTION>, RPerl provides the following stringification functions:
+As mentioned in L </INSERT_SECTION>, RPerl provides the following stringification functions:
 
 =for comment START HERE: add list
 

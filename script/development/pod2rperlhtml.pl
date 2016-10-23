@@ -4,7 +4,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.025_000;
+our $VERSION = 0.027_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -126,6 +126,7 @@ our string_arrayref $pod2cpanhtml_postprocess = sub {
     my boolean $inside_noncode = 0;
     push @{$file_lines_modified}, '<!DOCTYPE html>';  # why isn't there already a DOCTYPE tag added by one of the other HTML generators?  :P
     foreach my string $file_line ( @{$file_lines} ) {
+
         # CPAN only, not MetaCPAN: help inline code tags stand out more, highlighted background matching the block-indented code
 #        if ($file_line eq '</head>') { push @{$file_lines_modified}, '<style> code { background: #eeeeee; } </style>'; }  # no outline
 #        if ($file_line eq '</head>') { push @{$file_lines_modified}, '<style> code { background: #eeeeee; border: 1px solid #888888; } </style>'; }  # yes outline
@@ -157,9 +158,9 @@ our string_arrayref $pod2cpanhtml_postprocess = sub {
             next;
         }
 
-        # MetaCPAN & SyntaxHighlighter: enable CSS & Javascript
         if ($file_line eq '<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" >') {
-            push @{$file_lines_modified}, '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">';
+            push @{$file_lines_modified}, q{<meta name="viewport" content="width=device-width, initial-scale=1">};  # enable mobile device responsive behavior
+            push @{$file_lines_modified}, '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">';  # MetaCPAN & SyntaxHighlighter: enable CSS & Javascript
             next;
         }
         if ($file_line eq '<link rel="stylesheet" type="text/css" title="pod_stylesheet" href="http://search.cpan.org/s/style.css">') {
