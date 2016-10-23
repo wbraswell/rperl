@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.152_000;
+our $VERSION = 0.153_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -16992,6 +16992,10 @@ X<br>
     %token OP01_NAMED_SCOLON         = /(pack;|unpack;|vec;|
 
 # UNSORTED
+TEMPORARILY HIDDEN FROM VIEW
+
+=begin comment
+
     %token OP01_NAMED_SCOLON         = /(accept;|bind;|binmode;|bless;|break;|chmod;|chomp;|chop;|chown;|closedir;|connect;|continue;|dbmclose;
     |dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|fcntl;|fileno;|flock;|fork;
     |getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;
@@ -17004,6 +17008,8 @@ X<br>
 
     %token OP10_NAMED_UNARY_SCOLON   = /(alarm;|caller;|chdir;|chroot;|defined;|delete;|do;|eval;|exists;|gethostbyname;|getnetbyname;|getpgrp;|getprotobyname;|glob;
     |gmtime;|goto;|localtime;|lock;|lstat;|readlink;|ref;|require;|rmdir;|scalar;|sleep;|stat;|umask;)/
+
+=end comment
 
 X<br>
 
