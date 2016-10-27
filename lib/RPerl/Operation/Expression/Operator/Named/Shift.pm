@@ -1,14 +1,14 @@
 # [[[ DOCUMENTATION ]]]
-# http://perldoc.perl.org/functions/pop.html
-#     SUPPORTED:  pop ARRAY
-# NOT SUPPORTED:  pop
+# http://perldoc.perl.org/functions/shift.html
+#     SUPPORTED:  shift ARRAY
+# NOT SUPPORTED:  shift
 
 # [[[ HEADER ]]]
-package RPerl::Operation::Expression::Operator::Named::Pop;
+package RPerl::Operation::Expression::Operator::Named::Shift;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_100;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator::Named);
@@ -20,7 +20,7 @@ use RPerl::Operation::Expression::Operator::Named;
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 
 # [[[ CONSTANTS ]]]
-use constant NAME          => my string $TYPED_NAME           = 'pop';
+use constant NAME          => my string $TYPED_NAME           = 'shift';
 use constant ARGUMENTS_MIN => my integer $TYPED_ARGUMENTS_MIN = 1;
 use constant ARGUMENTS_MAX => my integer $TYPED_ARGUMENTS_MAX = 1;
 
@@ -34,8 +34,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
-#    RPerl::diag( 'in Operator::Named::Pop->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-#    RPerl::diag( 'in Operator::Named::Pop->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
+#    RPerl::diag( 'in Operator::Named::Shift->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Operator::Named::Shift->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
 
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operation_80' ) { # Operation -> OP01_NAMED_SCOLON

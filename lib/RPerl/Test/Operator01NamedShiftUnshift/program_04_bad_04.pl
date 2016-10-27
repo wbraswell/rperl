@@ -16,10 +16,10 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 my integer_arrayref $frob = [];
-my integer $frob_length = ( push @{$frob}, 21, 12, 23 ); # Operator, yes parentheses required for builtin w/ multiple arguments in non-void context
+my integer $frob_length = ( unshift @{$frob}, 21, 12, 23 );
 print 'have $frob_length = ', $frob_length, "\n";
 print 'have $frob = ', "\n", Dumper($frob), "\n";
 
-my integer $frob_pop = po @{$frob};
-print 'have $frob_pop = ', "\n", $frob_pop, "\n";
+my integer $frob_shift = po @{$frob};
+print 'have $frob_shift = ', "\n", $frob_shift, "\n";
 print 'have $frob = ', "\n", Dumper($frob), "\n";

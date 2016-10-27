@@ -10,6 +10,7 @@ DONE
     enable semi-dynamic auto-config of integer format code for printf & friends in CPPOPS modes, replace %ld by %"INTEGER"
 
 DOING
+    'cannot' -> 'can not' in all docs & source files
     execute via compiled copy not interpreted
     uncompile w/ corrupted or missing PMC, CPP, H files
     uncompile delete EXE files
@@ -265,6 +266,8 @@ PARALLELAPPSTORE.COM
     content
 
 DATA TYPES & STRUCTURES
+    implement 3-D arrays & hashes
+    implement *OPS_*TYPES *_arrayref_arrayref_to_string()
     implement *OPS_*TYPES boolean_arrayref_to_string(), unsigned_integer_arrayref_to_string(), gmp_integer_arrayref_to_string(), character_arrayref_to_string()
     add underscore separators to CPPOPS_CPPTYPES integer_arrayref_to_string()
     implement CPPOPS_*TYPES *arrayref_to_string()

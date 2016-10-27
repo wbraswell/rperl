@@ -15,5 +15,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 my integer_arrayref $foo = [];
-push @{$foo}, 23;
+unshift @{$foo}, 23;
 print 'have $foo = ', integer_arrayref_to_string($foo), "\n";

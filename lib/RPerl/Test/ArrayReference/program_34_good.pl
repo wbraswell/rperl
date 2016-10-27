@@ -1,7 +1,10 @@
 #!/usr/bin/perl
 
+# Learning RPerl, Section 3.3: How To Access Array Elements
+
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'have $foo = [23]' >>>
+# <<< EXECUTE_SUCCESS: 'The first born is Chico' >>>
+# <<< EXECUTE_SUCCESS: 'The middle child is Groucho' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -14,6 +17,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-my integer_arrayref $foo = [];
-push @{$foo}, 23;
-print 'have $foo = ', integer_arrayref_to_string($foo), "\n";
+
+my string_arrayref $marx_brothers = ['Chico', 'Harpo', 'Groucho', 'Gummo', 'Zeppo'];
+print 'The first born is ',   $marx_brothers->[0], "\n";
+print 'The middle child is ', $marx_brothers->[2], "\n";

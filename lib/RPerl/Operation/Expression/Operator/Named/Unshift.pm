@@ -1,9 +1,9 @@
 # [[[ DOCUMENTATION ]]]
-# http://perldoc.perl.org/functions/push.html
-#     SUPPORTED:  push ARRAY, LIST
+# http://perldoc.perl.org/functions/unshift.html
+#     SUPPORTED:  unshift ARRAY, LIST
 
 # [[[ HEADER ]]]
-package RPerl::Operation::Expression::Operator::Named::Push;
+package RPerl::Operation::Expression::Operator::Named::Unshift;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
@@ -19,7 +19,7 @@ use RPerl::Operation::Expression::Operator::Named;
 ## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
 
 # [[[ CONSTANTS ]]]
-use constant NAME          => my string $TYPED_NAME           = 'push';
+use constant NAME          => my string $TYPED_NAME           = 'unshift';
 use constant ARGUMENTS_MIN => my integer $TYPED_ARGUMENTS_MIN = 2;
 use constant ARGUMENTS_MAX => my integer $TYPED_ARGUMENTS_MAX = 999;
 
@@ -33,8 +33,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
-#    RPerl::diag( 'in Operator::Named::Push->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-#    RPerl::diag( 'in Operator::Named::Push->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
+#    RPerl::diag( 'in Operator::Named::Unshift->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Operator::Named::Unshift->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
 
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operation_80' ) { # Operation -> OP01_NAMED_SCOLON

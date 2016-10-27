@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.128_000;
+our $VERSION = 0.153_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -224,7 +224,7 @@ Learning RPerl
 
 =end docbook
 
-=for html <img src="http://www.rperl.org/images/roadrunner_engraving.png" width="100%">
+=for html <img src="http://www.rperl.org/images/roadrunner_engraving.jpg" width="90%">
 
 =for html <u>
 
@@ -10912,7 +10912,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X</noncode>
 
-I<SOLUTION: Do not attempt to combine incompatible command-line argument flags.  The uncompile and compile flags enable totally opposite functionality, so obviously they cannot be utilized simultaneously.  The uncompile and execute flags make no sense when utilized together because there would be no compiled code to execute, it being deleted by the uncompile mode.  The uncompile and test flags are incompatible for the same reason as uncompile and compile, because the test mode performs a partial compilation.>
+I<SOLUTION: Do not attempt to combine incompatible command-line argument flags.  The uncompile and compile flags enable totally opposite functionality, so obviously they can not be utilized simultaneously.  The uncompile and execute flags make no sense when utilized together because there would be no compiled code to execute, it being deleted by the uncompile mode.  The uncompile and test flags are incompatible for the same reason as uncompile and compile, because the test mode performs a partial compilation.>
 
 X<ENABLE_LIST_SPACING>
 
@@ -12441,7 +12441,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOCOFI06, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot write to file,\ncroaking: OPERATING_SYSTEM_ERROR
+    ERROR ECOCOFI06, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', can not write to file,\ncroaking: OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
@@ -12453,7 +12453,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOCOFI07, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot delete existing file,\ncroaking: OPERATING_SYSTEM_ERROR
+    ERROR ECOCOFI07, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', can not delete existing file,\ncroaking: OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
@@ -12465,7 +12465,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOCOFI08, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot open file for writing,\ncroaking: OPERATING_SYSTEM_ERROR
+    ERROR ECOCOFI08, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', can not open file for writing,\ncroaking: OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
@@ -12477,7 +12477,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', cannot close file,\ncroaking: OPERATING_SYSTEM_ERROR
+    ERROR ECOCOFI09, COMPILER, FILE SYSTEM: Attempting to save new file '$file_name', can not close file,\ncroaking: OPERATING_SYSTEM_ERROR
 
 =for rperl X</noncode>
 
@@ -15747,17 +15747,17 @@ In normal Perl, a variable may contain (represent) an array directly I<"by value
 
 In this filing cabinet analogy, an array which is stored by value is like a normal label (array variable), on a normal folder (array data structure), containing normal pages (elements).  An array which is stored by reference is like a special label (scalar variable), affixed to a single piece of paper (scalar data type), upon which is written the location (memory address AKA reference) of a special folder (anonymous array data structure).  Inside the special folder are normal pages (elements), and there is no label (array variable) affixed to the special folder, thus we say the folder is an I<"anonymous array"> because it has no label.
 
-To reiterate, an array stored by reference is actually a scalar variable which contains the memory address of an anonymous array.  When compared to storing an array by data, storing by reference only requires one additional scalar value (one piece of paper in our filing cabinet analogy), which contains the anonymous array's memory address.  Both storing by value and storing by reference are commonly utilized in many different computer programming languages.
+To reiterate, an array stored by reference is actually a scalar variable which contains the memory address of an anonymous array.  When compared to the memory usage of storing an array by data, the memory needs of storing by reference only require one additional scalar value (one piece of paper in our filing cabinet analogy), which contains the anonymous array's memory address.  Both storing by value and storing by reference are commonly utilized in many different computer programming languages.
 
-When an array is stored by value, the corresponding variable has an at sign C<@> as its sigil, and the assigned data is enclosed within parentheses C<( )> characters.  When an array is stored by reference, the corresponding variable has a dollar sign C<$> as its sigil, and the assigned data is enclosed within square bracket C<[ ]> characters.  If an array is stored by value and is then passed as input to an operation, it is said the array was I<"passed by value">; if the array is instead stored by reference and passed to an operation, it is said to be I<"passed by reference">.
+When an array is stored by value, the corresponding variable has an at sign C<@> as its sigil, and the assigned data is enclosed within parentheses C<( )> characters.  When an array is stored by reference, the corresponding variable has a dollar sign C<$> as its sigil, and the assigned data is enclosed within square bracket C<[ ]> characters.  If an array is stored by value and is then passed as input to an operation, it is said the array is I<"passed by value">.  On the other hand, if the array is instead stored by reference and then passed to an operation, it is said to be I<"passed by reference">.
 
-For arrays with more than just a few elements, it may be impractical or impossible to pass by value, because a full copy of each array element must be made in the process, which may fill up all your program's memory or take a prohibitively long time to complete.  Also, Perl allows us to provide explicit data types only when an array is stored by reference, so we can not provide a data type for an array stored by value.  Because of these reasons, all RPerl arrays are stored by reference, and are declared with an explicit RPerl data type ending with C<_arrayref>.
+For arrays with more than just a few elements, it may be impractical or impossible to pass by value, because a full copy of each array element must be made in the process, which may fill up all your program's available memory or take a prohibitively long time to complete.  Also, Perl allows us to provide explicit data types only when an array is stored by reference, so we can not provide a data type for an array stored by value.  Because of these reasons, all RPerl arrays are stored by reference, and are declared with an explicit RPerl data type ending with C<_arrayref>.
 
     my                  @foo_by_value           = (2, 4, 6);  # fine in normal Perl, error in RPerl
     my                  $foo_by_reference       = [2, 4, 6];  # fine in normal Perl, error in RPerl
     my integer_arrayref $foo_by_reference_typed = [2, 4, 6];  # fine in normal Perl, fine  in RPerl
 
-In a few special cases, Perl forces us to provide an array by value instead of by reference, in which case we need to I<"dereference"> our array variable, which is the process of converting from the stored-by-reference memory address to the stored-by-data values.  This is achieved by use of Perl's array dereference syntax, comprised of enclosing the scalar array variable within at sign curly braces C<@{ }>.  Because all arrays in RPerl are stored by reference, only necessary uses of the dereference syntax are supported by the RPerl compiler.  (Please see L</Section 3.8: C<push> & C<pop> Operators> for more information on C<pop>.)
+In a few special cases, Perl forces us to provide an array by value instead of by reference, in which case we need to I<"dereference"> our array variable, which is the process of converting from the stored-by-reference memory address to the stored-by-data values.  This is achieved by use of Perl's closefix array dereference syntax, comprised of enclosing the scalar array variable within at sign curly braces C<@{ }>.  Because all arrays in RPerl are stored by reference, only necessary uses of the dereference syntax are supported by the RPerl compiler.  (Please see L</Section 3.8: C<push> & C<pop> Operators> for more information on C<pop>.)
 
     my integer_arrayref $foo_by_reference_typed = [10, 20, 30];                    # fine in normal Perl, fine  in RPerl
     my integer          $foo_last_element       = pop @{$foo_by_reference_typed};  # fine in normal Perl, fine  in RPerl,   necessary dereference 
@@ -15772,6 +15772,11 @@ In normal Perl, a single array may contain elements with multiple different data
     my integer_arrayref $foo = [5, 10, 15.5];               # error in RPerl, compiled modes
     my  number_arrayref $bar = [5, 10, 'fifteen'];          # error in RPerl, compiled modes
     my  string_arrayref $bat = ['five', 'ten', 15];         # error in RPerl, compiled modes
+
+You can create an array with only one element, sometimes called a I<"singleton">; you can even create an empty array with zero elements:
+
+    my integer_arrayref $foo = [];    # zero elements, empty     array
+    my integer_arrayref $bar = [23];  # one  element,  singleton array
 
 To display the contents of an array, you may utilize the C<*_arrayref_to_string()> family of stringification subroutines:
 
@@ -15801,25 +15806,39 @@ RPerl currently supports the following array stringification subroutines, with s
 
 =head2 Section 3.1: Lists vs Arrays
 
-In Perl, we use the comma C<,> character to separate elements in a C<"list">, which may then be utilized either as the operands passed as input to an appropriate operation, or as the values stored inside an array data structure.  Thus, a list may be assigned as the value of an array, but the reverse is not necessarily true.  (Please see L</Section 3.7: Array Assignment> for more information.)
+In Perl, we use the comma C<,> character to separate elements in a C<"list">, which may then be utilized either as the operands passed as input to an appropriate operation, or as the values stored inside an array data structure.  Thus, an array variable may be assigned the value of an enclosed list, but in RPerl the reverse is not true.  (Please see L</Section 3.7: Array Assignment> for more information.)
 
-=for comment START HERE: add code example
+    my                 @variable_storing_array_by_value     = ('list', 'enclosed', 'within', 'round',  'parentheses');  # fine in  Perl, error in RPerl, list assigned to stored-by-value     array
+    my string_arrayref $variable_storing_array_by_reference = ['list', 'enclosed', 'within', 'square', 'brackets'];     # fine in RPerl, fine  in RPerl, list assigned to stored-by-reference array
 
-When a list is enclosed within square brackets C<[ ]>, then we have a stored-by-reference I<"array literal">, which represents the literal value which may be assigned to an RPerl variable.  Likewise, when a list is enclosed within parentheses C<( )> characters, and the context tells Perl the parentheses do not represent operation arguments or order-of-operations or some other non-array syntax, then we have a stored-by-data array literal, which may be assigned to a normal Perl variable.
+    my ($list, $of, $variables) = @variable_storing_array_by_value;      # fine  in Perl, error in RPerl, stored-by-value     array assigned to list
+    my [$list, $of, $variables] = $variable_storing_array_by_reference;  # error in Perl, error in RPerl, stored-by-reference array assigned to list
 
-=for comment START HERE: add code example
+As seen in the code example above, when a list is enclosed within square brackets C<[ ]>, then we have a stored-by-reference I<"array literal">, which represents the literal value which may be assigned to an RPerl variable.  Likewise, when a list is enclosed within parentheses C<( )> characters and the context tells Perl the parentheses are used as array syntax, then we have a stored-by-data array literal, which may be assigned to a normal Perl variable.
 
-An array literal should not be confused with an I<"array of literals">, which is where all the elements of an array are literals instead of variables or operations.
+Depending upon the context of the surrounding source code, the parentheses C<( )> characters have multiple different uses in Perl, including list and array literal values, explicit order-of-operations, operation input arguments, and control structure statement headers.  (Remember that RPerl only supports arrays which are stored by reference, so all RPerl array literals will be enclosed in square brackets C<[ ]>, not parentheses C<( )>.)
 
-=for comment START HERE: add code example
+    my                 @foo = (1,  3,   5);  # fine in Perl, error in RPerl, parentheses enclosing list values to create stored-by-value array
+    my integer         $foo = (1 + 3) * 5;   # fine in Perl, fine  in RPerl, parentheses enclosing arithmetic order-of-operations
+    my string_arrayref $foo = [qw(a c e)];   # fine in Perl, fine  in RPerl, parentheses enclosing input arguments to qw() operator
+    if (1 < 3)         { print   'a c e'; }  # fine in Perl, fine  in RPerl, parentheses enclosing if conditional statement header
 
-=head2 Section 3.2: Array Data Types
+Terminology can be confusing at times.  An array literal should not be confused with the similar-sounding I<"array of literals">, which is an array where all the elements are literals instead of variables or operations.  In the source code example below, the data structure C<[$foo, $bar, 23]> is an array literal, even though two of its three elements are variables themselves; remember, an array literal is any enclosed list which can be assigned to a variable.  On the other hand, the data structure C<[22,   13,   24]> below is an array of literals, because all its elements are literal values themselves.  At the same time, the variable C<$frob> can also be considered an array of literals, due to the ambiguity of the term "array" when used without explicit context.
 
-In RPerl, all arrays are stored by reference and have a specific data type which ends with C<_arrayref>.  Perl does not currently support array data structures with constant values, only scalars may be constants.
+    my integer          $foo  = 21;
+    my integer          $bar  = 12;
+    my integer_arrayref $quux = [$foo, $bar, 23];  # array literal     on right side  of = assignment operator
+    my integer_arrayref $frob = [22,   13,   24];  # array of literals on both  sides of = assignment operator
 
-A single scalar may be considered to be a zero-dimensional data point.  When an array's individual elements are each scalars, the array is considered to be one-dimensional (1-D), and may be visualized as multiple data points in a single row.
+Depending on context, the unqualified term "array" can be taken to have either the general meaning of "array data structure category", or the specific meanings "array literal" or "array assigned to variable".  The phrase "scalar versus array" should be read as "scalar data type category versus array data structure category", because we are referring to the general ideas of "scalar" and "array" instead of specific array literals or variables.  The phrase "array C<[22, 13, 24]>" should be read as "array literal C<[22, 13, 24]>", because we can see an enclosed list of comma-separated values.  The phrase "array C<$frob>" should be read as "array assigned to variable C<$frob>", because we can see a dollar sign C<$> sigil variable name.  (This is just one of many possible confusion points caused by the linguistic subtleties inherent in our particular brand of technical terminology, often rightfully referred to as I<"programming jargon"> or even the mocking I<"techno-babble">.)  Because the stand-alone term "array" is ambiguous, the term "array of literals" can be taken to mean either "array-literal of literals" or "array-assigned-to-variable of literals".  This means we can consider both C<$frob> and C<[22, 13, 24]> to be an "array of literals" in the source code example above.  Hopefully, you will never again experience this specific confusion of jargon, but you must always be wary of subtle language issues when dealing with high-tech concepts such as programming in RPerl.
 
-=for comment START HERE: add code example
+=head2 Section 3.2: 1-D Array Data Types & Constants
+
+In RPerl, all arrays are stored by reference and have a specific data type which ends with C<_arrayref>.  In the preceeding examples, you have already seen the three most common RPerl array data types, which are C<integer_arrayref>, C<number_arrayref>, and C<string_arrayref>.
+
+A single scalar may be considered to be a zero-dimensional (0-D) data point.  When an array's individual elements are each scalars, the array is considered to be one-dimensional (1-D), and may be visualized as multiple data points displayed on a single line.  Some additional math and software concepts related to a 1-D array or list are I<"vector">, I<"sequence">, and I<"set">; please see Wikipedia for more information.  (For example, in the MathPerl software suite, which is part of the RPerl Family of software, the C<Vector> data structure is simply a specially-packaged C<number_arrayref>.)  In some cases, it may also be useful to visualize a 1-D array as a single I<"row"> of elements.
+
+    my integer_arrayref $row_1D = [0, 2, 4, 6, 8];  # one row on one line
 
 The following 1-D array data types may be utilized in RPerl:
 
@@ -15831,35 +15850,27 @@ The following 1-D array data types may be utilized in RPerl:
 
 =item * C<integer_arrayref>
 
+=item * C<gmp_integer_arrayref>  Coming Soon
+
 =item * C<number_arrayref>
 
 =item * C<character_arrayref>
 
 =item * C<string_arrayref>
 
-=item * C<integer_arrayref>
-
 =back
 
-When an array's individual elements are each arrays, and each of those arrays is comprised of scalars, then the primary array is considered to be 2-D.  ("Or not 2-D?  That is the question.")  A 2-D array may be visualized as multiple rows, with multiple data points in each row.
+Perl itself does not currently support array data structures with constant values, so only scalars may be constants.
 
-=for comment START HERE: add code example
+    use constant PIE  => my string $TYPED_PIE = 'pecan';  # fine in Perl & RPerl
 
-The following 2-D array data types are currently supported by RPerl, with more to be added soon:
+    use constant DAYS => my string_arrayref $TYPED_DAYS = [ 'Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat' ];  # error in Perl & RPerl
 
-=over
-
-=item * C<integer_arrayref_arrayref>
-
-=item * C<number_arrayref_arrayref>
-
-=item * C<string_arrayref_arrayref>
-
-=back
+Please see L</Section 3.5: 2-D Array Data Types & Nested Arrays> for more RPerl array data types.
 
 =head2 Section 3.3: How To Access Array Elements
 
-Each element of a Perl array is numbered, in order, by integers starting at the value of zero and counting upward.  Each such integer is known as an I<"array index">, or just I<"index"> for short.  Thus, what a normal person would think of as being the "first" element in an array is actually not at index value of C<1>, but is actually at index C<0> instead.  This is a common point of confusion for new programmers, or even experienced programmers who may be used to a different computer language which starts at index C<1> insted of index C<0> like Perl.  It may help to think of the "first" element as actually being the "zeroth" element.
+Each element of a Perl array is numbered, in order, by integers starting at the value of zero and counting upward.  Each such integer is known as an I<"array index">, or just I<"index"> for short.  Thus, what a normal person would think of as being the "first" element in an array is actually not at index value of C<1>, but is actually at index C<0> instead.  This is a common point of confusion for new programmers, or even experienced programmers who may be accustomed to a different computer language which starts at index C<1> insted of index C<0> like Perl.  It may help to think of the "first" element as actually being the "zeroth" element.
 
     my string_arrayref $marx_brothers = ['Chico', 'Harpo', 'Groucho', 'Gummo', 'Zeppo'];
     print 'The first born is ',   $marx_brothers->[0], "\n";
@@ -15874,13 +15885,15 @@ Each element of a Perl array is numbered, in order, by integers starting at the 
 
 In the example above, note the "first born" is located at index value of C<0> (not C<1>), and the "middle child" is at index C<2> (not C<3>).
 
-Also, note the thin-arrow-square-brackets C<-E<gt>[ ]> syntax for accessing the individual elements.  The thin arrow C<-E<gt>> is Perl's I<"postfix dereference"> operation, which fetches the array data pointed to by the array's memory address, and is necessary because all RPerl arrays are stored by reference.  When combined with the postfix dereference operation, the square brackets C<[ ]> return the actual element located at the specified index value.
+Also, note the thin-arrow-square-brackets C<-E<gt>[ ]> syntax for accessing the individual elements.  The thin arrow C<-E<gt>> is Perl's I<"postfix dereference"> operation, which fetches the array data pointed to by the array's memory address, and is necessary because all RPerl arrays are stored by reference.  When combined with the postfix dereference operation, the square brackets C<[ ]> return the actual element located at the specified index value.  In the following example, each of the three lines of source code achieves the same goal of returning the array element at index C<2>, although only the last line is valid in RPerl:
 
-=for comment START HERE: add code example
+    $my_element = @my_array[2];        # fine in Perl, error in RPerl, array not stored by reference
+    $my_element = @{$my_arrayref}[2];  # fine in Perl, error in RPerl, unnecessary use of @{} closefix dereference syntax
+    $my_element = $my_arrayref->[2];   # fine in Perl, fine  in RPerl,   necessary use of ->   postfix dereference syntax
 
 =head2 Section 3.4: Array Length & Negative Indices
 
-When we want to count how many elements are in an array, we need to find the array's length.  This is achieved by use of Perl's C<scalar> operator, combined with Perl's closed-fixity at sign curly braces C<@{ }> I<"dereference"> operation.  Both the dereference and postfix dereference operations perform the same task, although they are used in differing scenarios due to their unique syntax.  The C<scalar> operator forces the dereferenced array to be evaluated in I<"scalar context">, which means Perl tries to treat an array as if it were a scalar.  Perl has many complex behaviors when forcing one data type's context upon another different data type, although in the case of forcing an array into scalar context we are simply provided with the length of the array.
+When we want to count how many elements are in an array, we need to find the array's length.  This is achieved by use of Perl's C<scalar> operator, combined with Perl's closed-fixity at sign curly braces C<@{ }> dereference operation.  Both the dereference and postfix dereference operations perform the same task, although they are used in differing scenarios due to their unique syntax.  The C<scalar> operator forces the dereferenced array to be evaluated in I<"scalar context">, which means Perl tries to treat an array as if it were a scalar.  Perl has many complex behaviors when forcing one data type's context upon another different data type, although in the case of forcing an array into scalar context we are simply provided with the length of the array.
 
     my string_arrayref $greetings        = ['hello', 'hi', 'howdy'];
     my integer         $greetings_length = scalar @{$greetings};
@@ -15905,9 +15918,23 @@ So, when you want to utilize an array's length to calculate a desired index valu
 
 =for rperl X</noncode>
 
-=for comment START HERE: add code example, wrong usage w/out subract-one
+Now let's see what would happen if we simply forgot to subtract one:
 
-In Perl, an array index with a negative value accesses elements beginning from index C<-1> as the final element, and counting backward to end with the zeroth element.  Thus, we may rewrite the previous example to achieve the exact same result by utilizing a negative index instead of the C<scalar> operation, thereby simplifying our code by removing at least three operations and one variable:
+    my string_arrayref $greetings        = ['hello', 'hi', 'howdy'];
+    my integer         $greetings_length = scalar @{$greetings};
+    my string $greeting_final            = $greetings->[$greetings_length];
+    print 'have $greeting_final = ', $greeting_final, "\n";
+
+=for rperl X<noncode>
+
+    Use of uninitialized value $greeting_final in print...
+    have $greeting_final =
+
+=for rperl X</noncode>
+
+As you can see in the output above, an attempt to access the C<$greetings> element at index value C<3> results in an C<uninitialized value> error message, because the highest valid index value is actually C<2> in this case.  Don't forget to subtract one when converting from array lengths to array indices!
+
+In Perl, an array index with a negative value will access elements beginning from index C<-1> as the final element of the array, and counting backward to end with the starting (zeroth) element.  Thus, we may rewrite the previous example to achieve the exact same result by utilizing a negative index instead of the C<scalar> operation, thereby simplifying our code by removing at least three operations and one variable:
 
     my string_arrayref $greetings        = ['hello', 'hi', 'howdy'];
     my string $greeting_final            = $greetings->[-1];
@@ -15919,33 +15946,877 @@ In Perl, an array index with a negative value accesses elements beginning from i
 
 =for rperl X</noncode>
 
-=for comment START HERE: add code example, other negative indices
+If you want to access each array element in reverse order, simply count downward with indices starting at C<-1>:
 
-=head2 Section 3.5: Nested Arrays
+    my string_arrayref $greetings        = ['hello', 'hi', 'howdy'];
+    print 'have $greetings->[-1] = ', $greetings->[-1], "\n";
+    print 'have $greetings->[-2] = ', $greetings->[-2], "\n";
+    print 'have $greetings->[-3] = ', $greetings->[-3], "\n";
 
-Because one data structure may contain another data structure as one of its subcomponents, we may thus nest multiple array values within one another.
+=for rperl X<noncode>
 
-START HERE: add content
+    have $greetings->[-1] = howdy
+    have $greetings->[-2] = hi
+    have $greetings->[-3] = hello
+
+=for rperl X</noncode>
+
+=head2 Section 3.5: 2-D Array Data Types & Nested Arrays
+
+Because one data structure may contain another data structure as one of its subcomponents, we may thus nest multiple array values within one another.  In normal Perl, any number of arrays may be arbitrarily nested within one another in any syntactically-valid combination; in RPerl, we require the use of explicit data types, which are currently limited to 2-dimensional array-within-array data structures.  Support for 3-dimensional or other nested data structures will be added in a future version of RPerl.
+
+    my integer_arrayref_arrayref $nested_2d =      # fine in normal Perl, fine  in RPerl, 2x3     2-D nested array
+        [[0, 1, 2],
+         [9, 8, 7]];
+    my                           $nested_2d_mix =  # fine in normal Perl, error in RPerl, 2x3     2-D nested array, unmatching integer & string types
+        [[0, 1, 2],
+         ['a', 'b', 'c']];
+    my                           $nested_3d =      # fine in normal Perl, error in RPerl, 3x3x3   3-D nested array, RPerl support coming soon
+        [[[1, 2, 3], 
+          [2, 3, 4], 
+          [3, 4, 5]],
+         [[9, 8, 7],
+          [8, 7, 6],
+          [7, 6, 5]],
+         [[0, 2, 4],
+          [2, 4, 6],
+          [4, 6, 8]]];
+    my                           $nested_4d =      # fine in normal Perl, error in RPerl, 1x1x1x3 4-D nested array, RPerl support coming soon
+        [[[[23, 42, 2_112]]]];
+
+When an array's individual elements are each arrays, and each of those arrays is comprised of scalars, then the primary array is considered to be 2-D.  ("Or not 2-D?  That is the question." ... Okay sorry for that one, haha!)  A 2-D array may be visualized as multiple data points displayed on multiple lines.  In mathematics, the concept of a I<"matrix"> is essentially a 2-D array which usually has an equal number of elements in each row.  Because of this, a matrix can often be visualized as either rectangular or square, and is said to contain both rows and I<"columns">, where the number of columns is defined as the number of elements in each row.  In the example below, the 2-D array can be utilized as a square matrix, because there are an equal number of rows (five) as there are columns (also five).
+
+    my integer_arrayref_arrayref $rows_and_columns_2D =  # fine in RPerl, multiple rows and columns on multiple lines
+        [[0, 2, 4, 6, 8],
+         [1, 3, 5, 7, 9],
+         [4, 3, 2, 1, 0],
+         [9, 8, 7, 6, 5],
+         [5, 5, 5, 5, 5]];
+
+However, in RPerl we are not limited to only rectangular or square matrices, because we are not required to have the same number of elements in each row of a 2-D array.  In the example below, note the acceptable use of rows with only one or zero elements; the empty array C<[ ]> and the singleton array C<[5]> are both valid in RPerl.
+
+    my integer_arrayref_arrayref $rows_and_columns_2D_irregular =  # fine in RPerl, irregular row lengths
+        [[0, 2, 4],
+         [1, 3, 5, 7, 9],
+         [],
+         [9, 8, 7, 6],
+         [5]];
+
+The following 2-D array data types may be utilized in RPerl:
+
+=over
+
+=item * C<boolean_arrayref_arrayref>  Coming Soon
+
+=item * C<unsigned_integer_arrayref_arrayref>  Coming Soon
+
+=item * C<integer_arrayref_arrayref>
+
+=item * C<gmp_integer_arrayref_arrayref>  Coming Soon
+
+=item * C<number_arrayref_arrayref>
+
+=item * C<character_arrayref_arrayref>  Coming Soon
+
+=item * C<string_arrayref_arrayref>
+
+=back
+
+To access elements in a 2-D array, you must use two postfix dereference operations, which may either be combined into one statement or separated across multiple statements.  When a 2-D array is being utilized as a matrix in RPerl, then the data structure is stored in I<"row-major form">, which means the first dereference operation will give you a whole row, and the second dereference will give you an individual column element from within the selected row.
+
+    my integer $row_3_column_0_combined = $rows_and_columns_2D->[3]->[0];  # row and column dereferences, combined in one statement
+    print 'have $row_3_column_0_combined = ', $row_3_column_0_combined, "\n";
+
+    my integer_arrayref $row_3 = $rows_and_columns_2D->[3];                # row dereference only
+    print 'have $row_3 = ', integer_arrayref_to_string($row_3), "\n";
+    my integer $row_3_column_0_separated = $row_3->[0];                    # column dereference only
+    print 'have $row_3_column_0_separated = ', $row_3_column_0_separated, "\n";
+
+If you run the code example above with the value of C<$rows_and_columns_2D> given in this section, then you should receive the following output:
+
+=for rperl X<noncode>
+
+    have $row_3_column_0_combined = 9
+    have $row_3 = [9, 8, 7, 6, 5]
+    have $row_3_column_0_separated = 9
+
+=for rperl X</noncode>
+
+If you want to select an entire matrix column instead of a row, then you can change the first dereference operation's index to select each row one-at-a-time, while keeping the second dereference's index set to the desired column:
+
+    my integer_arrayref $column_3 = [];
+    $column_3->[0] = $rows_and_columns_2D->[0]->[3];
+    $column_3->[1] = $rows_and_columns_2D->[1]->[3];
+    $column_3->[2] = $rows_and_columns_2D->[2]->[3];
+    $column_3->[3] = $rows_and_columns_2D->[3]->[3];
+    $column_3->[4] = $rows_and_columns_2D->[4]->[3];
+    # ... and so on, for each row in $rows_and_columns_2D (if there are more than 5 rows as shown above)
+    print 'have $column_3 = ', integer_arrayref_to_string($column_3), "\n";
+
+If you run the code example above, then you should receive the following output:
+
+=for rperl X<noncode>
+
+    have $column_3 = [6, 7, 1, 6, 5]
+
+=for rperl X</noncode>
+
+It is important not to confuse a 1-D array with a 2-D array which only contains one row.  A 1-D array will only require one dereference in order to access individual elements, while a 2-D array will require two dereferences to achieve the same thing.  For a 2-D array containing only one row, the first dereference should always be at index C<0> to retrieve the whole row.
+
+    my integer_arrayref          $foo_1D =  [3, 6, 9];
+    my integer_arrayref_arrayref $foo_2D = [[3, 6, 9]];
+
+    print 'have 1-D single dereference = ', $foo_1D->[2],      "\n";
+    print 'have 2-D double dereference = ', $foo_2D->[0]->[2], "\n";
+
+Both dereference statements in the example above should access the numeric value of C<9>, taken from C<$foo_1D> and then C<$foo_2D>, respectively:
+
+=for rperl X<noncode>
+
+    have 1-D single dereference = 9
+    have 2-D double dereference = 9
+
+=for rperl X</noncode>
 
 =head2 Section 3.6: C<qw()> Operator
 
-START HERE: add content
+Sometimes you will want to create an array which contains multiple string literals, which can be achieved either by normal use of quotes and commas, or by use of the I<"quote word"> C<qw()> operator.  Let's return to a source code example from L</Section 3.1: Lists vs Arrays>, which shows a common use of the C<qw()> operator, compared below with the equivalent code using quotes and commas.
+
+    my string_arrayref $foo_1 = [qw(a c e)];
+    my string_arrayref $bar_1 = ['a', 'c', 'e'];  # 4 characters less
+
+In the example above, we can reduce our source code by 4 characters by utilizing the C<qw()> operator.  The benefit of using C<qw()> only increases with the number of array elements.
+
+    my string_arrayref $foo_2 = [qw(a b c d e f g)];
+    my string_arrayref $bar_2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];  # 16 characters less
+ 
+    my string_arrayref $foo_3 = [qw(a b c d e f g h i j k l m)];
+    my string_arrayref $bar_3 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'];  # 34 characters less
+
+Now let's take a look at the data we have stored in our array reference variables:
+
+    print 'have $foo_1 = ', string_arrayref_to_string($foo_1), "\n";
+    print 'have $bar_1 = ', string_arrayref_to_string($bar_1), "\n";
+    print 'have $foo_2 = ', string_arrayref_to_string($foo_2), "\n";
+    print 'have $bar_2 = ', string_arrayref_to_string($bar_2), "\n";
+    print 'have $foo_3 = ', string_arrayref_to_string($foo_3), "\n";
+    print 'have $bar_3 = ', string_arrayref_to_string($bar_3), "\n";
+
+=for rperl X<noncode>
+
+    have $foo_1 = ['a', 'c', 'e']
+    have $bar_1 = ['a', 'c', 'e']
+    have $foo_2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+    have $bar_2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+    have $foo_3 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']
+    have $bar_3 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']
+
+=for rperl X</noncode>
+
+As we can see in the output above, the data stored by the C<qw()> operator is identical to the data stored by the normal quotes and commas technique, and C<qw()> requires fewer characters of source code when there are at least 2 string array elements.
 
 =head2 Section 3.7: Array Assignment
 
-START HERE: add content
+As mentioned in L</Section 3.1: Lists vs Arrays>, normal Perl allows you to perform a special kind of array assignment with multiple variables on the left (receiving) side of the equal sign C<=> assignment operator.  This is one of Perl's countless shortcuts, allowing a software developer to initialize or modify more than one variable in a single statement.
+
+    my ($x, $y, $z)       = @array_by_value;  # fine in Perl, error in RPerl, stored-by-value array assigned to list of scalar variables
+    my ($foo, $bar, $bat) = (10, 20, 30);     # fine in Perl, error in RPerl, list                  assigned to list of scalar variables
+
+In RPerl, we support exactly one variable on the left side of each assignment operator.  If you need to initialize or modify multiple variables, simply separate each into its own statement.  The source code below achieves the same goals as the code above, without utilizing special array assignment statements.  Each line of source code above has been expanded into three equivalent lines below.
+
+    my integer $x = $array_by_reference->[0];  # fine in Perl, fine in RPerl, stored-by-reference array element assigned to scalar variable
+    my integer $y = $array_by_reference->[1];
+    my integer $z = $array_by_reference->[2];
+
+    my integer $foo = 10;                      # fine in Perl, fine in RPerl, scalar assigned to scalar variable
+    my integer $bar = 20;
+    my integer $bat = 30;
 
 =head2 Section 3.8: C<push> & C<pop> Operators
 
-START HERE: add content
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice @{[split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Arithmetic Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Push
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+push
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Variadic
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Pop
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+pop
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<Push>
+
+    push ARRAY, LIST
+
+ARRAY is dereferenced array;
+
+LIST is commma-separated list of expressions;
+
+Append elements of LIST after final element of ARRAY;
+
+In non-void context, return new ARRAY length, operator and operands must be enclosed in parentheses
+
+    my integer_arrayref $foo = [17];
+    push @{$foo}, 21, 12, 23;
+    print 'have $foo = ', integer_arrayref_to_string($foo), "\n";
+
+=for rperl X<noncode>
+
+    have $foo = [17, 21, 12, 23]
+
+=for rperl X</noncode>
+
+    my integer_arrayref $frob = [];
+    my integer $frob_length = ( push @{$frob}, 21, 12, 23 );
+    print 'have $frob = ', integer_arrayref_to_string($frob), "\n";
+    print 'have $frob_length = ', $frob_length, "\n";
+
+=for rperl X<noncode>
+
+    have $frob = [21, 12, 23]
+    have $frob_length = 3
+
+=for rperl X</noncode>
+
+=back
+
+=over
+
+=item * B<Pop>
+
+    pop ARRAY
+
+ARRAY is dereferenced array;
+
+Remove final element of ARRAY and return
+
+    my integer_arrayref $foo = [17, 21, 12, 23];
+    pop @{$foo};
+    print 'have $foo = ', integer_arrayref_to_string($foo), "\n";
+
+=for rperl X<noncode>
+
+    have $foo = [17, 21, 12]
+
+=for rperl X</noncode>
+
+    my integer_arrayref $frob = [21, 12, 23];
+    my integer $frob_pop = pop @{$frob};
+    $frob_length = scalar @{$frob};
+    print 'have $frob_pop = ', $frob_pop, "\n";
+    print 'have $frob = ', integer_arrayref_to_string($frob), "\n";
+    print 'have $frob_length = ', $frob_length, "\n";
+
+=for rperl X<noncode>
+
+    have $frob_pop = 23
+    have $frob = [21, 12]
+    have $frob_length = 2
+
+=for rperl X</noncode>
+
+=back
 
 =head2 Section 3.9: C<shift> & C<unshift> Operators
 
-START HERE: add content
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice @{[split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Arithmetic Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Shift
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+shift
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Unary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <row><entry align="left">
+
+Unshift
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+unshift
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Variadic
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<Shift>
+
+    shift ARRAY
+
+ARRAY is dereferenced array;
+
+Remove starting element of ARRAY and return
+
+    my integer_arrayref $foo = [17, 21, 12, 23];
+    shift @{$foo};
+    print 'have $foo = ', integer_arrayref_to_string($foo), "\n";
+
+=for rperl X<noncode>
+
+    have $foo = [21, 12, 23]
+
+=for rperl X</noncode>
+
+    my integer_arrayref $frob = [21, 12, 23]; 
+    my integer $frob_shift = shift @{$frob};
+    $frob_length = scalar @{$frob};
+    print 'have $frob_shift = ', $frob_shift, "\n";
+    print 'have $frob = ', integer_arrayref_to_string($frob), "\n";
+    print 'have $frob_length = ', $frob_length, "\n";
+
+=for rperl X<noncode>
+
+    have $frob_shift = 21
+    have $frob = [12, 23]
+    have $frob_length = 2
+
+=for rperl X</noncode>
+
+=back
+
+=over
+
+=item * B<Unshift>
+
+    unshift ARRAY, LIST
+
+ARRAY is dereferenced array;
+
+LIST is commma-separated list of expressions;
+
+Append elements of LIST before starting element of ARRAY;
+
+In non-void context, return new ARRAY length, operator and operands must be enclosed in parentheses
+
+    my integer_arrayref $foo = [17];
+    unshift @{$foo}, 21, 12, 23;
+    print 'have $foo = ', integer_arrayref_to_string($foo), "\n";
+
+=for rperl X<noncode>
+
+    have $foo = [21, 12, 23, 17]
+
+=for rperl X</noncode>
+
+    my integer_arrayref $frob = [];
+    my integer $frob_length = ( unshift @{$frob}, 21, 12, 23 );
+    print 'have $frob = ', integer_arrayref_to_string($frob), "\n";
+    print 'have $frob_length = ', $frob_length, "\n";
+
+=for rperl X<noncode>
+
+    have $frob = [21, 12, 23]
+    have $frob_length = 3
+
+=for rperl X</noncode>
+
+=back
 
 =head2 Section 3.10: Converting From Array To String
 
-START HERE: add content
+The terms I<"stringify"> and I<"pretty print"> refer to the conversion from any non-string data type or data structure into a string data type.
+
+=for comment START HERE: need define "function"???
+
+As mentioned in L </INSERT_SECTION>, RPerl provides the following stringification functions:
+
+=for comment START HERE: add list
+
+The C<integer_arrayref_to_string()> function is implemented by the following Perl source code:
+
+=for comment START HERE: add code
 
 =head2 Section 3.11: Program Control Using The C<foreach> Loop
 
@@ -16121,18 +16992,24 @@ X<br>
     %token OP01_NAMED_SCOLON         = /(pack;|unpack;|vec;|
 
 # UNSORTED
+TEMPORARILY HIDDEN FROM VIEW
+
+=begin comment
+
     %token OP01_NAMED_SCOLON         = /(accept;|bind;|binmode;|bless;|break;|chmod;|chomp;|chop;|chown;|closedir;|connect;|continue;|dbmclose;
     |dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|fcntl;|fileno;|flock;|fork;
     |getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;
     |getprotobynumber;|getprotoent;|getpwent;|getpwnam;|getpwuid;|getservbyname;|getservbyport;|getservent;|getsockname;|getsockopt;|given;|grep;|ioctl;|join;
-    |keys;|kill;|link;|listen;|local;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pipe;|pop;|prototype;|push;|qx;|read;|readdir;
+    |keys;|kill;|link;|listen;|local;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pipe;|prototype;|qx;|read;|readdir;
     |readline;|readpipe;|recv;|rename;|reset;|reverse;|rewinddir;|say;|seek;|seekdir;|select;|semctl;|semget;|semop;|send;|setgrent;|sethostent;|setnetent;
-    |setpgrp;|setpriority;|setprotoent;|setpwent;|setservent;|setsockopt;|shift;|shmctl;|shmget;|shmread;|shmwrite;|shutdown;|socket;|socketpair;|sort;|splice;|split;
+    |setpgrp;|setpriority;|setprotoent;|setpwent;|setservent;|setsockopt;|shmctl;|shmget;|shmread;|shmwrite;|shutdown;|socket;|socketpair;|sort;|splice;|split;
     |state;|symlink;|syscall;|sysopen;|sysread;|sysseek;|system;|syswrite;|tell;|telldir;|tie;|tied;|time;|times;|truncate;|unless;|unlink;
-    |unshift;|untie;|until;|utime;|values;|vec;|wait;|waitpid;|wantarray;|warn;|when;)/
+    |untie;|until;|utime;|values;|vec;|wait;|waitpid;|wantarray;|warn;|when;)/
 
     %token OP10_NAMED_UNARY_SCOLON   = /(alarm;|caller;|chdir;|chroot;|defined;|delete;|do;|eval;|exists;|gethostbyname;|getnetbyname;|getpgrp;|getprotobyname;|glob;
     |gmtime;|goto;|localtime;|lock;|lstat;|readlink;|ref;|require;|rmdir;|scalar;|sleep;|stat;|umask;)/
+
+=end comment
 
 X<br>
 
@@ -18221,7 +19098,7 @@ I<By default, RPerl will set this mode option to match the internal C data type 
 
 I<The data type checking mode option tells RPerl if it should perform additional tests to ensure correct data types are used as "subroutine arguments" (not to be confused with "command-line arguments").  RPerl subroutines can accept 1 or more arguments (AKA "parameters"), each of which must be of a specific data type.>
 
-I<In C++-ops-C++-types mode, all data types must be determined at compile time and thus cannot change (AKA "static"), so the C++ compiler performs all necessary type checking.  In any Perl types mode, the data types can not be determined until runtime and thus can change (AKA "dynamic"), so RPerl must itself perform type checking for subroutine arguments.>
+I<In C++-ops-C++-types mode, all data types must be determined at compile time and thus can not change (AKA "static"), so the C++ compiler performs all necessary type checking.  In any Perl types mode, the data types can not be determined until runtime and thus can change (AKA "dynamic"), so RPerl must itself perform type checking for subroutine arguments.>
 
 I<If the type checking mode is set to TRACE, then the name of the problematic subroutine and argument will be "traced" and provided in the RPerl error message.  This setting can be useful for RPerl application developers and debugging purposes.>
 
@@ -19255,7 +20132,7 @@ Operator I<"arity"> is a technical term which means the number of input operands
 
 L<Operator Arity on Wikipedia|https://en.wikipedia.org/wiki/Arity>
 
-Operator I<"fixity"> is the notation form indicating the location of an operator when placed relative to its own input operands.  I<"Prefix"> operators are located before their operands, I<"infix"> between operands, and I<"postfix"> after operands.  Additionally, operators which must be placed both before and after their operands are said to be of I<"closed"> fixity, while operators capable of more than one placement location are called I<"mixfix">.  Prefix notation is also known as I<"Polish notation">, and postfix is called I<"Reverse Polish"> notation.  The C<abs> absolute value is a prefix operator; the C<+> addition operator is infix; and the C<++> increment operator can be called as postfix.  The C<-( )> negative-with-parentheses operator is of closed fixity, because the parentheses component must appear both before and after the enclosed operand.  Parentheses are always of closed fixity; in normal Perl, the C<-> negative (without parentheses) is a prefix operator, but in RPerl we only allow the closed fixity C<-( )> negative-with-parentheses operator in order to avoid grammar ambiguity, because the same C<-> dash (AKA hyphen) character is utilized for both the C<-> negative and C<-> subtraction operators.  The C<++> increment operator may also be called as prefix, so it may be classified as mixfix.
+Operator I<"fixity"> is the notation form indicating the location of an operator when placed relative to its own input operands.  I<"Prefix"> operators are located before their operands, I<"infix"> between operands, and I<"postfix"> after operands.  Additionally, operators which must be placed both before and after their operands are said to be of I<"closed"> fixity (AKA I<"closefix">), while operators capable of more than one placement location are called I<"mixfix">.  Prefix notation is also known as I<"Polish notation">, and postfix is called I<"Reverse Polish"> notation.  The C<abs> absolute value is a prefix operator; the C<+> addition operator is infix; and the C<++> increment operator can be called as postfix.  The C<-( )> negative-with-parentheses operator is of closed fixity, because the parentheses component must appear both before and after the enclosed operand.  Parentheses are always of closed fixity; in normal Perl, the C<-> negative (without parentheses) is a prefix operator, but in RPerl we only allow the closed fixity C<-( )> negative-with-parentheses operator in order to avoid grammar ambiguity, because the same C<-> dash (AKA hyphen) character is utilized for both the C<-> negative and C<-> subtraction operators.  The C<++> increment operator may also be called as prefix, so it may be classified as mixfix.
 
 L<Prefix Notation on Wikipedia|https://en.wikipedia.org/wiki/Prefix_notation>
 

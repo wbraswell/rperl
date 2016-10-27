@@ -1,7 +1,9 @@
 #!/usr/bin/perl
 
+# Learning RPerl, Section 3.4: Array Length & Negative Indices
+
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'have $foo = [23]' >>>
+# <<< EXECUTE_SUCCESS: 'have $greeting_final = howdy' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -14,6 +16,8 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-my integer_arrayref $foo = [];
-push @{$foo}, 23;
-print 'have $foo = ', integer_arrayref_to_string($foo), "\n";
+
+my string_arrayref $greetings        = ['hello', 'hi', 'howdy'];
+my integer         $greetings_length = scalar @{$greetings};
+my string $greeting_final            = $greetings->[($greetings_length - 1)];
+print 'have $greeting_final = ', $greeting_final, "\n";

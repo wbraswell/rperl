@@ -1,7 +1,11 @@
 #!/usr/bin/perl
 
+# Learning RPerl, Section 3.1: Lists vs Arrays
+
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'have $foo = [23]' >>>
+# <<< PARSE ERROR: 'ERROR ECOPAPL02' >>>
+# <<< PARSE ERROR: 'syntax error>>>
+# <<< PARSE ERROR: 'near "my ["' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -14,6 +18,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OPERATIONS ]]]
-my integer_arrayref $foo = [];
-push @{$foo}, 23;
-print 'have $foo = ', integer_arrayref_to_string($foo), "\n";
+
+my $variable_storing_array_by_reference = ['list', 'enclosed', 'within', 'round',  'parentheses'];
+my [$list, $of, $variables] = $variable_storing_array_by_reference;
+print '$list = ', $list, "\n";
