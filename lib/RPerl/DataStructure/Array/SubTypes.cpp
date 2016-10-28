@@ -218,6 +218,12 @@ void XS_pack_integer_arrayref_arrayref(SV* output_avref_avref, integer_arrayref_
 
 # ifdef __PERL__TYPES
 
+
+// START HERE: remove stringify subs below and replace w/ ones in Array.cpp
+// START HERE: remove stringify subs below and replace w/ ones in Array.cpp
+// START HERE: remove stringify subs below and replace w/ ones in Array.cpp
+
+
 /* DISABLE TMP
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing IV)
 SV* integer_arrayref_to_string(SV* input_avref)
