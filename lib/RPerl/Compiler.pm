@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.018_000;
+our $VERSION = 0.019_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -671,7 +671,8 @@ our void $save_source_files = sub {
             my string $perltidy_path = undef;
             $perltidy_path = can_run('perltidy');    # DEV NOTE: comment this line to disable perltidy
             if ( defined $perltidy_path ) {
-                system $perltidy_path, '-pbp', '--ignore-side-comment-lengths', '--converge', '-l=160', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
+#                system $perltidy_path, '-pbp', '--ignore-side-comment-lengths', '--converge', '-l=160', '-b', '-nst', q{-bext='/'}, '-q', $file_name;
+                system $perltidy_path, '-pbp', '--ignore-side-comment-lengths', '--converge', '-l=' . RPerl::Generator::PERLTIDY_LINE_WIDTH(), '-b', '-nst', q{-bext='/'}, '-q', $file_name;
             }
             else {
                 RPerl::warning(

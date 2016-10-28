@@ -17,13 +17,13 @@ use RPerl::DataType::Modifier::Reference;
 # [[[ INCLUDES ]]]
 # DEV NOTE: must pre-declare string_hashref::method and object types here, because this file appears on a lower line number in rperltypes.pm
 #require RPerl::CodeBlock::Subroutine::Method;
-package  # hide from PAUSE indexing
+package    # hide from PAUSE indexing
     string_hashref::method;
 use strict;
 use warnings;
 
 #require RPerl::Object;
-package  # hide from PAUSE indexing
+package    # hide from PAUSE indexing
     object;
 use strict;
 use warnings;
@@ -33,10 +33,11 @@ use strict;
 use warnings;
 
 # [[[ OO PROPERTIES ]]]
-# NEED FIX: type 'hashref' not yet defined here, 
+# NEED FIX: type 'hashref' not yet defined here,
 # makes it impossible to 'use RPerl::DataStructure::Array;' or 'use RPerl::DataStructure::Hash;',
 # followed by more cascading errors
 our hashref $properties = {};
+
 #our $properties = {};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
@@ -45,20 +46,19 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
-#    RPerl::diag( 'in Array::Reference->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    #    RPerl::diag( 'in Array::Reference->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
 
     # unwrap ArrayReference_198 from SubExpression_140
     if ( $self_class eq 'SubExpression_140' ) {
-        $self = $self->{children}->[0];
+        $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( ( $self_class ) ne 'ArrayReference_198' ) {
-        die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
-                . ( $self_class )
+    if ( ($self_class) ne 'ArrayReference_198' ) {
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+                . ($self_class)
                 . ' found where ArrayReference_198 or SubExpression_140 expected, dying' )
             . "\n";
     }
@@ -71,11 +71,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     $rperl_source_group->{PMC} .= $left_bracket;
 
     if ( exists $list_elements_optional->{children}->[0] ) {
-        my string_hashref $rperl_source_subgroup
-            = $list_elements_optional->{children}->[0]
-            ->ast_to_rperl__generate($modes);
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+        my string_hashref $rperl_source_subgroup = $list_elements_optional->{children}->[0]->ast_to_rperl__generate($modes);
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
 
     $rperl_source_group->{PMC} .= $right_bracket;
@@ -85,11 +82,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
-    my string_hashref $cpp_source_group
-        = {
-        CPP => q{// <<< RP::DS::A::R __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
-            . "\n"
-        };
+    my string_hashref $cpp_source_group = { CPP => q{// <<< RP::DS::A::R __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n" };
 
     #...
     return $cpp_source_group;
@@ -99,20 +92,19 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
-#    RPerl::diag( 'in Array::Reference->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    #    RPerl::diag( 'in Array::Reference->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
 
     # unwrap ArrayReference_198 from SubExpression_140
     if ( $self_class eq 'SubExpression_140' ) {
-        $self = $self->{children}->[0];
+        $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( ( $self_class ) ne 'ArrayReference_198' ) {
-        die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
-                . ( $self_class )
+    if ( ($self_class) ne 'ArrayReference_198' ) {
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+                . ($self_class)
                 . ' found where ArrayReference_198 or SubExpression_140 expected, dying' )
             . "\n";
     }
@@ -123,11 +115,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     $cpp_source_group->{CPP} .= '{';
 
     if ( exists $list_elements_optional->{children}->[0] ) {
-        my string_hashref $cpp_source_subgroup
-            = $list_elements_optional->{children}->[0]
-            ->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group,
-            $cpp_source_subgroup );
+        my string_hashref $cpp_source_subgroup = $list_elements_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
 
     $cpp_source_group->{CPP} .= '}';

@@ -17,4 +17,6 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-if (1 < 3) { print   'a c e'; }
+if (1 < 3) {
+    print 'a c e';
+}
