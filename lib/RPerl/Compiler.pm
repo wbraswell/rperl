@@ -30,6 +30,8 @@ use List::MoreUtils qw(uniq);
 use File::Spec;
 use Config;
 use Config qw(config_re);
+#use IPC::Open3; ## 93r
+#use IO::Select; ## 93r
 use IPC::Run3 qw(run3);
 use Cwd;
 use File::Copy;  # for move()
@@ -1222,8 +1224,26 @@ our void $cpp_to_openmp_cpp = sub {
     RPerl::diag( 'in Compiler::cpp_to_openmp_cpp(), have $polycc_command =' . "\n\n" . $polycc_command . "\n" );
 
     # ACTUALLY RUN POLYCC COMMAND
+    #    my $pid = open3( 0, \*POLYCC_STDOUT, \*POLYCC_STDERR, $polycc_command );    # disable STDIN w/ 0
+    #
+    #    my $stdout_select;
+    #    my $stderr_select;
+    #    if ( $OSNAME ne 'MSWin32' ) {
+    #        $stdout_select = IO::Select->new();
+    #        $stderr_select = IO::Select->new();
+    #        $stdout_select->add( \*POLYCC_STDOUT );
+    #        $stderr_select->add( \*POLYCC_STDERR );
+    #    }
+    #
+
     my string $polycc_command_stdout = q{};
     my string $polycc_command_stderr = q{};
+
+    #if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) { sysread POLYCC_STDOUT, $polycc_command_stdout, 4096; }
+	 #    if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) { sysread POLYCC_STDERR, $polycc_command_stderr, 4096; }
+	 #    waitpid $pid, 0;
+	 #    if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) { my $s; sysread POLYCC_STDOUT, $s, 4096; $polycc_command_stdout .= $s; }
+	 #    if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) { my $s; sysread POLYCC_STDERR, $s, 4096; $polycc_command_stderr .= $s; }
 
     #my $pid = open3( 0, \*POLYCC_STDOUT, \*POLYCC_STDERR, $polycc_command );    # disable STDIN w/ 0
     run3( $polycc_command, \undef, \$polycc_command_stdout, \$polycc_command_stderr );
@@ -1428,8 +1448,24 @@ our void $cpp_to_xsbinary__subcompile = sub {
             if   ( $OSNAME eq 'MSWin32' ) { $subcompile_command .= q{ } . ' > nul'; }
             else                          { $subcompile_command .= q{ } . ' > /dev/null'; }
         }
+	#	my $pid = open3( 0, \*SUBCOMPILE_STDOUT, \*SUBCOMPILE_STDERR, $subcompile_command );    # disable STDIN w/ 0
+	#
+	#        my $stdout_select;
+	#        my $stderr_select;
+	#        if ( $OSNAME ne 'MSWin32' ) {
+	#            $stdout_select = IO::Select->new();
+	#            $stderr_select = IO::Select->new();
+	#            $stdout_select->add( \*SUBCOMPILE_STDOUT );
+	#            $stderr_select->add( \*SUBCOMPILE_STDERR );
+	#        }
+	#
 
         RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command =' . "\n\n" . $subcompile_command . "\n" );
+	# if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) { sysread SUBCOMPILE_STDOUT, $subcompile_command_stdout, 4096; }
+	#        if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) { sysread SUBCOMPILE_STDERR, $subcompile_command_stderr, 4096; }
+	#        waitpid $pid, 0;
+	#        if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) { my $s; sysread SUBCOMPILE_STDOUT, $s, 4096; $subcompile_command_stdout .= $s; }
+	#        if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) { my $s; sysread SUBCOMPILE_STDERR, $s, 4096; $subcompile_command_stderr .= $s; }
 
         # ACTUALLY RUN SUBCOMPILE COMMAND
         my string $subcompile_command_stdout = q{};
