@@ -25,8 +25,9 @@ use RPerl::Compiler;
 use Test::More;
 use Test::Exception;
 use File::Find qw(find);
-use IPC::Open3;
-use IO::Select;
+#use IPC::Open3;
+#use IO::Select;
+use IPC::Run3 qw(run3);
 
 # [[[ CONSTANTS ]]]
 use constant PATH_TESTS => my string $TYPED_PATH_TESTS = $RPerl::INCLUDE_PATH . '/RPerl/Test';
@@ -135,77 +136,82 @@ foreach my $test_file ( sort keys %{$test_files} ) {
     }
 
 #    RPerl::diag( 'in 09_interpret_execute.t, have $test_file = ' . $test_file . "\n" );
-    my $pid;
+    #my $pid;
+    my $stdout_generated = q{};
+    my $stderr_generated = q{};
     if ( $RPerl::INCLUDE_PATH =~ /blib/ ) {
+	    #$pid = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, $test_file_execute_command );    # disable STDIN w/ 0
         my string $test_file_execute_command = $EXECUTABLE_NAME . ' -Mblib=' . $RPerl::INCLUDE_PATH . ' ' . $test_file;
 #        RPerl::diag( 'in 09_interpret_execute.t, yes blib INCLUDE_PATH, have $test_file_execute_command = ' . $test_file_execute_command . "\n" );
 #        RPerl::diag( 'in 09_interpret_execute.t, yes blib INCLUDE_PATH, about to call open3()...' . "\n" );
-        $pid = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, $test_file_execute_command );    # disable STDIN w/ 0
+	run3( $test_file_execute_command, \undef, \$stdout_generated, \$stderr_generated );
+	#$pid = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, $test_file_execute_command );    # disable STDIN w/ 0
 #        RPerl::diag( 'in 09_interpret_execute.t, yes blib INCLUDE_PATH, returned from open3(), have $pid = ' . $pid . "\n" );
     }
     else {
         my string $test_file_execute_command = $EXECUTABLE_NAME . ' -I' . $RPerl::INCLUDE_PATH . ' ' . $test_file;
 #        RPerl::diag( 'in 09_interpret_execute.t, not blib INCLUDE_PATH, have $test_file_execute_command = ' . $test_file_execute_command . "\n" );
 #        RPerl::diag( 'in 09_interpret_execute.t, not blib INCLUDE_PATH, about to call open3()...' . "\n" );
-        $pid = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, $test_file_execute_command );    # disable STDIN w/ 0
+#         my $stdout_select;
+#    my $stderr_select;
+#    if ( $OSNAME ne 'MSWin32' ) {
+##        RPerl::diag( 'in 09_interpret_execute.t, no MSWin32, about to call IO::Select->new()...' . "\n" );
+#        $stdout_select = IO::Select->new();
+#        $stderr_select = IO::Select->new();
+##        RPerl::diag( 'in 09_interpret_execute.t, no MSWin32, about to call $stdout_select->add( \*STDOUT_TEST )...' . "\n" );
+#        $stdout_select->add( \*STDOUT_TEST );
+#        $stderr_select->add( \*STDERR_TEST );
+##        RPerl::diag( 'in 09_interpret_execute.t, no MSWin32, returned from $stdout_select->add( \*STDOUT_TEST )' . "\n" );
+#    }
+#
+#    my $stdout_generated = q{};
+#    my $stderr_generated = q{};
+#
+	run3( $test_file_execute_command, \undef, \$stdout_generated, \$stderr_generated );
+	#$pid = open3( 0, \*STDOUT_TEST, \*STDERR_TEST, $test_file_execute_command );    # disable STDIN w/ 0
 #        RPerl::diag( 'in 09_interpret_execute.t, not blib INCLUDE_PATH, returned from open3(), have $pid = ' . $pid . "\n" );
     }
-
-    my $stdout_select;
-    my $stderr_select;
-    if ( $OSNAME ne 'MSWin32' ) {
-#        RPerl::diag( 'in 09_interpret_execute.t, no MSWin32, about to call IO::Select->new()...' . "\n" );
-        $stdout_select = IO::Select->new();
-        $stderr_select = IO::Select->new();
-#        RPerl::diag( 'in 09_interpret_execute.t, no MSWin32, about to call $stdout_select->add( \*STDOUT_TEST )...' . "\n" );
-        $stdout_select->add( \*STDOUT_TEST );
-        $stderr_select->add( \*STDERR_TEST );
-#        RPerl::diag( 'in 09_interpret_execute.t, no MSWin32, returned from $stdout_select->add( \*STDOUT_TEST )' . "\n" );
-    }
-
-    my $stdout_generated = q{};
-    my $stderr_generated = q{};
 
     # DISABLED: no user input accepted
     #    while (1) {
     #        print "Enter input\n";
     #        chomp( my $stdin_received = <STDIN_TEST> );
     #        print STDIN_TEST "$stdin_received\n";
-
-    #    select( undef, undef, undef, 0.1 ); # allow time for output to be generated; not needed with waitpid() before sysread() calls below
-
-    #        if ( $stdout_select->can_read(0) )  { RPerl::diag('in 09_interpret_execute.t, can read STDOUT_TEST for $test_file = ' . $test_file . "\n"); }
-    #        if ( $stderr_select->can_read(0) )  { RPerl::diag('in 09_interpret_execute.t, can read STDERR_TEST for $test_file = ' . $test_file . "\n"); }
-
-    if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) {
-#        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stdout_select->can_read(0), about to call sysread STDOUT_TEST...' . "\n" );
-        sysread STDOUT_TEST, $stdout_generated, 4096;
-#        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stdout_select->can_read(0), returned from sysread STDOUT_TEST, have $stdout_generated = ' . "\n" . '[BEGIN STDOUT]' . "\n" . $stdout_generated . '[END STDOUT]' . "\n" );
-    }
-    if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) {
-#        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stderr_select->can_read(0), about to call sysread STDERR_TEST...' . "\n" );
-        sysread STDERR_TEST, $stderr_generated, 4096;
-#        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stderr_select->can_read(0), returned from sysread STDERR_TEST, have $stderr_generated = ' . "\n" . '[BEGIN STDERR]' . "\n" . $stderr_generated . '[END STDERR]' . "\n" );
-    }
-
-#    RPerl::diag( 'in 09_interpret_execute.t, have $pid = ' . $pid . ', about to call waitpid...' . "\n" );
-    waitpid $pid, 0;
-#    RPerl::diag( 'in 09_interpret_execute.t, have $pid = ' . $pid . ', returned from waitpid...' . "\n" );
-
-    if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) {
-#        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stdout_select->can_read(0), about to call sysread STDOUT_TEST...' . "\n" );
-        my string $stdout_generated_continued;
-        sysread STDOUT_TEST, $stdout_generated_continued, 4096;
-        $stdout_generated .= $stdout_generated_continued;
-#        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stdout_select->can_read(0), returned from sysread STDOUT_TEST, have $stdout_generated_continued = ' . "\n" . '[BEGIN STDOUT]' . "\n" . $stdout_generated_continued . '[END STDOUT]' . "\n" );
-    }
-    if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) {
-#        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stderr_select->can_read(0), about to call sysread STDERR_TEST...' . "\n" );
-        my string $stderr_generated_continued;
-        sysread STDERR_TEST, $stderr_generated_continued, 4096;
-        $stderr_generated .= $stderr_generated_continued;
-#        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stderr_select->can_read(0), returned from sysread STDERR_TEST, have $stderr_generated_continued = ' . "\n" . '[BEGIN STDERR]' . "\n" . $stderr_generated_continued . '[END STDERR]' . "\n" );
-    }
+   #    select( undef, undef, undef, 0.1 ); # allow time for output to be generated; not needed with waitpid() before sysread() calls below
+#
+#    #        if ( $stdout_select->can_read(0) )  { RPerl::diag('in 09_interpret_execute.t, can read STDOUT_TEST for $test_file = ' . $test_file . "\n"); }
+#    #        if ( $stderr_select->can_read(0) )  { RPerl::diag('in 09_interpret_execute.t, can read STDERR_TEST for $test_file = ' . $test_file . "\n"); }
+#
+#    if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) {
+##        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stdout_select->can_read(0), about to call sysread STDOUT_TEST...' . "\n" );
+#        sysread STDOUT_TEST, $stdout_generated, 4096;
+##        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stdout_select->can_read(0), returned from sysread STDOUT_TEST, have $stdout_generated = ' . "\n" . '[BEGIN STDOUT]' . "\n" . $stdout_generated . '[END STDOUT]' . "\n" );
+#    }
+#    if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) {
+##        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stderr_select->can_read(0), about to call sysread STDERR_TEST...' . "\n" );
+#        sysread STDERR_TEST, $stderr_generated, 4096;
+##        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stderr_select->can_read(0), returned from sysread STDERR_TEST, have $stderr_generated = ' . "\n" . '[BEGIN STDERR]' . "\n" . $stderr_generated . '[END STDERR]' . "\n" );
+#    }
+#
+##    RPerl::diag( 'in 09_interpret_execute.t, have $pid = ' . $pid . ', about to call waitpid...' . "\n" );
+#    waitpid $pid, 0;
+##    RPerl::diag( 'in 09_interpret_execute.t, have $pid = ' . $pid . ', returned from waitpid...' . "\n" );
+#
+#    if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) {
+##        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stdout_select->can_read(0), about to call sysread STDOUT_TEST...' . "\n" );
+#        my string $stdout_generated_continued;
+#        sysread STDOUT_TEST, $stdout_generated_continued, 4096;
+#        $stdout_generated .= $stdout_generated_continued;
+##        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stdout_select->can_read(0), returned from sysread STDOUT_TEST, have $stdout_generated_continued = ' . "\n" . '[BEGIN STDOUT]' . "\n" . $stdout_generated_continued . '[END STDOUT]' . "\n" );
+#    }
+#    if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) {
+##        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stderr_select->can_read(0), about to call sysread STDERR_TEST...' . "\n" );
+#        my string $stderr_generated_continued;
+#        sysread STDERR_TEST, $stderr_generated_continued, 4096;
+#        $stderr_generated .= $stderr_generated_continued;
+##        RPerl::diag( 'in 09_interpret_execute.t, yes MSWin32 or $stderr_select->can_read(0), returned from sysread STDERR_TEST, have $stderr_generated_continued = ' . "\n" . '[BEGIN STDERR]' . "\n" . $stderr_generated_continued . '[END STDERR]' . "\n" );
+#    }
+  
 
     # DISABLED: no user input accepted
     #        $stdout_generated = q{};

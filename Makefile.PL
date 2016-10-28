@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.004_100;
+our $VERSION = 0.004_500;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -22,7 +22,7 @@ WriteMakefile(
     PREREQ_PM        => {
         # RPERL USER DEPENDENCIES
         'ExtUtils::MakeMaker' => 7.04,     # for compatibility with Inline::C >= v0.75
-        'Test::Exception'     => 0.32,
+        'Test::Exception'     => 0.43,     # 0.43 needed because Appveyor testing required it
         'Test::CPAN::Changes' => 0.400002,
         'Test::Number::Delta' => 1.06,     # for compatibility with Perls compiled using -Duselongdouble
         'Perl::Critic'        => 1.121,
@@ -46,7 +46,8 @@ WriteMakefile(
         'App::Pod2CpanHtml'   => 0.04,     # Learning RPerl; used by pod2rperlhtml.pl, provides pod2cpanhtml
         'Date::Format'        => 2.24,     # Learning RPerl; used by pod2rperlhtml.pl
         'Pod::PseudoPod'      => 0.18,     # Learning RPerl; provides ppodchecker, ppod2txt, ppod2html, ppod2docbook
-        'Text::ASCIITable'    => 0.20      # Learning RPerl; used by pod2text & ppod2txt
+        'Text::ASCIITable'    => 0.20,     # Learning RPerl; used by pod2text & ppod2txt
+	'IPC::Run3'           => 0.048     # RPerl Compiler; used for internals (subcompile, testing)
     },
     META_MERGE => {
         'meta-spec' => {

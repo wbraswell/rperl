@@ -99,6 +99,7 @@ find(
 );
 
 # locate all *.*OPS_*TYPES pre-compiled files in PATH_PRECOMPILED directory
+if ( not defined $ARGV[0] ) { ## bugfix, needed because so you can use t/13 with args and it will work.
 find(
     sub {
         my $file = $File::Find::name;
@@ -136,6 +137,7 @@ find(
     },
     PATH_PRECOMPILED()
 );
+}
 
 #=cut
 
