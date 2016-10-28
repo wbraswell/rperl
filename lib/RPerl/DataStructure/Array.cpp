@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Array_cpp 0.005_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Array_cpp 0.007_000
 
 #include <RPerl/DataStructure/Array.h>		// -> NULL (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option)
 
@@ -411,7 +411,8 @@ SV* integer_arrayref_to_string(SV* input_avref)
 //		integer_CHECKTRACE(*input_av_element, (char*)((string)"*input_av_element at index " + to_string(i)).c_str(), "integer_hashref_to_string()");
 
 		if (i_is_0) { i_is_0 = 0; } else { sv_catpvn(output_sv, ", ", 2); }
-		sv_catpvf(output_sv, "%"INTEGER"", (integer)SvIV(*input_av_element));
+//		sv_catpvf(output_sv, "%"INTEGER"", (integer)SvIV(*input_av_element));  // NO UNDERSCORES
+		sv_catsv(output_sv, integer_to_string(*input_av_element));  // YES UNDERSCORES
 	}
 
 	sv_catpvn(output_sv, "]", 1);
@@ -565,7 +566,8 @@ string integer_arrayref_to_string(integer_arrayref input_vector)
 		// utilizes i in element retrieval
 		input_vector_element = input_vector[i];
 		if (i_is_0) { i_is_0 = 0; } else { output_stream << ", "; }
-		output_stream << input_vector_element;
+//		output_stream << input_vector_element;  // NO UNDERSCORES
+		output_stream << integer_to_string(input_vector_element);  // YES UNDERSCORES
 	}
 
 	output_stream << ']';

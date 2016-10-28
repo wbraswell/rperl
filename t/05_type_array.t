@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -52,7 +52,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' Operations & ' . $types . ' Data Types' . q{' enabled} );
 
     if ( $ops eq 'PERL' ) {
-        lives_and( sub { require_ok('RPerl::DataStructure::Array'); }, q{require_ok('RPerl::DataStructure::Array') lives} );
+        lives_and( sub { use_ok('RPerl::DataStructure::Array'); }, q{use_ok('RPerl::DataStructure::Array') lives} );
     }
     else {
         if ( $types eq 'CPP' ) {
@@ -119,38 +119,38 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     throws_ok(                                                                 # TIVAVRV10
         sub {
-            integer_arrayref_to_string( [ 2, 2112, undef, 23, -877, -33, 1701 ] );
+            integer_arrayref_to_string( [ 2, 2_112, undef, 23, -877, -33, 1_701 ] );
         },
         "/EIVAVRV02.*$mode_tagline/",
-        q{TIVAVRV10 integer_arrayref_to_string([2, 2112, undef, 23, -877, -33, 1701]) throws correct exception}
+        q{TIVAVRV10 integer_arrayref_to_string([2, 2_112, undef, 23, -877, -33, 1_701]) throws correct exception}
     );
     throws_ok(                                                                 # TIVAVRV11
         sub {
-            integer_arrayref_to_string( [ 2, 2112, 42, 23.3, -877, -33, 1701 ] );
+            integer_arrayref_to_string( [ 2, 2_112, 42, 23.3, -877, -33, 1_701 ] );
         },
         "/EIVAVRV03.*$mode_tagline/",
-        q{TIVAVRV11 integer_arrayref_to_string([2, 2112, 42, 23.3, -877, -33, 1701]) throws correct exception}
+        q{TIVAVRV11 integer_arrayref_to_string([2, 2_112, 42, 23.3, -877, -33, 1_701]) throws correct exception}
     );
     throws_ok(                                                                 # TIVAVRV12
         sub {
-            integer_arrayref_to_string( [ 2, 2112, 42, '23', -877, -33, 1701 ] );
+            integer_arrayref_to_string( [ 2, 2_112, 42, '23', -877, -33, 1_701 ] );
         },
         "/EIVAVRV03.*$mode_tagline/",
-        q{TIVAVRV12 integer_arrayref_to_string([2, 2112, 42, '23', -877, -33, 1701]) throws correct exception}
+        q{TIVAVRV12 integer_arrayref_to_string([2, 2_112, 42, '23', -877, -33, 1_701]) throws correct exception}
     );
     throws_ok(                                                                 # TIVAVRV13
         sub {
-            integer_arrayref_to_string( [ 2, 2112, 42, [23], -877, -33, 1701 ] );
+            integer_arrayref_to_string( [ 2, 2_112, 42, [23], -877, -33, 1_701 ] );
         },
         "/EIVAVRV03.*$mode_tagline/",
-        q{TIVAVRV13 integer_arrayref_to_string([2, 2112, 42, [23], -877, -33, 1701]) throws correct exception}
+        q{TIVAVRV13 integer_arrayref_to_string([2, 2_112, 42, [23], -877, -33, 1_701]) throws correct exception}
     );
     throws_ok(                                                                 # TIVAVRV14
         sub {
-            integer_arrayref_to_string( [ 2, 2112, 42, { a_subkey => 23 }, -877, -33, 1701 ] );
+            integer_arrayref_to_string( [ 2, 2_112, 42, { a_subkey => 23 }, -877, -33, 1_701 ] );
         },
         "/EIVAVRV03.*$mode_tagline/",
-        q{TIVAVRV14 integer_arrayref_to_string([2, 2112, 42, {a_subkey => 23}, -877, -33, 1701]) throws correct exception}
+        q{TIVAVRV14 integer_arrayref_to_string([2, 2_112, 42, {a_subkey => 23}, -877, -33, 1_701]) throws correct exception}
     );
     lives_and(                                                                 # TIVAVRV20
         sub {
@@ -160,12 +160,12 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(                                                                 # TIVAVRV21
         sub {
-            is( integer_arrayref_to_string( [ 2, 2112, 42, 23, -877, -33, 1701 ] ),
-                '[2, 2112, 42, 23, -877, -33, 1701]',
-                q{TIVAVRV21 integer_arrayref_to_string([2, 2112, 42, 23, -877, -33, 1701]) returns correct value}
+            is( integer_arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                '[2, 2_112, 42, 23, -877, -33, 1_701]',
+                q{TIVAVRV21 integer_arrayref_to_string([2, 2_112, 42, 23, -877, -33, 1_701]) returns correct value}
             );
         },
-        q{TIVAVRV21 integer_arrayref_to_string([2, 2112, 42, 23, -877, -33, 1701]) lives}
+        q{TIVAVRV21 integer_arrayref_to_string([2, 2_112, 42, 23, -877, -33, 1_701]) lives}
     );
     throws_ok(                                                                 # TIVAVRV30
         sub { integer_arrayref__typetest0() },
@@ -179,26 +179,26 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     throws_ok(                                                                  # TIVAVRV32
         sub {
-            integer_arrayref__typetest0( [ 2, 2112, undef, 23, -877, -33, 1701 ] );
+            integer_arrayref__typetest0( [ 2, 2_112, undef, 23, -877, -33, 1_701 ] );
         },
         "/EIVAVRV02.*$mode_tagline/",
-        q{TIVAVRV32 integer_arrayref__typetest0([2, 2112, undef, 23, -877, -33, 1701]) throws correct exception}
+        q{TIVAVRV32 integer_arrayref__typetest0([2, 2_112, undef, 23, -877, -33, 1_701]) throws correct exception}
     );
     throws_ok(                                                                  # TIVAVRV33
         sub {
-            integer_arrayref__typetest0( [ 2, 2112, 42, 'abcdefg', -877, -33, 1701 ] );
+            integer_arrayref__typetest0( [ 2, 2_112, 42, 'abcdefg', -877, -33, 1_701 ] );
         },
         "/EIVAVRV03.*$mode_tagline/",
-        q{TIVAVRV33 integer_arrayref__typetest0([2, 2112, 42, 'abcdefg', -877, -33, 1701]) throws correct exception}
+        q{TIVAVRV33 integer_arrayref__typetest0([2, 2_112, 42, 'abcdefg', -877, -33, 1_701]) throws correct exception}
     );
     lives_and(                                                                  # TIVAVRV34
         sub {
-            is( integer_arrayref__typetest0( [ 2, 2112, 42, 23, -877, -33, 1701 ] ),
-                '[2, 2112, 42, 23, -877, -33, 1701]' . $mode_tagline,
-                q{TIVAVRV34 integer_arrayref__typetest0([2, 2112, 42, 23, -877, -33, 1701]) returns correct value}
+            is( integer_arrayref__typetest0( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                '[2, 2_112, 42, 23, -877, -33, 1_701]' . $mode_tagline,
+                q{TIVAVRV34 integer_arrayref__typetest0([2, 2_112, 42, 23, -877, -33, 1_701]) returns correct value}
             );
         },
-        q{TIVAVRV34 integer_arrayref__typetest0([2, 2112, 42, 23, -877, -33, 1701]) lives}
+        q{TIVAVRV34 integer_arrayref__typetest0([2, 2_112, 42, 23, -877, -33, 1_701]) lives}
     );
     lives_and(                                                                  # TIVAVRV40
         sub {
@@ -243,31 +243,31 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     throws_ok(                                                                # TNVAVRV10
         sub {
-            number_arrayref_to_string( [ 2, 2112, undef, 23, -877, -33, 1701 ] );
+            number_arrayref_to_string( [ 2, 2_112, undef, 23, -877, -33, 1_701 ] );
         },
         "/ENVAVRV02.*$mode_tagline/",
-        q{TNVAVRV10 number_arrayref_to_string([2, 2112, undef, 23, -877, -33, 1701]) throws correct exception}
+        q{TNVAVRV10 number_arrayref_to_string([2, 2_112, undef, 23, -877, -33, 1_701]) throws correct exception}
     );
     throws_ok(                                                                # TNVAVRV11
         sub {
-            number_arrayref_to_string( [ 2, 2112, 42, '23', -877, -33, 1701 ] );
+            number_arrayref_to_string( [ 2, 2_112, 42, '23', -877, -33, 1_701 ] );
         },
         "/ENVAVRV03.*$mode_tagline/",
-        q{TNVAVRV11 number_arrayref_to_string([2, 2112, 42, '23', -877, -33, 1701]) throws correct exception}
+        q{TNVAVRV11 number_arrayref_to_string([2, 2_112, 42, '23', -877, -33, 1_701]) throws correct exception}
     );
     throws_ok(                                                                # TNVAVRV12
         sub {
-            number_arrayref_to_string( [ 2, 2112, 42, [23], -877, -33, 1701 ] );
+            number_arrayref_to_string( [ 2, 2_112, 42, [23], -877, -33, 1_701 ] );
         },
         "/ENVAVRV03.*$mode_tagline/",
-        q{TNVAVRV12 number_arrayref_to_string([2, 2112, 42, [23], -877, -33, 1701]) throws correct exception}
+        q{TNVAVRV12 number_arrayref_to_string([2, 2_112, 42, [23], -877, -33, 1_701]) throws correct exception}
     );
     throws_ok(                                                                # TNVAVRV13
         sub {
-            number_arrayref_to_string( [ 2, 2112, 42, { a_subkey => 23 }, -877, -33, 1701 ] );
+            number_arrayref_to_string( [ 2, 2_112, 42, { a_subkey => 23 }, -877, -33, 1_701 ] );
         },
         "/ENVAVRV03.*$mode_tagline/",
-        q{TNVAVRV13 number_arrayref_to_string([2, 2112, 42, {a_subkey => 23}, -877, -33, 1701]) throws correct exception}
+        q{TNVAVRV13 number_arrayref_to_string([2, 2_112, 42, {a_subkey => 23}, -877, -33, 1_701]) throws correct exception}
     );
     lives_and(                                                                # TNVAVRV20
         sub {
@@ -277,12 +277,12 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(                                                                # TNVAVRV21
         sub {
-            is( number_arrayref_to_string( [ 2, 2112, 42, 23, -877, -33, 1701 ] ),
+            is( number_arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
                 '[2, 2_112, 42, 23, -877, -33, 1_701]',
-                q{TNVAVRV21 number_arrayref_to_string([2, 2112, 42, 23, -877, -33, 1701]) returns correct value}
+                q{TNVAVRV21 number_arrayref_to_string([2, 2_112, 42, 23, -877, -33, 1_701]) returns correct value}
             );
         },
-        q{TNVAVRV21 number_arrayref_to_string([2, 2112, 42, 23, -877, -33, 1701]) lives}
+        q{TNVAVRV21 number_arrayref_to_string([2, 2_112, 42, 23, -877, -33, 1_701]) lives}
     );
     lives_and(                                                                # TNVAVRV22
         sub {
@@ -292,40 +292,40 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(                                                                # TNVAVRV23
         sub {
-            is( number_arrayref_to_string( [ 2.1, 2112.2, 42.3, 23, -877, -33, 1701 ] ),
+            is( number_arrayref_to_string( [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ] ),
                 '[2.1, 2_112.2, 42.3, 23, -877, -33, 1_701]',
-                q{TNVAVRV23 number_arrayref_to_string([2.1, 2112.2, 42.3, 23, -877, -33, 1701]) returns correct value}
+                q{TNVAVRV23 number_arrayref_to_string([2.1, 2_112.2, 42.3, 23, -877, -33, 1_701]) returns correct value}
             );
         },
-        q{TNVAVRV23 number_arrayref_to_string([2.1, 2112.2, 42.3, 23, -877, -33, 1701]) lives}
+        q{TNVAVRV23 number_arrayref_to_string([2.1, 2_112.2, 42.3, 23, -877, -33, 1_701]) lives}
     );
 
     # NEED DELETE OLD CODE
 #    lives_and(                                                                # TNVAVRV24
 #        sub {
-#            is( number_arrayref_to_string( [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] ),
+#            is( number_arrayref_to_string( [ 2.123_443_211_234_432_1, 2_112.432_1, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] ),
 #                '[2.123_443_211_234_43, 2_112.432_1, 42.456_7, 23.765_444_444_444_4, -877.567_8, -33.876_587_658_765_9, 1_701.678_9]',
-#                q{TNVAVRV24 number_arrayref_to_string([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value}
+#                q{TNVAVRV24 number_arrayref_to_string([2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9]) returns correct value}
 #            );
 #        },
-#        q{TNVAVRV24 number_arrayref_to_string([2.1234432112344321, 2112.4321, ..., 1701.6789]) lives}
+#        q{TNVAVRV24 number_arrayref_to_string([2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9]) lives}
 #    );
 
     lives_and(                                                                 # TNVAVRV24
         sub {
-            my string $tmp_retval = number_arrayref_to_string( [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] );
+            my string $tmp_retval = number_arrayref_to_string( [ 2.123_443_211_234_432_1, 2_112.432_1, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
             like(
                 $tmp_retval,
                 qr/\[2\.123_443_211/,
-                q{TNVAVRV24a number_arrayref_to_string([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value, array beginning}
+                q{TNVAVRV24a number_arrayref_to_string([2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9]) returns correct value, array beginning}
             );
             like(
                 $tmp_retval,
                 qr/, 1_701\.678_9\]/,
-                q{TNVAVRV24b number_arrayref_to_string([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value, array end}
+                q{TNVAVRV24b number_arrayref_to_string([2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9]) returns correct value, array end}
             );
         },
-        q{TNVAVRV24 number_arrayref_to_string([2.1234432112344321, 2112.4321, ..., 1701.6789]) lives}
+        q{TNVAVRV24 number_arrayref_to_string([2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9]) lives}
     );
 
     throws_ok(                                                                # TNVAVRV30
@@ -340,51 +340,51 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     throws_ok(                                                                 # TNVAVRV32
         sub {
-            number_arrayref__typetest0( [ 2.1234432112344321, 2112.4321, undef, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] );
+            number_arrayref__typetest0( [ 2.123_443_211_234_432_1, 2_112.432_1, undef, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
         },
         "/ENVAVRV02.*$mode_tagline/",
-        q{TNVAVRV32 number_arrayref__typetest0([2.1234432112344321, 2112.4321, undef, 23.765444444444444444, ..., 1701.6789]) throws correct exception}
+        q{TNVAVRV32 number_arrayref__typetest0([2.123_443_211_234_432_1, 2_112.432_1, undef, 23.765_444_444_444_444_444, ..., 1_701.678_9]) throws correct exception}
     );
     throws_ok(                                                                 # TNVAVRV33
         sub {
             number_arrayref__typetest0(
-                [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 'abcdefg', -33.876587658765875687658765, 1701.6789 ] );
+                [ 2.123_443_211_234_432_1, 2_112.432_1, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, 'abcdefg', -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
         },
         "/ENVAVRV03.*$mode_tagline/",
-        q{TNVAVRV33 number_arrayref__typetest0([2.1234432112344321, ..., 'abcdefg', -33.876587658765875687658765, 1701.6789]) throws correct exception}
+        q{TNVAVRV33 number_arrayref__typetest0([2.123_443_211_234_432_1, ..., 'abcdefg', -33.876_587_658_765_875_687_658_765, 1_701.678_9]) throws correct exception}
     );
     
     # NEED DELETE OLD CODE
 #    lives_and(                                                                 # TNVAVRV34
 #        sub {
 #            is( 
-#                number_arrayref__typetest0( [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] ),
+#                number_arrayref__typetest0( [ 2.123_443_211_234_432_1, 2_112.432_1, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] ),
 #                '[2.123_443_211_234_43, 2_112.432_1, 42.456_7, 23.765_444_444_444_4, -877.567_8, -33.876_587_658_765_9, 1_701.678_9]' . $mode_tagline,
-#                q{TNVAVRV34 number_arrayref__typetest0([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value}
+#                q{TNVAVRV34 number_arrayref__typetest0([2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9]) returns correct value}
 #            );
 #        },
-#        q{TNVAVRV34 number_arrayref__typetest0([2.1234432112344321, 2112.4321, ..., 1701.6789]) lives}
+#        q{TNVAVRV34 number_arrayref__typetest0([2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9]) lives}
 #    );
     lives_and(                                                                 # TNVAVRV34
         sub {
-            my string $tmp_retval = number_arrayref__typetest0( [ 2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789 ] );
+            my string $tmp_retval = number_arrayref__typetest0( [ 2.123_443_211_234_432_1, 2_112.432_1, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
             like(
                 $tmp_retval,
                 qr/\[2\.123_443_211/,
-                q{TNVAVRV34a number_arrayref__typetest0([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value, array beginning}
+                q{TNVAVRV34a number_arrayref__typetest0([2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9]) returns correct value, array beginning}
             );
             like(
                 $tmp_retval,
                 qr/, 1_701\.678_9\]/,
-                q{TNVAVRV34b number_arrayref__typetest0([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value, array end}
+                q{TNVAVRV34b number_arrayref__typetest0([2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9]) returns correct value, array end}
             );
             like(
                 $tmp_retval,
                 qr/$mode_tagline/,
-                q{TNVAVRV34c number_arrayref__typetest0([2.1234432112344321, 2112.4321, ..., 1701.6789]) returns correct value, mode tagline}
+                q{TNVAVRV34c number_arrayref__typetest0([2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9]) returns correct value, mode tagline}
             );
         },
-        q{TNVAVRV34 number_arrayref__typetest0([2.1234432112344321, 2112.4321, ..., 1701.6789]) lives}
+        q{TNVAVRV34 number_arrayref__typetest0([2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9]) lives}
     );
 
     lives_and(                                                                 # TNVAVRV40
@@ -501,12 +501,12 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(                                                                # TPVAVRV23
         sub {
-            is( string_arrayref_to_string( [ 'Superman', 'Martian Manhunter', '-2112.23' ] ),
-                q{['Superman', 'Martian Manhunter', '-2112.23']},
-                q{TPVAVRV23 string_arrayref_to_string(['Superman', 'Martian Manhunter', '-2112.23']) returns correct value}
+            is( string_arrayref_to_string( [ 'Superman', 'Martian Manhunter', '-2_112.23' ] ),
+                q{['Superman', 'Martian Manhunter', '-2_112.23']},
+                q{TPVAVRV23 string_arrayref_to_string(['Superman', 'Martian Manhunter', '-2_112.23']) returns correct value}
             );
         },
-        q{TPVAVRV23 string_arrayref_to_string(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2112.23']) lives}
+        q{TPVAVRV23 string_arrayref_to_string(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2_112.23']) lives}
     );
     lives_and(                                                                # TPVAVRV24
         sub {
@@ -515,7 +515,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 q{TPVAVRV24 string_arrayref_to_string(['Superman', 'Martian Manhunter', "[\\'Tonto'\\]"]) returns correct value}
             );
         },
-        q{TPVAVRV24 string_arrayref_to_string(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', "Martian Manhunter", "-2112.23"]) lives}
+        q{TPVAVRV24 string_arrayref_to_string(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', "Martian Manhunter", "-2_112.23"]) lives}
     );
     lives_and(                                                                # TPVAVRV25
         sub {

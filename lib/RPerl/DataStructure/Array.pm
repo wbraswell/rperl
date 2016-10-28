@@ -2,7 +2,7 @@
 package RPerl::DataStructure::Array;
 use strict;
 use warnings;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataStructure);
@@ -31,6 +31,20 @@ use RPerl::DataType::String;
 use RPerl::DataType::Scalar;
 use RPerl::DataType::Unknown;
 use RPerl::DataStructure::Hash;
+
+# [[[ EXPORTS ]]]
+# DEV NOTE: avoid "Undefined subroutine &main::integer_to_string called"
+use Exporter 'import';
+our @EXPORT = ( @RPerl::DataType::Void::EXPORT, 
+                @RPerl::DataType::Boolean::EXPORT, 
+                @RPerl::DataType::UnsignedInteger::EXPORT, 
+                @RPerl::DataType::Integer::EXPORT, 
+                @RPerl::DataType::Number::EXPORT, 
+                @RPerl::DataType::Character::EXPORT, 
+                @RPerl::DataType::String::EXPORT, 
+                @RPerl::DataType::Scalar::EXPORT, 
+                @RPerl::DataType::Unknown::EXPORT, 
+                @RPerl::DataStructure::Hash::EXPORT);
 
 # DEV NOTE, CORRELATION #rp018: RPerl::DataStructure::Array & Hash can not 'use RPerl;' so *__MODE_ID() subroutines are hard-coded here
 package main;

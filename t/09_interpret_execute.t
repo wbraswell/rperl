@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.007_100;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -61,10 +61,12 @@ find(
             return;
         }
 
-        if ( ( $file =~ m/Good/ms ) or ( $file =~ m/good/ms ) ) {
+        elsif ( ( $file =~ m/NotGood/ms ) or ( $file =~ m/not_good/ms ) ) {
+            preprocess_execute_error($test_files, $file);
+        }
+        if ( ( $file =~ m/Good/ms ) or ( $file =~ m/good/ms ) or ( $file =~ m/NotBad/ms ) or ( $file =~ m/not_bad/ms ) ) {
 
-            # NEED FIX: remove use of $_ magic variable
-            open my filehandleref $FILE_HANDLE, '<', $_
+            open my filehandleref $FILE_HANDLE, '<', $file
                 or croak 'ERROR, Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
             while (<$FILE_HANDLE>) {
                 if (m/^\#\s*\<\<\<\s*EXECUTE_SUCCESS\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
@@ -87,17 +89,7 @@ find(
                 or croak 'ERROR, Cannot close file ' . $file . ' after reading,' . $OS_ERROR . ', croaking';
         }
         elsif ( ( $file =~ m/Bad/ms ) or ( $file =~ m/bad/ms ) ) {
-
-            # NEED FIX: remove use of $_ magic variable
-            open my filehandleref $FILE_HANDLE, '<', $_
-                or croak 'ERROR, Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
-            while (<$FILE_HANDLE>) {
-                if (m/^\#\s*\<\<\<\s*EXECUTE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
-                    push @{ $test_files->{$file}->{errors} }, $1;
-                }
-            }
-            close $FILE_HANDLE
-                or croak 'ERROR, Cannot close file ' . $file . ' after reading,' . $OS_ERROR . ', croaking';
+            preprocess_execute_error($test_files, $file);
         }
         else {
             return;
@@ -186,7 +178,11 @@ foreach my $test_file ( sort keys %{$test_files} ) {
     my string_arrayref $stdout_generated_lines = \@stdout_generated_lines_array;
 
     if ( $test_exit_status == 0 ) {    # UNIX process return code 0, success
-        if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
+        if ( ( $test_file =~ m/NotGood/xms ) or ( $test_file =~ m/not_good/xms ) ) {
+            ok( ( missing_errors_count($test_files, $test_file, $stdout_generated, $stderr_generated) == 0 ), 'Program interprets and executes with expected error(s):' . ( q{ } x 2 ) . $test_file );
+#            $number_of_tests_run++;
+        }
+        elsif ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) or ( $test_file =~ m/NotBad/xms ) or ( $test_file =~ m/not_bad/xms ) ) {
             my $missing_successes = [];
 #            RPerl::diag( 'in 09_interpret_execute.t, run success on good code, have $test_files->{$test_file} = ' . Dumper($test_files->{$test_file}) . "\n\n" );
 
@@ -228,18 +224,12 @@ foreach my $test_file ( sort keys %{$test_files} ) {
         }
     }
     else {    # UNIX process return code not 0, error
-        if ( ( $test_file =~ m/Bad/ms ) or ( $test_file =~ m/bad/ms ) ) {
-            my $missing_errors = [];
-            if ( defined $test_files->{$test_file}->{errors} ) {
-                foreach my $error ( @{ $test_files->{$test_file}->{errors} } ) {
-                    if (    ( $stdout_generated !~ /\Q$error\E/xms )
-                        and ( $stderr_generated !~ /\Q$error\E/xms ) )
-                    {
-                        push @{$missing_errors}, "Error message '$error' expected, but not found";
-                    }
-                }
-            }
-            ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program interprets and executes with expected error(s):' . ( q{ } x 2 ) . $test_file );
+        if ( ( $test_file =~ m/NotBad/ms ) or ( $test_file =~ m/not_bad/ms ) ) {
+            ok( 0, 'Program interprets and executes without errors:' . ( q{ } x 10 ) . $test_file );
+#            $number_of_tests_run++;
+        }
+        elsif ( ( $test_file =~ m/Bad/ms ) or ( $test_file =~ m/bad/ms ) or ( $test_file =~ m/NotGood/ms ) or ( $test_file =~ m/not_good/ms )  ) {
+            ok( ( missing_errors_count($test_files, $test_file, $stdout_generated, $stderr_generated) == 0 ), 'Program interprets and executes with expected error(s):' . ( q{ } x 2 ) . $test_file );
 #            $number_of_tests_run++;
         }
         else {
@@ -247,6 +237,34 @@ foreach my $test_file ( sort keys %{$test_files} ) {
 #            $number_of_tests_run++;
         }
     }
+}
+
+sub preprocess_execute_error {
+    (my string_hashref $test_files, my string $file) = @_;
+    open my filehandleref $FILE_HANDLE, '<', $file
+        or croak 'ERROR, Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
+    while (<$FILE_HANDLE>) {
+        if (m/^\#\s*\<\<\<\s*EXECUTE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
+            push @{ $test_files->{$file}->{errors} }, $1;
+        }
+    }
+    close $FILE_HANDLE
+        or croak 'ERROR, Cannot close file ' . $file . ' after reading,' . $OS_ERROR . ', croaking';
+}
+
+sub missing_errors_count {
+    (my string_hashref $test_files, my string $test_file, my string $stdout_generated, my string $stderr_generated) = @_;
+    my $missing_errors = [];
+    if ( defined $test_files->{$test_file}->{errors} ) {
+        foreach my $error ( @{ $test_files->{$test_file}->{errors} } ) {
+            if (    ( $stdout_generated !~ /\Q$error\E/xms )
+                and ( $stderr_generated !~ /\Q$error\E/xms ) )
+            {
+                push @{$missing_errors}, "Error message '$error' expected, but not found";
+            }
+        }
+    }
+   return scalar @{$missing_errors};
 }
 
 sub success_match {

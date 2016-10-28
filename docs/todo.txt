@@ -1,4 +1,5 @@
 DONE
+    add underscore separators to CPPOPS_CPPTYPES integer_arrayref_to_string()
     fix to_string() incorrect numeric formatting
     numerous MS Windows fixes
     die operator
@@ -269,7 +270,6 @@ DATA TYPES & STRUCTURES
     implement 3-D arrays & hashes
     implement *OPS_*TYPES *_arrayref_arrayref_to_string()
     implement *OPS_*TYPES boolean_arrayref_to_string(), unsigned_integer_arrayref_to_string(), gmp_integer_arrayref_to_string(), character_arrayref_to_string()
-    add underscore separators to CPPOPS_CPPTYPES integer_arrayref_to_string()
     implement CPPOPS_*TYPES *arrayref_to_string()
     enable semi-dynamic auto-config of number format code for printf & friends in CPPOPS modes, replace %f by %"NUMBER"
     add remaining generic overloaded type conversion subroutines to_boolean(), to_integer(), to_unsigned_integer(), to_gmp_integer(), to_character() in rperltypes.*

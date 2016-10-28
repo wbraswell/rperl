@@ -17,12 +17,19 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my integer_arrayref_arrayref $rows_and_columns_2D =  # fine in RPerl, multiple rows and columns on multiple lines
-    [[0, 2, 4, 6, 8],
-     [1, 3, 5, 7, 9],
-     [4, 3, 2, 1, 0],
-     [9, 8, 7, 6, 5],
-     [5, 5, 5, 5, 5]];
+# fine in RPerl, multiple rows and columns on multiple lines
+my integer_arrayref_arrayref $rows_and_columns_2D = [
+    [ 0, 2, 4, 6, 8 ],
+    [ 1, 3, 5, 7, 9 ],
+    [ 4, 3, 2, 1, 0 ],
+    [ 9, 8, 7, 6, 5 ],
+    [ 5, 5, 5, 5, 5 ],
+    [ 0, 2, 4, 6, 8 ],
+    [ 1, 3, 5, 7, 9 ],
+    [ 4, 3, 2, 1, 0 ],
+    [ 9, 8, 7, 6, 5 ],
+    [ 5, 5, 5, 5, 5 ]
+];
 
 my integer_arrayref $column_3 = [];
 $column_3->[0] = $rows_and_columns_2D->[0]->[3];

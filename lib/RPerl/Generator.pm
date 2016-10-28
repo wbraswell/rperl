@@ -4,7 +4,7 @@ package RPerl::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_100;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -34,6 +34,9 @@ if ( $EVAL_ERROR and ( $EVAL_ERROR =~ /attempt to reload/i ) ) {
 elsif ( $EVAL_ERROR ne q{} ) { die $EVAL_ERROR; }
 
 use English qw(-no_match_vars);    # for $OSNAME; NEED ANSWER: why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
+
+# [[[ CONSTANTS ]]]
+use constant PERLTIDY_LINE_WIDTH  => my number $TYPED_PERLTIDY_LINE_WIDTH  = 160;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -206,7 +209,8 @@ our hashref $diff_check_file_vs_string = sub {
         my scalartype $perltidy_errored   = Perl::Tidy::perltidy(
 
             # same as Compiler::save_source_files() except '-se' to redirect STDERR
-            argv        => q{-pbp --ignore-side-comment-lengths --converge -l=160 -b -nst -bext='/' -q -se},
+#            argv        => q{-pbp --ignore-side-comment-lengths --converge -l=160 -b -nst -bext='/' -q -se},
+            argv        => q{-pbp --ignore-side-comment-lengths --converge -l=} . PERLTIDY_LINE_WIDTH() . q{ -b -nst -bext='/' -q -se},
             source      => \$string_reference,
             destination => \$string_reference_tidied,
             stderr      => \$perltidy_stderr_string,
@@ -220,7 +224,8 @@ our hashref $diff_check_file_vs_string = sub {
 
         # TIDY GENERATED PERL SOURCE CODE
         $perltidy_errored = Perl::Tidy::perltidy(
-            argv        => q{-pbp --ignore-side-comment-lengths --converge -l=160 -b -nst -bext='/' -q -se},
+#            argv        => q{-pbp --ignore-side-comment-lengths --converge -l=160 -b -nst -bext='/' -q -se},
+            argv        => q{-pbp --ignore-side-comment-lengths --converge -l=} . PERLTIDY_LINE_WIDTH() . q{ -b -nst -bext='/' -q -se},
             source      => \$string_generated,
             destination => \$string_generated_tidied,
             stderr      => \$perltidy_stderr_string,

@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -53,7 +53,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' Operations & ' . $types . ' Data Types' . q{' enabled} );
 
     if ( $ops eq 'PERL' ) {
-        lives_and( sub { require_ok('RPerl::DataStructure::Hash'); }, q{require_ok('RPerl::DataStructure::Hash') lives} );
+        lives_and( sub { use_ok('RPerl::DataStructure::Hash'); }, q{use_ok('RPerl::DataStructure::Hash') lives} );
     }
     else {
         if ( $types eq 'CPP' ) {
@@ -122,83 +122,83 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         sub {
             integer_hashref_to_string(
                 {   a_key => 2,
-                    b_key => 2112,
+                    b_key => 2_112,
                     c_key => undef,
                     d_key => 23,
                     e_key => -877,
                     f_key => -33,
-                    g_key => 1701
+                    g_key => 1_701
                 }
             );
         },
         "/EIVHVRV02.*$mode_tagline/",
-        q{TIVHVRV10 integer_hashref_to_string({a_key => 2, b_key => 2112, c_key => undef, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
+        q{TIVHVRV10 integer_hashref_to_string({a_key => 2, b_key => 2_112, c_key => undef, d_key => 23, e_key => -877, f_key => -33, g_key => 1_701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV11
         sub {
             integer_hashref_to_string(
                 {   a_key => 2,
-                    b_key => 2112,
+                    b_key => 2_112,
                     c_key => 42,
                     d_key => 23.3,
                     e_key => -877,
                     f_key => -33,
-                    g_key => 1701
+                    g_key => 1_701
                 }
             );
         },
         "/EIVHVRV03.*$mode_tagline/",
-        q{TIVHVRV11 integer_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42, d_key => 23.3, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
+        q{TIVHVRV11 integer_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42, d_key => 23.3, e_key => -877, f_key => -33, g_key => 1_701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV12
         sub {
             integer_hashref_to_string(
                 {   a_key => 2,
-                    b_key => 2112,
+                    b_key => 2_112,
                     c_key => 42,
                     d_key => '23',
                     e_key => -877,
                     f_key => -33,
-                    g_key => 1701
+                    g_key => 1_701
                 }
             );
         },
         "/EIVHVRV03.*$mode_tagline/",
-        q{TIVHVRV12 integer_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42, d_key => '23', e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
+        q{TIVHVRV12 integer_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42, d_key => '23', e_key => -877, f_key => -33, g_key => 1_701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV13
         sub {
             integer_hashref_to_string(
                 {   a_key => 2,
-                    b_key => 2112,
+                    b_key => 2_112,
                     c_key => 42,
                     d_key => [23],
                     e_key => -877,
                     f_key => -33,
-                    g_key => 1701
+                    g_key => 1_701
                 }
             );
         },
         "/EIVHVRV03.*$mode_tagline/",
-        q{TIVHVRV13 integer_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42, d_key => [23], e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
+        q{TIVHVRV13 integer_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42, d_key => [23], e_key => -877, f_key => -33, g_key => 1_701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV14
         sub {
             integer_hashref_to_string(
                 {   a_key => 2,
-                    b_key => 2112,
+                    b_key => 2_112,
                     c_key => 42,
                     d_key => { a_subkey => 23 },
                     e_key => -877,
                     f_key => -33,
-                    g_key => 1701
+                    g_key => 1_701
                 }
             );
         },
         "/EIVHVRV03.*$mode_tagline/",
 
-#        q{TIVHVRV14 integer_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
-        q{TIVHVRV14 integer_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42, d_key => {a_subkey => 23}, ..., g_key => 1701}) throws correct exception}
+#        q{TIVHVRV14 integer_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42, d_key => {a_subkey => 23}, e_key => -877, f_key => -33, g_key => 1_701}) throws correct exception}
+        q{TIVHVRV14 integer_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42, d_key => {a_subkey => 23}, ..., g_key => 1_701}) throws correct exception}
     );
     lives_and(    # TIVHVRV20
         sub {
@@ -211,21 +211,21 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             like(
                 integer_hashref_to_string(
                     {   a_key => 2,
-                        b_key => 2112,
+                        b_key => 2_112,
                         c_key => 42,
                         d_key => 23,
                         e_key => -877,
                         f_key => -33,
-                        g_key => 1701
+                        g_key => 1_701
                     }
                 ),
 
              # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
-                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => -33\b)(?=.*'g_key' => 1701\b).*\}$/m},
-                q{TIVHVRV21 integer_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) returns correct value}
+                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2_112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => -33\b)(?=.*'g_key' => 1_701\b).*\}$/m},
+                q{TIVHVRV21 integer_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1_701}) returns correct value}
             );
         },
-        q{TIVHVRV21 integer_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) lives}
+        q{TIVHVRV21 integer_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1_701}) lives}
     );
     throws_ok(    # TIVHVRV30
         sub { integer_hashref__typetest0() },
@@ -241,57 +241,57 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         sub {
             integer_hashref__typetest0(
                 {   'binary'       => 2,
-                    'rush'         => 2112,
+                    'rush'         => 2_112,
                     'ERROR_FUNKEY' => undef,
                     'answer'       => 42,
                     'fnord'        => 23,
                     'units'        => -877,
                     'degree'       => -33,
-                    'ncc'          => 1701
+                    'ncc'          => 1_701
                 }
             );
         },
         "/EIVHVRV02.*$mode_tagline/",
-        q{TIVHVRV32 integer_hashref__typetest0({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1701}) throws correct exception}
+        q{TIVHVRV32 integer_hashref__typetest0({'binary' => 2, 'rush' => 2_112, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1_701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV33
         sub {
             integer_hashref__typetest0(
                 {   'binary'       => 2,
-                    'rush'         => 2112,
+                    'rush'         => 2_112,
                     'ERROR_FUNKEY' => 'abcdefg',
                     'answer'       => 42,
                     'fnord'        => 23,
                     'units'        => -877,
                     'degree'       => -33,
-                    'ncc'          => 1701
+                    'ncc'          => 1_701
                 }
             );
         },
         "/EIVHVRV03.*$mode_tagline/",
-        q{TIVHVRV33 integer_hashref__typetest0({'binary' => 2, 'rush' => 2112, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1701}) throws correct exception}
+        q{TIVHVRV33 integer_hashref__typetest0({'binary' => 2, 'rush' => 2_112, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1_701}) throws correct exception}
     );
     lives_and(    # TIVHVRV34
         sub {
             like(
                 integer_hashref__typetest0(
                     {   'binary' => 2,
-                        'rush'   => 2112,
+                        'rush'   => 2_112,
                         'answer' => 42,
                         'fnord'  => 23,
                         'units'  => -877,
                         'degree' => -33,
-                        'ncc'    => 1701
+                        'ncc'    => 1_701
                     }
                 ),
-                q{/^\{(?=.*'binary' => 2\b)(?=.*'rush' => 2112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => -33\b)(?=.*'ncc' => 1701\b).*\}}
+                q{/^\{(?=.*'binary' => 2\b)(?=.*'rush' => 2_112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => -33\b)(?=.*'ncc' => 1_701\b).*\}}
                     . $mode_tagline . q{$/m},
 
-#                q{TIVHVRV34 integer_hashref__typetest0({'binary' => 2, 'rush' => 2112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => -33, 'ncc' => 1701}) returns correct value}
-                q{TIVHVRV34 integer_hashref__typetest0({'binary' => 2, 'rush' => 2112, ..., 'ncc' => 1701}) returns correct value}
+#                q{TIVHVRV34 integer_hashref__typetest0({'binary' => 2, 'rush' => 2_112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => -33, 'ncc' => 1_701}) returns correct value}
+                q{TIVHVRV34 integer_hashref__typetest0({'binary' => 2, 'rush' => 2_112, ..., 'ncc' => 1_701}) returns correct value}
             );
         },
-        q{TIVHVRV34 integer_hashref__typetest0({'binary' => 2, 'rush' => 2112, ..., 'ncc' => 1701}) lives}
+        q{TIVHVRV34 integer_hashref__typetest0({'binary' => 2, 'rush' => 2_112, ..., 'ncc' => 1_701}) lives}
     );
     lives_and(    # TIVHVRV40
         sub {
@@ -347,67 +347,67 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         sub {
             number_hashref_to_string(
                 {   a_key => 2,
-                    b_key => 2112,
+                    b_key => 2_112,
                     c_key => undef,
                     d_key => 23,
                     e_key => -877,
                     f_key => -33,
-                    g_key => 1701
+                    g_key => 1_701
                 }
             );
         },
         "/ENVHVRV02.*$mode_tagline/",
-        q{TNVHVRV10 number_hashref_to_string({a_key => 2, b_key => 2112, c_key => undef, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
+        q{TNVHVRV10 number_hashref_to_string({a_key => 2, b_key => 2_112, c_key => undef, d_key => 23, e_key => -877, f_key => -33, g_key => 1_701}) throws correct exception}
     );
     throws_ok(    # TNVHVRV11
         sub {
             number_hashref_to_string(
                 {   a_key => 2,
-                    b_key => 2112,
+                    b_key => 2_112,
                     c_key => 42.3,
                     d_key => '23',
                     e_key => -877,
                     f_key => -33,
-                    g_key => 1701
+                    g_key => 1_701
                 }
             );
         },
         "/ENVHVRV03.*$mode_tagline/",
-        q{TNVHVRV11 number_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42.3, d_key => '23', e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
+        q{TNVHVRV11 number_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42.3, d_key => '23', e_key => -877, f_key => -33, g_key => 1_701}) throws correct exception}
     );
     throws_ok(    # TNVHVRV12
         sub {
             number_hashref_to_string(
                 {   a_key => 2,
-                    b_key => 2112,
+                    b_key => 2_112,
                     c_key => 42.3,
                     d_key => [23],
                     e_key => -877,
                     f_key => -33,
-                    g_key => 1701
+                    g_key => 1_701
                 }
             );
         },
         "/ENVHVRV03.*$mode_tagline/",
-        q{TNVHVRV12 number_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42.3, d_key => [23], e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
+        q{TNVHVRV12 number_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42.3, d_key => [23], e_key => -877, f_key => -33, g_key => 1_701}) throws correct exception}
     );
     throws_ok(    # TNVHVRV13
         sub {
             number_hashref_to_string(
                 {   a_key => 2,
-                    b_key => 2112,
+                    b_key => 2_112,
                     c_key => 42.3,
                     d_key => { a_subkey => 23 },
                     e_key => -877,
                     f_key => -33,
-                    g_key => 1701
+                    g_key => 1_701
                 }
             );
         },
         "/ENVHVRV03.*$mode_tagline/",
 
-#        q{TNVHVRV13 number_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42.3, d_key => {a_subkey => 23}, e_key => -877, f_key => -33, g_key => 1701}) throws correct exception}
-        q{TNVHVRV13 number_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42.3, d_key => {a_subkey => 23}, ..., g_key => 1701}) throws correct exception}
+#        q{TNVHVRV13 number_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42.3, d_key => {a_subkey => 23}, e_key => -877, f_key => -33, g_key => 1_701}) throws correct exception}
+        q{TNVHVRV13 number_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42.3, d_key => {a_subkey => 23}, ..., g_key => 1_701}) throws correct exception}
     );
     lives_and(    # TNVHVRV20
         sub {
@@ -420,42 +420,42 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             like(
                 number_hashref_to_string(
                     {   a_key => 2,
-                        b_key => 2112,
+                        b_key => 2_112,
                         c_key => 42,
                         d_key => 23,
                         e_key => -877,
                         f_key => -33,
-                        g_key => 1701
+                        g_key => 1_701
                     }
                 ),
 
                 q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2_112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => -33\b)(?=.*'g_key' => 1_701\b).*\}$/m},
-                q{TNVHVRV21 number_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) returns correct value}
+                q{TNVHVRV21 number_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1_701}) returns correct value}
             );
         },
-        q{TNVHVRV21 number_hashref_to_string({a_key => 2, b_key => 2112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1701}) lives}
+        q{TNVHVRV21 number_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1_701}) lives}
     );
     lives_and(    # TNVHVRV22
         sub {
             like(
-                number_hashref_to_string( { a_key => 2.1234432112344321 } ),
+                number_hashref_to_string( { a_key => 2.123_443_211_234_432_1 } ),
                 qr/\{'a_key' => 2\.123_443_211_234/,
-                q{TNVHVRV22 number_hashref_to_string({a_key => 2.1234432112344321}) returns correct value}
+                q{TNVHVRV22 number_hashref_to_string({a_key => 2.123_443_211_234_432_1}) returns correct value}
             );
         },
-        q{TNVHVRV22 number_hashref_to_string({a_key => 2.1234432112344321}) lives}
+        q{TNVHVRV22 number_hashref_to_string({a_key => 2.123_443_211_234_432_1}) lives}
     );
     lives_and(    # TNVHVRV23
         sub {
             like(
                 number_hashref_to_string(
-                    {   a_key => 2.1234432112344321,
-                        b_key => 2112.4321,
-                        c_key => 42.4567,
-                        d_key => 23.765444444444444444,
-                        e_key => -877.5678,
-                        f_key => -33.876587658765875687658765,
-                        g_key => 1701.6789
+                    {   a_key => 2.123_443_211_234_432_1,
+                        b_key => 2_112.432_1,
+                        c_key => 42.456_7,
+                        d_key => 23.765_444_444_444_444_444,
+                        e_key => -877.567_8,
+                        f_key => -33.876_587_658_765_875_687_658_765,
+                        g_key => 1_701.678_9
                     }
                 ),
 
@@ -463,11 +463,11 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #                q{/^\{(?=.*'a_key' => 2\.123_443_211_234_4\b)(?=.*'b_key' => 2_112\.432_1\b)(?=.*'c_key' => 42\.456_7\b)(?=.*'d_key' => 23\.765_444_444_444\b)(?=.*'e_key' => -877\.5_678\b)(?=.*'f_key' => -33\.876_587_658_765\b)(?=.*'g_key' => 1_701\.6_789\b).*\}$/m},
                 q{/^\{(?=.*'a_key' => 2\.123_443_211_234)(?=.*'b_key' => 2_112\.432_1)(?=.*'c_key' => 42\.456_7)(?=.*'d_key' => 23\.765_444_444_44)(?=.*'e_key' => -877\.567_8)(?=.*'f_key' => -33\.876_587_658_76)(?=.*'g_key' => 1_701\.678_9).*\}$/m},
 
-#                q{TNVHVRV23 number_hashref_to_string(a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => -33.876587658765875687658765, g_key => 1701.6789) returns correct value}
-                q{TNVHVRV23 number_hashref_to_string(a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, ..., g_key => 1701.6789) returns correct value}
+#                q{TNVHVRV23 number_hashref_to_string(a_key => 2.123_443_211_234_432_1, b_key => 2_112.432_1, c_key => 42.456_7, d_key => 23.765_444_444_444_444_444, e_key => -877.567_8, f_key => -33.876_587_658_765_875_687_658_765, g_key => 1_701.678_9) returns correct value}
+                q{TNVHVRV23 number_hashref_to_string(a_key => 2.123_443_211_234_432_1, b_key => 2_112.432_1, c_key => 42.456_7, ..., g_key => 1_701.678_9) returns correct value}
             );
         },
-        q{TNVHVRV23 number_hashref_to_string(a_key => 2.1234432112344321, b_key => 2112.4321, c_key => 42.4567, d_key => 23.765444444444444444, e_key => -877.5678, f_key => -33.876587658765875687658765, g_key => 1701.6789) lives}
+        q{TNVHVRV23 number_hashref_to_string(a_key => 2.123_443_211_234_432_1, b_key => 2_112.432_1, c_key => 42.456_7, d_key => 23.765_444_444_444_444_444, e_key => -877.567_8, f_key => -33.876_587_658_765_875_687_658_765, g_key => 1_701.678_9) lives}
     );
     throws_ok(    # TNVHVRV30
         sub { number_hashref__typetest0() },
@@ -482,69 +482,69 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     throws_ok(                                                                # TNVHVRV32
         sub {
             number_hashref__typetest0(
-                {   'binary'       => 2.1234432112344321,
-                    'rush'         => 2112.4321,
+                {   'binary'       => 2.123_443_211_234_432_1,
+                    'rush'         => 2_112.432_1,
                     'ERROR_FUNKEY' => undef,
-                    'answer'       => 42.4567,
-                    'fnord'        => 23.765444444444444444,
-                    'units'        => -877.5678,
-                    'degree'       => -33.876587658765875687658765,
-                    'ncc'          => 1701.6789
+                    'answer'       => 42.456_7,
+                    'fnord'        => 23.765_444_444_444_444_444,
+                    'units'        => -877.567_8,
+                    'degree'       => -33.876_587_658_765_875_687_658_765,
+                    'ncc'          => 1_701.678_9
                 }
             );
         },
         "/ENVHVRV02.*$mode_tagline/",
-        q{TNVHVRV32 number_hashref__typetest0({'binary' => 2.1234432112344321, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1701.6789}) throws correct exception}
+        q{TNVHVRV32 number_hashref__typetest0({'binary' => 2.123_443_211_234_432_1, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1_701.678_9}) throws correct exception}
     );
     throws_ok(    # TNVHVRV33
         sub {
             number_hashref__typetest0(
-                {   'binary'       => 2.1234432112344321,
-                    'rush'         => 2112.4321,
+                {   'binary'       => 2.123_443_211_234_432_1,
+                    'rush'         => 2_112.432_1,
                     'ERROR_FUNKEY' => 'abcdefg',
-                    'answer'       => 42.4567,
-                    'fnord'        => 23.765444444444444444,
-                    'units'        => -877.5678,
-                    'degree'       => -33.876587658765875687658765,
-                    'ncc'          => 1701.6789
+                    'answer'       => 42.456_7,
+                    'fnord'        => 23.765_444_444_444_444_444,
+                    'units'        => -877.567_8,
+                    'degree'       => -33.876_587_658_765_875_687_658_765,
+                    'ncc'          => 1_701.678_9
                 }
             );
         },
         "/ENVHVRV03.*$mode_tagline/",
-        q{TNVHVRV33 number_hashref__typetest0({'binary' => 2.1234432112344321, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1701.6789}) throws correct exception}
+        q{TNVHVRV33 number_hashref__typetest0({'binary' => 2.123_443_211_234_432_1, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1_701.678_9}) throws correct exception}
     );
     lives_and(    # TNVHVRV34
         sub {
             like(
                 number_hashref__typetest0(
-                    {   'binary' => 2.1234432112344321,
-                        'rush'   => 2112.4321,
-                        'answer' => 42.4567,
-                        'fnord'  => 23.765444444444444444,
-                        'units'  => -877.5678,
-                        'degree' => -33.876587658765875687658765,
-                        'ncc'    => 1701.6789
+                    {   'binary' => 2.123_443_211_234_432_1,
+                        'rush'   => 2_112.432_1,
+                        'answer' => 42.456_7,
+                        'fnord'  => 23.765_444_444_444_444_444,
+                        'units'  => -877.567_8,
+                        'degree' => -33.876_587_658_765_875_687_658_765,
+                        'ncc'    => 1_701.678_9
                     }
                 ),
 
 # NEED DELETE OLD CODE
-#                q{/^\{(?=.*'binary' => 2\.12344321123443\b)(?=.*'rush' => 2112\.4321\b)(?=.*'answer' => 42\.4567\b)(?=.*'fnord' => 23\.7654444444444\b)(?=.*'units' => -877\.5678\b)(?=.*'degree' => -33\.8765876587659\b)(?=.*'ncc' => 1701\.6789\b).*\}}
+#                q{/^\{(?=.*'binary' => 2\.123_443_211_234_43\b)(?=.*'rush' => 2_112\.432_1\b)(?=.*'answer' => 42\.456_7\b)(?=.*'fnord' => 23\.765_444_444_444_4\b)(?=.*'units' => -877\.567_8\b)(?=.*'degree' => -33\.8765876587659\b)(?=.*'ncc' => 1_701\.678_9\b).*\}}
                 q{/^\{(?=.*'binary' => 2\.123_443_211_234)(?=.*'rush' => 2_112\.432_1)(?=.*'answer' => 42\.456_7)(?=.*'fnord' => 23\.765_444_444_44)(?=.*'units' => -877\.567_8)(?=.*'degree' => -33\.876_587_658_76)(?=.*'ncc' => 1_701\.678_9).*\}}
                     . $mode_tagline . q{$/m},
-                q{TNVHVRV34 number_hashref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, ..., 'ncc' => 1701.6789}) returns correct value}
+                q{TNVHVRV34 number_hashref__typetest0({'binary' => 2.123_443_211_234_432_1, 'rush' => 2_112.432_1, ..., 'ncc' => 1_701.678_9}) returns correct value}
             );
         },
-        q{TNVHVRV34 number_hashref__typetest0({'binary' => 2.1234432112344321, 'rush' => 2112.4321, ..., 'ncc' => 1701.6789}) lives}
+        q{TNVHVRV34 number_hashref__typetest0({'binary' => 2.123_443_211_234_432_1, 'rush' => 2_112.432_1, ..., 'ncc' => 1_701.678_9}) lives}
     );
     lives_and(    # TNVHVRV40
         sub {
             # NEED DELETE OLD CODE
             #            is_deeply(
             #                number_hashref__typetest1(5),
-            #                {   "$mode_tagline\_funkey2" => 10.246913578,
-            #                    "$mode_tagline\_funkey3" => 15.370370367,
-            #                    "$mode_tagline\_funkey4" => 20.493827156,
-            #                    "$mode_tagline\_funkey1" => 5.123456789,
+            #                {   "$mode_tagline\_funkey2" => 10.246_913_578,
+            #                    "$mode_tagline\_funkey3" => 15.370_370_367,
+            #                    "$mode_tagline\_funkey4" => 20.493_827_156,
+            #                    "$mode_tagline\_funkey1" => 5.123_456_789,
             #                    "$mode_tagline\_funkey0" => 0
             #                },
             #                q{TNVHVRV40 number_hashref__typetest1(5) returns correct value}
@@ -552,10 +552,10 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
             my number_hashref $tmp_retval    = number_hashref__typetest1(5);
             my number_hashref $correct_retval = {
-                "$mode_tagline\_funkey2" => 10.246913578,
-                "$mode_tagline\_funkey3" => 15.370370367,
-                "$mode_tagline\_funkey4" => 20.493827156,
-                "$mode_tagline\_funkey1" => 5.123456789,
+                "$mode_tagline\_funkey2" => 10.246_913_578,
+                "$mode_tagline\_funkey3" => 15.370_370_367,
+                "$mode_tagline\_funkey4" => 20.493_827_156,
+                "$mode_tagline\_funkey1" => 5.123_456_789,
                 "$mode_tagline\_funkey0" => 0
             };
             foreach my string $correct_retval_key ( keys %{$correct_retval} ) {
@@ -635,12 +635,12 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             string_hashref_to_string(
                 {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
                     'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
-                    'NUMBER_NOT_STRING'                => -2112.23
+                    'NUMBER_NOT_STRING'                => -2_112.23
                 }
             );
         },
         "/EPVHVRV03.*$mode_tagline/",
-        q{TPVHVRV12 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'NUMBER_NOT_STRING' => -2112.23}) throws correct exception}
+        q{TPVHVRV12 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'NUMBER_NOT_STRING' => -2_112.23}) throws correct exception}
     );
     throws_ok(                                                               # TPVHVRV13
         sub {
@@ -725,15 +725,15 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 string_hashref_to_string(
                     {   'kryptonian_manofsteel_clarkkent'  => 'Superman',
                         'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter',
-                        'STRING_NOT_NUMBER'                => '-2112.23'
+                        'STRING_NOT_NUMBER'                => '-2_112.23'
                     }
                 ),
-                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_NUMBER' => '-2112.23').*\}$/m}
+                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_NUMBER' => '-2_112.23').*\}$/m}
                 ,    ## PERLTIDY BUG comma on newline
-                q{TPVHVRV23 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'STRING_NOT_NUMBER' => '-2112.23'}) returns correct value}
+                q{TPVHVRV23 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'STRING_NOT_NUMBER' => '-2_112.23'}) returns correct value}
             );
         },
-        q{TPVHVRV23 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'STRING_NOT_NUMBER' => '-2112.23'}) lives}
+        q{TPVHVRV23 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'STRING_NOT_NUMBER' => '-2_112.23'}) lives}
     );
     lives_and(       # TPVHVRV24
         sub {

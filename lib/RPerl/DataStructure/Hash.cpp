@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp 0.005_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash_cpp 0.006_000
 
 #include <RPerl/DataStructure/Hash.h>		// -> NULL (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option)
 
@@ -707,7 +707,9 @@ SV* integer_hashref_to_string(SV* input_hv_ref)
 		}
 
 //		sv_catpvf(output_sv, "'%s' => %"INTEGER"", SvPV_nolen(input_hv_entry_key), (integer)SvIV(input_hv_entry_value));
-		sv_catpvf(output_sv, "'%s' => %"INTEGER"", input_hv_entry_key_string.c_str(), (integer)SvIV(input_hv_entry_value));
+//		sv_catpvf(output_sv, "'%s' => %"INTEGER"", input_hv_entry_key_string.c_str(), (integer)SvIV(input_hv_entry_value));  // NO UNDERSCORES
+		sv_catpvf(output_sv, "'%s' => ", input_hv_entry_key_string.c_str());  // YES UNDERSCORES
+		sv_catsv(output_sv, integer_to_string(input_hv_entry_value));  // YES UNDERSCORES
 	}
 
 	sv_catpvn(output_sv, "}", 1);
@@ -893,7 +895,8 @@ string integer_hashref_to_string(integer_hashref input_unordered_map)
 		}
 
 //		output_stream << "'" << (i->first).c_str() << "' => " << i->second;
-		output_stream << "'" << key_string.c_str() << "' => " << i->second;
+//		output_stream << "'" << key_string.c_str() << "' => " << i->second;  // NO UNDERSCORES
+		output_stream << "'" << key_string.c_str() << "' => " << integer_to_string(i->second);  // YES UNDERSCORES
 	}
 
 	output_stream << '}';
