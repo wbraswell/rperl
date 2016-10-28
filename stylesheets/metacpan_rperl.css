@@ -8851,12 +8851,18 @@ form#logout {
 #right-panel.panel-hide {
   display: none;
 }
+
+/* WBRASWELL 20161028 BEGIN: RPerl HTML margin formatting */
 .content {
-  margin-left: 175px;
-  border-left: 1px solid #e9e9e9;
+/*  margin-left: 25px; */
+  margin-left: 2%;
+/*  border-left: 1px solid #e9e9e9; */
   padding-left: 15px;
+  margin-right: 2%;
   line-height: 20px;
 }
+/* WBRASWELL 20161028 END: RPerl HTML margin formatting */
+
 .site-alert-message {
   text-align: center;
   margin: 1px 15% 20px;
