@@ -218,55 +218,11 @@ void XS_pack_integer_arrayref_arrayref(SV* output_avref_avref, integer_arrayref_
 
 # ifdef __PERL__TYPES
 
-
-// START HERE: remove stringify subs below and replace w/ ones in Array.cpp
-// START HERE: remove stringify subs below and replace w/ ones in Array.cpp
-// START HERE: remove stringify subs below and replace w/ ones in Array.cpp
-
-
-/* DISABLE TMP
-// convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing IV)
-SV* integer_arrayref_to_string(SV* input_avref)
-{
-    // NEED ADD CODE HERE
-}
-*/
+// NEED REFACTOR: move stringify routines out of Array.cpp into here???
 
 # elif defined __CPP__TYPES
 
-/* DISABLE TMP
-// convert from (C++ std::vector of integers) to Perl-parsable (C++ std::string)
-string integer_arrayref_to_string(integer_arrayref input_vector)
-{
-//	fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), top of subroutine\n");
-
-	ostringstream output_stream;
-	integer input_vector_length = input_vector.size();
-	integer i;
-	integer input_vector_element;
-    boolean i_is_0 = 1;
-
-//	fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), have input_vector_length = %"INTEGER"\n", input_vector_length);
-
-	output_stream << '[';
-
-	for (i = 0;  i < input_vector_length;  ++i)
-	{
-		// utilizes i in element retrieval
-		input_vector_element = input_vector[i];
-		if (i_is_0) { i_is_0 = 0; } else { output_stream << ", "; }
-		// NEED FIX: call integer_to_string() instead of just << below, to include underscore separators
-		output_stream << input_vector_element;
-	}
-
-	output_stream << ']';
-
-//	fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
-//	fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), bottom of subroutine\n");
-
-	return(output_stream.str());
-}
-*/
+// NEED REFACTOR: move stringify routines out of Array.cpp into here???
 
 # else
 
