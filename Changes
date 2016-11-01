@@ -1,5 +1,22 @@
 Revision history for Perl compiler RPerl.
 
+2.200000 2016-10-31 Codename Luna
+
+    - HOLIDAY EDITION: Happy Halloween!
+    - Now Running On The Cloud
+        http://cloudforfree.org
+    - New Installer Script
+    - Greatly Simplified Installation Instructions
+        https://github.com/wbraswell/rperl/blob/master/INSTALL
+    - Correct Numeric Formatting: to_string(), integer_arrayref_to_string(), etc.
+    - Named Operator die
+    - Native Types, Enable Semi-Dynamic Auto-Configuration Of integer Format Code
+        Used By printf & Friends In CPPOPS Modes, Replaced %ld By %"INTEGER"
+    - Learning RPerl, Numerous Updates
+        http://rperl.org/learning_rperl.html
+    - Microsoft Windows OS Compatibility, Numerous Fixes
+    - Microsoft Windows OS Compatibility, Add CI.AppVeyor.com GitHub Webhook
+
 2.000000 2016-07-04 Codename Pioneer
 
     - HOLIDAY EDITION: Happy Independence Day!

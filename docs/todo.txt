@@ -1,14 +1,4 @@
 DONE
-    add underscore separators to CPPOPS_CPPTYPES integer_arrayref_to_string()
-    fix to_string() incorrect numeric formatting
-    numerous MS Windows fixes
-    die operator
-    Learning RPerl, <noncode> fix for rperl.org only
-        Learning RPerl, examples for 2.1.9 - 2.1.14
-        add calling conventions & data types for all numeric operators, section 2.1
-        v1.7 not the latest any more!
-    appveyor, add ci.appveyor.com github webhook for Windows
-    enable semi-dynamic auto-config of integer format code for printf & friends in CPPOPS modes, replace %ld by %"INTEGER"
 
 DOING
     'cannot' -> 'can not' in all docs & source files

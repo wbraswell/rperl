@@ -8,7 +8,7 @@ VERSION='0.076_000'
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
 
 # PRE-INSTALL: download the latest version of this file and make it executable
-# wget https://raw.githubusercontent.com/wbraswell/rperl/master/script/rperl_installer.sh; chmod a+x ./rperl_installer.sh;
+# wget https://raw.githubusercontent.com/wbraswell/rperl/master/script/rperl_installer.sh; chmod a+x ./rperl_installer.sh
 
 # enable extended pattern matching in case statements
 shopt -s extglob

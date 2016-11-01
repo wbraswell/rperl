@@ -264,7 +264,7 @@ $ mv ./RPerl-VERSION.tar.gz ./RPerl-VERSION_BETAVERSION.tar.gz
 	# to CPAN's underscore-is-beta (underscores and zeros now shown) numbering scheme;
 $ vi MYMETA.json
 	"version" : "1.XXXXXX",
-	# DEV NOTE, CORRELATION #rp023: must preserve six numeric digits after the decimal point in the file name
+	# DEV NOTE, CORRELATION #rp023: must preserve six numeric digits after the decimal point in the file name; must add double quotes (?)
 
 # INSTALL & TEST DIST, LOCAL COPY
 $ cpanm ./RPerl-VERSION.tar.gz
