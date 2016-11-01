@@ -1,13 +1,31 @@
 # RPerl Install Notes
 # Last Updated October 31, 2016
 
-################################################################################
-# ONLY FOR WINDOWS
-# INSTALL STRAWBERRY PERL
-################################################################################
+For Ubuntu & Debian GNU/Linux Users:
 
-# RPerl on Windows requires Strawberry Perl v5.20 or higher.
-# http://strawberryperl.com/
+    Download & run the RPerl Installer.
+    wget https://raw.githubusercontent.com/wbraswell/rperl/master/script/rperl_installer.sh; chmod a+x ./rperl_installer.sh; ./rperl_installer.sh
 
-# RPerl system developers may use the Mingw64 GCC v4.8 compiler.
-# The Mingw64 GCC v4.6 and older compilers are not compatible.
+For CentOS & Redhat GNU/Linux Users:
+
+    Download & run the RPerl Installer.
+    There are a few places with CentOS-specific & RedHat-specific instructions.
+    Everywhere that calls the apt-get command, you will have to substitute your yum or rpm equivalent.
+ 
+For MacOSX & BSD Users:
+
+    Download & run the RPerl Installer.
+    Everywhere that calls the apt-get command, you will have to substitute your equivalent.
+
+For Windows Users:
+
+    RPerl on Windows requires Strawberry Perl v5.20 or higher.
+    http://strawberryperl.com/
+
+    RPerl system developers may use the Mingw64 GCC v4.8 compiler.
+    The Mingw64 GCC v4.6 and older compilers are not compatible.
+
+For All Other Operating Systems:
+
+    Download & run the RPerl Installer, if you have a *nix OS.
+    Otherwise, please contact the RPerl development team for assistance.

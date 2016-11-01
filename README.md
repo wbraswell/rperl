@@ -1,6 +1,14 @@
 RPerl
 =====
 
+Installation Instructions:
+
+<a href="https://github.com/wbraswell/rperl/blob/master/INSTALL">https://github.com/wbraswell/rperl/blob/master/INSTALL</a>
+
+Installer Script:
+
+<a href="https://raw.githubusercontent.com/wbraswell/rperl/master/script/rperl_installer.sh">https://raw.githubusercontent.com/wbraswell/rperl/master/script/rperl_installer.sh</a>
+
 RPerl is the optimizing compiler for the Perl 5 programming language.  RPerl stands for Restricted Perl, in that we restrict our use of Perl to those parts which can be made to run fast.
 
 The input to the RPerl compiler is low-magic Perl 5 source code.  RPerl converts the low-magic Perl 5 source code into C++ source code using Perl and/or C++ data structures.  Inline::CPP converts the C++ source code into XS source code.  Perl's XS tools and a standard C++ compiler convert the XS source code into machine-readable binary code, which can be directly linked back into normal high-magic Perl 5 source code.  
