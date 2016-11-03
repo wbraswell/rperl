@@ -109,7 +109,7 @@ MISC DOCUMENTATION
 
 RPERL.ORG
     Book of RPerl tome graphic
-    Learning RPerl antique roadrunner icon
+    Roadie Roadrunner, add eye circle to website
     shiny
 
 RPERL COMMAND-LINE FRONT-END

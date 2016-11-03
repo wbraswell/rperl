@@ -1,7 +1,7 @@
 #!/bin/bash
 # Copyright © 2014, 2015, 2016, William N. Braswell, Jr.. All Rights Reserved. This work is Free \& Open Source; you can redistribute it and/or modify it under the same terms as Perl 5.24.0.
 # RPerl Installer Script
-VERSION='0.076_000'
+VERSION='0.077_000'
 
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
@@ -218,14 +218,14 @@ echo \ '0. [[[      NEW MACHINE; SERVER; REMOTE CLOUD HOST ]]]'
 echo \ '1. [[[ EXISTING MACHINE; CLIENT; LOCAL USER SYSTEM ]]]'
 echo
 
-while true; do
-    read -p 'Please type your machine menu choice number, or press <ENTER> for 0... ' MACHINE_CHOICE
-    case $MACHINE_CHOICE in
-        [01] ) echo; break;;
-        '' ) echo; MACHINE_CHOICE=0; break;;
-        * ) echo 'Please choose a number from the menu!'; echo;;
-    esac
-done
+#while true; do
+#    read -p 'Please type your machine menu choice number, or press <ENTER> for 0... ' MACHINE_CHOICE
+#    case $MACHINE_CHOICE in
+#        [01] ) echo; break;;
+#        '' ) echo; MACHINE_CHOICE=0; break;;
+#        * ) echo 'Please choose a number from the menu!'; echo;;
+#    esac
+#done
 
 # SECTION 0 VARIABLES
 EDITOR='__EMPTY__'
@@ -234,7 +234,7 @@ USERNAME='__EMPTY__'
 if [ $MENU_CHOICE -le 20 ]; then
     echo '20. [[[ UBUNTU LINUX, INSTALL PERL DEPENDENCIES ]]]'
     echo
-    if [ $MACHINE_CHOICE -eq 0 ]; then
+#    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ Overview Of Perl Dependencies In This Section ]'
         echo '[ Git: Source Code Version Control, Required To Install Latest Development & Unstable Software ]'
         echo '[ cURL: Downloader, Required To Install cpanminus & Perlbrew & Perl-Build ]'
@@ -270,16 +270,16 @@ if [ $MENU_CHOICE -le 20 ]; then
 
         echo '[ Install ExtUtils::MakeMaker, Check Perl Version To Determine Which Of The Following Sections To Choose ]'
         B perl -v
-    elif [ $MACHINE_CHOICE -eq 1 ]; then
-        echo "Nothing To Do On Existing Machine!"
-    fi
+#    elif [ $MACHINE_CHOICE -eq 1 ]; then
+#        echo "Nothing To Do On Existing Machine!"
+#    fi
     CURRENT_SECTION_COMPLETE
 fi
 
 if [ $MENU_CHOICE -le 21 ]; then
     echo '21. [[[ UBUNTU LINUX, INSTALL SINGLE-USER PERL LOCAL::LIB & CPANM ]]]'
     echo
-    if [ $MACHINE_CHOICE -eq 0 ]; then
+#    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You SHOULD Use This Instead Of Perlbrew Or Perl From Source Or System Perl In Sections 22 & 23 & 24, Unless You Have No Choice ]'
         echo '[ This Option Will Contain All Perl Code In Your Home Directory Under The ~/perl5 Subdirectory ]'
         echo '[ This Option May  Not Work With Older Versions Of Debian GNU/Linux Which Include A Broken Perl v5.14, Use Perlbrew in Section 22 Instead ]'
@@ -294,16 +294,16 @@ if [ $MENU_CHOICE -le 21 ]; then
         SOURCE ~/.bashrc
         echo '[ Ensure The Following 4 Environmental Variables Now Include ~/perl5: PERL_MM_OPT, PERL_MB_OPT, PERL5LIB, PATH ]'
         B 'set | grep perl5'
-    elif [ $MACHINE_CHOICE -eq 1 ]; then
-        echo "Nothing To Do On Existing Machine!"
-    fi
+#    elif [ $MACHINE_CHOICE -eq 1 ]; then
+#        echo "Nothing To Do On Existing Machine!"
+#    fi
     CURRENT_SECTION_COMPLETE
 fi
 
 if [ $MENU_CHOICE -le 22 ]; then
     echo '22. [[[ UBUNTU LINUX, INSTALL SINGLE-USER PERLBREW & CPANM ]]]'
     echo
-    if [ $MACHINE_CHOICE -eq 0 ]; then
+#    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You SHOULD NOT Use This Instead Of local::lib In Section 21, Unless You Have No Choice ]'
         echo '[ This Option WILL Work With Older Versions Of Debian GNU/Linux Which Include A Broken Perl v5.14 ]'
         echo '[ This Option WILL Work With Older Versions Of Perl Which Are Not At Least v5.10 Or Newer ]'
@@ -347,16 +347,16 @@ if [ $MENU_CHOICE -le 22 ]; then
         B cpanm ExtUtils::MakeMaker
         echo '[ EITHER OPTION: Re-Check Version Of ExtUtils::MakeMaker, Must Be v7.04 Or Newer ]'
         B 'perl -MExtUtils::MakeMaker\ 999'
-    elif [ $MACHINE_CHOICE -eq 1 ]; then
-        echo "Nothing To Do On Existing Machine!"
-    fi
+#    elif [ $MACHINE_CHOICE -eq 1 ]; then
+#        echo "Nothing To Do On Existing Machine!"
+#    fi
     CURRENT_SECTION_COMPLETE
 fi
 
 if [ $MENU_CHOICE -le 23 ]; then
     echo '23. [[[ UBUNTU LINUX, INSTALL SYSTEM-WIDE PERL FROM SOURCE & CPANM ]]]'
     echo
-    if [ $MACHINE_CHOICE -eq 0 ]; then
+#    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You SHOULD NOT Use This Instead Of local::lib In Section 21, Unless You Have No Choice ]'
         echo '[ WARNING: Do NOT Mix With local::lib In Section 21! ]'
         echo '[ WARNING: Do NOT Mix With Perlbrew In Section 22! ]'
@@ -377,16 +377,16 @@ if [ $MENU_CHOICE -le 23 ]; then
         S 'curl https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build | perl - 5.24.0 /usr/local/bin/perl-5.24.0/'
         echo '[ EITHER OPTION: Install cpanminus ]'
         S perl -MCPAN -e 'install App::cpanminus'
-    elif [ $MACHINE_CHOICE -eq 1 ]; then
-        echo "Nothing To Do On Existing Machine!"
-    fi
+#    elif [ $MACHINE_CHOICE -eq 1 ]; then
+#        echo "Nothing To Do On Existing Machine!"
+#    fi
     CURRENT_SECTION_COMPLETE
 fi
 
 if [ $MENU_CHOICE -le 24 ]; then
     echo '24. [[[ UBUNTU LINUX, INSTALL SYSTEM-WIDE SYSTEM PERL & CPANM ]]]'
     echo
-    if [ $MACHINE_CHOICE -eq 0 ]; then
+#    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You SHOULD NOT Use This Instead Of local::lib In Section 21, Unless You Have No Choice ]'
         echo '[ This Option Will Install Both Perl & cpanminus System-Wide ]'
         echo '[ Also, All Future CPAN Distributions Will Install System-Wide In A Hard-To Control Manner ]'
@@ -395,16 +395,16 @@ if [ $MENU_CHOICE -le 24 ]; then
         echo '[ WARNING: Do NOT Mix With Perl From Source In Section 23! ]'
         C 'Please read the warnings above.  Seriously.'
         S apt-get install perl cpanminus
-    elif [ $MACHINE_CHOICE -eq 1 ]; then
-        echo "Nothing To Do On Existing Machine!"
-    fi
+#    elif [ $MACHINE_CHOICE -eq 1 ]; then
+#        echo "Nothing To Do On Existing Machine!"
+#    fi
     CURRENT_SECTION_COMPLETE
 fi
 
 if [ $MENU_CHOICE -le 25 ]; then
     echo '25. [[[ LINUX, INSTALL RPERL DEPENDENCIES ]]]'
     echo
-    if [ $MACHINE_CHOICE -eq 0 ]; then
+#    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ Overview Of RPerl Dependencies In This Section ]'
         echo '[ GCC: gcc & g++ Required For Compiling ]'
         echo '[ libc: libcrypt.(a|so) Required For Compiling ]'
@@ -452,16 +452,16 @@ if [ $MENU_CHOICE -le 25 ]; then
         echo 'https://gmplib.org'
         echo '[ MANUAL BUILD OPTION ONLY: Install RPerl Dependency AStyle, Visit The Following URL For Installation Instructions ]'
         echo 'http://astyle.sourceforge.net'
-    elif [ $MACHINE_CHOICE -eq 1 ]; then
-        echo "Nothing To Do On Existing Machine!"
-    fi
+#    elif [ $MACHINE_CHOICE -eq 1 ]; then
+#        echo "Nothing To Do On Existing Machine!"
+#    fi
     CURRENT_SECTION_COMPLETE
 fi
 
 if [ $MENU_CHOICE -le 26 ]; then
     echo '26. [[[ PERL, INSTALL RPERL, LATEST STABLE VIA CPAN ]]]'
     echo
-    if [ $MACHINE_CHOICE -eq 0 ]; then
+#    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You Should Use This Instead Of Unstable Via GitHub In Section 27, Unless You Are An RPerl System Developer ]'
         echo '[ This Option Will Install The Latest Stable Public Release Of RPerl ]'
         echo '[ WARNING: Do NOT Mix With Unstable Via GitHub In Section 27! ]'
@@ -483,9 +483,9 @@ if [ $MENU_CHOICE -le 26 ]; then
         echo '[ Copy The Command From The Following Line For System-Wide Option ]'
         echo '$ sudo cpan RPerl'
         echo
-    elif [ $MACHINE_CHOICE -eq 1 ]; then
-        echo "Nothing To Do On Existing Machine!"
-    fi
+#    elif [ $MACHINE_CHOICE -eq 1 ]; then
+#        echo "Nothing To Do On Existing Machine!"
+#    fi
     CURRENT_SECTION_COMPLETE
 fi
 
@@ -498,7 +498,7 @@ RPERL_REPO_DIRECTORY='__EMPTY__'
 if [ $MENU_CHOICE -le 27 ]; then
     echo '27. [[[ PERL, INSTALL RPERL, LATEST UNSTABLE VIA GITHUB ]]]'
     echo
-    if [ $MACHINE_CHOICE -eq 0 ]; then
+#    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You SHOULD NOT Use This Instead Of Stable Via CPAN In Section 26, Unless You Are An RPerl System Developer ]'
         echo '[ This Option Will Install The Latest Unstable Development Release Of RPerl ]'
         echo '[ WARNING: Do NOT Mix With Stable Via CPAN In Section 26! ]'
@@ -572,9 +572,9 @@ if [ $MENU_CHOICE -le 27 ]; then
         B 'make; make test TEST_VERBOSE=1'
         echo '[ ALL OPTIONS: Install RPerl ]'
         B 'make install'
-    elif [ $MACHINE_CHOICE -eq 1 ]; then
-        echo "Nothing To Do On Existing Machine!"
-    fi
+#    elif [ $MACHINE_CHOICE -eq 1 ]; then
+#        echo "Nothing To Do On Existing Machine!"
+#    fi
     CURRENT_SECTION_COMPLETE
 fi
 
@@ -587,7 +587,7 @@ RPERL_INSTALL_DIRECTORY='__EMPTY__'
 if [ $MENU_CHOICE -le 28 ]; then
     echo '28. [[[ RPERL, RUN COMPILER TESTS ]]]'
     echo
-    if [ $MACHINE_CHOICE -eq 0 ]; then
+#    if [ $MACHINE_CHOICE -eq 0 ]; then
         D $RPERL_VERBOSE 'RPERL_VERBOSE additional user output, 0 for off, 1 for on' '1'
         export RPERL_VERBOSE=$USER_INPUT
         D $RPERL_DEBUG 'RPERL_DEBUG additional system output, 0 for off, 1 for on' '1'
@@ -660,9 +660,9 @@ if [ $MENU_CHOICE -le 28 ]; then
 
         echo '[ Test Command Sequence #2, Bubble Sort Timing Test: Clean New Compiled Files ]'
         B ../script/demo/unlink_bubble.sh
-    elif [ $MACHINE_CHOICE -eq 1 ]; then
-        echo "Nothing To Do On Existing Machine!"
-    fi
+#    elif [ $MACHINE_CHOICE -eq 1 ]; then
+#        echo "Nothing To Do On Existing Machine!"
+#    fi
     CURRENT_SECTION_COMPLETE
 fi
 
@@ -673,7 +673,7 @@ PHYSICSPERL_NBODY_STEPS='__EMPTY__'
 if [ $MENU_CHOICE -le 29 ]; then
     echo '29. [[[ RPERL, INSTALL RPERL FAMILY & RUN DEMOS ]]]'
     echo
-    if [ $MACHINE_CHOICE -eq 0 ]; then
+#    if [ $MACHINE_CHOICE -eq 0 ]; then
         D $RPERL_VERBOSE 'RPERL_VERBOSE additional user output, 0 for off, 1 for on' '1'
         export RPERL_VERBOSE=$USER_INPUT
         D $RPERL_DEBUG 'RPERL_DEBUG additional system output, 0 for off, 1 for on' '1'
@@ -735,9 +735,9 @@ if [ $MENU_CHOICE -le 29 ]; then
         B rperl -V -nop lib/PhysicsPerl/Astro/System.pm
         echo '[ Test Command Sequence #0, PhysicsPerl N-Body Timing Test: Ultra Fast Automatically Compiled CPPOPS_CPPTYPES_SSE Mode, ~13 Seconds For 50M Steps Without Graphics ]'
         B script/demo/n_body.pl $PHYSICSPERL_NBODY_STEPS $PHYSICSPERL_ENABLE_GRAPHICS
-    elif [ $MACHINE_CHOICE -eq 1 ]; then
-        echo "Nothing To Do On Existing Machine!"
-    fi
+#    elif [ $MACHINE_CHOICE -eq 1 ]; then
+#        echo "Nothing To Do On Existing Machine!"
+#    fi
 #    CURRENT_SECTION_COMPLETE  # final section!
 fi
 
