@@ -1,7 +1,7 @@
 #!/bin/bash
 # Copyright © 2014, 2015, 2016, William N. Braswell, Jr.. All Rights Reserved. This work is Free \& Open Source; you can redistribute it and/or modify it under the same terms as Perl 5.24.0.
 # RPerl Installer Script
-VERSION='0.077_000'
+VERSION='0.079_000'
 
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
@@ -250,8 +250,9 @@ if [ $MENU_CHOICE -le 20 ]; then
         echo
         echo '[ Look For Any Errors In The Output From The curl Command Above ]'
         echo '[ WARNING: IF AND ONLY IF The Above curl Command Gives The Error On The Following Line, THEN Execute The echo Command In The Next Step ]'
-        C 'Please read the warning above.  Seriously.'
         echo 'curl: (77) error setting certificate verify locations'
+        echo
+        C 'Please read the warning above.  Seriously.'
         echo
         B "echo 'cacert=/etc/ssl/certs/ca-certificates.crt' >> ~/.curlrc"
 
@@ -288,11 +289,18 @@ if [ $MENU_CHOICE -le 21 ]; then
         echo '[ WARNING: Do NOT Mix With Perl From Source In Section 23! ]'
         echo '[ WARNING: Do NOT Mix With System Perl In Section 24! ]'
         C 'Please read the warnings above.  Seriously.'
+        echo
+        echo '[ Install local::lib & CPANM in ~/perl5 ]'
         B 'curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib'
-        # echo 'eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)' >> ~/.bashrc  # DEV NOTE: pre-munged command for comparison
-        B echo "'" eval '$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)' "'" '>> ~/.bashrc'
+        echo '[ Enable local::lib In .bashrc Run Commands Startup File, Do Not Repeat If Already Using LAMP University .bashrc File ]'
+        # DEV NOTE: pre-munged command for comparison
+#       if [ -d $HOME/perl5/lib/perl5 ]; then
+#           eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
+#       fi
+        B echo -e '"# enable local::lib, do NOT mix with Perlbrew\nif [ -d"' '\$HOME/perl5/lib/perl5 ]\; then' '"\n  "' "'" eval '$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)' "'" '"\nfi\n"' '>> ~/.bashrc'
         SOURCE ~/.bashrc
         echo '[ Ensure The Following 4 Environmental Variables Now Include ~/perl5: PERL_MM_OPT, PERL_MB_OPT, PERL5LIB, PATH ]'
+        echo '[ If Not, Please Log Out & Log Back In, Then Return To This Point & Check Again ]'
         B 'set | grep perl5'
 #    elif [ $MACHINE_CHOICE -eq 1 ]; then
 #        echo "Nothing To Do On Existing Machine!"
