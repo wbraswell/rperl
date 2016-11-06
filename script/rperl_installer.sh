@@ -292,7 +292,8 @@ if [ $MENU_CHOICE -le 21 ]; then
         echo
         echo '[ Install local::lib & CPANM in ~/perl5 ]'
         B 'curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib'
-        echo '[ Enable local::lib In .bashrc Run Commands Startup File, Do Not Repeat If Already Using LAMP University .bashrc File ]'
+        echo '[ Enable local::lib In .bashrc Run Commands Startup File ]'
+        echo '[ NOTE: Do Not Run The Following Step If You Already Copied Your Own Pre-Existing LAMP University .bashrc File In Section 0 ]'
         # DEV NOTE: pre-munged command for comparison
 #       if [ -d $HOME/perl5/lib/perl5 ]; then
 #           eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
