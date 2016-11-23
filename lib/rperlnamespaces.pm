@@ -4,7 +4,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use rperlnamespaces_generated;
-our $VERSION = 0.001_010;
+our $VERSION = 0.002_000;
 
 use Data::Dumper;
 
@@ -12,7 +12,7 @@ sub array {
     my $namespaces = [];
     for my $name ( sort keys %main:: ) {
         my $glob = $main::{$name};
-        if ( %{$glob} ) {
+        if ( (not ref $glob) and  %{$glob} ) {  # check glob ref to avoid "not a HASH reference" error on DUMMY code refs
             push @{$namespaces}, $name;
         }
     }
@@ -20,13 +20,17 @@ sub array {
 }
 
 sub hash {
+#    print 'in rperlnamespaces::hash(), top of subroutine', "\n";
     my $namespaces = {};
     for my $name ( sort keys %main:: ) {
         my $glob = $main::{$name};
-        if ( %{$glob} ) {
+#        print 'in rperlnamespaces::hash(), have ref $glob = ', ref $glob, "\n";
+#        print 'in rperlnamespaces::hash(), have $glob = ', Dumper($glob), "\n";
+        if ( (not ref $glob) and  %{$glob} ) {  # check glob ref to avoid "not a HASH reference" error on DUMMY code refs
             $namespaces->{$name} = 1;
         }
     }
+#    print 'in rperlnamespaces::hash(), bottom of subroutine, about to return $namespaces = ', Dumper($namespaces), "\n";
     return $namespaces;
 }
 
@@ -35,7 +39,7 @@ sub hash_noncore {
     my $namespaces = {};
     for my $name ( sort keys %main:: ) {
         my $glob = $main::{$name};
-        if ( %{$glob}
+        if ( (not ref $glob) and  %{$glob}  # check glob ref to avoid "not a HASH reference" error on DUMMY code refs
             and ( not exists $rperlnamespaces_generated::CORE->{$name} ) )
         {
             $namespaces->{$name} = 1;
@@ -49,7 +53,7 @@ sub hash_noncore_nonrperl {
     my $namespaces = {};
     for my $name ( sort keys %main:: ) {
         my $glob = $main::{$name};
-        if (    %{$glob}
+        if ( (not ref $glob) and  %{$glob}  # check glob ref to avoid "not a HASH reference" error on DUMMY code refs
             and ( not exists $rperlnamespaces_generated::CORE->{$name} )
             and ( not exists $rperlnamespaces_generated::RPERL->{$name} ) )
         {

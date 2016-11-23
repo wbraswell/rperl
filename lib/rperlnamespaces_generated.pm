@@ -44,7 +44,6 @@ $rperlnamespaces_generated::CORE = {
     'strict::'      => 1,
     'threads::'     => 1,
     'utf8::'        => 1,
-    'vars::'        => 1,
     'version::'     => 1,
     'warnings::'    => 1
 };
@@ -147,6 +146,7 @@ $rperlnamespaces_generated::RPERL = {
     'constant_number::'                       => 1,
     'constant_sse_number_pair::'              => 1,
     'constant_unsigned_integer::'             => 1,
+    'eval_25_f5a5::'                          => 1,
     'filehandleref::'                         => 1,
     'gmp_integer::'                           => 1,
     'hash::'                                  => 1,
@@ -176,6 +176,7 @@ $rperlnamespaces_generated::RPERL = {
     'rperlnamespaces::'                       => 1,
     'rperlnamespaces_generated::'             => 1,
     'rperloperations::'                       => 1,
+    'rperloptions::'                          => 1,
     'rperlrules::'                            => 1,
     'rperlsse::'                              => 1,
     'rperltypes::'                            => 1,
@@ -194,6 +195,7 @@ $rperlnamespaces_generated::RPERL = {
     'string_hashref_hashref::'                => 1,
     'unknown::'                               => 1,
     'unsigned_integer::'                      => 1,
+    'vars::'                                  => 1,
     'void::'                                  => 1
 };
 

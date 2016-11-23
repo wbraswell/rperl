@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use rperlnamespaces;
-our $VERSION = 0.001_300;
+our $VERSION = 0.002_000;
 
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 
@@ -22,9 +22,10 @@ use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
 
 package main;
-my $namespaces_core = rperlnamespaces::hash();
 
-#print 'have $namespaces_core_string = ' . "\n" . $namespaces_core_string . "\n\n";
+#print 'in namespaces_regenerate.pl main::, about to call rperlnamespaces::hash()...', "\n";
+my $namespaces_core = rperlnamespaces::hash();
+#print 'in namespaces_regenerate.pl main::, ret from rperlnamespaces::hash(), have $namespaces_core = ', Dumper($namespaces_core), "\n";
 
 # NEED FIX: remove hard-coded list of packages
 # DEV NOTE, CORRELATION #rp003: some RPerl packages are missed due to BEGIN{} or INIT{} blocks, etc.
@@ -36,6 +37,7 @@ my $namespaces_rperl_missed = {
     'rperlnamespaces_generated::' => 1,
     'rperltypes::' => 1,
     'rperloperations::' => 1,
+    'rperloptions::' => 1,
     'rperlrules::' => 1,
     'rperlsse::' => 1,
     'rperlgmp::' => 1,
@@ -127,7 +129,10 @@ eval 'use RPerl::AfterSubclass';
 eval 'use rperlsse';
 eval 'use rperlgmp';
 
+#print 'in namespaces_regenerate.pl main::, after evals, about to call rperlnamespaces::hash()...', "\n";
 my $namespaces_rperl = rperlnamespaces::hash();
+#print 'in namespaces_regenerate.pl main::, after evals, ret from rperlnamespaces::hash(), have $namespaces_rperl = ', Dumper($namespaces_rperl), "\n";
+
 $namespaces_rperl = { %{$namespaces_rperl}, %{$namespaces_rperl_missed} };
 
 # separate RPerl namespaces and Perl core namespaces

@@ -3,13 +3,14 @@
 use strict;
 use warnings;
 use RPerl;
+use RPerl;
 #use RPerl::AfterSubclass;
 
 # DEV NOTE, CORRELATION #rp016: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = 2.200_000;
 
-#our $VERSION = 20161031;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2016.305;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20161123;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2016.328;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -23,15 +24,13 @@ use RPerl::Parser;    # includes Perl::Critic
 use RPerl::Generator;
 use RPerl::Compiler;    # includes Inline
 use RPerl::DataType::Number;  # number_to_string()
+use rperloptions;
 use Getopt::Long qw(:config no_ignore_case);
 use Pod::Usage;
 use File::Path qw(remove_tree);
 use Config qw(config_re);
 
 # [[[ SUBROUTINES ]]]
-
-# this array must be instantiated here, because GetOptions' diamond '<>' operator does not allow passing arguments or receiving return values
-my string_arrayref $input_file_names_unlabeled = [];
 
 # [[[ ACCEPT, CHECK, REPORT COMMAND-LINE ARGUMENTS (aka OPTIONS)) ]]]
 # [[[ ACCEPT, CHECK, REPORT COMMAND-LINE ARGUMENTS (aka OPTIONS)) ]]]
@@ -59,6 +58,8 @@ sub accept_and_verify_input_files {
 
     if ( ( scalar @{$input_file_names} ) == 0 ) {
         die 'ERROR EAR01: No RPerl source code input file(s) specified, dying' . "\n";
+#        print {*STDERR} 'ERROR EAR01: No RPerl source code input file(s) specified, aborting' . "\n";
+#        return $input_file_names;  # allow require of this file
     }
 
     # verify input file(s)
@@ -441,7 +442,7 @@ sub multi_file_settings {
 #our void $store_unlabeled_arguments = sub {  # NEED FIX: can't define RPerl-style subroutines here?
 sub store_unlabeled_arguments {
     ( my unknown $argument ) = @_;
-    push @{$input_file_names_unlabeled}, $argument;
+    push @{$::input_file_names_unlabeled}, $argument;
     return;
 }
 
@@ -579,6 +580,7 @@ sub depends_delete {
             RPerl::verbose('DEPENDENCIES:       Follow & find all deps... ');
             if ( exists $input_file_name_deps->[0] ) {
                 $input_file_name_deps = accept_and_verify_input_files( $input_file_name_deps, [], $modes );    # verify deps input files
+#                if ( ( scalar @{$input_file_name_deps} ) == 0 ) { return; }  # allow require of this file
             }
             $input_file_name_deps      = [ @{$input_file_name_deps}, $input_file_name ];                       # append input file to deps list
             $input_file_and_deps_count = scalar @{$input_file_name_deps};
@@ -738,6 +740,7 @@ sub depends_parse_generate_save_subcompile_execute {
             RPerl::verbose('DEPENDENCIES:       Follow & find all deps... ');
             if ( exists $input_file_name_deps->[0] ) {
                 $input_file_name_deps = accept_and_verify_input_files( $input_file_name_deps, [], $modes );    # verify deps input files
+#                if ( ( scalar @{$input_file_name_deps} ) == 0 ) { return; }  # allow require of this file
             }
             $input_file_name_deps      = [ @{$input_file_name_deps}, $input_file_name ];                       # append input file to deps list
             $input_file_and_deps_count = scalar @{$input_file_name_deps};
@@ -877,97 +880,14 @@ sub depends_parse_generate_save_subcompile_execute {
 # [[[ ACTUALLY RUN CODE ]]]
 # [[[ ACTUALLY RUN CODE ]]]
 
-my integer $help_flag                           = 0;
-my integer $version_flag                        = 0;
-my integer $vversions_flag                      = 0;
-my integer $dependencies_flag                   = undef;
-my integer $uncompile_flag                      = undef;
-my integer $uncompile_source_flag               = undef;
-my integer $uncompile_source_binary_flag        = undef;
-my integer $uncompile_source_binary_inline_flag = undef;
-my integer $compile_flag                        = undef;
-my integer $subcompile_assemble_flag            = undef;
-my integer $subcompile_archive_flag             = undef;
-my integer $subcompile_shared_flag              = undef;
-my integer $subcompile_static_flag              = undef;
-my string  $subcompile_CXX                      = undef;
-my integer $parallel_flag                       = undef;
-my integer $num_cores                           = undef;
-my integer $execute_flag                        = undef;
-my integer $test_flag                           = undef;
-my string_arrayref $input_file_names            = [];
-my string_arrayref $output_file_name_prefixes   = [];
-my hashref_arrayref $output_file_name_groups    = [];
-my string_hashref $modes                        = {};      # can't store defaults here, erased by GetOptions()
-my string_hashref $modes_default                = {        # default to CPPOPS_CPPTYPES_CHECKTRACE_SUBCOMPILE_EXECUTE_LABEL in C++ output code
-    dependencies => 'ON',
-    ops          => 'CPP',
-    types        => 'CPP',
-    type_integer => 'LONG',
-    type_number  => 'DOUBLE',
-    check        => 'TRACE',
-    uncompile    => 'OFF',
-    compile      => 'SUBCOMPILE',
-    subcompile   => 'DYNAMIC',
-    CXX          => 'g++',  # default to GNU GCC  http://www.gnu.org/software/make/manual/make.html#Implicit-Variables
-    parallel     => 'OPENMP',
-    num_cores    => 4,
-    execute      => 'ON',
-    label        => 'ON',
-};
-my arrayref_hashref $modes_supported = {
-    arguments    => undef,  # accept any value
-    dependencies => [ 'OFF', 'ON' ],
-    ops          => [ 'PERL', 'CPP' ],
-    types        => [ 'PERL', 'CPP', 'DUAL' ],
-    type_integer => [ 'LONG', 'LONG__LONG' ],
-    type_number  => [ 'DOUBLE', 'LONG__DOUBLE' ],
-    check        => [ 'OFF', 'ON', 'TRACE' ],
-    uncompile    => [ 'OFF', 'SOURCE', 'BINARY', 'INLINE', 'SOURCE_BINARY', 'SOURCE_BINARY_INLINE' ],
-    compile      => [ 'OFF', 'PARSE', 'GENERATE', 'SAVE', 'SUBCOMPILE' ],
-    subcompile   => [ 'OFF', 'ASSEMBLE', 'ARCHIVE', 'SHARED', 'STATIC', 'DYNAMIC' ],
-    CXX          => undef,  # accept any value
-    parallel     => [ 'OFF', 'OPENMP' ],
-    num_cores    => undef,  # accept any value
-    execute      => [ 'OFF', 'ON' ],
-    label        => [ 'OFF', 'ON' ],
-};
 my hashref_hashref $filename_suffixes_supported = $RPerl::Compiler::filename_suffixes_supported;
 my integer $input_files_count = 0;
 
-GetOptions(
-    'help|?'        => \$help_flag,
-    'v'             => \$version_flag,
-    'version'       => \$version_flag,
-    'vversion'      => \$vversions_flag,
-    'dependencies!' => \$dependencies_flag,
-    'Verbose!'      => \$RPerl::VERBOSE,
-    'Debug!'        => \$RPerl::DEBUG,
-    'Warnings!'     => \$RPerl::WARNINGS,
-    'u!'            => \$uncompile_source_flag,
-    'uncompile!'    => \$uncompile_source_flag,
-    'uu!'           => \$uncompile_source_binary_flag,
-    'uuncompile!'   => \$uncompile_source_binary_flag,
-    'uuuncompile!'  => \$uncompile_source_binary_inline_flag,
-    'compile!'      => \$compile_flag,
-    'assemble'      => \$subcompile_assemble_flag,
-    'archive'       => \$subcompile_archive_flag,
-    'shared'        => \$subcompile_shared_flag,
-    'static!'       => \$subcompile_static_flag,
-    'CXX=s'         => \$subcompile_CXX,
-    'parallel!'     => \$parallel_flag,
-    'num_cores=i'   => \$num_cores,
-    'execute!'      => \$execute_flag,
-    'test'          => \$test_flag,
-    'infile=s{1,}'  => \@{$input_file_names},
-    'outfile=s{1,}' => \@{$output_file_name_prefixes},
-    'mode=s%'       => \$modes,
-    '<>'            => \&store_unlabeled_arguments
-) or die "ERROR EAR00: Failure processing command-line arguments, dying\n";
+GetOptions(%{$::rperl_options}) or die "ERROR EAR00: Failure processing command-line arguments, dying\n";
 
-if ($help_flag) { pod2usage( -verbose => 1, -width => 80 ); exit; }
-if ($vversions_flag) { $RPerl::VERBOSE = 1; verbose_versions(); exit; }
-if ($version_flag) {
+if ($::help_flag) { pod2usage( -verbose => 1, -width => 80 ); exit; }
+if ($::vversions_flag) { $RPerl::VERBOSE = 1; verbose_versions(); exit; }
+if ($::version_flag) {
 
     # NEED UPDATE: automatically generate version info
 
@@ -997,25 +917,31 @@ EOL
 }
 
 # pre-aggregate values of uncompile mode flags
-if (defined $uncompile_source_flag) { if ($uncompile_source_flag) { $uncompile_flag = 1; } else { $uncompile_flag = 0; } }
-if (defined $uncompile_source_binary_flag) { if ($uncompile_source_binary_flag) { $uncompile_flag = 2; } else { $uncompile_flag = 0; } }
-if (defined $uncompile_source_binary_inline_flag) { if ($uncompile_source_binary_inline_flag) { $uncompile_flag = 3; } else { $uncompile_flag = 0; } }
+if (defined $::uncompile_source_flag) { if ($::uncompile_source_flag) { $::uncompile_flag = 1; } else { $::uncompile_flag = 0; } }
+if (defined $::uncompile_source_binary_flag) { if ($::uncompile_source_binary_flag) { $::uncompile_flag = 2; } else { $::uncompile_flag = 0; } }
+if (defined $::uncompile_source_binary_inline_flag) { if ($::uncompile_source_binary_inline_flag) { $::uncompile_flag = 3; } else { $::uncompile_flag = 0; } }
 
 verbose_flags(
-    $dependencies_flag, $uncompile_flag, $compile_flag, $subcompile_assemble_flag,
-    $subcompile_archive_flag,      $subcompile_shared_flag,           $subcompile_static_flag, $parallel_flag,        $execute_flag, $test_flag
+    $::dependencies_flag, $::uncompile_flag, $::compile_flag, $::subcompile_assemble_flag,
+    $::subcompile_archive_flag,      $::subcompile_shared_flag,           $::subcompile_static_flag, $::parallel_flag,        $::execute_flag, $::test_flag
 );
-$input_file_names  = accept_and_verify_input_files( $input_file_names, $input_file_names_unlabeled, $modes );
-$input_files_count = scalar @{$input_file_names};
-$modes             = verify_and_default_modes(
-    $modes,              $modes_default, $modes_supported, $dependencies_flag, $uncompile_flag, $compile_flag,  
-    $subcompile_assemble_flag,   $subcompile_archive_flag,      $subcompile_shared_flag,
-    $subcompile_static_flag, $subcompile_CXX, $parallel_flag, $num_cores, $execute_flag,  $test_flag, $input_file_names
+
+use rperloptions;
+$::input_file_names  = accept_and_verify_input_files( $::input_file_names, $::input_file_names_unlabeled, $::modes );
+
+#if ( ( scalar @{$::input_file_names} ) == 0 ) { return 1; }  # allow require of this file
+$input_files_count = scalar @{$::input_file_names};
+$::modes             = verify_and_default_modes(
+    $::modes,              $::modes_default, $::modes_supported, $::dependencies_flag, $::uncompile_flag, $::compile_flag,  
+    $::subcompile_assemble_flag,   $::subcompile_archive_flag,      $::subcompile_shared_flag,
+    $::subcompile_static_flag, $::subcompile_CXX, $::parallel_flag, $::num_cores, $::execute_flag,  $::test_flag, $::input_file_names
 );
-$output_file_name_groups = generate_output_file_names( $input_file_names, $output_file_name_prefixes, $input_files_count, $modes );
-verbose_multi_file_settings( $input_file_names, $output_file_name_groups, $input_files_count, $filename_suffixes_supported, $modes );
-if ( $modes->{uncompile} ne 'OFF' ) { depends_delete( $input_file_names, $output_file_name_groups, $output_file_name_prefixes, $input_files_count, $filename_suffixes_supported, $modes ); }
-else { depends_parse_generate_save_subcompile_execute( $input_file_names, $output_file_name_groups, $output_file_name_prefixes, $input_files_count, $filename_suffixes_supported, $modes ); }
+$::output_file_name_groups = generate_output_file_names( $::input_file_names, $::output_file_name_prefixes, $input_files_count, $::modes );
+verbose_multi_file_settings( $::input_file_names, $::output_file_name_groups, $input_files_count, $filename_suffixes_supported, $::modes );
+if ( $::modes->{uncompile} ne 'OFF' ) { depends_delete( $::input_file_names, $::output_file_name_groups, $::output_file_name_prefixes, $input_files_count, $filename_suffixes_supported, $::modes ); }
+else { depends_parse_generate_save_subcompile_execute( $::input_file_names, $::output_file_name_groups, $::output_file_name_prefixes, $input_files_count, $filename_suffixes_supported, $::modes ); }
+
+#1;  # allow require of this file
 
 __END__
 =head1 NAME
