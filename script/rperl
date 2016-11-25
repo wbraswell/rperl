@@ -885,7 +885,7 @@ my integer $input_files_count = 0;
 
 GetOptions(%{$::rperl_options}) or die "ERROR EAR00: Failure processing command-line arguments, dying\n";
 
-if ($::help_flag) { pod2usage( -verbose => 1, -width => 80 ); exit; }
+if ($::help_flag) { pod2usage( -verbose => 1, -width => 80, -exitval => 0 ); exit; }
 if ($::vversions_flag) { $RPerl::VERBOSE = 1; verbose_versions(); exit; }
 if ($::version_flag) {
 
