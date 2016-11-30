@@ -319,8 +319,6 @@ Your new tests will be automatically accessed by 3 parts of the RPerl system tes
 https://github.com/wbraswell/rperl/blob/master/t/09_interpret_execute.t
 https://github.com/wbraswell/rperl/blob/master/t/12_parse.t
 https://github.com/wbraswell/rperl/blob/master/t/13_generate.t
-In t/13 only you will need to disable the constant 'PATH_PRECOMPILED' by changing it's value to end with an invalid path such as '/RPerl/FOO'.
-You may safely ignore any warnings about "/RPerl/FOO" being an invalid path while t/13 is running.
 You can run tests for your new 'abs' operator only.
 You can just run 1 test at a time, using the environmental variables to enable verbose and debugging output:
 $ export RPERL_VERBOSE=1
