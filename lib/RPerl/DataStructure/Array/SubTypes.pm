@@ -3,12 +3,26 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_100;
+our $VERSION = 0.009_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd)  # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
+
+# [[[ PRE-DECLARED TYPES ]]]
+package    # hide from PAUSE indexing
+    boolean;
+package    # hide from PAUSE indexing
+    unsigned_integer;
+package     # hide from PAUSE indexing
+    integer;
+package    # hide from PAUSE indexing
+    number;
+package    # hide from PAUSE indexing
+    character;
+package    # hide from PAUSE indexing
+    string;
 
 # [[[ ARRAYS ]]]
 
@@ -149,47 +163,60 @@ our void $integer_arrayref_CHECKTRACE = sub {
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
+# stringify an integer_arrayref
 our string $integer_arrayref_to_string = sub {
-    ( my $input_avref ) = @_;
+    # require exactly one integer_arrayref as input, store in variable $input_avref
+    ( my integer_arrayref $input_avref ) = @_;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), top of subroutine\n");
 
     #    ::integer_arrayref_CHECK($input_avref);
-    ::integer_arrayref_CHECKTRACE( $input_avref, '$input_avref',
-        'integer_arrayref_to_string()' );
+    ::integer_arrayref_CHECKTRACE( $input_avref, '$input_avref', 'integer_arrayref_to_string()' );
 
-    my @input_av;
+    # declare local variables, av & sv mean "array value" & "scalar value" as used in Perl core
+#    my @input_av;  # DEV NOTE: match CPPOPS_*TYPES code
     my integer $input_av_length;
     my integer $input_av_element;
     my string $output_sv;
-    my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
+    my boolean $i_is_0 = 1;
 
-    @input_av        = @{$input_avref};
-    $input_av_length = scalar @input_av;
+    # compute length of (number of elements in) input array
+#    @input_av        = @{$input_avref};  # DEV NOTE: match CPPOPS_*TYPES code
+#    $input_av_length = scalar @input_av;  # DEV NOTE: match CPPOPS_*TYPES code
+    $input_av_length = scalar @{$input_avref};
 
 #	RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), have \$input_av_length = $input_av_length\n");
 
+    # begin output string with left-square-bracket, as required for all RPerl arrays
     $output_sv = '[';
 
+    # loop through all valid values of $i for use as index to input array
     for my integer $i ( 0 .. ( $input_av_length - 1 ) ) {
 
-        $input_av_element = $input_av[$i];
+        # retrieve input array's element at index $i
+#        $input_av_element = $input_av[$i];  # DEV NOTE: match CPPOPS_*TYPES code
+        $input_av_element = $input_avref->[$i];
 
 # DEV NOTE: integer type-checking already done as part of integer_arrayref_CHECKTRACE()
 #        ::integer_CHECK($input_av_element);
 #::integer_CHECKTRACE( $input_av_element, "\$input_av_element at index $i", 'integer_arrayref_to_string()' );
 
+        # append comma & space to output string for all elements except index 0
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
+
+        # stringify individual integer element, append to output string
         $output_sv .= ::integer_to_string($input_av_element);
     }
 
+    # end output string with right-square-bracket, as required for all RPerl arrays
     $output_sv .= ']';
 
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n");
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), bottom of subroutine\n");
 
-    return ($output_sv);
+    # return output string, containing stringified input array
+    return $output_sv;
 };
 
 # [[[ TYPE TESTING ]]]

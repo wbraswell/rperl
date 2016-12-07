@@ -964,9 +964,9 @@ The I<"header"> section is required and always contains 4 lines for an RPerl I<"
 
 The I<"critics"> section is included as necessary and may contain 1 or more lines beginning with C<## no critic>, which disable the errors caused by the over-restrictive nature of some Perl::Critic policies.  There are currently 6 critics commands enabled for normal RPerl users, the first 2 of which are given in this example.  The "USER DEFAULT 1" C<no critic> command allows the use of numeric values such as C<21> and C<12>, as well as the common C<print> command.  The C<USER DEFAULT 2> critics command allows the printing of C<'have $foo = '>, where a single-quoted C<'> string literal value contains the the C<$> dollar sigil (covered later in Chapter 2).
 
-The I<"operations"> section is required and contains 1 or more lines of general-purpose RPerl source code.  This is the main body of your program.  The 6 lines of source code in our example are used to perform some simple arithmetic and display the results.  The C<my integer $foo = 21 + 12;> line declares a new variable named C<$foo> which will only contain non-floating-point numeric data, and which is initialized to contain the arithmetic result of numeric literal values C<21> plus C<12>.  The C<my integer $bar = 23 * 42 * 2;> line does much the same thing, creating a new numeric variable named C<$bar> and initialized with C<23> times C<42> times C<2>.  The C<my number $baz = to_number($bar) / $foo;> line creates a new floating-point numeric variable C<$baz>, and initializes it to the quotient of the C<$bar> and C<$foo> variables.  The C<to_number()> RPerl type conversion subroutine converts a non-floating-point C<integer> value to a floating-point C<number> value.
+The I<"operations"> section is required and contains 1 or more lines of general-purpose RPerl source code.  This is the main body of your program.  The 6 lines of source code in our example are used to perform some simple arithmetic and display the results.  The C<my integer $foo = 21 + 12;> line declares a new variable named C<$foo> which will only contain non-floating-point numeric data, and which is initialized to contain the arithmetic result of numeric literal values C<21> plus C<12>.  The C<my integer $bar = 23 * 42 * 2;> line does much the same thing, creating a new numeric variable named C<$bar> and initialized with C<23> times C<42> times C<2>.  The C<my number $baz = to_number($bar) / $foo;> line creates a new floating-point numeric variable C<$baz>, and initializes it to the quotient of the C<$bar> and C<$foo> variables.  The C<to_number()> RPerl type conversion I<"subroutine"> converts a non-floating-point C<integer> value to a floating-point C<number> value.  (A subroutine is like a user-defined operation, in this case pre-defined by the RPerl development team for your convenience; please see L</CHAPTER 4: ORGANIZING BY SUBROUTINES> for more information.)
 
-The C<print 'have $foo = ', $foo, "\n";> and following 2 lines will display on screen (not send to paper printer) the labeled values of C<$foo>, C<$bar>, and C<$baz> respectively.  The C<,> comma is used to separate multiple arguments passed to the C<print> operator.  The C<to_string()> RPerl type conversion subroutine converts the numeric values to underscore-formatted string values, suitable for use via the C<print> operator.  If the <to_string()> subroutine is not used, then the displayed numeric values will still be human-readable, but will not contain the proper underscores to be accepted back into RPerl as valid numeric data.  The "n" in the C<"\n"> double-quoted string literal values stands for "newline", which inserts a carriage return to place the next piece of printed data down on the following line.
+The C<print 'have $foo = ', $foo, "\n";> and following 2 lines will display on screen (not send to paper printer) the labeled values of C<$foo>, C<$bar>, and C<$baz> respectively.  The C<,> comma is used to separate multiple arguments passed to the C<print> operator.  The C<to_string()> RPerl type conversion subroutine converts the numeric values to underscore-formatted string values, suitable for use via the C<print> operator.  If the C<to_string()> subroutine is not used, then the displayed numeric values will still be human-readable, but will not contain the proper underscores to be accepted back into RPerl as valid numeric data.  The "n" in the C<"\n"> double-quoted string literal values stands for "newline", which inserts a carriage return to place the next piece of printed data down on the following line.
 
 =head2 Section 1.24: How Do I Run The RPerl Compiler?
 
@@ -1630,7 +1630,7 @@ X<br>
 
 Most programming languages include the basic principles of using named I<"variables"> to store data values such as numbers, text strings, and lists of multiple numbers or strings.  Multiple variables may be created, each with different names such as C<$foo> or C<$bar> or C<$quux>, and each potentially containing a different value.
 
-A single piece of data, such as one number or one string, is called a I<"scalar">.  Multiple pieces of data combined into a single aggregate structure may be either an I<"array"> or a I<"hash">, described in chapters 3 and 6, respectively.  (Although sharing the same terminology, the I<hash> data structure is not related to the I<hash> C<#> tic-tac-toe character.)  In normal Perl, only scalar variable names begin with the dollar sign C<$> I<"sigil">, while aggregate data structures are stored in variables starting with different sigils like C<@> or C<%>.  In RPerl, all variable names begin the C<$> sigil, both scalar types and aggregate structures alike.
+A single piece of data, such as one number or one string, is called a I<"scalar">.  Multiple pieces of data combined into a single aggregate structure may be either an I<"array"> or a I<"hash">, described in chapters 3 and 6, respectively.  (Although sharing the same terminology, the I<hash> data structure is not related to the I<hash> C<#> tic-tac-toe character.)  In normal Perl, only scalar variable names begin with the dollar-sign C<$> I<"sigil">, while aggregate data structures are stored in variables starting with different sigils like C<@> or C<%>.  In RPerl, all variable names begin the C<$> sigil, both scalar types and aggregate structures alike.
 
 RPerl provides 7 scalar data types:
 
@@ -1692,7 +1692,7 @@ S< >S< >S< >S< >a boolean logic value, either 0 or 1
 
 =item * C<unsigned_integer>
 
-S< >S< >S< >S< >a positive whole number value, greater than or equal to 0
+S< >S< >S< >S< >a positive whole number value, greater-than or equal to 0
 
 =item * C<integer>
 
@@ -1746,7 +1746,7 @@ The most memory-efficient numeric literal is C<boolean>, which represents a sing
 
 =head3 Section 2.1.2: Unsigned Integer Literals
 
-The second most efficient numeric literal is C<unsigned_integer>, which represents a single whole (non-decimal) number greater than or equal to 0.  An C<unsigned_integer> literal may describe any positive whole number, within the data size limits of the data types supported by your operating system software and computer hardware.  An C<unsigned_integer> may not describe a negative number or a non-whole number.
+The second most efficient numeric literal is C<unsigned_integer>, which represents a single whole (non-decimal) number greater-than or equal to 0.  An C<unsigned_integer> literal may describe any positive whole number, within the data size limits of the data types supported by your operating system software and computer hardware.  An C<unsigned_integer> may not describe a negative number or a non-whole number.
 
     23      # unsigned_integer
     0       # unsigned_integer
@@ -1799,7 +1799,7 @@ For C<unsigned_integer>, C<integer>, C<gmp_integer>, and C<number> literals, an 
 
 =head3 Section 2.1.7: Optional Positive Sign
 
-For C<unsigned_integer>, C<integer>, C<gmp_integer>, and C<number> literals, an optional C<+> plus sign may be prepended to explicitly indicate a numeric literal is positive (greater than zero).
+For C<unsigned_integer>, C<integer>, C<gmp_integer>, and C<number> literals, an optional C<+> plus sign may be prepended to explicitly indicate a numeric literal is positive (greater-than zero).
 
     1   # positive one
     +1  # also positive one
@@ -1964,7 +1964,7 @@ It will usually not be possible to easily predict when and where floating-point 
 
 =back
 
-To compensate for unpredictable floating-point error, you should use the I<"floating-point epsilon"> value stored in the constant C<RPerl::EPSILON()>, which is a very small number used to help detect inaccuracies.  Whenever you want of directly compare two floating-point values, instead use the subtraction C<-> and absolute value C<abs> operators to take the positive difference, then use the less-than C<E<lt>> operator to compare the difference to the floating-point epsilon value.  If the difference is less than the floating-point epsilon, then the two input floating-point values can be considered to be numerically equal.
+To compensate for unpredictable floating-point error, you should use the I<"floating-point epsilon"> value stored in the constant C<RPerl::EPSILON()>, which is a very small number used to help detect inaccuracies.  Whenever you want of directly compare two floating-point values, instead use the subtraction C<-> and absolute value C<abs> operators to take the positive difference, then use the less-than C<E<lt>> operator to compare the difference to the floating-point epsilon value.  If the difference is less-than the floating-point epsilon, then the two input floating-point values can be considered to be numerically equal.
 
                                          RPerl::EPSILON()  # A VERY SMALL NUMBER: 0.000_000_000_000_000_2
          (0.105 / 1_000) == 0.000_105                      # UNEXPECTED BEHAVIOR: false
@@ -2853,9 +2853,9 @@ $z = q{<<< END TEXT EVAL >>>};
 
 VALUE is numeric value;
 
-If operand VALUE is 0 or positive (greater than 0), return unchanged;
+If operand VALUE is 0 or positive (greater-than 0), return unchanged;
 
-If VALUE is negative (less than 0), return positive number with equal magnitude (distance from 0)
+If VALUE is negative (less-than 0), return positive number with equal magnitude (distance from 0)
 
     abs  0         # 0
     abs  1         # 1
@@ -3028,7 +3028,7 @@ VALUE1 and VALUE2 are numeric values;
 
 Divide integer part of first operand VALUE1 by integer part of second operand VALUE2, return remainder;
 
-Error if attempt to modulus by VALUE2 with absolute value less than 1
+Error if attempt to modulus by VALUE2 with absolute value less-than 1
 
      0 %  0  # ERROR
      0 %  1  # 0
@@ -3124,7 +3124,7 @@ Constant C<e> is known as Euler's Number and is defined as the limit of C<(1 + 1
 
 To instead calculate logarithm using a base other than C<e>, utilize ratio C<(log $operand)/(log $base)>;
 
-Error if attempt to take logarithm of VALUE less than or equal to 0
+Error if attempt to take logarithm of VALUE less-than or equal to 0
 
     log  0                    # ERROR
     log  1                    # 0
@@ -3143,7 +3143,7 @@ VALUE is numeric value;
 
 Take square root of operand VALUE, return result;
 
-Error if attempt to take square root of VALUE less than 0
+Error if attempt to take square root of VALUE less-than 0
 
     sqrt  0  # 0
     sqrt  1  # 1
@@ -4142,7 +4142,7 @@ $z = q{<<< END TEXT EVAL >>>};
 
 VALUE1 and VALUE2 are numeric values;
 
-Compare to determine relation of operands, return true if first operand VALUE1 is less than second operand VALUE2, otherwise return false
+Compare to determine relation of operands, return true if first operand VALUE1 is less-than second operand VALUE2, otherwise return false
 
      0 <  0  # false
      0 <  1  # true
@@ -4164,7 +4164,7 @@ Compare to determine relation of operands, return true if first operand VALUE1 i
 
 VALUE1 and VALUE2 are numeric values;
 
-Compare to determine relation of operands, return true if first operand VALUE1 is greater than second operand VALUE2, otherwise return false
+Compare to determine relation of operands, return true if first operand VALUE1 is greater-than second operand VALUE2, otherwise return false
 
      0 >  0  # false
      0 >  1  # false
@@ -4186,7 +4186,7 @@ Compare to determine relation of operands, return true if first operand VALUE1 i
 
 VALUE1 and VALUE2 are numeric values;
 
-Compare to determine relation of operands, return true if first operand VALUE1 is less than or equal to second operand VALUE2, otherwise return false
+Compare to determine relation of operands, return true if first operand VALUE1 is less-than or equal to second operand VALUE2, otherwise return false
 
      0 <=  0  # true
      0 <=  1  # true
@@ -4208,7 +4208,7 @@ Compare to determine relation of operands, return true if first operand VALUE1 i
 
 VALUE1 and VALUE2 are numeric values;
 
-Compare to determine relation of operands, return true if first operand VALUE1 is greater than or equal to second operand VALUE2, otherwise return false
+Compare to determine relation of operands, return true if first operand VALUE1 is greater-than or equal to second operand VALUE2, otherwise return false
 
      0 >=  0  # true
      0 >=  1  # false
@@ -4276,7 +4276,7 @@ VALUE1 and VALUE2 are numeric values;
 
 Perform three-way comparison of operands; 
 
-Return -1 if first operand VALUE1 is less than second operand VALUE2, return 0 if operands are equal, or return 1 if VALUE1 is greater than VALUE2;
+Return -1 if first operand VALUE1 is less-than second operand VALUE2, return 0 if operands are equal, or return 1 if VALUE1 is greater-than VALUE2;
 
 Randal L. Schwartz coined the operator's nickname based on visual similarity to Darth Vader's TIE Advanced x1 (TIE fighter) personal spacecraft
 
@@ -6512,7 +6512,7 @@ Break apart operand VALUE into integer part and fraction part, return both, frac
 
 Not a Perl built-in operator, it is a Perl subroutine (which happens to provide an interface to the underlying C subroutine of the same name); thus, C<POSIX::modf()> must be called with both the preceding C<POSIX::> namespace and parentheses around the operand;
 
-Returns more than one return value (always two); thus, must be wrapped in square brackets C<[ ]> and stored in C<number_arrayref> data structure, then individual parts accessed via thin-arrow C<-E<gt>> array dereference and element retrieval
+Returns more than one return value (always two); thus, must be wrapped in square-brackets C<[ ]> and stored in C<number_arrayref> data structure, then individual parts accessed via thin-arrow C<-E<gt>> array dereference and element retrieval
 
     POSIX::modf( 0)  # 0,  0
     POSIX::modf( 1)  # 0,  1
@@ -6841,7 +6841,7 @@ I<BEST PRACTICES>
 
 Text literals enclosed in double quotes are fully interpolated in normal Perl, and are only used for trivial interpolation of strings containing the newline C<"\n"> or tab C<"\t"> escape sequences in RPerl.  All double-quoted strings in RPerl must contain at least one newline or tab special character.
 
-In addition to escape sequences, string interpolation in normal Perl is also triggered by finding either the dollar sign C<$> or I<"at sign"> C<@> characters inside of a double-quoted string literal.  Because RPerl does not support string interpolation, double-quoted string literals must not contain the C<$> or C<@> characters.
+In addition to escape sequences, string interpolation in normal Perl is also triggered by finding either the dollar-sign C<$> or I<"at-sign"> C<@> characters inside of a double-quoted string literal.  Because RPerl does not support string interpolation, double-quoted string literals must not contain the C<$> or C<@> characters.
 
 Double-quoted string literals must not contain any backslash characters, other than those used in newline C<\n> and tab C<\t> escape sequences, and thus can not represent a single backslash character C<\>; use single quotes C<'\\'> or q quotes C<q{\\}> double backslash escape sequences instead. 
 
@@ -6931,9 +6931,9 @@ I<BEST PRACTICES>
 
 =head3 Section 2.2.5: C<q> Quotes
 
-Text literals enclosed in I<"q quotes"> begin with lowercase letter q and left I<"curly brace"> characters C<q{>, and end with the right curly brace C<}> character.  You must use q quotes to represent empty text C<q{}> literals, which contain no characters.  Curly braces are also known as I<"curly brackets"> or just I<"braces"> for short.
+Text literals enclosed in I<"q quotes"> begin with lowercase letter q and left I<"curly-brace"> characters C<q{>, and end with the right curly-brace C<}> character.  You must use q quotes to represent empty text C<q{}> literals, which contain no characters.  Curly braces are also known as I<"curly-brackets"> or just I<"braces"> for short.
 
-Normal Perl supports q-quoted string literals using delimiters other than curly braces, as well as I<"qq quotes"> which provide string interpolation in the same way as double-quoted strings.  RPerl's existing string quoting mechanisms cover all non-interpolated use cases, so RPerl does not support the additional qq quotes or non-curly-brace q quotes, because TDNNTBMTOWTDI.
+Normal Perl supports q-quoted string literals using delimiters other than curly-braces, as well as I<"qq quotes"> which provide string interpolation in the same way as double-quoted strings.  RPerl's existing string quoting mechanisms cover all non-interpolated use cases, so RPerl does not support the additional qq quotes or non-curly-brace q quotes, because TDNNTBMTOWTDI.
 
 q-quoted literals behave exactly the same as single-quoted literals, other than the empty string C<q{}> and the difference in delimiters.
 
@@ -7459,7 +7459,7 @@ X<break_code_blocks>
 X<break_code_blocks>
 
 
-    # LENGTH less than REPLACEMENT length
+    # LENGTH less-than REPLACEMENT length
     my string $foo = 'abc123!?*';                   # $foo = 'abc123!?*'
     my string $bar = substr $foo, 2;                #                         $bar =   'c123!?*'
     my string $bat = substr $foo, 2, 3;             #                         $bat =   'c12'
@@ -7468,7 +7468,7 @@ X<break_code_blocks>
 X<break_code_blocks>
 
 
-    # LENGTH greater than REPLACEMENT length, and empty replacement string
+    # LENGTH greater-than REPLACEMENT length, and empty replacement string
     my string $foo = 'abc123!?*';             # $foo = 'abc123!?*'
     my string $bar = substr $foo, 2;          #                     $bar =   'c123!?*'
     my string $bat = substr $foo, 2, 3;       #                     $bat =   'c12'
@@ -8612,7 +8612,7 @@ $z = q{<<< END TEXT EVAL >>>};
 
 EXPR1 and EXPR2 are string values;
 
-Compare to determine relation of operands, return true if EXPR1 is stringwise less than EXPR2, otherwise return false
+Compare to determine relation of operands, return true if EXPR1 is stringwise less-than EXPR2, otherwise return false
 
        '' lt    ''  #   (false)
        '' lt   'a'  # 1 (true)
@@ -8670,7 +8670,7 @@ Compare to determine relation of operands, return true if EXPR1 is stringwise le
 
 EXPR1 and EXPR2 are string values;
 
-Compare to determine relation of operands, return true if EXPR1 is stringwise greater than EXPR2, otherwise return false
+Compare to determine relation of operands, return true if EXPR1 is stringwise greater-than EXPR2, otherwise return false
 
        '' gt    ''  #   (false)
        '' gt   'a'  #   (false)
@@ -8728,7 +8728,7 @@ Compare to determine relation of operands, return true if EXPR1 is stringwise gr
 
 EXPR1 and EXPR2 are string values;
 
-Compare to determine relation of operands, return true if EXPR1 is stringwise less than or equal to EXPR2, otherwise return false
+Compare to determine relation of operands, return true if EXPR1 is stringwise less-than or equal to EXPR2, otherwise return false
 
        '' le    ''  # 1 (true)
        '' le   'a'  # 1 (true)
@@ -8786,7 +8786,7 @@ Compare to determine relation of operands, return true if EXPR1 is stringwise le
 
 EXPR1 and EXPR2 are string values;
 
-Compare to determine relation of operands, return true if EXPR1 is stringwise greater than or equal to EXPR2, otherwise return false
+Compare to determine relation of operands, return true if EXPR1 is stringwise greater-than or equal to EXPR2, otherwise return false
 
        '' ge    ''  # 1 (true)
        '' ge   'a'  #   (false)
@@ -8962,53 +8962,53 @@ EXPR1 and EXPR2 are string values;
 
 Perform three-way comparison of operands;
 
-Return -1 if EXPR1 is stringwise less than EXPR2, return 0 if operands are equal, or return 1 if EXPR1 is greater than EXPR2
+Return -1 if EXPR1 is stringwise less-than EXPR2, return 0 if operands are equal, or return 1 if EXPR1 is greater-than EXPR2
 
        '' cmp    ''  #  0 (equal)
        '' cmp   'a'  # -1 (less    than)
        '' cmp   'b'  # -1 (less    than)
        '' cmp   'A'  # -1 (less    than)
        '' cmp   'B'  # -1 (less    than)
-      'a' cmp    ''  #  1 (greater than)
+      'a' cmp    ''  #  1 (greater-than)
       'a' cmp   'a'  #  0 (equal)
       'a' cmp   'b'  # -1 (less    than)
-      'a' cmp   'A'  #  1 (greater than)
-      'a' cmp   'B'  #  1 (greater than)
-     'aa' cmp    ''  #  1 (greater than)
-     'aa' cmp   'a'  #  1 (greater than)
+      'a' cmp   'A'  #  1 (greater-than)
+      'a' cmp   'B'  #  1 (greater-than)
+     'aa' cmp    ''  #  1 (greater-than)
+     'aa' cmp   'a'  #  1 (greater-than)
      'aa' cmp   'b'  # -1 (less    than)
-     'aa' cmp   'A'  #  1 (greater than)
-     'aa' cmp   'B'  #  1 (greater than)
-      'b' cmp    ''  #  1 (greater than)
-      'b' cmp   'a'  #  1 (greater than)
+     'aa' cmp   'A'  #  1 (greater-than)
+     'aa' cmp   'B'  #  1 (greater-than)
+      'b' cmp    ''  #  1 (greater-than)
+      'b' cmp   'a'  #  1 (greater-than)
       'b' cmp   'b'  #  0 (equal)
-      'b' cmp   'A'  #  1 (greater than)
-      'b' cmp   'B'  #  1 (greater than)
-     'bb' cmp    ''  #  1 (greater than)
-     'bb' cmp   'a'  #  1 (greater than)
-     'bb' cmp   'b'  #  1 (greater than)
-     'bb' cmp   'A'  #  1 (greater than)
-     'bb' cmp   'B'  #  1 (greater than)
-      'A' cmp    ''  #  1 (greater than)
+      'b' cmp   'A'  #  1 (greater-than)
+      'b' cmp   'B'  #  1 (greater-than)
+     'bb' cmp    ''  #  1 (greater-than)
+     'bb' cmp   'a'  #  1 (greater-than)
+     'bb' cmp   'b'  #  1 (greater-than)
+     'bb' cmp   'A'  #  1 (greater-than)
+     'bb' cmp   'B'  #  1 (greater-than)
+      'A' cmp    ''  #  1 (greater-than)
       'A' cmp   'a'  # -1 (less    than)
       'A' cmp   'b'  # -1 (less    than)
       'A' cmp   'A'  #  0 (equal)
       'A' cmp   'B'  # -1 (less    than)
-     'AA' cmp    ''  #  1 (greater than)
+     'AA' cmp    ''  #  1 (greater-than)
      'AA' cmp   'a'  # -1 (less    than)
      'AA' cmp   'b'  # -1 (less    than)
-     'AA' cmp   'A'  #  1 (greater than)
+     'AA' cmp   'A'  #  1 (greater-than)
      'AA' cmp   'B'  # -1 (less    than)
-      'B' cmp    ''  #  1 (greater than)
+      'B' cmp    ''  #  1 (greater-than)
       'B' cmp   'a'  # -1 (less    than)
       'B' cmp   'b'  # -1 (less    than)
-      'B' cmp   'A'  #  1 (greater than)
+      'B' cmp   'A'  #  1 (greater-than)
       'B' cmp   'B'  #  0 (equal)
-     'BB' cmp    ''  #  1 (greater than)
+     'BB' cmp    ''  #  1 (greater-than)
      'BB' cmp   'a'  # -1 (less    than)
      'BB' cmp   'b'  # -1 (less    than)
-     'BB' cmp   'A'  #  1 (greater than)
-     'BB' cmp   'B'  #  1 (greater than)
+     'BB' cmp   'A'  #  1 (greater-than)
+     'BB' cmp   'B'  #  1 (greater-than)
 
 =back
 
@@ -12969,7 +12969,7 @@ An RPerl I<"named operator"> is any of the 220+ Perl named operators, although R
 
 An RPerl I<"operation"> is the equivalent of a single sentence in human language, and may be either an expression followed by a C<;> semicolon punctuation character, or a named operator followed by a semicolon, or a statement.
 
-The C<=> equal sign is the assignment operator, used to set the variable on its left to store the value of the expression on its right.
+The C<=> equal-sign is the assignment operator, used to set the variable on its left to store the value of the expression on its right.
 
 Perl's C<my> keyword is used to declare a new variable, and optionally initialize it to a starting value when combined with the C<=> assignment operator.
 
@@ -13345,7 +13345,7 @@ Global variables are usable within any code block accessible by Perl.  Except fo
 
 The I<"type"> of a variable is simply the data type which is stored inside the variable, as described in detail throughout the preceeding subsections of L</Section 2.4: Variables With Scalar Values>.  A variable's type must be set during declaration and may not be altered thereafter.  Remember there are 7 scalar data types in RPerl: C<boolean>, C<unsigned_integer>, C<integer>, C<gmp_integer>, C<number>, C<character>, and C<string>.
 
-The I<"name"> of a variable is the word or phrase you type after a dollar sign C<$> character, in order to access the variable.  Like the scope and type, a variable's name may not be changed after the point of variable declaration, when the software begins execution.  Closely related is the I<"namespace"> of a variable, which is a named group of variables and constants and possibly other things; except where specified in L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES>, all RPerl variables exist outside of any namespace, which is to say that normal RPerl variables do not have a namespace.  
+The I<"name"> of a variable is the word or phrase you type after a dollar-sign C<$> character, in order to access the variable.  Like the scope and type, a variable's name may not be changed after the point of variable declaration, when the software begins execution.  Closely related is the I<"namespace"> of a variable, which is a named group of variables and constants and possibly other things; except where specified in L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES>, all RPerl variables exist outside of any namespace, which is to say that normal RPerl variables do not have a namespace.  
 
 The I<"value"> of a variable is the actual data which has been stored inside of the variable, and which may be accessed or modified as your RPerl software is running.  A variable's value must be compatible with its type, otherwise an error or undefined behavior may occur.
 
@@ -14497,7 +14497,7 @@ All constants must utilize names with uppercase-only lettering, in order to dist
     my string $Pie = 'blackberry';  # okay
     my string $pie = 'blueberry';   # best
 
-The declaration of constants follows a purposefully-repetitive format starting with the C<use constant> command, followed by the all-uppercase constant name, a fat arrow (AKA fat comma) C<=E<gt>>, the C<my> command, the desired data type, a variable named C<$TYPED_> with the same all-uppercase name appended, the equal-sign C<=> assignment operator, and finally the desired data value with a closing semicolon.  Within a constant declaration, the all-uppercase constant name must appear identically in both places, which is a language construct enabling us to provide a data type where it would otherwise be impossible to do so.
+The declaration of constants follows a purposefully-repetitive format starting with the C<use constant> command, followed by the all-uppercase constant name, a fat-arrow (AKA fat-comma) C<=E<gt>>, the C<my> command, the desired data type, a variable named C<$TYPED_> with the same all-uppercase name appended, the equal-sign C<=> assignment operator, and finally the desired data value with a closing semicolon.  Within a constant declaration, the all-uppercase constant name must appear identically in both places, which is a language construct enabling us to provide a data type where it would otherwise be impossible to do so.
 
     use constant PIE => my string $TYPED_PIE = 'cherry';        # fine
     use constant PIE =>                        'black forest';  # error in RPerl, compiled modes
@@ -14544,7 +14544,7 @@ You can also print the contents of variables and constants.  For example, the 3 
 
 =head3 Section 2.6.1: C<STDOUT> & C<STDERR>
 
-When you call the C<print> operator, it sends all output to the operating system's default output data stream, which is a special component called I<"standard output"> or just I<"standard out"> for short, written using the C<STDOUT> keyword in Perl.  You may explicitly specify C<STDOUT> for any C<print> operator, although this is not necessary because it is already the default behavior.  When specified, the output stream has an asterisk C<*> character prepended, and is then wrapped in curly braces. 
+When you call the C<print> operator, it sends all output to the operating system's default output data stream, which is a special component called I<"standard output"> or just I<"standard out"> for short, written using the C<STDOUT> keyword in Perl.  You may explicitly specify C<STDOUT> for any C<print> operator, although this is not necessary because it is already the default behavior.  When specified, the output stream has an asterisk C<*> character prepended, and is then wrapped in curly-braces. 
 
 So again, the following operation produces the exact same output as the 2 preceding examples:
 
@@ -14684,7 +14684,7 @@ Now we don't need any redirection on the command line to suppress C<STDERR> outp
 
 Often you will want to perform a task, but only if some specific I<"condition"> is met; this is called a I<"conditional statement"> or just I<"conditional"> for short, and is implemented using the C<if> statement in Perl.  You may also refer to the C<if> statement as a I<"control structure">, because it is a source code structure used to control the execution flow of a piece of Perl software.  In other words, a conditional statement can control how your software runs, and so your software may run differently depending on your conditional statements.
 
-Whether or not an C<if> statement's task is actually performed is determined by the truth value of its condition, which is specified in the loop's I<"header">, contained within parentheses immediately after the C<if> keyword; please review L</Section 2.1.9: Truth Values> for more information.  The header of a conditional statement contains only its condition.  The task to be conditionally performed is known as the conditional statement's I<"body">, and is specified within curly braces immediately after the header.
+Whether or not an C<if> statement's task is actually performed is determined by the truth value of its condition, which is specified in the loop's I<"header">, contained within parentheses immediately after the C<if> keyword; please review L</Section 2.1.9: Truth Values> for more information.  The header of a conditional statement contains only its condition.  The task to be conditionally performed is known as the conditional statement's I<"body">, and is specified within curly-braces immediately after the header.
 
     if ( $my_integer == 17 ) { print 'I got seventeen!', "\n"; }
 
@@ -14743,7 +14743,7 @@ What do you think will be the generated output from the code above?  Well here i
 
 =for rperl X</noncode>
 
-By studying the source code and output above, we can see there are five opportunities for the value of the C<$heart> variable to be incremented via the C<++> operator, but only three of them are actually executed.  This is because the truth value of C<$heart E<lt> 3> is true while C<$heart> is equal to 0, 1, and 2, but then the truth value of C<$heart E<lt> 3> becomes false once the value of C<$heart> reaches 3.  Obviously, a value of 3 is not less than another equal value of 3, so the final 2 truth values are false.
+By studying the source code and output above, we can see there are five opportunities for the value of the C<$heart> variable to be incremented via the C<++> operator, but only three of them are actually executed.  This is because the truth value of C<$heart E<lt> 3> is true while C<$heart> is equal to 0, 1, and 2, but then the truth value of C<$heart E<lt> 3> becomes false once the value of C<$heart> reaches 3.  Obviously, a value of 3 is not less-than another equal value of 3, so the final 2 truth values are false.
 
 According to the generated output, it appears we have achieved our simple goal of incrementing C<$heart> until it reaches 3, but it can be difficult to know exactly what is happening while the program is running.  Let's add some C<print> operators to display more useful output:
 
@@ -14942,7 +14942,7 @@ If we simply remove the last line where C<$bar> is incorrectly accessed, then ou
 
 When you want the users of your software to provide some keyboard input, then you will need to use the C<STDIN> keyword in Perl, which represents the I<"standard input"> data stream.  This will allow the user to type one line of input text and numbers, ended by pressing the Enter key.  All user input is received in text format, and should initially be stored in a variable with a C<string> data type.  Unless converted to a different data type via one of RPerl's type conversion subroutines, the string variable should be passed to the C<chomp> operator, which will remove the trailing newline character collected by C<STDIN>. 
 
-When used in Perl, we wrap C<STDIN> with I<"angle brackets">, which start with the less-than C<E<lt>> character and end with the greater-than C<E<gt>> character.  In this context, the less-than and greater-than characters are not used as tests for numeric inequality.  Also, when using C<STDIN> in RPerl we must always include the "USER DEFAULT 4" C<no critic> command, which enables use of C<STDIN> in general.
+When used in Perl, we wrap C<STDIN> with I<"angle-brackets">, which start with the less-than C<E<lt>> character and end with the greater-than C<E<gt>> character.  In this context, the less-than and greater-than characters are not used as tests for numeric inequality.  Also, when using C<STDIN> in RPerl we must always include the "USER DEFAULT 4" C<no critic> command, which enables use of C<STDIN> in general.
 
 Along with the two output streams C<STDOUT> and C<STDERR>, the input stream C<STDIN> makes up the third of three standard I/O ("input / output") data streams available on most operating systems. 
 
@@ -14985,7 +14985,7 @@ You may also receive numeric data input, with the use of the appropriate data ty
     print 'You are ', integer_to_string($age), ' years old.', "\n";
     print 'In one year from now, you will be ', integer_to_string($age + 1), ' years old.', "\n";
 
-In the above example, you may optionally omit the two calls to the C<integer_to_string()> data type conversion subroutine, because it has no effect on any integer with a value less than 1,000.  One possible execution produces the following output:
+In the above example, you may optionally omit the two calls to the C<integer_to_string()> data type conversion subroutine, because it has no effect on any integer with a value less-than 1,000.  One possible execution produces the following output:
 
 =for rperl X<noncode>
 
@@ -15153,7 +15153,7 @@ In each line of the generated output, the first number is from the outer-most C<
 
 =for rperl X</noncode>
 
-=head3 Section 2.9.3: Loop Control Operators
+=head3 Section 2.9.3: Loop Control Operators C<next> & C<last>
 
 Sometimes you need to skip to the next loop iteration immediately, without finishing the current iteration.  For this, we use the C<next> operator:
 
@@ -15236,7 +15236,7 @@ When we run the code above, the C<print> operator at the bottom of the loop's bo
 
 =for rperl X</noncode>
 
-=head3 Section 2.9.4: Loop Labels & More Loop Control Operators
+=head3 Section 2.9.4: Loop Labels & Loop Control Operator C<redo>
 
 Sometimes you need to restart a loop's current iteration, without actually finishing the current iteration first or re-executing the loop's header; for this, we use the C<redo> operator.  However, before we use the C<redo> operator, we must first learn about loop labels.
 
@@ -15315,7 +15315,7 @@ The following source code example is comprised of a C<while> loop containing an 
     print "\n";
     print 'after     loop, have current $i = ', $i, "\n";
 
-When we run the example code above, we never reach the C<last> operator inside the loop, because the C<next> operator causes the loop's condition to be checked and the loop stops iterating before C<$i> reaches a value greater than C<10>.  In fact, we could totally delete the C<next MY_LOOP> line as well as the entire C<if> conditional statement, and we would still receive the same output:
+When we run the example code above, we never reach the C<last> operator inside the loop, because the C<next> operator causes the loop's condition to be checked and the loop stops iterating before C<$i> reaches a value greater-than C<10>.  In fact, we could totally delete the C<next MY_LOOP> line as well as the entire C<if> conditional statement, and we would still receive the same output:
 
 =for rperl X<noncode>
 
@@ -15381,7 +15381,7 @@ Of course, we will now replace C<next MY_LOOP> with C<redo MY_LOOP>:
     print "\n";
     print 'after     loop, have current $i = ', $i, "\n";
 
-The C<redo> operator does not cause the C<while> loop's header to be executed, so the C<$i E<lt> 5> condition is only checked the very first iteration.  Therefore, the value of C<$i> continues to increase until it is greater than C<10> and triggers the "bail out" mechanism.  (If only the economy was this simple.)
+The C<redo> operator does not cause the C<while> loop's header to be executed, so the C<$i E<lt> 5> condition is only checked the very first iteration.  Therefore, the value of C<$i> continues to increase until it is greater-than C<10> and triggers the "bail out" mechanism.  (If only the economy was this simple.)
 
 When we run the code, this is the output we see displayed:
 
@@ -15432,7 +15432,7 @@ Now we will look at at a simple nested loop example; we have 2 loops with the C<
     print 'after     outer loop, have current $i = ', $i, "\n";
     print 'after     outer loop, have current $j = ', $j, "\n";
 
-When we run this code we can see that for every iteration of the outer loop, the bottom of the inner loop is only reached twice, when the current value of C<$j> is less than C<2>.  This is because when the C<next> operator is called without a loop label, then it is applied to most immediate loop, which means C<next> is applied to the inner loop in this case:
+When we run this code we can see that for every iteration of the outer loop, the bottom of the inner loop is only reached twice, when the current value of C<$j> is less-than C<2>.  This is because when the C<next> operator is called without a loop label, then it is applied to most immediate loop, which means C<next> is applied to the inner loop in this case:
 
 =for rperl X<noncode>
 
@@ -15688,7 +15688,7 @@ An example execution should display:
 
 =head3 6.  Looping Integer Sum  [ 35 mins ]
 
-Create a program named F<exercise_6-sum_of_first_n_integers.pl>, which will prompt the user for one input integer and then display the sum of the numbers 1 through the input integer, inclusive.  Utilize an C<if> conditional statement to perform an error check, and call the C<die> operator if the input integer is less than 0.  Then utilize a C<while> loop to compute the actual sum to be displayed as a result.
+Create a program named F<exercise_6-sum_of_first_n_integers.pl>, which will prompt the user for one input integer and then display the sum of the numbers 1 through the input integer, inclusive.  Utilize an C<if> conditional statement to perform an error check, and call the C<die> operator if the input integer is less-than 0.  Then utilize a C<while> loop to compute the actual sum to be displayed as a result.
 
 Store your input integer in a variable named C<$n>, and your final result in a variable named C<$sum>, both of the C<integer> data type.  As with all loop iterators, the C<$i> variable is also an integer. 
 
@@ -15749,7 +15749,7 @@ In this filing cabinet analogy, an array which is stored by value is like a norm
 
 To reiterate, an array stored by reference is actually a scalar variable which contains the memory address of an anonymous array.  When compared to the memory usage of storing an array by data, the memory needs of storing by reference only require one additional scalar value (one piece of paper in our filing cabinet analogy), which contains the anonymous array's memory address.  Both storing by value and storing by reference are commonly utilized in many different computer programming languages.
 
-When an array is stored by value, the corresponding variable has an at sign C<@> as its sigil, and the assigned data is enclosed within parentheses C<( )> characters.  When an array is stored by reference, the corresponding variable has a dollar sign C<$> as its sigil, and the assigned data is enclosed within square bracket C<[ ]> characters.  If an array is stored by value and is then passed as input to an operation, it is said the array is I<"passed by value">.  On the other hand, if the array is instead stored by reference and then passed to an operation, it is said to be I<"passed by reference">.
+When an array is stored by value, the corresponding variable has an at-sign C<@> as its sigil, and the assigned data is enclosed within parentheses C<( )> characters.  When an array is stored by reference, the corresponding variable has a dollar-sign C<$> as its sigil, and the assigned data is enclosed within square-bracket C<[ ]> characters.  If an array is stored by value and is then passed as input to an operation, it is said the array is I<"passed by value">.  On the other hand, if the array is instead stored by reference and then passed to an operation, it is said to be I<"passed by reference">.
 
 For arrays with more than just a few elements, it may be impractical or impossible to pass by value, because a full copy of each array element must be made in the process, which may fill up all your program's available memory or take a prohibitively long time to complete.  Also, Perl allows us to provide explicit data types only when an array is stored by reference, so we can not provide a data type for an array stored by value.  Because of these reasons, all RPerl arrays are stored by reference, and are declared with an explicit RPerl data type ending with C<_arrayref>.
 
@@ -15757,7 +15757,7 @@ For arrays with more than just a few elements, it may be impractical or impossib
     my                  $foo_by_reference       = [2, 4, 6];  # fine in normal Perl, error in RPerl
     my integer_arrayref $foo_by_reference_typed = [2, 4, 6];  # fine in normal Perl, fine  in RPerl
 
-In a few special cases, Perl forces us to provide an array by value instead of by reference, in which case we need to I<"dereference"> our array variable, which is the process of converting from the stored-by-reference memory address to the stored-by-data values.  This is achieved by use of Perl's closefix array dereference syntax, comprised of enclosing the scalar array variable within at sign curly braces C<@{ }>.  Because all arrays in RPerl are stored by reference, only necessary uses of the dereference syntax are supported by the RPerl compiler.  (Please see L</Section 3.8: C<push> & C<pop> Operators> for more information on C<pop>.)
+In a few special cases, Perl forces us to provide an array by value instead of by reference, in which case we need to I<"dereference"> our array variable, which is the process of converting from the stored-by-reference memory address to the stored-by-data values.  This is achieved by use of Perl's closefix array dereference syntax, comprised of enclosing the scalar array variable within at-sign-curly-braces C<@{ }>.  Because all arrays in RPerl are stored by reference, only necessary uses of the dereference syntax are supported by the RPerl compiler.  (Please see L</Section 3.8: C<push> & C<pop> Operators> for more information on C<pop>.)
 
     my integer_arrayref $foo_by_reference_typed = [10, 20, 30];                    # fine in normal Perl, fine  in RPerl
     my integer          $foo_last_element       = pop @{$foo_by_reference_typed};  # fine in normal Perl, fine  in RPerl,   necessary dereference 
@@ -15814,9 +15814,9 @@ In Perl, we use the comma C<,> character to separate elements in a C<"list">, wh
     my ($list, $of, $variables) = @variable_storing_array_by_value;      # fine  in Perl, error in RPerl, stored-by-value     array assigned to list
     my [$list, $of, $variables] = $variable_storing_array_by_reference;  # error in Perl, error in RPerl, stored-by-reference array assigned to list
 
-As seen in the code example above, when a list is enclosed within square brackets C<[ ]>, then we have a stored-by-reference I<"array literal">, which represents the literal value which may be assigned to an RPerl variable.  Likewise, when a list is enclosed within parentheses C<( )> characters and the context tells Perl the parentheses are used as array syntax, then we have a stored-by-data array literal, which may be assigned to a normal Perl variable.
+As seen in the code example above, when a list is enclosed within square-brackets C<[ ]>, then we have a stored-by-reference I<"array literal">, which represents the literal value which may be assigned to an RPerl variable.  Likewise, when a list is enclosed within parentheses C<( )> characters and the context tells Perl the parentheses are used as array syntax, then we have a stored-by-data array literal, which may be assigned to a normal Perl variable.
 
-Depending upon the context of the surrounding source code, the parentheses C<( )> characters have multiple different uses in Perl, including list and array literal values, explicit order-of-operations, operation input arguments, and control structure statement headers.  (Remember that RPerl only supports arrays which are stored by reference, so all RPerl array literals will be enclosed in square brackets C<[ ]>, not parentheses C<( )>.)
+Depending upon the context of the surrounding source code, the parentheses C<( )> characters have multiple different uses in Perl, including list and array literal values, explicit order-of-operations, operation input arguments, and control structure statement headers.  (Remember that RPerl only supports arrays which are stored by reference, so all RPerl array literals will be enclosed in square-brackets C<[ ]>, not parentheses C<( )>.)
 
     my                 @foo = (1,  3,   5);  # fine in Perl, error in RPerl, parentheses enclosing list values to create stored-by-value array
     my integer         $foo = (1 + 3) * 5;   # fine in Perl, fine  in RPerl, parentheses enclosing arithmetic order-of-operations
@@ -15830,7 +15830,7 @@ Terminology can be confusing at times.  An array literal should not be confused 
     my integer_arrayref $quux = [$foo, $bar, 23];  # array literal     on right side  of = assignment operator
     my integer_arrayref $frob = [22,   13,   24];  # array of literals on both  sides of = assignment operator
 
-Depending on context, the unqualified term "array" can be taken to have either the general meaning of "array data structure category", or the specific meanings "array literal" or "array assigned to variable".  The phrase "scalar versus array" should be read as "scalar data type category versus array data structure category", because we are referring to the general ideas of "scalar" and "array" instead of specific array literals or variables.  The phrase "array C<[22, 13, 24]>" should be read as "array literal C<[22, 13, 24]>", because we can see an enclosed list of comma-separated values.  The phrase "array C<$frob>" should be read as "array assigned to variable C<$frob>", because we can see a dollar sign C<$> sigil variable name.  (This is just one of many possible confusion points caused by the linguistic subtleties inherent in our particular brand of technical terminology, often rightfully referred to as I<"programming jargon"> or even the mocking I<"techno-babble">.)  Because the stand-alone term "array" is ambiguous, the term "array of literals" can be taken to mean either "array-literal of literals" or "array-assigned-to-variable of literals".  This means we can consider both C<$frob> and C<[22, 13, 24]> to be an "array of literals" in the source code example above.  Hopefully, you will never again experience this specific confusion of jargon, but you must always be wary of subtle language issues when dealing with high-tech concepts such as programming in RPerl.
+Depending on context, the unqualified term "array" can be taken to have either the general meaning of "array data structure category", or the specific meanings "array literal" or "array assigned to variable".  The phrase "scalar versus array" should be read as "scalar data type category versus array data structure category", because we are referring to the general ideas of "scalar" and "array" instead of specific array literals or variables.  The phrase "array C<[22, 13, 24]>" should be read as "array literal C<[22, 13, 24]>", because we can see an enclosed list of comma-separated values.  The phrase "array C<$frob>" should be read as "array assigned to variable C<$frob>", because we can see a dollar-sign C<$> sigil variable name.  (This is just one of many possible confusion points caused by the linguistic subtleties inherent in our particular brand of technical terminology, often rightfully referred to as I<"programming jargon"> or even the mocking I<"techno-babble">.)  Because the stand-alone term "array" is ambiguous, the term "array of literals" can be taken to mean either "array-literal of literals" or "array-assigned-to-variable of literals".  This means we can consider both C<$frob> and C<[22, 13, 24]> to be an "array of literals" in the source code example above.  Hopefully, you will never again experience this specific confusion of jargon, but you must always be wary of subtle language issues when dealing with high-tech concepts such as programming in RPerl.
 
 =head2 Section 3.2: 1-D Array Data Types & Constants
 
@@ -15885,7 +15885,7 @@ Each element of a Perl array is numbered, in order, by integers starting at the 
 
 In the example above, note the "first born" is located at index value of C<0> (not C<1>), and the "middle child" is at index C<2> (not C<3>).
 
-Also, note the thin-arrow-square-brackets C<-E<gt>[ ]> syntax for accessing the individual elements.  The thin arrow C<-E<gt>> is Perl's I<"postfix dereference"> operation, which fetches the array data pointed to by the array's memory address, and is necessary because all RPerl arrays are stored by reference.  When combined with the postfix dereference operation, the square brackets C<[ ]> return the actual element located at the specified index value.  In the following example, each of the three lines of source code achieves the same goal of returning the array element at index C<2>, although only the last line is valid in RPerl:
+Also, note the thin-arrow-square-brackets C<-E<gt>[ ]> syntax for accessing the individual elements.  The thin-arrow C<-E<gt>> is Perl's I<"postfix dereference"> operation, which fetches the array data pointed to by the array's memory address, and is necessary because all RPerl arrays are stored by reference.  When combined with the postfix dereference operation, the square-brackets C<[ ]> return the actual element located at the specified index value.  In the following example, each of the three lines of source code achieves the same goal of returning the array element at index C<2>, although only the last line is valid in RPerl:
 
     $my_element = @my_array[2];        # fine in Perl, error in RPerl, array not stored by reference
     $my_element = @{$my_arrayref}[2];  # fine in Perl, error in RPerl, unnecessary use of @{} closefix dereference syntax
@@ -15893,7 +15893,7 @@ Also, note the thin-arrow-square-brackets C<-E<gt>[ ]> syntax for accessing the 
 
 =head2 Section 3.4: Array Length & Negative Indices
 
-When we want to count how many elements are in an array, we need to find the array's length.  This is achieved by use of Perl's C<scalar> operator, combined with Perl's closed-fixity at sign curly braces C<@{ }> dereference operation.  Both the dereference and postfix dereference operations perform the same task, although they are used in differing scenarios due to their unique syntax.  The C<scalar> operator forces the dereferenced array to be evaluated in I<"scalar context">, which means Perl tries to treat an array as if it were a scalar.  Perl has many complex behaviors when forcing one data type's context upon another different data type, although in the case of forcing an array into scalar context we are simply provided with the length of the array.
+When we want to count how many elements are in an array, we need to find the array's length.  This is achieved by use of Perl's C<scalar> operator, combined with Perl's closed-fixity at-sign-curly-braces C<@{ }> dereference operation.  Both the dereference and postfix dereference operations perform the same task, although they are used in differing scenarios due to their unique syntax.  The C<scalar> operator forces the dereferenced array to be evaluated in I<"scalar context">, which means Perl tries to treat an array as if it were a scalar.  Perl has many complex behaviors when forcing one data type's context upon another different data type, although in the case of forcing an array into scalar context we are simply provided with the length of the array.
 
     my string_arrayref $greetings        = ['hello', 'hi', 'howdy'];
     my integer         $greetings_length = scalar @{$greetings};
@@ -16117,7 +16117,7 @@ As we can see in the output above, the data stored by the C<qw()> operator is id
 
 =head2 Section 3.7: Array Assignment
 
-As mentioned in L</Section 3.1: Lists vs Arrays>, normal Perl allows you to perform a special kind of array assignment with multiple variables on the left (receiving) side of the equal sign C<=> assignment operator.  This is one of Perl's countless shortcuts, allowing a software developer to initialize or modify more than one variable in a single statement.
+As mentioned in L</Section 3.1: Lists vs Arrays>, normal Perl allows you to perform a special kind of array assignment with multiple variables on the left (receiving) side of the equal-sign C<=> assignment operator.  This is one of Perl's countless shortcuts, allowing a software developer to initialize or modify more than one variable in a single statement.
 
     my ($x, $y, $z)       = @array_by_value;  # fine in Perl, error in RPerl, stored-by-value array assigned to list of scalar variables
     my ($foo, $bar, $bat) = (10, 20, 30);     # fine in Perl, error in RPerl, list                  assigned to list of scalar variables
@@ -16133,6 +16133,12 @@ In RPerl, we support exactly one variable on the left side of each assignment op
     my integer $bat = 30;
 
 =head2 Section 3.8: C<push> & C<pop> Operators
+
+Often you will want to append one or more elements to the end of an existing array, and equally often you will want to remove one or more elements from the end of an array.  For these use cases, you may choose the C<push> and C<pop> operators.  (The end of an array is sometimes called the I<"tail"> of the array, and likewise the beginning of an array is sometimes called its I<"head">.)
+
+The C<push> operator will add one or more new elements to the end of a dereferenced array, and will return the new array length.  The C<pop> operator will remove one element from the end of a dereferenced array, and will return the removed element.  You may optionally ignore the return value of either operator.
+
+Both the C<push> and C<pop> operators require their array argument to be dereferenced, which means you must always use the closed-fixity at-sign-curly-braces C<@{ }> array dereference operator, as demonstrated in the code examples below.
 
 =begin text
 
@@ -16470,6 +16476,12 @@ Remove final element of ARRAY and return
 
 =head2 Section 3.9: C<shift> & C<unshift> Operators
 
+In the previous section, we saw how to append and remove elements from the end of an array, using C<push> and C<pop>.  In this section, we will work with the beginning of an array instead of the end, using the C<shift> and C<unshift> operators.
+
+The C<shift> operator will remove one element from the beginning of a dereferenced array, and will return the removed element, in the same way the C<pop> operator works on the end of an array.  The C<unshift> operator will add one or more elements to the beginning of a dereferenced array, and like C<push> will return the new array length.
+
+Like the C<push> and C<pop> operators, both C<shift> and C<unshift> require their array argument to be dereferenced, so don't forget to use the at-sign-curly-braces C<@{ }> array dereference operator every time.
+
 =begin text
 
 my $z = q{<<< BEGIN TEXT EVAL >>>};
@@ -16806,21 +16818,101 @@ In non-void context, return new ARRAY length, operator and operands must be encl
 
 =head2 Section 3.10: Converting From Array To String
 
-The terms I<"stringify"> and I<"pretty print"> refer to the conversion from any non-string data type or data structure into a string data type.
+The terms I<"stringify">, I<"stringification">, and I<"pretty print"> refer to type conversion from any non-string data type or data structure into a string data type.
 
-=for comment START HERE: need define "function"???
+As mentioned in this chapter's opening section L</CHAPTER 3: ARRAY VALUES & VARIABLES>, RPerl currently provides the following array stringification subroutines, with support for all RPerl array data types coming soon:
 
-As mentioned in L </INSERT_SECTION>, RPerl provides the following stringification functions:
+=over
 
-=for comment START HERE: add list
+=item * C<integer_arrayref_to_string()>
 
-The C<integer_arrayref_to_string()> function is implemented by the following Perl source code:
+=item * C<number_arrayref_to_string()>
 
-=for comment START HERE: add code
+=item * C<string_arrayref_to_string()>
 
-=head2 Section 3.11: Program Control Using The C<foreach> Loop
+=back
 
-START HERE: add content
+The C<integer_arrayref_to_string()> subroutine is implemented by the following RPerl source code, for Perl operations & Perl data types mode:
+
+    # stringify an integer_arrayref
+    our string $integer_arrayref_to_string = sub {
+        # require exactly one integer_arrayref as input, store in variable $input_avref
+        ( my integer_arrayref $input_avref ) = @_;
+    
+        # declare local variables, av & sv mean "array value" & "scalar value" as used in Perl core
+        my integer $input_av_length;
+        my integer $input_av_element;
+        my string $output_sv;
+        my boolean $i_is_0 = 1;
+    
+        # compute length of (number of elements in) input array
+        $input_av_length = scalar @{$input_avref};
+    
+        # begin output string with left-square-bracket, as required for all RPerl arrays
+        $output_sv = '[';
+    
+        # loop through all valid values of $i for use as index to input array
+        for my integer $i ( 0 .. ( $input_av_length - 1 ) ) {
+            # retrieve input array's element at index $i
+            $input_av_element = $input_avref->[$i];
+    
+            # append comma & space to output string for all elements except index 0
+            if ($i_is_0) { $i_is_0 = 0; }
+            else         { $output_sv .= ', '; }
+    
+            # stringify individual integer element, append to output string
+            $output_sv .= integer_to_string($input_av_element);
+        }
+    
+        # end output string with right-square-bracket, as required for all RPerl arrays
+        $output_sv .= ']';
+    
+        # return output string, containing stringified input array
+        return $output_sv;
+    };
+
+In the RPerl system source code above, you will see at least 2 new concepts: the definition of a subroutine, and usage of a C<for> loop.
+
+The subroutine's name is, unsurprisingly, C<integer_arrayref_to_string()>; it accepts exactly one input argument, an C<integer_arrayref> accessed via the variable C<$input_avref>, and it generates as output a string formed in the variable C<$output_sv>.  (Subroutine names in writing are usually followed by empty parenthesis C<()>, to distinguish them from other source code components such as variables, operators, etc.)
+
+The C<for> loop is used to access each individual element of the input array, one at a time; each element is then, in turn, stringified and appended to the output string.  You will note the C<integer_to_string()> stringification subroutine is called from within the C<integer_arrayref_to_string()> subroutine, which makes sense because an C<integer_arrayref> data structure is obviously composed of individual C<integer> data types.
+
+The string generated as output of the C<integer_arrayref_to_string()> subroutine is itself valid RPerl source code, and may be copied, pasted, and re-parsed by the RPerl compiler:
+
+    my integer_arrayref $foo;
+    $foo = [7, 17, 27];
+    print '$foo = ', integer_arrayref_to_string($foo), ';', "\n";
+
+Running the code example above generates the following output string, which is itself an exact replica of the original line of valid RPerl source code:
+
+=for rperl X<noncode>
+
+    $foo = [7, 17, 27];
+
+=for rperl X</noncode>
+
+=head2 Section 3.11: Program Control Using The C<for> & C<foreach> Loops
+
+In the previous section, you saw a C<for> loop control structure used to stringify an array in the C<integer_arrayref_to_string()> subroutine.  In this section, we'll learn more about the C<for> loop and its closely-related counterpart, the C<foreach> loop.
+
+Please take a few minutes to review L</Section 2.9: Program Control Using The C<while> Loop>; this should prove helpful because the C<for> and C<foreach> loops share some things in common with the C<while> loop control structure.
+
+In normal Perl, there is no difference whatsoever between the C<for> and C<foreach> loops; the 2 keywords are synonymous and you may freely interchange them as you like.  This follows the Perl philosophy of TIMTOWTDI (There Is More Than One Way To Do It).
+
+In RPerl, the C<for> and C<foreach> loops are used for separate, but related, purposes.  This follows the RPerl philosophies of TDNNTBMTOWTDI (There Does Not Need To Be More Than One Way To Do It) and TIOFWTDI (There Is One Fastest Way To Do It).
+
+=head3 Section 3.11.1: The Range C<for> Loop
+
+=head3 Section 3.11.2: The C-Style C<for> Loop
+
+=head3 Section 3.11.3: The C<foreach> Loop
+
+
+
+
+
+
+
 
 =head2 Section 3.12: Punctuation Variables & Magic [[[ NEED ADD MAGIC INTRO SECTION SOMEWHERE??? ]]]
 
@@ -17367,7 +17459,7 @@ X<br>
 
 The goal of this exercise is to become familiar with conditional statements and comparison operators.X<br>
 
-In the C<OPERATIONS> section, the line starting with C<if ($radius E<gt>= 0)> denotes the beginning of a conditional statement: if the numeric value of the variable C<$radius> is greater-than-or-equal-to 0, then the normal calculation for C<$circumference> is used; if C<$radius> is less than 0 (physically impossible), then a warning message is printed and C<$circumference> is set to 0.X<br>
+In the C<OPERATIONS> section, the line starting with C<if ($radius E<gt>= 0)> denotes the beginning of a conditional statement: if the numeric value of the variable C<$radius> is greater-than-or-equal-to 0, then the normal calculation for C<$circumference> is used; if C<$radius> is less-than 0 (physically impossible), then a warning message is printed and C<$circumference> is set to 0.X<br>
 
 This exercise is otherwise identical to the previous exercise.X<br>
 
@@ -17692,7 +17784,7 @@ The C<@{...}> (at-sign-curly-braces) is the array dereference operator, which ex
 
 The line starting with C<my string_arrayref $input_strings_reversed> declares another array of string values C<input_strings_reversed>, and then assigns it the strings contained within the first array C<$input_strings> in reversed order, as returned by calling the C<reverse> operator.X<br>
 
-As with the C<push> operator, the C<reverse> operator requires its argument to be dereferenced using C<@{...}>; another dereferenced array value is returned by C<reverse>, and an array reference is returned by enclosing C<reverse> and its argument inside the C<[...]> (square brackets) array reference operator.X<br>
+As with the C<push> operator, the C<reverse> operator requires its argument to be dereferenced using C<@{...}>; another dereferenced array value is returned by C<reverse>, and an array reference is returned by enclosing C<reverse> and its argument inside the C<[...]> (square-brackets) array reference operator.X<br>
 
 Finally, the line starting with C<foreach my string $input_strings_reversed_element> denotes the beginning of another loop statement, which iterates the value of C<$input_strings_reversed_element> once for each string value contained in the C<$input_strings_reversed> array; C<print> is called inside the loop body to display the original input strings in reverse order.X<br>
 
@@ -18071,7 +18163,7 @@ In the C<SUBROUTINES> section, 3 subroutines are defined: C<total()> (same as pr
 
 Inside the subroutine C<average()> is a call to the subroutine C<total()>; there is also a call to the C<scalar> operator, which returns the count of elements inside the array C<$input_numbers>.  When the return value of C<total()> is divided by that of C<scalar>, the result is computation of the numeric mean (average) of all elements of C<$input_numbers>.X<br>
 
-Inside C<above_average()> is a call to the subroutine C<average()>, with the return value stored in the variable C<$average>.  An empty array is created in the variable C<$retval>, then a C<foreach> loop iterates over all elements in C<$input_numbers> and an C<if> conditional statement makes a copy of all elements which are greater than C<$average>.  All above-average elements are returned as an array in C<$retval>.X<br>
+Inside C<above_average()> is a call to the subroutine C<average()>, with the return value stored in the variable C<$average>.  An empty array is created in the variable C<$retval>, then a C<foreach> loop iterates over all elements in C<$input_numbers> and an C<if> conditional statement makes a copy of all elements which are greater-than C<$average>.  All above-average elements are returned as an array in C<$retval>.X<br>
 
 In the C<OPERATIONS> section, 2 arrays are created in the C<$fred> and C<$barney> variables, which are then passed as input arguments to 2 calls to the subroutine C<above_average()>, and the results are displayed.X<br>
 
@@ -18489,7 +18581,7 @@ In the C<SUBROUTINES> section, 1 subroutine C<right_justify_variable()> is defin
 
 Inside C<right_justify_variable()>, the user is prompted to input a custom right justify width, stored in the integer variable C<$column_width>.X<br>
 
-The integer variable C<$ruler_width_tens> is used to determine the number of characters displayed for the ruler, by tens; the default value for C<$ruler_width_tens> is 6, which means a ruler width of 60 characters.  If the user-supplied C<$column_width> is greater than 60, we scale it by 1/10 and add 1, thereby creating a new value for C<$ruler_width_tens> which will always display a ruler wider than C<$column_width>.X<br> 
+The integer variable C<$ruler_width_tens> is used to determine the number of characters displayed for the ruler, by tens; the default value for C<$ruler_width_tens> is 6, which means a ruler width of 60 characters.  If the user-supplied C<$column_width> is greater-than 60, we scale it by 1/10 and add 1, thereby creating a new value for C<$ruler_width_tens> which will always display a ruler wider than C<$column_width>.X<br> 
 
 When the ruler is displayed, C<$ruler_width_tens> is passed to the C<x> string repeat operator instead of a hard-coded value of 6; likewise, when each C<$input_string> is right justified, the C<-> subtraction operator is passed C<$column_width> instead of a hard-coded value of 20.X<br>
 
@@ -18767,7 +18859,7 @@ In the C<SUBROUTINES> section, 1 subroutine C<sort_env_vars()> is defined, which
 
 Inside C<sort_env_vars()>, a hash of strings is created in the variable C<$env_vars>, and it is initialized to contain the values of the special C<%ENV> system hash, which stores the current user's environmental variables.X<br>
 
-Next, 2 integer variables C<$env_var_length> and C<$left_column_width> are created, and C<$left_column_width> is initialized to the value 0.  A C<foreach> loop iterates through all environmental variables, measuring the string length of each C<$env_var> by the C<length> operator, and using an C<if> conditional statement to test if the current C<$env_var_length> is greater than the existing C<$left_column_width>.  If C<$env_var_length> is large enough, then C<$left_column_width> is updated, thereby resulting in the value of C<$left_column_width> being equal to the longest C<$env_var_length>.X<br>
+Next, 2 integer variables C<$env_var_length> and C<$left_column_width> are created, and C<$left_column_width> is initialized to the value 0.  A C<foreach> loop iterates through all environmental variables, measuring the string length of each C<$env_var> by the C<length> operator, and using an C<if> conditional statement to test if the current C<$env_var_length> is greater-than the existing C<$left_column_width>.  If C<$env_var_length> is large enough, then C<$left_column_width> is updated, thereby resulting in the value of C<$left_column_width> being equal to the longest C<$env_var_length>.X<br>
 
 After the C<foreach> loop, C<$left_column_width> is incremented by an additional 2 character widths, allowing for 2 or more spaces between the hash keys and their respective values when displayed.X<br>
 
@@ -19931,7 +20023,7 @@ precedence 21 infix: "list operators (rightward)" [1] AKA comma C<,>
 
 =item * OP20_HASH_FATARROW
 
-precedence 20 infix: hash entry fat arrow AKA fat comma C<=E<gt>>
+precedence 20 infix: hash entry fat-arrow AKA fat-comma C<=E<gt>>
 
 =item * OP19_LOOP_CONTROL_SCOLON
 
@@ -20020,19 +20112,19 @@ precedence 05 prefix: logical negation C<!>
 
 =item * OP02_HASH_THINARROW
 
-precedence 02 infix: thin arrow, hash dereference and retrieval C<-E<gt>{>
+precedence 02 infix: thin-arrow, hash dereference and retrieval C<-E<gt>{>
 
 =item * OP02_ARRAY_THINARROW
 
-precedence 02 infix: thin arrow, array dereference and retrieval C<-E<gt>[>
+precedence 02 infix: thin-arrow, array dereference and retrieval C<-E<gt>[>
 
 =item * OP02_METHOD_THINARROW_NEW
 
-precedence 02 infix: thin arrow, class constructor C<-E<gt>new(>
+precedence 02 infix: thin-arrow, class constructor C<-E<gt>new(>
 
 =item * OP02_METHOD_THINARROW
 
-precedence 02 infix: thin arrow, method dereference and call; ex. C<-E<gt>foo> or C<-E<gt>Bar23>
+precedence 02 infix: thin-arrow, method dereference and call; ex. C<-E<gt>foo> or C<-E<gt>Bar23>
 
 =item * OP05_MATH_NEG_LPAREN
 
@@ -20044,7 +20136,7 @@ precedence 08 infix: arithmetic add C<+>, subtract C<->, SSE add C<sse_add>, SSE
 
 =item * OP11_COMPARE_LT_GT
 
-precedence 11 infix: numeric comparison less or equal C<E<lt>=>, greater or equal C<E<gt>=>, less than C<E<lt>>, greater than C<E<gt>>; string comparison less or equal C<le>, greater or equal C<ge>, less than C<lt>, greater than C<gt>
+precedence 11 infix: numeric comparison less-or-equal C<E<lt>=>, greater-or-equal C<E<gt>=>, less-than C<E<lt>>, greater-than C<E<gt>>; string comparison less-or-equal C<le>, greater-or-equal C<ge>, less-than C<lt>, greater-than C<gt>
 
 =item * OP19_VARIABLE_ASSIGN
 
@@ -22954,7 +23046,7 @@ X<br>
 
 =head2 A
 
-=head3 Angle Brackets
+=head3 Angle-Brackets
 
 Used to wrap input streams such as C<E<lt>STDINE<gt>> or C<E<lt>$MY_FILEHANDLEE<gt>>.
 
@@ -22964,7 +23056,7 @@ Also known as I<"chevrons">; created using I<"less-than"> C<E<lt>> and I<"greate
 
 =head3 Braces
 
-I<"curly brackets"> AKA I<"curly braces"> AKA I<"braces"> C<{ }>
+I<"curly-brackets"> AKA I<"curly-braces"> AKA I<"braces"> C<{ }>
 
 See L</Brackets>
 
@@ -22972,21 +23064,21 @@ See L</Brackets>
 
 A group of opening and closing character pairs, including:
 
-I<"square brackets"> AKA I<"brackets"> C<[ ]>
+I<"square-brackets"> AKA I<"brackets"> C<[ ]>
 
-I<"round brackets"> AKA I<"parentheses"> C<( )>
+I<"round-brackets"> AKA I<"parentheses"> C<( )>
 
-I<"curly brackets"> AKA I<"curly braces"> AKA I<"braces"> C<{ }>
+I<"curly-brackets"> AKA I<"curly-braces"> AKA I<"braces"> C<{ }>
 
-I<"angle brackets"> AKA I<"chevrons"> AKA I<"less-than"> and I<"greater-than"> C<E<lt> E<gt>>
+I<"angle-brackets"> AKA I<"chevrons"> AKA I<"less-than"> and I<"greater-than"> C<E<lt> E<gt>>
 
-See L</Square Brackets>
+See L</Square-Brackets>
 
 See L</Parentheses>
 
 See L</Braces>
 
-See L</Angle Brackets>
+See L</Angle-Brackets>
 
 =head2 P
 
@@ -22996,7 +23088,7 @@ NEED DEFINITION
 
 =head2 S
 
-=head3 Square Brackets
+=head3 Square-Brackets
 
 NEED DEFINITION
 
