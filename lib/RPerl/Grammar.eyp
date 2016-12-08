@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.003_820;
+    our $VERSION = 0.003_821;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -100,7 +100,7 @@
 %token OP01_NAMED_VOID_SCOLON    = /(croak;|die;|exit;|return;)/ # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value; 'croak;', 'die;', 'exit;', 'return;'
 %token OP01_NAMED_VOID_LPAREN    = /(croak\(|exit\(|return\()/   # precedence 01 prefix void: same as above, except w/ parenthesis & w/out semicolon & w/out die; 'croak(', 'exit(', 'return('; ProhibitParensWithBuiltins excepts return() & exit(...); RequireTidyCode & RequireCarping excepts croak() 
 %token OP01_NAMED_VOID           = /(croak|die|exit|return)\s/   # precedence 01 prefix void: same as above, except accepts argument(s); 'croak', 'die', 'exit', 'return'
-%token OP01_QW                   = /(qw\([^()]*\))/              # precedence 01 prefix: quoted words; ex. 'qw()' or 'qw(foo bar baz)' or 'qw(Foo23 BarBax Ba_z 123)'
+%token OP01_QW                   = /(qw\([^()]*\))/              # precedence 01 closed: quote word; ex. 'qw()' or 'qw(foo bar baz)' or 'qw(Foo23 BarBax Ba_z 123)'
 %token OP01_OPEN                 = /(open)\s/                    # precedence 01 prefix: 'open' filehandle
 %token OP01_CLOSE                = /(close)\s/                   # precedence 01 prefix: 'close' filehandle
                                                                  # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; http://perl5.git.perl.org/perl.git/blob/HEAD:/t/op/cproto.t [2]

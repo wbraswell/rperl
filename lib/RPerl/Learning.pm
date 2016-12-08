@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.153_000;
+our $VERSION = 0.154_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -6648,7 +6648,7 @@ RPerl provides 3 delimiters for enclosing text data:
 
 =over
 
-=item * Single Quotes
+=item * Single-Quotes
 
 C<'I am a single-quoted string literal'>
 
@@ -6656,7 +6656,7 @@ C<'I am a single-quoted string literal'>
 
 =over
 
-=item * Double Quotes
+=item * Double-Quotes
 
 C<"I am a double-quoted string literal">
 
@@ -6707,8 +6707,8 @@ The most memory-efficient text literal is C<character>, which represents exactly
     "h"          #   VALID
     "+"          #   VALID
     "\n"         #   VALID: newline
-    "-1"         # INVALID: too many characters & invalid use of double quotes
-    "howdy23!"   # INVALID: too many characters & invalid use of double quotes
+    "-1"         # INVALID: too many characters & invalid use of double-quotes
+    "howdy23!"   # INVALID: too many characters & invalid use of double-quotes
 
     q{}          #   VALID: empty
     q{0}         #   VALID
@@ -6732,12 +6732,12 @@ Any text data more than 1 character in length must be represented by a C<string>
     'howdy23!'   #   VALID
 
     ""           # INVALID: use q{} for empty string
-    "0"          # INVALID: invalid use of double quotes, must contain newline or tab character(s)
-    "h"          # INVALID: invalid use of double quotes, must contain newline or tab character(s)
-    "+"          # INVALID: invalid use of double quotes, must contain newline or tab character(s)
+    "0"          # INVALID: invalid use of double-quotes, must contain newline or tab character(s)
+    "h"          # INVALID: invalid use of double-quotes, must contain newline or tab character(s)
+    "+"          # INVALID: invalid use of double-quotes, must contain newline or tab character(s)
     "\n"         #   VALID: interpolated to become newline character
-    "-1"         # INVALID: invalid use of double quotes, must contain newline or tab character(s)
-    "howdy23!"   # INVALID: invalid use of double quotes, must contain newline or tab character(s)
+    "-1"         # INVALID: invalid use of double-quotes, must contain newline or tab character(s)
+    "howdy23!"   # INVALID: invalid use of double-quotes, must contain newline or tab character(s)
 
     q{}          #   VALID: empty string
     q{0}         #   VALID
@@ -6748,31 +6748,31 @@ Any text data more than 1 character in length must be represented by a C<string>
     q{-1}        #   VALID
     q{howdy23!}  #   VALID
 
-=head3 Section 2.2.3: Single Quotes
+=head3 Section 2.2.3: Single-Quotes
 
-Text literals enclosed in single quotes are the simplest and most common case in RPerl.
+Text literals enclosed in single-quotes are the simplest and most common case in RPerl.
 
-Single-quoted text literals are not I<"interpolated">, which means the literal's data contents are not changed by Perl or RPerl in any way, except for the extra-special double backslash C<\\> as described below.  Because single quotes do not activate string interpolation, you can not use a single-quoted string literal to represent special characters such as newline or tab.
+Single-quoted text literals are not I<"interpolated">, which means the literal's data contents are not changed by Perl or RPerl in any way, except for the extra-special double-backslash C<\\> as described below.  Because single-quotes do not activate string interpolation, you can not use a single-quoted string literal to represent special characters such as newline or tab.
 
-Do not use single quotes to represent a newline or tab character, use double quotes C<"\n"> or C<"\t"> instead.
+Do not use single-quotes to represent a newline or tab character, use double-quotes C<"\n"> or C<"\t"> instead.
 
-Do not use single quotes to represent an empty character or empty string, use q quotes C<q{}> instead.
+Do not use single-quotes to represent an empty character or empty string, use q-quotes C<q{}> instead.
 
-In normal Perl, single backslash characters C<\> are used to create special characters called I<"escape sequences">, the most common of which are the well-known newline C<\n> and tab C<\t> escape sequences.  Each valid escape sequence actually counts as only one character of computer data, even though it is represented to humans by 2 or more typed characters, so a single escape sequence may be utilized as either a C<character> text literal or a C<string> text literal.  (Thus, C<"\n"> and C<"\t"> may both be utilized as either a C<character> or C<string> in RPerl, but only when using double quotes as discussed in the following section.)
+In normal Perl, single-backslash characters C<\> are used to create special characters called I<"escape sequences">, the most common of which are the well-known newline C<\n> and tab C<\t> escape sequences.  Each valid escape sequence actually counts as only one character of computer data, even though it is represented to humans by 2 or more typed characters, so a single escape sequence may be utilized as either a C<character> text literal or a C<string> text literal.  (Thus, C<"\n"> and C<"\t"> may both be utilized as either a C<character> or C<string> in RPerl, but only when using double-quotes as discussed in the following section.)
 
-In single-quoted string literals, the only escape sequence supported by RPerl is the double backslash C<\\>, so the string literal C<'\\'> is interpolated to mean only one single backslash character C<\>.  To represent two backslash characters C<\\>, utilize two double backslash escape sequences in a row C<'\\\\'>; for three backslashes C<\\\> utilize three escape sequences C<'\\\\\\'>, and so forth.
+In single-quoted string literals, the only escape sequence supported by RPerl is the double-backslash C<\\>, so the string literal C<'\\'> is interpolated to mean only one single-backslash character C<\>.  To represent two backslash characters C<\\>, utilize two double-backslash escape sequences in a row C<'\\\\'>; for three backslashes C<\\\> utilize three escape sequences C<'\\\\\\'>, and so forth.
 
-Because RPerl only accepts double backslashes (not single backslashes) within single quotes, RPerl thus does not accept any odd number of consecutive backslash characters within single quotes.  For example, two or four backslashes in a row are supported, but one or three or five directly adjacent backslashes are not supported.
+Because RPerl only accepts double-backslashes (not single-backslashes) within single-quotes, RPerl thus does not accept any odd number of consecutive backslash characters within single-quotes.  For example, two or four backslashes in a row are supported, but one or three or five directly adjacent backslashes are not supported.
 
-In normal Perl, the backslash single quote C<\'> escape sequence may be used to include a single quote character C<'> within a single-quoted text literal.  As stated above, RPerl only supports the double backslash C<\\> escape sequence within single quotes, so the backslash single quote C<\'> escape sequence is thus not supported.  Use double quotes C<"'"> or q quotes C<q{'}> to represent a single quote C<'> character in an RPerl string literal.
+In normal Perl, the backslash single-quote C<\'> escape sequence may be used to include a single-quote character C<'> within a single-quoted text literal.  As stated above, RPerl only supports the double-backslash C<\\> escape sequence within single-quotes, so the backslash single-quote C<\'> escape sequence is thus not supported.  Use double-quotes C<"'"> or q-quotes C<q{'}> to represent a single-quote C<'> character in an RPerl string literal.
 
 Single-quoted text literals must B<not> contain:
 
 =over
 
-=item * Single Quote Character: C<'>
+=item * Single-Quote Character: C<'>
 
-=item * Single Backslash Character: C<\>
+=item * Single-Backslash Character: C<\>
 
 =item * Odd Number Of Consecutive Backslash Characters: C<\\\> C<\\\\\> C<\\\\\\\>
 
@@ -6784,11 +6784,11 @@ Single-quoted text literals may contain:
 
 =over
 
-=item * Double Quote Character: C<">
+=item * Double-Quote Character: C<">
 
-=item * Right Curly Brace Character: C<}>
+=item * Right-Curly-Brace Character: C<}>
 
-=item * Double Backslash Characters: C<\\>
+=item * Double-Backslash Characters: C<\\>
 
 =item * Even Number Of Consecutive Backslash Characters: C<\\\\> C<\\\\\\> C<\\\\\\\\>
 
@@ -6799,17 +6799,17 @@ Single-quoted text literals may contain:
     ''      # INVALID: empty string
     ' '     #   VALID: single space
     'a'     #   VALID: single letter
-    '\'     # INVALID: single backslash
+    '\'     # INVALID: single-backslash
 
     '   '   #   VALID: three spaces
-    ' ' '   # INVALID: single quote within single quotes
-    '\' '   # INVALID: backslash single quote escape sequence, also single backslash
+    ' ' '   # INVALID: single-quote within single-quotes
+    '\' '   # INVALID: backslash single-quote escape sequence, also single-backslash
 
     ' a '   #   VALID: space, letter, space
-    '"a}'   #   VALID: double quote, letter, right brace
-    '\a}'   # INVALID: single backslash       not interpolated as audible bell (alarm beep) escape sequence
-    '\n}'   # INVALID: single backslash       not interpolated as newline                   escape sequence
-    '\\}'   #   VALID: double backslash           interpolated as one backslash character, right brace
+    '"a}'   #   VALID: double-quote, letter, right brace
+    '\a}'   # INVALID: single-backslash       not interpolated as audible bell (alarm beep) escape sequence
+    '\n}'   # INVALID: single-backslash       not interpolated as newline                   escape sequence
+    '\\}'   #   VALID: double-backslash           interpolated as one backslash character, right brace
     '\\\'   # INVALID: odd  number of backslashes 
     '\\\\'  #   VALID: even number of backslashes interpolated as half as many backslash characters
 
@@ -6826,36 +6826,36 @@ I<BEST PRACTICES>
 =for html </u>
 
     'n'      #     BEST PRACTICE
-    "n"      # NOT BEST PRACTICE: double quotes not needed
-    q{n}     # NOT BEST PRACTICE:      q quotes not needed
+    "n"      # NOT BEST PRACTICE: double-quotes not needed
+    q{n}     # NOT BEST PRACTICE:      q-quotes not needed
 
     '1atx'   #     BEST PRACTICE
-    "1atx"   # NOT BEST PRACTICE: double quotes not needed
-    q{1atx}  # NOT BEST PRACTICE:      q quotes not needed
+    "1atx"   # NOT BEST PRACTICE: double-quotes not needed
+    q{1atx}  # NOT BEST PRACTICE:      q-quotes not needed
 
     '\\tx'   #     BEST PRACTICE
-    "\\tx"   # NOT BEST PRACTICE: double quotes    invalid, extra backslash
-    q{\\tx}  # NOT BEST PRACTICE:      q quotes not needed
+    "\\tx"   # NOT BEST PRACTICE: double-quotes    invalid, extra backslash
+    q{\\tx}  # NOT BEST PRACTICE:      q-quotes not needed
 
-=head3 Section 2.2.4: Double Quotes
+=head3 Section 2.2.4: Double-Quotes
 
-Text literals enclosed in double quotes are fully interpolated in normal Perl, and are only used for trivial interpolation of strings containing the newline C<"\n"> or tab C<"\t"> escape sequences in RPerl.  All double-quoted strings in RPerl must contain at least one newline or tab special character.
+Text literals enclosed in double-quotes are fully interpolated in normal Perl, and are only used for trivial interpolation of strings containing the newline C<"\n"> or tab C<"\t"> escape sequences in RPerl.  All double-quoted strings in RPerl must contain at least one newline or tab special character.
 
 In addition to escape sequences, string interpolation in normal Perl is also triggered by finding either the dollar-sign C<$> or I<"at-sign"> C<@> characters inside of a double-quoted string literal.  Because RPerl does not support string interpolation, double-quoted string literals must not contain the C<$> or C<@> characters.
 
-Double-quoted string literals must not contain any backslash characters, other than those used in newline C<\n> and tab C<\t> escape sequences, and thus can not represent a single backslash character C<\>; use single quotes C<'\\'> or q quotes C<q{\\}> double backslash escape sequences instead. 
+Double-quoted string literals must not contain any backslash characters, other than those used in newline C<\n> and tab C<\t> escape sequences, and thus can not represent a single-backslash character C<\>; use single-quotes C<'\\'> or q-quotes C<q{\\}> double-backslash escape sequences instead. 
 
-As with single quotes, in normal Perl the backslash double quote C<\"> escape sequence may be used to include a double quote character C<"> within a double-quoted text literal.  As stated above, RPerl only supports the newline C<\n> and tab C<\t> escape sequences within double quotes, so the backslash double quote C<\"> escape sequence is thus not supported.  Use single quotes C<'"'> or q quotes C<q{"}> to represent a double quote C<"> character in an RPerl string literal.
+As with single-quotes, in normal Perl the backslash double-quote C<\"> escape sequence may be used to include a double-quote character C<"> within a double-quoted text literal.  As stated above, RPerl only supports the newline C<\n> and tab C<\t> escape sequences within double-quotes, so the backslash double-quote C<\"> escape sequence is thus not supported.  Use single-quotes C<'"'> or q-quotes C<q{"}> to represent a double-quote C<"> character in an RPerl string literal.
 
 Double-quoted text literals must B<not> contain:
 
 =over
 
-=item * Double Quote Character: C<">
+=item * Double-Quote Character: C<">
 
-=item * Dollar Sign Character: C<$>
+=item * Dollar-Sign Character: C<$>
 
-=item * At Sign Character: C<@>
+=item * At-Sign Character: C<@>
 
 =item * Extra Backslash Characters (Other Than C<\n> Or C<\t>): C<\> C<\\> C<\\\> C<\r> C<123\456>
 
@@ -6877,9 +6877,9 @@ Double-quoted text literals may contain:
 
 =over
 
-=item * Single Quote Character: C<'>
+=item * Single-Quote Character: C<'>
 
-=item * Right Curly Brace Character: C<}>
+=item * Right-Curly-Brace Character: C<}>
 
 =item * Any Other Characters
 
@@ -6891,13 +6891,13 @@ Double-quoted text literals may contain:
     "\"     # INVALID: extra  backslash,                                                                     only \n and \t supported
 
     "   "   #   VALID: three spaces
-    " " "   # INVALID: double quote within double quotes
-    "\" "   # INVALID: backslash double quote escape sequence, also single backslash
+    " " "   # INVALID: double-quote within double-quotes
+    "\" "   # INVALID: backslash double-quote escape sequence, also single-backslash
 
     " a "   #   VALID: space, letter, space
-    "'a}"   #   VALID: single quote, letter, right brace
-    "\a}"   # INVALID: single backslash           interpolated as audible bell (alarm beep) escape sequence, only \n and \t supported
-    "\n}"   #   VALID: single backslash           interpolated as newline                   escape sequence, right brace
+    "'a}"   #   VALID: single-quote, letter, right brace
+    "\a}"   # INVALID: single-backslash           interpolated as audible bell (alarm beep) escape sequence, only \n and \t supported
+    "\n}"   #   VALID: single-backslash           interpolated as newline                   escape sequence, right brace
     "\\}"   # INVALID: extra  backslashes,                                                                   only \n and \t supported
     "\\\"   # INVALID: extra  backslashes,                                                                   only \n and \t supported 
     "\\\\"  # INVALID: extra  backslashes,                                                                   only \n and \t supported
@@ -6910,7 +6910,7 @@ I<BEST PRACTICES>
 
 =item * I<Use double-quoted text literals to contain newline C<\n> and tab C<\t> characters only, not other normal characters.>
 
-=item * I<To represent a mixture of normal characters with newline and/or tab characters, enclose the normal characters in single quotes, enclose the newline and tab characters in double quotes, and use the dot C<.> "string concatenation" operator to append one string literal to the other.  (Please see L</Section 2.2.6: Editing Operators> for more information about string concatenation.)>
+=item * I<To represent a mixture of normal characters with newline and/or tab characters, enclose the normal characters in single-quotes, enclose the newline and tab characters in double-quotes, and use the dot C<.> "string concatenation" operator to append one string literal to the other.  (Please see L</Section 2.2.6: Editing Operators> for more information about string concatenation.)>
 
 =back
 
@@ -6921,19 +6921,19 @@ I<BEST PRACTICES>
     "\t\n\t"    #     BEST PRACTICE:     newline and tab only
 
     "a\n"       # NOT BEST PRACTICE: not newline and tab only
-    'a' . "\n"  #     BEST PRACTICE:     newline         only, additional characters in single quotes
+    'a' . "\n"  #     BEST PRACTICE:     newline         only, additional characters in single-quotes
 
     "\tx"       # NOT BEST PRACTICE: not newline and tab only
-    "\t" . 'x'  #     BEST PRACTICE:                 tab only, additional characters in single quotes
+    "\t" . 'x'  #     BEST PRACTICE:                 tab only, additional characters in single-quotes
 
     "a\tx\n"                 # NOT BEST PRACTICE: not newline and tab only
-    'a' . "\t" . 'x' . "\n"  #     BEST PRACTICE:     newline and tab only, additional characters in single quotes
+    'a' . "\t" . 'x' . "\n"  #     BEST PRACTICE:     newline and tab only, additional characters in single-quotes
 
 =head3 Section 2.2.5: C<q> Quotes
 
-Text literals enclosed in I<"q quotes"> begin with lowercase letter q and left I<"curly-brace"> characters C<q{>, and end with the right curly-brace C<}> character.  You must use q quotes to represent empty text C<q{}> literals, which contain no characters.  Curly braces are also known as I<"curly-brackets"> or just I<"braces"> for short.
+Text literals enclosed in I<"q-quotes"> begin with lowercase letter q and left I<"curly-brace"> characters C<q{>, and end with the right curly-brace C<}> character.  You must use q-quotes to represent empty text C<q{}> literals, which contain no characters.  Curly braces are also known as I<"curly-brackets"> or just I<"braces"> for short.
 
-Normal Perl supports q-quoted string literals using delimiters other than curly-braces, as well as I<"qq quotes"> which provide string interpolation in the same way as double-quoted strings.  RPerl's existing string quoting mechanisms cover all non-interpolated use cases, so RPerl does not support the additional qq quotes or non-curly-brace q quotes, because TDNNTBMTOWTDI.
+Normal Perl supports q-quoted string literals using delimiters other than curly-braces, as well as I<"qq-quotes"> which provide string interpolation in the same way as double-quoted strings.  RPerl's existing string quoting mechanisms cover all non-interpolated use cases, so RPerl does not support the additional qq-quotes or non-curly-brace q-quotes, because TDNNTBMTOWTDI.
 
 q-quoted literals behave exactly the same as single-quoted literals, other than the empty string C<q{}> and the difference in delimiters.
 
@@ -6941,9 +6941,9 @@ q-quoted text literals must B<not> contain:
 
 =over
 
-=item * Right Curly Brace Character: C<}>
+=item * Right-Curly-Brace Character: C<}>
 
-=item * Single Backslash Character: C<\>
+=item * Single-Backslash Character: C<\>
 
 =item * Odd Number Of Consecutive Backslash Characters: C<\\\> C<\\\\\> C<\\\\\\\>
 
@@ -6953,11 +6953,11 @@ q-quoted text literals may contain:
 
 =over
 
-=item * Single Quote Character: C<'>
+=item * Single-Quote Character: C<'>
 
-=item * Double Quote Character: C<">
+=item * Double-Quote Character: C<">
 
-=item * Double Backslash Characters: C<\\>
+=item * Double-Backslash Characters: C<\\>
 
 =item * Even Number Of Consecutive Backslash Characters: C<\\\\> C<\\\\\\> C<\\\\\\\\>
 
@@ -6970,17 +6970,17 @@ q-quoted text literals may contain:
     q{}      #   VALID: empty string
     q{ }     #   VALID: single space
     q{a}     #   VALID: single letter
-    q{\}     # INVALID: single backslash
+    q{\}     # INVALID: single-backslash
 
     q{   }   #   VALID: three spaces
-    q{ } }   # INVALID: right brace within q quotes
-    q{\} }   # INVALID: backslash right brace escape sequence, also single backslash
+    q{ } }   # INVALID: right brace within q-quotes
+    q{\} }   # INVALID: backslash right brace escape sequence, also single-backslash
 
     q{ a }   #   VALID: space, letter, space
-    q{"a'}   #   VALID: double quote, letter, single quote
-    q{\a'}   # INVALID: single backslash       not interpolated as audible bell (alarm beep) escape sequence
-    q{\n'}   # INVALID: single backslash       not interpolated as newline                   escape sequence
-    q{\\'}   #   VALID: double backslash           interpolated as one backslash character, single quote
+    q{"a'}   #   VALID: double-quote, letter, single-quote
+    q{\a'}   # INVALID: single-backslash       not interpolated as audible bell (alarm beep) escape sequence
+    q{\n'}   # INVALID: single-backslash       not interpolated as newline                   escape sequence
+    q{\\'}   #   VALID: double-backslash           interpolated as one backslash character, single-quote
     q{\\\}   # INVALID: odd  number of backslashes 
     q{\\\\}  #   VALID: even number of backslashes interpolated as half as many backslash characters
 
@@ -6996,17 +6996,17 @@ I<BEST PRACTICES>
 
 =for html </u>
 
-    ''      # NOT BEST PRACTICE: single quotes invalid, empty string
-    ""      # NOT BEST PRACTICE: double quotes invalid, empty string
+    ''      # NOT BEST PRACTICE: single-quotes invalid, empty string
+    ""      # NOT BEST PRACTICE: double-quotes invalid, empty string
     q{}     #     BEST PRACTICE
 
     '0gnb'   #     BEST PRACTICE
-    "0gnb"   # NOT BEST PRACTICE: double quotes not needed
-    q{0gnb}  # NOT BEST PRACTICE:      q quotes not needed
+    "0gnb"   # NOT BEST PRACTICE: double-quotes not needed
+    q{0gnb}  # NOT BEST PRACTICE:      q-quotes not needed
 
     '\\nx'   #     BEST PRACTICE
-    "\\nx"   # NOT BEST PRACTICE: double quotes    invalid, extra backslash
-    q{\\nx}  # NOT BEST PRACTICE:      q quotes not needed
+    "\\nx"   # NOT BEST PRACTICE: double-quotes    invalid, extra backslash
+    q{\\nx}  # NOT BEST PRACTICE:      q-quotes not needed
 
 =head3 Section 2.2.6: Editing Operators
 
@@ -13024,7 +13024,7 @@ I<BEST PRACTICES>
 
 The first of these three best practices is for your variable names to be meaningful, so you should never actually choose C<$foo> or C<$bar> as your variable names, unless you are writing a programming textbook and need to make up a bunch of small stand-alone code examples.  When first choosing a variable's name, take a moment and simply think of the most descriptive word or words which explain what it is you plan to use the variable for.  Don't worry if your variable name starts out a bit too long, you can always shorten it later if appropriate.
 
-The second best practice is for your variable names to be of medium length, so you should usually not choose either C<$r> (too short) or C<$rounding_error_from_perl_arithmetic_operators> (too long); instead, how about C<$rounding_error> (just right)?  To be fair, there are a number of commonly-accepted single-letter variable names including C<$i> and C<$j> and C<$k> for loop iterators (see L</Section 2.9.1: Loop Iterator Variables> for more info), as well as traditional mathematics variables such as C<$n> (a "number" of items) and C<$x> and C<$y> and C<$z> (Cartesian coordinates).
+The second best practice is for your variable names to be of medium length, so you should usually not choose either C<$r> (too short) or C<$rounding_error_from_perl_arithmetic_operators> (too long); instead, how about C<$rounding_error> (just right)?  To be fair, there are a number of commonly-accepted single-letter variable names including C<$i> and C<$j> and C<$k> for loop iterators (see L</Section 2.9.1: Loop Iterator Variables> for more information), as well as traditional mathematics variables such as C<$n> (a "number" of items) and C<$x> and C<$y> and C<$z> (Cartesian coordinates).
 
 The third and final best practice is for your variable names to be simple, so you should usually choose C<$golden_ratio> instead of C<$phi> because more people will understand what the "golden ratio" is, and also the greek letter "phi" is ambiguous as it is traditionally used for multiple different mathematical purposes.  On the other hand, most people will understand what you mean if you give a numeric variable the name C<$circumference>, so you probably do not need to utilize the longer name C<$perimeter_length> instead.
 
@@ -16078,9 +16078,224 @@ Both dereference statements in the example above should access the numeric value
 
 =for rperl X</noncode>
 
-=head2 Section 3.6: C<qw()> Operator
+=head2 Section 3.6: Quote Word C<qw()> Operator
 
-Sometimes you will want to create an array which contains multiple string literals, which can be achieved either by normal use of quotes and commas, or by use of the I<"quote word"> C<qw()> operator.  Let's return to a source code example from L</Section 3.1: Lists vs Arrays>, which shows a common use of the C<qw()> operator, compared below with the equivalent code using quotes and commas.
+Sometimes you will want to create an array which contains multiple string literals, which can be achieved either by normal use of quotes and commas, or by use of the I<"quote word"> operator C<qw()>.
+
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice @{[split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Arithmetic Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Quote Word
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+qw( )
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Variadic
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Closed
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<Quote Word>
+
+    qw(LIST)
+
+LIST is whitespace-separated list of string literals;
+
+Split list elements by whitespace, return list of each element as a single-quoted string literal;
+
+Shortcut to avoid typing single-quote C<'> and comma C<,> characters in lists of string literals;
+
+May be utilized anywhere a list is accepted
+
+    # the following two lines are equivalent
+    qw(foo bar bat baz quux)
+    'foo', 'bar', 'bat', 'baz', 'quux'
+
+=back
+
+Let's return to a source code example from L</Section 3.1: Lists vs Arrays>, which shows a common use of the C<qw()> operator, compared below with the equivalent code using quotes and commas:
 
     my string_arrayref $foo_1 = [qw(a c e)];
     my string_arrayref $bar_1 = ['a', 'c', 'e'];  # 4 characters less
@@ -16816,7 +17031,274 @@ In non-void context, return new ARRAY length, operator and operands must be encl
 
 =back
 
-=head2 Section 3.10: Converting From Array To String
+=head2 Section 3.10: Range C<..> Operator
+
+Often you will want to generate a list of integers increasing by one.  For this purpose, the natural choice the range operator C<..>, sometimes called I<"dot-dot">.
+
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice @{[split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Arithmetic Operators</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Range
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+..
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Binary
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Infix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+17
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Non
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<Range>
+
+    VALUE1 .. VALUE2
+
+VALUE1 and VALUE2 are numeric values;
+
+Return list of integers starting at VALUE1, increasing by 1, and ending at VALUE 2;
+
+If VALUE1 is greater than VALUE2, returns empty list;
+
+If VALUE1 or VALUE2 is not an integer, only integer part is utilized;
+
+May be utilized anywhere a list is accepted
+
+    # the following two lines are equivalent
+    1 .. 10
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+
+=back
+
+Remember, if you pass value C<0> as the first argument for the range operator C<..>, whether for use as an array index or loop iterator variable or any other purpose, then you will generate a list of length 1-greater than the operator's second argument.  So, a list from C<1> to C<5> has length 5, and a list from C<0> to C<5> has length 6.  As an extension of the array-indices-start-at-zero issue, this can be a common mistake or mixup for new programmers.
+
+    my integer_arrayref $foo = [1 .. 5];
+    print 'have $foo = ', integer_arrayref_to_string($foo), "\n";
+    print 'have $foo length = ', (scalar @{$foo}), "\n";
+
+=for rperl X<noncode>
+
+    have $foo = [1, 2, 3, 4, 5]
+    have $foo length = 5
+
+=for rperl X</noncode>
+
+    my integer_arrayref $foo = [0 .. 5];
+    print 'have $foo = ', integer_arrayref_to_string($foo), "\n";
+    print 'have $foo length = ', (scalar @{$foo}), "\n";
+
+=for rperl X<noncode>
+
+    have $foo = [0, 1, 2, 3, 4, 5]
+    have $foo length = 6
+
+=for rperl X</noncode>
+
+    my integer_arrayref $foo = [0 .. 5];
+    push @{$foo}, 21, 12, 23;
+    print 'have $foo = ', integer_arrayref_to_string($foo), "\n";
+    print 'have $foo length = ', (scalar @{$foo}), "\n";
+
+=for rperl X<noncode>
+
+    have $foo = [0, 1, 2, 3, 4, 5, 21, 12, 23]
+    have $foo length = 9
+
+=for rperl X</noncode>
+
+    my integer_arrayref $foo = [0 .. 5];
+    push @{$foo}, 20 .. 25;
+    print 'have $foo = ', integer_arrayref_to_string($foo), "\n";
+    print 'have $foo length = ', (scalar @{$foo}), "\n";
+
+=for rperl X<noncode>
+
+    have $foo = [0, 1, 2, 3, 4, 5, 20, 21, 22, 23, 24, 25]
+    have $foo length = 12
+
+=for rperl X</noncode>
+
+=head2 Section 3.11: Converting From Array To String
 
 The terms I<"stringify">, I<"stringification">, and I<"pretty print"> refer to type conversion from any non-string data type or data structure into a string data type.
 
@@ -16838,35 +17320,35 @@ The C<integer_arrayref_to_string()> subroutine is implemented by the following R
     our string $integer_arrayref_to_string = sub {
         # require exactly one integer_arrayref as input, store in variable $input_avref
         ( my integer_arrayref $input_avref ) = @_;
-    
+
         # declare local variables, av & sv mean "array value" & "scalar value" as used in Perl core
         my integer $input_av_length;
         my integer $input_av_element;
         my string $output_sv;
         my boolean $i_is_0 = 1;
-    
+
         # compute length of (number of elements in) input array
         $input_av_length = scalar @{$input_avref};
-    
+
         # begin output string with left-square-bracket, as required for all RPerl arrays
         $output_sv = '[';
-    
+
         # loop through all valid values of $i for use as index to input array
         for my integer $i ( 0 .. ( $input_av_length - 1 ) ) {
             # retrieve input array's element at index $i
             $input_av_element = $input_avref->[$i];
-    
+
             # append comma & space to output string for all elements except index 0
             if ($i_is_0) { $i_is_0 = 0; }
             else         { $output_sv .= ', '; }
-    
+
             # stringify individual integer element, append to output string
             $output_sv .= integer_to_string($input_av_element);
         }
-    
+
         # end output string with right-square-bracket, as required for all RPerl arrays
         $output_sv .= ']';
-    
+
         # return output string, containing stringified input array
         return $output_sv;
     };
@@ -16891,58 +17373,95 @@ Running the code example above generates the following output string, which is i
 
 =for rperl X</noncode>
 
-=head2 Section 3.11: Program Control Using The C<for> & C<foreach> Loops
+=head2 Section 3.12: Program Control Using The C<for> & C<foreach> Loops
 
 In the previous section, you saw a C<for> loop control structure used to stringify an array in the C<integer_arrayref_to_string()> subroutine.  In this section, we'll learn more about the C<for> loop and its closely-related counterpart, the C<foreach> loop.
 
-Please take a few minutes to review L</Section 2.9: Program Control Using The C<while> Loop>; this should prove helpful because the C<for> and C<foreach> loops share some things in common with the C<while> loop control structure.
+Please take a few minutes to review L</Section 2.9: Program Control Using The C<while> Loop> if you have not yet done so; this should prove helpful because the C<for> and C<foreach> loops share some things in common with the C<while> loop control structure.
 
 In normal Perl, there is no difference whatsoever between the C<for> and C<foreach> loops; the 2 keywords are synonymous and you may freely interchange them as you like.  This follows the Perl philosophy of TIMTOWTDI (There Is More Than One Way To Do It).
 
 In RPerl, the C<for> and C<foreach> loops are used for separate, but related, purposes.  This follows the RPerl philosophies of TDNNTBMTOWTDI (There Does Not Need To Be More Than One Way To Do It) and TIOFWTDI (There Is One Fastest Way To Do It).
 
-=head3 Section 3.11.1: The Range C<for> Loop
+In RPerl, the C<for> loop itself is actually 2 different control structures: the I<"range"> C<for> loop and the I<"C-style"> C<for> loop.  The range C<for> loop is so named due to its use of the range operator C<..>, which you may recall from L</Section 3.10: Range C<..> Operator>.  The C-style C<for> loop derives its name from its origins in the foundational programming language I<"C">, which is the language used to build most modern technology such as Linux and Perl and RPerl.  (Of course we prefer programming in Perl over C, so that's why we created RPerl in the first place, because RPerl generates the C and C++ code for us!)
 
-=head3 Section 3.11.2: The C-Style C<for> Loop
+=head3 Section 3.12.1: The Range C<for> Loop
 
-=head3 Section 3.11.3: The C<foreach> Loop
+Often you will want your loop iterator variable to simply increase by one each time the loop iterates, starting and ending at some specific values.  For this purpose, you may choose the range C<for> loop control structure.
 
+    for my integer $i ( 1 .. 5 ) {
+        print 'have $i = ', $i, "\n";
+    }
 
+=for rperl X<noncode>
 
+    have $i = 1
+    have $i = 2
+    have $i = 3
+    have $i = 4
+    have $i = 5
 
+=for rperl X</noncode>
 
+Range C<for> loop control structures always take the following form:
 
+    for my integer $i ( $lower .. $upper ) {
+        # PERFORM OPERATIONS INSIDE LOOP
+    }
 
+In the source code example above, C<$i> is the loop iterator variable, which you will hopefully recall from L</Section 2.9.1: Loop Iterator Variables>.  By definition, a loop iterator variable must always be a variable, although it may be named something other than C<$i> if you like.  The C<$lower> and C<$upper> variables are the two arguments to the infix range operator C<..>, and they may be any expression, literal, or variable which produces a numeric value.  The number of times this loop will iterate is C<($upper - $lower) + 1>, and each time the loop iterates it will effectively cause the value of C<$i> to increase by one, starting at C<$lower> and ending at C<$upper>.
 
-=head2 Section 3.12: Punctuation Variables & Magic [[[ NEED ADD MAGIC INTRO SECTION SOMEWHERE??? ]]]
+We have recently seen the range C<for> loop in L</Section 3.11: Converting From Array To String>, used inside the C<integer_arrayref_to_string()> subroutine.  Here is the header and first operation of that same range C<for> loop, isolated from the rest of the code:
+    
+    # loop through all valid values of $i for use as index to input array
+    for my integer $i ( 0 .. ( $input_av_length - 1 ) ) {
+        # retrieve input array's element at index $i
+        $input_av_element = $input_avref->[$i];
+
+        # ADDITIONAL CODE INSIDE LOOP REMOVED FOR BREVITY
+    }
+
+In the source code example above, the range operator <..> begins at C<0> and ends at C<( $input_av_length - 1 )>; remember, array indices start at 0, so we must always be careful to subtract one from the array's length when calculating the range operator's second argument.  (If you forget to subtract one from the second argument, then your code will probably attempt to access one element beyond the end of the array, which generally causes errors, crashes, or unexpected behavior.)  Inside the loop body, we access the element of array C<$input_avref> located at index C<$i>, and store the element inside the C<$input_av_element> variable for further use in the loop (not shown).  This loop will access each and every element of the array, in order, one at a time. 
+
+=head3 Section 3.12.2: The C-Style C<for> Loop
+
+START HERE: NEED ADD CONTENT
+START HERE: NEED ADD CONTENT
+START HERE: NEED ADD CONTENT
+
+=head3 Section 3.12.3: The C<foreach> Loop
+
+NEED ADD CONTENT
+
+=head2 Section 3.13: Punctuation Variables & Magic [[[ NEED ADD MAGIC INTRO SECTION SOMEWHERE??? ]]]
 
 START HERE: add content
 
-=head2 Section 3.13: C<reverse> Operator
+=head2 Section 3.14: C<reverse> Operator
 
 START HERE: add content
 
-=head2 Section 3.14: C<sort> Operator
+=head2 Section 3.15: C<sort> Operator
 
 START HERE: add content
 
-=head2 Section 3.15: Scalar & Array Contexts
+=head2 Section 3.16: Scalar & Array Contexts
 
 START HERE: add content
 
-=head2 Section 3.16: Array Values In Scalar Context
+=head2 Section 3.17: Array Values In Scalar Context
 
 START HERE: add content
 
-=head2 Section 3.17: Scalar Values In Array Context
+=head2 Section 3.18: Scalar Values In Array Context
 
 START HERE: add content
 
-=head2 Section 3.18: Explicitly Scalar Context
+=head2 Section 3.19: Explicitly Scalar Context
 
 START HERE: add content
 
-=head2 Section 3.19: C<STDIN> & Arrays
+=head2 Section 3.20: C<STDIN> & Arrays
 
 START HERE: add content
 
@@ -16957,7 +17476,7 @@ Closely related to the loop concept of an iterator variable is that of an C<"ind
 
 types() introspection subroutine
 
-=head2 Section 3.20: SSE Operators
+=head2 Section 3.21: SSE Operators
 
     OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
     OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
@@ -17852,7 +18371,7 @@ X<br>
 
 The goal of this exercise is to become familiar with utilizing array indices.X<br>
 
-The first line in the C<OPERATIONS> section declares a new variable C<$flintstones_and_rubbles> of type C<string_arrayref>, which is then initialized to contain a C<qw()> (quoted word) set of names including the string element 'fred' at array index 0, 'betty' at array index 1, and so on.X<br>
+The first line in the C<OPERATIONS> section declares a new variable C<$flintstones_and_rubbles> of type C<string_arrayref>, which is then initialized to contain a C<qw()> (quote word) set of names including the string element 'fred' at array index 0, 'betty' at array index 1, and so on.X<br>
 
 The second line in C<OPERATIONS> creates an empty array of integers C<$input_indices>, and the following C<while> loop uses the C<push> operator to fill C<$input_indices> with integers entered by the user.X<br>
 
@@ -18399,7 +18918,7 @@ In the C<OPERATIONS> section, the C<tac()> subroutine is called with its only ar
 
 Before executing this program, the non-Perl C<`printf`> program must be called to populate some test data into the 3 input files F<fred>, F<barney>, and F<betty>; and after execution the C<`rm`> program is called to delete the 3 input files.X<br>
 
-To begin execution of this program via the C<`rperl`> command, the program name and input file names must be enclosed in either C<'single quotes'> or C<"double quotes">; this tells RPerl the input file names are command-line arguments to be passed to the 1 specified program, instead of specifying additional RPerl programs.X<br>
+To begin execution of this program via the C<`rperl`> command, the program name and input file names must be enclosed in either C<'single-quotes'> or C<"double-quotes">; this tells RPerl the input file names are command-line arguments to be passed to the 1 specified program, instead of specifying additional RPerl programs.X<br>
 
 
     #!/usr/bin/perl
@@ -19939,7 +20458,7 @@ number with underscores, optional scientific notation; ex. C<12_345_678.910_1>
 
 =item * LITERAL_STRING
 
-single quotes non-empty; double quotes non-empty without sigils or extra backslashes & with newline or tab; or single q-braces; ex. C<'howdy $foo!'> or C<"howdy foo!\n"> or C<q{howdy $foo!}>
+single-quotes non-empty; double-quotes non-empty without sigils or extra backslashes & with newline or tab; or single q-braces; ex. C<'howdy $foo!'> or C<"howdy foo!\n"> or C<q{howdy $foo!}>
 
 =item * SELF
 
@@ -20160,7 +20679,7 @@ precedence 01 prefix void: same as above, except accepts argument(s); C<croak>, 
 
 =item * OP01_QW
 
-precedence 01 prefix: quoted words; ex. C<qw()> or C<qw(foo bar baz)> or C<qw(Foo23 BarBax Ba_z 123)>
+precedence 01 prefix: quote word; ex. C<qw()> or C<qw(foo bar baz)> or C<qw(Foo23 BarBax Ba_z 123)>
 
 =item * OP01_OPEN
 
@@ -20302,7 +20821,7 @@ C<ProductionRule: First Alternative 'foo' | Second Alternative 'bar' | ... | Las
 
 In this example, C<ProductionRule> is a non-terminal left-hand-side (LHS) symbol, is followed by the C<:> reduction metasymbol, and may be reduced (replaced) by any of the right-hand-side (RHS) sequences of terminal and non-terminal symbols, themselves separated by the C<|> alternation (logical or) metasymbol.  In other words, each LHS may become any of its corresponding RHS alternatives.
 
-Terminal symbols are enclosed in single quotes as with C<'foo'>, never appear on the LHS, and are taken as literal data with no transformations applied.  Eyapp treats terminal symbols as tokens which only match one hard-coded lexeme, which is the string appearing inside the single quotes, C<foo> in this example.
+Terminal symbols are enclosed in single-quotes as with C<'foo'>, never appear on the LHS, and are taken as literal data with no transformations applied.  Eyapp treats terminal symbols as tokens which only match one hard-coded lexeme, which is the string appearing inside the single-quotes, C<foo> in this example.
 
 =head3 D.4.1: File Formats
 
