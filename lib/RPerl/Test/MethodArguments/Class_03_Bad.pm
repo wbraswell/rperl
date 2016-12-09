@@ -24,7 +24,7 @@ our void::method $empty_method = sub {
         my string $bar,
         my scalartype_arrayref $baz,
         my integer_hashref $bat
-    ) @_;
+    ) @ARG;
     return 2;
 };
 

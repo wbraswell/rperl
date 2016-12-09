@@ -4,7 +4,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.004_301;
+our $VERSION = 0.004_500;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -17,7 +17,7 @@ our $VERSION = 0.004_301;
 # DEV NOTE: this package exists to serve as the header file for RPerl.pm itself,
 # as well as for RPerl.pm dependencies such as Class.pm, HelperFunctions_cpp.pm, and rperltypes.pm
 
-# $OS_ERROR == $ERRNO == $!, $EVAL_ERROR == $@, $CHILD_ERROR == $?, $EXECUTABLE_NAME == $^X, $PROGRAM_NAME == $0, $OSNAME == $^O
+# @ARG == @_, $OS_ERROR == $ERRNO == $!, $EVAL_ERROR == $@, $CHILD_ERROR == $?, $EXECUTABLE_NAME == $^X, $PROGRAM_NAME == $0, $OSNAME == $^O
 
 # export various subroutines and variables to all who call 'use RPerl::Config;'
 use Data::Dumper;
@@ -28,7 +28,7 @@ use POSIX qw(ceil floor modf);
 use Exporter 'import';
 
 # DEV NOTE, CORRELATION #rp008: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
-our @EXPORT = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
+our @EXPORT = qw(Dumper carp croak confess *ARG $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
 
 1;                              # end of package
 
@@ -36,8 +36,6 @@ our @EXPORT = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $E
 package RPerl::AfterSubclass;
 
 ## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 14: allow global exports from Config.pm
-
-# $OS_ERROR == $ERRNO == $!, $EVAL_ERROR == $@, $CHILD_ERROR == $?, $EXECUTABLE_NAME == $^X, $PROGRAM_NAME == $0, $OSNAME == $^O
 
 # export various subroutines and variables to all who call 'use RPerl::AfterSubclass;'
 use Data::Dumper;
@@ -48,7 +46,7 @@ use POSIX qw(ceil floor modf);
 use Exporter 'import';
 
 # DEV NOTE, CORRELATION #rp008: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
-our @EXPORT = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
+our @EXPORT = qw(Dumper carp croak confess *ARG $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
 
 1;                              # end of package
 
@@ -79,7 +77,7 @@ use Carp;
 use English qw(-no_match_vars);
 use POSIX qw(ceil floor modf);
 use Exporter 'import';
-our @EXPORT = qw(Dumper carp croak confess $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
+our @EXPORT = qw(Dumper carp croak confess *ARG $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
 
 # [[[ OO CLASS PROPERTIES SPECIAL ]]]
 

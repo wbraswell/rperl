@@ -24,7 +24,7 @@ our $VERSION = 2.200_000;
 # force pre-loading so they make it into $inc_skip
 use parent qw();
 use IPC::Cmd;
-use English;
+#use English;
 #use re 'strict';  # doesn't work in all versions of Perl
 use re 'taint';  # hopefully doesn't actually do anything!
 

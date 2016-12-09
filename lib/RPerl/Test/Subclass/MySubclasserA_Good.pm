@@ -20,14 +20,14 @@ our hashref $properties = { preschool => my string $TYPED_preschool = 'Busy Beav
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 our RPerl::Test::Subclass::MySubclasserA_Good::method $building_blocks = sub {
-    ( my RPerl::Test::Subclass::MySubclasserA_Good $self ) = @_;
+    ( my RPerl::Test::Subclass::MySubclasserA_Good $self ) = @ARG;
     $self->{preschool} .= '; ABCDEFG';
     my RPerl::Test::Subclass::MySubclasserA_Good $chum = RPerl::Test::Subclass::MySubclasserA_Good->new();
     return $chum;
 };
 
 our RPerl::Test::Subclass::MySubclasserA_Good_arrayref::method $finger_paints = sub {
-    ( my RPerl::Test::Subclass::MySubclasserA_Good $self ) = @_;
+    ( my RPerl::Test::Subclass::MySubclasserA_Good $self ) = @ARG;
     $self->{preschool} .= '; orange yellow red';
     my RPerl::Test::Subclass::MySubclasserA_Good_arrayref $friends
         = [ RPerl::Test::Subclass::MySubclasserA_Good->new(), RPerl::Test::Subclass::MySubclasserA_Good->new(),
@@ -36,7 +36,7 @@ our RPerl::Test::Subclass::MySubclasserA_Good_arrayref::method $finger_paints = 
 };
 
 our RPerl::Test::Subclass::MySubclasserA_Good_hashref::method $sand_box = sub {
-    ( my RPerl::Test::Subclass::MySubclasserA_Good $self ) = @_;
+    ( my RPerl::Test::Subclass::MySubclasserA_Good $self ) = @ARG;
     $self->{preschool} .= '; castle';
     my RPerl::Test::Subclass::MySubclasserA_Good_hashref $classmates = {
         'alvin'    => RPerl::Test::Subclass::MySubclasserA_Good->new(),

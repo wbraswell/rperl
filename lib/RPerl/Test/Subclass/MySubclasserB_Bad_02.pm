@@ -24,7 +24,7 @@ our hashref $properties = { preschool => my string $TYPED_preschool = 'Eager Mus
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 our RPerl::Test::Subclass::MySubclasserB_Bad_02::method $alphabet = sub {
-    ( my RPerl::Test::Subclass::MySubclasserB_Bad_02 $self ) = @_;
+    ( my RPerl::Test::Subclass::MySubclasserB_Bad_02 $self ) = @ARG;
     $self->{kindergarten} .= '; ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     my RPerl::Test::Subclass::MySubclasserA_Good $buddy = RPerl::Test::Subclass::MySubclasserA_Good->new();
     my RPerl::Test::Subclass::MySubclasserB_Bad_02 $chum  = RPerl::Test::Subclass::MySubclasserB_Bad_02->new();
@@ -32,7 +32,7 @@ our RPerl::Test::Subclass::MySubclasserB_Bad_02::method $alphabet = sub {
 };
 
 our RPerl::Test::Subclass::MySubclasserB_Bad_02_arrayref::method $brush_paints = sub {
-    ( my RPerl::Test::Subclass::MySubclasserB_Bad_02 $self ) = @_;
+    ( my RPerl::Test::Subclass::MySubclasserB_Bad_02 $self ) = @ARG;
     $self->{kindergarten} .= '; green blue purple';
     my RPerl::Test::Subclass::MySubclasserB_Bad_02_arrayref $friends
         = [ RPerl::Test::Subclass::MySubclasserB_Bad_02->new(), RPerl::Test::Subclass::MySubclasserB_Bad_02->new(),
@@ -41,7 +41,7 @@ our RPerl::Test::Subclass::MySubclasserB_Bad_02_arrayref::method $brush_paints =
 };
 
 our RPerl::Test::Subclass::MySubclasserB_Bad_02_hashref::method $clay = sub {
-    ( my RPerl::Test::Subclass::MySubclasserB_Bad_02 $self ) = @_;
+    ( my RPerl::Test::Subclass::MySubclasserB_Bad_02 $self ) = @ARG;
     $self->{kindergarten} .= '; bust';
     my RPerl::Test::Subclass::MySubclasserB_Bad_02_hashref $classmates = {
         'huey'  => RPerl::Test::Subclass::MySubclasserB_Bad_02->new(),

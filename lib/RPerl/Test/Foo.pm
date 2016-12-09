@@ -30,7 +30,7 @@ our hashref $properties = {
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 our void::method $quux = sub {
-    ( my object $self) = @_;
+    ( my object $self) = @ARG;
     $self->{plugh} = $self->{plugh} + 2;
     $self->{plugh} = $self->{plugh} - 3;
     $self->{plugh} = $self->{plugh} * 4;  # ensure integer outcome
@@ -49,7 +49,7 @@ our integer::method $quince = sub {
 };
 
 our string_hashref::method $qorge = sub {
-    ( my object $self, my integer $qorge_input ) = @_;
+    ( my object $self, my integer $qorge_input ) = @ARG;
     return {
         a => $self->{xyzzy} x $qorge_input,
         b => 'howdy',
@@ -58,7 +58,7 @@ our string_hashref::method $qorge = sub {
 };
 
 our RPerl::Test::Foo_arrayref::method $qaft = sub {
-    ( my object $self, my integer $foo, my number $bar, my string $bat, my string_hashref $baz ) = @_;
+    ( my object $self, my integer $foo, my number $bar, my string $bat, my string_hashref $baz ) = @ARG;
     my RPerl::Test::Foo_arrayref $retval = [];
     $retval->[0] = RPerl::Test::Foo->new();
     $retval->[0]->{xyzzy} = 'larry';
@@ -74,7 +74,7 @@ our void $tnurg = sub {
 };
 
 our number $tluarg = sub {
-    ( my integer $tluarg_input ) = @_;
+    ( my integer $tluarg_input ) = @ARG;
     $tluarg_input++;
     $tluarg_input--;
     $tluarg_input = $tluarg_input**2;
@@ -82,7 +82,7 @@ our number $tluarg = sub {
 };
 
 our number_arrayref $ylprag = sub {
-    ( my integer $ylprag_input, my number_arrayref $ylprag_array ) = @_;
+    ( my integer $ylprag_input, my number_arrayref $ylprag_array ) = @ARG;
     my integer $ylprag_input_size = scalar @{$ylprag_array};
     my integer $unylprag_size_typed = scalar @{my integer_arrayref $TYPED_unylprag = [4, 6, 8, 10]};
 #    my integer $unylprag_size_untyped = scalar @{[4, 6, 8, 10]};  missing type_inner, not supported in CPPOPS_CPPTYPES
@@ -96,7 +96,7 @@ our number_arrayref $ylprag = sub {
 
 our string_hashref $ecrog = sub {
     ( my integer $al, my number $be, my string $ga, my string_hashref $de)
-        = @_;
+        = @ARG;
     return {
         alpha => integer_to_string($al),
         beta  => number_to_string($be),

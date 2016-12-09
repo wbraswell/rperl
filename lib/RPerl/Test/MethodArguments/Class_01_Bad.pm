@@ -19,7 +19,7 @@ our hashref $properties
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 our void::method $empty_method = sub {
-    ( my oject $self, my integer $foo ) = @_;
+    ( my oject $self, my integer $foo ) = @ARG;
     return 2;
 };
 

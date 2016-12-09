@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.003_821;
+    our $VERSION = 0.004_000;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -183,13 +183,13 @@ Constant:                'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeIn
 #ConstantValue:          Literal | LBRACKET TypeInnerConstant? Literal (OP21_LIST_COMMA TypeInnerConstant? Literal)* ']' | 
 #                        LBRACE WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal (OP21_LIST_COMMA WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal)* '}' ;
 Subroutine:              'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation* '}' ';' ;
-SubroutineArguments:     LPAREN_MY Type VARIABLE_SYMBOL (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
+SubroutineArguments:     LPAREN_MY Type VARIABLE_SYMBOL (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
 Class:                   'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties SubroutineOrMethod* LITERAL_NUMBER ';' ;
 Properties:              'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryProperties (OP21_LIST_COMMA HashEntryProperties)* '}' ';' |
                          'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';' |
                          'our hashref $properties' OP19_VARIABLE_ASSIGN VARIABLE_SYMBOL ';' ;
 Method:                  'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation* '}' ';' ;
-MethodArguments:         LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
+MethodArguments:         LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
 SubroutineOrMethod:      Subroutine | Method ;
 
 # [[[ SYNTAX PRODUCTION RULES, OPERATIONS ]]]
@@ -288,13 +288,13 @@ Include_41 => 'RPerl::CompileUnit::Include',                                # In
 Include_42 => 'RPerl::CompileUnit::Include',                                # Include -> USE_OR_REQUIRE WordScoped OP01_QW ';'
 Constant_43 => 'RPerl::CompileUnit::Constant',                              # Constant -> 'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';'
 Subroutine_48 => 'RPerl::CodeBlock::Subroutine',                            # Subroutine -> 'our' Type VARIABLE_SYMBOL '= sub {' OPTIONAL-16 STAR-17 '}' ';'
-SubroutineArguments_52 => 'RPerl::CodeBlock::Subroutine::Arguments',        # SubroutineArguments -> LPAREN_MY Type VARIABLE_SYMBOL STAR-19 ')' OP19_VARIABLE_ASSIGN '@_;'
+SubroutineArguments_52 => 'RPerl::CodeBlock::Subroutine::Arguments',        # SubroutineArguments -> LPAREN_MY Type VARIABLE_SYMBOL STAR-19 ')' OP19_VARIABLE_ASSIGN '@ARG;'
 Class_61 => 'RPerl::CompileUnit::Module::Class::Generator',                 # Class -> 'use parent qw(' WordScoped ')' ';' Include STAR-20 STAR-21 STAR-22 Properties STAR-23 LITERAL_NUMBER ';'
 Properties_65 => 'RPerl::NonGenerator',                                     # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryProperties STAR-27 '}' ';'
 Properties_66 => 'RPerl::NonGenerator',                                     # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';'
 Properties_67 => 'RPerl::NonGenerator',                                     # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN VARIABLE_SYMBOL ';'
 Method_72 => 'RPerl::CodeBlock::Subroutine::Method',                        # Method -> 'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' OPTIONAL-26 STAR-27 '}' ';'
-MethodArguments_76 => 'RPerl::CodeBlock::Subroutine::Method::Arguments',    # MethodArguments -> LPAREN_MY TYPE_SELF STAR-29 ')' OP19_VARIABLE_ASSIGN '@_;'
+MethodArguments_76 => 'RPerl::CodeBlock::Subroutine::Method::Arguments',    # MethodArguments -> LPAREN_MY TYPE_SELF STAR-29 ')' OP19_VARIABLE_ASSIGN '@ARG;'
 SubroutineOrMethod_77 => 'RPerl::CodeBlock::Subroutine',                    # SubroutineOrMethod -> Subroutine
 SubroutineOrMethod_78 => 'RPerl::CodeBlock::Subroutine::Method',            # SubroutineOrMethod -> Method
 Operation_79 => 'RPerl::Operation::Expression',                             # Operation -> Expression ';'

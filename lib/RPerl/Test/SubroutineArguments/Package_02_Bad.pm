@@ -11,7 +11,7 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 our void $empty_sub = sub {
-    ( my number__arrayref $foo ) = @_;
+    ( my number__arrayref $foo ) = @ARG;
     return 1;
 };
 

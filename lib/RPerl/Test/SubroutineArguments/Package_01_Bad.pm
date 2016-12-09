@@ -11,7 +11,7 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 our void $empty_sub = sub {
-    ( my strin $foo ) = @_;
+    ( my strin $foo ) = @ARG;
     return 1;
 };
 

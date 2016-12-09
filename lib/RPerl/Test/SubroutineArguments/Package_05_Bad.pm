@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'near "@_;"' >>>
+# <<< PARSE_ERROR: 'near "@ARG;"' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -11,7 +11,7 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 our void $empty_sub = sub {
-    ( my number $foo, my string $bar  = @_;
+    ( my number $foo, my string $bar  = @ARG;
     return 1;
 };
 

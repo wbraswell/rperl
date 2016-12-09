@@ -17465,7 +17465,7 @@ We have recently seen the range C<for> loop in L</Section 3.11: Converting From 
         # retrieve input array's element at index $i
         $input_av_element = $input_avref->[$i];
 
-        # ADDITIONAL CODE INSIDE LOOP REMOVED FOR BREVITY
+        # PERFORM OPERATIONS USING $input_av_element
     }
 
 In the source code example above, the range operator C<..> begins at C<0> and ends at C<( $input_av_length - 1 )>; remember, array indices start at 0, so we must always be careful to subtract one from the array's length when calculating the range operator's second operand.  (If you forget to subtract one from the second operand, then your code will probably attempt to access one element beyond the end of the array, which generally causes errors, crashes, or unexpected behavior.)  Inside the loop body, we access the element of array C<$input_avref> located at index C<$i>, and store the element inside the C<$input_av_element> variable for further use in the loop (not shown).  This loop will access each and every element of the array, in order, one at a time.
@@ -17526,7 +17526,7 @@ Let's return again to our example from the C<integer_arrayref_to_string()> subro
         # retrieve input array's element at index $i
         $input_av_element = $input_avref->[$i];
 
-        # ADDITIONAL CODE INSIDE LOOP REMOVED FOR BREVITY
+        # PERFORM OPERATIONS USING $input_av_element
     }
 
 In this modified source code example, the loop header's initialization operation is C<my integer $i = 0>.  The continuation condition has been simplified and optimized by removing the subtract-one C<- 1> operation and utilizing a less-than C<E<lt>> operator instead of a less-or-equal C<E<lt>=> operator.  (RPerl is usually capable of automatically performing this specific optimization on the range operator's second operand in range C<for> loops, where applicable.)  The incrementation operation is a simple C<$i++> auto-increment operator which increases the value of iterator variable by one after each loop iteration.  The loop body remains unchanged, and we can access the elements of array C<$input_avref> in the exact same manner as in the original example.  This C-style C<for> loop will access each element of the array in order, and is functionally equivalent to the original range C<for> loop.
@@ -17581,14 +17581,52 @@ Let's return once more to our example from the C<integer_arrayref_to_string()> s
 
     # loop through all valid elements in input array
     foreach my integer $input_av_element ( @{$input_avref} ) {
-        # ADDITIONAL CODE INSIDE LOOP REMOVED FOR BREVITY
+        # PERFORM OPERATIONS USING $input_av_element
     }
 
 In this re-modified source code example, the loop header's declaration operation is C<my integer $input_av_element>.  The list elements are taken directly from the C<$input_avref> variable by use of the array dereference operator C<@{ }>.  The loop iterator variable is completely removed, as are the range operator, the continuation condition inequality operator (including subtract-one operation), and the incrementation operator in the loop header, as well as the array element retrieval operation inside the loop body.  The resulting code is significantly simpler, cleaner, and less error-prone than before.
 
-=head2 Section 3.13: Punctuation Variables & Magic [[[ NEED ADD MAGIC INTRO SECTION SOMEWHERE??? ]]]
+=head2 Section 3.13: Punctuation Variables & Magic
+
+In normal Perl, you may access and modify a number of I<"punctuation variables">, which are special variables created by the Perl language itself, and which may be utilized to achieve many different goals.
+
+=over
+
+=item * C<$_> AKA C<$ARG>
+
+=item * C<$!> AKA C<$OS_ERROR> AKA C<$ERRNO>
+
+=item * 
+
+=item * 
+
+=item * 
+
+=item * 
+
+=item * 
+
+
+
+
+=item * C<@_>
+
+=back
+
+
+
+L</Section 1.10: Why Didn't Will Just Use Normal Perl?>
+
+L</Section 1.15: What Is RPerl Not Meant To Do?>
+
+L</Section 1.25.4: The Low-Magic Perl Commandments>
 
 START HERE: add content
+START HERE: add content
+START HERE: add content
+
+
+
 
 =head2 Section 3.14: C<reverse> Operator
 

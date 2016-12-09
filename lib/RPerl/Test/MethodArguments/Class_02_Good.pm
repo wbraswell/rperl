@@ -19,7 +19,7 @@ our void::method $empty_method = sub {
         my number $foo,
         my number_arrayref $bar,
         my number_hashref $baz
-    ) = @_;
+    ) = @ARG;
     return 2;
 };
 

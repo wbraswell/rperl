@@ -19,7 +19,7 @@ our hashref $properties = { thud => my integer_arrayref $TYPED_thud = [] };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 our void::method $quux = sub {
-    ( my object $self, my integer $howdy, my string_hashref $doody) = @_;
+    ( my object $self, my integer $howdy, my string_hashref $doody) = @ARG;
     return 2;
 };
 1;    # end of class

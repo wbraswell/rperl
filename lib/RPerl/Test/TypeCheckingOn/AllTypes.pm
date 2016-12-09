@@ -41,21 +41,21 @@ our hashref $properties = {};
 # [[ SCALARS ]]
 
 our void $check_integer = sub {
-    ( my integer $input_1) = @_;
+    ( my integer $input_1) = @ARG;
 
 #    RPerl::diag("in check_integer(), received \$input_1\n" . Dumper($input_1) . "\n");
     return;
 };
 
 our void $check_number = sub {
-    ( my number $input_1) = @_;
+    ( my number $input_1) = @ARG;
 
 #    RPerl::diag("in check_number(), received \$input_1\n" . Dumper($input_1) . "\n");
     return;
 };
 
 our void $check_string = sub {
-    ( my string $input_1) = @_;
+    ( my string $input_1) = @ARG;
 
 #    RPerl::diag("in check_string(), received \$input_1\n" . Dumper($input_1) . "\n");
     return;
@@ -64,21 +64,21 @@ our void $check_string = sub {
 # [[ ARRAY REFS ]]
 
 our void $check_arrayref = sub {
-    ( my arrayref $input_1) = @_;
+    ( my arrayref $input_1) = @ARG;
 
 #    RPerl::diag("in check_arrayref(), received \$input_1\n" . Dumper($input_1) . "\n");
     return;
 };
 
 our void $check_integer_arrayref = sub {
-    ( my integer_arrayref $input_1) = @_;
+    ( my integer_arrayref $input_1) = @ARG;
 
 #    RPerl::diag("in check_integer_arrayref(), received \$input_1\n" . Dumper($input_1) . "\n");
     return;
 };
 
 our void $check_number_arrayref = sub {
-    ( my number_arrayref $input_1) = @_;
+    ( my number_arrayref $input_1) = @ARG;
 
 #    RPerl::diag("in check_number_arrayref(), received \$input_1\n" . Dumper($input_1) . "\n");
     return;
@@ -88,7 +88,7 @@ our void $check_number_arrayrefs = sub {
     (   my number_arrayref $input_1,
         my number_arrayref $input_2,
         my number_arrayref $input_3)
-        = @_;
+        = @ARG;
 
 #    RPerl::diag("in check_number_arrayrefs(), received \$input_1\n" . Dumper($input_1) . "\n");
 #    RPerl::diag("in check_number_arrayrefs(), received \$input_2\n" . Dumper($input_2) . "\n");
@@ -102,7 +102,7 @@ our void $check_number_arrayrefs = sub {
 };
 
 our void $check_string_arrayref = sub {
-    ( my string_arrayref $input_1) = @_;
+    ( my string_arrayref $input_1) = @ARG;
 
 #    RPerl::diag("in check_string_arrayref(), received \$input_1\n" . Dumper($input_1) . "\n");
     return;
@@ -111,21 +111,21 @@ our void $check_string_arrayref = sub {
 # [[ HASH REFS ]]
 
 our void $check_hashref = sub {
-    ( my hashref $input_1) = @_;
+    ( my hashref $input_1) = @ARG;
 
 #    RPerl::diag("in check_hashref(), received \$input_1\n" . Dumper($input_1) . "\n");
     return;
 };
 
 our void $check_integer_hashref = sub {
-    ( my integer_hashref $input_1) = @_;
+    ( my integer_hashref $input_1) = @ARG;
 
 #    RPerl::diag("in check_integer_hashref(), received \$input_1\n" . Dumper($input_1) . "\n");
     return;
 };
 
 our void $check_number_hashref = sub {
-    ( my number_hashref $input_1) = @_;
+    ( my number_hashref $input_1) = @ARG;
 
 #    RPerl::diag("in check_number_hashref(), received \$input_1\n" . Dumper($input_1) . "\n");
     return;
@@ -135,7 +135,7 @@ our void $check_number_hashrefs = sub {
     (   my number_hashref $input_1,
         my number_hashref $input_2,
         my number_hashref $input_3)
-        = @_;
+        = @ARG;
 
 #    RPerl::diag("in check_number_hashrefs(), received \$input_1\n" . Dumper($input_1) . "\n");
 #    RPerl::diag("in check_number_hashrefs(), received \$input_2\n" . Dumper($input_2) . "\n");
@@ -145,7 +145,7 @@ our void $check_number_hashrefs = sub {
 };
 
 our void $check_string_hashref = sub {
-    ( my string_hashref $input_1) = @_;
+    ( my string_hashref $input_1) = @ARG;
 
 #    RPerl::diag("in check_string_hashref(), received \$input_1\n" . Dumper($input_1) . "\n");
     return;
@@ -154,7 +154,7 @@ our void $check_string_hashref = sub {
 # [[ MIXED TYPES ]]
 
 our void $check__mixed_00 = sub {
-    ( my integer $input_1, my number $input_2, my string $input_3) = @_;
+    ( my integer $input_1, my number $input_2, my string $input_3) = @ARG;
 
 #    RPerl::diag("in check__mixed_00(), received \$input_1\n" . Dumper($input_1) . "\n");
 #    RPerl::diag("in check__mixed_00(), received \$input_2\n" . Dumper($input_2) . "\n");
@@ -168,7 +168,7 @@ our void $check__mixed_01 = sub {
         my integer_arrayref $input_2,
         my number_arrayref $input_3,
         my string_arrayref $input_4)
-        = @_;
+        = @ARG;
 
 #    RPerl::diag("in check__mixed_01(), received \$input_1\n" . Dumper($input_1) . "\n");
 #    RPerl::diag("in check__mixed_01(), received \$input_2\n" . Dumper($input_2) . "\n");
@@ -183,7 +183,7 @@ our void $check__mixed_02 = sub {
         my integer_hashref $input_2,
         my number_hashref $input_3,
         my string_hashref $input_4)
-        = @_;
+        = @ARG;
 
 #    RPerl::diag("in check__mixed_02(), received \$input_1\n" . Dumper($input_1) . "\n");
 #    RPerl::diag("in check__mixed_02(), received \$input_2\n" . Dumper($input_2) . "\n");
@@ -205,7 +205,7 @@ our void $check__mixed_03 = sub {
         my integer_hashref $input_9,
         my number_hashref $input_10,
         my string_hashref $input_11
-    ) = @_;
+    ) = @ARG;
 
 #    RPerl::diag("in check__mixed_03(), received \$input_1\n" . Dumper($input_1) . "\n");
 #    RPerl::diag("in check__mixed_03(), received \$input_2\n" . Dumper($input_2) . "\n");
