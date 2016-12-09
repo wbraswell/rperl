@@ -187,6 +187,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         $self_class = ref $self;
     }
 
+    # RANGE FOR LOOP
     # LoopFor -> 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock
     if ( $self_class eq 'LoopFor_168' ) {
         my string $for             = $self->{children}->[0];
@@ -275,6 +276,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         }
         pop @{$modes->{_current_parallel_loop}};
     }
+    # C-STYLE FOR LOOP
     elsif ( $self_class eq 'LoopFor_169' ) {
 # LoopFor -> 'for' LPAREN_MY TYPE_INTEGER VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExp VARIABLE_SYMBOL OP11_COMPARE_LT_GT OpNamedScolonOrSubExp SubExpressionOrVarMod ')' CodeBlock
         my string $for                       = $self->{children}->[0];

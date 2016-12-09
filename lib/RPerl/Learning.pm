@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.154_000;
+our $VERSION = 0.155_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -17355,7 +17355,7 @@ The C<integer_arrayref_to_string()> subroutine is implemented by the following R
 
 In the RPerl system source code above, you will see at least 2 new concepts: the definition of a subroutine, and usage of a C<for> loop.
 
-The subroutine's name is, unsurprisingly, C<integer_arrayref_to_string()>; it accepts exactly one input argument, an C<integer_arrayref> accessed via the variable C<$input_avref>, and it generates as output a string formed in the variable C<$output_sv>.  (Subroutine names in writing are usually followed by empty parenthesis C<()>, to distinguish them from other source code components such as variables, operators, etc.)
+The subroutine's name is, unsurprisingly, C<integer_arrayref_to_string()>; it accepts exactly one input operand, an C<integer_arrayref> accessed via the variable C<$input_avref>, and it generates as output a string formed in the variable C<$output_sv>.  (Subroutine names in writing are usually followed by empty parenthesis C<()>, to distinguish them from other source code components such as variables, operators, etc.)
 
 The C<for> loop is used to access each individual element of the input array, one at a time; each element is then, in turn, stringified and appended to the output string.  You will note the C<integer_to_string()> stringification subroutine is called from within the C<integer_arrayref_to_string()> subroutine, which makes sense because an C<integer_arrayref> data structure is obviously composed of individual C<integer> data types.
 
@@ -17377,7 +17377,21 @@ Running the code example above generates the following output string, which is i
 
 In the previous section, you saw a C<for> loop control structure used to stringify an array in the C<integer_arrayref_to_string()> subroutine.  In this section, we'll learn more about the C<for> loop and its closely-related counterpart, the C<foreach> loop.
 
-Please take a few minutes to review L</Section 2.9: Program Control Using The C<while> Loop> if you have not yet done so; this should prove helpful because the C<for> and C<foreach> loops share some things in common with the C<while> loop control structure.
+Please take a few minutes to review L</Section 2.9: Program Control Using The C<while> Loop> if you have not yet done so; this should prove helpful because the C<for> and C<foreach> loops share some things in common with the C<while> loop control structure.  When compared with the much more loosely-structured C<while> loop, the RPerl compiler may have more opportunities to perform automatic optimizations on C<for> and C<foreach> loop control structures.  Unlike loop iterator variables in a C<while> loop, iterators in a C<for> or C<foreach> loop should only be modified in the loop header, in order to avoid hard-to-diagnose behavior and also to increase the opportunities for automatic optimization.
+
+=for html <u>
+
+I<BEST PRACTICES>
+
+=over
+
+=item * I<When possible, always use a C<for> or C<foreach> loop instead of a C<while> loop.>
+
+=item * I<In a C<for> or C<foreach> loop, never modify the loop iterator variable inside the loop body, only inside the loop header.>
+
+=back
+
+=for html </u>
 
 In normal Perl, there is no difference whatsoever between the C<for> and C<foreach> loops; the 2 keywords are synonymous and you may freely interchange them as you like.  This follows the Perl philosophy of TIMTOWTDI (There Is More Than One Way To Do It).
 
@@ -17409,10 +17423,43 @@ Range C<for> loop control structures always take the following form:
         # PERFORM OPERATIONS INSIDE LOOP
     }
 
-In the source code example above, C<$i> is the loop iterator variable, which you will hopefully recall from L</Section 2.9.1: Loop Iterator Variables>.  By definition, a loop iterator variable must always be a variable, although it may be named something other than C<$i> if you like.  The C<$lower> and C<$upper> variables are the two arguments to the infix range operator C<..>, and they may be any expression, literal, or variable which produces a numeric value.  The number of times this loop will iterate is C<($upper - $lower) + 1>, and each time the loop iterates it will effectively cause the value of C<$i> to increase by one, starting at C<$lower> and ending at C<$upper>.
+In the source code example above, C<$i> is the loop iterator variable, which you will hopefully recall from L</Section 2.9.1: Loop Iterator Variables>.  By definition, a loop iterator variable must always be a variable, although it may be named something other than C<$i> if you like.  The C<$lower> and C<$upper> variables are the two operands to the infix range operator C<..>, and they may be any expression, literal, or variable which produces a numeric value.  The number of times this loop will iterate is C<($upper - $lower) + 1>, and each time the loop iterates it will effectively cause the value of C<$i> to increase by one, starting at C<$lower> and ending at C<$upper>.
+
+In all range C<for> loops, the iterator variable (C<$i> in this example) is I<"lexically scoped"> by virtue of Perl's C<my> keyword, which means this specific instance of C<$i> is valid within this specific loop header and body only.  Any other independent loop(s) within the same Perl program may also utilize an iterator variable with the exact same name C<$i>, but it will be a totally new instance of C<$i>, and thus will not be connected in any way other than the coincidence of sharing an iterator variable name.  Also, once you utilize a variable name as a loop iterator, then you must not declare or utilize that same variable name except within other independent loops (as just described), or within a totally different scope such as a different source code file, etc.  Failure to do so will result in a C++ compile-time error, as illustrated in the next two source code examples.
+
+The following example shows multiple instances of the loop iterator variable C<$i>, without any errors:
+
+    for my integer $i ( 0 .. 10 ) {
+        # do stuff inside first loop, using $i; fine
+    }
+
+    # do stuff outside loops, not using $i; fine
+    my integer $x = 100;
+
+    # fine
+    for my integer $i ( 20 .. 30 ) {
+        # do stuff inside second loop,
+        # using totally independent instance of $i
+    }
+
+The following example shows multiple instances of the loop iterator variable C<$i>, with an error:
+
+    for my integer $i ( 0 .. 10 ) {
+        # do stuff inside first loop, using $i; fine
+    }
+
+    # do stuff outside loops, using $i; causes error in second loop below
+    my integer $i = 100;
+
+    # ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: 
+    # variable i already declared in this scope, namespace main::, subroutine/method main(), dying
+    for my integer $i ( 20 .. 30 ) {
+        # do stuff inside second loop,
+        # using totally independent instance of $i
+    }
 
 We have recently seen the range C<for> loop in L</Section 3.11: Converting From Array To String>, used inside the C<integer_arrayref_to_string()> subroutine.  Here is the header and first operation of that same range C<for> loop, isolated from the rest of the code:
-    
+
     # loop through all valid values of $i for use as index to input array
     for my integer $i ( 0 .. ( $input_av_length - 1 ) ) {
         # retrieve input array's element at index $i
@@ -17421,17 +17468,123 @@ We have recently seen the range C<for> loop in L</Section 3.11: Converting From 
         # ADDITIONAL CODE INSIDE LOOP REMOVED FOR BREVITY
     }
 
-In the source code example above, the range operator <..> begins at C<0> and ends at C<( $input_av_length - 1 )>; remember, array indices start at 0, so we must always be careful to subtract one from the array's length when calculating the range operator's second argument.  (If you forget to subtract one from the second argument, then your code will probably attempt to access one element beyond the end of the array, which generally causes errors, crashes, or unexpected behavior.)  Inside the loop body, we access the element of array C<$input_avref> located at index C<$i>, and store the element inside the C<$input_av_element> variable for further use in the loop (not shown).  This loop will access each and every element of the array, in order, one at a time. 
+In the source code example above, the range operator C<..> begins at C<0> and ends at C<( $input_av_length - 1 )>; remember, array indices start at 0, so we must always be careful to subtract one from the array's length when calculating the range operator's second operand.  (If you forget to subtract one from the second operand, then your code will probably attempt to access one element beyond the end of the array, which generally causes errors, crashes, or unexpected behavior.)  Inside the loop body, we access the element of array C<$input_avref> located at index C<$i>, and store the element inside the C<$input_av_element> variable for further use in the loop (not shown).  This loop will access each and every element of the array, in order, one at a time.
 
 =head3 Section 3.12.2: The C-Style C<for> Loop
 
-START HERE: NEED ADD CONTENT
-START HERE: NEED ADD CONTENT
-START HERE: NEED ADD CONTENT
+Sometimes you need more control over your loop iterator variable than the range C<for> loop can provide; for this, you may choose the C-style C<for> loop.  However, the additional complexity of C-style C<for> loop control structures may result in fewer opportunities for the RPerl compiler to perform automatic optimizations when compared with range C<for> loops.
+
+=for html <u>
+
+I<BEST PRACTICES>
+
+=over
+
+=item * I<When possible, always use a range C<for> loop instead of a C-style C<for> loop.>
+
+=back
+
+=for html </u>
+
+In the range C<for> loop, there is one operation in the loop header, which is the range operator C<..>.  In the C-style C<for> loop header, there are three operations which all pertain to the loop iterator variable, separated by semicolon C<;> characters: initialization, continuation condition, and incrementation.  The initialization operation is an integer variable declaration which is only executed once, before the very first loop iteration.  The continuation condition operation is an inequality operator which is evaluated for boolean truth value before each loop iteration, and the loop will continue iterating as long as the condition evaluates to true.  The incrementation operation is generally an arithmetic incrementation operator which executes once at the end of every loop iteration.
+
+All RPerl source code files which utilize a C-style C<for> loop must also include a specific C<## no critic qw(ProhibitCStyleForLoops)> directive to avoid triggering an RPerl syntax error.
+
+    ## no critic qw(ProhibitCStyleForLoops)
+    for ( my integer $i = 1; $i <= 5; $i++ ) {
+        print 'have $i = ', $i, "\n";
+    }
+
+=for rperl X<noncode>
+
+    have $i = 1
+    have $i = 2
+    have $i = 3
+    have $i = 4
+    have $i = 5
+
+=for rperl X</noncode>
+
+In the source code example above, the initialization operation is C<my integer $i = 1>, which achieves the same outcome as the C<for my integer $i> and C<1 ..> components in the previous section's range C<for> loop header.  The continuation condition is C<$i E<lt>= 5>, which is equivalent to the range C<for> loop header's C<.. 5> component.  Finally, the incrementation operation is C<$i++>, which equivalent to the implied increment-by-one of the range operator C<..> itself.
+
+C-style C<for> loop control structures always take the following form:
+
+    ## no critic qw(ProhibitCStyleForLoops)
+    for ( my integer $i = $lower; $i <= $upper; $i++ ) {
+        # PERFORM OPERATIONS INSIDE LOOP
+    }
+
+In the source code example above, C<$i> is the loop iterator variable, which you may name something other than C<$i>, as with the range C<for> loop.  The C<$lower> and C<$upper> variables may be any expression, literal, or variable which produces a numeric value.  The less-or-equal C<E<lt>=> operator may be any comparison operator; if less-or-equal is used as shown in this example, then the number of times this loop will iterate is C<($upper - $lower) + 1>, again matching the behavior of the simpler range C<for> loop control structure.  The C<$i++> auto-increment operator may be any operation, although the obvious goal should be to increment or modify the loop iterator variable in some way.  As with the range C<for> loop example in the previous section, each time this loop iterates it will cause the value of C<$i> to increase by one, starting at C<$lower> and ending at C<$upper>.
+
+As with range C<for> loops, all C-style C<for> loops have lexically scoped iterator variables.  If you attempt to utilize a loop iterator variable outside of a loop, you will likely experience a C++ compile-time error.
+
+Let's return again to our example from the C<integer_arrayref_to_string()> subroutine, now converted to a C-style C<for> loop:
+
+    ## no critic qw(ProhibitCStyleForLoops)
+    # loop through all valid values of $i for use as index to input array
+    for ( my integer $i = 0; $i < $input_av_length; $i++ ) {
+        # retrieve input array's element at index $i
+        $input_av_element = $input_avref->[$i];
+
+        # ADDITIONAL CODE INSIDE LOOP REMOVED FOR BREVITY
+    }
+
+In this modified source code example, the loop header's initialization operation is C<my integer $i = 0>.  The continuation condition has been simplified and optimized by removing the subtract-one C<- 1> operation and utilizing a less-than C<E<lt>> operator instead of a less-or-equal C<E<lt>=> operator.  (RPerl is usually capable of automatically performing this specific optimization on the range operator's second operand in range C<for> loops, where applicable.)  The incrementation operation is a simple C<$i++> auto-increment operator which increases the value of iterator variable by one after each loop iteration.  The loop body remains unchanged, and we can access the elements of array C<$input_avref> in the exact same manner as in the original example.  This C-style C<for> loop will access each element of the array in order, and is functionally equivalent to the original range C<for> loop.
 
 =head3 Section 3.12.3: The C<foreach> Loop
 
-NEED ADD CONTENT
+Sometimes you do not need a loop iterator variable at all, and instead you just need to access each element of an array in order; for this, you may choose the C<foreach> loop control structure.  By utilizing a C<foreach> loop, you can rest assured that no code inside your loop body will cause problems by modifying your iterator variable, because there is no iterator to begin with!
+
+=for html <u>
+
+I<BEST PRACTICES>
+
+=over
+
+=item * I<When possible, always use a C<foreach> loop instead of a C<for> or C<while> loop.>
+
+=back
+
+=for html </u>
+
+In the range C<for> loop header there is one operation; in the C-style C<for> loop header there are three operations; and in the C<foreach> loop header there is one operation, the element variable declaration, followed by a list of elements.
+
+Because the C<foreach> loop has no iterator variable, we can skip directly to initializing the variable which will store each loop iteration's respective element, and this now occurs in the loop header instead of inside the loop body.  The list of elements in a C<foreach> loop header is where we get the individual elements accessible during each loop iteration.
+
+    foreach my string $element ( 'smile', 'frown', 'blank stare', 'wince', 'pucker' ) {
+        print 'have $element = ', $element, "\n";
+    }
+
+=for rperl X<noncode>
+
+    have $element = smile
+    have $element = frown
+    have $element = blank stare
+    have $element = wince
+    have $element = pucker
+
+=for rperl X</noncode>
+
+In the source code example above, the declaration operation is C<my string $element>, followed by the element list containing three string literals which describe common facial expressions.
+
+C<foreach> loop control structures always take the following form:
+
+    foreach my string $element ( 'first', 'second', 'third' ) {
+        # PERFORM OPERATIONS INSIDE LOOP
+    }
+
+In the source code example above, C<$element> is the loop element variable of data type C<string>, which you may name something other than C<$element> and give any data type as appropriate.  The list elements C<'first', 'second', 'third'> may be any expression(s), literal(s), or variable(s) which produce a valid list.  It is also quite common to utilize the at-sign-curly-braces array dereference operator C<@{ }> within the loop header's parentheses, in order to load list elements from within a pre-existing array variable (as seen in the next example below).  The number of times this loop will execute is equal to the number of elements in the list, which is three in the current example.
+
+As with the iterator variables in C<for> loops, all the element variables in C<foreach> loops are lexically scoped.  If you attempt to utilize a loop element variable outside of a loop, you will likely experience a C++ compile-time error.
+
+Let's return once more to our example from the C<integer_arrayref_to_string()> subroutine, now finally converted to a C<foreach> loop:
+
+    # loop through all valid elements in input array
+    foreach my integer $input_av_element ( @{$input_avref} ) {
+        # ADDITIONAL CODE INSIDE LOOP REMOVED FOR BREVITY
+    }
+
+In this re-modified source code example, the loop header's declaration operation is C<my integer $input_av_element>.  The list elements are taken directly from the C<$input_avref> variable by use of the array dereference operator C<@{ }>.  The loop iterator variable is completely removed, as are the range operator, the continuation condition inequality operator (including subtract-one operation), and the incrementation operator in the loop header, as well as the array element retrieval operation inside the loop body.  The resulting code is significantly simpler, cleaner, and less error-prone than before.
 
 =head2 Section 3.13: Punctuation Variables & Magic [[[ NEED ADD MAGIC INTRO SECTION SOMEWHERE??? ]]]
 

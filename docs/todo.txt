@@ -47,6 +47,10 @@ DOING
     split author tests (checking Changes file, etc) into xt/ directory, 
         split deps in Makefile.PL, possibly utilize AUTHOR_TESTING in travis-perl/helpers
 
+CODE GENERATION, CPPOPS_CPPTYPES MODE
+    ForEach.pm
+    WHAT ELSE?!?
+
 INSTALLERS
     Linux DEB
     Linux RPM
