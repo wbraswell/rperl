@@ -3,8 +3,8 @@
 # Learning RPerl, Section 3.12.1: The Range for Loop
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: 'ERROR ECOGEASCP11' >>>
-# <<< GENERATE_ERROR: 'variable i already declared in this scope, namespace main::, subroutine/method main(), dying' >>>
+# <<< COMPILE_ERROR: 'ERROR ECOGEASCP11' >>>
+# <<< COMPILE_ERROR: 'variable i already declared in this scope, namespace main::, subroutine/method main(), dying' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
