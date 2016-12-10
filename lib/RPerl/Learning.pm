@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.155_100;
+our $VERSION = 0.156_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1078,7 +1078,7 @@ The most condensed answer is that I<"RPerl is really fast.">  Utilizing RPerl's 
 
 =head3 Section 1.25.4: The Low-Magic Perl Commandments
 
-The high-magic features of Perl are primarily responsible for how slow Perl runs for general-purpose computations.  The I<"R"> in RPerl stands for I<"Restricted">, in that we restrict ourselves to only use the low-magic features of Perl which can run really fast.
+The high-magic features of Perl are primarily responsible for the slow speed at which Perl executes general-purpose computations.  The I<"R"> in RPerl stands for I<"Restricted">, in that we restrict ourselves to only use the low-magic features of Perl which can run really fast.
 
 The definitive list of do's and do-not's for high-magic vs low-magic Perl programming is called I<The Low Magic Perl Commandments> (LMPC).  There are 64 total commandments split into 5 groups of Ideals, Magic, Data, Operations, and Object-Orientation.  The "Thou Shalt" commandments appear in the left column, and the "Thou Shalt Nots" appear on the right.
 
@@ -13422,8 +13422,8 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.4.x.1-table_1" label="" frame="all" colsep="1" rowsep="1">
-<title>Increment & Decrement Operators</title>
+<table id="learning_rperl-section_2.4.11-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Binary Assignment Operators</title>
 <tgroup cols="6">
 
 =end docbook
@@ -13968,7 +13968,7 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.4.x.1-table_1" label="" frame="all" colsep="1" rowsep="1">
+<table id="learning_rperl-section_2.4.12-table_1" label="" frame="all" colsep="1" rowsep="1">
 <title>Increment & Decrement Operators</title>
 <tgroup cols="6">
 
@@ -16107,8 +16107,8 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
-<title>Arithmetic Operators</title>
+<table id="learning_rperl-section_3.6-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Quote Word C<qw()> Operator</title>
 <tgroup cols="6">
 
 =end docbook
@@ -16353,7 +16353,7 @@ Often you will want to append one or more elements to the end of an existing arr
 
 The C<push> operator will add one or more new elements to the end of a dereferenced array, and will return the new array length.  The C<pop> operator will remove one element from the end of a dereferenced array, and will return the removed element.  You may optionally ignore the return value of either operator.
 
-Both the C<push> and C<pop> operators require their array argument to be dereferenced, which means you must always use the closed-fixity at-sign-curly-braces C<@{ }> array dereference operator, as demonstrated in the code examples below.
+Both the C<push> and C<pop> operators require array arguments to be dereferenced, which means you must always use the closed-fixity at-sign-curly-braces C<@{ }> array dereference operator for arrays, as demonstrated in the code examples below.
 
 =begin text
 
@@ -16380,8 +16380,8 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
-<title>Arithmetic Operators</title>
+<table id="learning_rperl-section_3.8-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>C<push> & C<pop> Operators</title>
 <tgroup cols="6">
 
 =end docbook
@@ -16622,7 +16622,7 @@ $z = q{<<< END TEXT EVAL >>>};
 
 ARRAY is dereferenced array;
 
-LIST is commma-separated list of expressions;
+LIST is comma-separated list of expressions;
 
 Append elements of LIST after final element of ARRAY;
 
@@ -16695,7 +16695,7 @@ In the previous section, we saw how to append and remove elements from the end o
 
 The C<shift> operator will remove one element from the beginning of a dereferenced array, and will return the removed element, in the same way the C<pop> operator works on the end of an array.  The C<unshift> operator will add one or more elements to the beginning of a dereferenced array, and like C<push> will return the new array length.
 
-Like the C<push> and C<pop> operators, both C<shift> and C<unshift> require their array argument to be dereferenced, so don't forget to use the at-sign-curly-braces C<@{ }> array dereference operator every time.
+Like the C<push> and C<pop> operators, both C<shift> and C<unshift> require array arguments to be dereferenced, so don't forget to use the at-sign-curly-braces C<@{ }> array dereference operator every time.
 
 =begin text
 
@@ -16722,8 +16722,8 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
-<title>Arithmetic Operators</title>
+<table id="learning_rperl-section_3.9-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>C<shift> & C<unshift> Operators</title>
 <tgroup cols="6">
 
 =end docbook
@@ -17001,7 +17001,7 @@ Remove starting element of ARRAY and return
 
 ARRAY is dereferenced array;
 
-LIST is commma-separated list of expressions;
+LIST is comma-separated list of expressions;
 
 Append elements of LIST before starting element of ARRAY;
 
@@ -17060,8 +17060,8 @@ l l l l r l l .
 
 =begin docbook
 
-<table id="learning_rperl-section_2.1.11-table_1" label="" frame="all" colsep="1" rowsep="1">
-<title>Arithmetic Operators</title>
+<table id="learning_rperl-section_3.10-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>Range C<..> Operator</title>
 <tgroup cols="6">
 
 =end docbook
@@ -17588,56 +17588,294 @@ In this re-modified source code example, the loop header's declaration operation
 
 =head2 Section 3.13: Punctuation Variables & Magic
 
-In normal Perl, you may access and modify a number of I<"punctuation variables">, which are special variables created by the Perl language itself, and which may be utilized to achieve many different goals.  Perl punctuation variables derive their name from their sometimes-cryptic combinations of punctuation characters, such as the dollar-sign C<$>, at-sign C<@>, percent-sign C<%>, underscore C<_>, and exclamation-point C<!> characters.
+In normal Perl, you may access and modify a number of I<"punctuation variables"> AKA I<"special variables">, which are created by the Perl language itself and may be utilized to achieve many different goals.  Perl punctuation variables derive their collective name from their sometimes-cryptic combinations of punctuation characters, such as the dollar-sign C<$>, at-sign C<@>, percent-sign C<%>, underscore C<_>, and exclamation-point C<!> characters.
 
-
-START HERE: replace all @_ with @ARG, then LMPC
-START HERE: replace all @_ with @ARG, then LMPC
-START HERE: replace all @_ with @ARG, then LMPC
-
-
+A semi-random (and relatively tiny) selection of Perl's numerous punctuation variables follows:
 
 =over
 
 =item * C<$_> AKA C<$ARG>
 
+=item * C<@_> AKA C<@ARG>
+
 =item * C<$!> AKA C<$OS_ERROR> AKA C<$ERRNO>
 
-=item * 
+=item * C<%!> AKA C<%OS_ERROR> AKA C<%ERRNO>
 
-=item * 
-
-=item * 
-
-=item * 
-
-=item * 
-
-
-
-
-=item * C<@ARG>
+=item * C<$$> AKA C<$PROCESS_ID> AKA C<$PID>
 
 =back
 
+In the list above, the left-most item on each line is the punctuation form of each punctuation variable, followed by the plain-English equivalent(s).  Out of all these (and the many other unlisted) punctuation variables, only C<@ARG> is utilized in RPerl, and then only in the plain-English format, never the C<@_> punctuation format.  Please see L</CHAPTER 4: ORGANIZING BY SUBROUTINES> for more information on the C<@ARG> special variable.
 
+Practically all of the punctuation variables' functionality is based on Perl's high-magic software components.  You may recall the mention of Perl's magic in the following sections:
 
-L</Section 1.10: Why Didn't Will Just Use Normal Perl?>
+=over
 
-L</Section 1.15: What Is RPerl Not Meant To Do?>
+=item * L</Section 1.10: Why Didn't Will Just Use Normal Perl?>
 
-L</Section 1.25.4: The Low-Magic Perl Commandments>
+"The most complex and flexible parts of Perl are called I<"high magic">, so RPerl is focused on supporting the I<"low magic"> parts of Perl which can be made to run fast."
 
-START HERE: add content
-START HERE: add content
-START HERE: add content
+=item * L</Section 1.15: What Is RPerl Not Meant To Do?>
 
+"If you have purposefully designed your Perl software to depend on these high-magic features, or you are unconditionally committed to continue using high-magic language features, then maybe RPerl isn't for you."
 
+=item * L</Section 1.25.4: The Low-Magic Perl Commandments>
 
+"The high-magic features of Perl are primarily responsible for the slow speed at which Perl executes general-purpose computations."
+
+=back
+
+The Low-Magic Perl Commandments (LMPCs) put an even finer point on it:
+
+=over
+
+=item * L<The 11th Low-Magic Perl Commandment|http://rperl.org/the_low_magic_perl_commandments.html#commandments_magic>
+
+"11. Thou Shalt Not Use ... High-Magic Perl"
+
+=item * L<The 23rd Low-Magic Perl Commandment|http://rperl.org/the_low_magic_perl_commandments.html#commandments_data>
+
+"23. Thou Shalt Not Use ... Punctuation Variables"
+
+=back
+
+In keeping with the 23rd LMPC, RPerl does not support the use of punctuation variables.
+
+Further, in keeping with the 11th LMPC, RPerl does not support the use of any high-magic Perl features, which is the basis of RPerl's ability to produce super-high-speed output.  Future versions of RPerl may include support for medium-magic Perl features, and perhaps even high-magic features some day, but the default RPerl compile mode will always be based on the low-magic RPerl grammar, which generates the most high-performance output code possible.
+
+Please review all of L<The Low-Magic Perl Commandments|http://rperl.org/the_low_magic_perl_commandments.html> for more information about which Perl features are high-magic and which are low-magic.
 
 =head2 Section 3.14: C<reverse> Operator
 
-START HERE: add content
+Sometimes you will want to reverse the order in which a list or array's elements are stored, whereby the last element becomes first, and vice-versa.  For this purpose, you may choose the C<reverse> operator.
+
+Like C<push> & C<pop> & friends, the C<reverse> operator requires array arguments to be dereferenced, so don't forget to use the closed-fixity at-sign-curly-braces C<@{ }> array dereference operator where appropriate.
+
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice @{[split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_3.14-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>C<reverse> Operator</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Reverse
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+reverse
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Variadic
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<Reverse>
+
+    reverse LIST
+
+LIST is comma-separated list of expressions;
+
+Reverse order of list elements, return reversed list;
+
+May be utilized anywhere a list is accepted
+
+    # the following two lines are equivalent
+    reverse 'foo', 'bar', 'bat', 'baz, 'quux'
+    'quux', 'baz', 'bat', 'bar', 'foo'
+
+X<break_code_blocks>
+
+    my integer_arrayref $forward  = [2, 4, 6, 8, 10];
+    my integer_arrayref $reversed = [reverse @{$forward}];
+    print 'have $forward  = ', integer_arrayref_to_string($forward), "\n";
+    print 'have $reversed = ', integer_arrayref_to_string($reversed), "\n";
+
+=for rperl X<noncode>
+
+    have $forward  = [2, 4, 6, 8, 10]
+    have $reversed = [10, 8, 6, 4, 2]
+
+=for rperl X</noncode>
+
+=back
 
 =head2 Section 3.15: C<sort> Operator
 
