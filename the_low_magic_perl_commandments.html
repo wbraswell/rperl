@@ -39,7 +39,7 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1><a name="commandments" class="anchor" href="#commandments"><span class="octicon octicon-link"></span></a>The Low-Magic Perl Commandments</h1>
-            <h2>Last Update: March 28th, 2016</h2>
+            <h2>Last Update: December 10th, 2016</h2>
 
 <h2>Feelings</h2>
 
@@ -100,15 +100,15 @@ Recorrect each old habit the instant you notice yourself backsliding.  Be strict
     <thead><tr><th class="header">THOU SHALT:</th><th class="blank"></th><th class="header">THOU SHALT NOT:</th></tr></thead>                   
     <tfoot><tr><th class="footer"></th><th class="blank"></th><th class="footer"></th></tr></tfoot>                 
     <tbody>                 
-        <tr>    <td class="body">16.  Use A Type System (“use types;”), Static-Type Data, Variable Declarations, & Non-Tied Variables</td>  <td class="blank"></td> <td class="body">17.  Use Dynamic-Type Data, Auto-Vivification, Or Tied Variables</td>   </tr>
+        <tr>    <td class="body">16.  Use A Type System, Static-Type Data, Variable Declarations, & Non-Tied Variables</td>  <td class="blank"></td> <td class="body">17.  Use Dynamic-Type Data, Auto-Vivification, Or Tied Variables</td>   </tr>
         <tr>    <td class="body">18.  Use Private Lexical-Scope Variables (“my”)</td>   <td class="blank"></td> <td class="body">19.  Use Private Dynamic-Scope (“local”), Private Persistent Lexical-Scope (“state”), Global, Or Package Variables (“our”)</td>    </tr>
         <tr>    <td class="body">20.  Use Scalars, Arrays, Hashes, Filehandles, & Mundane Lvalues (Variables & Slices)</td> <td class="blank"></td> <td class="body">21.  Use Typeglobs, Code References, Weak References, Or Magic Lvalues (Builtins, Non-Variables, Non-Slices, etc)</td> </tr>
         <tr>    <td class="body">22.  Use Normal Variables With Single, Descriptive Names</td>  <td class="blank"></td> <td class="body">23.  Use Aliased, Non-Descriptive, Special ($1, $a, %ENV, %SIG, etc), Or Punctuation Variables ($_, @_, %!, $@, $$, etc)</td>  </tr>
         <tr>    <td class="body">24.  Use Direct Access To $ Scalar Variables</td>  <td class="blank"></td> <td class="body">25.  Use Indirect Access To $ Scalar Variables Via References Or Pointer Arithmetic</td>   </tr>
         <tr>    <td class="body">26.  Use Indirect Access To Arrays & Hashes Via Anonymous References Stored In $ Scalar Variables</td> <td class="blank"></td> <td class="body">27.  Use Direct Access To Arrays & Hashes Stored In @ Or % Non-Scalar Variables</td>   </tr>
         <tr>    <td class="body">28.  Use Numeric & Single-Quote Non-Interpolated String Literals</td>  <td class="blank"></td> <td class="body">29.  Use Double-Quote Interpolated String Or Special Literals (__FILE__, __LINE__, __PACKAGE__, __SUB__, etc)</td> </tr>
-        <tr>    <td class="body">30.  Use Mundane @ARGV & Known Constants (“my const_int $FNORD = 23;”)</td>    <td class="blank"></td> <td class="body">31.  Use Magic @ARGV, Magic Numbers, Or Secret Constants (Amphisbaena, Space Fleet, etc)</td>  </tr>
-        <tr>    <td class="body">32.  Use Definedness Test On Builtins (“defined( $var = builtin($args) );” Or “defined( builtin($args) );”)</td>   <td class="blank"></td> <td class="body">33.  Use Undefined Values (“$var = undef;”, etc) Or Definedness Test On Non-Builtins (“defined($var);”, etc)</td>  </tr>
+        <tr>    <td class="body">30.  Use Mundane @ARGV & Known Constants (“use constant PI => my number $TYPED_PI  = 3.141_59;”)</td>    <td class="blank"></td> <td class="body">31.  Use Magic @ARGV, Magic Numbers, Or Secret Constants (Amphisbaena, Space Fleet, etc)</td>  </tr>
+        <tr>    <td class="body">32.  Use Definedness Test On Builtins (“defined( $var = builtin $args );” Or “defined( builtin $args );”)</td>   <td class="blank"></td> <td class="body">33.  Use Undefined Values (“$var = undef;”, etc) Or Definedness Test On Non-Builtins (“defined($var);”, etc)</td>  </tr>
         <tr>    <td class="body">34.  Use Secure Platforms & Trusted Data</td>  <td class="blank"></td> <td class="body">35.  Use Taint Mode</td>   </tr>
     </tbody>                    
 </table>                        
@@ -125,7 +125,7 @@ Recorrect each old habit the instant you notice yourself backsliding.  Be strict
         <tr>    <td class="body">36.  Use Compile-Time Includes (“use MyModule;”)</td>  <td class="blank"></td> <td class="body">37.  Use Run-Time Includes (“require MyModule;”)</td>  </tr>
         <tr>    <td class="body">38.  Use Static-Type Arguments & Return Values For Subroutines</td>    <td class="blank"></td> <td class="body">39.  Use Dynamic-Type Arguments Or Return Values For Subroutines</td>  </tr>
         <tr>    <td class="body">40.  Use Static Number Of Arguments & Single Return Values For Subroutines</td>    <td class="blank"></td> <td class="body">41.  Use Dynamic Number Of Arguments, Multiple Return Values, Or Dynamic Context (“wantarray”) For Subroutines</td>    </tr>
-        <tr>    <td class="body">42.  Use Real Prototypes (“our int__array_ref $f = sub {(my string $x, my int $y) = @_; ...}”, @_ Allowed)</td>   <td class="blank"></td> <td class="body">43.  Use Perl Prototypes (AKA Parameter Context Templates)</td>    </tr>
+        <tr>    <td class="body">42.  Use Real Prototypes (“our integer_arrayref $f = sub {(my string $x, my integer $y) = @ARG; ...};”)</td>   <td class="blank"></td> <td class="body">43.  Use Perl Prototypes (AKA Parameter Context Templates)</td>    </tr>
         <tr>    <td class="body">44.  Use Basic String Processing</td>  <td class="blank"></td> <td class="body">45.  Use Regular Expressions, Smart Match, q Quoting Mechanisms, Unicode/UTF-8, Or String Interpolation</td>   </tr>
         <tr>    <td class="body">46.  Use Conditional & Loop Control Structures, Including Flow Control Statements (next, last, redo, etc)</td> <td class="blank"></td> <td class="body">47.  Use Goto, Either Mundane (“goto MYLABEL;”) Or Magic (“goto &mysub;”)</td> </tr>
         <tr>    <td class="body">48.  Use Normal Code Blocks (Bodies Of Conditionals, Loops, & Named Subroutines)</td>  <td class="blank"></td> <td class="body">49.  Use Special Code Blocks (Closures, Anonymous, BEGIN, UNITCHECK, CHECK, INIT, END, etc)</td>   </tr>
