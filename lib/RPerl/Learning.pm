@@ -17590,6 +17590,13 @@ In this re-modified source code example, the loop header's declaration operation
 
 In normal Perl, you may access and modify a number of I<"punctuation variables">, which are special variables created by the Perl language itself, and which may be utilized to achieve many different goals.
 
+
+START HERE: replace all @_ with @ARG in this document, then in remaining available RPerl code, then MathPerl & PhysicsPerl, then LMPC
+START HERE: replace all @_ with @ARG in this document, then in remaining available RPerl code, then MathPerl & PhysicsPerl, then LMPC
+START HERE: replace all @_ with @ARG in this document, then in remaining available RPerl code, then MathPerl & PhysicsPerl, then LMPC
+
+
+
 =over
 
 =item * C<$_> AKA C<$ARG>

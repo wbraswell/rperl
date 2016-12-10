@@ -3,7 +3,7 @@ package RPerl::Test;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -19,7 +19,7 @@ our hashref $properties = {};
 
 # OO INHERITANCE TESTING
 our void::method $empty_method = sub {
-    ( my object $self ) = @_;
+    ( my object $self ) = @ARG;
     print 'Hello, world!' . "\n";
 };
 

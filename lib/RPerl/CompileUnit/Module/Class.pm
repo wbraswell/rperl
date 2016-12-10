@@ -3,14 +3,14 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.036_000;
+our $VERSION = 0.037_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
-## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @_
+## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @ARG
 ## no critic qw(ProhibitExcessComplexity)  # SYSTEM SPECIAL 5: allow complex code inside subroutines, must be after line 1
 ## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 7: allow deeply-nested code
 ## no critic qw(ProhibitNoStrict)  # SYSTEM SPECIAL 8: allow no strict
@@ -42,7 +42,7 @@ sub DESTROY { }
 # suppress deprecated feature warning
 local $SIG{__WARN__} = sub {
     return if $_[0] =~ /^Use of inherited AUTOLOAD for non-method /xms;
-    carp @_;
+    carp @ARG;
 };
 
 # after compiling but before runtime: create symtab entries for all RPerl functions/methods, and accessors/mutators for all RPerl class properties
@@ -400,14 +400,14 @@ INIT {
                     #                    RPerl::diag( q{in Class.pm INIT block, have $inside_subroutine_arguments = }, $inside_subroutine_arguments, "\n" );
                     if ($inside_subroutine_arguments) {
                         $subroutine_arguments_line .= $module_file_line;
-                        if ( $subroutine_arguments_line =~ /\@\_\;/xms ) {    # @_; found
-                            if ( not( $subroutine_arguments_line =~ /\@\_\;$/xms ) ) {    # @_; found not at end-of-line
+                        if ( $subroutine_arguments_line =~ /\@ARG\;/xms ) {    # @ARG; found
+                            if ( not( $subroutine_arguments_line =~ /\@ARG\;$/xms ) ) {    # @ARG; found not at end-of-line
 
-#                                RPerl::diag( q{in Class.pm INIT block, found @_; NOT at end-of-line while inside subroutine } . $subroutine_name . '(), have $subroutine_arguments_line = ' . "\n" . $subroutine_arguments_line . "\n\n" . 'aborting RPerl activation of entire file' . "\n" );
+#                                RPerl::diag( q{in Class.pm INIT block, found @ARG; NOT at end-of-line while inside subroutine } . $subroutine_name . '(), have $subroutine_arguments_line = ' . "\n" . $subroutine_arguments_line . "\n\n" . 'aborting RPerl activation of entire file' . "\n" );
                                 last;
                             }
 
-#                            RPerl::diag( q{in Class.pm INIT block, found @_; at end-of-line while inside subroutine } . $subroutine_name . '(), have $subroutine_arguments_line = ' . "\n" . $subroutine_arguments_line . "\n" );
+#                            RPerl::diag( q{in Class.pm INIT block, found @ARG; at end-of-line while inside subroutine } . $subroutine_name . '(), have $subroutine_arguments_line = ' . "\n" . $subroutine_arguments_line . "\n" );
 
                             my $subroutine_arguments = [];                                # string_arrayref_arrayref
 
@@ -480,7 +480,7 @@ INIT {
             # activate final subroutine in file, no arguments
             if ($inside_subroutine) {
                 if ($inside_subroutine_arguments) {
-                    croak('Did not find @_ to end subroutine arguments before end of file, croaking');
+                    croak('Did not find @ARG to end subroutine arguments before end of file, croaking');
                 }
 
                 #                RPerl::diag( 'in Class.pm INIT block, activating final subroutine in file, no subroutine arguments found' . "\n" );
@@ -512,9 +512,9 @@ INIT {
                         and ( not eval( 'defined &' . $package_name . '::get_' . $property_name . '_element' ) ) )
                     {
           # hard-coded example
-          #our int::method $get_foo_size = sub { ( my Foo::Bar $self ) = @_; return (scalar @{$self->{foo}}); };
-          #our Foo::Quux::method $get_foo_element = sub { ( my Foo::Bar $self, my integer $i ) = @_; return $self->{foo}->[$i]; };
-          #our void::method $set_foo_element = sub { ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @_; $self->{foo}->[$i] = $foo_element; };
+          #our int::method $get_foo_size = sub { ( my Foo::Bar $self ) = @ARG; return (scalar @{$self->{foo}}); };
+          #our Foo::Quux::method $get_foo_element = sub { ( my Foo::Bar $self, my integer $i ) = @ARG; return $self->{foo}->[$i]; };
+          #our void::method $set_foo_element = sub { ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @ARG; $self->{foo}->[$i] = $foo_element; };
                         my $property_element_type = substr $property_type, 0, ( ( length $property_type ) - 9 );    # strip trailing '_arrayref'
                         if ( exists $rperlnamespaces_generated::RPERL->{ $property_element_type . '::' } ) {
                             $return_whole = 1;
@@ -527,7 +527,7 @@ INIT {
                                 . $property_name . '_size'
                                 . '} = sub { ( my '
                                 . $package_name
-                                . ' $self ) = @_; return (scalar @{$self->{'
+                                . ' $self ) = @ARG; return (scalar @{$self->{'
                                 . $property_name
                                 . '}}); };';
                             $eval_string
@@ -538,7 +538,7 @@ INIT {
                                 . '_element'
                                 . '} = sub { ( my '
                                 . $package_name
-                                . ' $self, my integer $i ) = @_; return $self->{'
+                                . ' $self, my integer $i ) = @ARG; return $self->{'
                                 . $property_name
                                 . '}->[$i]; };';
                             $eval_string
@@ -552,7 +552,7 @@ INIT {
                                 . ' $self, my integer $i, my '
                                 . $property_element_type . ' $'
                                 . $property_name
-                                . '_element ) = @_; $self->{'
+                                . '_element ) = @ARG; $self->{'
                                 . $property_name
                                 . '}->[$i] = $'
                                 . $property_name
@@ -569,9 +569,9 @@ INIT {
                         and ( not eval( 'defined &' . $package_name . '::get_' . $property_name . '_element' ) ) )
                     {
           # hard-coded example
-          #our string_arrayref::method $get_foo_keys = sub { ( my Foo::Bar $self ) = @_; return [sort keys %{$self->{foo}}]; };
-          #our Foo::Quux::method $get_foo_element = sub { ( my Foo::Bar $self, my integer $i ) = @_; return $self->{foo}->{$i}; };
-          #our void::method $set_foo_element = sub { ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @_; $self->{foo}->{$i} = $foo_element; };
+          #our string_arrayref::method $get_foo_keys = sub { ( my Foo::Bar $self ) = @ARG; return [sort keys %{$self->{foo}}]; };
+          #our Foo::Quux::method $get_foo_element = sub { ( my Foo::Bar $self, my integer $i ) = @ARG; return $self->{foo}->{$i}; };
+          #our void::method $set_foo_element = sub { ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @ARG; $self->{foo}->{$i} = $foo_element; };
                         my $property_value_type = substr $property_type, 0, ( ( length $property_type ) - 8 );    # strip trailing '_hashref'
                         if ( exists $rperlnamespaces_generated::RPERL->{ $property_value_type . '::' } ) {
                             $return_whole = 1;
@@ -584,7 +584,7 @@ INIT {
                                 . $property_name . '_keys'
                                 . '} = sub { ( my '
                                 . $package_name
-                                . ' $self ) = @_; return [sort keys %{$self->{'
+                                . ' $self ) = @ARG; return [sort keys %{$self->{'
                                 . $property_name
                                 . '}}]; };';
                             $eval_string
@@ -595,7 +595,7 @@ INIT {
                                 . '_element'
                                 . '} = sub { ( my '
                                 . $package_name
-                                . ' $self, my integer $i ) = @_; return $self->{'
+                                . ' $self, my integer $i ) = @ARG; return $self->{'
                                 . $property_name
                                 . '}->{$i}; };';
                             $eval_string
@@ -609,7 +609,7 @@ INIT {
                                 . ' $self, my integer $i, my '
                                 . $property_value_type . ' $'
                                 . $property_name
-                                . '_element ) = @_; $self->{'
+                                . '_element ) = @ARG; $self->{'
                                 . $property_name
                                 . '}->{$i} = $'
                                 . $property_name
@@ -660,17 +660,17 @@ INIT {
 # fake getting and setting values of *_raw subclass of user-defined type (AKA class),
 # achieved by treating normal Perl object reference (C++ std::unique_ptr<Foo> AKA Foo_ptr) as Perl object raw reference (C++ Foo* AKA Foo_rawptr)
 sub get_raw {
-    ( my $self ) = @_;
+    ( my $self ) = @ARG;
     return $self;
 }
 
 sub set_raw {
-    ( my $self, my $self_new ) = @_;
+    ( my $self, my $self_new ) = @ARG;
     %{$self} = %{$self_new};
 }
 
 sub save_object_properties_types {
-    ( my $package_name, my $object_properties_string, my $object_properties_types ) = @_;
+    ( my $package_name, my $object_properties_string, my $object_properties_types ) = @ARG;
     if ( $object_properties_string eq q{} ) {
 
         #        RPerl::diag( 'in Class::save_object_properties_types(), have NO PROPERTIES $object_properties_string ' . "\n" );
@@ -730,7 +730,7 @@ sub save_object_properties_types {
 
 # create Perl symbol table entries for RPerl subroutines and methods
 sub activate_subroutine {
-    ( my $package_name, my $subroutine_name, my $subroutine_type, my $subroutine_arguments_check_code, my $module_filename_long ) = @_;
+    ( my $package_name, my $subroutine_name, my $subroutine_type, my $subroutine_arguments_check_code, my $module_filename_long ) = @ARG;
 
 #    RPerl::diag('in Class::activate_subroutine(), received $package_name = ' . $package_name . "\n");
 #    RPerl::diag('in Class::activate_subroutine(), received $subroutine_name = ' . $subroutine_name . "\n");
@@ -759,7 +759,7 @@ sub activate_subroutine {
             . 'return &${'
             . $package_name . '::'
             . $subroutine_name
-            . '}(@_); };';
+            . '}(@ARG); };';
 
 #        if ($subroutine_arguments_check_code ne q{}) { RPerl::diag('in Class::activate_subroutine(), have method $subroutine_definition_code =' . "\n" . $subroutine_definition_code . "\n"); }
         eval($subroutine_definition_code)
@@ -788,7 +788,7 @@ sub activate_subroutine {
             . 'return &${'
             . $package_name_tmp . '::'
             . $subroutine_name
-            . '}(@_); };';
+            . '}(@ARG); };';
 
 #        if ($subroutine_arguments_check_code ne q{}) { RPerl::diag('in Class::activate_subroutine(), have subroutine main:: $subroutine_definition_code =' . "\n" . $subroutine_definition_code . "\n"); }
         eval($subroutine_definition_code)
@@ -809,7 +809,7 @@ sub activate_subroutine {
                 . 'return &${'
                 . $package_name . '::'
                 . $subroutine_name
-                . '}(@_); };';
+                . '}(@ARG); };';
 
 #            if ($subroutine_arguments_check_code ne q{}) {
 #                RPerl::diag('in Class::activate_subroutine(), have subroutine package:: $subroutine_definition_code =' . "\n" . $subroutine_definition_code . "\n");
@@ -831,7 +831,7 @@ __END__
 our $AUTOLOAD;
 sub AUTOLOAD
 {
-	RPerl::diag("IN AUTOLOAD, top of subroutine, received \$AUTOLOAD = '$AUTOLOAD', and \@_ =\n" . Dumper(\@_) . "\n");
+	RPerl::diag("IN AUTOLOAD, top of subroutine, received \$AUTOLOAD = '$AUTOLOAD', and \@ARG =\n" . Dumper(\@ARG) . "\n");
 	no strict;
 	my $retval;
 
@@ -864,13 +864,13 @@ sub AUTOLOAD
 		# such as when an RPerl class calls one of it's own functions/methods during compile time
 #		eval "\*\{$AUTOLOAD\} \= sub \{ return \&\$\{$AUTOLOAD\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
 #		eval "\*\{$AUTOLOAD\} \= sub \{ RPerl::diag(\"IN POST\-AUTOLOAD\, direct call MODE $AUTOLOAD\\n\"\; return \&\$\{$AUTOLOAD\}\(\@\_\)\; \}\;";  # NEED UPGRADE: how can I do this w/out a subroutine?
-		if (defined(${$AUTOLOAD})) { $retval = &${$AUTOLOAD}(@_); }
+		if (defined(${$AUTOLOAD})) { $retval = &${$AUTOLOAD}(@ARG); }
 		else { die "Attempt to AUTOLOAD undefined subroutine '$AUTOLOAD', dying"; }
 	}
 	# is there any reason to encapsulate calls in an eval() to trap their errors???
 #	else
 #	{
-#		my $eval_string = '&$' . $AUTOLOAD . '(@_);';
+#		my $eval_string = '&$' . $AUTOLOAD . '(@ARG);';
 #		RPerl::diag("IN AUTOLOAD, eval call MODE, have \$eval_string = '$eval_string'\n");
 #		$retval = eval $eval_string;
 #	}
@@ -887,7 +887,7 @@ sub AUTOLOAD
 #sub new($class_name_const_str)
 sub new_LONG FORM
 {
-	(my $class_name_const_str) = @_;
+	(my $class_name_const_str) = @ARG;
 RPerl::diag("in Class.pm, have \$class_name_const_str = '$class_name_const_str'\n");
 	my $properties_name_const_str = $class_name_const_str . '::properties';
 RPerl::diag("in Class.pm, have \$properties_name_const_str = '$properties_name_const_str'\n");
