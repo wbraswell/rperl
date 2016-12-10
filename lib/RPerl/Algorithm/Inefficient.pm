@@ -19,12 +19,12 @@ our hashref $properties = {};
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 our void::method $inherited__Inefficient = sub {
-    ( my object $self, my string $person ) = @_;
+    ( my object $self, my string $person ) = @ARG;
     RPerl::diag( 'in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FLUFFY' . "\n" );
 };
 
 our void::method $inherited = sub {
-    ( my object $self, my string $person ) = @_;
+    ( my object $self, my string $person ) = @ARG;
     RPerl::diag('in PERLOPS_PERLTYPES Inefficient->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', INCOMPATIBLE' . "\n");
 };
 
@@ -41,14 +41,14 @@ our void::method $inherited = sub {
 #RPerl::diag("LATERZ FROM Inefficient.pm\n");
 
 our string $uninherited__Inefficient = sub {
-    ( my string $person ) = @_;
+    ( my string $person ) = @ARG;
     RPerl::diag( 'in PERLOPS_PERLTYPES Inefficient::uninherited__Inefficient(), received $person = ' . $person . ', MESSY' . "\n" );
     return 'Inefficient::uninherited__Inefficient() RULES! PERLOPS_PERLTYPES';
 };
 
 # DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 #our string $uninherited = sub {
-#    ( my string $person ) = @_;
+#    ( my string $person ) = @ARG;
 #    RPerl::diag('in PERLOPS_PERLTYPES Inefficient::uninherited(), received $person = ' . $person . ', TRICKS' . "\n");
 #    return 'Inefficient::uninherited() ROCKS! PERLOPS_PERLTYPES';
 #};

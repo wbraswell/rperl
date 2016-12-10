@@ -27,7 +27,7 @@ our hashref $properties = {
 
 # call out to sort integer data, return nothing
 our void::method $integer_sort = sub {
-    ( my object $self ) = @_;
+    ( my object $self ) = @ARG;
 
     # DEV NOTE: this is an in-place sorting algorithm, we don't actually need to set $self->{integer_data} as it has not changed location
     $self->{integer_data} = integer_bubblesort( $self->{integer_data} );
@@ -35,7 +35,7 @@ our void::method $integer_sort = sub {
 
 # call out to sort number data, return nothing
 our void::method $number_sort = sub {
-    ( my object $self ) = @_;
+    ( my object $self ) = @ARG;
 
     $self->{number_data} = number_bubblesort( $self->{number_data} );
 };
@@ -43,13 +43,13 @@ our void::method $number_sort = sub {
 # OO INHERITANCE TESTING
 
 our void::method $inherited__Bubble = sub {
-    ( my object $self, my string $person ) = @_;
+    ( my object $self, my string $person ) = @ARG;
 
     #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), received $self = ' . $self . ' and $person = ' . $person . ', FRIED' . "\n");
 };
 
 our void::method $inherited = sub {
-    ( my object $self, my string $person ) = @_;
+    ( my object $self, my string $person ) = @ARG;
 
     #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), received $self = ' . $self . ' and $person = ' . $person . ', ILLOGICAL' . "\n");
 };
@@ -57,7 +57,7 @@ our void::method $inherited = sub {
 # original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 # sort integer data, return sorted data
 our integer_arrayref $integer_bubblesort = sub {
-    ( my integer_arrayref $integer_data ) = @_;
+    ( my integer_arrayref $integer_data ) = @ARG;
 
     #    ::integer_arrayref_CHECK($integer_data );
     ::integer_arrayref_CHECKTRACE( $integer_data, '$integer_data', 'integer_bubblesort()' );
@@ -110,7 +110,7 @@ LOOP_OUTER:
 
 # sort number data, return sorted data
 our number_arrayref $number_bubblesort = sub {
-    ( my number_arrayref $number_data ) = @_;
+    ( my number_arrayref $number_data ) = @ARG;
 
     #    ::number_arrayref_CHECK($number_data );
     ::number_arrayref_CHECKTRACE( $number_data, '$number_data', 'number_bubblesort()' );
@@ -155,7 +155,7 @@ LOOP_OUTER:
 # OO INHERITANCE TESTING, CONTINUED
 
 our string $uninherited__Bubble = sub {
-    ( my string $person ) = @_;
+    ( my string $person ) = @ARG;
 
     #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n");
     return ('Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES');
@@ -163,7 +163,7 @@ our string $uninherited__Bubble = sub {
 
 # DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 our string $uninherited = sub {
-    ( my string $person ) = @_;
+    ( my string $person ) = @ARG;
 
     #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited(), received $person = ' . $person . ', TETRAHEDRON' . "\n");
     return ('Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES');
@@ -172,7 +172,7 @@ our string $uninherited = sub {
 # TYPE TESTING
 
 our string $integer_bubblesort__typetest0 = sub {
-    ( my integer_arrayref $lucky_integers ) = @_;
+    ( my integer_arrayref $lucky_integers ) = @ARG;
 
     #    ::integer_arrayref_CHECK($lucky_integers );
     ::integer_arrayref_CHECKTRACE( $lucky_integers, '$lucky_integers', 'integer_bubblesort__typetest0()' );
@@ -188,7 +188,7 @@ our string $integer_bubblesort__typetest0 = sub {
 };
 
 our string $number_bubblesort__typetest0 = sub {
-    ( my number_arrayref $lucky_numbers ) = @_;
+    ( my number_arrayref $lucky_numbers ) = @ARG;
 
     #    ::number_arrayref_CHECK($lucky_numbers );
     ::number_arrayref_CHECKTRACE( $lucky_numbers, '$lucky_numbers', 'number_bubblesort__typetest0()' );

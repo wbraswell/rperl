@@ -1,4 +1,5 @@
 DONE
+    replace @_ with @ARG
 
 DOING
     'cannot' -> 'can not' in all docs & source files
@@ -314,6 +315,9 @@ INLINE::CPP BUGS
 PERLOPS_PERLTYPES
     C++ subclasses using AV* instead of std::vector, etc?
     add symtab building and checking
+
+ERROR CODES
+    RPerl::CompileUnit::Module::Class (global base class) needs error codes added for all croak() or die() statements
 
 GRAMMAR
     remove 'undef' from all possible locations in grammar for C++ compatibility

@@ -16,7 +16,7 @@ use RPerl::Config;
 
 # <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>
 undef &RPerl::Algorithm::Sort::uninherited__Sort;
-*RPerl::Algorithm::Sort::uninherited__Sort = sub { return main::RPerl__Algorithm__Sort__uninherited__Sort(@_); };
+*RPerl::Algorithm::Sort::uninherited__Sort = sub { return main::RPerl__Algorithm__Sort__uninherited__Sort(@ARG); };
 
 # <<< C++ LOADER >>>
 #our void::method $cpp_load = sub {
