@@ -2,8 +2,8 @@
 package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
-use RPerl::Config;    # get Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.037_000;
+use RPerl::Config;    # get @ARG, Dumper, Carp, English without 'use RPerl;'
+our $VERSION = 0.037_100;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE

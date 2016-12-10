@@ -6,10 +6,10 @@ use strict;
 use warnings;
 
 # DEV NOTE, CORRELATION #rp016: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
-our $VERSION = 2.200_000;
+our $VERSION = 2.201_000;
 
-#our $VERSION = 20161031;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2016.305;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20161209;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2016.344;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -24,22 +24,15 @@ our $VERSION = 2.200_000;
 # force pre-loading so they make it into $inc_skip
 use parent qw();
 use IPC::Cmd;
-#use English;
 #use re 'strict';  # doesn't work in all versions of Perl
 use re 'taint';  # hopefully doesn't actually do anything!
 
 # actually used in this file
 use Data::Dumper;
 
-#use base qw(Exporter);
 use Filter::Simple;
 
-#use Carp;
 $Data::Dumper::Sortkeys = 1;    # Dumper() output must be sorted for lib/RPerl/Tests/Type_Types/* etc.
-
-#use Exporter 'import';
-
-#our @EXPORT = qw(croak Dumper $OSNAME);
 
 FILTER { $_ = filter($_) };
 
@@ -148,6 +141,7 @@ sub filter {
             $output .= '# [[[ HEADER, PART 1 ]]]' . "\n";
             $output .= $input_line . "\n";
             $output .= 'use rperltypesconv;' . "\n";  # DEV NOTE, CORRELATION #rp008: import from Exporter for code inside of a package or class
+            $output .= 'use RPerl::Config;' . "\n";  # DEV NOTE, CORRELATION #rp034: enable @ARG in all packages (class & non-class)
 
 #            print {*STDERR} 'in RPerl::filter(), found $package_line = ' . $package_line . "\n";
 #            print {*STDERR} 'in RPerl::filter(), found $package = ' . $package . "\n";
@@ -157,6 +151,7 @@ sub filter {
             $use_parent_line = $input_line;
             $namespace_root = package_to_namespace_root($package);
 
+#            print {*STDERR} q{in RPerl::filter(), have $package = '} . $package . "'\n";
 #            print {*STDERR} q{in RPerl::filter(), have $namespace_root = '} . $namespace_root . "'\n";
 #            print {*STDERR} 'in RPerl::filter(), have $rperlnamespaces_generated::CORE = ' . Dumper($rperlnamespaces_generated::CORE) . "\n";
 #            print {*STDERR} 'in RPerl::filter(), have $rperlnamespaces_generated::RPERL_DEPS = ' . Dumper($rperlnamespaces_generated::RPERL_DEPS) . "\n";
@@ -166,16 +161,18 @@ sub filter {
 #            print {*STDERR} 'in RPerl::filter(), have $rperlnamespaces_generated::RPERL->{' . $namespace_root . '} = ' . Dumper($rperlnamespaces_generated::RPERL->{$namespace_root}) . "\n";
 
             # DEV NOTE, CORRELATION #rp019: need remove hard-coded allowance of RPerl::Test namespace, at least move to rperlnamespaces.pm or friends
-            if (    ($package =~ /RPerl::Test/xms) or ($package eq 'RPerl::CompileUnit::Module::Class::Template')
-                or ( ( not exists $rperlnamespaces_generated::CORE->{$namespace_root} )
-                and ( not exists $rperlnamespaces_generated::RPERL_DEPS->{$namespace_root} )
-                and ( not exists $rperlnamespaces_generated::RPERL->{$namespace_root} ) ) )
+            if (    
+                ($package =~ /RPerl::Test/xms) or 
+                ($package eq 'RPerl::CompileUnit::Module::Class::Template') or ( 
+                    ( not exists $rperlnamespaces_generated::CORE->{$namespace_root} ) and 
+                    ( not exists $rperlnamespaces_generated::RPERL_DEPS->{$namespace_root} ) and 
+                    ( not exists $rperlnamespaces_generated::RPERL->{$namespace_root} ) ) )
             {
-#                print {*STDERR} 'in RPerl::filter(), enabling subclasses for $package = ' . $package . "\n";
+#                print {*STDERR} 'in RPerl::filter(), enabling subclasses for $package = ' . $package . "\n"; 
 
                 my $input_line_prepend = q{};
                 $input_line_prepend .= '# <<<=== BEGIN $input_line_prepend ===>>>' . "\n";
-                $input_line_prepend .= 'use RPerl::Config;' . "\n";
+#                $input_line_prepend .= 'use RPerl::Config;' . "\n";  # DEV NOTE, CORRELATION #rp034: enable @ARG in all packages (class & non-class)
                 $input_line_prepend .= 'use RPerl::AfterSubclass;' . "\n";
                 $input_line_prepend .= '1;  # end class, original' . "\n";
                 my $subclasses = {

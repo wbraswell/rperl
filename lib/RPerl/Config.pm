@@ -4,7 +4,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.004_500;
+our $VERSION = 0.004_600;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -28,6 +28,7 @@ use POSIX qw(ceil floor modf);
 use Exporter 'import';
 
 # DEV NOTE, CORRELATION #rp008: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
+# DEV NOTE, CORRELATION #rp034: enable @ARG in all packages (class & non-class)
 our @EXPORT = qw(Dumper carp croak confess *ARG $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
 
 1;                              # end of package
@@ -46,6 +47,7 @@ use POSIX qw(ceil floor modf);
 use Exporter 'import';
 
 # DEV NOTE, CORRELATION #rp008: can't include to_string(), type(), types(), name(), or scope_type_name_value() in @EXPORT here or in RPerl:: namespace below
+# DEV NOTE, CORRELATION #rp034: enable @ARG in all packages (class & non-class)
 our @EXPORT = qw(Dumper carp croak confess *ARG $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
 
 1;                              # end of package
@@ -77,6 +79,7 @@ use Carp;
 use English qw(-no_match_vars);
 use POSIX qw(ceil floor modf);
 use Exporter 'import';
+# DEV NOTE, CORRELATION #rp034: enable @ARG in all packages (class & non-class)
 our @EXPORT = qw(Dumper carp croak confess *ARG $OS_ERROR $EVAL_ERROR $CHILD_ERROR $EXECUTABLE_NAME $PROGRAM_NAME $OSNAME);
 
 # [[[ OO CLASS PROPERTIES SPECIAL ]]]
