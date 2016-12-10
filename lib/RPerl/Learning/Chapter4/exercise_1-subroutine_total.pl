@@ -17,7 +17,7 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 
 our number $total = sub {
-    (my number_arrayref $input_numbers) = @_;
+    (my number_arrayref $input_numbers) = @ARG;
     my number $retval = 0;
     foreach my number $input_number (@{$input_numbers}) {
         $retval += $input_number;

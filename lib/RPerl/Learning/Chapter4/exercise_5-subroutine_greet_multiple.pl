@@ -15,7 +15,7 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 
 our string_arrayref $greet = sub {
-    ( my string $name, my string_arrayref $previous_names ) = @_;
+    ( my string $name, my string_arrayref $previous_names ) = @ARG;
     print 'Hi ', $name, '!  ';
     if ((scalar @{$previous_names}) == 0) {
         print 'You are the first one here!', "\n";

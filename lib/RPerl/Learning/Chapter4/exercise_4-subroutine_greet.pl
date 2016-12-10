@@ -15,7 +15,7 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 
 our string $greet = sub {
-    ( my string $name, my string $previous_name ) = @_;
+    ( my string $name, my string $previous_name ) = @ARG;
     print 'Hi ', $name, '!  ';
     if ($previous_name eq q{}) {
         print 'You are the first one here!', "\n";

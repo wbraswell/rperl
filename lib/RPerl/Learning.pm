@@ -958,7 +958,7 @@ This program is separated by blank lines into 4 sections: shebang, header, criti
 
 Other than the shebang and critics, all lines beginning with C<#> are comments and can be safely ignored or discarded without affecting the program.
 
-The I<"shebang"> section is required, always contains exactly 1 line, and is short for I<"hash bang">; referring to the two leading characters C<#!> of this line.  The I<"octothorpe"> character C<#> (tic-tac-toe symbol) is called a I<"pound sign"> when used on a telephone, and is called a I<"hash"> (or more recently and less accurately I<"hash tag">) when used on a computer.  The exclamation point character C<!> is called a I<"bang"> when used on a computer.  When appearing together as the first two characters in a plain text file, the hash and bang characters tell the operating system to run the immediately-following command (in this case the Perl interpreter located at F</usr/bin/perl>) and pass the remaining contents of the text file as input to the command.  In other words, if the first line of a plain text file is C<#!/usr/bin/perl>, then that file is a Perl program.
+The I<"shebang"> section is required, always contains exactly 1 line, and is short for I<"hash bang">; referring to the two leading characters C<#!> of this line.  The I<"octothorpe"> character C<#> (tic-tac-toe symbol) is called a I<"pound-sign"> when used on a telephone, and is called a I<"hash"> (or more recently and less accurately I<"hash-tag">) when used on a computer.  The exclamation-point character C<!> is called a I<"bang"> when used on a computer.  When appearing together as the first two characters in a plain text file, the hash and bang characters tell the operating system to run the immediately-following command (in this case the Perl interpreter located at F</usr/bin/perl>) and pass the remaining contents of the text file as input to the command.  In other words, if the first line of a plain text file is C<#!/usr/bin/perl>, then that file is a Perl program.
 
 The I<"header"> section is required and always contains 4 lines for an RPerl I<"program"> file ending in F<.pl>, or 5 lines for an RPerl I<"module"> ending in F<.pm> (covered later in Chapter 11).  C<use> is recognized by Perl as a special I<"keyword"> (AKA I<"built-in operator">) which has 2 primary purposes: to load additional RPerl modules, and to enable RPerl I<"pragma"> system configuration modes.  The C<use RPerl;> line is dual-purpose, it both loads the F<RPerl.pm> module and enables the special RPerl low-magic pragma.  The C<use strict;> and C<use warnings;> lines enable basic Perl pragmas which require decent programming practices by the human programmers.  The C<our $VERSION = 0.001_000;> line sets the version number of this RPerl program.
 
@@ -17319,7 +17319,7 @@ The C<integer_arrayref_to_string()> subroutine is implemented by the following R
     # stringify an integer_arrayref
     our string $integer_arrayref_to_string = sub {
         # require exactly one integer_arrayref as input, store in variable $input_avref
-        ( my integer_arrayref $input_avref ) = @_;
+        ( my integer_arrayref $input_avref ) = @ARG;
 
         # declare local variables, av & sv mean "array value" & "scalar value" as used in Perl core
         my integer $input_av_length;
@@ -17588,12 +17588,10 @@ In this re-modified source code example, the loop header's declaration operation
 
 =head2 Section 3.13: Punctuation Variables & Magic
 
-In normal Perl, you may access and modify a number of I<"punctuation variables">, which are special variables created by the Perl language itself, and which may be utilized to achieve many different goals.
+In normal Perl, you may access and modify a number of I<"punctuation variables">, which are special variables created by the Perl language itself, and which may be utilized to achieve many different goals.  Perl punctuation variables derive their name from their sometimes-cryptic combinations of punctuation characters, such as the dollar-sign C<$>, at-sign C<@>, percent-sign C<%>, underscore C<_>, and exclamation-point C<!> characters.
 
 
-START HERE: replace all @_ with @ARG in this document, then in remaining available RPerl code, then MathPerl & PhysicsPerl, then LMPC
-START HERE: replace all @_ with @ARG in this document, then in remaining available RPerl code, then MathPerl & PhysicsPerl, then LMPC
-START HERE: replace all @_ with @ARG in this document, then in remaining available RPerl code, then MathPerl & PhysicsPerl, then LMPC
+START HERE: replace all @ARG with @ARG in this document, exercise files, then in remaining available RPerl code, then MathPerl & PhysicsPerl, then LMPC
 
 
 
@@ -17616,7 +17614,7 @@ START HERE: replace all @_ with @ARG in this document, then in remaining availab
 
 
 
-=item * C<@_>
+=item * C<@ARG>
 
 =back
 
@@ -18771,7 +18769,7 @@ Finally, the subroutine C<total()> is called a second time, now with the variabl
     # [[[ SUBROUTINES ]]]
 
     our number $total = sub {
-        (my number_arrayref $input_numbers) = @_;
+        (my number_arrayref $input_numbers) = @ARG;
         my number $retval = 0;
         foreach my number $input_number (@{$input_numbers}) {
             $retval += $input_number;
@@ -18845,7 +18843,7 @@ Finally, the subroutine C<total()> is called with C<$one_to_one_thousand> passed
     # [[[ SUBROUTINES ]]]
 
     our number $total = sub {
-        ( my number_arrayref $input_numbers ) = @_;
+        ( my number_arrayref $input_numbers ) = @ARG;
         my number $retval = 0;
         foreach my number $input_number ( @{$input_numbers} ) {
             $retval += $input_number;
@@ -18904,7 +18902,7 @@ In the C<OPERATIONS> section, 2 arrays are created in the C<$fred> and C<$barney
     # [[[ SUBROUTINES ]]]
 
     our number $total = sub {
-        ( my number_arrayref $input_numbers ) = @_;
+        ( my number_arrayref $input_numbers ) = @ARG;
         my number $retval = 0;
         foreach my number $input_number ( @{$input_numbers} ) {
             $retval += $input_number;
@@ -18913,12 +18911,12 @@ In the C<OPERATIONS> section, 2 arrays are created in the C<$fred> and C<$barney
     };  
 
     our number $average = sub {
-        ( my number_arrayref $input_numbers ) = @_;
+        ( my number_arrayref $input_numbers ) = @ARG;
         return (total($input_numbers) / (scalar @{$input_numbers}));
     };
 
     our number_arrayref $above_average = sub {
-        ( my number_arrayref $input_numbers ) = @_;
+        ( my number_arrayref $input_numbers ) = @ARG;
         my number $average = average($input_numbers);
         my number_arrayref $retval = [];
         foreach my number $input_number (@{$input_numbers}) {
@@ -18995,7 +18993,7 @@ Finally, the string variable C<$name> is returned from C<greet()> and passed to 
     # [[[ SUBROUTINES ]]]
 
     our string $greet = sub {
-        ( my string $name, my string $previous_name ) = @_;
+        ( my string $name, my string $previous_name ) = @ARG;
         print 'Hi ', $name, '!  ';
         if ($previous_name eq q{}) {
             print 'You are the first one here!', "\n";
@@ -19057,7 +19055,7 @@ Finally, the current value of C<$name> is appended as the last element of the ar
     # [[[ SUBROUTINES ]]]
 
     our string_arrayref $greet = sub {
-        ( my string $name, my string_arrayref $previous_names ) = @_;
+        ( my string $name, my string_arrayref $previous_names ) = @ARG;
         print 'Hi ', $name, '!  ';
         if ((scalar @{$previous_names}) == 0) {
             print 'You are the first one here!', "\n";
@@ -19137,7 +19135,7 @@ To begin execution of this program via the C<`rperl`> command, the program name 
     # [[[ SUBROUTINES ]]]
 
     our void $tac = sub {
-        ( my string_arrayref $command_line_arguments ) = @_;
+        ( my string_arrayref $command_line_arguments ) = @ARG;
         $command_line_arguments = [ reverse @{$command_line_arguments} ];
         foreach my string $file_name ( @{$command_line_arguments} ) {
             if ( not( -e $file_name ) ) {
@@ -20527,7 +20525,7 @@ X<br>
     
     ## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
     
-    ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @_
+    ## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @ARG
     
     ## no critic qw(ProhibitParensWithBuiltins ProhibitNoisyQuotes)  # SYSTEM SPECIAL 3: allow auto-generated code
     
@@ -21038,12 +21036,12 @@ C<[[[ SYNTAX PRODUCTION RULES, FILE FORMATS ]]]>
     Include:                 USE WordScoped ';' | USE WordScoped OP01_QW ';' ;
     Constant:                'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';' ;
     Subroutine:              'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation* '}' ';' ;
-    SubroutineArguments:     LPAREN_MY Type VARIABLE_SYMBOL (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
+    SubroutineArguments:     LPAREN_MY Type VARIABLE_SYMBOL (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
     Class:                   'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties MethodOrSubroutine* LITERAL_NUMBER ';' ;
     Properties:              'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryProperties (OP21_LIST_COMMA HashEntryProperties)* '}' ';' |
                              'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';' ;
     Method:                  'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation* '}' ';' ;
-    MethodArguments:         LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@_;' ;
+    MethodArguments:         LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
     MethodOrSubroutine:      Method | Subroutine;
 
 =for rperl X</noncode>
@@ -21357,7 +21355,7 @@ L<Package_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
     # [[[ SUBROUTINES ]]]
     our void $empty_sub = sub {
-        ( my number $foo ) = @_;
+        ( my number $foo ) = @ARG;
         return 1;
     };
 
@@ -21417,7 +21415,7 @@ L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test
 
     # [[[ SUBROUTINES & OO METHODS ]]]
     our void::method $test_method = sub {
-        ( my object $self, my integer $input_integer ) = @_;
+        ( my object $self, my integer $input_integer ) = @ARG;
         $self->{test_property} *= $input_integer;
         return $self->{test_property};
     };
@@ -21447,7 +21445,7 @@ L<Class_01_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test
 
     # [[[ SUBROUTINES & OO METHODS ]]]
     our void::method $empty_method = sub {
-        ( my object $self, my integer $foo ) = @_;
+        ( my object $self, my integer $foo ) = @ARG;
         return 2;
     };
 

@@ -1,7 +1,8 @@
 DONE
-    replace @_ with @ARG
+    replace @_ with @ARG in app code
 
 DOING
+    replace @_ with @ARG in system code
     'cannot' -> 'can not' in all docs & source files
     execute via compiled copy not interpreted
     uncompile w/ corrupted or missing PMC, CPP, H files

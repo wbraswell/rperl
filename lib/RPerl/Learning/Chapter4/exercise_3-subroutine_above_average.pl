@@ -17,7 +17,7 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 
 our number $total = sub {
-    ( my number_arrayref $input_numbers ) = @_;
+    ( my number_arrayref $input_numbers ) = @ARG;
     my number $retval = 0;
     foreach my number $input_number ( @{$input_numbers} ) {
         $retval += $input_number;
@@ -26,12 +26,12 @@ our number $total = sub {
 };
 
 our number $average = sub {
-    ( my number_arrayref $input_numbers ) = @_;
+    ( my number_arrayref $input_numbers ) = @ARG;
     return (total($input_numbers) / (scalar @{$input_numbers}));
 };
 
 our number_arrayref $above_average = sub {
-    ( my number_arrayref $input_numbers ) = @_;
+    ( my number_arrayref $input_numbers ) = @ARG;
     my number $average = average($input_numbers);
     my number_arrayref $retval = [];
     foreach my number $input_number (@{$input_numbers}) {
