@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.155_000;
+our $VERSION = 0.155_100;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -17591,7 +17591,9 @@ In this re-modified source code example, the loop header's declaration operation
 In normal Perl, you may access and modify a number of I<"punctuation variables">, which are special variables created by the Perl language itself, and which may be utilized to achieve many different goals.  Perl punctuation variables derive their name from their sometimes-cryptic combinations of punctuation characters, such as the dollar-sign C<$>, at-sign C<@>, percent-sign C<%>, underscore C<_>, and exclamation-point C<!> characters.
 
 
-START HERE: replace all @ARG with @ARG in this document, exercise files, then in remaining available RPerl code, then MathPerl & PhysicsPerl, then LMPC
+START HERE: replace all @_ with @ARG, then LMPC
+START HERE: replace all @_ with @ARG, then LMPC
+START HERE: replace all @_ with @ARG, then LMPC
 
 
 
