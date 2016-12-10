@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -41,7 +41,7 @@ our hashref $properties = {};
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 our string_hashref::method $ast_to_rperl__generate = sub {
-    ( my object $self, my string_hashref $modes) = @_;
+    ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $rperl_source_group = { PMC => q{} };
     my string_hashref $rperl_source_subgroup;
 
@@ -92,7 +92,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 };
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
+    ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group = { CPP => q{// <<< RP::CB::S __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n" };
 
     #...
@@ -100,7 +100,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
+    ( my object $self, my string_hashref $modes) = @ARG;
 #    RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
  
     my string_hashref $cpp_source_group = { H => q{} };
@@ -147,7 +147,7 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
 };
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
+    ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
     $self = $self->{children}->[0];    # unwrap Subroutine_48 from SubroutineOrMethod_77
@@ -215,7 +215,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 };
 
 our string_hashref::method $ast_to_cpp__generate_shims__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
+    ( my object $self, my string_hashref $modes) = @ARG;
 #    RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shims__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
  
     my string_hashref $cpp_source_group = { CPP => q{} };
@@ -245,9 +245,9 @@ our string_hashref::method $ast_to_cpp__generate_shims__CPPOPS_CPPTYPES = sub {
     if ($modes->{subcompile} eq 'DYNAMIC') {
         # hard-coded example, PMC subroutine
         #undef &RPerl::Algorithm::Sort::Bubble::integer_bubblesort;
-        #*RPerl::Algorithm::Sort::Bubble::integer_bubblesort = sub { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@_); };
+        #*RPerl::Algorithm::Sort::Bubble::integer_bubblesort = sub { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@ARG); };
         $cpp_source_group->{PMC} = 'undef &' . $namespace_colons . $name . ';'. "\n";
-        $cpp_source_group->{PMC} .= '*' . $namespace_colons . $name . ' = sub { return main::' . $namespace_underscores . $name . '(@_); };';
+        $cpp_source_group->{PMC} .= '*' . $namespace_colons . $name . ' = sub { return main::' . $namespace_underscores . $name . '(@ARG); };';
     }
 
 =DEPRECATED IN FAVOR OF MACROS

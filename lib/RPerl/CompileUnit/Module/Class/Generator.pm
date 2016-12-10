@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -24,7 +24,7 @@ our hashref $properties = {};
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 our string_hashref::method $ast_to_rperl__generate = sub {
-    ( my object $self, my string $package_name_underscores, my string_hashref $modes ) = @_;
+    ( my object $self, my string $package_name_underscores, my string_hashref $modes ) = @ARG;
     my string_hashref $rperl_source_group = {};
 
     #    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
@@ -346,7 +346,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 };
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
-    ( my object $self, my string $package_name_underscores, my string_hashref $modes ) = @_;
+    ( my object $self, my string $package_name_underscores, my string_hashref $modes ) = @ARG;
     my string_hashref $cpp_source_group = {
         CPP => q{// <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n",
         H   => q{// <<< RP::CU::M::C::G __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n",
@@ -358,7 +358,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 };
 
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string $package_name_underscores, my string_hashref $modes ) = @_;
+    ( my object $self, my string $package_name_underscores, my string_hashref $modes ) = @ARG;
     my string_hashref $cpp_source_group = { H_INCLUDES => q{}, H => q{}, CPP => q{} };
 
 #RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
@@ -928,7 +928,7 @@ EOL
 
 # generate accessors/mutators
 our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = sub {
-    ( my string $property_key, my string_hashref $modes ) = @_;
+    ( my string $property_key, my string_hashref $modes ) = @ARG;
     my string_hashref $cpp_source_group = { H => q{} };
 
 #    RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
@@ -1011,7 +1011,7 @@ our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = s
 #void set_bodies_element(integer i, PhysicsPerl__Astro__Body_ptr& bodies_element_ptr) { *(this->bodies[i].get_raw()) = *(bodies_element_ptr.get_raw()); }  // call from C++
 #void set_bodies_element(integer i, PhysicsPerl__Astro__Body_rawptr bodies_element_rawptr) { *(this->bodies[i].get_raw()) = *bodies_element_rawptr; }  // call from Perl
 #sub get_bodies_element {
-#    ( my PhysicsPerl::Astro::System $self, my integer $i ) = @_;
+#    ( my PhysicsPerl::Astro::System $self, my integer $i ) = @ARG;
 #    my PhysicsPerl::Astro::Body $bodies_element = PhysicsPerl::Astro::Body->new();
 #    $self->get_bodies_element_indirect($i, $bodies_element);
 #    return $bodies_element;
@@ -1096,7 +1096,7 @@ our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = s
             $cpp_source_group->{PMC}
                 .= '( my '
                 . ( substr $modes->{_symbol_table}->{_namespace}, 0, ( ( length $modes->{_symbol_table}->{_namespace} ) - 2 ) )
-                . ' $self, my integer $i ) = @_;' . "\n";
+                . ' $self, my integer $i ) = @ARG;' . "\n";
             $cpp_source_group->{PMC}
                 .= 'my ' . $property_element_or_value_type . ' $' . $property_key . '_element = ' . $property_element_or_value_type . '->new();' . "\n";
             $cpp_source_group->{PMC} .= '$self->get_' . $property_key . '_element_indirect($i, $' . $property_key . '_element);' . "\n";
