@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.156_000;
+our $VERSION = 0.160_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -15749,7 +15749,7 @@ In this filing cabinet analogy, an array which is stored by value is like a norm
 
 To reiterate, an array stored by reference is actually a scalar variable which contains the memory address of an anonymous array.  When compared to the memory usage of storing an array by data, the memory needs of storing by reference only require one additional scalar value (one piece of paper in our filing cabinet analogy), which contains the anonymous array's memory address.  Both storing by value and storing by reference are commonly utilized in many different computer programming languages.
 
-When an array is stored by value, the corresponding variable has an at-sign C<@> as its sigil, and the assigned data is enclosed within parentheses C<( )> characters.  When an array is stored by reference, the corresponding variable has a dollar-sign C<$> as its sigil, and the assigned data is enclosed within square-bracket C<[ ]> characters.  If an array is stored by value and is then passed as input to an operation, it is said the array is I<"passed by value">.  On the other hand, if the array is instead stored by reference and then passed to an operation, it is said to be I<"passed by reference">.
+When an array is stored by value, the corresponding variable has an at-sign C<@> as its sigil, and the assigned data is enclosed within parentheses C<( )> characters.  When an array is stored by reference, the corresponding variable has a dollar-sign C<$> as its sigil, and the assigned data is enclosed within I<"square-bracket"> C<[ ]> characters, also known as just I<"brackets">.  If an array is stored by value and is then passed as input to an operation, it is said the array is I<"passed by value">.  On the other hand, if the array is instead stored by reference and then passed to an operation, it is said to be I<"passed by reference">.
 
 For arrays with more than just a few elements, it may be impractical or impossible to pass by value, because a full copy of each array element must be made in the process, which may fill up all your program's available memory or take a prohibitively long time to complete.  Also, Perl allows us to provide explicit data types only when an array is stored by reference, so we can not provide a data type for an array stored by value.  Because of these reasons, all RPerl arrays are stored by reference, and are declared with an explicit RPerl data type ending with C<_arrayref>.
 
@@ -15870,7 +15870,13 @@ Please see L</Section 3.5: 2-D Array Data Types & Nested Arrays> for more RPerl 
 
 =head2 Section 3.3: How To Access Array Elements
 
-Each element of a Perl array is numbered, in order, by integers starting at the value of zero and counting upward.  Each such integer is known as an I<"array index">, or just I<"index"> for short.  Thus, what a normal person would think of as being the "first" element in an array is actually not at index value of C<1>, but is actually at index C<0> instead.  This is a common point of confusion for new programmers, or even experienced programmers who may be accustomed to a different computer language which starts at index C<1> insted of index C<0> like Perl.  It may help to think of the "first" element as actually being the "zeroth" element.
+Please take a few moments to review L</Section 2.9.1: Loop Iterator Variables> at this time.
+
+Closely related to the loop concept of an iterator variable is that of an C<"array index">.  Each element of a Perl array is numbered, in order, by integers starting at the value of zero and counting upward.  Each such integer is known as an array index, or just I<"index"> for short.
+
+(Depending upon context or tradition, you may argue the "i" in C<$i> stands for either "iterator" or "index".  The main difference between an iterator and an index are usage: an iterator is an integer variable used to count loop iterations; whereas an index is a integer value used to specify an array element, and may be either a variable or a hard-coded numeric literal.  An iterator can always be used as an index, and often is; however, the reverse is not true.)
+
+What a normal person would think of as being the "first" element in an array is actually not at index value of C<1>, but is actually at index C<0> instead.  This is a common point of confusion for new programmers, or even experienced programmers who may be accustomed to a different computer language which starts at index C<1> instead of index C<0> like Perl.  It may help to think of the "first" element as actually being the "zeroth" element.
 
     my string_arrayref $marx_brothers = ['Chico', 'Harpo', 'Groucho', 'Gummo', 'Zeppo'];
     print 'The first born is ',   $marx_brothers->[0], "\n";
@@ -17858,20 +17864,21 @@ Reverse order of list elements, return reversed list;
 May be utilized anywhere a list is accepted
 
     # the following two lines are equivalent
-    reverse 'foo', 'bar', 'bat', 'baz, 'quux'
+    reverse 'foo', 'bar', 'bat', 'baz', 'quux'
     'quux', 'baz', 'bat', 'bar', 'foo'
 
 X<break_code_blocks>
 
-    my integer_arrayref $forward  = [2, 4, 6, 8, 10];
+    # reverse array elements
+    my integer_arrayref $forward  = [2, 8, 24, 76, 238, 748];
     my integer_arrayref $reversed = [reverse @{$forward}];
     print 'have $forward  = ', integer_arrayref_to_string($forward), "\n";
     print 'have $reversed = ', integer_arrayref_to_string($reversed), "\n";
 
 =for rperl X<noncode>
 
-    have $forward  = [2, 4, 6, 8, 10]
-    have $reversed = [10, 8, 6, 4, 2]
+    have $forward  = [2, 8, 24, 76, 238, 748]
+    have $reversed = [748, 238, 76, 24, 8, 2]
 
 =for rperl X</noncode>
 
@@ -17879,43 +17886,466 @@ X<break_code_blocks>
 
 =head2 Section 3.15: C<sort> Operator
 
-START HERE: add content
+
+
+
+
+
+Sometimes you will want to sort the order in which a list or array's elements are stored, whereby the element with the lowest value becomes first, and the element with the highest value is last.  For this purpose, you may choose the C<sort> operator.
+
+Like C<reverse>, the C<sort> operator requires arrays to be dereferenced, so you must use the closed-fixity at-sign-curly-braces C<@{ }> array dereference operator for array arguments.
+
+=begin text
+
+my $z = q{<<< BEGIN TEXT EVAL >>>};
+
+use Text::ASCIITable;
+
+my Text::ASCIITable $table = Text::ASCIITable->new({alignHeadRow => 'center', drawRowLine => 1});
+
+$table->setCols(splice @{[split /\s*\n\s*/, q{
+
+=end text
+
+=begin man
+
+.TS
+allbox tab(@) ;
+c c c c c c c
+l l l l r l l .
+
+=end man
+
+=for html <table class="rperl operators">
+
+=begin docbook
+
+<table id="learning_rperl-section_3.15-table_1" label="" frame="all" colsep="1" rowsep="1">
+<title>C<sort> Operator</title>
+<tgroup cols="6">
+
+=end docbook
+
+=for man T{
+
+=for html <tr><th>
+
+=for docbook <thead>
+
+=for docbook <row><entry align="center">
+
+B<Name>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Symbol>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Arity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Fixity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Precedence>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Associativity>
+
+=for man T}@T{
+
+=for html </th><th>
+
+=for docbook </entry><entry align="center">
+
+B<Supported>
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </th></tr>
+
+=for docbook </entry></row>
+
+=for docbook </thead>
+
+=for text $table->addRow(splice @{[split /\s*\n\s*/, q{
+
+=for man T{
+
+=for html <tr><td>
+
+=for docbook <tbody>
+
+=for docbook <row><entry align="left">
+
+Sort
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+sort
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Variadic
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Prefix
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="right">
+
+01
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Left
+
+=for man T}@T{
+
+=for html </td><td>
+
+=for docbook </entry><entry align="left">
+
+Coming Soon
+
+=for text }]}, 1);
+
+=for man T}
+
+=for html </td></tr>
+
+=for docbook </entry></row>
+
+=begin text
+
+return $table->draw( ['.=','=.','=','='],   # .=============.
+
+                     ['|','|','|'],         # | info | info |
+ 
+                     ['|-','-|','=','='],   # |-===========-|
+
+                     ['|','|','|'],         # | info | info |
+
+                     ["'=","='",'=','='],   # '============='
+
+                     ['|-','-|','-','+']    # rowseperator
+
+                    );
+
+$z = q{<<< END TEXT EVAL >>>};
+
+=end text
+
+=for man .TE
+
+=for html </table>
+
+=for docbook </tbody></tgroup></table>
+
+=over
+
+=item * B<Sort>
+
+    sort LIST
+
+LIST is comma-separated list of expressions which all produce scalar values;
+
+Sort order of list elements, return sorted list;
+
+May be utilized anywhere a list is accepted
+
+    # the following two lines are equivalent
+    sort 'foo', 'bar', 'bat', 'baz', 'quux'
+    'bar', 'bat', 'baz', 'foo', 'quux'
+
+X<break_code_blocks>
+
+    # sort array elements
+    my integer_arrayref $random = [6, 4, 8, 1, 5, 0, 9, 2, 7, 3];
+    my integer_arrayref $sorted = [sort @{$random}];
+    print 'have $random = ', integer_arrayref_to_string($random), "\n";
+    print 'have $sorted = ', integer_arrayref_to_string($sorted), "\n";
+
+=for rperl X<noncode>
+
+    have $random = [6, 4, 8, 1, 5, 0, 9, 2, 7, 3]
+    have $sorted = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+=for rperl X</noncode>
+
+=back
 
 =head2 Section 3.16: Scalar & Array Contexts
 
-START HERE: add content
+In normal Perl, usually there is no explicit indication of the data type of an expression's return value; in other words, normal Perl code doesn't know ahead of time if any particular expression will return a string or an integer or an array, etc.  RPerl solves this issue once-and-for-all by providing a fully-fledged data type system, as you have been learning about throughout this book.
 
-=head2 Section 3.17: Array Values In Scalar Context
+Normal Perl attempts to approach this issue through a few different mechanisms, one of which is I<"context">, meaning the requirements or expectations of the receiving operation.  In other words, Perl tries to guess what kind of data you want, and may even change your data without telling you, based on the requirements of your own code.  In this section we will consider scalar context, and how it relates to array context (AKA list context).
 
-START HERE: add content
+All three lines of code in the following example enforce scalar context on the right-hand-side of the equal-sign C<=>, because the receiving operation on the left-hand-side is a scalar (integer) variable modification and thus requires a scalar value as input:
 
-=head2 Section 3.18: Scalar Values In Array Context
+    my integer $i =                   3;  # scalar variable receiving scalar value, context    match, fine in Perl, fine  in RPerl
+    my integer $j = scalar @{[2, 4, 6]};  # scalar variable receiving scalar value, context    match, fine in Perl, fine  in RPerl
+    my integer $k =        @{[2, 4, 6]};  # scalar variable receiving array  value, context mismatch, fine in Perl, error in RPerl compiled modes
+    print 'have $i = ', $i, "\n";
+    print 'have $j = ', $j, "\n";
+    print 'have $k = ', $k, "\n";
 
-START HERE: add content
+When executing the source code above in non-compiled mode, the following output is generated:
 
-=head2 Section 3.19: Explicitly Scalar Context
+=for rperl X<noncode>
 
-START HERE: add content
+    have $i = 3
+    have $j = 3
+    have $k = 3
 
-=head2 Section 3.20: C<STDIN> & Arrays
+=for rperl X</noncode>
 
-START HERE: add content
+However, when we try to compile the source code, we experience an error:
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
+
+=for rperl X</noncode>
+
+In non-compiled mode, the normal Perl interpreter will detect the context mismatch and force an implicit context switch from the array C<@{[2, 4, 6]}> to the scalar C<$k>.  This same array-to-scalar context switch is achieved explicitly via the C<scalar> operator.  Both implicit and explicit context switches have the same effect, an array value put into scalar context will simply return the number of array elements.
+
+The ability for Perl to guess and imply context is derived from high-magic features.  Once again, the Low-Magic Perl Commandments are clear on the issue:
+
+=over
+
+=item * L<The 57th Low-Magic Perl Commandment|http://rperl.org/the_low_magic_perl_commandments.html#commandments_operations>
+
+"57. Thou Shalt Not Use Scalar Operations In List Context & Vice-Versa"
+
+=back
+
+In keeping with the 57th LMPC, RPerl does not support the use of implied or mismatched context.
+
+When you need to force an array or list into scalar context, which is the same as asking for an element count, then simply utilize the C<scalar> operator as demonstrated above.  Do not try to force a scalar into an array context, it makes no sense in RPerl and will only produce errors in your code.
+
+=head2 Section 3.17: C<STDIN> & Arrays
+
+When we combine a C<while> loop control structure with the C<E<lt>STDINE<gt>> input data stream, then the C<while> loop is able to detect a special signal from the operating system, known as I<"End-Of-Transmission"> (EOT) or I<"End-Of-File"> (EOF), which tells the loop there is no more user input available.  The EOF condition is triggered when a user presses the <CTRL-D> key combination on their keyboard.
+
+Data collected from C<E<lt>STDINE<gt>> is always of the C<string> data type, and each collected line always contains an extra newline C<"\n"> character at the end, due to the user pressing the <ENTER> key after each line.  (If the user presses only <CTRL-D> and not <ENTER> after the last line of input, then the extra newline character will be missing on the last line collected.)  We can use the safe C<chomp> operator to remove any trailing newline(s) characters if present, and push each collected line of input onto an array:
+
+    my string_arrayref $input_strings = [];
+    print 'Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:', "\n";
+    while (my string $input_string = <STDIN>) {
+        chomp $input_string;
+        push @{$input_strings}, $input_string;
+    }
+    print "\n";
+    print 'have $input_strings = ', string_arrayref_to_string($input_strings), "\n";
+
+When we run the source code example above, we will be prompted for input until we signal EOF:
+
+=for rperl X<noncode>
+
+    Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
+    alpha
+    beta
+    gamma
+    delta
+    epsilon
+
+    have $input_strings = ['alpha', 'beta', 'gamma', 'delta', 'epsilon']
+
+=for rperl X</noncode>
+
+If we press <CTRL-D> immediately, then no input is collected and we have an empty array, zero elements:
+
+=for rperl X<noncode>
+
+    Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
+
+    have $input_strings = []
+
+=for rperl X</noncode>
+
+If we press <ENTER> once before pressing <CTRL-D>, then a blank line of input is collected and we have an array with one element, an empty string:
+
+=for rperl X<noncode>
+
+    Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
 
 
+    have $input_strings = ['']
 
+=for rperl X</noncode>
 
+If you want to accept only a certain number of input lines, instead of allowing the user to end input with <CTRL-D>, then one option would be to replace the C<while> loop with a C<for> loop instead.  This is left as an exercise for the reader.
 
+=head2 Section 3.18: Exercises
 
-I<"Square brackets"> are also known as just I<"brackets"> for short.
+=head3 1.  Reverse Collected Array Of Strings  [ 30 mins ]
 
-Closely related to the loop concept of an iterator variable is that of an C<"index">, and depending upon the usage you may argue the "i" in C<$i> stands for either "iterator" or "index".  The main difference between an iterator and an index are usage: an iterator is an integer variable used to count loop iterations; whereas an index is a numeric value used to specify an array element, and may be either an integer variable or a hard-coded integer literal.  An iterator can always be used as an index, but an index by definition is not meant to be used as an iterator.
+In the same F<LearningRPerl> directory from the chapter 1 & 2 exercises, create a new sub-directory named F<Chapter3>.  In the new sub-directory, create a RPerl program file named F<exercise_1-stdin_strings_reverse.pl>.
 
-types() introspection subroutine
+Use a C<while> loop to collect data from C<E<lt>STDINE<gt>> until the user signals EOF, storing the collected strings in an array variable named C<$input_strings>.  Use the C<reverse> operator and store the new data in a different array variable named C<$input_strings_reversed>.  Finally, use a C<foreach> loop to print all the elements in reverse order, one-at-a-time.  (Do not use the C<string_arrayref_to_string()> subroutine.)
 
-=head2 Section 3.21: SSE Operators
+Your program should produce exactly the following output, when provided with the first seven letters of the alphabet as input:
 
-    OP08_MATH_ADD_SUB         = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
-    OP07_MATH_MULT_DIV_MOD    = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
+=for rperl X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter3/exercise_1-stdin_strings_reverse.pl 
+    Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
+    a
+    b
+    c
+    d
+    e
+    f
+    g
+
+    Strings in reverse order:
+    g
+    f
+    e
+    d
+    c
+    b
+    a
+
+=for rperl X</noncode>
+
+=head3 2.  Collect Array Indices  [ 45 mins ]
+
+Use the C<qw()> operator to store the following list of words in an array variable named C<$flintstones_and_rubbles>, in exactly this order:
+
+=over
+
+=item * fred
+
+=item * betty
+
+=item * barney
+
+=item * dino
+
+=item * wilma
+
+=item * pebbles
+
+=item * bamm-bamm
+
+=back
+
+Next, use a C<while> loop to collect data from C<E<lt>STDINE<gt>> until the user signals EOF, converting the collected strings to integers and storing them in an array variable named C<$input_indices>.  
+
+Finally, use a C<foreach> loop to print all the elements of C<$flintstones_and_rubbles> which correspond to the collected user input array indices, with the caveat that we do not expect the user to know array indices begin at zero, so the element C<fred> is displayed by user input C<1> instead of C<0>.
+
+Your program should produce exactly the following output, when provided with the first four odd integers as input:
+
+=for rperl X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter3/exercise_2-stdin_array_indices.pl 
+    Please input zero or more integers with values ranging from 1 to 7, separated by <ENTER>, ended by <CTRL-D>:
+    1
+    3
+    5
+    7
+
+    Flintstones & Rubbles:
+    fred
+    barney
+    wilma
+    bamm-bamm
+
+=for rperl X</noncode>
+
+=head3 3.  Sort & Display Collected Array Of Strings  [ 45 mins ]
+
+Create a constant boolean value named C<SINGLE_LINE_OUTPUT>, and set it to C<0>.
+
+Next, use a C<while> loop to collect data from C<E<lt>STDINE<gt>> until the user signals EOF, storing the collected strings in an array variable named C<$input_strings>.  Use the C<sort> operator and store the new data in a different array variable named C<$input_strings_sorted>.
+
+Finally, use a C<foreach> loop containing a nested C<if> statement and C<chomp> operator, in order to print all the elements in sorted order.  If the value of C<SINGLE_LINE_OUTPUT> is true, separate the elements by one space and display all on one line of output; otherwise, display each element on a new line of output.
+
+Your program should produce exactly the output below, when C<SINGLE_LINE_OUTPUT> is set to C<0> and the following strings are provided as input:
+
+=for rperl X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter3/exercise_3-stdin_strings_sort.pl 
+    Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
+    gygax
+    grue
+    gorn
+    galactus
+    galadriel
+
+    Strings in ASCIIbetical order:
+    galactus
+    galadriel
+    gorn
+    grue
+    gygax
+
+=for rperl X</noncode>
+
+Now, set the value of C<SINGLE_LINE_OUTPUT> to C<1> and you should see the following:
+
+=for rperl X<noncode>
+
+    $ rperl -t LearningRPerl/Chapter3/exercise_3-stdin_strings_sort.pl 
+    Please input zero or more strings, separated by <ENTER>, ended by <CTRL-D>:
+    gygax
+    grue
+    gorn
+    galactus
+    galadriel
+
+    Strings in ASCIIbetical order:
+    galactus galadriel gorn grue gygax
+
+=for rperl X</noncode>
 
 X<br>
 
@@ -18027,19 +18457,20 @@ X<br>
 
 =for comment [ INSERT CHAPTER ]
 
-=head3 Section 17.x.x: UNSORTED Operators
+=head2 Section 17.1: SSE Data Structure & Operators
 
-# REGEX
-    %token OP01_NAMED_SCOLON         = /(m;|pos;|qr;|s;|study;|tr;|y;
+    # OP08_MATH_ADD_SUB = /(sse_add|sse_sub)/    # precedence 08 infix: SSE add 'sse_add', SSE subtract 'sse_sub'
+    # OP07_MATH_MULT_DIV_MOD = /(sse_mul|sse_div)/  # precedence 07 infix: SSE multiply 'sse_mul', SSE divide 'sse_div'
 
-# FORMAT
-    %token OP01_NAMED_SCOLON         = /(format;|formline;|write;
+=head3 Section 17.2: Misc & Unsorted Operators
 
-# PACK / UNPACK
-    %token OP01_NAMED_SCOLON         = /(pack;|unpack;|vec;|
+    # REGEX: %token OP01_NAMED_SCOLON = /(m;|pos;|qr;|s;|study;|tr;|y;
 
-# UNSORTED
-TEMPORARILY HIDDEN FROM VIEW
+    # FORMAT: %token OP01_NAMED_SCOLON = /(format;|formline;|write;
+
+    # PACK / UNPACK: %token OP01_NAMED_SCOLON = /(pack;|unpack;|vec;
+
+    # ADDITIONAL UNSORTED OPERATORS, HIDDEN FROM VIEW BELOW
 
 =begin comment
 
@@ -18058,8 +18489,11 @@ TEMPORARILY HIDDEN FROM VIEW
 
 =end comment
 
-X<br>
+=head3 Section 17.3: Type Introspection
 
+C<types()> introspection subroutine
+
+X<br>
 
 =head1 APPENDIX A: EXERCISE ANSWERS
 
@@ -19137,7 +19571,6 @@ In the C<OPERATIONS> section, 2 arrays are created in the C<$fred> and C<$barney
     # [[[ CRITICS ]]]
     ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
     ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
-    ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN> prompt
 
     # [[[ SUBROUTINES ]]]
 
