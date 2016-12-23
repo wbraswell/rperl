@@ -1,0 +1,50 @@
+version: 1.0.{build}
+pull_requests:
+  do_not_increment_build_number: true
+skip_tags: true
+clone_depth: 1
+clone_folder: C:\projects\rperl
+install:
+- cmd: >-
+    choco install astyle
+
+    astyle --version
+
+    choco install curl
+
+    curl -V
+
+    curl -O http://strawberryperl.com/download/5.24.0.1/strawberry-perl-5.24.0.1-32bit.msi
+
+    msiexec /i strawberry-perl-5.24.0.1-32bit.msi /quiet /qn /norestart
+
+    set PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;C:\windows\system32;C:\windows;
+
+    gcc -v
+
+    g++ -v
+
+    perl -V
+
+    perl Makefile.PL
+
+    perl -e"require CPAN;CPAN::Shell->notest('install','App::cpanminus');"
+
+    cpanm -n --installdeps .
+
+    set RPERL_DEBUG=0
+
+    set RPERL_VERBOSE=0
+
+    set PERL5LIB=blib;lib
+
+    set RPERL_TEST_SKIP_T13_DIFF_CHECK=1
+
+    set
+
+    perl -le "print for @INC"
+
+    dmake test
+build: off
+test: off
+deploy: off
