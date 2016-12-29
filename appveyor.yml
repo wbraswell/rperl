@@ -4,8 +4,14 @@ pull_requests:
 skip_tags: true
 clone_depth: 1
 clone_folder: C:\projects\rperl
+
+# This file replaces the following AppVeyor test command sequence:
+# AppVeyor.com -> rperl -> Settings -> Test -> Script
+# choco install strawberryperl --forceX86 && set PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;C:\windows\system32;C:\windows; && gcc -v && g++ -v && perl -V && dmake -V || perl Makefile.PL && perl -e"require CPAN;CPAN::Shell->notest('install','App::cpanminus');" && cpanm -n -v --installdeps . && set RPERL_DEBUG=1 && set RPERL_VERBOSE=1 && dmake test
+
 install:
 - cmd: >-
+
     choco install astyle
 
     astyle --version
