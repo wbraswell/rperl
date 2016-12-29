@@ -1,7 +1,7 @@
 #!/bin/bash
 # Copyright © 2014, 2015, 2016, William N. Braswell, Jr.. All Rights Reserved. This work is Free \& Open Source; you can redistribute it and/or modify it under the same terms as Perl 5.24.0.
 # RPerl Installer Script
-VERSION='0.079_000'
+VERSION='0.115_000'
 
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
@@ -428,6 +428,9 @@ if [ $MENU_CHOICE -le 25 ]; then
 
         echo '[ ANY OPTION: Check GCC Version, Must Be v4.7 Or Newer, Use Manual Build Option If Automatic Install Options Fail Or Are Too Old ]'
         B g++ --version
+
+        echo '[ ANY OPTION: Check AStyle Version, Must Be v2.05.1 Or Newer, Use Manual Build Option If Automatic Install Options Fail Or Are Too Old ]'
+        B astyle -V
 
         echo '[ ANY OPTION: Install RPerl Dependency Pluto PolyCC, Download ]'
         B 'wget https://github.com/wbraswell/pluto-mirror/raw/master/backup/pluto-0.11.4.tar.gz; tar -xzvf pluto-0.11.4.tar.gz'
