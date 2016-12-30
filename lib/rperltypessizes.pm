@@ -18,7 +18,7 @@ our $VERSION = 0.001_000;
 
 # [[[ NON-RPERL MODULES ]]]
 use Config;
-use Carp;
+use Carp qw(croak);
 
 # [[[ PRE-DECLARED TYPES ]]]
 package    # hide from PAUSE indexing
