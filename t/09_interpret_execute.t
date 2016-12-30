@@ -241,16 +241,16 @@ foreach my $test_file ( sort keys %{$test_files} ) {
             if ( defined $test_files->{$test_file}->{successes} ) {
                success_match($test_file, $test_files->{$test_file}->{successes}, $stdout_generated_lines);
             }
-            elsif ( ( defined $test_files->{$test_file}->{successes_integer_32} ) and ( rperltypes::type_integer_bitsize() == 32 ) ) {
+            elsif ( ( defined $test_files->{$test_file}->{successes_integer_32} ) and ( rperltypessizes::type_integer_bitsize() == 32 ) ) {
                success_match($test_file, $test_files->{$test_file}->{successes_integer_32}, $stdout_generated_lines);
             }
-            elsif ( ( defined $test_files->{$test_file}->{successes_integer_64} ) and ( rperltypes::type_integer_bitsize() == 64 ) ) {
+            elsif ( ( defined $test_files->{$test_file}->{successes_integer_64} ) and ( rperltypessizes::type_integer_bitsize() == 64 ) ) {
                success_match($test_file, $test_files->{$test_file}->{successes_integer_64}, $stdout_generated_lines);
             }
-            elsif ( ( defined $test_files->{$test_file}->{successes_number_32} ) and ( rperltypes::type_number_bitsize() == 32 ) ) {
+            elsif ( ( defined $test_files->{$test_file}->{successes_number_32} ) and ( rperltypessizes::type_number_bitsize() == 32 ) ) {
                success_match($test_file, $test_files->{$test_file}->{successes_number_32}, $stdout_generated_lines);
             }
-            elsif ( ( defined $test_files->{$test_file}->{successes_number_64} ) and ( rperltypes::type_number_bitsize() == 64 ) ) {
+            elsif ( ( defined $test_files->{$test_file}->{successes_number_64} ) and ( rperltypessizes::type_number_bitsize() == 64 ) ) {
                success_match($test_file, $test_files->{$test_file}->{successes_number_64}, $stdout_generated_lines);
             }
 
