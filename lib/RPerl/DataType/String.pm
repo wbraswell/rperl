@@ -40,6 +40,8 @@ use warnings;
 
 # [[[ INCLUDES ]]]
 use POSIX qw(floor);
+use RPerl::HelperFunctions_cpp;  # main::RPerl_SvPOKp
+RPerl::HelperFunctions_cpp::cpp_load();
 
 # [[[ EXPORTS ]]]
 use Exporter 'import';
