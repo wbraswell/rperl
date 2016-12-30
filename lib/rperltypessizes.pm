@@ -26,6 +26,10 @@ package    # hide from PAUSE indexing
 package     # hide from PAUSE indexing
     string_hashref;
 
+# return to primary package namespace
+package  # hide from PAUSE indexing
+    rperltypessizes;
+
 # DEV NOTE, CORRELATION #rp001: keep track of all these hard-coded "semi-dynamic" integer data types
 our string_hashref $ALTERNATE_TYPES_TO_PERLISH_TYPES = {
     '__int8' => 'i8',
