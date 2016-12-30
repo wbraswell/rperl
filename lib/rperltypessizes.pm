@@ -19,6 +19,12 @@ our $VERSION = 0.001_000;
 # [[[ NON-RPERL MODULES ]]]
 use Config;
 
+# [[[ PRE-DECLARED TYPES ]]]
+package    # hide from PAUSE indexing
+    string;
+package     # hide from PAUSE indexing
+    string_hashref;
+
 # DEV NOTE, CORRELATION #rp001: keep track of all these hard-coded "semi-dynamic" integer data types
 our string_hashref $ALTERNATE_TYPES_TO_PERLISH_TYPES = {
     '__int8' => 'i8',
