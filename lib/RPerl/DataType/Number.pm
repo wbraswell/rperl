@@ -3,7 +3,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.009_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -55,7 +55,7 @@ use POSIX qw(floor);
 
 # [[[ EXPORTS ]]]
 use Exporter 'import';
-our @EXPORT = qw(number_to_boolean number_to_unsigned_integer number_to_integer number_to_character number_to_string);
+our @EXPORT = qw(number_CHECK number_CHECKTRACE number_to_boolean number_to_unsigned_integer number_to_integer number_to_character number_to_string);
 
 # [[[ TYPE-CHECKING ]]]
 #our void $number_CHECK = sub {

@@ -3,7 +3,7 @@ package RPerl::DataType::Character;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.007_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::String);
@@ -36,7 +36,7 @@ use warnings;
 
 # [[[ EXPORTS ]]]
 use Exporter 'import';
-our @EXPORT = qw(character_to_boolean character_to_unsigned_integer character_to_integer character_to_number character_to_string);
+our @EXPORT = qw(character_CHECK character_CHECKTRACE character_to_boolean character_to_unsigned_integer character_to_integer character_to_number character_to_string);
 
 # [[[ TYPE-CHECKING ]]]
 #our void $character_CHECK = sub {
