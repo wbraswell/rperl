@@ -48,8 +48,8 @@ RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/CompileUnit/Module.cpp' ]]]
 1;
 EOF
 
-        $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG . rperltypes::type_integer_native_ccflag() . rperltypes::type_number_native_ccflag();
-        $RPerl::Inline::ARGS{cppflags}  = $RPerl::TYPES_CCFLAG . rperltypes::type_integer_native_ccflag() . rperltypes::type_number_native_ccflag();
+        $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypes::type_number_native_ccflag();
+        $RPerl::Inline::ARGS{cppflags}  = $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypes::type_number_native_ccflag();
         # <<< CHANGE_ME: enable optional SSE support here >>>
         # <<< CHANGE_ME: enable optional GMP support here >>>
 

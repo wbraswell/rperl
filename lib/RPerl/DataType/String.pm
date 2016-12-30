@@ -40,10 +40,9 @@ use warnings;
 
 # [[[ INCLUDES ]]]
 use POSIX qw(floor);
-INIT {
+# DEV NOTE: do not put inside INIT{} block, because it will be "too late to run INIT block" in some cases, such as inside Catalyst
 use RPerl::HelperFunctions_cpp;  # main::RPerl_SvPOKp
 RPerl::HelperFunctions_cpp::cpp_load();
-}
 
 # [[[ EXPORTS ]]]
 use Exporter 'import';

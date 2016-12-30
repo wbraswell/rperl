@@ -12,6 +12,7 @@ our $VERSION = 0.003_000;
 
 # [[[ INCLUDES ]]]
 use RPerl::Inline;
+use rperltypessizes;  # get type_integer_native_ccflag() & type_number_native_ccflag() w/out loading the entire RPerl type system via 'use rperltypes;'
 
 # [[[ SUBROUTINES ]]]
 #our void::method $cpp_load = sub {  # DEV NOTE: remove dependency on RPerl
@@ -48,8 +49,8 @@ RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n"
 1;
 EOF
 
-        $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG . rperltypes::type_integer_native_ccflag() . rperltypes::type_number_native_ccflag();
-        $RPerl::Inline::ARGS{cppflags} = $RPerl::TYPES_CCFLAG . rperltypes::type_integer_native_ccflag() . rperltypes::type_number_native_ccflag();
+        $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypes::type_number_native_ccflag();
+        $RPerl::Inline::ARGS{cppflags} = $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypes::type_number_native_ccflag();
 
 #        RPerl::diag("in HelperFunctions_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n");
 #        RPerl::diag("in HelperFunctions_cpp::cpp_load(), CPP not yet loaded, have \%RPerl::Inline::ARGS =\n" . Dumper(\%RPerl::Inline::ARGS) . "\n");
