@@ -3,7 +3,7 @@ package RPerl::DataType::Boolean;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -44,16 +44,18 @@ use Exporter 'import';
 our @EXPORT = qw(boolean_to_unsigned_integer boolean_to_integer boolean_to_number boolean_to_character boolean_to_string);
 
 # [[[ TYPE-CHECKING ]]]
-our void $boolean_CHECK = sub {
+#our void $boolean_CHECK = sub {
+sub boolean_CHECK {
     ( my $possible_boolean ) = @_;
     if ( not( defined $possible_boolean ) ) { croak( "\nERROR EBV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but undefined/null value found,\ncroaking" ); }
     if ( not( main::RPerl_SvBOKp($possible_boolean) ) ) { croak( "\nERROR EBV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but non-boolean value found,\ncroaking" ); }
-};
-our void $boolean_CHECKTRACE = sub {
+}
+#our void $boolean_CHECKTRACE = sub {
+sub boolean_CHECKTRACE {
     ( my $possible_boolean, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_boolean ) ) { croak( "\nERROR EBV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
     if ( not( main::RPerl_SvBOKp($possible_boolean) ) ) { croak( "\nERROR EBV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but non-boolean value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
-};
+}
 
 # [[[ UNSIGNED INTEGERIFY ]]]
 #our unsigned_integer $boolean_to_unsigned_integer = sub {

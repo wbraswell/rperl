@@ -3,7 +3,7 @@ package RPerl::DataType::String;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.007_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -46,7 +46,8 @@ use Exporter 'import';
 our @EXPORT = qw(string_to_boolean string_to_unsigned_integer string_to_integer string_to_number string_to_character string_to_string);
 
 # [[[ TYPE CHECKING ]]]
-our void $string_CHECK = sub {
+#our void $string_CHECK = sub {
+sub string_CHECK {
     ( my $possible_string ) = @_;
     if ( not( defined $possible_string ) ) {
         croak(
@@ -58,8 +59,12 @@ our void $string_CHECK = sub {
             "\nERROR EPV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found,\ncroaking"
         );
     }
-};
-our void $string_CHECKTRACE = sub {
+}
+
+# DEV NOTE: avoid error for those packages which do NOT 'use RPerl', but instead do 'use RPerl::AfterSubclass' and 'use RPerl::Config' and 'use rperltypesconv' etc.
+# "Undefined subroutine &RPerl::DataType::String::string_CHECKTRACE called at lib/RPerl/DataType/String.pm line XYZ   [ in string_to_integer() below ]
+#our void $string_CHECKTRACE = sub {
+sub string_CHECKTRACE {
     ( my $possible_string, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_string ) ) {
         croak(
@@ -71,7 +76,7 @@ our void $string_CHECKTRACE = sub {
             "\nERROR EPV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
-};
+}
 
 # [[[ BOOLEANIFY ]]]
 #our boolean $string_to_boolean = sub {

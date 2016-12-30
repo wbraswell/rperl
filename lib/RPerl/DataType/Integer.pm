@@ -3,7 +3,7 @@ package RPerl::DataType::Integer;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_100;
+our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -50,7 +50,8 @@ use Exporter 'import';
 our @EXPORT = qw(integer_to_boolean integer_to_unsigned_integer integer_to_number integer_to_character integer_to_string);
 
 # [[[ TYPE-CHECKING ]]]
-our void $integer_CHECK = sub {
+#our void $integer_CHECK = sub {
+sub integer_CHECK {
     ( my $possible_integer ) = @_;
     if ( not( defined $possible_integer ) ) {
         croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but undefined/null value found,\ncroaking");
@@ -58,8 +59,9 @@ our void $integer_CHECK = sub {
     if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
         croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found,\ncroaking");
     }
-};
-our void $integer_CHECKTRACE = sub {
+}
+#our void $integer_CHECKTRACE = sub {
+sub integer_CHECKTRACE {
     ( my $possible_integer, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_integer ) ) {
         croak(
@@ -71,7 +73,7 @@ our void $integer_CHECKTRACE = sub {
             "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
-};
+}
 
 # [[[ BOOLEANIFY ]]]
 #our boolean $integer_to_boolean = sub {

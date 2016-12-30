@@ -3,7 +3,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_100;
+our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -58,7 +58,8 @@ use Exporter 'import';
 our @EXPORT = qw(number_to_boolean number_to_unsigned_integer number_to_integer number_to_character number_to_string);
 
 # [[[ TYPE-CHECKING ]]]
-our void $number_CHECK = sub {
+#our void $number_CHECK = sub {
+sub number_CHECK {
     ( my $possible_number ) = @_;
     if ( not( defined $possible_number ) ) {
         croak(
@@ -73,8 +74,9 @@ our void $number_CHECK = sub {
             "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\ncroaking"
         );
     }
-};
-our void $number_CHECKTRACE = sub {
+}
+#our void $number_CHECKTRACE = sub {
+sub number_CHECKTRACE {
     ( my $possible_number, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_number ) ) {
         croak(
@@ -89,7 +91,7 @@ our void $number_CHECKTRACE = sub {
             "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
-};
+}
 
 # [[[ BOOLEANIFY ]]]
 #our boolean $number_to_boolean = sub {

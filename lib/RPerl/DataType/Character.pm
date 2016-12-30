@@ -3,7 +3,7 @@ package RPerl::DataType::Character;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_200;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::String);
@@ -39,16 +39,18 @@ use Exporter 'import';
 our @EXPORT = qw(character_to_boolean character_to_unsigned_integer character_to_integer character_to_number character_to_string);
 
 # [[[ TYPE-CHECKING ]]]
-our void $character_CHECK = sub {
+#our void $character_CHECK = sub {
+sub character_CHECK {
     ( my $possible_character ) = @_;
     if ( not( defined $possible_character ) ) { croak( "\nERROR ETV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but undefined/null value found,\ncroaking" ); }
     if ( not( main::RPerl_SvCOKp($possible_character) ) ) { croak( "\nERROR ETV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but non-character value found,\ncroaking" ); }
-};
-our void $character_CHECKTRACE = sub {
+}
+#our void $character_CHECKTRACE = sub {
+sub character_CHECKTRACE {
     ( my $possible_character, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_character ) ) { croak( "\nERROR ETV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
     if ( not( main::RPerl_SvCOKp($possible_character) ) ) { croak( "\nERROR ETV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but non-character value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
-};
+}
 
 # [[[ BOOLEANIFY ]]]
 #our boolean $character_to_boolean = sub {
