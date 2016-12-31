@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -49,7 +49,8 @@ our string_hashref $ALTERNATE_TYPES_TO_PERLISH_TYPES = {
 # [[[ C++ TYPE SIZE REPORTING ]]]
 sub type_integer_bitsize {
     type_integer_errorcheck();
-    return (string_to_integer($Config{ivsize}) * 8);  # return answer in bits, not bytes
+#    return (string_to_integer($Config{ivsize}) * 8);  # return answer in bits, not bytes
+    return ($Config{ivsize} * 8);  # return answer in bits, not bytes
 }
 
 sub type_integer_native {
@@ -137,7 +138,8 @@ sub type_integer_bitsize_dump {
 
 sub type_number_bitsize {
     type_number_errorcheck();
-    return (string_to_integer($Config{nvsize}) * 8);  # return answer in bits, not bytes
+#    return (string_to_integer($Config{nvsize}) * 8);  # return answer in bits, not bytes
+    return ($Config{nvsize} * 8);  # return answer in bits, not bytes
 }
 
 sub type_number_native {

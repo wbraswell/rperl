@@ -3,12 +3,20 @@ package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.010_000;
 
+# [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd)  # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
+
+# [[[ EXPORTS ]]]
+use Exporter 'import';
+our @EXPORT = qw(hashref_CHECK hashref_CHECKTRACE integer_hashref_CHECK integer_hashref_CHECKTRACE number_hashref_CHECK number_hashref_CHECKTRACE string_hashref_CHECK string_hashref_CHECKTRACE);
+
+# [[[ INCLUDES ]]]
+use RPerl::DataType::Integer;  # integer_CHECKTRACE
 
 # [[[ HASHES ]]]
 
@@ -34,9 +42,15 @@ use warnings;
 use parent -norequire, qw(RPerl::DataStructure::Hash::Reference);
 use Carp;
 
+# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
+package RPerl::DataStructure::Hash::SubTypes;
+use strict;
+use warnings;
+
 # [[[ TYPE-CHECKING ]]]
 
-our void $hashref_CHECK = sub {
+#our void $hashref_CHECK = sub {
+sub hashref_CHECK {
     ( my $possible_hashref ) = @_;
     if ( not( defined $possible_hashref ) ) {
         croak(
@@ -50,8 +64,11 @@ our void $hashref_CHECK = sub {
             "\nERROR EHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhashref value expected but non-hashref value found,\ncroaking"
         );
     }
-};
-our void $hashref_CHECKTRACE = sub {
+}
+
+
+#our void $hashref_CHECKTRACE = sub {
+sub hashref_CHECKTRACE {
     ( my $possible_hashref, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_hashref ) ) {
         croak(
@@ -63,7 +80,7 @@ our void $hashref_CHECKTRACE = sub {
             "\nERROR EHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhashref value expected but non-hashref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
-};
+}
 
 # [[[ INTEGER HASH REF ]]]
 # [[[ INTEGER HASH REF ]]]
@@ -77,9 +94,15 @@ use warnings;
 use parent -norequire, qw(hashref);
 use Carp;
 
+# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
+package RPerl::DataStructure::Hash::SubTypes;
+use strict;
+use warnings;
+
 # [[[ TYPE-CHECKING ]]]
 
-our void $integer_hashref_CHECK = sub {
+#our void $integer_hashref_CHECK = sub {
+sub integer_hashref_CHECK {
     ( my $possible_integer_hashref ) = @_;
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with integer-specific error codes
@@ -115,9 +138,11 @@ our void $integer_hashref_CHECK = sub {
             );
         }
     }
-};
+}
 
-our void $integer_hashref_CHECKTRACE = sub {
+
+#our void $integer_hashref_CHECKTRACE = sub {
+sub integer_hashref_CHECKTRACE {
     ( my $possible_integer_hashref, my $variable_name, my $subroutine_name )
         = @_;
 
@@ -154,7 +179,7 @@ our void $integer_hashref_CHECKTRACE = sub {
             );
         }
     }
-};
+}
 
 # [[[ STRINGIFY ]]]
 
@@ -164,8 +189,8 @@ our string $integer_hashref_to_string = sub {
 
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_hashref_to_string(), top of subroutine\n");
 
-    #    ::integer_hashref_CHECK($input_hv_ref);
-    ::integer_hashref_CHECKTRACE( $input_hv_ref, '$input_hv_ref',
+    #    integer_hashref_CHECK($input_hv_ref);
+    integer_hashref_CHECKTRACE( $input_hv_ref, '$input_hv_ref',
         'integer_hashref_to_string()' );
 
     my %input_hv;
@@ -189,8 +214,8 @@ our string $integer_hashref_to_string = sub {
         $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
 # DEV NOTE: integer type-checking already done as part of integer_hashref_CHECKTRACE()
-#        ::integer_CHECK($input_hv_entry_value);
-#        ::integer_CHECKTRACE( $input_hv_entry_value, "\$input_hv_entry_value at key '$key'", 'integer_hashref_to_string()' );
+#        integer_CHECK($input_hv_entry_value);
+#        integer_CHECKTRACE( $input_hv_entry_value, "\$input_hv_entry_value at key '$key'", 'integer_hashref_to_string()' );
 
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ', '; }
@@ -212,8 +237,8 @@ our string $integer_hashref_to_string = sub {
 our string $integer_hashref__typetest0 = sub {
     ( my integer_hashref $lucky_integers) = @_;
 
-    #    ::integer_hashref_CHECK($lucky_integers);
-    ::integer_hashref_CHECKTRACE( $lucky_integers, '$lucky_integers',
+    #    integer_hashref_CHECK($lucky_integers);
+    integer_hashref_CHECKTRACE( $lucky_integers, '$lucky_integers',
         'integer_hashref__typetest0()' );
 
 #    foreach my string $key ( keys %{$lucky_integers} ) {
@@ -232,8 +257,8 @@ our string $integer_hashref__typetest0 = sub {
 our integer_hashref $integer_hashref__typetest1 = sub {
     ( my integer $my_size) = @_;
 
-    #    ::integer_CHECK($my_size);
-    ::integer_CHECKTRACE( $my_size, '$my_size',
+    #    integer_CHECK($my_size);
+    integer_CHECKTRACE( $my_size, '$my_size',
         'integer_hashref__typetest1()' );
     my integer_hashref $new_hash = {};
     my string $temp_key;
@@ -258,9 +283,15 @@ use warnings;
 use parent -norequire, qw(hashref);
 use Carp;
 
+# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
+package RPerl::DataStructure::Hash::SubTypes;
+use strict;
+use warnings;
+
 # [[[ TYPE-CHECKING ]]]
 
-our void $number_hashref_CHECK = sub {
+#our void $number_hashref_CHECK = sub {
+sub number_hashref_CHECK {
     ( my $possible_number_hashref ) = @_;
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with number-specific error codes
@@ -299,9 +330,11 @@ our void $number_hashref_CHECK = sub {
             );
         }
     }
-};
+}
 
-our void $number_hashref_CHECKTRACE = sub {
+
+#our void $number_hashref_CHECKTRACE = sub {
+sub number_hashref_CHECKTRACE {
     ( my $possible_number_hashref, my $variable_name, my $subroutine_name )
         = @_;
 
@@ -341,7 +374,7 @@ our void $number_hashref_CHECKTRACE = sub {
             );
         }
     }
-};
+}
 
 # [[[ STRINGIFY ]]]
 
@@ -351,8 +384,8 @@ our string $number_hashref_to_string = sub {
 
 #    RPerl::diag("in PERLOPS_PERLTYPES number_hashref_to_string(), top of subroutine\n");
 
-    #    ::number_hashref_CHECK($input_hv_ref);
-    ::number_hashref_CHECKTRACE( $input_hv_ref, '$input_hv_ref',
+    #    number_hashref_CHECK($input_hv_ref);
+    number_hashref_CHECKTRACE( $input_hv_ref, '$input_hv_ref',
         'number_hashref_to_string()' );
 
     my %input_hv;
@@ -394,8 +427,8 @@ our string $number_hashref_to_string = sub {
 our string $number_hashref__typetest0 = sub {
     ( my number_hashref $lucky_numbers) = @_;
 
-    #    ::number_hashref_CHECK($lucky_numbers);
-    ::number_hashref_CHECKTRACE( $lucky_numbers, '$lucky_numbers',
+    #    number_hashref_CHECK($lucky_numbers);
+    number_hashref_CHECKTRACE( $lucky_numbers, '$lucky_numbers',
         'number_hashref__typetest0()' );
 
 #    foreach my string $key ( keys %{$lucky_numbers} ) {
@@ -412,8 +445,8 @@ our string $number_hashref__typetest0 = sub {
 our number_hashref $number_hashref__typetest1 = sub {
     ( my integer $my_size) = @_;
 
-    #    ::integer_CHECK($my_size);
-    ::integer_CHECKTRACE( $my_size, '$my_size',
+    #    integer_CHECK($my_size);
+    integer_CHECKTRACE( $my_size, '$my_size',
         'number_hashref__typetest1()' );
     my number_hashref $new_hash = {};
     my string $temp_key;
@@ -426,7 +459,9 @@ our number_hashref $number_hashref__typetest1 = sub {
     return ($new_hash);
 };
 
-# [[[ CHAR HASHES ]]]
+# [[[ CHARACTER HASHE REF ]]]
+# [[[ CHARACTER HASHE REF ]]]
+# [[[ CHARACTER HASHE REF ]]]
 
 # (ref to hash) of chars
 package  # hide from PAUSE indexing
@@ -447,9 +482,15 @@ use warnings;
 use parent -norequire, qw(hashref);
 use Carp;
 
+# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
+package RPerl::DataStructure::Hash::SubTypes;
+use strict;
+use warnings;
+
 # [[[ TYPE-CHECKING ]]]
 
-our void $string_hashref_CHECK = sub {
+#our void $string_hashref_CHECK = sub {
+sub string_hashref_CHECK {
     ( my $possible_string_hashref ) = @_;
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with string-specific error codes
@@ -485,9 +526,11 @@ our void $string_hashref_CHECK = sub {
             );
         }
     }
-};
+}
 
-our void $string_hashref_CHECKTRACE = sub {
+
+#our void $string_hashref_CHECKTRACE = sub {
+sub string_hashref_CHECKTRACE {
     ( my $possible_string_hashref, my $variable_name, my $subroutine_name )
         = @_;
 
@@ -524,7 +567,7 @@ our void $string_hashref_CHECKTRACE = sub {
             );
         }
     }
-};
+}
 
 # [[[ STRINGIFY ]]]
 
@@ -534,8 +577,8 @@ our string $string_hashref_to_string = sub {
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string_hashref_to_string(), top of subroutine\n");
 
-    #    ::string_hashref_CHECK($input_hv_ref);
-    ::string_hashref_CHECKTRACE( $input_hv_ref, '$input_hv_ref',
+    #    string_hashref_CHECK($input_hv_ref);
+    string_hashref_CHECKTRACE( $input_hv_ref, '$input_hv_ref',
         'string_hashref_to_string()' );
 
     my %input_hv;
@@ -578,8 +621,8 @@ our string $string_hashref_to_string = sub {
 our string $string_hashref__typetest0 = sub {
     ( my string_hashref $people) = @_;
 
-    #    ::string_hashref_CHECK($lucky_numbers);
-    ::string_hashref_CHECKTRACE( $people, '$people',
+    #    string_hashref_CHECK($lucky_numbers);
+    string_hashref_CHECKTRACE( $people, '$people',
         'string_hashref__typetest0()' );
 
 #    foreach my string $key ( keys %{$people} ) {
@@ -595,8 +638,8 @@ our string $string_hashref__typetest0 = sub {
 our string_hashref $string_hashref__typetest1 = sub {
     ( my integer $my_size) = @_;
 
-    #    ::integer_CHECK($my_size);
-    ::integer_CHECKTRACE( $my_size, '$my_size',
+    #    integer_CHECK($my_size);
+    integer_CHECKTRACE( $my_size, '$my_size',
         'string_hashref__typetest1()' );
     my string_hashref $people = {};
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {

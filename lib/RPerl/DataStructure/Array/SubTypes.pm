@@ -3,20 +3,28 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.009_000;
+our $VERSION = 0.010_000;
 
+# [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd)  # DEVELOPER DEFAULT 1b: allow unreachable & POD-commented code, must be after line 1
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
+
+# [[[ EXPORTS ]]]
+use Exporter 'import';
+our @EXPORT = qw(arrayref_CHECK arrayref_CHECKTRACE integer_arrayref_CHECK integer_arrayref_CHECKTRACE number_arrayref_CHECK number_arrayref_CHECKTRACE string_arrayref_CHECK string_arrayref_CHECKTRACE);
+
+# [[[ INCLUDES ]]]
+use RPerl::DataType::Integer;  # integer_CHECKTRACE
 
 # [[[ PRE-DECLARED TYPES ]]]
 package    # hide from PAUSE indexing
     boolean;
 package    # hide from PAUSE indexing
     unsigned_integer;
-package     # hide from PAUSE indexing
-    integer;
+#package     # hide from PAUSE indexing
+#    integer;
 package    # hide from PAUSE indexing
     number;
 package    # hide from PAUSE indexing
@@ -48,9 +56,15 @@ use warnings;
 use parent -norequire, qw(RPerl::DataStructure::Array::Reference);
 use Carp;
 
+# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
+package RPerl::DataStructure::Array::SubTypes;
+use strict;
+use warnings;
+
 # [[[ TYPE-CHECKING ]]]
 
-our void $arrayref_CHECK = sub {
+#our void $arrayref_CHECK = sub {
+sub arrayref_CHECK {
     ( my $possible_arrayref ) = @_;
     if ( not( defined $possible_arrayref ) ) {
         croak(
@@ -64,8 +78,11 @@ our void $arrayref_CHECK = sub {
             "\nERROR EAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\narrayref value expected but non-arrayref value found,\ncroaking"
         );
     }
-};
-our void $arrayref_CHECKTRACE = sub {
+}
+
+
+#our void $arrayref_CHECKTRACE = sub {
+sub arrayref_CHECKTRACE {
     ( my $possible_arrayref, my $variable_name, my $subroutine_name ) = @_;
     if ( not( defined $possible_arrayref ) ) {
         croak(
@@ -77,7 +94,7 @@ our void $arrayref_CHECKTRACE = sub {
             "\nERROR EAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\narrayref value expected but non-arrayref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
-};
+}
 
 # [[[ INTEGER ARRAY REF ]]]
 # [[[ INTEGER ARRAY REF ]]]
@@ -91,9 +108,15 @@ use warnings;
 use parent -norequire, qw(arrayref);
 use Carp;
 
+# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
+package RPerl::DataStructure::Array::SubTypes;
+use strict;
+use warnings;
+
 # [[[ TYPE-CHECKING ]]]
 
-our void $integer_arrayref_CHECK = sub {
+#our void $integer_arrayref_CHECK = sub {
+sub integer_arrayref_CHECK {
     ( my $possible_integer_arrayref ) = @_;
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the arrayref_CHECK() subroutine, but with integer-specific error codes
@@ -128,7 +151,10 @@ our void $integer_arrayref_CHECK = sub {
         }
     }
 };
-our void $integer_arrayref_CHECKTRACE = sub {
+
+
+#our void $integer_arrayref_CHECKTRACE = sub {
+sub integer_arrayref_CHECKTRACE {
     ( my $possible_integer_arrayref, my $variable_name, my $subroutine_name )
         = @_;
     if ( not( defined $possible_integer_arrayref ) ) {
@@ -158,7 +184,7 @@ our void $integer_arrayref_CHECKTRACE = sub {
             );
         }
     }
-};
+}
 
 # [[[ STRINGIFY ]]]
 
@@ -170,8 +196,8 @@ our string $integer_arrayref_to_string = sub {
 
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), top of subroutine\n");
 
-    #    ::integer_arrayref_CHECK($input_avref);
-    ::integer_arrayref_CHECKTRACE( $input_avref, '$input_avref', 'integer_arrayref_to_string()' );
+    #    integer_arrayref_CHECK($input_avref);
+    integer_arrayref_CHECKTRACE( $input_avref, '$input_avref', 'integer_arrayref_to_string()' );
 
     # declare local variables, av & sv mean "array value" & "scalar value" as used in Perl core
 #    my @input_av;  # DEV NOTE: match CPPOPS_*TYPES code
@@ -198,8 +224,8 @@ our string $integer_arrayref_to_string = sub {
         $input_av_element = $input_avref->[$i];
 
 # DEV NOTE: integer type-checking already done as part of integer_arrayref_CHECKTRACE()
-#        ::integer_CHECK($input_av_element);
-#::integer_CHECKTRACE( $input_av_element, "\$input_av_element at index $i", 'integer_arrayref_to_string()' );
+#        integer_CHECK($input_av_element);
+#integer_CHECKTRACE( $input_av_element, "\$input_av_element at index $i", 'integer_arrayref_to_string()' );
 
         # append comma & space to output string for all elements except index 0
         if ($i_is_0) { $i_is_0 = 0; }
@@ -224,8 +250,8 @@ our string $integer_arrayref_to_string = sub {
 our string $integer_arrayref__typetest0 = sub {
     ( my integer_arrayref $lucky_integers) = @_;
 
-    #    ::integer_arrayref_CHECK($lucky_integers);
-    ::integer_arrayref_CHECKTRACE( $lucky_integers, '$lucky_integers',
+    #    integer_arrayref_CHECK($lucky_integers);
+    integer_arrayref_CHECKTRACE( $lucky_integers, '$lucky_integers',
         'integer_arrayref__typetest0()' );
 
 #    my integer $how_lucky = scalar @{$lucky_integers};
@@ -241,8 +267,8 @@ our string $integer_arrayref__typetest0 = sub {
 our integer_arrayref $integer_arrayref__typetest1 = sub {
     ( my integer $my_size) = @_;
 
-    #    ::integer_CHECK($my_size);
-    ::integer_CHECKTRACE( $my_size, '$my_size',
+    #    integer_CHECK($my_size);
+    integer_CHECKTRACE( $my_size, '$my_size',
         'integer_arrayref__typetest1()' );
     my integer_arrayref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
@@ -265,9 +291,15 @@ use warnings;
 use parent -norequire, qw(arrayref);
 use Carp;
 
+# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
+package RPerl::DataStructure::Array::SubTypes;
+use strict;
+use warnings;
+
 # [[[ TYPE-CHECKING ]]]
 
-our void $number_arrayref_CHECK = sub {
+#our void $number_arrayref_CHECK = sub {
+sub number_arrayref_CHECK {
     ( my $possible_number_arrayref ) = @_;
     if ( not( defined $possible_number_arrayref ) ) {
         croak(
@@ -299,8 +331,11 @@ our void $number_arrayref_CHECK = sub {
             );
         }
     }
-};
-our void $number_arrayref_CHECKTRACE = sub {
+}
+
+
+#our void $number_arrayref_CHECKTRACE = sub {
+sub number_arrayref_CHECKTRACE {
     ( my $possible_number_arrayref, my $variable_name, my $subroutine_name )
         = @_;
     if ( not( defined $possible_number_arrayref ) ) {
@@ -332,7 +367,7 @@ our void $number_arrayref_CHECKTRACE = sub {
             );
         }
     }
-};
+}
 
 # [[[ STRINGIFY ]]]
 
@@ -342,8 +377,8 @@ our string $number_arrayref_to_string = sub {
 
 #    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), top of subroutine\n");
 
-    #    ::number_arrayref_CHECK($input_avref);
-    ::number_arrayref_CHECKTRACE( $input_avref, '$input_avref',
+    #    number_arrayref_CHECK($input_avref);
+    number_arrayref_CHECKTRACE( $input_avref, '$input_avref',
         'number_arrayref_to_string()' );
 
     my @input_av;
@@ -381,8 +416,8 @@ our string $number_arrayref_to_string = sub {
 our string $number_arrayref__typetest0 = sub {
     ( my number_arrayref $lucky_numbers) = @_;
 
-    #    ::number_arrayref_CHECK($lucky_numbers);
-    ::number_arrayref_CHECKTRACE( $lucky_numbers, '$lucky_numbers',
+    #    number_arrayref_CHECK($lucky_numbers);
+    number_arrayref_CHECKTRACE( $lucky_numbers, '$lucky_numbers',
         'number_arrayref__typetest0()' );
 
 #    my integer $how_lucky = scalar @{$lucky_numbers};
@@ -398,8 +433,8 @@ our string $number_arrayref__typetest0 = sub {
 our number_arrayref $number_arrayref__typetest1 = sub {
     ( my integer $my_size) = @_;
 
-    #    ::integer_CHECK($my_size);
-    ::integer_CHECKTRACE( $my_size, '$my_size',
+    #    integer_CHECK($my_size);
+    integer_CHECKTRACE( $my_size, '$my_size',
         'number_arrayref__typetest1()' );
     my number_arrayref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
@@ -410,7 +445,9 @@ our number_arrayref $number_arrayref__typetest1 = sub {
     return ($new_array);
 };
 
-# [[[ CHAR ARRAYS ]]]
+# [[[ CHARACTER ARRAY REF ]]]
+# [[[ CHARACTER ARRAY REF ]]]
+# [[[ CHARACTER ARRAY REF ]]]
 
 # (ref to array) of chars
 package  # hide from PAUSE indexing
@@ -431,9 +468,15 @@ use warnings;
 use parent -norequire, qw(arrayref);
 use Carp;
 
+# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
+package RPerl::DataStructure::Array::SubTypes;
+use strict;
+use warnings;
+
 # [[[ TYPE-CHECKING ]]]
 
-our void $string_arrayref_CHECK = sub {
+#our void $string_arrayref_CHECK = sub {
+sub string_arrayref_CHECK {
     ( my $possible_string_arrayref ) = @_;
     if ( not( defined $possible_string_arrayref ) ) {
         croak(
@@ -462,9 +505,11 @@ our void $string_arrayref_CHECK = sub {
             );
         }
     }
-};
+}
 
-our void $string_arrayref_CHECKTRACE = sub {
+
+#our void $string_arrayref_CHECKTRACE = sub {
+sub string_arrayref_CHECKTRACE {
     ( my $possible_string_arrayref, my $variable_name, my $subroutine_name )
         = @_;
     if ( not( defined $possible_string_arrayref ) ) {
@@ -493,7 +538,7 @@ our void $string_arrayref_CHECKTRACE = sub {
             );
         }
     }
-};
+}
 
 # [[[ STRINGIFY ]]]
 
@@ -503,8 +548,8 @@ our string $string_arrayref_to_string = sub {
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), top of subroutine\n");
 
-    #    ::string_arrayref_CHECK($input_avref);
-    ::string_arrayref_CHECKTRACE( $input_avref, '$input_avref',
+    #    string_arrayref_CHECK($input_avref);
+    string_arrayref_CHECKTRACE( $input_avref, '$input_avref',
         'string_arrayref_to_string()' );
 
     my @input_av;
@@ -544,8 +589,8 @@ our string $string_arrayref_to_string = sub {
 our string $string_arrayref__typetest0 = sub {
     ( my string_arrayref $people) = @_;
 
-    #    ::string_arrayref_CHECK($people);
-    ::string_arrayref_CHECKTRACE( $people, '$people',
+    #    string_arrayref_CHECK($people);
+    string_arrayref_CHECKTRACE( $people, '$people',
         'string_arrayref__typetest0()' );
 
 #    my integer $how_crowded = scalar @{$people};
@@ -560,8 +605,8 @@ our string $string_arrayref__typetest0 = sub {
 our string_arrayref $string_arrayref__typetest1 = sub {
     ( my integer $my_size) = @_;
 
-    #    ::integer_CHECK($my_size);
-    ::integer_CHECKTRACE( $my_size, '$my_size',
+    #    integer_CHECK($my_size);
+    integer_CHECKTRACE( $my_size, '$my_size',
         'string_arrayref__typetest1()' );
     my string_arrayref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {

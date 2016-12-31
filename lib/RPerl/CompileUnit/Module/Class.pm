@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get @ARG, Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.037_100;
+our $VERSION = 0.038_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -44,6 +44,36 @@ local $SIG{__WARN__} = sub {
     return if $_[0] =~ /^Use of inherited AUTOLOAD for non-method /xms;
     carp @ARG;
 };
+
+BEGIN {
+    #RPerl::diag('in Class.pm BEGIN block, about to use data types...' . "\n");
+
+    # DEV NOTE, CORRELATION #rp012: type system includes, hard-copies in rperltypes.pm & rperltypesconv.pm & Class.pm
+
+    # [[[ DATA TYPES ]]]
+    use RPerl::DataType::Void;
+    use RPerl::DataType::Boolean;
+    use RPerl::DataType::UnsignedInteger;
+    use RPerl::DataType::Integer;
+    use RPerl::DataType::Number;
+    use RPerl::DataType::Character;
+    use RPerl::DataType::String;
+    use RPerl::DataType::Scalar;
+    use RPerl::DataType::Unknown;
+    use RPerl::DataType::FileHandle;
+
+    #RPerl::diag('in Class.pm BEGIN block, about to use data structures...' . "\n");
+
+    # [[[ DATA STRUCTURES ]]]
+    use RPerl::DataStructure::Array;
+    use RPerl::DataStructure::Array::SubTypes;
+    use RPerl::DataStructure::Array::Reference;
+    use RPerl::DataStructure::Hash;
+    use RPerl::DataStructure::Hash::SubTypes;
+    use RPerl::DataStructure::Hash::Reference;
+
+    #RPerl::diag('in Class.pm BEGIN block, done' . "\n");
+}
 
 # after compiling but before runtime: create symtab entries for all RPerl functions/methods, and accessors/mutators for all RPerl class properties
 INIT {
@@ -427,7 +457,7 @@ INIT {
                                 #                                RPerl::diag( 'in Class.pm INIT block, CHECK IS ON' . "\n" );
                                 my $i = 0;                                                # integer
                                 foreach my $subroutine_argument ( @{$subroutine_arguments} ) {
-                                    $subroutine_arguments_check_code .= q{    } . '::' . $subroutine_argument->[0] . '_CHECK( $_[' . $i . '] );' . "\n";
+                                    $subroutine_arguments_check_code .= q{    } . $subroutine_argument->[0] . '_CHECK( $_[' . $i . '] );' . "\n";
                                     $i++;
                                 }
 
@@ -443,14 +473,7 @@ INIT {
                                 my $i = 0;    # integer
                                 foreach my $subroutine_argument ( @{$subroutine_arguments} ) {
                                     $subroutine_arguments_check_code
-                                        .= q{    } . '::'
-                                        . $subroutine_argument->[0]
-                                        . '_CHECKTRACE( $_['
-                                        . $i
-                                        . q{], '$}
-                                        . $subroutine_argument->[1] . q{', '}
-                                        . $subroutine_name
-                                        . q{()' );} . "\n";
+                                        .= q{    } . $subroutine_argument->[0] . '_CHECKTRACE( $_[' . $i . q{], '$} . $subroutine_argument->[1] . q{', '} . $subroutine_name . q{()' );} . "\n";
                                     $i++;
                                 }
 

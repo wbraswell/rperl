@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -33,6 +33,8 @@ use Config;
 
 use rperltypessizes;
 
+# DEV NOTE, CORRELATION #rp012: type system includes, hard-copies in rperltypes.pm & rperltypesconv.pm & Class.pm
+
 # [[[ DATA TYPES ]]]
 use RPerl::DataType::Void;
 use RPerl::DataType::Boolean;
@@ -47,8 +49,10 @@ use RPerl::DataType::FileHandle;
 
 # [[[ DATA STRUCTURES ]]]
 use RPerl::DataStructure::Array;
+use RPerl::DataStructure::Array::SubTypes;
 use RPerl::DataStructure::Array::Reference;
 use RPerl::DataStructure::Hash;
+use RPerl::DataStructure::Hash::SubTypes;
 use RPerl::DataStructure::Hash::Reference;
 
 #use RPerl::DataStructure::LinkedList;
