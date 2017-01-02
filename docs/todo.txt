@@ -1,5 +1,4 @@
 DONE
-    replace @_ with @ARG in app code
 
 DOING
     replace @_ with @ARG in system code
