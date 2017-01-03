@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.004_500;
+our $VERSION = 0.005_000;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -30,7 +30,7 @@ WriteMakefile(
         'Inline'              => 0.80,
         'Inline::C'           => 0.76,     # wbraswell added CPPFLAGS
         'Inline::CPP'         => 0.74,     # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack; nanis fixed Win32 filename space bug
-        'Inline::Filters'     => 0.17,     # wbraswell, rurban, & bulk88 added preprocess inc array; wbraswell added CPPFLAGS
+        'Inline::Filters'     => 0.18,     # wbraswell, rurban, & bulk88 added preprocess inc array; wbraswell added CPPFLAGS; bulk88 fix space in path
         'PadWalker'           => 2.1,
         'Module::Refresh'     => 0.17,
         'Filter::Simple'      => 0.91,
