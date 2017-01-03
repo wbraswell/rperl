@@ -1,5 +1,10 @@
 Revision history for Perl compiler RPerl.
 
+2.401000 2017-01-03
+
+    - Microsoft Windows OS Compatibility,
+        Require Inline::Filters v0.18 To Support Spaces In Directory Paths
+
 2.400000 2017-01-01 Codename Aurora
 
     - HOLIDAY EDITION: Happy New Year!

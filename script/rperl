@@ -7,10 +7,10 @@ use RPerl;
 #use RPerl::AfterSubclass;
 
 # DEV NOTE, CORRELATION #rp016: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
-our $VERSION = 2.400_000;
+our $VERSION = 2.401_000;
 
-#our $VERSION = 20170101;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2017.001;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20170103;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2017.003;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -893,7 +893,7 @@ if ($::version_flag) {
 
     # DEV NOTE, CORRELATION #rp016: numbering schemes mentioned below
     my $version_message = <<EOL;
-This is RPerl version 2.400_000, Long Date 20170101, Star Date 2017.001
+This is RPerl version 2.401_000, Long Date 20170103, Star Date 2017.003
 v2.400_000 using RPerl's underscore-is-comma numbering scheme
 v2.400000  using  CPAN's underscore-is-beta  numbering scheme
 
