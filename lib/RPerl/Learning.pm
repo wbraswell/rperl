@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.160_000;
+our $VERSION = 0.161_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -63,6 +63,13 @@ table.operators > tbody > tr > td:nth-child(5)  { text-align: right; }
 =head1 NAME
 
 Learning RPerl
+
+=head1 COPYRIGHT
+
+Learning RPerl is Copyright © 2013, 2014, 2015, 2016, 2017 William N. Braswell, Jr.
+All Rights Reserved.
+
+Learning RPerl is part of the RPerl Family of software and documentation.
 
 =head1 BOOK TITLE
 
