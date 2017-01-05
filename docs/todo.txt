@@ -1,12 +1,12 @@
 DONE
 
 DOING
+    astyle, require for t/13 generate diff check?  (tests fail w/out astyle installed)
     replace @_ with @ARG in system code
     'cannot' -> 'can not' in all docs & source files
     execute via compiled copy not interpreted
     uncompile w/ corrupted or missing PMC, CPP, H files
     uncompile delete EXE files
-    astyle, require for t/13 generate diff check?  (tests fail w/out astyle installed)
     disable variable declaration w/out initial value, grammar & tests & docs
     Learning
         EAR17 & Exxx & any other new errors
