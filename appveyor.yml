@@ -36,8 +36,6 @@ install:
 
     perl -e"require CPAN;CPAN::Shell->notest('install','App::cpanminus');"
 
-#    cpanm --notest --installdeps .
-
     cpanm --verbose --installdeps .
 
     set RPERL_DEBUG=0
