@@ -4,7 +4,7 @@ package RPerl::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_100;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -22,6 +22,9 @@ use rperltypesconv;
 use IPC::Cmd qw(can_run);          # to check for `astyle`
 use File::Temp qw(tempfile);
 use File::Basename;
+use Alien::astyle;
+use Env qw(@PATH);
+unshift @PATH, Alien::astyle->bin_dir();
 
 #use RPerl::Parser;
 #require RPerl::Parser;

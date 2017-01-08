@@ -1,8 +1,10 @@
 # [[[ EXCLUDE ALL GITHUB, UNUSED, AND AUTOMATICALLY-GENERATED FILES FROM CPAN ]]]
-# [ GitHub ]
+# v0.100_000
+# [ GitHub & Travis-CI & AppVeyor ]
 ^\.git
 ^\.gitignore$
 ^\.travis\.yml$
+^\appveyor\.yml$
 
 # [ Inline Build ]
 # NEED UPDATE, CORRELATION #rp005: list of _Inline directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
@@ -26,16 +28,16 @@
 
 # [ CPAN Build & Distribution ]
 # NEED UPDATE, CORRELATION #rp006: list of CPAN files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
-# MANIFEST.SKIP is not auto-generated, do not exclude self
+# MANIFEST.SKIP is not auto-generated, but should not be distributed to end users
+^MANIFEST\.SKIP$
 # MANIFEST is needed by CPAN, do not exclude
-^MANIFEST\.bak
+^MANIFEST\.bak$
 # META.yml & META.json are needed by CPAN, do not exclude
 ^MYMETA\.
 ^Makefile$
 ^Makefile\.old
 ^blib
 ^pm_to_blib
-^RPerl-
 ^MakeMaker-
 
 # [ Temporary Files, Ending With Tilde ~ Or swp ]
@@ -45,8 +47,11 @@ swp$
 # [ POD ]
 ^pod2htmd\.tmp$
 
-# [ RPerl Unused ]
+# [ RPerl Archives ]
 ^backup
+^RPerl-
+
+# [ RPerl Unused ]
 ^lib\/RPerl\/3rd_party_debugging
 ^script\/3rd_party_debugging
 ^script\/development\/unused

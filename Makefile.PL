@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -38,6 +38,7 @@ WriteMakefile(
         'Time::HiRes'         => 1.9726,
         'List::MoreUtils'     => 0.33,
         'Math::BigInt::GMP'   => 1.46,
+        'Alien::astyle'       => 0.002,
 
         # RPERL SYSTEM (NON-USER) DEPENDENCIES
         'Parse::Eyapp'        => 1.182,    # RPerl Grammar; used by grammar_recompile.sh
@@ -47,7 +48,7 @@ WriteMakefile(
         'Date::Format'        => 2.24,     # Learning RPerl; used by pod2rperlhtml.pl
         'Pod::PseudoPod'      => 0.18,     # Learning RPerl; provides ppodchecker, ppod2txt, ppod2html, ppod2docbook
         'Text::ASCIITable'    => 0.20,     # Learning RPerl; used by pod2text & ppod2txt
-	'IPC::Run3'           => 0.048     # RPerl Compiler; used for internals (subcompile, testing)
+        'IPC::Run3'           => 0.048     # RPerl Compiler; used for internals (subcompile, testing)
     },
     META_MERGE => {
         'meta-spec' => {

@@ -1,5 +1,5 @@
 language: perl
-# v0.002_200
+# v0.003_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -47,7 +47,7 @@ install:
 - cd ..
 # end Pluto PolyCC
 - sudo apt-get install curl
-- sudo apt-get install astyle
+#- sudo apt-get install astyle  # rely on Alien::astyle for more platform-independent testing
 
 before_script:
 # MODIFY FOLLOWING LINE TO ENABLE TEST_VERBOSE STDOUT DURING `make test`

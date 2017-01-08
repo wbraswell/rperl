@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.019_000;
+our $VERSION = 0.020_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -35,6 +35,9 @@ use Config qw(config_re);
 use IPC::Run3 qw(run3);
 use Cwd;
 use File::Copy;  # for move()
+use Alien::astyle;
+use Env qw(@PATH);
+unshift @PATH, Alien::astyle->bin_dir();
 
 #our string_arrayref_hashref_hashref $filename_suffixes_supported = {
 our hashref_hashref $filename_suffixes_supported = {

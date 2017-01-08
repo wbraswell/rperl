@@ -1,7 +1,8 @@
 DONE
+    astyle, require for t/13 generate diff check?  (tests fail w/out astyle installed)
+    Parser, disable RequirePod, set theme to core to disable additional policies such as Perlsecret, etc.
 
 DOING
-    astyle, require for t/13 generate diff check?  (tests fail w/out astyle installed)
     replace @_ with @ARG in system code
     'cannot' -> 'can not' in all docs & source files
     execute via compiled copy not interpreted
