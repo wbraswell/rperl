@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use rperlnamespaces;
-our $VERSION = 0.002_000;
+our $VERSION = 0.004_000;
 
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 
@@ -46,6 +46,7 @@ my $namespaces_rperl_missed = {
 # NEED FIX: remove hard-coded list of packages
 # NEED UPDATE: some of these should be in core
 my $namespaces_rperl_deps = {
+    'Alien::'    => 1,
     'AutoSplit::'    => 1,
     'AutoLoader::'    => 1,
     'Class::'        => 1,
@@ -135,7 +136,7 @@ my $namespaces_rperl = rperlnamespaces::hash();
 
 $namespaces_rperl = { %{$namespaces_rperl}, %{$namespaces_rperl_missed} };
 
-# separate RPerl namespaces and Perl core namespaces
+# separate RPerl namespaces and Perl core namespaces; discard Inline build eval_XX_YYYY namespaces
 foreach my $namespace ( keys %{$namespaces_rperl} ) {
     if ( exists $namespaces_core->{$namespace} ) {
         if ( $namespace =~ /rperl/ ) {
@@ -144,6 +145,9 @@ foreach my $namespace ( keys %{$namespaces_rperl} ) {
         else {
             delete $namespaces_rperl->{$namespace};
         }
+    }
+    elsif ((substr $namespace, 0, 5) eq 'eval_') {
+        delete $namespaces_rperl->{$namespace};
     }
 }
 
