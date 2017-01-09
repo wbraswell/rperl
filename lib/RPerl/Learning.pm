@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.161_000;
+our $VERSION = 0.162_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -18359,11 +18359,42 @@ X<br>
 
 =head1 CHAPTER 4: ORGANIZING BY SUBROUTINES
 
-    our void $SWEET_TOOTH = sub { print 'Yum!  I love ', PIE(), "\n"; };  # error in RPerl, compiled modes
-    our void $Sweet_Tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # okay
-    our void $sweet_tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # best
+         sub  sweet_tooth       { print 'Yum!  I love ', PIE(), "\n"; }   # okay in Perl, error in RPerl
+    our void $SWEET_TOOTH = sub { print 'Yum!  I love ', PIE(), "\n"; };  # okay in Perl, error in RPerl
+    our void $Sweet_Tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # okay in Perl, okay  in RPerl
+    our void $sweet_tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # okay in Perl, best  in RPerl
 
-=for comment [ INSERT CHAPTER ]
+
+
+=head2 Section 4.1: Subroutine Definitions
+
+=head2 Section 4.2: Subroutine Calls
+
+=head3 Section 4.2.1: Ampersand Prefix
+
+=head2 Section 4.3: Subroutine Return Values
+
+=head3 Section 4.3.1: C<return> Operator
+
+=head3 Section 4.3.2: Multiple Return Values
+
+=head2 Section 4.4: Subroutine Arguments
+
+=head3 Section 4.4.1: Variadic Subroutines
+
+=head2 Section 4.5: Subroutine Variables
+
+=head3 Section 4.5.1: C<my> Intermittent Variables
+
+=head3 Section 4.5.2: C<state> Persistent Variables
+
+=head2 Section 4.6: C<use strict; use warnings;> Pragmas & Magic
+
+=head2 Section 4.7: Exercises
+
+
+
+
 
 X<br>
 

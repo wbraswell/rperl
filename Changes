@@ -1,6 +1,6 @@
 Revision history for Perl compiler RPerl.
 
-2.402000 2017-01-03
+2.402000 2017-01-07
 
     - Alien::astyle, Add Initial Support For Linux & BSD
     - Parser Perl::Critic, Disable RequirePod; Set Theme To core To Disable Additional Policies Such As Perlsecret, etc.
