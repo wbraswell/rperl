@@ -1,17 +1,17 @@
 language: perl
-# v0.007_000
+# v0.008_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
 #    - "5.8"
-    - "5.10"
-    - "5.12"
-    - "5.14"
-    - "5.16"
-    - "5.18"
-    - "5.20"
-    - "5.22"
-    - "5.24"
+#    - "5.10"
+#    - "5.12"
+#    - "5.14"
+#    - "5.16"
+#    - "5.18"
+#    - "5.20"
+#    - "5.22"
+#    - "5.24"
     # version(s) below are built using Travis-CI Helper
     - "5.25" 
 #    - "dev"  # same as 5.25 above
@@ -84,7 +84,8 @@ before_script:
 # UNCOMMENT FOLLOWING LINE FOR DEV VERSIONS OF MODULES, which travis can't get from Makefile.PL
 #    - cpanm -n INGY/Inline-C-0.62_03.tar.gz
 # DEV NOTE, CORRELATION #rp011: following line was not necessary until before_install & install sections added
-    - cpanm --quiet --installdeps --notest .
+#    - cpanm --quiet --installdeps --notest .
+    - cpanm --verbose --installdeps .
 
 # replace default build command "perl Makefile.PL && make test"
 # DEV NOTE: TEST_VERBOSE variable for ExtUtils::MakeMaker 'make' command disables suppression of stdout;
