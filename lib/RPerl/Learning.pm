@@ -971,7 +971,7 @@ The I<"header"> section is required and always contains 4 lines for an RPerl I<"
 
 The I<"critics"> section is included as necessary and may contain 1 or more lines beginning with C<## no critic>, which disable the errors caused by the over-restrictive nature of some Perl::Critic policies.  There are currently 6 critics commands enabled for normal RPerl users, the first 2 of which are given in this example.  The "USER DEFAULT 1" C<no critic> command allows the use of numeric values such as C<21> and C<12>, as well as the common C<print> command.  The C<USER DEFAULT 2> critics command allows the printing of C<'have $foo = '>, where a single-quoted C<'> string literal value contains the the C<$> dollar sigil (covered later in Chapter 2).
 
-The I<"operations"> section is required and contains 1 or more lines of general-purpose RPerl source code.  This is the main body of your program.  The 6 lines of source code in our example are used to perform some simple arithmetic and display the results.  The C<my integer $foo = 21 + 12;> line declares a new variable named C<$foo> which will only contain non-floating-point numeric data, and which is initialized to contain the arithmetic result of numeric literal values C<21> plus C<12>.  The C<my integer $bar = 23 * 42 * 2;> line does much the same thing, creating a new numeric variable named C<$bar> and initialized with C<23> times C<42> times C<2>.  The C<my number $baz = to_number($bar) / $foo;> line creates a new floating-point numeric variable C<$baz>, and initializes it to the quotient of the C<$bar> and C<$foo> variables.  The C<to_number()> RPerl type conversion I<"subroutine"> converts a non-floating-point C<integer> value to a floating-point C<number> value.  (A subroutine is like a user-defined operation, in this case pre-defined by the RPerl development team for your convenience; please see L</CHAPTER 4: ORGANIZING BY SUBROUTINES> for more information.)
+The I<"operations"> section is required and contains 1 or more lines of general-purpose RPerl source code.  This is the main body of your program.  The 6 lines of source code in our example are used to perform some simple arithmetic and display the results.  The C<my integer $foo = 21 + 12;> line declares a new variable named C<$foo> which will only contain non-floating-point numeric data, and which is initialized to contain the arithmetic result of numeric literal values C<21> plus C<12>.  The C<my integer $bar = 23 * 42 * 2;> line does much the same thing, creating a new numeric variable named C<$bar> and initialized with C<23> times C<42> times C<2>.  The C<my number $baz = to_number($bar) / $foo;> line creates a new floating-point numeric variable C<$baz>, and initializes it to the quotient of the C<$bar> and C<$foo> variables.  The C<to_number()> RPerl type conversion I<"subroutine"> converts a non-floating-point C<integer> value to a floating-point C<number> value.  (A subroutine is a user-defined operation, in this case pre-defined by the RPerl development team for your convenience; please see L</CHAPTER 4: ORGANIZING BY SUBROUTINES> for more information.)
 
 The C<print 'have $foo = ', $foo, "\n";> and following 2 lines will display on screen (not send to paper printer) the labeled values of C<$foo>, C<$bar>, and C<$baz> respectively.  The C<,> comma is used to separate multiple arguments passed to the C<print> operator.  The C<to_string()> RPerl type conversion subroutine converts the numeric values to underscore-formatted string values, suitable for use via the C<print> operator.  If the C<to_string()> subroutine is not used, then the displayed numeric values will still be human-readable, but will not contain the proper underscores to be accepted back into RPerl as valid numeric data.  The "n" in the C<"\n"> double-quoted string literal values stands for "newline", which inserts a carriage return to place the next piece of printed data down on the following line.
 
@@ -17327,44 +17327,52 @@ As mentioned in this chapter's opening section L</CHAPTER 3: ARRAY VALUES & VARI
 
 =back
 
-The C<integer_arrayref_to_string()> subroutine is implemented by the following RPerl source code, for Perl operations & Perl data types mode:
 
-    # stringify an integer_arrayref
-    our string $integer_arrayref_to_string = sub {
-        # require exactly one integer_arrayref as input, store in variable $input_avref
-        ( my integer_arrayref $input_avref ) = @ARG;
 
-        # declare local variables, av & sv mean "array value" & "scalar value" as used in Perl core
-        my integer $input_av_length;
-        my integer $input_av_element;
-        my string $output_sv;
-        my boolean $i_is_0 = 1;
 
-        # compute length of (number of elements in) input array
-        $input_av_length = scalar @{$input_avref};
 
-        # begin output string with left-square-bracket, as required for all RPerl arrays
-        $output_sv = '[';
 
-        # loop through all valid values of $i for use as index to input array
-        for my integer $i ( 0 .. ( $input_av_length - 1 ) ) {
-            # retrieve input array's element at index $i
-            $input_av_element = $input_avref->[$i];
 
-            # append comma & space to output string for all elements except index 0
-            if ($i_is_0) { $i_is_0 = 0; }
-            else         { $output_sv .= ', '; }
 
-            # stringify individual integer element, append to output string
-            $output_sv .= integer_to_string($input_av_element);
-        }
+The internals of the C<integer_arrayref_to_string()> subroutine are implemented by the copied-and-pasted section of RPerl source code below, for Perl operations & Perl data types mode:
 
-        # end output string with right-square-bracket, as required for all RPerl arrays
-        $output_sv .= ']';
+    # change this to hold your own data
+    my integer_arrayref $input_avref = [8, 23, 17];
 
-        # return output string, containing stringified input array
-        return $output_sv;
-    };
+    # [ BEGIN COPIED-AND-PASTED CODE ]
+
+    # declare local variables, av & sv mean "array value" & "scalar value" as used in Perl core
+    my integer $input_av_length;
+    my integer $input_av_element;
+    my string $output_sv;
+    my boolean $i_is_0 = 1;
+
+    # compute length of (number of elements in) input array
+    $input_av_length = scalar @{$input_avref};
+
+    # begin output string with left-square-bracket, as required for all RPerl arrays
+    $output_sv = '[';
+
+    # loop through all valid values of $i for use as index to input array
+    for my integer $i ( 0 .. ( $input_av_length - 1 ) ) {
+        # retrieve input array's element at index $i
+        $input_av_element = $input_avref->[$i];
+
+        # append comma & space to output string for all elements except index 0
+        if ($i_is_0) { $i_is_0 = 0; }
+        else         { $output_sv .= ', '; }
+
+        # stringify individual integer element, append to output string
+        $output_sv .= integer_to_string($input_av_element);
+    }
+
+    # end output string with right-square-bracket, as required for all RPerl arrays
+    $output_sv .= ']';
+
+    # [ END COPIED-AND-PASTED CODE ]
+
+    # display stringified output
+    print $output_sv;
 
 In the RPerl system source code above, you will see at least 2 new concepts: the definition of a subroutine, and usage of a C<for> loop.
 
@@ -17385,6 +17393,14 @@ Running the code example above generates the following output string, which is i
     $foo = [7, 17, 27];
 
 =for rperl X</noncode>
+
+
+
+
+(Please see L</CHAPTER 4: ORGANIZING BY SUBROUTINES> for the full subroutine C<integer_arrayref_to_string()>.)
+
+
+
 
 =head2 Section 3.12: Program Control Using The C<for> & C<foreach> Loops
 
@@ -18358,6 +18374,80 @@ X<br>
 
 
 =head1 CHAPTER 4: ORGANIZING BY SUBROUTINES
+
+
+
+
+
+
+
+
+The C<integer_arrayref_to_string()> subroutine is implemented by the following RPerl source code, for Perl operations & Perl data types mode:
+
+    # stringify an integer_arrayref
+    our string $integer_arrayref_to_string = sub {
+        # require exactly one integer_arrayref as input, store in variable $input_avref
+        ( my integer_arrayref $input_avref ) = @ARG;
+
+        # declare local variables, av & sv mean "array value" & "scalar value" as used in Perl core
+        my integer $input_av_length;
+        my integer $input_av_element;
+        my string $output_sv;
+        my boolean $i_is_0 = 1;
+
+        # compute length of (number of elements in) input array
+        $input_av_length = scalar @{$input_avref};
+
+        # begin output string with left-square-bracket, as required for all RPerl arrays
+        $output_sv = '[';
+
+        # loop through all valid values of $i for use as index to input array
+        for my integer $i ( 0 .. ( $input_av_length - 1 ) ) {
+            # retrieve input array's element at index $i
+            $input_av_element = $input_avref->[$i];
+
+            # append comma & space to output string for all elements except index 0
+            if ($i_is_0) { $i_is_0 = 0; }
+            else         { $output_sv .= ', '; }
+
+            # stringify individual integer element, append to output string
+            $output_sv .= integer_to_string($input_av_element);
+        }
+
+        # end output string with right-square-bracket, as required for all RPerl arrays
+        $output_sv .= ']';
+
+        # return output string, containing stringified input array
+        return $output_sv;
+    };
+
+In the RPerl system source code above, you will see at least 2 new concepts: the definition of a subroutine, and usage of a C<for> loop.
+
+The subroutine's name is, unsurprisingly, C<integer_arrayref_to_string()>; it accepts exactly one input operand, an C<integer_arrayref> accessed via the variable C<$input_avref>, and it generates as output a string formed in the variable C<$output_sv>.  (Subroutine names in writing are usually followed by empty parenthesis C<()>, to distinguish them from other source code components such as variables, operators, etc.)
+
+The C<for> loop is used to access each individual element of the input array, one at a time; each element is then, in turn, stringified and appended to the output string.  You will note the C<integer_to_string()> stringification subroutine is called from within the C<integer_arrayref_to_string()> subroutine, which makes sense because an C<integer_arrayref> data structure is obviously composed of individual C<integer> data types.
+
+The string generated as output of the C<integer_arrayref_to_string()> subroutine is itself valid RPerl source code, and may be copied, pasted, and re-parsed by the RPerl compiler:
+
+    my integer_arrayref $foo;
+    $foo = [7, 17, 27];
+    print '$foo = ', integer_arrayref_to_string($foo), ';', "\n";
+
+Running the code example above generates the following output string, which is itself an exact replica of the original line of valid RPerl source code:
+
+=for rperl X<noncode>
+
+    $foo = [7, 17, 27];
+
+=for rperl X</noncode>
+
+
+
+
+
+
+
+
 
          sub  sweet_tooth       { print 'Yum!  I love ', PIE(), "\n"; }   # okay in Perl, error in RPerl
     our void $SWEET_TOOTH = sub { print 'Yum!  I love ', PIE(), "\n"; };  # okay in Perl, error in RPerl
