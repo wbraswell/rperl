@@ -1,5 +1,5 @@
 language: perl
-# v0.004_000
+# v0.005_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -12,7 +12,10 @@ perl:
   - "5.20"
   - "5.22"
   - "5.24"
-  - "5.25"
+  # version(s) below are built using Travis-CI Helper
+  - "5.25" 
+  - "dev"
+  - "blead"
 
 # DEV NOTE, CORRELATION #rp011: update g++ to 4.8 for full C++11 support, including:
 # -std=c++11, std::string::pop_back(), etc.
@@ -28,27 +31,42 @@ perl:
 #    - g++-4.8
 #    - time
 
-# legacy Travis-CI stack, currently enabled, supports sudo & update-alternatives
+
+# [ BEGIN Travis-CI Helper ]
+matrix:
+  allow_failures:
+    - perl: "blead"
 before_install:
-- sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-- sudo apt-get update -qq
+    - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
+    - source ~/travis-perl-helpers/init
+    - build-perl
+    - perl -V
+#    - build-dist
+#    - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
+# [ END Travis-CI Helper ]
+
+    # legacy Travis-CI stack, currently enabled, supports sudo & update-alternatives
+    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+    - sudo apt-get update -qq
+
 install:
-- sudo apt-get install -qq g++-4.8
-- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
-- sudo apt-get install libgmp-dev
-# begin Pluto PolyCC
-- sudo apt-get install texinfo
-- wget https://github.com/wbraswell/pluto-mirror/raw/master/backup/pluto-0.11.4.tar.gz
-- tar -xzvf pluto-0.11.4.tar.gz
-- cd pluto-0.11.4/
-- ./configure
-- make
-- make test
-- sudo make install
-- cd ..
-# end Pluto PolyCC
-- sudo apt-get install curl
-#- sudo apt-get install astyle  # rely on Alien::astyle for more platform-independent testing
+    - sudo apt-get install -qq g++-4.8
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
+    - sudo apt-get install libgmp-dev
+    # begin Pluto PolyCC
+    - sudo apt-get install texinfo
+    - wget https://github.com/wbraswell/pluto-mirror/raw/master/backup/pluto-0.11.4.tar.gz
+    - tar -xzvf pluto-0.11.4.tar.gz
+    - cd pluto-0.11.4/
+    - ./configure
+    - make
+    - make test
+    - sudo make install
+    - cd ..
+    # end Pluto PolyCC
+    - sudo apt-get install curl
+    #- sudo apt-get install astyle  # rely on Alien::astyle for more platform-independent testing
+    #- cpan-install --deps       # Travis-CI Helper: installs prereqs, including recommends
 
 before_script:
 # MODIFY FOLLOWING LINE TO ENABLE TEST_VERBOSE STDOUT DURING `make test`
@@ -76,8 +94,3 @@ notifications:
     template:
       - "RPerl build %{result}. %{author} says '%{commit_message}'"
       - "%{build_url} %{compare_url}"
-
-    # DEFAULT TEMPLATE
-#      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
-#      - "Change view : %{compare_url}"
-#      - "Build details : %{build_url}"

@@ -17374,33 +17374,21 @@ The internals of the C<integer_arrayref_to_string()> subroutine are implemented 
     # display stringified output
     print $output_sv;
 
-In the RPerl system source code above, you will see at least 2 new concepts: the definition of a subroutine, and usage of a C<for> loop.
+In the RPerl system source code above, you will see at least 1 new concept: the usage of a C<for> loop.
 
-The subroutine's name is, unsurprisingly, C<integer_arrayref_to_string()>; it accepts exactly one input operand, an C<integer_arrayref> accessed via the variable C<$input_avref>, and it generates as output a string formed in the variable C<$output_sv>.  (Subroutine names in writing are usually followed by empty parenthesis C<()>, to distinguish them from other source code components such as variables, operators, etc.)
+The input to this source code is an C<integer_arrayref> accessed via the variable C<$input_avref>, and the output generated is a string in the variable C<$output_sv>.  (The term "avref" refers to "Array Value Reference", and likewise "sv" refers to "Scalar Value"; these terms are used in the internals of the Perl 5 interpreter itself, and copied in RPerl's internals for consistency.) 
 
 The C<for> loop is used to access each individual element of the input array, one at a time; each element is then, in turn, stringified and appended to the output string.  You will note the C<integer_to_string()> stringification subroutine is called from within the C<integer_arrayref_to_string()> subroutine, which makes sense because an C<integer_arrayref> data structure is obviously composed of individual C<integer> data types.
 
-The string generated as output of the C<integer_arrayref_to_string()> subroutine is itself valid RPerl source code, and may be copied, pasted, and re-parsed by the RPerl compiler:
-
-    my integer_arrayref $foo;
-    $foo = [7, 17, 27];
-    print '$foo = ', integer_arrayref_to_string($foo), ';', "\n";
-
-Running the code example above generates the following output string, which is itself an exact replica of the original line of valid RPerl source code:
+Running the code example above generates the following output string from C<$output_sv>, which is an exact replica of the original RPerl C<integer_arrayref> input data from C<$input_avref>:
 
 =for rperl X<noncode>
 
-    $foo = [7, 17, 27];
+    [8, 23, 17]
 
 =for rperl X</noncode>
 
-
-
-
 (Please see L</CHAPTER 4: ORGANIZING BY SUBROUTINES> for the full subroutine C<integer_arrayref_to_string()>.)
-
-
-
 
 =head2 Section 3.12: Program Control Using The C<for> & C<foreach> Loops
 
