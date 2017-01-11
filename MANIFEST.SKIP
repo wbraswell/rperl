@@ -4,7 +4,7 @@
 ^\.git
 ^\.gitignore$
 ^\.travis\.yml$
-^\appveyor\.yml$
+^appveyor\.yml$
 
 # [ Inline Build ]
 # NEED UPDATE, CORRELATION #rp005: list of _Inline directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP
