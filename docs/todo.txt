@@ -50,6 +50,8 @@ DOING
 
 CODE GENERATION, CPPOPS_CPPTYPES MODE
     ForEach.pm
+    finish .pl body generation
+    subroutines, final operation must be return operator
     WHAT ELSE?!?
 
 INSTALLERS
@@ -128,6 +130,7 @@ UNSIGNED INTEGER FIX
     CPPOPS_CPPTYPES conversion routines
 
 TESTS
+    split author (developer) tests from normal user tests
     TypeConversion, all 42 normal conversions plus to_string()
     add EXECUTE_SUCCESS to *good*.pl
     uncompile w/ corrupted or missing PMC, CPP, H files

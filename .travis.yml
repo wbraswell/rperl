@@ -1,46 +1,50 @@
 language: perl
-# v0.005_000
+# v0.007_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
-#  - "5.8"
-  - "5.10"
-  - "5.12"
-  - "5.14"
-  - "5.16"
-  - "5.18"
-  - "5.20"
-  - "5.22"
-  - "5.24"
-  # version(s) below are built using Travis-CI Helper
-  - "5.25" 
-  - "dev"
-  - "blead"
+#    - "5.8"
+    - "5.10"
+    - "5.12"
+    - "5.14"
+    - "5.16"
+    - "5.18"
+    - "5.20"
+    - "5.22"
+    - "5.24"
+    # version(s) below are built using Travis-CI Helper
+    - "5.25" 
+#    - "dev"  # same as 5.25 above
+    - "blead"
 
 # DEV NOTE, CORRELATION #rp011: update g++ to 4.8 for full C++11 support, including:
 # -std=c++11, std::string::pop_back(), etc.
 
 # new Docker container-based Travis-CI stack, currently disabled, does not support update-alternatives
 #addons:
-#  apt:
-#    sources:
-#    - ubuntu-toolchain-r-test
+#    apt:
+#       sources:
+#           - ubuntu-toolchain-r-test
 #addons:
-#  apt:
-#    packages:
-#    - g++-4.8
-#    - time
+#    apt:
+#       packages:
+#           - g++-4.8
+#           - time
 
 
 # [ BEGIN Travis-CI Helper ]
 matrix:
-  allow_failures:
-    - perl: "blead"
+    allow_failures:
+        - perl: "blead"
 before_install:
     - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
     - source ~/travis-perl-helpers/init
     - build-perl
     - perl -V
+
+# NEED REMOVE FOLLOWING 2 LINES IF NOT USED
+# NEED REMOVE FOLLOWING 2 LINES IF NOT USED
+# NEED REMOVE FOLLOWING 2 LINES IF NOT USED
 #    - build-dist
 #    - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
 # [ END Travis-CI Helper ]
@@ -66,6 +70,10 @@ install:
     # end Pluto PolyCC
     - sudo apt-get install curl
     #- sudo apt-get install astyle  # rely on Alien::astyle for more platform-independent testing
+
+# NEED REMOVE FOLLOWING 1 LINE IF NOT USED
+# NEED REMOVE FOLLOWING 1 LINE IF NOT USED
+# NEED REMOVE FOLLOWING 1 LINE IF NOT USED
     #- cpan-install --deps       # Travis-CI Helper: installs prereqs, including recommends
 
 before_script:
@@ -74,7 +82,7 @@ before_script:
 # UNCOMMENT FOLLOWING LINE TO ENABLE NOISY BUILD DURING `make test`; REQUIRES RPERL_VERBOSE=1 ABOVE
 #    - export RPERL_DEBUG=1
 # UNCOMMENT FOLLOWING LINE FOR DEV VERSIONS OF MODULES, which travis can't get from Makefile.PL
-#  - cpanm -n INGY/Inline-C-0.62_03.tar.gz
+#    - cpanm -n INGY/Inline-C-0.62_03.tar.gz
 # DEV NOTE, CORRELATION #rp011: following line was not necessary until before_install & install sections added
     - cpanm --quiet --installdeps --notest .
 
@@ -84,13 +92,17 @@ before_script:
 script: perl Makefile.PL && make test TEST_VERBOSE=$RPERL_VERBOSE
 
 notifications:
-  irc:
-    channels:
-      - "irc.perl.org#perl11"
+    irc:
+        channels:
+            - "irc.perl.org#perl11"
     on_success: always
     on_failure: always
     # to enable skip_join, in IRC channel first execute `/mode -n`
     skip_join: true
     template:
-      - "RPerl build %{result}. %{author} says '%{commit_message}'"
-      - "%{build_url} %{compare_url}"
+        - "RPerl build %{result}. %{author} says '%{commit_message}'"
+        - "%{build_url} %{compare_url}"
+
+env:
+    global:
+        - AUTHOR_TESTING=0
