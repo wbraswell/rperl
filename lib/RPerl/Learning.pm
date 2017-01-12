@@ -18363,8 +18363,7 @@ X<br>
 
 =head1 CHAPTER 4: ORGANIZING BY SUBROUTINES
 
-
-
+As we have seen in the preceding chapters, Perl is an operator-rich language, meaning there are a relatively large number of built-in operators available to Perl programmers.  However, sometimes you will want to create your own user-defined operation, which may be utilized like a built-in operator and which provides some custom functionality not already available.  In these cases, you may create a new I<"subroutine">.
 
 
 
