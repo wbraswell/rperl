@@ -1,3 +1,4 @@
+# v0.010_000
 version: 1.0.{build}
 pull_requests:
   do_not_increment_build_number: false
@@ -5,7 +6,7 @@ skip_tags: true
 clone_depth: 1
 clone_folder: C:\projects\rperl
 
-# This file replaces the following AppVeyor test command sequence:
+# This file replaces & expands upon the original AppVeyor test command sequence:
 # AppVeyor.com -> rperl -> Settings -> Test -> Script -> CMD
 # choco install strawberryperl --forceX86 && set PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;C:\windows\system32;C:\windows; && gcc -v && g++ -v && perl -V && dmake -V || perl Makefile.PL && perl -e"require CPAN;CPAN::Shell->notest('install','App::cpanminus');" && cpanm -n -v --installdeps . && set RPERL_DEBUG=1 && set RPERL_VERBOSE=1 && dmake test
 
@@ -24,7 +25,7 @@ install:
 
     msiexec /i strawberry-perl-5.24.0.1-32bit.msi /quiet /qn /norestart
 
-    set PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;C:\windows\system32;C:\windows;
+    set PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;C:\windows\system32;C:\windows;%path%
 
     gcc -v
 

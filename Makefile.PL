@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 use ExtUtils::MakeMaker;
 
 BEGIN { use English; }
@@ -38,7 +38,8 @@ WriteMakefile(
         'Time::HiRes'         => '1.9726',
         'List::MoreUtils'     => '0.33',
         'Math::BigInt::GMP'   => '1.46',
-        'Alien::astyle'       => '0.005',
+        'IO::Socket::SSL'     => '2.043',    # pre-prerequisite for Alien::astyle
+        'Alien::astyle'       => '0.006',
 
         # RPERL SYSTEM (NON-USER) DEPENDENCIES
         'Parse::Eyapp'        => '1.182',    # RPerl Grammar; used by grammar_recompile.sh

@@ -1,4 +1,4 @@
-# RPerl Developer Notes 20170109 2017.009
+# RPerl Developer Notes 20170112 2017.012
 
 ##########################################################################################
 # WARNING & ERROR CODES
@@ -208,6 +208,7 @@ GOOD FRIDAY
 EASTER
 APRIL FOOLS'
 MAY THE 4TH
+CAPTAIN PICARD DAY (JUNE 16)
 INDEPENDENCE
 HALLOWEEN
 THANKSGIVING
