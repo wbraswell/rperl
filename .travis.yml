@@ -1,5 +1,5 @@
 language: perl
-# v0.009_000
+# v0.010_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -78,6 +78,8 @@ install:
     #- cpan-install --deps       # Travis-CI Helper: installs prereqs, including recommends
 
 before_script:
+    # NEED REMOVE FOLLOWING 1 LINE when bug is fixed   https://github.com/daoswald/Inline-CPP/issues/38
+    - cpanm --verbose --force ExtUtils::CppGuess
 # MODIFY FOLLOWING LINE TO ENABLE TEST_VERBOSE STDOUT DURING `make test`
     - export RPERL_VERBOSE=0
 # UNCOMMENT FOLLOWING LINE TO ENABLE NOISY BUILD DURING `make test`; REQUIRES RPERL_VERBOSE=1 ABOVE
