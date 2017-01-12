@@ -168,7 +168,7 @@ sub type_number_errorcheck {
         croak 'ERROR ERPTYREN01: Non-existent or undefined Perl config value $Config{nvtype}, croaking';
     }
     my string $nvtypesize_key = $Config{nvtype} . 'size';
- 
+
     if ((not exists $Config{$nvtypesize_key}) or (not defined $Config{$nvtypesize_key})) {
         croak 'ERROR ERPTYREN02: Non-existent or undefined Perl config value $Config{' . $nvtypesize_key . '}, croaking';
     }

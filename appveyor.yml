@@ -1,4 +1,4 @@
-# v0.010_000
+# v0.011_000
 version: 1.0.{build}
 pull_requests:
   do_not_increment_build_number: false
@@ -44,8 +44,6 @@ install:
     set RPERL_VERBOSE=0
 
     set PERL5LIB=blib;lib
-
-    set RPERL_TEST_SKIP_T13_DIFF_CHECK=1
 
     set
 
