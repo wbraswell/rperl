@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.012_000;
+our $VERSION = 0.013_000;
 use ExtUtils::MakeMaker;
 
 BEGIN { 
@@ -28,6 +28,12 @@ if ($Config{cc} =~ /clang/) {
 $ g++ --version
 g++ (Ubuntu 5.4.0-6ubuntu1~16.04.4) 5.4.0 20160609
 ...
+
+$ g++ --version
+g++ (i686-posix-sjlj, built by strawberryperl.com project) 4.9.2
+Copyright (C) 2014 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 $ clang++ --version
 Ubuntu clang version 3.4-1ubuntu3 ...
@@ -59,7 +65,7 @@ if ($cxx eq 'c++') {
 print {*STDERR} '<<< DEBUG >>>: have $cxx_real = ', $cxx_real, "\n";
 
 # must meet minimum compiler version requirements
-$version_retval =~ m/^[^\d.]*(\d+\.\d+)/xms;
+$version_retval =~ m/(\d+\.\d+)/xms;
 my $version = $1 + 0;
 print {*STDERR} '<<< DEBUG >>>: have $version = ', $version, "\n";
 if ($version < $min_cxx_versions->{$cxx_real}) {
