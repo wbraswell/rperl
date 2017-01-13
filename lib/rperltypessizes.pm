@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.002_000;
+our $VERSION = 0.003_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -167,15 +167,34 @@ sub type_number_errorcheck {
     if ((not exists $Config{nvtype}) or (not defined $Config{nvtype})) {
         croak 'ERROR ERPTYREN01: Non-existent or undefined Perl config value $Config{nvtype}, croaking';
     }
-    my string $nvtypesize_key = $Config{nvtype} . 'size';
+
+    my string $nvtype = $Config{nvtype};
+
+    # DEV NOTE: I decided to programmatically approach the 'long double' issue in case 'longdouble' and 'longdbl' are both valid,
+    # instead of hard-coding one or the other in $ALTERNATE_TYPES_TO_PERLISH_TYPES;
+    # if nvtype contains whitespace, remove it: 'long double' becomes 'longdouble'
+    $nvtype =~ s/\s//gxms;
+
+    my string $nvtypesize_key = $nvtype . 'size';
 
     if ((not exists $Config{$nvtypesize_key}) or (not defined $Config{$nvtypesize_key})) {
-        croak 'ERROR ERPTYREN02: Non-existent or undefined Perl config value $Config{' . $nvtypesize_key . '}, croaking';
+        # try with 'dbl' instead of 'double'
+        if ($nvtype =~ m/double/gxms) {
+            $nvtype =~ s/double/dbl/gxms;
+            my string $nvtypesize_key_long = $nvtypesize_key;
+            $nvtypesize_key = $nvtype . 'size';
+            if ((not exists $Config{$nvtypesize_key}) or (not defined $Config{$nvtypesize_key})) {
+                croak 'ERROR ERPTYREN02: Non-existent or undefined Perl config values $Config{' . $nvtypesize_key_long . '} and $Config{' . $nvtypesize_key . '}, croaking';
+            }
+        }
+        else {
+            croak 'ERROR ERPTYREN03: Non-existent or undefined Perl config value $Config{' . $nvtypesize_key . '}, croaking';
+        }
     }
     my string $nvtypesize = $Config{$nvtypesize_key};
 
     if ($nvsize ne $nvtypesize) {
-        croak 'ERROR ERPTYREN03: Mis-matching Perl config values, $Config{nvsize} = ' . $nvsize . ', $Config{' . $nvtypesize_key . '} = ' . $nvtypesize . ', croaking';
+        croak 'ERROR ERPTYREN04: Mis-matching Perl config values, $Config{nvsize} = ' . $nvsize . ', $Config{' . $nvtypesize_key . '} = ' . $nvtypesize . ', croaking';
     }
 }
 

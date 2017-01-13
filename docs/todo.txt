@@ -1,6 +1,7 @@
 DONE
     temporary work-around, avoid false critic failure ProhibitBitwiseOperators from Perl::Critic::Bangs
     upgrade to Alien::astyle v0.00X
+    Type System, Native Types, Support nvtype='long double'
 
 DOING
     replace @_ with @ARG in system code
