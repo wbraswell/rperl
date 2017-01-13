@@ -18363,7 +18363,29 @@ X<br>
 
 =head1 CHAPTER 4: ORGANIZING BY SUBROUTINES
 
-As we have seen in the preceding chapters, Perl is an operator-rich language, meaning there are a relatively large number of built-in operators available to Perl programmers.  However, sometimes you will want to create your own user-defined operation, which may be utilized like a built-in operator and which provides some custom functionality not already available.  In these cases, you may create a new I<"subroutine">.
+As we have seen in the preceding chapters, Perl is an operator-rich language, meaning there are a relatively large number of built-in operators available to Perl programmers.  However, sometimes you will want to create your own user-defined operation, which may be utilized like a built-in operator and which provides some custom functionality that's not already available.  In these cases, you may create a new I<"subroutine">.
+
+As you may have expected, our first subroutine example will be our old favorite, "Hello, World!", implemented in RPerl:
+
+    our void $hello_world = sub {
+        print 'Hello, World!', "\n";
+    };
+
+In the source code example above, we have defined a very simple subroutine named C<hello_world()>, which may be called as follows:
+
+    hello_world();
+
+When called, this subroutine simply prints output:
+
+=for rperl X<noncode>
+
+    Hello, World!
+
+=for rperl X</noncode>
+
+Now let's dissect the subroutine definition and call into their individual components.  First, we see the keyword C<our>, which is a reserved word used in normal Perl to denote a global variable, and used in RPerl for a few specific purposes, most commonly to begin the definition of a subroutine.
+
+Second, we see the C<void> data type, which specifies the I<"return type"> of the subroutine.  A return type of C<void> means this subroutine does not return any data whatsoever, which makes sense, because all we have is a single C<print> statement inside the subroutine, and generally the C<print> statement is not considered to be an operator which returns a (useful) value.
 
 
 

@@ -2,7 +2,9 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.013_000;
+our $VERSION = 0.014_000;
+use 5.010;  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
+
 use ExtUtils::MakeMaker;
 
 BEGIN { 
@@ -42,7 +44,7 @@ Ubuntu clang version 3.4-1ubuntu3 ...
 
 # run external compiler command to get version info
 my $version_retval = `$cxx --version`;
-print {*STDERR} '<<< DEBUG >>>: have $version_retval = ', "\n", $version_retval, "\n";
+#print {*STDERR} '<<< DEBUG >>>: have $version_retval = ', "\n", $version_retval, "\n";
 if ((not defined $version_retval) or ($version_retval eq q{})) {
     print {*STDERR} 'C++ compiler ', $cxx, ' not found, bailing out!', "\n";
     exit 0;
@@ -62,12 +64,12 @@ if ($cxx eq 'c++') {
         exit 0;
     }
 }
-print {*STDERR} '<<< DEBUG >>>: have $cxx_real = ', $cxx_real, "\n";
+#print {*STDERR} '<<< DEBUG >>>: have $cxx_real = ', $cxx_real, "\n";
 
 # must meet minimum compiler version requirements
 $version_retval =~ m/(\d+\.\d+)/xms;
 my $version = $1 + 0;
-print {*STDERR} '<<< DEBUG >>>: have $version = ', $version, "\n";
+#print {*STDERR} '<<< DEBUG >>>: have $version = ', $version, "\n";
 if ($version < $min_cxx_versions->{$cxx_real}) {
     print {*STDERR} 'C++ compiler ', $cxx_real, ' version ', $version, ' found, does not meet minimum version requirement ', $min_cxx_versions->{$cxx_real} , ', bailing out!', "\n";
     exit 0;
@@ -107,7 +109,7 @@ WriteMakefile(
         'List::MoreUtils'     => '0.33',
         'Math::BigInt::GMP'   => '1.46',
         'IO::Socket::SSL'     => '2.043',    # pre-prerequisite for Alien::astyle
-        'Alien::astyle'       => '0.006',
+        'Alien::astyle'       => '0.007',
 
         # RPERL SYSTEM (NON-USER) DEPENDENCIES
         'Parse::Eyapp'        => '1.182',    # RPerl Grammar; used by grammar_recompile.sh

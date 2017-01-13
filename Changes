@@ -1,5 +1,12 @@
 Revision history for Perl compiler RPerl.
 
+2.410000 2017-01-13
+
+    - Bug Fix, Avoid False Failures Caused By Perl::Critic::Policy::Bangs::ProhibitBitwiseOperators
+    - Type System, Native Types, Support nvtype='long double'
+    - C++11 Compiler, GCC v4.7 Or Clang v3.3 Minimum Required, Makefile.PL 
+    - Perl v5.10 Minimum Required, Makefile.PL
+
 2.403000 2017-01-10
 
     - Alien::astyle, More OS Support & Bug Fixes
