@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -186,9 +186,10 @@ our void $rperl_source__criticize = sub {
         # disable PodSpelling because calling the external spellchecker can cause errors such as aspell's "No word lists can be found for the language FOO";
         # disable RequireExplicitPackage because 'use RPerl;' comes before package name(s), and Grammar.eyp will catch any other violations
         # NEED REMOVE HARD-CODED TEMPORARY WORK-AROUND:  https://github.com/autinitysystems/Perl-Critic-Policy-Documentation-RequirePod/issues/1
+        # NEED REMOVE HARD-CODED TEMPORARY WORK-AROUND:  https://github.com/petdance/perl-critic-bangs/issues/16
         # disable RequirePod because it is not part of Perl::Critic & wrongly includes itself in themes 'core' & 'php' & 'maintenance'
         # disable all non-core additional policies which may be installed, such as Perlsecret, etc.
-        '-exclude'  => ['RequireTidyCode', 'PodSpelling', 'RequireExplicitPackage', 'RequirePod'],
+        '-exclude'  => ['RequireTidyCode', 'PodSpelling', 'RequireExplicitPackage', 'RequirePod', 'ProhibitBitwiseOperators'],
         '-severity' => 'brutal',
         '-theme'    => 'core'
     );
