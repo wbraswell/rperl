@@ -4,7 +4,7 @@ package RPerl::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -362,15 +362,6 @@ our hashref $diff_check_file_vs_string = sub {
 
     my hashref $return_value = {};
     $return_value->{diff_line} = 0;    # default return value, files do not differ
-
-    ## 93r: temporary introduced stuff, because debbugging of diff checks takes more time than expected
-    if ((exists $ENV{RPERL_TEST_SKIP_T13_DIFF_CHECK}) and 
-        (defined $ENV{RPERL_TEST_SKIP_T13_DIFF_CHECK}) and
-        ($ENV{RPERL_TEST_SKIP_T13_DIFF_CHECK} == 1)) {
-        # It's Howdy Doody time, kids!
-	    RPerl::warning( q{[[[ MS Windows OS Flag Detected, File Difference Checks Temporarily Disabled, Skipping Diff Check Tests, RPerl Code Generator ]]]} . "\n" );
-	    return $return_value;
-    }
 
     for my integer $i ( 0 .. ( ( scalar @{$string_reference_split} ) - 1 ) ) {
         my string $line_reference = $string_reference_split->[$i];
