@@ -12976,7 +12976,7 @@ An RPerl I<"named operator"> is any of the 220+ Perl named operators, although R
 
 An RPerl I<"operation"> is the equivalent of a single sentence in human language, and may be either an expression followed by a C<;> semicolon punctuation character, or a named operator followed by a semicolon, or a statement.
 
-The C<=> equal-sign is the assignment operator, used to set the variable on its left to store the value of the expression on its right.
+The equal-sign C<=> is the assignment operator, used to set the variable on its left to store the value of the expression on its right.
 
 Perl's C<my> keyword is used to declare a new variable, and optionally initialize it to a starting value when combined with the C<=> assignment operator.
 
@@ -18375,7 +18375,7 @@ In the source code example above, we have defined a very simple subroutine named
 
     hello_world();
 
-When called, this subroutine simply prints output:
+When called, this subroutine simply prints the output:
 
 =for rperl X<noncode>
 
@@ -18383,13 +18383,69 @@ When called, this subroutine simply prints output:
 
 =for rperl X</noncode>
 
-Now let's dissect the subroutine definition and call into their individual components.  First, we see the keyword C<our>, which is a reserved word used in normal Perl to denote a global variable, and used in RPerl for a few specific purposes, most commonly to begin the definition of a subroutine.
+Now let's dissect the above source code example into its individual components:
 
-Second, we see the C<void> data type, which specifies the I<"return type"> of the subroutine.  A return type of C<void> means this subroutine does not return any data whatsoever, which makes sense, because all we have is a single C<print> statement inside the subroutine, and generally the C<print> statement is not considered to be an operator which returns a (useful) value.
+First, we see the keyword C<our>, which is used in normal Perl to denote a global variable, and is used in RPerl for only a few specific purposes, most commonly to begin the definition of a subroutine.  (We have already utilized the C<our> keyword to declare the C<$VERSION> variable in the header section of an RPerl program.)  The definitions of all RPerl subroutines begin with the C<our> keyword.
 
+Second, we see the C<void> data type, which provides the I<"return type"> of the subroutine.  All RPerl subroutines must specify exactly one return type, which is the data type of the value returned when the subroutine is finished running.  A return type of C<void> means this subroutine does not actually return any data whatsoever, which makes sense because all we have is a single C<print> statement inside the subroutine, and generally the C<print> statement is not considered to be an operator which returns a (useful) value.  Normal Perl does not provide a type system, and thus can not provide the ability to specify subroutine return types; this is only possible in RPerl.
 
+Third, we see the variable name C<$hello_world>, which provides the name of the subroutine.  The definition of an RPerl subroutine is the only place where you will include a dollar-sign C<$> as part of the subroutine name; everywhere else in your source code you will refer to the subroutine without the dollar-sign C<$> prefix and with an added parentheses C<( )> suffix, so our example becomes C<hello_world()> throughout the rest of your code.  In normal Perl, a subroutine name is very rarely defined with a dollar-sign C<$> prefix - this is a bit of tricky magic (oh no!) used internally by RPerl in order to enable subroutine return types.  Because a special subroutine reference value is stored in the global scalar variable named C<$hello_world>, you may not create a normal variable with the same name C<$hello_world> in the main operations section of your RPerl program.  However, you are free to create scalar variables named C<$hello_world> within this or any other subroutine.
 
+After the RPerl subroutine name, we will always see an equal-sign C<=> followed by the C<sub> keyword and a left-curly-brace C<{> character.  As usual, the equal-sign C<=> is the assignment operator, which assigns the special subroutine reference value to the global scalar variable C<$hello_world>.  Both RPerl and normal Perl use the C<sub> keyword to define a subroutine, as well as the left-curly-brace C<{> to denote the beginning of the subroutine's body.
 
+Following the left-curly-brace C<{> character is the subroutine's body, which is a code block consisting of an arbitrary number of operations, and is generally the same in both RPerl and normal Perl.  In the example above, the body consists of exactly one operation, the C<print 'Hello, World!', "\n";> statement.
+
+Finally, we see a right-curly-brace C<}> followed by a semicolon C<;> character, used to denote the end of the subroutine's body.  In normal Perl, there is no trailing semicolon C<;> used after the right-curly-brace C<}> character.
+
+=head2 Section 4.1: Subroutine Definitions
+
+In software development, we have the two related concepts of I<"subroutine declaration"> and I<"subroutine definition">.  To declare a subroutine, a software developer must provide at least the subroutine's name and return type.  To define a subroutine, a developer must provide at least the subroutine's name and body.  In RPerl, these two steps of declaration and definition are always combined into one single step, as seen in the "Hello, World!" example in the previous section.
+
+Normal Perl does not provide the ability to specificy a subroutine's return type, so the closest thing to the separation of subroutine declaration and definition in normal Perl is the usage of high-magic features such as the manipulation of subroutine references, etc.  In the C and C++ programming languages, subroutine declarations and definitions are traditionally kept separate, often in completely different source code files.
+
+Because RPerl subroutine declarations and definitions are always combined, we will simply use the term "subroutine definition" in this textbook.
+
+RPerl subroutines with very short bodies may be written on a single line, so we can re-write the "Hello, World!" subroutine as a one-liner by simply deleting the two invisible newline characters:
+
+    our void $hello_world = sub { print 'Hello, World!', "\n"; };
+
+In normal Perl, the same subroutine would be written like this:
+
+    sub hello_world { print 'Hello, World!', "\n"; }
+
+Let's compare them more closely:
+
+         sub  hello_world       { print 'Hello, World!', "\n"; }   #  Perl
+    our void $hello_world = sub { print 'Hello, World!', "\n"; };  # RPerl
+
+In the comparison above, we can quickly see the different placements of the C<sub> keyword and RPerl's usage of the C<void> return type.  We can also easily point out the four additional bits of RPerl syntax not present in the normal Perl line: C<our>, C<$>, C<=>, and C<;>.
+
+START HERE: explain subroutine name capitalization, give hello_world example, introduce sweet_tooth below
+START HERE: explain subroutine name capitalization, give hello_world example, introduce sweet_tooth below
+START HERE: explain subroutine name capitalization, give hello_world example, introduce sweet_tooth below
+
+         sub  sweet_tooth       { print 'Yum!  I love ', PIE(), "\n"; }   #   usable in Perl, error  in RPerl
+    our void $SWEET_TOOTH = sub { print 'Yum!  I love ', PIE(), "\n"; };  # unusable in Perl, error  in RPerl
+    our void $Sweet_Tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # unusable in Perl, usable in RPerl
+    our void $sweet_tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # unusable in Perl, best   in RPerl
+
+=head2 Section 4.2: Subroutine Calls
+
+=head3 Section 4.2.1: Ampersand Prefix
+
+=head2 Section 4.3: Subroutine Return Values
+
+=head3 Section 4.3.1: C<return> Operator
+
+=head3 Section 4.3.2: Multiple Return Values
+
+=head2 Section 4.4: Subroutine Arguments
+
+=head3 Section 4.4.1: Variadic Subroutines
+
+=head2 Section 4.5: Subroutine Variables
+
+=head3 Section 4.5.1: C<my> Intermittent Variables
 
 The C<integer_arrayref_to_string()> subroutine is implemented by the following RPerl source code, for Perl operations & Perl data types mode:
 
@@ -18432,7 +18488,7 @@ The C<integer_arrayref_to_string()> subroutine is implemented by the following R
 
 In the RPerl system source code above, you will see at least 2 new concepts: the definition of a subroutine, and usage of a C<for> loop.
 
-The subroutine's name is, unsurprisingly, C<integer_arrayref_to_string()>; it accepts exactly one input operand, an C<integer_arrayref> accessed via the variable C<$input_avref>, and it generates as output a string formed in the variable C<$output_sv>.  (Subroutine names in writing are usually followed by empty parenthesis C<()>, to distinguish them from other source code components such as variables, operators, etc.)
+The subroutine's name is, unsurprisingly, C<integer_arrayref_to_string()>; it accepts exactly one input operand, an C<integer_arrayref> accessed via the variable C<$input_avref>, and it generates as output a string formed in the variable C<$output_sv>.  (Subroutine names in writing are usually followed by empty parenthesis C<( )>, to distinguish them from other source code components such as variables, operators, etc.)
 
 The C<for> loop is used to access each individual element of the input array, one at a time; each element is then, in turn, stringified and appended to the output string.  You will note the C<integer_to_string()> stringification subroutine is called from within the C<integer_arrayref_to_string()> subroutine, which makes sense because an C<integer_arrayref> data structure is obviously composed of individual C<integer> data types.
 
@@ -18449,41 +18505,6 @@ Running the code example above generates the following output string, which is i
     $foo = [7, 17, 27];
 
 =for rperl X</noncode>
-
-
-
-
-
-
-
-
-
-         sub  sweet_tooth       { print 'Yum!  I love ', PIE(), "\n"; }   # okay in Perl, error in RPerl
-    our void $SWEET_TOOTH = sub { print 'Yum!  I love ', PIE(), "\n"; };  # okay in Perl, error in RPerl
-    our void $Sweet_Tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # okay in Perl, okay  in RPerl
-    our void $sweet_tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # okay in Perl, best  in RPerl
-
-
-
-=head2 Section 4.1: Subroutine Definitions
-
-=head2 Section 4.2: Subroutine Calls
-
-=head3 Section 4.2.1: Ampersand Prefix
-
-=head2 Section 4.3: Subroutine Return Values
-
-=head3 Section 4.3.1: C<return> Operator
-
-=head3 Section 4.3.2: Multiple Return Values
-
-=head2 Section 4.4: Subroutine Arguments
-
-=head3 Section 4.4.1: Variadic Subroutines
-
-=head2 Section 4.5: Subroutine Variables
-
-=head3 Section 4.5.1: C<my> Intermittent Variables
 
 =head3 Section 4.5.2: C<state> Persistent Variables
 
