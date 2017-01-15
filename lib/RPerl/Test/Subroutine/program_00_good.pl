@@ -19,9 +19,22 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our void $hello_world = sub { print 'Hello, World!', "\n"; };
-our void $Hello_World = sub { print 'Hello, World, again!', "\n"; };
-our void $HELLO_world = sub { print 'Hello, World, yet again!', "\n"; };
+# NEED UPGRADE: create some mechanism to allow one-line subroutines in test files AND pass diff check
+#our void $hello_world = sub { print 'Hello, World!',            "\n"; };
+#our void $Hello_World = sub { print 'Hello, World, again!',     "\n"; };
+#our void $HELLO_world = sub { print 'Hello, World, yet again!', "\n"; };
+
+our void $hello_world = sub {
+    print 'Hello, World!', "\n";
+};
+
+our void $Hello_World = sub {
+    print 'Hello, World, again!', "\n";
+};
+
+our void $HELLO_world = sub {
+    print 'Hello, World, yet again!', "\n";
+};
 
 # [[[ OPERATIONS ]]]
 
