@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.162_000;
+our $VERSION = 0.163_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -967,7 +967,7 @@ Other than the shebang and critics, all lines beginning with C<#> are comments a
 
 The I<"shebang"> section is required, always contains exactly 1 line, and is short for I<"hash bang">; referring to the two leading characters C<#!> of this line.  The I<"octothorpe"> character C<#> (tic-tac-toe symbol) is called a I<"pound-sign"> when used on a telephone, and is called a I<"hash"> (or more recently and less accurately I<"hash-tag">) when used on a computer.  The exclamation-point character C<!> is called a I<"bang"> when used on a computer.  When appearing together as the first two characters in a plain text file, the hash and bang characters tell the operating system to run the immediately-following command (in this case the Perl interpreter located at F</usr/bin/perl>) and pass the remaining contents of the text file as input to the command.  In other words, if the first line of a plain text file is C<#!/usr/bin/perl>, then that file is a Perl program.
 
-The I<"header"> section is required and always contains 4 lines for an RPerl I<"program"> file ending in F<.pl>, or 5 lines for an RPerl I<"module"> ending in F<.pm> (covered later in Chapter 11).  C<use> is recognized by Perl as a special I<"keyword"> (AKA I<"built-in operator">) which has 2 primary purposes: to load additional RPerl modules, and to enable RPerl I<"pragma"> system configuration modes.  The C<use RPerl;> line is dual-purpose, it both loads the F<RPerl.pm> module and enables the special RPerl low-magic pragma.  The C<use strict;> and C<use warnings;> lines enable basic Perl pragmas which require decent programming practices by the human programmers.  The C<our $VERSION = 0.001_000;> line sets the version number of this RPerl program.
+The I<"header"> section is required and always contains 4 lines for an RPerl I<"program"> file ending in F<.pl>, or 5 lines for an RPerl I<"module"> ending in F<.pm> (covered later in Chapter 11).  C<use> is recognized by Perl as a special I<"keyword"> (which is also a Perl I<"function">) which has 2 primary purposes: to load additional RPerl modules, and to enable RPerl I<"pragma"> system configuration modes.  The C<use RPerl;> line is dual-purpose, it both loads the F<RPerl.pm> module and enables the special RPerl low-magic pragma.  The C<use strict;> and C<use warnings;> lines enable basic Perl pragmas which require decent programming practices by the human programmers.  The C<our $VERSION = 0.001_000;> line sets the version number of this RPerl program.
 
 The I<"critics"> section is included as necessary and may contain 1 or more lines beginning with C<## no critic>, which disable the errors caused by the over-restrictive nature of some Perl::Critic policies.  There are currently 6 critics commands enabled for normal RPerl users, the first 2 of which are given in this example.  The "USER DEFAULT 1" C<no critic> command allows the use of numeric values such as C<21> and C<12>, as well as the common C<print> command.  The C<USER DEFAULT 2> critics command allows the printing of C<'have $foo = '>, where a single-quoted C<'> string literal value contains the the C<$> dollar sigil (covered later in Chapter 2).
 
@@ -1715,7 +1715,7 @@ S< >S< >S< >S< >a floating-point decimal number value, either negative, 0, or po
 
 =back
 
-Perl 5 provides several built-in operators designed for use with numeric data, which can be organized into 6 general categories:
+Perl 5 provides several I<"built-in operators"> designed for use with numeric data, which can be organized into 6 general categories:
 
 =over
 
@@ -1732,6 +1732,12 @@ Perl 5 provides several built-in operators designed for use with numeric data, w
 =item * Miscellaneous
 
 =back
+
+Most of the operators which have names consisting of normal letters (a - z) are classified as I<"functions"> in Perl 5 terminology.  Notable exceptions are the logic operators, which are simply classified as "operators" in Perl, along with most of the operators which have names consisting of special characters.  For the sake of simplicity, we will only use the term "operator" throughout this textbook.
+
+L<http://perldoc.perl.org/perlop.html>
+
+L<http://perldoc.perl.org/perlfunc.html>
 
 Each operator in Perl 5 (and thus RPerl) is assigned 4 important characteristics: I<"arity"> (a number), I<"fixity"> (a placement location), I<"precedence"> (a number) and I<"associativity"> (a chirality or "handedness").  Operators of unary arity accept exactly 1 input operand, binary operators accept exactly 2 operands, etc.  Prefix operators appear before their respective operands, postfix appear after, infix appear between, and closed operators appear both before and after their operands.  Operators with a lower numeric precedence are executed before operators with a higher precedence; in the absence of parentheses, multiplication executes before addition because multiplication has a lower precedence number.  Operators with equal precedence number are grouped by (and executed in order of) associativity; in the absence of parentheses, multiple subtraction operators will execute from left to right because subtraction is left-associative, whereas multiple exponent operators will execute from right to left because exponentiation is right-associative.  For more information, see the Appendix:
 
@@ -18478,16 +18484,30 @@ Before we can even try to call this C<HELLO_WORLD()> subroutine, RPerl tells us 
 
 As long as you are careful to use proper capitalization, then you are free to utilize both all-uppercase constant names such as C<PIE()> alongside not-all-uppercase subroutine names:
 
-         sub  sweet_tooth       { print 'Yum!  I love ', PIE(), "\n"; }   #   usable in Perl, error  in RPerl
-    our void $SWEET_TOOTH = sub { print 'Yum!  I love ', PIE(), "\n"; };  # unusable in Perl, error  in RPerl
-    our void $Sweet_Tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # unusable in Perl, usable in RPerl
-    our void $sweet_tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # unusable in Perl, best   in RPerl
+         sub  sweet_tooth       { print 'Yum!  I love ', PIE(), ' pie.', "\n"; }   #   usable in Perl, error  in RPerl
+    our void $SWEET_TOOTH = sub { print 'Yum!  I love ', PIE(), ' pie.', "\n"; };  # unusable in Perl, error  in RPerl
+    our void $Sweet_Tooth = sub { print 'Yum!  I love ', PIE(), ' pie.', "\n"; };  # unusable in Perl, usable in RPerl
+    our void $sweet_tooth = sub { print 'Yum!  I love ', PIE(), ' pie.', "\n"; };  # unusable in Perl, best   in RPerl
 
-In the C<sweet_tooth()> example above, the first line is usable only in normal Perl, the second line is not usable at all, and both the third and fourth lines are usable only in RPerl.
-
-Please see L</Section 2.4.1: How To Select Expressive Variable Names> for best practices which apply equally to subroutine names as well as variable names.
+In the C<sweet_tooth()> example above, the first line is usable only in normal Perl, the second line is not usable at all, and both the third and fourth lines are usable only in RPerl.  Please see L</Section 2.4.1: How To Select Expressive Variable Names> for best practices which apply equally to subroutine names as well as variable names.  The fourth line fulfills best practices by naming the subroutine using all-lowercase letters.
 
 =head2 Section 4.2: Subroutine Calls
+
+As seen in the previous two sections, in order to run a subroutine we must call (AKA I<"invoke">) the subroutine by name.  This is achieved by simply typing the subroutine's name, without the dollar-sign C<$> prefix, and adding empty parentheses C<( )> as a suffix.  As with all Perl expressions, we end with a semicolon C<;> character.  In this way, we can call the best practices version of the "sweet tooth" example from the previous section:
+
+    sweet_tooth();
+
+Utilizing the original constant value from L</Section 2.5: Constant Data>, invoking the subroutine will return the following output:
+
+=for rperl X<noncode>
+
+    Yum!  I love pecan pie.
+
+=for rperl X</noncode>
+
+START HERE
+START HERE
+START HERE
 
 =head3 Section 4.2.1: Ampersand Prefix
 
