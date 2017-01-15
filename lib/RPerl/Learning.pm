@@ -13003,6 +13003,8 @@ Data types make your code much more readable and much, much faster.  Learn to lo
 
 Your choice of variable names will have a significant impact on the readability of your source code, whether written in Perl or any other programming language.  If the names of your variables make sense, then it will be much easier for other programmers to understand your code.  Also, good variable names will help you to understand your own code, after not looking at it for a few months or years.  Variable names may include letters, numbers, and underscores.
 
+=for html <u>
+
 I<BEST PRACTICES>
 
 =over
@@ -13013,9 +13015,13 @@ I<BEST PRACTICES>
 
 =back
 
+=for html </u>
+
 You may not choose to utilize an all-uppercase variable name, because RPerl reserves that format for the names of constants; please see L</Section 2.5: Constant Data> for more information.  If you really insist, then RPerl will allow you to use mostly-uppercase variable names, as long as at least one lowercase letter is included.  Also, instead of underscores you may choose to utilize "CamelCase" in order to separate words in your variable names.  However, neither of these variable naming practices are recommended.
 
 In addition to the best practices listed above, a good variable name should also fulfill all 3 of the following:
+
+=for html <u>
 
 I<BEST PRACTICES>
 
@@ -13028,6 +13034,8 @@ I<BEST PRACTICES>
 =item * I<Simple: Two or three common words separated by underscores is better than one obscure word.>
 
 =back
+
+=for html </u>
 
 The first of these three best practices is for your variable names to be meaningful, so you should never actually choose C<$foo> or C<$bar> as your variable names, unless you are writing a programming textbook and need to make up a bunch of small stand-alone code examples.  When first choosing a variable's name, take a moment and simply think of the most descriptive word or words which explain what it is you plan to use the variable for.  Don't worry if your variable name starts out a bit too long, you can always shorten it later if appropriate.
 
@@ -13185,6 +13193,8 @@ If we run our code example above, we should receive the following output, which 
 
 =for rperl X</noncode>
 
+=for html <u>
+
 I<BEST PRACTICES>
 
 =over
@@ -13192,6 +13202,8 @@ I<BEST PRACTICES>
 =item * I<Numeric data types should always be converted to a C<string> data type before being passed to C<print> or otherwise displayed or saved.>
 
 =back
+
+=for html </u>
 
 If we do not call the C<number_to_string()> subroutine before the values of C<$bar> and C<$double_bar> are processed by the C<print> operator, then our output will be missing the proper underscore separators:
 
@@ -13212,6 +13224,8 @@ In most cases, the shorthand subroutine C<to_string()> may be used instead of on
     print 'have $bar = ', to_string($bar), "\n";
     print 'have $double_bar = ', number_to_string($double_bar), "\n";
 
+=for html <u>
+
 I<BEST PRACTICES>
 
 =over
@@ -13219,6 +13233,8 @@ I<BEST PRACTICES>
 =item * I<Numeric data should always include proper underscore separators, even when stored inside a C<string> data type.>
 
 =back
+
+=for html </u>
 
 If the variable C<$foo> was a C<number> instead of a C<string>, then RPerl would give an C<ERROR ECOPARP00> parse error and complain of C<Long number not separated with underscores>.  However, since C<$foo> is of the C<string> data type, then it is not checked for proper numeric underscores, and thus we can omit the underscore in the value of C<$foo> without errors and with the proper output as seen above.  However, this is not best practices, and we should consider the underscore to be missing in the following:
 
@@ -18420,14 +18436,56 @@ Let's compare them more closely:
 
 In the comparison above, we can quickly see the different placements of the C<sub> keyword and RPerl's usage of the C<void> return type.  We can also easily point out the four additional bits of RPerl syntax not present in the normal Perl line: C<our>, C<$>, C<=>, and C<;>.
 
-START HERE: explain subroutine name capitalization, give hello_world example, introduce sweet_tooth below
-START HERE: explain subroutine name capitalization, give hello_world example, introduce sweet_tooth below
-START HERE: explain subroutine name capitalization, give hello_world example, introduce sweet_tooth below
+In both RPerl and normal Perl, the capitalization of variables (and thus RPerl subroutine names) is significant, which is to say that subroutine names are case-sensitive.  The subroutine name C<hello_world()> is different than either C<Hello_World()> or C<HELLO_world()>, all of which are valid RPerl subroutine names.  As detailed in L</Section 2.5: Constant Data>, the all-uppercase subroutine name C<HELLO_WORLD()> is reserved for constant use only, as is any other all-uppercase subroutine or variable name in RPerl.
+
+    our void $hello_world = sub { print 'Hello, World!', "\n"; };
+    our void $Hello_World = sub { print 'Hello, World, again!', "\n"; };
+    our void $HELLO_world = sub { print 'Hello, World, yet again!', "\n"; };
+
+We can call these three similarly-named-yet-distinct subroutines as follows:
+
+    hello_world();
+    Hello_World();
+    HELLO_world();
+
+Doing so will print three different lines of output:
+
+=for rperl X<noncode>
+
+    Hello, World!
+    Hello, World, again!
+    Hello, World, yet again!
+
+=for rperl X</noncode>
+
+If we try to define a subroutine with an all-uppercase name, RPerl will give an error due to all-uppercase symbols being reserved for constants:
+
+    our void $HELLO_WORLD = sub { print 'Hello, World!', "\n"; };
+
+Before we can even try to call this C<HELLO_WORLD()> subroutine, RPerl tells us we have made a mistake because an all-uppercase symbol is not a valid variable symbol (and thus not a valid RPerl subroutine name):
+
+=for rperl X<noncode>
+
+    ERROR ECOPARP00, RPERL PARSER, RPERL SYNTAX ERROR
+    Failed RPerl grammar syntax check with the following information:
+    
+        File Name:         ...
+        Line Number:       ...
+        Unexpected Token:  $HELLO_WORLD
+        Expected Token(s): VARIABLE_SYMBOL
+
+=for rperl X</noncode>
+
+As long as you are careful to use proper capitalization, then you are free to utilize both all-uppercase constant names such as C<PIE()> alongside not-all-uppercase subroutine names:
 
          sub  sweet_tooth       { print 'Yum!  I love ', PIE(), "\n"; }   #   usable in Perl, error  in RPerl
     our void $SWEET_TOOTH = sub { print 'Yum!  I love ', PIE(), "\n"; };  # unusable in Perl, error  in RPerl
     our void $Sweet_Tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # unusable in Perl, usable in RPerl
     our void $sweet_tooth = sub { print 'Yum!  I love ', PIE(), "\n"; };  # unusable in Perl, best   in RPerl
+
+In the C<sweet_tooth()> example above, the first line is usable only in normal Perl, the second line is not usable at all, and both the third and fourth lines are usable only in RPerl.
+
+Please see L</Section 2.4.1: How To Select Expressive Variable Names> for best practices which apply equally to subroutine names as well as variable names.
 
 =head2 Section 4.2: Subroutine Calls
 
