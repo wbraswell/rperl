@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.165_000;
+our $VERSION = 0.166_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -18603,7 +18603,26 @@ Your RPerl subroutines may have any return type chosen from the full list of sup
 
 =head3 Section 4.3.1: C<return> Operator
 
-The C<jedi()> subroutine example in the previous section includes a C<return> operator at the end of the subroutine's body, which serves to return the value C<6> to the caller.
+The C<jedi()> subroutine example in the previous section includes a C<return> operator at the end of the subroutine's body, which serves to return the value C<6> to the caller.  In other words, the input operand of the C<return> operator is the numeric literal C<6>, which is then passed back to whatever part of the software originally invoked the C<jedi()> subroutine.
+
+The C<return> operator serves two purposes, both returning a specific return value to the caller, as well as controlling termination of the subroutine at some point before the end of the subroutine's body.  It is common to have multiple C<return> operators inside one subroutine, organized using conditional statements or other logic:
+
+    if ($foo < $bar) {
+        return 23;
+    } 
+    else {
+        return 42;
+    }
+
+A subroutine with C<void> return type may also utilize the C<return> operator, in order to control when and where the subroutine terminates:
+
+    if ($foo < $bar) {
+        print '$foo is too small, returning', "\n";
+        return;
+    }
+
+    print '$foo is not too small, continuing', "\n";
+    $foo = $bar * 17;
 
 In normal Perl, the C<return> operator is optional, and Perl automatically returns the vale of the last expression executed before the subroutine ends.  However, leaving out the C<return> operator in RPerl will once again lead to either an error, or undefined and unpredictable behavior in C++ compile modes.
 
@@ -18651,7 +18670,7 @@ We can try to add a C<return> operator to the C<unpredictable()> subroutine:
     our integer $unpredictable = sub { return 'howdy' . 'doody'; };
     print 'have unpredictable() = ', unpredictable(), "\n";
 
-This will lead to a C++ subcompile error, visible in RPerl debug mode C<-D>:
+Adding the C<return> operator will lead to a C++ subcompile error, visible in RPerl debug mode C<-D>, because the string concatenation C<.> operator's C<string> return type does not match the C<unpredictable()> subroutine's C<integer> return type:
 
 =for rperl X<noncode>
 
@@ -18666,6 +18685,8 @@ This will lead to a C++ subcompile error, visible in RPerl debug mode C<-D>:
     ERROR ECOCOSU04, COMPILER, SUBCOMPILE: C++ compiler returned error code, croaking...
 
 =for rperl X</noncode>
+
+For all subroutines with non-C<void> return types, you should always use the C<return> operator and always give C<return> operands of the correct return type.
 
 =head3 Section 4.3.2: Multiple Return Values
 
