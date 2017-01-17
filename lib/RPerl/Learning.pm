@@ -18421,7 +18421,7 @@ Finally, we see a right-curly-brace C<}> followed by a semicolon C<;> character,
 
 =head2 Section 4.1: Subroutine Definitions
 
-In software development, we have the two related concepts of I<"subroutine declaration"> and I<"subroutine definition">.  To declare a subroutine, a software developer must provide at least the subroutine's name and return type.  To define a subroutine, a developer must provide at least the subroutine's name and body.  In RPerl, these two steps of declaration and definition are always combined into one single step, as seen in the "Hello, World!" example in the previous section.
+In software development, we have the two related concepts of I<"subroutine declaration"> and I<"subroutine definition">.  To declare a subroutine, a software developer must provide (at least) the subroutine's name and return type.  To define a subroutine, a developer must provide at least the subroutine's name and body.  In RPerl, these two steps of declaration and definition are always combined into one single step, where we provide the subroutine's name and return type and body all together, as seen in the "Hello, World!" example in the previous section.
 
 Normal Perl does not provide the ability to specificy a subroutine's return type, so the closest thing to the separation of subroutine declaration and definition in normal Perl is the usage of high-magic features such as the manipulation of subroutine references, etc.  In the C and C++ programming languages, subroutine declarations and definitions are traditionally kept separate, often in completely different source code files.
 
@@ -18442,7 +18442,7 @@ Let's compare them more closely:
 
 In the comparison above, we can quickly see the different placements of the C<sub> keyword and RPerl's usage of the C<void> return type.  We can also easily point out the four additional bits of RPerl syntax not present in the normal Perl line: C<our>, C<$>, C<=>, and C<;>.
 
-In both RPerl and normal Perl, the capitalization of variables (and thus RPerl subroutine names) is significant, which is to say that subroutine names are case-sensitive.  The subroutine name C<hello_world()> is different than either C<Hello_World()> or C<HELLO_world()>, all of which are valid RPerl subroutine names.  As detailed in L</Section 2.5: Constant Data>, the all-uppercase subroutine name C<HELLO_WORLD()> is reserved for constant use only, as is any other all-uppercase subroutine or variable name in RPerl.
+In both RPerl and normal Perl, the capitalization of variables (and thus RPerl subroutine names) is significant, which is to say that subroutine names are case-sensitive.  The subroutine name C<hello_world()> is different than either C<Hello_World()> or C<HELLO_world()>, all of which are valid Perl (and RPerl) subroutine names.  As detailed in L</Section 2.5: Constant Data>, the all-uppercase subroutine name C<HELLO_WORLD()> is reserved for constant use only, as is any other all-uppercase subroutine or variable name in RPerl.
 
     our void $hello_world = sub { print 'Hello, World!', "\n"; };
     our void $Hello_World = sub { print 'Hello, World, again!', "\n"; };
@@ -18482,7 +18482,7 @@ Before we can even try to call this C<HELLO_WORLD()> subroutine, RPerl tells us 
 
 =for rperl X</noncode>
 
-As long as you are careful to use proper capitalization, then you are free to utilize both all-uppercase constant names such as C<PIE()> alongside not-all-uppercase subroutine names:
+As long as you are careful to use proper capitalization, then you are free to utilize all-uppercase constant names such as C<PIE()> alongside not-all-uppercase subroutine names:
 
          sub  sweet_tooth       { print 'Yum!  I love ', PIE(), ' pie.', "\n"; }   #   usable in Perl, error  in RPerl
     our void $SWEET_TOOTH = sub { print 'Yum!  I love ', PIE(), ' pie.', "\n"; };  # unusable in Perl, error  in RPerl
@@ -18505,13 +18505,49 @@ Utilizing the original constant value from L</Section 2.5: Constant Data>, invok
 
 =for rperl X</noncode>
 
-START HERE
-START HERE
-START HERE
+Remember, as mentioned in the previous section, all subroutine names are case-sensitive and must be spelled exactly the same for every subroutine call.  In the following five subroutine calls, only the first line is a valid call because the rest are all misspelled:
 
-=head3 Section 4.2.1: Ampersand Prefix
+    sweet_tooth();  # fine
+    sweeT_tootH();  # error
+    swEEt_tooth();  # error
+    sweet_tOOth();  # error
+    sw33t_t00th();  # error
+
+=head3 Section 4.2.1: Parentheses Suffix & Ampersand Prefix
+
+In RPerl, all subroutine calls must include parentheses C<( )> as a suffix immediately following the name of the subroutine, with no space between the last letter of the name and the left-parenthesis C<(> character.  In normal Perl, you are allowed to have whitespace between the subroutine name and the parentheses characters, although this is both unnecessary and potentially quite confusing, thus it is against best practices.  Likewise, it is not an error to include optional whitespace between the left-parenthesis C<(> and right-parenthesis C<)> characters, but again, best practices admonish us to allow no extraneous whitespace between the parentheses.
+
+=for html <u>
+
+I<BEST PRACTICES>
+
+=over
+
+=item * I<Do not include whitespace before the left-parenthesis C<(> character in a subroutine call.>
+
+=item * I<Do not include unnecessary whitespace between the left-parenthesis C<(> and right-parenthesis C<)> characters in a subroutine call.>
+
+=back
+
+=for html </u>
+
+The parentheses suffix is optional in normal Perl, and is required in RPerl:
+
+    sweet_tooth;     # fine in Perl, error in RPerl
+    sweet_tooth ();  # fine in Perl, fine  in RPerl
+    sweet_tooth( );  # fine in Perl, fine  in RPerl
+    sweet_tooth();   # fine in Perl, best  in RPerl
+
+In normal Perl, subroutine calls may include an optional ampersand C<&> prefix, but this is unnecessary and thus unsupported by RPerl:
+
+    &sweet_tooth();  # usable in Perl, error  in RPerl
+     sweet_tooth();  # usable in Perl, usable in RPerl
 
 =head2 Section 4.3: Subroutine Return Values
+
+START HERE
+START HERE
+START HERE
 
 =head3 Section 4.3.1: C<return> Operator
 

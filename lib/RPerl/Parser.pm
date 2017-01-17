@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.009_000;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -113,11 +113,15 @@ our void $rperl_source__check_syntax = sub {
     foreach my string $rperl_source__perl_syntax_retstring_line (
         @{$rperl_source__perl_syntax_retstring_lines} )
     {
-        if (( $rperl_source__perl_syntax_retstring_line !~ /WARNING\sW/xms ) # RPerl Warning
+        if (( $rperl_source__perl_syntax_retstring_line !~ m/WARNING\sW/xms ) # RPerl Warning
             and
-            ( $rperl_source__perl_syntax_retstring_line !~ /ERROR\sE/xms )   # RPerl Error
+            ( $rperl_source__perl_syntax_retstring_line !~ m/ERROR\sE/xms )   # RPerl Error
             and
-            ( $rperl_source__perl_syntax_retstring_line !~ /syntax\sOK/xms ) # Perl Non-Error
+            ( $rperl_source__perl_syntax_retstring_line !~ m/\[\[\[\ BEGIN\s/xms )   # RPerl Non-Error Debug Info
+            and
+            ( $rperl_source__perl_syntax_retstring_line !~ m/\[\[\[\ END\s/xms )   # RPerl Non-Error Debug Info
+            and
+            ( $rperl_source__perl_syntax_retstring_line !~ m/syntax\sOK/xms ) # Perl Non-Error
             )
         {
             push @{$rperl_source__perl_syntax_retstring_warnings},
