@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.163_000;
+our $VERSION = 0.164_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -969,7 +969,7 @@ The I<"shebang"> section is required, always contains exactly 1 line, and is sho
 
 The I<"header"> section is required and always contains 4 lines for an RPerl I<"program"> file ending in F<.pl>, or 5 lines for an RPerl I<"module"> ending in F<.pm> (covered later in Chapter 11).  C<use> is recognized by Perl as a special I<"keyword"> (which is also a Perl I<"function">) which has 2 primary purposes: to load additional RPerl modules, and to enable RPerl I<"pragma"> system configuration modes.  The C<use RPerl;> line is dual-purpose, it both loads the F<RPerl.pm> module and enables the special RPerl low-magic pragma.  The C<use strict;> and C<use warnings;> lines enable basic Perl pragmas which require decent programming practices by the human programmers.  The C<our $VERSION = 0.001_000;> line sets the version number of this RPerl program.
 
-The I<"critics"> section is included as necessary and may contain 1 or more lines beginning with C<## no critic>, which disable the errors caused by the over-restrictive nature of some Perl::Critic policies.  There are currently 6 critics commands enabled for normal RPerl users, the first 2 of which are given in this example.  The "USER DEFAULT 1" C<no critic> command allows the use of numeric values such as C<21> and C<12>, as well as the common C<print> command.  The C<USER DEFAULT 2> critics command allows the printing of C<'have $foo = '>, where a single-quoted C<'> string literal value contains the the C<$> dollar sigil (covered later in Chapter 2).
+The I<"critics"> section is included as necessary and may contain 1 or more lines beginning with C<## no critic>, which disable the errors caused by the over-restrictive nature of some Perl::Critic policies.  There are currently 6 critics commands enabled for normal RPerl users, the first 2 of which are given in this example.  The "USER DEFAULT 1" C<no critic> command allows the use of numeric values such as C<21> and C<12>, as well as the common C<print> command.  The C<USER DEFAULT 2> critics command allows the printing of C<'have $foo = '>, where a single-quoted C<'> string literal value contains the the dollar-sign C<$> sigil (covered later in Chapter 2).
 
 The I<"operations"> section is required and contains 1 or more lines of general-purpose RPerl source code.  This is the main body of your program.  The 6 lines of source code in our example are used to perform some simple arithmetic and display the results.  The C<my integer $foo = 21 + 12;> line declares a new variable named C<$foo> which will only contain non-floating-point numeric data, and which is initialized to contain the arithmetic result of numeric literal values C<21> plus C<12>.  The C<my integer $bar = 23 * 42 * 2;> line does much the same thing, creating a new numeric variable named C<$bar> and initialized with C<23> times C<42> times C<2>.  The C<my number $baz = to_number($bar) / $foo;> line creates a new floating-point numeric variable C<$baz>, and initializes it to the quotient of the C<$bar> and C<$foo> variables.  The C<to_number()> RPerl type conversion I<"subroutine"> converts a non-floating-point C<integer> value to a floating-point C<number> value.  (A subroutine is a user-defined operation, in this case pre-defined by the RPerl development team for your convenience; please see L</CHAPTER 4: ORGANIZING BY SUBROUTINES> for more information.)
 
@@ -1637,7 +1637,7 @@ X<br>
 
 Most programming languages include the basic principles of using named I<"variables"> to store data values such as numbers, text strings, and lists of multiple numbers or strings.  Multiple variables may be created, each with different names such as C<$foo> or C<$bar> or C<$quux>, and each potentially containing a different value.
 
-A single piece of data, such as one number or one string, is called a I<"scalar">.  Multiple pieces of data combined into a single aggregate structure may be either an I<"array"> or a I<"hash">, described in chapters 3 and 6, respectively.  (Although sharing the same terminology, the I<hash> data structure is not related to the I<hash> C<#> tic-tac-toe character.)  In normal Perl, only scalar variable names begin with the dollar-sign C<$> I<"sigil">, while aggregate data structures are stored in variables starting with different sigils like C<@> or C<%>.  In RPerl, all variable names begin the C<$> sigil, both scalar types and aggregate structures alike.
+A single piece of data, such as one number or one string, is called a I<"scalar">.  Multiple pieces of data combined into a single aggregate structure may be either an I<"array"> or a I<"hash">, described in chapters 3 and 6, respectively.  (Although sharing the same terminology, the I<hash> data structure is not related to the I<hash> C<#> tic-tac-toe character.)  In normal Perl, only scalar variable names begin with the dollar-sign C<$> I<"sigil">, while aggregate data structures are stored in variables starting with different sigils like at-sign C<@> or percent-sign C<%>.  A sigil is simply a special character prefixed to a word, in order to help us quickly identify different source code components.  In RPerl, all variable names begin the C<$> sigil, both scalar types and aggregate structures alike.
 
 RPerl provides 7 scalar data types:
 
@@ -18513,7 +18513,7 @@ Remember, as mentioned in the previous section, all subroutine names are case-se
     sweet_tOOth();  # error
     sw33t_t00th();  # error
 
-=head3 Section 4.2.1: Parentheses Suffix & Ampersand Prefix
+=head3 Section 4.2.1: Parentheses Suffix & Ampersand Sigil Prefix
 
 In RPerl, all subroutine calls must include parentheses C<( )> as a suffix immediately following the name of the subroutine, with no space between the last letter of the name and the left-parenthesis C<(> character.  In normal Perl, you are allowed to have whitespace between the subroutine name and the parentheses characters, although this is both unnecessary and potentially quite confusing, thus it is against best practices.  Likewise, it is not an error to include optional whitespace between the left-parenthesis C<(> and right-parenthesis C<)> characters, but again, best practices admonish us to allow no extraneous whitespace between the parentheses.
 
@@ -18538,10 +18538,38 @@ The parentheses suffix is optional in normal Perl, and is required in RPerl:
     sweet_tooth( );  # fine in Perl, fine  in RPerl
     sweet_tooth();   # fine in Perl, best  in RPerl
 
-In normal Perl, subroutine calls may include an optional ampersand C<&> prefix, but this is unnecessary and thus unsupported by RPerl:
+If we try to call an RPerl subroutine without the parentheses C<( )> suffix, we receive a Perl C<use strict;> error:
 
-    &sweet_tooth();  # usable in Perl, error  in RPerl
-     sweet_tooth();  # usable in Perl, usable in RPerl
+=for rperl X<noncode>
+
+    ERROR ECOPAPL02, RPERL PARSER, PERL SYNTAX ERROR
+    Failed normal Perl strictures-and-fatal-warnings syntax check with the following information:
+    
+        File Name:        ./lib/RPerl/Test/Subroutine/program_00_bad_01.pl
+        Return Value:     2
+        Error Message(s): Bareword "hello_world" not allowed while "strict subs" in use
+
+=for rperl X</noncode>
+
+In normal Perl, subroutine calls may include an optional ampersand C<&> sigil prefix, but this is unnecessary and thus unsupported by RPerl:
+
+     sweet_tooth();  # fine in Perl, fine  in RPerl
+    &sweet_tooth();  # fine in Perl, error in RPerl
+
+If we try to call an RPerl subroutine using an ampersand C<&> sigil, we receive a Perl::Critic policy violation:
+
+=for rperl X<noncode>
+
+    ERROR ECOPAPC02, RPERL PARSER, PERL CRITIC VIOLATION
+    Failed Perl::Critic brutal review with the following information:
+    
+        File Name:    ...
+        Line number:  ...
+        Policy:       Perl::Critic::Policy::Subroutines::ProhibitAmpersandSigils
+        Description:  Subroutine called with "&" sigil
+        Explanation:  See Perl Best Practices page(s) 175
+
+=for rperl X</noncode>
 
 =head2 Section 4.3: Subroutine Return Values
 
