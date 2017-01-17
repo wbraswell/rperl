@@ -9,8 +9,8 @@ use RPerl;
 # DEV NOTE, CORRELATION #rp016: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = '2.410000';
 
-#our $VERSION = 20170113;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2017.013;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20170117;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2017.017;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -484,7 +484,7 @@ sub verbose_flags {
         RPerl::verbose( 'Static Flag.......... ' . $subcompile_static_flag . "\n" );
     }
     if ( defined $parallel_flag ) {
-        RPerl::verbose( 'Parallel Flag......... ' . $parallel_flag . "\n" );
+        RPerl::verbose( 'Parallel Flag........ ' . $parallel_flag . "\n" );
     }
     if ( defined $execute_flag ) {
         RPerl::verbose( 'Execute Flag......... ' . $execute_flag . "\n" );
@@ -723,6 +723,8 @@ sub depends_parse_generate_save_subcompile_execute {
                 . $modes->{compile}
                 . ', subcompile => '
                 . $modes->{subcompile}
+                . ', parallel => '
+                . $modes->{parallel}
                 . ', execute => '
                 . $modes->{execute}
                 . ', label => '
@@ -848,14 +850,28 @@ sub depends_parse_generate_save_subcompile_execute {
         if ( $modes->{execute} eq 'ON' ) {
             RPerl::verbose( 'EXECUTE:            Run code...' . "\n" );
             RPerl::verbose("\n");
+#            RPerl::diag('in rperl depends_parse_generate_save_subcompile_execute(), have \$modes = ' . Dumper($modes) . "'\n");
 
-            #            RPerl::diag('in rperl depends_parse_generate_save_subcompile_execute(), have \$modes = ' . Dumper($modes) . "'\n");
-            if ( defined $modes->{arguments} ) {
-                my integer $execute_retval = system( $EXECUTABLE_NAME, $input_file_name, @{ $modes->{arguments} } );
+            # if subcompiled C++, then run binary executable instead of original interpreted source code
+            if (($modes->{ops} eq 'CPP') and ($modes->{compile} eq 'SUBCOMPILE')) {
+                my $execute_file_name = $output_file_name_group->{EXE};
+#                RPerl::diag('in rperl depends_parse_generate_save_subcompile_execute(), have $execute_file_name = ' . $execute_file_name . "\n");
+                if ( defined $modes->{arguments} ) {
+                    my integer $execute_retval = system( $execute_file_name, @{ $modes->{arguments} } );
+                }
+                else {
+                    my integer $execute_retval = system( $execute_file_name );
+                }
             }
             else {
-                my integer $execute_retval = system( $EXECUTABLE_NAME, $input_file_name );
+                if ( defined $modes->{arguments} ) {
+                    my integer $execute_retval = system( $EXECUTABLE_NAME, $input_file_name, @{ $modes->{arguments} } );
+                }
+                else {
+                    my integer $execute_retval = system( $EXECUTABLE_NAME, $input_file_name );
+                }
             }
+
         }
 
  #        RPerl::diag( 'in depends_parse_generate_save_subcompile_execute(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );

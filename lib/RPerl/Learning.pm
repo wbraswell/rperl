@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.164_000;
+our $VERSION = 0.165_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -18579,7 +18579,7 @@ In the previous sections, both the C<hello_world()> and C<sweet_tooth()> example
 
 Likewise, the outcome of the following addition C<+> operator is unpredictable, and will probably cause other difficult-to-debug errors elsewhere in our source code:
 
-    23 + hello_world()
+    23 + hello_world()  # undefined behavior, unpredictable result
 
 So, when we want to utilize the return value of a subroutine, we must give the subroutine a non-C<void> return type in the subroutine definition.
 
@@ -18599,11 +18599,73 @@ The above subroutine call and C<print> statement produce the following output:
 
 =for rperl X</noncode>
 
+Your RPerl subroutines may have any return type chosen from the full list of supported RPerl data types, such as C<number>, C<string>, C<integer_arrayref>, etc.
+
 =head3 Section 4.3.1: C<return> Operator
 
-The C<jedi()> subroutine example in the previous section includes a C<return> operator at end end of the subroutine's body, which serves to return the value C<6> to the caller. 
+The C<jedi()> subroutine example in the previous section includes a C<return> operator at the end of the subroutine's body, which serves to return the value C<6> to the caller.
 
-In normal Perl
+In normal Perl, the C<return> operator is optional, and Perl automatically returns the vale of the last expression executed before the subroutine ends.  However, leaving out the C<return> operator in RPerl will once again lead to either an error, or undefined and unpredictable behavior in C++ compile modes.
+
+            sub  jedi       { print q{You love him, don't you?}, "\n";        6; }   #   usable in Perl, error  in RPerl
+    our integer $jedi = sub { print q{You love him, don't you?}, "\n";        6; };  # unusable in Perl, error  in RPerl
+    our integer $jedi = sub { print q{You love him, don't you?}, "\n"; return 6; };  # unusable in Perl, usable in RPerl
+
+If we exclude the C<return> operator as in the second line above, then we will receive an error in RPerl compiled modes, because the semicolon C<;> of C<6;> is found before an actual operator is encountered:
+
+=for rperl X<noncode>
+
+    $ rperl jedi.pl
+
+    ...
+
+    ERROR ECOPARP00, RPERL PARSER, RPERL SYNTAX ERROR
+    Failed RPerl grammar syntax check with the following information:
+    
+        File Name:         ...
+        Line Number:       ...
+        Unexpected Token:  ;
+        ...
+
+=for rperl X</noncode>
+
+We can see undefined behavior when we fail to utilize a C<return> operator in a subroutine which should return a value, in this case an C<integer> should be returned but instead a string concatenation C<.> operator is performed without an explicit return value:
+
+    our integer $unpredictable = sub { 'howdy' . 'doody'; };
+    print 'have unpredictable() = ', unpredictable(), "\n";
+
+When we run the above C<unpredictable()> subroutine in RPerl test mode C<-t>, we see the result of the string concatenation operator; when we run the same subroutine in RPerl compiled mode, we receive a seemingly-random number instead:
+
+=for rperl X<noncode>
+
+    $ rperl -t unpredictable.pl
+    have unpredictable() = howdydoody
+
+    $ rperl unpredictable.pl 
+    have unpredictable() = 140725691414304
+
+=for rperl X</noncode>
+
+We can try to add a C<return> operator to the C<unpredictable()> subroutine:
+
+    our integer $unpredictable = sub { return 'howdy' . 'doody'; };
+    print 'have unpredictable() = ', unpredictable(), "\n";
+
+This will lead to a C++ subcompile error, visible in RPerl debug mode C<-D>:
+
+=for rperl X<noncode>
+
+    $ rperl -D unpredictable_return.pl
+
+    [[[ SUBCOMPILE STDERR ]]]
+
+    unpredictable_return.cpp: In function ‘integer unpredictable()’:
+    unpredictable_return.cpp:18:52: error: cannot convert ‘std::__cxx11::basic_string<char>’ to ‘integer {aka long int}’ in return
+         return (const string) "howdy" + (const string) "doody";
+                                                        ^
+    ERROR ECOCOSU04, COMPILER, SUBCOMPILE: C++ compiler returned error code, croaking...
+
+=for rperl X</noncode>
 
 =head3 Section 4.3.2: Multiple Return Values
 

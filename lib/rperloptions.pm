@@ -4,7 +4,7 @@ package              # hide from PAUSE indexing
 use strict;
 use warnings;
 #use RPerl::Config;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ PRE-DECLARED TYPES ]]]
 package    # hide from PAUSE indexing
@@ -69,7 +69,7 @@ our $modes_default = my string_hashref $TYPED_modes_default = {    # default to 
     compile      => 'SUBCOMPILE',
     subcompile   => 'DYNAMIC',
     CXX          => 'g++',                                         # default to GNU GCC  http://www.gnu.org/software/make/manual/make.html#Implicit-Variables
-    parallel     => 'OPENMP',
+    parallel     => 'OFF',
     num_cores    => 4,
     execute      => 'ON',
     label        => 'ON',

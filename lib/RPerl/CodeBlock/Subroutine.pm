@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.010_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -47,10 +47,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     #    RPerl::diag( 'in Subroutine->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap Subroutine_48 from SubroutineOrMethod_77
-    if ( ( ref $self ) eq 'SubroutineOrMethod_77' ) {
-        $self = $self->{children}->[0];
-    }
+    # unwrap Subroutine_48 from SubroutineOrMethod_77, only if needed
+    if ((ref $self) eq 'SubroutineOrMethod_77') { $self = $self->{children}->[0]; }
 
     if ( ( ref $self ) ne 'Subroutine_48' ) {
         die RPerl::Parser::rperl_rule__replace(
@@ -105,7 +103,9 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
  
     my string_hashref $cpp_source_group = { H => q{} };
 
-    $self = $self->{children}->[0];    # unwrap Subroutine_48 from SubroutineOrMethod_77
+    # unwrap Subroutine_48 from SubroutineOrMethod_77, only if needed
+    if ((ref $self) eq 'SubroutineOrMethod_77') { $self = $self->{children}->[0]; }
+
     my string $return_type = $self->{children}->[1]->{children}->[0];
     my string $name        = $self->{children}->[2];
     my object $arguments_optional = $self->{children}->[4];
@@ -127,8 +127,11 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
     $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name}->{type_cpp} = $return_type;  # add converted C++ type to symtab entry
 
     # DEV NOTE, CORRELATION #rp022: must prefix subroutine names with namespace-underscores to simulate Perl's behavior of not exporting subroutines by default
-    my string $namespace_underscores = $modes->{_symbol_table}->{_namespace};
-    $namespace_underscores =~ s/:/_/gxms;
+    my string $namespace_underscores = q{};
+    if ((exists $modes->{_symbol_table}->{_namespace}) and (defined $modes->{_symbol_table}->{_namespace})) {
+        $namespace_underscores = $modes->{_symbol_table}->{_namespace};
+        $namespace_underscores =~ s/:/_/gxms;
+    }
     $cpp_source_group->{H} .= $return_type . q{ } . $namespace_underscores . $name . '(';
 
     if ( exists $arguments_optional->{children}->[0] ) {
@@ -150,7 +153,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
-    $self = $self->{children}->[0];    # unwrap Subroutine_48 from SubroutineOrMethod_77
+    # unwrap Subroutine_48 from SubroutineOrMethod_77, only if needed
+    if ((ref $self) eq 'SubroutineOrMethod_77') { $self = $self->{children}->[0]; }
+
     my string $return_type = $self->{children}->[1]->{children}->[0];
     my string $name        = $self->{children}->[2];
     my object $arguments_optional = $self->{children}->[4];
@@ -166,8 +171,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     $return_type = RPerl::Generator::type_convert_perl_to_cpp($return_type, 1);  # $pointerify_classes = 1
     
     # DEV NOTE: must prefix subroutine names with namespace-underscores to simulate Perl's behavior of not exporting subroutines by default
-    my string $namespace_underscores = $modes->{_symbol_table}->{_namespace};
-    $namespace_underscores =~ s/:/_/gxms;
+    my string $namespace_underscores = q{};
+    if ((exists $modes->{_symbol_table}->{_namespace}) and (defined $modes->{_symbol_table}->{_namespace})) {
+        $namespace_underscores = $modes->{_symbol_table}->{_namespace};
+        $namespace_underscores =~ s/:/_/gxms;
+    }
     $cpp_source_group->{CPP} .= $return_type . q{ } . $namespace_underscores . $name . '(';
 
     if ( exists $arguments_optional->{children}->[0] ) {
@@ -221,7 +229,9 @@ our string_hashref::method $ast_to_cpp__generate_shims__CPPOPS_CPPTYPES = sub {
     my string_hashref $cpp_source_group = { CPP => q{} };
     my object $cpp_source_subgroup = undef;
 
-    $self = $self->{children}->[0];    # unwrap Subroutine_48 from SubroutineOrMethod_77
+    # unwrap Subroutine_48 from SubroutineOrMethod_77, only if needed
+    if ((ref $self) eq 'SubroutineOrMethod_77') { $self = $self->{children}->[0]; }
+
 #    my string $return_type = $self->{children}->[1]->{children}->[0];  # SHIM SUBS DEPRECATED IN FAVOR OF MACROS
     my string $name        = $self->{children}->[2];
     my object $arguments_optional = $self->{children}->[4];
@@ -237,9 +247,13 @@ our string_hashref::method $ast_to_cpp__generate_shims__CPPOPS_CPPTYPES = sub {
     }
 
     # DEV NOTE, CORRELATION #rp022: must create shims to un-prefix subroutine names with namespace-underscores to un-simulate Perl's behavior of not exporting subroutines by default
-    my string $namespace_colons = $modes->{_symbol_table}->{_namespace};
-    my string $namespace_underscores = $namespace_colons;
-    $namespace_underscores =~ s/:/_/gxms;
+    my string $namespace_colons = q{};
+    my string $namespace_underscores = q{};
+    if ((exists $modes->{_symbol_table}->{_namespace}) and (defined $modes->{_symbol_table}->{_namespace})) {
+        $namespace_colons = $modes->{_symbol_table}->{_namespace};
+        $namespace_underscores = $namespace_colons;
+        $namespace_underscores =~ s/:/_/gxms;
+    }
  
     # DEV NOTE: only generate PMC output file in dynamic (default) subcompile mode
     if ($modes->{subcompile} eq 'DYNAMIC') {

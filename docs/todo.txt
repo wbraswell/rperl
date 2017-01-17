@@ -1,10 +1,13 @@
 DONE
     Parser, fix false error triggered by RPerl debug statements
+    CPPOPS_CPPTYPES bug fix, program header line miscalculation
+    CPPOPS_CPPTYPES enable subroutines inside programs
+    CPPOPS_CPPTYPES execute via compiled copy not interpreted
+    CPPOPS_CPPTYPES enable double-quote characters w/in single-quoted and q-quoted strings
 
 DOING
     replace @_ with @ARG in system code
     'cannot' -> 'can not' in all docs & source files
-    execute via compiled copy not interpreted
     uncompile w/ corrupted or missing PMC, CPP, H files
     uncompile delete EXE files
     disable variable declaration w/out initial value, grammar & tests & docs

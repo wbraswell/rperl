@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.020_000;
+our $VERSION = 0.021_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -1463,7 +1463,10 @@ our void $cpp_to_xsbinary__subcompile = sub {
 	#        }
 	#
 
-        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command =' . "\n\n" . $subcompile_command . "\n" );
+#        RPerl::diag( "\n" . 'in Compiler::cpp_to_xsbinary__subcompile(), have $subcompile_command =' . "\n\n" . $subcompile_command . "\n\n" );
+        RPerl::diag(  "\n\n" . $subcompile_command . "\n\n" );
+        if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) { RPerl::diag(  q{SUBCOMPILE:         Generate binary...     } ); }
+
 	# if ( $OSNAME eq 'MSWin32' || $stdout_select->can_read(0) ) { sysread SUBCOMPILE_STDOUT, $subcompile_command_stdout, 4096; }
 	#        if ( $OSNAME eq 'MSWin32' || $stderr_select->can_read(0) ) { sysread SUBCOMPILE_STDERR, $subcompile_command_stderr, 4096; }
 	#        waitpid $pid, 0;

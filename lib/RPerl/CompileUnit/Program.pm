@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Program;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit);
@@ -147,6 +147,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     return $rperl_source_group;
 };
 
+
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = {
@@ -160,6 +161,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
     return $cpp_source_group;
 };
 
+
 our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{} };
@@ -169,10 +171,6 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 #    die 'TMP DEBUG';
-
-
-
-
 
     my string $self_class = ref $self;
 
@@ -208,13 +206,17 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my object $subroutine_star = $self->{children}->[7];
     my object $operation_plus  = $self->{children}->[8];
 
+#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_star = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_star) . "\n");
+
     # NEED ANSWER: should we modify the user-provided shebang as done here, or simply replace it with a hard-coded one pointing to /usr/bin?   //!/usr/bin/rperl
     substr $shebang, 0, 2, '//!';
     substr $shebang, -4, 4, 'rperl';
     $cpp_source_group->{CPP} = $shebang . "\n";
 
     if ( $modes->{label} eq 'ON' ) {
-        $cpp_source_group->{CPP} .= "\n" x ($header_line_number - 6);
+        if ($header_line_number > 6) {
+            $cpp_source_group->{CPP} .= "\n" x ($header_line_number - 6);
+        }
         $cpp_source_group->{CPP} .= '// [[[ HEADER ]]]' . "\n";
     }
     $cpp_source_group->{CPP} .= '#include <rperlstandalone.h>' . "\n";
@@ -234,10 +236,6 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     if (( exists $critic_star->{children}->[0] ) and ( $modes->{label} eq 'ON' )) {
         $cpp_source_group->{CPP} .= "\n" x (scalar @{ $critic_star->{children} });  # insert one blank line for each Critic
     }
-
-
-
-
 
     if ( exists $include_star->{children}->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
@@ -270,14 +268,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     {
         $cpp_source_subgroup = $subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        $cpp_source_group->{CPP} .= "\n\n";
     }
 
-
-
-
-
-
-
+    # BEGIN C++ main() function wrapper, to contain all operations which are not inside a subroutine
     $cpp_source_group->{CPP} .= 'int main() {';
 
     if ( $modes->{label} eq 'ON' ) { 
@@ -286,8 +280,6 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $CPP_saved = $cpp_source_group->{CPP};
     $cpp_source_group->{CPP} = q{};
-
-
 
     if ( $modes->{label} eq 'ON' ) {
         $cpp_source_group->{CPP} .= "\n" . '// [[[ OPERATIONS ]]]' . "\n";
@@ -301,8 +293,6 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #        RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n");
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
-
-
 
     my integer $num_loop_iterators = 0;
     if ((exists $modes->{_loop_iterators}) and (defined $modes->{_loop_iterators})) {
@@ -329,10 +319,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     $CPP_saved .= $cpp_source_group->{CPP};
     $cpp_source_group->{CPP} = $CPP_saved;
-
         
     if ( $modes->{label} eq 'ON' ) { $cpp_source_group->{CPP} .= "\n" x 3; }
     if ( $modes->{label} eq 'ON' ) { $cpp_source_group->{CPP} .= '    // [[[ OPERATIONS FOOTER ]]]' . "\n"; }
+
+    # END C++ main() function wrapper
     $cpp_source_group->{CPP} .= '    return 0;' . "\n" . '}' . "\n\n";
 
     if ( $modes->{label} eq 'ON' ) { $cpp_source_group->{CPP} .= '// [[[ FOOTER ]]]' . "\n"; }

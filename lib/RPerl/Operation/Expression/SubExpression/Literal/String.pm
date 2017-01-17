@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::Literal::String;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression::Literal);
@@ -60,6 +60,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     # replace single-quoted Perl string with double-quoted C++ string, both non-interpolated
     if ((substr $cpp_source_group->{CPP}, 0, 1) eq q{'}) {
         if ((substr $cpp_source_group->{CPP}, -1, 1) eq q{'}) {
+            $cpp_source_group->{CPP} =~ s/\"/\\\"/gxms;  # backslash-escape all double-quotes contained w/in single-quoted strings, before wrapping in non-escaped double-quotes
             substr $cpp_source_group->{CPP}, 0, 1, q{"};
             substr $cpp_source_group->{CPP}, -1, 1, q{"};
         }
@@ -69,6 +70,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
     elsif ((substr $cpp_source_group->{CPP}, 0, 2) eq 'q{') {
         if ((substr $cpp_source_group->{CPP}, -1, 1) eq '}') {
+            $cpp_source_group->{CPP} =~ s/\"/\\\"/gxms;  # backslash-escape all double-quotes contained w/in single-quoted strings, before wrapping in non-escaped double-quotes
             substr $cpp_source_group->{CPP}, 0, 2, q{"};
             substr $cpp_source_group->{CPP}, -1, 1, q{"};
         }
