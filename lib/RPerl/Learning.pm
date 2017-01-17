@@ -18573,11 +18573,37 @@ If we try to call an RPerl subroutine using an ampersand C<&> sigil, we receive 
 
 =head2 Section 4.3: Subroutine Return Values
 
-START HERE
-START HERE
-START HERE
+In the previous sections, both the C<hello_world()> and C<sweet_tooth()> example subroutines have return values of C<void>, which means no data is returned to the caller when these subroutines finish running.  If we try to utilize the return value of a C<void> subroutine, we will experience undefined behavior which will likely lead to other (possibly mysterious) errors in our code.  For example, the variable C<$foo> in the following line of source code will have an unknown and unpredictable value, because the return value of a C<void> subroutine is undefined:
+
+    my integer $foo = hello_world();  # undefined behavior, unpredictable value in $foo
+
+Likewise, the outcome of the following addition C<+> operator is unpredictable, and will probably cause other difficult-to-debug errors elsewhere in our source code:
+
+    23 + hello_world()
+
+So, when we want to utilize the return value of a subroutine, we must give the subroutine a non-C<void> return type in the subroutine definition.
+
+    our integer $jedi = sub { print q{You love him, don't you?}, "\n"; return 6; };
+
+We can call the C<jedi()> subroutine defined above, and actually utilize the return value:
+
+    my integer $episode = jedi();
+    print 'Return (value) of the Jedi, Episode ', $episode, "\n";
+
+The above subroutine call and C<print> statement produce the following output:
+
+=for rperl X<noncode>
+
+    "You love him, don't you?"
+    Return (value) of the Jedi, Episode 6
+
+=for rperl X</noncode>
 
 =head3 Section 4.3.1: C<return> Operator
+
+The C<jedi()> subroutine example in the previous section includes a C<return> operator at end end of the subroutine's body, which serves to return the value C<6> to the caller. 
+
+In normal Perl
 
 =head3 Section 4.3.2: Multiple Return Values
 
