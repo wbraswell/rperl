@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.166_000;
+our $VERSION = 0.167_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13003,6 +13003,8 @@ On the other hand, RPerl I<requires> the use of data types for each and every va
 
 Normal Perl provides a special literal value C<undef>, along with a built-in function named C<defined> which is used to test if a variable contains the special C<undef> value.  RPerl does not support C<undef> or C<defined>, because C++ does not fully support the concept of undefined values, and RPerl's high-speed components are written using C++.
 
+Future versions of RPerl will likely provide a flexible C<scalar> data type, which will offer the trade-off of higher memory usage in exchange for the ability to use one variable with multiple possible data types.  Currently, all RPerl variables must hold exactly one specific data type only.
+
 Data types make your code much more readable and much, much faster.  Learn to love data types.  Now.  :-)
 
 =head3 Section 2.4.1: How To Select Expressive Variable Names
@@ -15895,6 +15897,8 @@ Perl itself does not currently support array data structures with constant value
 
     use constant DAYS => my string_arrayref $TYPED_DAYS = [ 'Sun', 'Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat' ];  # error in Perl & RPerl
 
+As mentioned in L</Section 2.4: Variables With Scalar Values>, future versions of RPerl will likely provide the C<scalar> data type and also the C<scalar_arrayref> data structure, which will provide the ability to use one array reference to store elements with non-matching data types.  Currently, RPerl arrays must store elements which all have the exact same data type as one another.
+
 Please see L</Section 3.5: 2-D Array Data Types & Nested Arrays> for more RPerl array data types.
 
 =head2 Section 3.3: How To Access Array Elements
@@ -18583,7 +18587,7 @@ Likewise, the outcome of the following addition C<+> operator is unpredictable, 
 
 So, when we want to utilize the return value of a subroutine, we must give the subroutine a non-C<void> return type in the subroutine definition.
 
-    our integer $jedi = sub { print q{You love him, don't you?}, "\n"; return 6; };
+    our integer $jedi = sub { print q{"You love him, don't you?"}, "\n"; return 6; };
 
 We can call the C<jedi()> subroutine defined above, and actually utilize the return value:
 
@@ -18626,9 +18630,9 @@ A subroutine with C<void> return type may also utilize the C<return> operator, i
 
 In normal Perl, the C<return> operator is optional, and Perl automatically returns the vale of the last expression executed before the subroutine ends.  However, leaving out the C<return> operator in RPerl will once again lead to either an error, or undefined and unpredictable behavior in C++ compile modes.
 
-            sub  jedi       { print q{You love him, don't you?}, "\n";        6; }   #   usable in Perl, error  in RPerl
-    our integer $jedi = sub { print q{You love him, don't you?}, "\n";        6; };  # unusable in Perl, error  in RPerl
-    our integer $jedi = sub { print q{You love him, don't you?}, "\n"; return 6; };  # unusable in Perl, usable in RPerl
+            sub  jedi       { print q{"You love him, don't you?"}, "\n";        6; }   #   usable in Perl, error  in RPerl
+    our integer $jedi = sub { print q{"You love him, don't you?"}, "\n";        6; };  # unusable in Perl, error  in RPerl
+    our integer $jedi = sub { print q{"You love him, don't you?"}, "\n"; return 6; };  # unusable in Perl, usable in RPerl
 
 If we exclude the C<return> operator as in the second line above, then we will receive an error in RPerl compiled modes, because the semicolon C<;> of C<6;> is found before an actual operator is encountered:
 
@@ -18686,9 +18690,25 @@ Adding the C<return> operator will lead to a C++ subcompile error, visible in RP
 
 =for rperl X</noncode>
 
-For all subroutines with non-C<void> return types, you should always use the C<return> operator and always give C<return> operands of the correct return type.
+For all subroutines with non-C<void> return types, you should always use the C<return> operator, and always provide the C<return> operator with operands of the correct return type.
 
 =head3 Section 4.3.2: Multiple Return Values
+
+In normal Perl, the C<return> operator may optionally be provided with more than one operand, thereby causing its subroutine to actually return multiple values to the originating caller.  In this case, the calling software must know how to properly receive back more than one return value from the invoked subroutine, or else you may receive the incorrect data or experience undefined behavior.
+
+In RPerl, any subroutine defined with a non-C<void> return type must provide each of its C<return> operators with exactly one operand, thereby causing the subroutine to return exactly one value to the originating caller.  Likewise, all non-C<void> subroutine calls in RPerl must be designed to receive back exactly one data value of the subroutine's defined return type.  (As with many design aspects of the RPerl compiler, this particular requirement is based on the behavior of the C++ target language.)
+
+NEED ADD EXAMPLE
+NEED ADD EXAMPLE
+NEED ADD EXAMPLE
+
+When you want to return multiple values from an RPerl subroutine, simply return an array reference containing more than one element, then you may receive back a single array reference in the caller and access each element as needed.  In other words, you may wrap up multiple return values inside of a single array reference, and still be in compliance with the exactly-one-return-value requirement.
+
+NEED ADD EXAMPLE
+NEED ADD EXAMPLE
+NEED ADD EXAMPLE
+
+Currently, all RPerl subroutines utilizing an array reference return value must only return elements which all have the exact same data type as one another, because RPerl arrays are homogeneous with only one data type shared across all elements.  As mentioned in L</Section 3.2: 1-D Array Data Types & Constants>, future versions of RPerl will probably provide a C<scalar_arrayref> data structure which can hold elements of non-matching data types.
 
 =head2 Section 4.4: Subroutine Arguments
 

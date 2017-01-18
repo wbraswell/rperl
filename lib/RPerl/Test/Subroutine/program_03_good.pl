@@ -19,7 +19,7 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 
 # NEED UPGRADE: create some mechanism to allow one-line subroutines in test files AND pass diff check
-# our integer $jedi = sub { print q{You love him, don't you?}, "\n"; return 6; };
+# our integer $jedi = sub { print q{"You love him, don't you?"}, "\n"; return 6; };
 
 our integer $jedi = sub {
     print q{"You love him, don't you?"}, "\n";
