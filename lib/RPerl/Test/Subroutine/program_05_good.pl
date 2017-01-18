@@ -1,4 +1,10 @@
 #!/usr/bin/perl
+
+# Learning RPerl, Section 4.3.2: Multiple Return Values
+
+# [[[ PREPROCESSOR ]]]
+# <<< EXECUTE_SUCCESS: 'have $retval = 23' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -10,8 +16,8 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ SUBROUTINES ]]]
-our number $foo = sub { return -234_567.890_12; };
+our integer $foo_single = sub { return 23; };
 
 # [[[ OPERATIONS ]]]
-foo();
-
+my integer $retval = foo_single();
+print 'have $retval = ', $retval, "\n";

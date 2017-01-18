@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.167_000;
+our $VERSION = 0.168_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -18696,17 +18696,56 @@ For all subroutines with non-C<void> return types, you should always use the C<r
 
 In normal Perl, the C<return> operator may optionally be provided with more than one operand, thereby causing its subroutine to actually return multiple values to the originating caller.  In this case, the calling software must know how to properly receive back more than one return value from the invoked subroutine, or else you may receive the incorrect data or experience undefined behavior.
 
-In RPerl, any subroutine defined with a non-C<void> return type must provide each of its C<return> operators with exactly one operand, thereby causing the subroutine to return exactly one value to the originating caller.  Likewise, all non-C<void> subroutine calls in RPerl must be designed to receive back exactly one data value of the subroutine's defined return type.  (As with many design aspects of the RPerl compiler, this particular requirement is based on the behavior of the C++ target language.)
+The following subroutine C<foo_multi()> is valid in normal Perl only:
 
-NEED ADD EXAMPLE
-NEED ADD EXAMPLE
-NEED ADD EXAMPLE
+    sub foo_multi { return 21, 22, 23; }
+    (my $retval0, my $retval1, my $retval2) = foo_multi();
+    print 'have $retval0 = ', $retval0, "\n";
+    print 'have $retval1 = ', $retval1, "\n";
+    print 'have $retval2 = ', $retval2, "\n";
 
-When you want to return multiple values from an RPerl subroutine, simply return an array reference containing more than one element, then you may receive back a single array reference in the caller and access each element as needed.  In other words, you may wrap up multiple return values inside of a single array reference, and still be in compliance with the exactly-one-return-value requirement.
+Running the normal Perl C<foo_multi()> code above will produce the following output:
 
-NEED ADD EXAMPLE
-NEED ADD EXAMPLE
-NEED ADD EXAMPLE
+=for rperl X<noncode>
+
+    have $retval0 = 21
+    have $retval1 = 22
+    have $retval2 = 23
+
+=for rperl X</noncode>
+
+On the other hand, any RPerl subroutine defined with a non-C<void> return type must provide each of its C<return> operators with exactly one operand, thereby causing the subroutine to return exactly one value to the originating caller.  Likewise, all non-C<void> subroutine calls in RPerl must be designed to receive back exactly one data value of the subroutine's defined return type.  (As with many design aspects of the RPerl compiler, this particular requirement is based on the behavior of the C++ target language.)
+
+    our integer $foo_single = sub { return 23; };
+    my integer $retval = foo_single();
+    print 'have $retval = ', $retval, "\n";
+
+=for rperl X<noncode>
+
+    have $retval = 23
+
+=for rperl X</noncode>
+
+When you want to return multiple values from an RPerl subroutine, you may simply return an array reference containing more than one element, then you will receive back a single array reference in the caller and you access each element as needed.  In other words, you may wrap up multiple return values inside of a single array reference, and still be in compliance with the exactly-one-return-value requirement.
+
+    our integer_arrayref $foo_multi = sub { return [21, 22, 23]; };
+    my integer_arrayref $retvals = foo_multi();
+    my integer $retval0 = $retvals->[0];
+    my integer $retval1 = $retvals->[1];
+    my integer $retval2 = $retvals->[2];
+    print 'have $retval0 = ', $retval0, "\n";
+    print 'have $retval1 = ', $retval1, "\n";
+    print 'have $retval2 = ', $retval2, "\n";
+
+Running the RPerl C<foo_multi()> code above will produce the exact same variables and output as the normal Perl C<foo_multi()> code:
+
+=for rperl X<noncode>
+
+    have $retval0 = 21
+    have $retval1 = 22
+    have $retval2 = 23
+
+=for rperl X</noncode>
 
 Currently, all RPerl subroutines utilizing an array reference return value must only return elements which all have the exact same data type as one another, because RPerl arrays are homogeneous with only one data type shared across all elements.  As mentioned in L</Section 3.2: 1-D Array Data Types & Constants>, future versions of RPerl will probably provide a C<scalar_arrayref> data structure which can hold elements of non-matching data types.
 

@@ -12,9 +12,7 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 
 # DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'return();' not 'return ();'
-our void $foo = sub {
-    return();
-};
+our void $foo = sub { return(); };
 
 # [[[ OPERATIONS ]]]
 foo();

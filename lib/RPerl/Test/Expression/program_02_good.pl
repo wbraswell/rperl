@@ -11,8 +11,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-our void $foo = sub {
-    ( my string $bar ) = @ARG;
-    print $bar, "\n";
-};
+our void $foo = sub { ( my string $bar ) = @ARG; print $bar, "\n"; };
 foo('howdy!');

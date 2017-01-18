@@ -16,9 +16,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ SUBROUTINES ]]]
-our integer $unpredictable = sub {
-    return 'howdy' . 'doody';
-};
+our integer $unpredictable = sub { return 'howdy' . 'doody'; };
 
 # [[[ OPERATIONS ]]]
 print 'have unpredictable() = ', unpredictable(), "\n";

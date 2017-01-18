@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -72,8 +72,9 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 . ' must not start with underscore, dying' . "\n";
     }
 
-    $rperl_source_group->{PMC}
-        .= $our . q{ } . $return_type->{children}->[0] . q{ } . $name . q{ } . $equal_sub . "\n";
+    # DEV NOTE: no newline appended in the next line, all newlines removed from subroutine body via regex replacement after foreach loop below,
+    # thus allowing for single-line subroutines as well as multi-line subroutines, at the control of Perl::Tidy
+    $rperl_source_group->{PMC} .= $our . q{ } . $return_type->{children}->[0] . q{ } . $name . q{ } . $equal_sub;
 
     if ( exists $arguments_optional->{children}->[0] ) {
         $rperl_source_subgroup = $arguments_optional->{children}->[0]->ast_to_rperl__generate($modes);
@@ -84,6 +85,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $rperl_source_subgroup = $operation->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
+
+    $rperl_source_group->{PMC} =~ s/\n/\ /gxms;
 
     $rperl_source_group->{PMC} .= $right_brace . $semicolon . "\n\n";
     return $rperl_source_group;

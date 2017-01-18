@@ -6,8 +6,6 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
-our string $empty_sub = sub {
-    return "`~!#%^&*()-_=+[]{}\n|;:',<.>/?\n";
-};
+our string $empty_sub = sub { return "`~!#%^&*()-_=+[]{}\n|;:',<.>/?\n"; };
 
 1;    # end of package
