@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.170_000;
+our $VERSION = 0.171_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -18839,6 +18839,108 @@ Running C<bar_args_static()> gives us the exact same variables and output as C<b
 
 =head3 Section 4.4.1: Variadic Subroutines
 
+The number of arguments accepted by a subroutine is known as its "arity".  A subroutine, operator, or other operation which is capable of accepting a varying number of input arguments is known as "variadic".  (Please see L</D.3: Syntax Arity, Fixity, Precedence, Associativity> for more information.)
+
+In the previous section, we saw the C<bar_args_dynamic()> subroutine use the C<shift> operator (and associated Perl magic) in order to control its own accepted arguments.  The same magic can be used in normal Perl to change, at runtime, the number of arguments accepted by a subroutine.
+
+In normal Perl, a variadic subroutine can be created as follows:
+
+    sub baz_variadic_dynamic {
+        my $num_args = shift @ARG;
+        my $arg2 = q{};
+        my $arg3 = q{};
+        my $arg4 = q{};
+        if ($num_args >= 2) { $arg2 = shift @ARG; }
+        if ($num_args >= 3) { $arg3 = shift @ARG; }
+        if ($num_args >= 4) { $arg4 = shift @ARG; }
+        print 'have $num_args = ', $num_args, "\n";
+        print 'have $args2 = ', $arg2, "\n";
+        print 'have $args3 = ', $arg3, "\n";
+        print 'have $args4 = ', $arg4, "\n\n";
+        return;
+    }
+    baz_variadic_dynamic(1);
+    baz_variadic_dynamic(2, 'howdy');
+    baz_variadic_dynamic(3, 'howdy', 'doody');
+    baz_variadic_dynamic(4, 'howdy', 'doody', 'time');
+
+Running the normal Perl subroutine C<baz_variadic_dynamic()>, we can see how the first argument C<$num_args> is used to control how many additional arguments are accepted:
+
+=for rperl X<noncode>
+
+    have $num_args = 1
+    have $args2 = 
+    have $args3 = 
+    have $args4 = 
+
+    have $num_args = 2
+    have $args2 = howdy
+    have $args3 = 
+    have $args4 = 
+
+    have $num_args = 3
+    have $args2 = howdy
+    have $args3 = doody
+    have $args4 = 
+
+    have $num_args = 4
+    have $args2 = howdy
+    have $args3 = doody
+    have $args4 = time
+
+=for rperl X</noncode>
+
+As we did with subroutine return values in L</Section 4.3.2: Multiple Return Values>, we can use an array reference to simulate a variadic subroutine while maintaining compatibility with RPerl:
+
+    our void $baz_variadic_static = sub {
+        (my integer $num_args, my string_arrayref $args) = @ARG;
+        my string $arg2 = q{};
+        my string $arg3 = q{};
+        my string $arg4 = q{};
+        if ($num_args >= 2) { $arg2 = $args->[0]; }
+        if ($num_args >= 3) { $arg3 = $args->[1]; }
+        if ($num_args >= 4) { $arg4 = $args->[2]; }
+        print 'have $num_args = ', $num_args, "\n";
+        print 'have $args2 = ', $arg2, "\n";
+        print 'have $args3 = ', $arg3, "\n";
+        print 'have $args4 = ', $arg4, "\n\n";
+        return;
+    };
+    baz_variadic_static(1, []);
+    baz_variadic_static(2, ['howdy']);
+    baz_variadic_static(3, ['howdy', 'doody']);
+    baz_variadic_static(4, ['howdy', 'doody', 'time']);
+
+In the C<baz_variadic_static()> subroutine example above, we accept an array reference argument named C<$args> and retrieve its elements as controlled by the C<$num_args> input argument, achieving the same outcome as in C<baz_variadic_dynamic()>.  You will note the variable C<$arg2> receives its value from C<$args-E<gt>[0]> which is a seeming index difference of 2, caused by array indices starting at 0 instead of 1, combined with the fact that we have already accepted C<$num_args> as a separate argument altogether.
+
+Also, when we call C<baz_variadic_static()>, all arguments after the first must be wrapped in the square-brackets C<[ ]>, denoting an array reference.
+
+As you may expect, running the C<baz_variadic_static()> subroutine gives us the same variables and output as C<baz_variadic_dynamic()>, with the added performance optimizations of the RPerl compiler:
+
+=for rperl X<noncode>
+
+    have $num_args = 1
+    have $args2 = 
+    have $args3 = 
+    have $args4 = 
+
+    have $num_args = 2
+    have $args2 = howdy
+    have $args3 = 
+    have $args4 = 
+
+    have $num_args = 3
+    have $args2 = howdy
+    have $args3 = doody
+    have $args4 = 
+
+    have $num_args = 4
+    have $args2 = howdy
+    have $args3 = doody
+    have $args4 = time
+
+=for rperl X</noncode>
+
 =head2 Section 4.5: Subroutine Variables
 
 =head3 Section 4.5.1: C<my> Intermittent Variables
@@ -19723,11 +19825,11 @@ A new copy of the variable C<$input_string> is created and assigned the value of
 
 Inside the body of the C<while> loop is 1 line calling the C<push> operator, which appends the current iteration's value of C<$input_string> onto the list of strings contained in C<$input_strings>.X<br>
 
-The C<@{...}> (at-sign-curly-braces) is the array dereference operator, which exists because in Perl it is still sometimes necessary to directly access an array by value, instead of the RPerl method of indirectly accessing the array by reference, such as is required by the C<push> operator.X<br>
+The at-sign-curly-braces C<@{ }> is the array dereference operator, which exists because in Perl it is still sometimes necessary to directly access an array by value, instead of the RPerl method of indirectly accessing the array by reference, such as is required by the C<push> operator.X<br>
 
 The line starting with C<my string_arrayref $input_strings_reversed> declares another array of string values C<input_strings_reversed>, and then assigns it the strings contained within the first array C<$input_strings> in reversed order, as returned by calling the C<reverse> operator.X<br>
 
-As with the C<push> operator, the C<reverse> operator requires its argument to be dereferenced using C<@{...}>; another dereferenced array value is returned by C<reverse>, and an array reference is returned by enclosing C<reverse> and its argument inside the C<[...]> (square-brackets) array reference operator.X<br>
+As with the C<push> operator, the C<reverse> operator requires its argument to be dereferenced using at-sign-curly-braces C<@{ }>; another dereferenced array value is returned by C<reverse>, and an array reference is returned by enclosing C<reverse> and its argument inside the square-brackets C<[ ]> array reference operator.X<br>
 
 Finally, the line starting with C<foreach my string $input_strings_reversed_element> denotes the beginning of another loop statement, which iterates the value of C<$input_strings_reversed_element> once for each string value contained in the C<$input_strings_reversed> array; C<print> is called inside the loop body to display the original input strings in reverse order.X<br>
 
@@ -21801,7 +21903,7 @@ Inside the F<lib/RPerl/Grammar.eyp> file, there are several labeled file section
 
 =item * Eyapp Setup & Config
 
-At the top of the F<Grammar.eyp> file, the C<[[[ EYAPP SETUP & CONFIG ]]]> section contains Perl 5 code to initialize RPerl within the C<%{...}%> delimiters, as well as the C<%strict> and C<%tree> Eyapp configuration directives for automatically building an abstract syntax tree (AST) from an RPerl input file.
+At the top of the F<Grammar.eyp> file, the C<[[[ EYAPP SETUP & CONFIG ]]]> section contains Perl 5 code to initialize RPerl within the special percent-signs-and-curly-braces C<%{ }%> delimiters, as well as the C<%strict> and C<%tree> Eyapp configuration directives for automatically building an abstract syntax tree (AST) from an RPerl input file.
 
 =item * Lexicon
 
@@ -22162,7 +22264,7 @@ single uppercase letter, or uppercase letter followed by uppercase letters, numb
 
 =head2 D.3: Syntax Arity, Fixity, Precedence, Associativity
 
-Operator I<"arity"> is a technical term which means the number of input operands accepted by a specific built-in operator, or the number of input arguments accepted by a user-defined function.  An operator or function which accepts 0 input arguments is known as I<"nullary">, 1 argument as I<"unary">, 2 arguments as I<"binary">, 3 arguments as I<"ternary">, and so forth.  The C<exit;> operator may be called as nullary; the C<++> increment operator is unary; the C<+> addition operator is binary; and the C<substr> operator may be called as ternary.  Not to be confused with "a ternary operator", meaning any operator which accepts 3 operands, there is one specific operator known as I<"the ternary operator">, which is a special kind of conditional operator accepting 3 input arguments.  An operator or function which may accept more than one number of arguments is known as I<"variadic">.  Some RPerl operators are variadic, such as C<substr> which may accept 2, 3, or 4 arguments.  RPerl does not currently support variadic user-defined functions.
+Operator I<"arity"> is a technical term which means the number of input operands accepted by a specific built-in operator, or the number of input arguments accepted by a user-defined subroutine.  An operator or function which accepts 0 input arguments is known as I<"nullary">, 1 argument as I<"unary">, 2 arguments as I<"binary">, 3 arguments as I<"ternary">, and so forth.  The C<exit;> operator may be called as nullary; the C<++> increment operator is unary; the C<+> addition operator is binary; and the C<substr> operator may be called as ternary.  Not to be confused with "a ternary operator", meaning any operator which accepts 3 operands, there is one specific operator known as I<"the ternary operator">, which is a special kind of conditional operator accepting 3 input arguments.  An operator or function which may accept more than one number of arguments is known as I<"variadic">.  Some RPerl operators are variadic, such as C<substr> which may accept 2, 3, or 4 arguments.  RPerl does not currently support variadic user-defined subroutine.
 
 L<Operator Arity on Wikipedia|https://en.wikipedia.org/wiki/Arity>
 

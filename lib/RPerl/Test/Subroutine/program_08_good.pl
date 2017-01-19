@@ -18,7 +18,9 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 our void $foo_args = sub {
-    (my integer $arg1, my number $arg2, my string $arg3) = @ARG;
+    # PERLTIDY BUG, failure to put a space between $arg3 and closing )
+#    (my integer $arg1, my number $arg2, my string $arg3) = @ARG;
+    ( my integer $arg1, my number $arg2, my string $arg3 ) = @ARG;
     print 'have $arg1 * $arg2 = ', number_to_string($arg1 * $arg2), "\n";
     print 'have $arg3 x $arg1 = ', ($arg3 x $arg1), "\n";
 };

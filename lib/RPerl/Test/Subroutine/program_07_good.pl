@@ -16,10 +16,13 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ SUBROUTINES ]]]
-our void $foo_arg  = sub {
-    (my integer $arg1) = @ARG;
-    print 'inside foo_arg(), have $arg1 = ', integer_to_string($arg1), "\n";
-};
+
+# NEED UPGRADE, CORRELATION #rp035: allow multi-line subroutines where it would be less than 160 chars if on a single line
+#our void $foo_arg  = sub {
+#    (my integer $arg1) = @ARG;
+#    print 'inside foo_arg(), have $arg1 = ', integer_to_string($arg1), "\n";
+#};
+our void $foo_arg  = sub { (my integer $arg1) = @ARG; print 'inside foo_arg(), have $arg1 = ', integer_to_string($arg1), "\n"; };
 
 # [[[ OPERATIONS ]]]
 foo_arg(1_701);

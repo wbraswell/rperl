@@ -72,6 +72,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 . ' must not start with underscore, dying' . "\n";
     }
 
+    # NEED UPGRADE, CORRELATION #rp035: allow multi-line subroutines where it would be less than 160 chars if on a single line
     # DEV NOTE: no newline appended in the next line, all newlines removed from subroutine body via regex replacement after foreach loop below,
     # thus allowing for single-line subroutines as well as multi-line subroutines, at the control of Perl::Tidy
     $rperl_source_group->{PMC} .= $our . q{ } . $return_type->{children}->[0] . q{ } . $name . q{ } . $equal_sub;

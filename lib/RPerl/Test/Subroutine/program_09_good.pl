@@ -18,7 +18,9 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 our void $bar_args_static = sub {
-    (my string $arg_type, my integer $bar_int, my string $bar_str) = @ARG;
+    # PERLTIDY BUG, failure to put a space between $arg3 and closing )
+#    (my string $arg_type, my integer $bar_int, my string $bar_str) = @ARG;
+    ( my string $arg_type, my integer $bar_int, my string $bar_str ) = @ARG;
     if ($arg_type eq 'integer') {
         print 'have $bar_int * 3 = ', $bar_int * 3, "\n";
     }

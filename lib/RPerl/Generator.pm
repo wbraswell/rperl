@@ -39,6 +39,7 @@ elsif ( $EVAL_ERROR ne q{} ) { die $EVAL_ERROR; }
 use English qw(-no_match_vars);    # for $OSNAME; NEED ANSWER: why isn't this included from 'require RPerl::Config', which is included from 'use RPerl' above?
 
 # [[[ CONSTANTS ]]]
+# NEED UPGRADE, CORRELATION #rp035: allow multi-line subroutines where it would be less than 160 chars if on a single line
 use constant PERLTIDY_LINE_WIDTH  => my number $TYPED_PERLTIDY_LINE_WIDTH  = 160;
 
 # [[[ OO PROPERTIES ]]]
