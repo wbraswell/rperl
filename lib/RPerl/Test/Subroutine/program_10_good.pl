@@ -18,7 +18,9 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 
 our void $baz_variadic_static = sub {
-    (my integer $num_args, my string_arrayref $args) = @ARG;
+    # PERLTIDY BUG, failure to put a space between $arg3 and closing )
+#    (my integer $num_args, my string_arrayref $args) = @ARG;
+    ( my integer $num_args, my string_arrayref $args ) = @ARG;
     my string $arg2 = q{};
     my string $arg3 = q{};
     my string $arg4 = q{};

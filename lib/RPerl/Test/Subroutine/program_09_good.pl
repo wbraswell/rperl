@@ -21,12 +21,16 @@ our void $bar_args_static = sub {
     # PERLTIDY BUG, failure to put a space between $arg3 and closing )
 #    (my string $arg_type, my integer $bar_int, my string $bar_str) = @ARG;
     ( my string $arg_type, my integer $bar_int, my string $bar_str ) = @ARG;
-    if ($arg_type eq 'integer') {
-        print 'have $bar_int * 3 = ', $bar_int * 3, "\n";
-    }
-    else {
-        print 'have $bar_str x 3 = ', $bar_str x 3, "\n";
-    }
+
+# NEED UPGRADE, CORRELATION #rp035: allow multi-line subroutines & other code blocks, where they would be less than 160 chars if on a single line
+#    if ($arg_type eq 'integer') {
+#        print 'have $bar_int * 3 = ', $bar_int * 3, "\n";
+#    }
+#    else {
+#        print 'have $bar_str x 3 = ', $bar_str x 3, "\n";
+#    }
+    if ($arg_type eq 'integer') { print 'have $bar_int * 3 = ', $bar_int * 3, "\n"; }
+    else { print 'have $bar_str x 3 = ', $bar_str x 3, "\n"; }
     return;
 };
 
