@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.171_000;
+our $VERSION = 0.172_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -18941,7 +18941,126 @@ As you may expect, running the C<baz_variadic_static()> subroutine gives us the 
 
 =for rperl X</noncode>
 
-=head2 Section 4.5: Subroutine Variables
+=head2 Section 4.5: Subroutine Variables, Variable Scope & Persistence
+
+In normal Perl, variables inside a subroutine may behave in several complex ways, depending upon if and how the variable was declared, which can happen both inside and outside the subroutine itself.  Perl provides a number of different ways to create a variable, including the by-now familiar C<my> keyword, as well as the C<our> and C<state> keywords, and others.
+
+Perl variables possess many (often magic) properties which affect their behavior, two of which are I<"scope"> and I<"persistence">.  The scope of a variable is the subroutine, code block, or other region of code within which the variable is valid and accessible.  Attempting to utilize a variable outside of its scope will lead to errors and undefined behavior.
+
+The persistence of a variable is how long the variable will remain valid, before its memory is released and it is no longer accessible from anywhere within your Perl program.  As with out-of-scope variables, attepting to access a variable after its persistence has expired will result in errors and undefined behavior.
+
+Perl variables declared using the C<my> keyword are classified as possessing I<"local scope">, as well as I<"intermittent persistence"> (AKA I<"non-persistent">).  This means C<my> variables declared inside a subroutine will only be valid within their own subroutine (local scope), and must be re-declared each time the subroutine is executed (intermittent).  In Perl terminology, "local scope" is generally synonymous with "lexical scope" and "private scope".  The C<my> variable is the safest, simplest, and most optimizable classification of Perl variable.
+
+    use strict;
+    #print 'before defining quux(), have $local_intermittent = ', $local_intermittent, "\n";  # YES ERROR
+    our void $quux = sub {
+        my integer $local_intermittent = 23;
+        print 'inside quux(), have $local_intermittent = ', $local_intermittent, "\n";        # NO  ERROR
+        $local_intermittent++;
+    };
+    #print 'after  defining quux(), have $local_intermittent = ', $local_intermittent, "\n";  # YES ERROR
+
+    quux();
+    #print 'after   calling quux(), have $local_intermittent = ', $local_intermittent, "\n";  # YES ERROR
+    quux();
+    #print 'after   calling quux(), have $local_intermittent = ', $local_intermittent, "\n";  # YES ERROR
+
+Running the example code above, which utilizes a C<my> variable, gives us the following output:
+
+=for rperl X<noncode>
+
+    inside quux(), have $local_intermittent = 23
+    inside quux(), have $local_intermittent = 23
+
+=for rperl X</noncode>
+
+Perl variables declared using C<our> are of I<"global scope"> and are I<"persistent">, which means C<our> variables may be accessed from anywhere within your Perl program and will never need to be re-declared.  This is one of the least safe, simple, and optimizable classifications of variable.
+
+    use strict;
+    our integer $global_persistent = 23;
+    print 'before defining quux(), have $global_persistent = ', $global_persistent, "\n";  # NO ERROR
+    our void $quux = sub {
+        print 'inside quux(), have $global_persistent = ', $global_persistent, "\n";       # NO ERROR
+        $global_persistent++;
+    };
+    print 'after  defining quux(), have $global_persistent = ', $global_persistent, "\n";  # NO ERROR
+
+    quux();
+    print 'after   calling quux(), have $global_persistent = ', $global_persistent, "\n";  # NO ERROR
+    quux();
+    print 'after   calling quux(), have $global_persistent = ', $global_persistent, "\n";  # NO ERROR
+
+
+Running this C<our> variable example code produces the output below:
+
+=for rperl X<noncode>
+
+    before defining quux(), have $global_persistent = 23
+    after  defining quux(), have $global_persistent = 23
+    inside quux(), have $global_persistent = 23
+    after   calling quux(), have $global_persistent = 24
+    inside quux(), have $global_persistent = 24
+    after   calling quux(), have $global_persistent = 25
+
+=for rperl X</noncode>
+
+Perl variables declared using C<state> are of local scope and are persistent; this means C<state> variables may be accessed only from within the area of code where they were defined, but they do not ever need to be re-declared, and they will retain their values between each execution of their enclosing code block.  A C<state> variable declared inside a subroutine will save its value each time the subroutine is executed, providing yet another convenient use of magic in normal Perl.  Like C<our> variables, C<state> variables score low for safety, simplicity, and optimizability.
+
+    use strict;
+    use feature 'state';
+    #print 'before defining quux(), have $local_persistent = ', $local_persistent, "\n";  # YES ERROR
+    our void $quux = sub {
+        state integer $local_persistent = 23;
+        print 'inside quux(), have $local_persistent = ', $local_persistent, "\n";        # NO  ERROR
+        $local_persistent++;
+    };
+    #print 'after  defining quux(), have $local_persistent = ', $local_persistent, "\n";  # YES ERROR
+
+    quux();
+    #print 'after   calling quux(), have $local_persistent = ', $local_persistent, "\n";  # YES ERROR
+    quux();
+    #print 'after   calling quux(), have $local_persistent = ', $local_persistent, "\n";  # YES ERROR
+
+Executing the C<state> variable example code above will generate the following output:
+
+=for rperl X<noncode>
+
+    inside quux(), have $local_persistent = 23
+    inside quux(), have $local_persistent = 24
+
+=for rperl X</noncode>
+
+In normal Perl, a variable which is utilized without first being declared will usually undergo the process of I<"autovivification">, which means the variable is automatically created by Perl, according to Perl's own internal rules.  Variables which have been autovivified may cause many difficult-to-debug issues, such as misspelled variables taking data without emitting any warnings, etc.  Because of this, the C<use strict;> pragma will cause an error to be triggered by any variables which would normally be autovivified.  Like C<our> and C<state> variables, autovivified variables receive a low score for safety, simplicity, and speed.
+
+    print 'before defining quux(), have $autovivified = ', $autovivified, "\n";  # NO ERROR, YES WARNING
+    our void $quux = sub {
+        $autovivified = 23;
+        print 'inside quux(), have $autovivified = ', $autovivified, "\n";       # NO ERROR
+        $autovivified++;
+    };
+    print 'after  defining quux(), have $autovivified = ', $autovivified, "\n";  # NO ERROR, YES WARNING
+
+    quux();
+    print 'after   calling quux(), have $autovivified = ', $autovivified, "\n";  # NO ERROR
+    quux();
+    print 'after   calling quux(), have $autovivified = ', $autovivified, "\n";  # NO ERROR
+
+Executing the autovivified code requires us to first disable C<use strict;>, after which it will run with warnings:
+
+=for rperl X<noncode>
+
+    Use of uninitialized value $autovivified in print
+    before defining quux(), have $autovivified = 
+    Use of uninitialized value $autovivified in print
+    after  defining quux(), have $autovivified = 
+    inside quux(), have $autovivified = 23
+    after   calling quux(), have $autovivified = 24
+    inside quux(), have $autovivified = 23
+    after   calling quux(), have $autovivified = 24
+
+=for rperl X</noncode>
+
+In RPerl, all variables are created using the C<my> keyword, because it is the best choice: C<my> variables are the least prone to cause errors, they are the easiest to convert into C++ output code, and they are the most optimizable.  Also, because all RPerl code must utilize the C<use strict;> pragma, there is no autovivification of RPerl variables.  RPerl does not support C<our> variables, C<state> variables, autovivified variables, or any kind other than C<my> variables.
 
 =head3 Section 4.5.1: C<my> Intermittent Variables
 
@@ -19003,8 +19122,6 @@ Running the code example above generates the following output string, which is i
     $foo = [7, 17, 27];
 
 =for rperl X</noncode>
-
-=head3 Section 4.5.2: C<state> Persistent Variables
 
 =head2 Section 4.6: C<use strict; use warnings;> Pragmas & Magic
 

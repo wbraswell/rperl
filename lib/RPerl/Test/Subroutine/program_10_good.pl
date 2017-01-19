@@ -3,7 +3,22 @@
 # Learning RPerl, Section 4.4.1: Variadic Subroutines
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: ' ' >>>
+# <<< EXECUTE_SUCCESS: 'have $num_args = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $args2 = ' >>>
+# <<< EXECUTE_SUCCESS: 'have $args3 = ' >>>
+# <<< EXECUTE_SUCCESS: 'have $args4 = ' >>>
+# <<< EXECUTE_SUCCESS: 'have $num_args = 2' >>>
+# <<< EXECUTE_SUCCESS: 'have $args2 = howdy' >>>
+# <<< EXECUTE_SUCCESS: 'have $args3 = ' >>>
+# <<< EXECUTE_SUCCESS: 'have $args4 = ' >>>
+# <<< EXECUTE_SUCCESS: 'have $num_args = 3' >>>
+# <<< EXECUTE_SUCCESS: 'have $args2 = howdy' >>>
+# <<< EXECUTE_SUCCESS: 'have $args3 = doody' >>>
+# <<< EXECUTE_SUCCESS: 'have $args4 = ' >>>
+# <<< EXECUTE_SUCCESS: 'have $num_args = 4' >>>
+# <<< EXECUTE_SUCCESS: 'have $args2 = howdy' >>>
+# <<< EXECUTE_SUCCESS: 'have $args3 = doody' >>>
+# <<< EXECUTE_SUCCESS: 'have $args4 = time' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
