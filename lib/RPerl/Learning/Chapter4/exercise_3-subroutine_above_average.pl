@@ -43,13 +43,13 @@ our number_arrayref $above_average = sub {
 
 # [[[ OPERATIONS ]]]
 
-my string_arrayref $fred = [1 .. 10];
+my number_arrayref $fred = [1 .. 10];
 my number $fred_above_average = above_average($fred);
 print '$fred is ', number_arrayref_to_string($fred), "\n";
 print 'The above-average elements of $fred are ', number_arrayref_to_string($fred_above_average), "\n";
 print '(Should be [6, 7, 8, 9, 10])', "\n\n";
 
-my string_arrayref $barney = [100, 1 .. 10];
+my number_arrayref $barney = [100, 1 .. 10];
 my number $barney_above_average = above_average($barney);
 print '$barney is ', number_arrayref_to_string($barney), "\n";
 print 'The above-average elements of $barney are ', number_arrayref_to_string($barney_above_average), "\n";

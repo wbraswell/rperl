@@ -1,7 +1,7 @@
 //!/usr/bin/rperl
 
 // Learning RPerl, Chapter 1, Exercise 1
-// Print "Hello, world!"; the classic first program for new programmers
+// Print "Hello, World!"; the classic first program for new programmers
 
 // [[[ HEADER ]]]
 #include <rperlstandalone.h>
@@ -13,7 +13,7 @@ int main() {  // [[[ OPERATIONS HEADER ]]]
 
 
 // [[[ OPERATIONS ]]]
- print "Hello, world!" << endl;
+ print "Hello, World!" << endl;
 
 
 

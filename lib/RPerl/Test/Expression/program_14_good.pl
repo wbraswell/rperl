@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'Hello, world!' >>>
+# <<< EXECUTE_SUCCESS: 'Hello, World!' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -18,5 +18,5 @@ our $VERSION = 0.001_000;
 use constant NEWLINE => my string $TYPED_NEWLINE = "\n";
 
 # [[[ OPERATIONS ]]]
-my string $greeting = 'Hello, world!';
+my string $greeting = 'Hello, World!';
 print $greeting, NEWLINE();

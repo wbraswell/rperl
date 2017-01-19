@@ -1,11 +1,11 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'Hello, world #1!' >>>
-# <<< EXECUTE_SUCCESS: 'Hello, world #2!' >>>
-# <<< EXECUTE_SUCCESS: 'Hello, world #3!' >>>
-# <<< EXECUTE_SUCCESS: 'Hello, world #4!' >>>
-# <<< EXECUTE_SUCCESS: 'Hello, world #5!' >>>
+# <<< EXECUTE_SUCCESS: 'Hello, World #1!' >>>
+# <<< EXECUTE_SUCCESS: 'Hello, World #2!' >>>
+# <<< EXECUTE_SUCCESS: 'Hello, World #3!' >>>
+# <<< EXECUTE_SUCCESS: 'Hello, World #4!' >>>
+# <<< EXECUTE_SUCCESS: 'Hello, World #5!' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -21,6 +21,6 @@ our $VERSION = 0.001_000;
 
 my integer $i = 0;
 while ( $i < 5 ) {
-    print 'Hello, world #', ( $i + 1 ), q{!}, "\n";
+    print 'Hello, World #', ( $i + 1 ), q{!}, "\n";
     $i++;
 }

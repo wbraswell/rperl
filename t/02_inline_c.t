@@ -33,12 +33,12 @@ if ( $ENV{RPERL_VERBOSE} ) {
 # Note: I excluded the Inline::C examples which required reading files, loading 3rd-party libraries, and other weirdness not suitable for testing.
 
 # greet()
-#lives_ok( sub { use Inline C => q{charge* greet(){return("Hello, world");}}; }, q{Inline::C, define greet() lives} );  # bad: invokes Inline during syntax check and crashes all tests
+#lives_ok( sub { use Inline C => q{charge* greet(){return("Hello, World");}}; }, q{Inline::C, define greet() lives} );  # bad: invokes Inline during syntax check and crashes all tests
 lives_and(
     sub {
-        my $EVAL_RETVAL = eval 'use Inline C=>q{char* greet(){return("Hello, world");}};';
+        my $EVAL_RETVAL = eval 'use Inline C=>q{char* greet(){return("Hello, World");}};';
 
-        #            '$SIG{__WARN__}=sub {cluck $_[0]};  use Inline C=>q{char* greet(){return("Hello, world");}};';
+        #            '$SIG{__WARN__}=sub {cluck $_[0]};  use Inline C=>q{char* greet(){return("Hello, World");}};';
         if ( $EVAL_ERROR ne q{} ) {
             croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
@@ -52,7 +52,7 @@ lives_and(
         if ( $EVAL_ERROR ne q{} ) {
             croak("Error in eval, have \$EVAL_ERROR =\n\nBEGIN EVAL ERROR\n\n$EVAL_ERROR\n\nEND EVAL ERROR\n\ncroaking");
         }
-        is( $EVAL_RETVAL, 'Hello, world', q{Inline::C, call greet() returns correct value} );
+        is( $EVAL_RETVAL, 'Hello, World', q{Inline::C, call greet() returns correct value} );
     },
     q{Inline::C, call greet() lives}
 );

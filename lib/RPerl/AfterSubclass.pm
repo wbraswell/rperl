@@ -37,8 +37,8 @@ require rperlnames;
 # NEED ADD: use/require HelperFunctions*.pm here (not just in rperltypes.pm) to match dependency path of C++ code?
 
 # [[[ CONSTANTS ]]]
-#use constant TEST_CONSTANT => my string $TYPED_TEST_CONSTANT = 'Hello, world!';
-use constant TEST_CONSTANT => 'Hello, world!';
+#use constant TEST_CONSTANT => my string $TYPED_TEST_CONSTANT = 'Hello, World!';
+use constant TEST_CONSTANT => 'Hello, World!';
 
 # [[[ SUBROUTINES ]]]
 

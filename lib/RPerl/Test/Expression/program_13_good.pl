@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'Hello, world!' >>>
-# <<< EXECUTE_SUCCESS: 'Hello, world!' >>>
+# <<< EXECUTE_SUCCESS: 'Hello, World!' >>>
+# <<< EXECUTE_SUCCESS: 'Hello, World!' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

@@ -40,3 +40,4 @@ while (my string $input_string = <STDIN>) {
 
 my number $user_total = total($input_numbers);
 print 'The total of those numbers is ', to_string($user_total), "\n";
+
