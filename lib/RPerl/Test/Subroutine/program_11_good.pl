@@ -18,11 +18,15 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 #print 'before defining quux(), have $local_intermittent = ', $local_intermittent, "\n";  # YES ERROR
-our void $quux = sub {
-    my integer $local_intermittent = 23;
-    print 'inside quux(), have $local_intermittent = ', $local_intermittent, "\n";        # NO  ERROR
-    $local_intermittent++;
-};
+
+# NEED UPGRADE, CORRELATION #rp035: allow multi-line subroutines & other code blocks, where they would be less than 160 chars if on a single line
+#our void $quux = sub {
+#    my integer $local_intermittent = 23;
+#    print 'inside quux(), have $local_intermittent = ', $local_intermittent, "\n";        # NO  ERROR
+#    $local_intermittent++;
+#};
+our void $quux = sub { my integer $local_intermittent = 23; print 'inside quux(), have $local_intermittent = ', $local_intermittent, "\n"; $local_intermittent++; };
+
 #print 'after  defining quux(), have $local_intermittent = ', $local_intermittent, "\n";  # YES ERROR
 
 # [[[ OPERATIONS ]]]

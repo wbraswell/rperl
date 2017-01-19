@@ -20,7 +20,7 @@ our $VERSION = 0.001_000;
 our integer $global_persistent = 23;
 print 'before defining quux(), have $global_persistent = ', $global_persistent, "\n";  # NO ERROR
 our void $quux = sub {
-    print 'inside quux(), have $global_persistent = ', $global_persistent, "\n";       # NO ERROR
+    print 'inside          quux(), have $global_persistent = ', $global_persistent, "\n";       # NO ERROR
     $global_persistent++;
 };
 print 'after  defining quux(), have $global_persistent = ', $global_persistent, "\n";  # NO ERROR

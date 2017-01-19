@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.172_000;
+our $VERSION = 0.173_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -17353,13 +17353,6 @@ As mentioned in this chapter's opening section L</CHAPTER 3: ARRAY VALUES & VARI
 
 =back
 
-
-
-
-
-
-
-
 The internals of the C<integer_arrayref_to_string()> subroutine are implemented by the copied-and-pasted section of RPerl source code below, for Perl operations & Perl data types mode:
 
     # change this to hold your own data
@@ -17414,7 +17407,7 @@ Running the code example above generates the following output string from C<$out
 
 =for rperl X</noncode>
 
-(Please see L</CHAPTER 4: ORGANIZING BY SUBROUTINES> for the full subroutine C<integer_arrayref_to_string()>.)
+(Please see L</Section 4.5.1: C<my> Intermittent Variables> for the full subroutine C<integer_arrayref_to_string()>.)
 
 =head2 Section 3.12: Program Control Using The C<for> & C<foreach> Loops
 
@@ -18980,7 +18973,7 @@ Perl variables declared using C<our> are of I<"global scope"> and are I<"persist
     our integer $global_persistent = 23;
     print 'before defining quux(), have $global_persistent = ', $global_persistent, "\n";  # NO ERROR
     our void $quux = sub {
-        print 'inside quux(), have $global_persistent = ', $global_persistent, "\n";       # NO ERROR
+        print 'inside          quux(), have $global_persistent = ', $global_persistent, "\n";       # NO ERROR
         $global_persistent++;
     };
     print 'after  defining quux(), have $global_persistent = ', $global_persistent, "\n";  # NO ERROR
@@ -18997,9 +18990,9 @@ Running this C<our> variable example code produces the output below:
 
     before defining quux(), have $global_persistent = 23
     after  defining quux(), have $global_persistent = 23
-    inside quux(), have $global_persistent = 23
+    inside          quux(), have $global_persistent = 23
     after   calling quux(), have $global_persistent = 24
-    inside quux(), have $global_persistent = 24
+    inside          quux(), have $global_persistent = 24
     after   calling quux(), have $global_persistent = 25
 
 =for rperl X</noncode>
@@ -19035,7 +19028,7 @@ In normal Perl, a variable which is utilized without first being declared will u
     print 'before defining quux(), have $autovivified = ', $autovivified, "\n";  # NO ERROR, YES WARNING
     our void $quux = sub {
         $autovivified = 23;
-        print 'inside quux(), have $autovivified = ', $autovivified, "\n";       # NO ERROR
+        print 'inside         quux(), have $autovivified = ', $autovivified, "\n";       # NO ERROR
         $autovivified++;
     };
     print 'after  defining quux(), have $autovivified = ', $autovivified, "\n";  # NO ERROR, YES WARNING
@@ -19053,9 +19046,9 @@ Executing the autovivified code requires us to first disable C<use strict;>, aft
     before defining quux(), have $autovivified = 
     Use of uninitialized value $autovivified in print
     after  defining quux(), have $autovivified = 
-    inside quux(), have $autovivified = 23
+    inside          quux(), have $autovivified = 23
     after   calling quux(), have $autovivified = 24
-    inside quux(), have $autovivified = 23
+    inside          quux(), have $autovivified = 23
     after   calling quux(), have $autovivified = 24
 
 =for rperl X</noncode>
@@ -19064,7 +19057,7 @@ In RPerl, all variables are created using the C<my> keyword, because it is the b
 
 =head3 Section 4.5.1: C<my> Intermittent Variables
 
-The C<integer_arrayref_to_string()> subroutine is implemented by the following RPerl source code, for Perl operations & Perl data types mode:
+You may recall we analyzed part of the C<integer_arrayref_to_string()> subroutine in L</Section 3.11: Converting From Array To String>; as promised, we will now provide the full subroutine, for Perl operations & Perl data types mode:
 
     # stringify an integer_arrayref
     our string $integer_arrayref_to_string = sub {
@@ -19103,33 +19096,27 @@ The C<integer_arrayref_to_string()> subroutine is implemented by the following R
         return $output_sv;
     };
 
-In the RPerl system source code above, you will see at least 2 new concepts: the definition of a subroutine, and usage of a C<for> loop.
+The above subroutine's name is, unsurprisingly, C<integer_arrayref_to_string()>; it accepts exactly one input operand, an C<integer_arrayref> accessed via the variable C<$input_avref>, and it generates as output a string formed in the variable C<$output_sv>.
 
-The subroutine's name is, unsurprisingly, C<integer_arrayref_to_string()>; it accepts exactly one input operand, an C<integer_arrayref> accessed via the variable C<$input_avref>, and it generates as output a string formed in the variable C<$output_sv>.  (Subroutine names in writing are usually followed by empty parenthesis C<( )>, to distinguish them from other source code components such as variables, operators, etc.)
-
-The C<for> loop is used to access each individual element of the input array, one at a time; each element is then, in turn, stringified and appended to the output string.  You will note the C<integer_to_string()> stringification subroutine is called from within the C<integer_arrayref_to_string()> subroutine, which makes sense because an C<integer_arrayref> data structure is obviously composed of individual C<integer> data types.
+In addition to the input operand, the C<integer_arrayref_to_string()> subroutine defines four normal C<my> variables: C<$input_av_length>, C<$input_av_element>, C<$output_sv>, and C<$i_is_0>.  Also, the special loop iterator variable C<$i> is declared using the C<my> keyword.
 
 The string generated as output of the C<integer_arrayref_to_string()> subroutine is itself valid RPerl source code, and may be copied, pasted, and re-parsed by the RPerl compiler:
 
     my integer_arrayref $foo;
-    $foo = [7, 17, 27];
+    $foo = [8, 23, 17];
     print '$foo = ', integer_arrayref_to_string($foo), ';', "\n";
 
 Running the code example above generates the following output string, which is itself an exact replica of the original line of valid RPerl source code:
 
 =for rperl X<noncode>
 
-    $foo = [7, 17, 27];
+    $foo = [8, 23, 17];
 
 =for rperl X</noncode>
 
 =head2 Section 4.6: C<use strict; use warnings;> Pragmas & Magic
 
 =head2 Section 4.7: Exercises
-
-
-
-
 
 X<br>
 

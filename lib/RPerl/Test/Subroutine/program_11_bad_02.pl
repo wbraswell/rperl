@@ -20,7 +20,7 @@ our $VERSION = 0.001_000;
 print 'before defining quux(), have $autovivified = ', $autovivified, "\n";  # NO ERROR
 our void $quux = sub {
     $autovivified = 23;
-    print 'inside quux(), have $autovivified = ', $autovivified, "\n";       # NO ERROR
+    print 'inside          quux(), have $autovivified = ', $autovivified, "\n";       # NO ERROR
     $autovivified++;
 };
 print 'after  defining quux(), have $autovivified = ', $autovivified, "\n";  # NO ERROR
