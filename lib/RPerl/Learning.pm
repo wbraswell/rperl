@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.168_000;
+our $VERSION = 0.170_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -18690,7 +18690,7 @@ Adding the C<return> operator will lead to a C++ subcompile error, visible in RP
 
 =for rperl X</noncode>
 
-For all subroutines with non-C<void> return types, you should always use the C<return> operator, and always provide the C<return> operator with operands of the correct return type.
+For all subroutines with non-C<void> return types, you must always use the C<return> operator, and always provide the C<return> operator with operands of the correct return type.
 
 =head3 Section 4.3.2: Multiple Return Values
 
@@ -18750,6 +18750,92 @@ Running the RPerl C<foo_multi()> code above will produce the exact same variable
 Currently, all RPerl subroutines utilizing an array reference return value must only return elements which all have the exact same data type as one another, because RPerl arrays are homogeneous with only one data type shared across all elements.  As mentioned in L</Section 3.2: 1-D Array Data Types & Constants>, future versions of RPerl will probably provide a C<scalar_arrayref> data structure which can hold elements of non-matching data types.
 
 =head2 Section 4.4: Subroutine Arguments
+
+When calling a subroutine, often you will want to provide one or more pieces of data as input to the subroutine; for this purpose, we use I<"subroutine arguments">.  Perl provides a special array variable named C<@ARG>, which contains all arguments which have been passed into each subroutine by its caller.  For any RPerl subroutine which accepts arguments, the first expression of the subroutine must always be the argument definition operation, as seen in the following source code example: 
+
+    our void $foo_arg  = sub {
+        (my integer $arg1) = @ARG;
+        print 'inside foo_arg(), have $arg1 = ', integer_to_string($arg1), "\n";
+    };
+    foo_arg(1_701);
+
+Running the C<foo_arg()> code example gives us this output:
+
+=for rperl X<noncode>
+
+    inside foo_arg(), have $arg1 = 1_701
+
+=for rperl X</noncode>
+
+It's easy for a subroutine to accept multiple arguments, simply separate each argument's variable declaration by a comma C<,> character, and keep them all within the parentheses C<( )> characters:
+
+    our void $foo_args = sub {
+        (my integer $arg1, my number $arg2, my string $arg3) = @ARG;
+        print 'have $arg1 * $arg2 = ', number_to_string($arg1 * $arg2), "\n";
+        print 'have $arg3 x $arg1 = ', ($arg3 x $arg1), "\n";
+    };
+    foo_args(5, 2.575, 'over and ');
+
+Running the C<foo_args()> code gives us:
+
+=for rperl X<noncode>
+
+    have $arg1 * $arg2 = 12.875
+    have $arg3 x $arg1 = over and over and over and over and over and
+
+=for rperl X</noncode>
+
+Unsurprisingly, normal Perl provides magic which allows a subroutine to change its own argument names and data types at runtime, which is one of Perl's many dynamic behaviors.  In the source code example below, we see the C<shift> operator used to receive each argument one-at-a-time, where the name and (implied) data type of the second argument is dependent upon runtime conditional logic using the first argument:
+
+    sub bar_args_dynamic {
+        my $arg_type = shift @ARG;
+        if ($arg_type eq 'integer') {
+            my $bar_int = shift @ARG;
+            print 'have $bar_int * 3 = ', $bar_int * 3, "\n";
+        }
+        else {
+            my $bar_str = shift @ARG;
+            print 'have $bar_str x 3 = ', $bar_str x 3, "\n";
+        }
+        return;
+    }
+    bar_args_dynamic('integer', 4);
+    bar_args_dynamic('string', 'repeat');
+
+Running the C<bar_args_dynamic()> subroutine example produces the following output:
+
+=for rperl X<noncode>
+
+    have $bar_int * 3 = 12
+    have $bar_str x 3 = repeatrepeatrepeat
+
+=for rperl X</noncode>
+
+In RPerl, the argument names and data types for each subroutine are set at compile time, which is one of RPerl's many static behaviors and which contributes to significant runtime performance optimizations.  In other words, one reason why RPerl is faster than normal Perl is because RPerl knows the names and data types for each subroutine when the C<rperl> compiler is run.
+
+By always accepting three arguments, we can upgrade from the C<bar_args_dynamic()> subroutine to the C<bar_args_static()> subroutine, which can then be compiled with RPerl:
+
+    our void $bar_args_static = sub {
+        (my string $arg_type, my integer $bar_int, my string $bar_str) = @ARG;
+        if ($arg_type eq 'integer') {
+            print 'have $bar_int * 3 = ', $bar_int * 3, "\n";
+        }
+        else {
+            print 'have $bar_str x 3 = ', $bar_str x 3, "\n";
+        }
+        return;
+    };
+    bar_args_static('integer', 4, q{});
+    bar_args_static('string',  0, 'repeat');
+
+Running C<bar_args_static()> gives us the exact same variables and output as C<bar_args_dynamic()>, now able to be compiled and run at a much faster speed:
+
+=for rperl X<noncode>
+
+    have $bar_int * 3 = 12
+    have $bar_str x 3 = repeatrepeatrepeat
+
+=for rperl X</noncode>
 
 =head3 Section 4.4.1: Variadic Subroutines
 
@@ -21220,7 +21306,7 @@ L<https://en.wikipedia.org/wiki/C++11>
 
 =for rperl X<noncode>
 
-    Specify automatic parallelization mode, OPENMP by default.
+    Specify automatic parallelization mode, OFF by default.
     If set to OFF, do not automatically parallelize any input files.
     If set to OPENMP, automatically parallelize all eligible input files for use on shared-memory OpenMP systems.
     If set to MPI (COMING SOON), automatically parallelize all eligible input files for use on distributed-memory MPI systems.
@@ -21576,7 +21662,7 @@ I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, S
 =for rperl X<noncode>
 
     Automatically parallelize input code, or not.
-    Enabled by default.
+    Disabled by default.
     Equivalent to '--mode parallel=OPENMP' argument.
 
 =for rperl X</noncode>

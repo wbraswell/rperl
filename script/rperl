@@ -9,8 +9,8 @@ use RPerl;
 # DEV NOTE, CORRELATION #rp016: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = '2.410000';
 
-#our $VERSION = 20170117;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2017.017;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20170118;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2017.018;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -1290,7 +1290,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =for rperl X<noncode>
 
-    Specify automatic parallelization mode, OPENMP by default.
+    Specify automatic parallelization mode, OFF by default.
     If set to OFF, do not automatically parallelize any input files.
     If set to OPENMP, automatically parallelize all eligible input files for use on shared-memory OpenMP systems.
     If set to MPI (COMING SOON), automatically parallelize all eligible input files for use on distributed-memory MPI systems.
@@ -1572,7 +1572,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 =for rperl X<noncode>
 
     Automatically parallelize input code, or not.
-    Enabled by default.
+    Disabled by default.
     Equivalent to '--mode parallel=OPENMP' argument.
 
 =for rperl X</noncode>
