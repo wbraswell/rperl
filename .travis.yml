@@ -1,5 +1,5 @@
 language: perl
-# v0.010_000
+# v0.011_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -99,13 +99,13 @@ notifications:
     irc:
         channels:
             - "irc.perl.org#perl11"
-    on_success: always
-    on_failure: always
-    # to enable skip_join, in IRC channel first execute `/mode -n`
-    skip_join: true
-    template:
-        - "RPerl build %{result}. %{author} says '%{commit_message}'"
-        - "%{build_url} %{compare_url}"
+        on_success: always
+        on_failure: always
+        # to enable skip_join, in IRC channel first execute `/mode -n`
+        skip_join: true
+        template:
+            - "RPerl build %{result}. %{author} says '%{commit_message}'"
+            - "%{build_url} %{compare_url}"
 
 env:
     global:
