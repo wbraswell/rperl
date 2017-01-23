@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.177_000;
+our $VERSION = 0.180_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -19101,7 +19101,9 @@ In RPerl, all variables are created using the C<my> keyword, because it is the b
 
 =head3 Section 4.5.1: C<my> Intermittent Variables
 
-You may recall we analyzed part of the C<integer_arrayref_to_string()> subroutine in L</Section 3.11: Converting From Array To String>.  This particular subroutine makes use of multiple C<my> variables.  As promised, we will now review the full subroutine, for Perl operations & Perl data types mode:
+You may recall we analyzed part of the C<integer_arrayref_to_string()> subroutine in L</Section 3.11: Converting From Array To String>.  This particular subroutine makes use of multiple C<my> variables, the significance of which is discussed after the source code example.
+
+As promised, we will now review the full subroutine, for Perl operations & Perl data types mode:
 
     # stringify an integer_arrayref
     our string $integer_arrayref_to_string = sub {
@@ -19144,6 +19146,12 @@ The above subroutine's name is, unsurprisingly, C<integer_arrayref_to_string()>;
 
 In addition to the input operand, the C<integer_arrayref_to_string()> subroutine defines four normal C<my> variables: C<$input_av_length>, C<$input_av_element>, C<$output_sv>, and C<$i_is_0>.  Also, the special loop iterator variable C<$i> is declared using the C<my> keyword.
 
+The values of the four normal C<my> variables are accessible only within this subroutine; in other words, they are locally-scoped AKA lexically-scoped variables.  Any attempt to access or modify the values of the C<$input_av_length>, C<$input_av_element>, C<$output_sv>, or C<$i_is_0> variables outside the C<integer_arrayref_to_string()> subroutine will result in an error or undefined behavior.
+
+The value of the special loop iterator C<$i> has an even smaller scope, because it is only valid within the C<for> loop body.  The accepted terminology is to say that C<$i> is a I<"lexical loop iterator"> variable.  Any attempt to utilize the C<$i> variable outside the loop body code block will result in an error or undefined behavior.
+
+This style of programming, where all variables are created using the C<my> keyword, allows our code to undergo additional optimizations for memory usage, serial runtime performance, and parallel runtime performance.  Thus, we always use lexically-scoped variables created using Perl's C<my> keyword, in order to make our RPerl output code run as fast as possible.
+
 The string generated as output of the C<integer_arrayref_to_string()> subroutine is itself valid RPerl source code, and may be copied, pasted, and re-parsed by the RPerl compiler:
 
     my integer_arrayref $foo;
@@ -19155,6 +19163,49 @@ Running the code example above generates the following output string, which is i
 =for rperl X<noncode>
 
     $foo = [8, 23, 17];
+
+=for rperl X</noncode>
+
+=head3 Section 4.5.2: Persistent State, Pseudo-State Variables
+
+RPerl does not support variables created using the magic C<state> keyword.  If you want to maintain a persistent state variable for one of your subroutines, then you may simply use the C<my> keyword to declare a variable before calling the subroutine, pass the variable as a differently-named input argument to the subroutine, access and modify the variable while inside the subroutine, return the variable from the subroutine, receive the returned value back into the original variable, and repeat for as many times as you like.  Each time your subroutine runs, it will be able to utilize the persistent state contained within your variable, even though you used the C<my> keyword instead of the C<state> keyword to declare the variable.
+
+We coin the term C<"pseudo-state variable"> to mean a low-magic C<my> variable used to simulate the behavior of a high-magic C<state> variable.
+
+    our integer $foo = sub {
+        ( my integer $pseudo_state_in_foo ) = @ARG;
+        print 'inside foo(), received $pseudo_state_in_foo = ', $pseudo_state_in_foo, "\n";
+        $pseudo_state_in_foo++;
+        print 'inside foo(), have modified $pseudo_state_in_foo = ', $pseudo_state_in_foo, "\n";
+        return $pseudo_state_in_foo;
+    };
+
+    my integer $pseudo_state = 0;
+
+    $pseudo_state = foo($pseudo_state);
+    $pseudo_state = foo($pseudo_state);
+    $pseudo_state = foo($pseudo_state);
+    $pseudo_state = foo($pseudo_state);
+    $pseudo_state = foo($pseudo_state);
+
+Outside the subroutine, we declare our variable with the expressive name C<$pseudo_state> as an indication of its purpose, although you may certainly choose to name your variable(s) differently.
+
+Inside the subroutine, we declare our variable with a different name, in this case C<$pseudo_state_in_foo>; by doing so, we remind ourselves these are truly two different variables with different scopes, and we also avoid any possible errors or unexpected behavior.  The persistent variable is C<$pseudo_state>, because its value persists after each call to C<foo()> returns.  The non-persistent variable is C<$pseudo_state_in_foo>, because its value is accessible only inside each individual call to C<foo()>.  The trick to creating a pseudo-state variable is to make a connection between a persistent variable outside of a subroutine and a non-persistent variable inside the subroutine, as we have done in the example code above.
+
+Running the pseudo-state source code example above produces the following output:
+
+=for rperl X<noncode>
+
+    inside foo(), received $pseudo_state_in_foo = 0
+    inside foo(), have modified $pseudo_state_in_foo = 1
+    inside foo(), received $pseudo_state_in_foo = 1
+    inside foo(), have modified $pseudo_state_in_foo = 2
+    inside foo(), received $pseudo_state_in_foo = 2
+    inside foo(), have modified $pseudo_state_in_foo = 3
+    inside foo(), received $pseudo_state_in_foo = 3
+    inside foo(), have modified $pseudo_state_in_foo = 4
+    inside foo(), received $pseudo_state_in_foo = 4
+    inside foo(), have modified $pseudo_state_in_foo = 5
 
 =for rperl X</noncode>
 
