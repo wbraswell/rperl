@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.176_000;
+our $VERSION = 0.177_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13045,7 +13045,7 @@ On the other hand, RPerl I<requires> the use of data types for each and every va
     my number $foo = 23;
     $foo = 42;  # just fine in RPerl
 
-Normal Perl provides a special literal value C<undef>, along with a built-in function named C<defined> which is used to test if a variable contains the special C<undef> value.  RPerl does not support C<undef> or C<defined>, because C++ does not fully support the concept of undefined values, and RPerl's high-speed components are written using C++.
+Normal Perl provides a special literal value C<undef>, along with a built-in operator named C<defined> which can be used to test if a variable contains the special C<undef> value.  RPerl does not support the C<undef> value, nor use of the C<defined> operator with scalar variables, because C++ does not fully support the concept of undefined values, and RPerl's high-speed components are written using C++.
 
 Future versions of RPerl will likely provide a flexible C<scalar> data type, which will offer the trade-off of higher memory usage in exchange for the ability to use one variable with multiple possible data types.  Currently, all RPerl variables must hold exactly one specific data type only.
 
