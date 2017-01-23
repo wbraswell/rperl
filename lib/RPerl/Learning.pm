@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.175_000;
+our $VERSION = 0.176_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -11403,6 +11403,12 @@ During this phase of compilation, RPerl converts the AST format back into human-
 
 When compared to normal Perl, the 2 primary benefits of the RPerl compiler come from generating C++ source code: high-performance runtime speed optimization, and intellectual property source code protection.  The act of converting from one human-readable computer language source code into another is compared to the similar act of converting from one spoken (or written) human language to another; this is called the I<"translate"> process.  When computer language translation is utilized as part of a compiler, the software is called a I<"transpiler"> or "translating compiler".  RPerl is a transpiler.
 
+=begin comment
+
+START HERE: update error messages under development
+START HERE: update error messages under development
+START HERE: update error messages under development
+
 Common problem messages in this phase may include:
 
 =over
@@ -12350,9 +12356,17 @@ X<ENABLE_LIST_SPACING>
 
 =back
 
+=end comment
+
 =head3 Section 2.3.12: Compile, Save Phase 0 (Final File Modifications)
 
-NEED ADD CONTENT
+During this phase, a number of changes and updates may be made to the output files.  Most of these changes were delayed from previous phases, due to as-yet-incomplete compile-time information.  This is the final phase during which RPerl directly generates output source code.
+
+=begin comment
+
+START HERE: update error messages under development
+START HERE: update error messages under development
+START HERE: update error messages under development
 
 Common problem messages in this phase may include:
 
@@ -12430,9 +12444,19 @@ X<ENABLE_LIST_SPACING>
 
 =back
 
+=end comment
+
 =head3 Section 2.3.13: Compile, Save Phase 1 (Format & Write Files To Disk)
 
-NEED ADD CONTENT
+This phase may utilize source code formatting software, including Perl::Tidy for Perl output code as well as the Artistic Style formatter for C++ output code.  If an error occurs with one of these third-party code formatters, please review the applicable documentation.
+
+After the output files have been formatted, they are saved to your computer's storage, which usually means the output files are written to hard-disk or the equivalent.  Please be sure you have free disk space and the proper disk permissions to save files, etc.
+
+=begin comment
+
+START HERE: update error messages under development
+START HERE: update error messages under development
+START HERE: update error messages under development
 
 Common problem messages in this phase may include:
 
@@ -12537,9 +12561,17 @@ X<ENABLE_LIST_SPACING>
 
 =back
 
+=end comment
+
 =head3 Section 2.3.14: Compile, Subcompile (Generate Binary)
 
-NEED ADD CONTENT
+The final compile phase utilizes your pre-installed C++ compiler software, thus it is termed the subcompile phase.  Please be sure you have a subcompiler installed which supports the C++11 standard, such as GNU GCC v4.7 and Clang v3.3, among others.  If an error occurs during this phase, please refer to the applicable subcompiler documentation. 
+
+=begin comment
+
+START HERE: update error messages under development
+START HERE: update error messages under development
+START HERE: update error messages under development
 
 Common problem messages in this phase may include:
 
@@ -12624,9 +12656,19 @@ X<ENABLE_LIST_SPACING>
 
 =back
 
+=end comment
+
 =head3 Section 2.3.15: Execute
 
-NEED ADD CONTENT
+If RPerl has been provided with exactly one file as input, and if that file is an executable Perl program file ending with C<.pl>, then RPerl may optionally execute the program after all previous phases have been completed.
+
+If RPerl is utilized in test mode, then the original non-compiled Perl program input file will be executed via the Perl interpreter with RPerl extensions.  If RPerl is utilized in normal compile mode, then the compiled Perl program output file will be executed without the Perl interpreter. 
+
+=begin comment
+
+START HERE: update error messages under development
+START HERE: update error messages under development
+START HERE: update error messages under development
 
 Common problem messages in this phase may include:
 
@@ -12971,6 +13013,8 @@ I<SOLUTION: BAZ_SOLUTION>
 X<ENABLE_LIST_SPACING>
 
 =back
+
+=end comment
 
 =head2 Section 2.4: Variables With Scalar Values
 

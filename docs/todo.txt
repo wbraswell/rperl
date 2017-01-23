@@ -7,6 +7,12 @@ DONE
     tests, allow single-line subroutines
 
 DOING
+    Monolithic Modules, Fix Deps Warning
+        START HERE: why did eval stop working???, subclass SSE & monolith, upgrade tests, fix monolith dep warnings
+        START HERE: why did eval stop working???, subclass SSE & monolith, upgrade tests, fix monolith dep warnings
+        START HERE: why did eval stop working???, subclass SSE & monolith, upgrade tests, fix monolith dep warnings
+
+
     replace @_ with @ARG in system code
     'cannot' -> 'can not' in all docs & source files
     uncompile w/ corrupted or missing PMC, CPP, H files
@@ -323,6 +329,7 @@ INLINE::CPP BUGS
 PERLOPS_PERLTYPES
     C++ subclasses using AV* instead of std::vector, etc?
     add symtab building and checking
+    real SSE support (faster, not slower)
 
 ERROR CODES
     RPerl::CompileUnit::Module::Class (global base class) needs error codes added for all croak() or die() statements
@@ -336,7 +343,6 @@ GRAMMAR
         update Learning RPerl section 4.2.1 & lib/RPerl/Test/Subroutine/program_* accordingly
 
 COMPILER
-    Monolithic Modules, Fix Deps Warning
     figure out <> vs "" and also long-path-deps in includes in Bubble.cpp & Bubble.h
     compile Foo.pm
     add mutators pass-by-reference for scalars?  see SystemRenderer2D::show()
