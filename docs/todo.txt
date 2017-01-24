@@ -5,12 +5,14 @@ DONE
     CPPOPS_CPPTYPES execute via compiled copy not interpreted
     CPPOPS_CPPTYPES enable double-quote characters w/in single-quoted and q-quoted strings
     tests, allow single-line subroutines
+    create RPerl::eval_use()
+    split create_symtab_entries_and_accessors_mutators() out of INIT{}, optimize by adding missing skip entries in rperlnamespaces_generated.pm
 
 DOING
     Monolithic Modules, Fix Deps Warning
-        START HERE: why did eval stop working???, subclass SSE & monolith, upgrade tests, fix monolith dep warnings
-        START HERE: why did eval stop working???, subclass SSE & monolith, upgrade tests, fix monolith dep warnings
-        START HERE: why did eval stop working???, subclass SSE & monolith, upgrade tests, fix monolith dep warnings
+        START HERE: figure out how to trigger Inline from inside eval_use(), subclass SSE & monolith, upgrade tests, fix monolith dep warnings
+        START HERE: figure out how to trigger Inline from inside eval_use(), subclass SSE & monolith, upgrade tests, fix monolith dep warnings
+        START HERE: figure out how to trigger Inline from inside eval_use(), subclass SSE & monolith, upgrade tests, fix monolith dep warnings
 
 
     replace @_ with @ARG in system code

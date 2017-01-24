@@ -4,7 +4,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.004_600;
+our $VERSION = 0.006_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -103,9 +103,40 @@ use constant EPSILON => POSIX::DBL_EPSILON();
 
 # [[[ SUBROUTINES SPECIAL ]]]
 
+# use an RPerl package during runtime
+sub eval_use {
+    (my $package_name) = @ARG;
+    RPerl::debug('in RPerl::eval_use(), received $package_name = ', $package_name, "\n");
+
+    my $INC_ref_pre = {};
+    foreach my $INC_key_pre (keys %INC) { $INC_ref_pre->{$INC_key_pre} = 1; }
+#    RPerl::debug('in RPerl::eval_use(), have $INC_ref_pre = ', Dumper($INC_ref_pre), "\n");
+
+    my $eval_string = "use $package_name;" . "\n";
+    $eval_string .=<<'EOL';
+    my $INC_ref_post = {};
+    foreach my $INC_key_post (keys %INC) {
+        if (not exists $INC_ref_pre->{$INC_key_post}) {
+            $INC_ref_post->{$INC_key_post} = $INC{$INC_key_post};
+        }
+    }
+    RPerl::debug('in RPerl::eval_use() eval, have $INC_ref_post = ', Dumper($INC_ref_post), "\n");
+    RPerl::CompileUnit::Module::Class::create_symtab_entries_and_accessors_mutators($INC_ref_post);
+EOL
+
+    my $eval_retval = eval $eval_string;
+#    if (defined $eval_retval) { print 'have $eval_retval = ', $eval_retval, "\n"; }
+#    else { print 'have $eval_retval = undef, have $EVAL_ERROR = ', $EVAL_ERROR, "\n"; }
+    if ((defined $EVAL_ERROR) and ($EVAL_ERROR ne q{})) {
+        print {*STDERR} 'in eval_use(), have $EVAL_ERROR = ', $EVAL_ERROR, "\n";
+    }
+
+    return $eval_retval;
+}
+
 # NEED UPGRADE: replace Data::Dumper with pure-RPerl equivalent?
 #sub DUMPER {
-#    ( my $dumpee ) = @_;
+#    ( my $dumpee ) = @ARG;
 #	die ('in RPerl::DUMPER(), received undef argument, dying') if (not(defined($_[0])));
 #    return '**UNDEF**' if ( not( defined $dumpee ) );
 #    return $dumpee->DUMPER()
@@ -113,28 +144,27 @@ use constant EPSILON => POSIX::DBL_EPSILON();
 #    return Dumper($dumpee);
 #}
 
+# DEV NOTE: to make diag*() & debug*() & verbose*() & warning() truly variadic, do not accept args as first line in subroutine
+
 # DEV NOTE: diag() is simply a wrapper around debug(), they are 100% equivalent; likewise diag_pause() and debug_pause()
-sub diag { return debug(@_); }
-sub diag_pause { return debug_pause(@_); }
+sub diag { return debug(@ARG); }
+sub diag_pause { return debug_pause(@ARG); }
 
 # print debugging AKA diagnostic message to STDERR, if either RPERL_DEBUG environmental variable or $RPerl::DEBUG global variable are true
 sub debug {
-    ( my $message ) = @_;
-
-    #    print {*STDERR} 'in debug(), have $ENV{RPERL_DEBUG} = ' . $ENV{RPERL_DEBUG} . "\n";
+#    print {*STDERR} 'in debug(), have $ENV{RPERL_DEBUG} = ' . $ENV{RPERL_DEBUG} . "\n";
 
     # DEV NOTE, CORRELATION #rp017: default to off; if either variable is set to true, then do emit messages
-    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} $message; }
+    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} @ARG; }
 
-    #    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} "\e[1;31m $message \e[0m"; }  # print in red
+#    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} "\e[1;31m $message \e[0m"; }  # print in red
     return 1;    # DEV NOTE: this must be here to avoid 'at -e line 0. INIT failed--call queue aborted.'... BUT WHY???
 }
 
 # same as debug(), except require <ENTER> to continue
 sub debug_pause {
-    ( my $message ) = @_;
     if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) {
-        print {*STDERR} $message;
+        print {*STDERR} @ARG;
         my $stdin_ignore = <STDIN>;
     }
     return 1;
@@ -142,20 +172,17 @@ sub debug_pause {
 
 # print verbose user-friendly message to STDOUT, if either RPERL_VERBOSE environmental variable or $RPerl::VERBOSE global variable are true
 sub verbose {
-    ( my $message ) = @_;
-
     # DEV NOTE, CORRELATION #rp017: default to off; if either variable is set to true, then do emit messages
     if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) {
-        print {*STDOUT} $message;
+        print {*STDOUT} @ARG;
     }
     return 1;
 }
 
 # same as verbose(), except require <ENTER> to continue
 sub verbose_pause {
-    ( my $message ) = @_;
     if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) {
-        print {*STDOUT} $message;
+        print {*STDOUT} @ARG;
         my $stdin_ignore = <STDIN>;
     }
     return 1;
@@ -186,14 +213,12 @@ sub verbose_clear_screen {
 
 # print non-fatal warning message to STDERR, unless either RPERL_WARNINGS environmental variable or $RPerl::WARNINGS global variable are false
 sub warning {
-    ( my $message ) = @_;
-
     # default to on; if either variable is set to false, then do not emit messages
     if ( ( ( not defined $ENV{RPERL_WARNINGS} ) or $ENV{RPERL_WARNINGS} )
         and $RPerl::WARNINGS )
     {
         # NEED ADDRESS? the two following lines should be equivalent, but warn causes false ECOPAPL03
-        print {*STDERR} $message;
+        print {*STDERR} @ARG;
 
         #        warn $message . "\n";
     }
@@ -201,7 +226,7 @@ sub warning {
 }
 
 sub analyze_class_symtab_entries {
-    ( my $class ) = @_;
+    ( my $class ) = @ARG;
     my $retval    = q{};
     my @isa_array = eval q{@} . $class . q{::ISA};
 
@@ -248,7 +273,7 @@ sub analyze_class_symtab_entries {
 
 # [ AUTOMATICALLY SET SYSTEM-DEPENDENT PATH VARIABLES ]
 sub set_system_paths {
-    ( my $target_file_name_config, my $target_package_name_config, my $target_file_name_pm, my $target_file_name_script ) = @_;
+    ( my $target_file_name_config, my $target_package_name_config, my $target_file_name_pm, my $target_file_name_script ) = @ARG;
     if (( not exists $INC{$target_file_name_config} )
         or ( not defined $INC{$target_file_name_config} )
         )

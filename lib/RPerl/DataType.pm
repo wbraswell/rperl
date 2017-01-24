@@ -2,7 +2,12 @@
 package RPerl::DataType;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+use RPerl::AfterSubclass;
+our $VERSION = 0.002_000;
+
+# [[[ OO INHERITANCE ]]]
+use parent qw(RPerl::CompileUnit::Module::Class);
+use RPerl::CompileUnit::Module::Class;
 
 # [[[ INCLUDES ]]]
 # include modifiers here to be utilized by individual data types

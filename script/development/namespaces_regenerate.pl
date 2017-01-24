@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use rperlnamespaces;
-our $VERSION = 0.004_000;
+our $VERSION = 0.007_000;
 
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 
@@ -36,6 +36,8 @@ my $namespaces_rperl_missed = {
     'rperlnamespaces::' => 1,
     'rperlnamespaces_generated::' => 1,
     'rperltypes::' => 1,
+    'rperltypesconv::' => 1,
+    'rperltypessizes::' => 1,
     'rperloperations::' => 1,
     'rperloptions::' => 1,
     'rperlrules::' => 1,
@@ -44,11 +46,43 @@ my $namespaces_rperl_missed = {
 };
 
 # NEED FIX: remove hard-coded list of packages
+my $filenames_rperl = {
+    # forward slash
+    'RPerl/CompileUnit/Module/Class.pm' => 1,
+    'RPerl/AfterSubclass.pm' => 1,
+    'RPerl/Config.pm' => 1,
+    'RPerl/HelperFunctions_cpp.pm' => 1,
+    'RPerl/Inline.pm' => 1,
+
+    # backslash
+    'RPerl\CompileUnit\Module\Class.pm' => 1,
+    'RPerl\AfterSubclass.pm' => 1,
+    'RPerl\Config.pm' => 1,
+    'RPerl\HelperFunctions_cpp.pm' => 1,
+    'RPerl\Inline.pm' => 1,
+
+    # no slash
+    'RPerl.pm' => 1,
+    'rperlnames.pm' => 1,
+    'rperlnamespaces.pm' => 1,
+    'rperlnamespaces_generated.pm' => 1,
+    'rperltypes.pm' => 1,
+    'rperltypesconv.pm' => 1,
+    'rperltypessizes.pm' => 1,
+    'rperloperations.pm' => 1,
+    'rperloptions.pm' => 1,
+    'rperlrules.pm' => 1,
+    'rperlsse.pm' => 1,
+    'rperlgmp.pm' => 1,
+};
+
+# NEED FIX: remove hard-coded list of packages
 # NEED UPDATE: some of these should be in core
 my $namespaces_rperl_deps = {
     'Alien::'    => 1,
     'AutoSplit::'    => 1,
     'AutoLoader::'    => 1,
+    'Capture::'      => 1,
     'Class::'        => 1,
     'Clone::'        => 1,
     'Config::'       => 1,
@@ -81,6 +115,7 @@ my $namespaces_rperl_deps = {
     'Locale::'       => 1,
     'Log::'          => 1,
     'MIME::'         => 1,
+    'Math::'         => 1,
     'Module::'       => 1,
     'POSIX::'        => 1,
     'PadWalker::'    => 1,
@@ -93,6 +128,9 @@ my $namespaces_rperl_deps = {
     'PPIx::'        => 1,
     'Readonly::'  => 1,
     'Role::'   => 1,
+    'SDL_perl::'     => 1,
+    'SDL::'          => 1,
+    'SDLx::'         => 1,
     'SelectSaver::'  => 1,
     'SelfLoader::'   => 1,
     'Socket::'       => 1,
@@ -104,6 +142,7 @@ my $namespaces_rperl_deps = {
     'Term::'         => 1,
     'Test::'         => 1,
     'Text::'         => 1,
+    'Tie::'          => 1,
     'Time::'         => 1,
     'VMS::'          => 1,
     'Win32::'        => 1,
@@ -121,8 +160,12 @@ my $namespaces_rperl_deps = {
     'parent::'       => 1,
     'psSnake::'      => 1,
     're::'           => 1,
+    'ref::'          => 1,
+    'strict::'       => 1,
     'unicore::'      => 1,
     'utf8_heavy::'   => 1,
+    'vars::'         => 1,
+    'warnings::'     => 1,
 };
 
 # DEV NOTE: can not use eval{}, must use stringy eval
@@ -165,6 +208,8 @@ my $namespaces_rperl_deps_string = Dumper($namespaces_rperl_deps);
 $namespaces_rperl_deps_string =~ s/\$VAR1/\$rperlnamespaces_generated::RPERL_DEPS/gxms;
 my $namespaces_rperl_string = Dumper($namespaces_rperl);
 $namespaces_rperl_string =~ s/\$VAR1/\$rperlnamespaces_generated::RPERL/gxms;
+my $filenames_rperl_string = Dumper($filenames_rperl);
+$filenames_rperl_string =~ s/\$VAR1/\$rperlnamespaces_generated::RPERL_FILES/gxms;
 
 #print 'have $namespaces_rperl_string = ' . "\n" . $namespaces_rperl_string . "\n\n";
 
@@ -188,6 +233,8 @@ $namespaces_generated .= q{$rperlnamespaces_generated::RPERL_DEPS = undef;} . "\
 $namespaces_generated .= $namespaces_rperl_deps_string . "\n";
 $namespaces_generated .= q{$rperlnamespaces_generated::RPERL = undef;} . "\n";
 $namespaces_generated .= $namespaces_rperl_string . "\n";
+$namespaces_generated .= q{$rperlnamespaces_generated::RPERL_FILES = undef;} . "\n";
+$namespaces_generated .= $filenames_rperl_string . "\n";
 $namespaces_generated .= q{1;} . "\n";
 
 #print 'have $namespaces_generated = ' . "\n" . $namespaces_generated . "\n\n";

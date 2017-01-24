@@ -66,7 +66,7 @@ use RPerl::DataStructure::Hash::Reference;
 use RPerl::Object;
 use RPerl::CodeBlock::Subroutine::Method;    # Method is the only item that is both a Data Type & a Grammar Rule???
 
-# these types are currently implemented for all 3 primary RPerl modes: PERLOPS_PERLTYPES, CPPOPS_PERLTYPES, CPPOPS_CPPTYPES
+# these types are currently implemented for the 2 primary RPerl modes: PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
 # NEED REMOVE: hard-coded list
 # MISSING: boolean, unsigned_integer, char, *_arrayref, *_hashref
 our string_arrayref $SUPPORTED = [

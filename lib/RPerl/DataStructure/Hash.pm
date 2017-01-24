@@ -2,7 +2,8 @@
 package RPerl::DataStructure::Hash;
 use strict;
 use warnings;
-our $VERSION = 0.006_000;
+use RPerl::AfterSubclass;
+our $VERSION = 0.007_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataStructure);
