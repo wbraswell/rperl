@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.014_000;
+our $VERSION = 0.015_000;
 use 5.010;  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 
 use ExtUtils::MakeMaker;
@@ -100,7 +100,7 @@ WriteMakefile(
         'Inline'              => '0.80',
         'Inline::C'           => '0.76',     # wbraswell added CPPFLAGS
         'Inline::CPP'         => '0.74',     # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack; nanis fixed Win32 filename space bug
-        'Inline::Filters'     => '0.18',     # wbraswell, rurban, & bulk88 added preprocess inc array; wbraswell added CPPFLAGS; bulk88 fix space in path
+        'Inline::Filters'     => '0.19',     # wbraswell, rurban, & bulk88 added preprocess inc array; wbraswell added CPPFLAGS; bulk88 fix space in path
         'PadWalker'           => '2.1',
         'Module::Refresh'     => '0.17',
         'Filter::Simple'      => '0.91',

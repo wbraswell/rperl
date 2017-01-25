@@ -7,6 +7,7 @@ DONE
     tests, allow single-line subroutines
     create RPerl::eval_use()
     split create_symtab_entries_and_accessors_mutators() out of INIT{}, optimize by adding missing skip entries in rperlnamespaces_generated.pm
+    Compiler, Find Dependencies Via Static Analysis Only, Disable Dynamic Analysis
 
 DOING
     Monolithic Modules, Fix Deps Warning

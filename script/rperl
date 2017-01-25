@@ -9,8 +9,8 @@ use RPerl;
 # DEV NOTE, CORRELATION #rp016: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = '2.410000';
 
-#our $VERSION = 20170118;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2017.018;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20170124;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2017.024;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -603,7 +603,7 @@ sub depends_delete {
                     RPerl::verbose( "\n" . 'Dep Output File(s): ' . stringify_output_file_name_group($output_file_name_dep_group, $filename_suffixes_supported) . "\n" );
                 }
                 elsif ($input_file_deps_count > 1) { 
-                    RPerl::verbose( "\n" . 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_dep_group), $filename_suffixes_supported . "\n" );
+                    RPerl::verbose( "\n" . 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_dep_group, $filename_suffixes_supported) . "\n" );
                 }
                 RPerl::verbose('UNLINK PHASE 0:     Delete files from disk...');
 #                RPerl::diag( 'in depends_delete(), have ( keys %{$output_file_name_dep_group} ) = ' . "\n" . Dumper(keys %{$output_file_name_dep_group}) . "\n" );

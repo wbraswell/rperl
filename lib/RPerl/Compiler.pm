@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.021_000;
+our $VERSION = 0.022_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -83,14 +83,16 @@ our string_arrayref $find_dependencies = sub {
             # disable top-level PMC file before finding subdependencies
             $top_level_package_name = $file_line;
             $top_level_package_name =~ s/^\s*package\s+([\w:]+)\s*;\s*$/$1/gxms;
+=DISABLE_DYNAMIC_DEPS_ANALYSIS
             my string $pmc_disable_path = pmc_disable($top_level_package_name);
             if ($pmc_disable_path eq q{}) {
-#               my integer $eval_retval = eval_use($top_level_package_name);  # NEED ANSWER: do we need to care about $eval_retval?
-                eval_use($top_level_package_name);
+#               my integer $eval_retval = eval_use_dependencies($top_level_package_name);  # NEED ANSWER: do we need to care about $eval_retval?
+                eval_use_dependencies($top_level_package_name);
             }
             else {
                 push @{$pmc_disable_paths}, $pmc_disable_path;
             }
+=cut
         }
 
         # NEED FIX: remove hard-coded list of not-subdependency uses
@@ -135,7 +137,6 @@ our string_arrayref $find_dependencies = sub {
                 next;
             }
             elsif ( $file_line =~ /use\s+rperlgmp\s*;/ ) {
-
 #                RPerl::diag('in Compiler::find_dependencies(), found rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
                 if ( ( not exists $modes->{_enable_gmp} ) or ( not defined $modes->{_enable_gmp} ) ) {
                     $modes->{_enable_gmp} = {};
@@ -162,15 +163,16 @@ our string_arrayref $find_dependencies = sub {
             my string $package_file_name_included;
             my string $package_name = $file_line;
             $package_name =~ s/^\s*use\s+([\w:]+)\s*.*\s*;\s*$/$1/gxms;    # remove everything except the package name
-            my string $pmc_disable_path = pmc_disable($package_name);
+#            my string $pmc_disable_path = pmc_disable($package_name);  # DISABLE_DYNAMIC_DEPS_ANALYSIS
 
             my string $package_file_name = $package_name;
             $package_file_name =~ s/::/\//gxms;    # replace double-colon :: scope delineator with forward-slash / directory delineator
             $package_file_name .= '.pm';
 
             # find specific included dependency file in either %INC or @INC
+=DISABLE_DYNAMIC_DEPS_ANALYSIS
             if ($pmc_disable_path eq q{}) {
-                eval_use($package_name);
+                eval_use_dependencies($package_name);
                 if ( not exists $INC{$package_file_name} ) {
                     die 'ERROR ECOCODE03, COMPILER, FIND DEPENDENCIES: Failed to find package file ', q{'}, $package_file_name, q{'},
                         ' in %INC, included from file ', q{'}, $file_name, q{'}, ', dying', "\n";
@@ -178,6 +180,7 @@ our string_arrayref $find_dependencies = sub {
                 $package_file_name_included = $INC{$package_file_name};
             }
             else {
+=cut
                 foreach my string $INC_directory (@INC) {
 #                    RPerl::diag( 'in Compiler::find_dependencies(), top of @INC foreach loop, have $INC_directory = ' . $INC_directory . "\n" );
                     $package_file_name_included = $INC_directory . '/' . $package_file_name;
@@ -194,8 +197,10 @@ our string_arrayref $find_dependencies = sub {
                     die 'ERROR ECOCODE04, COMPILER, FIND DEPENDENCIES: Failed to find package file ', q{'}, $package_file_name, q{'},
                         ' in @INC, included from file ', q{'}, $file_name, q{'}, ', dying', "\n";
                 }
+=DISABLE_DYNAMIC_DEPS_ANALYSIS
                 push @{$pmc_disable_paths}, $pmc_disable_path;
             }
+=cut
 
 #            RPerl::diag( 'in Compiler::find_dependencies(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
 
@@ -224,17 +229,20 @@ our string_arrayref $find_dependencies = sub {
         . $OS_ERROR
         . ', dying' . "\n";
 
+=DISABLE_DYNAMIC_DEPS_ANALYSIS
     # re-enable all PMC files after finding dependencies
     while (scalar @{$pmc_disable_paths}) {
         pmc_reenable(pop @{$pmc_disable_paths});
     }
+=cut
 
-    #    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
-    #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
-    #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+#    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
+#    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
+#    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
     return $dependencies;
 };
 
+=DISABLE_DYNAMIC_DEPS_ANALYSIS
 # temporarily disable a package's PMC file, if it exists
 our string $pmc_disable = sub {
     ( my string $package_name ) = @_;
@@ -293,15 +301,12 @@ our boolean $pmc_reenable = sub {
     else { return 0; }
 };
 
-# use eval to perform a runtime use on a package
-our integer $eval_use = sub {
+# call RPerl::eval_use() to perform a runtime use on a package, with dependencies-specific warning message
+our integer $eval_use_dependencies = sub {
     ( my string $package_name ) = @_;
 #    RPerl::diag( 'in Compiler::eval_use(), received $package_name = ' . $package_name . "\n" );
 
-    my string $eval_string = 'use ' . $package_name . '; 1;';
-
-    #            RPerl::diag('in Compiler::find_dependencies(), about to call NON-DEP $eval_string = ' . $eval_string . "\n");
-    my integer $eval_retval = eval($eval_string);
+    my integer $eval_retval = RPerl::eval_use($package_name, 0);
 
 #    RPerl::diag('in Compiler::find_dependencies(), have POST-EVAL NON-DEP %INC = ' . Dumper(\%INC) . "\n");
     # warn instead of dying on eval error here and below, in order to preserve proper parser errors instead of weird eval errors
@@ -316,6 +321,7 @@ our integer $eval_use = sub {
 
     return $eval_retval;
 };
+=cut
 
 # [[[ COMPILE RPERL TO RPERL, TEST MODE ]]]
 # [[[ COMPILE RPERL TO RPERL, TEST MODE ]]]
