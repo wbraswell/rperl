@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::Variable;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_100;
+our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression);
@@ -132,11 +132,23 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                             if ((substr $types->[$i], -2, 2) ne '::') { $types->[$i] .= '::'; }  # _properties in _symbol_table are keyed by class/package names ending in ::
 #                            RPerl::diag( 'in Variable->ast_to_cpp__generate__CPPOPS_CPPTYPES() #0, for loop $i = ' . $i . ', have $modes->{_symbol_table}->{ $types->[$i] }->{_properties} = ' . $modes->{_symbol_table}->{ $types->[$i] }->{_properties} . "\n" );
 
+                            # check if OO property exists in self class or parent class
                             if ( exists $modes->{_symbol_table}->{ $types->[$i] }->{_properties}->{$number_or_string_literal} ) {
                                 $types->[ $i + 1 ] = $modes->{_symbol_table}->{ $types->[$i] }->{_properties}->{$number_or_string_literal}->{type};
                             }
                             else {
-                                die 'ERROR ECOGEASCP31 #0, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $number_or_string_literal . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
+                                my $parent_package_names = RPerl::CompileUnit::Module::Class::parent_and_grandparent_package_names(substr $types->[$i], 0, -2);
+                                my boolean $property_found = 0;
+                                foreach my $parent_package_name (@{$parent_package_names}) {
+                                    if (exists $modes->{_symbol_table}->{ $parent_package_name . q{::} }->{_properties}->{$number_or_string_literal}) {
+                                        $types->[ $i + 1 ] = $modes->{_symbol_table}->{ $parent_package_name . q{::} }->{_properties}->{$number_or_string_literal}->{type};
+                                        $property_found = 1;
+                                        last;
+                                    }
+                                }
+                                if (not $property_found) {
+                                    die 'ERROR ECOGEASCP31 #0, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $number_or_string_literal . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
+                                }
                             }
                         }
                         else {
@@ -153,11 +165,26 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #                        RPerl::diag( 'in Variable->ast_to_cpp__generate__CPPOPS_CPPTYPES() #1, for loop $i = ' . $i . ', have $modes->{_symbol_table}->{ $types->[$i] } = ' . $modes->{_symbol_table}->{ $types->[$i] } . "\n" );
 #                        RPerl::diag( 'in Variable->ast_to_cpp__generate__CPPOPS_CPPTYPES() #1, for loop $i = ' . $i . ', have $modes->{_symbol_table}->{ $types->[$i] }->{_properties} = ' . $modes->{_symbol_table}->{ $types->[$i] }->{_properties} . "\n" );
 
+                        # check if OO property exists in self class or parent class
                         if ( exists $modes->{_symbol_table}->{ $types->[$i] }->{_properties}->{$word} ) {
                             $types->[ $i + 1 ] = $modes->{_symbol_table}->{ $types->[$i] }->{_properties}->{$word}->{type};
                         }
                         else {
-                            die 'ERROR ECOGEASCP31 #1, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $word . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
+                            my $parent_package_names = RPerl::CompileUnit::Module::Class::parent_and_grandparent_package_names(substr $types->[$i], 0, -2);
+#                            RPerl::diag( 'in Variable->ast_to_cpp__generate__CPPOPS_CPPTYPES(), for loop $i = ' . $i . ', have $parent_package_names = ' . Dumper($parent_package_names) . "\n" );
+                            my boolean $property_found = 0;
+                            foreach my $parent_package_name (@{$parent_package_names}) {
+#                                RPerl::diag( 'in Variable->ast_to_cpp__generate__CPPOPS_CPPTYPES(), for loop $i = ' . $i . ', have $parent_package_name = ' . $parent_package_name . "\n" );
+#                                RPerl::diag( 'in Variable->ast_to_cpp__generate__CPPOPS_CPPTYPES(), for loop $i = ' . $i . ', have $modes->{_symbol_table} = ' . Dumper($modes->{_symbol_table}) . "\n" );
+                                if (exists $modes->{_symbol_table}->{ $parent_package_name . q{::} }->{_properties}->{$word}) {
+                                    $types->[ $i + 1 ] = $modes->{_symbol_table}->{ $parent_package_name . q{::} }->{_properties}->{$word}->{type};
+                                    $property_found = 1;
+                                    last;
+                                }
+                            }
+                            if (not $property_found) {
+                                die 'ERROR ECOGEASCP31 #1, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $word . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
+                            }
                         }
                     }
                     else {

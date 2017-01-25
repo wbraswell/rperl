@@ -7,14 +7,15 @@ DONE
     tests, allow single-line subroutines
     create RPerl::eval_use()
     split create_symtab_entries_and_accessors_mutators() out of INIT{}, optimize by adding missing skip entries in rperlnamespaces_generated.pm
-    Compiler, Find Dependencies Via Static Analysis Only, Disable Dynamic Analysis
+    Compiler, Fix Uncompile Bug, Find Dependencies Via Static Analysis Only & Disable Dynamic Analysis
 
 DOING
     Monolithic Modules, Fix Deps Warning
-        START HERE: figure out how to trigger Inline from inside eval_use(), subclass SSE & monolith, upgrade tests, fix monolith dep warnings
-        START HERE: figure out how to trigger Inline from inside eval_use(), subclass SSE & monolith, upgrade tests, fix monolith dep warnings
-        START HERE: figure out how to trigger Inline from inside eval_use(), subclass SSE & monolith, upgrade tests, fix monolith dep warnings
+        START HERE: subclass monolith???, upgrade tests, fix monolith dep warnings
+        START HERE: subclass monolith???, upgrade tests, fix monolith dep warnings
+        START HERE: subclass monolith???, upgrade tests, fix monolith dep warnings
 
+    REMOVE EXPLICIT PROPERTIES INHERITANCE, Generator.pm & Grammar.eyp
 
     replace @_ with @ARG in system code
     'cannot' -> 'can not' in all docs & source files
@@ -330,6 +331,7 @@ INLINE::CPP BUGS
         chmod a-w build/eval_637_3400/eval_637_3400.c
     
 PERLOPS_PERLTYPES
+    build each class' properties_inherited() once at compile time in Class::INIT{}, will optimize runtime performance
     C++ subclasses using AV* instead of std::vector, etc?
     add symtab building and checking
     real SSE support (faster, not slower)
@@ -346,6 +348,7 @@ GRAMMAR
         update Learning RPerl section 4.2.1 & lib/RPerl/Test/Subroutine/program_* accordingly
 
 COMPILER
+    uncompile, store list of compiled dependencies inside compiled files themselves, for optional use during uncompile
     figure out <> vs "" and also long-path-deps in includes in Bubble.cpp & Bubble.h
     compile Foo.pm
     add mutators pass-by-reference for scalars?  see SystemRenderer2D::show()

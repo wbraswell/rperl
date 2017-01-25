@@ -3,10 +3,11 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get @ARG, Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.040_000;
+our $VERSION = 0.042_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
+# "The Buck Stops Here"
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
@@ -30,7 +31,72 @@ sub new {
     if ( not defined ${ $_[0] . '::properties' } ) {
         croak 'ERROR ECOOOCO00, SOURCE CODE, OO OBJECT CONSTRUCTOR: Undefined hashref $properties for class ' . $_[0] . ', croaking' . "\n";
     }
-    return bless { %{ ${ $_[0] . '::properties' } } }, $_[0];
+#    return bless { %{ ${ $_[0] . '::properties' } } }, $_[0];  # DOES NOT INHERIT DATA MEMBERS FROM PARENT CLASSES
+#    return bless { %{ ${ $_[0] . '::properties' } }, %{ properties_inherited($_[0]) } }, $_[0];
+    return bless { %{ properties_inherited($_[0]) } }, $_[0];
+}
+
+sub properties_inherited {
+#    print {*STDERR} 'in Class::properties_inherited(), top of subroutine, received $ARG[0] = ', $ARG[0], "\n";
+    no strict;
+
+    # always keep self class' $properties
+    my $properties = { %{ ${ $ARG[0] . '::properties' } } };
+
+    # inherit parent & (great*)grandparent class' $properties
+    foreach my $parent_package_name (@{ $ARG[0] . '::ISA' }) {
+#        print {*STDERR} 'in Class::properties_inherited(), top of foreach() loop, have $parent_package_name = ', $parent_package_name, "\n";
+        # RPerl base class & Eyapp classes have no $properties, skip
+        if (($parent_package_name eq 'RPerl::CompileUnit::Module::Class') or
+            ($parent_package_name eq 'Parse::Eyapp::Node')) {
+                next;
+        }
+
+        # recurse to get inherited $properties
+        my $parent_and_grandparent_properties = properties_inherited($parent_package_name);
+
+        # self class' $properties override inherited $properties, same as C++
+        foreach my $parent_property_key (keys %{ $parent_and_grandparent_properties }) {
+            if (not exists $properties->{$parent_property_key}) {
+                $properties->{$parent_property_key} = $parent_and_grandparent_properties->{$parent_property_key};
+            }
+        }
+    }
+    return $properties;
+}
+
+sub parent_and_grandparent_package_names {
+#    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), top of subroutine, received $ARG[0] = ', $ARG[0], "\n";
+    no strict;
+
+    RPerl::eval_use($ARG[0]);
+
+    my $arg0_isa_string = $ARG[0] . '::ISA';
+#    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), have $arg0_isa_string = ', $arg0_isa_string, "\n";
+
+    my @arg0_isa = @{$arg0_isa_string};
+#    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), have @arg0_isa = ', Dumper(\@arg0_isa), "\n";
+
+    my $package_names = [];
+
+    foreach my $parent_package_name (@{ $ARG[0] . '::ISA' }) {
+#        print {*STDERR} 'in Class::parent_and_grandparent_package_names(), top of foreach() loop, have $parent_package_name = ', $parent_package_name, "\n";
+        # RPerl base class & Eyapp classes have no $properties, skip
+        if (($parent_package_name eq 'RPerl::CompileUnit::Module::Class') or
+            ($parent_package_name eq 'Parse::Eyapp::Node')) {
+                next;
+        }
+
+        # get parent's package name
+        push @{$package_names}, $parent_package_name;
+
+        # recurse to get (great*)grandparents' package names
+        my $grandparent_package_names = parent_and_grandparent_package_names($parent_package_name);
+        $package_names = [@{$package_names}, @{$grandparent_package_names}];
+#        print {*STDERR} 'in Class::parent_and_grandparent_package_names(), inside foreach() loop, have $grandparent_package_names = ', Dumper($grandparent_package_names), "\n";
+    }
+#    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), bottom of subroutine, returning $package_names = ', Dumper($package_names), "\n";
+    return $package_names;
 }
 
 # RPerl object destructor

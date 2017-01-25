@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -606,7 +606,7 @@ EOL
         $property_declaration .= ';';
         push @{$properties_declarations}, $property_declaration;
 
-        $cpp_source_subgroup = ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES( $property_key, $modes );
+        $cpp_source_subgroup = ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES( $property_key, $modes->{_symbol_table}->{_namespace}, $modes );
         if ( $cpp_source_subgroup->{H} ne q{} ) {
             push @{$properties_accessors_mutators}, $cpp_source_subgroup->{H};
         }
@@ -705,7 +705,7 @@ EOL
             $property_declaration .= ';';
             push @{$properties_declarations}, $property_declaration;
 
-            $cpp_source_subgroup = ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES( $property_key, $modes );
+            $cpp_source_subgroup = ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES( $property_key, $modes->{_symbol_table}->{_namespace}, $modes );
             if ( $cpp_source_subgroup->{H} ne q{} ) {
                 push @{$properties_accessors_mutators}, $cpp_source_subgroup->{H};
             }
@@ -714,6 +714,7 @@ EOL
             }
         }
     }
+    # NEED REMOVE EXPLICIT PROPERTIES INHERITANCE
     # inherited OO $properties
     # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN VARIABLE_SYMBOL ';'
     elsif ( ref $properties eq 'Properties_67' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
@@ -735,6 +736,28 @@ EOL
             $package_name_colons =~ s/__/::/gxms;
             die 'ERROR ECOGEASCP37, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Class ' . $package_name_colons . ' inherits OO functionality from parent class ' .
             $parent_name . ' but is attempting to inherit OO properties from non-matching class ' . $properties_inherit_package . ', dying' . "\n";
+        }
+    }
+
+    # generate accessors & mutators for inherited $properties
+    my string $package_name_colons = $package_name_underscores;
+    $package_name_colons =~ s/__/::/gxms;
+
+    my $parent_package_names = RPerl::CompileUnit::Module::Class::parent_and_grandparent_package_names($package_name_colons);
+#    RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_package_names = ' . Dumper($parent_package_names) . "\n" );
+    foreach my $parent_package_name (@{$parent_package_names}) {
+#        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_package_name = ' . $parent_package_name . "\n" );
+#        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{ $parent_package_name . q{::} } = ' . Dumper($modes->{_symbol_table}->{ $parent_package_name . q{::} }) . "\n" );
+        foreach my $parent_property_key (keys %{ $modes->{_symbol_table}->{ $parent_package_name . q{::} }->{_properties} }) {
+            if (not exists $modes->{_symbol_table}->{ $package_name_colons . q{::} }->{_properties}->{$parent_property_key}) {
+                $cpp_source_subgroup = ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES( $parent_property_key, $parent_package_name . q{::}, $modes );
+                if ( $cpp_source_subgroup->{H} ne q{} ) {
+                    push @{$properties_accessors_mutators}, $cpp_source_subgroup->{H};
+                }
+                if ((exists $cpp_source_subgroup->{PMC}) and (defined $cpp_source_subgroup->{PMC}) and ($cpp_source_subgroup->{PMC} ne q{})) {
+                    push @{$properties_accessors_mutators_shims}, $cpp_source_subgroup->{PMC};
+                }
+            }
         }
     }
 
@@ -928,13 +951,14 @@ EOL
 
 # generate accessors/mutators
 our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = sub {
-    ( my string $property_key, my string_hashref $modes ) = @ARG;
+    ( my string $property_key, my string $namespace_from, my string_hashref $modes ) = @ARG;
     my string_hashref $cpp_source_group = { H => q{} };
 
 #    RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
 
     # grab RPerl-style type out of symtab, instead of accepting-as-arg now-C++-style type from $property_type in caller
-    my string $property_type = $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type};
+#    my string $property_type = $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type};
+    my string $property_type = $modes->{_symbol_table}->{ $namespace_from }->{_properties}->{$property_key}->{type};
     my boolean $is_direct    = 0;
     my $property_element_or_value_type;
 
@@ -1113,3 +1137,4 @@ our string_hashref $ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES = s
 };
 
 1;    # end of class
+

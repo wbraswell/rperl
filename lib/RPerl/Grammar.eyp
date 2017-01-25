@@ -187,6 +187,7 @@ SubroutineArguments:     LPAREN_MY Type VARIABLE_SYMBOL (OP21_LIST_COMMA MY Type
 Class:                   'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties SubroutineOrMethod* LITERAL_NUMBER ';' ;
 Properties:              'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryProperties (OP21_LIST_COMMA HashEntryProperties)* '}' ';' |
                          'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';' |
+                         # NEED REMOVE EXPLICIT PROPERTIES INHERITANCE
                          'our hashref $properties' OP19_VARIABLE_ASSIGN VARIABLE_SYMBOL ';' ;
 Method:                  'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation* '}' ';' ;
 MethodArguments:         LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
