@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.014_000;
+our $VERSION = 0.021_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -53,7 +53,7 @@ BEGIN {
 }
 
 # TEMP DEBUGGING, ONLY LOAD SPECIFIC FILES
-#my $test_files = { './lib/RPerl/Test/Operator01AbsoluteValue/program_00_good.pl' => undef };
+#my $test_files = { './lib/RPerl/FOO/BAR.pm' => undef };
 
 #=DEBUG_DISABLE
 # NEED UPDATE: add string_arrayref_hashref_hashref type
@@ -95,48 +95,47 @@ find(
             return;
         }
     },
-    (defined $ARGV[0]) ? PATH_TESTS() . q{/} . $ARGV[0] : PATH_TESTS()
+    (defined $ARGV[0]) ? $ARGV[0] : PATH_TESTS()  # accept optional command-line argument
 );
 
-# locate all *.*OPS_*TYPES pre-compiled files in PATH_PRECOMPILED directory
-if ( not defined $ARGV[0] ) { ## bugfix, needed because so you can use t/13 with args and it will work.
-find(
-    sub {
-        my $file = $File::Find::name;
-
-#        RPerl::diag('in 13_generate.t, have $file = ' . $file . "\n");
-
-#        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
-#        if ( $file !~ m/.*Module\/.*$/xms ) { # TEMP DEBUGGING, ONLY FIND FILES IN A CERTAIN DIRECTORY
-#        if ( $file =~ m/^(.*foo_bar_arith.*)[.].*OPS.*$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
-        if ( $file =~ m/^(.+)[.]\w+OPS_\w+TYPES$/gxms ) {    # find all pre-compiled files
-            my string $file_base = $1;
-#            RPerl::diag('in 13_generate.t, have pre-compiled $file        = ' . $file . "\n");
-#            RPerl::diag('in 13_generate.t, have pre-compiled $file_base   = ' . $file_base . "\n");
-            if (($file_base =~ m/^(.*)[.]cpp$/gxms) or ($file_base =~ m/^(.*)[.]h$/gxms) or ($file_base =~ m/^(.*)[.]pmc$/gxms)) {
-                my string $file_prefix = $1;
-#                RPerl::diag('in 13_generate.t, have pre-compiled $file_prefix = ' . $file_prefix . "\n");
-                if ((-e ($file_prefix . '.pl')) and (-f ($file_prefix . '.pl')) and (-T ($file_prefix . '.pl'))) {
-                    $test_files->{$file_prefix . '.pl'} = undef;
-                }
-                elsif ((-e ($file_prefix . '.pm')) and (-f ($file_prefix . '.pm')) and (-T ($file_prefix . '.pm'))) {
-                    $test_files->{$file_prefix . '.pm'} = undef;
+# skip find() if command-line argument is provided
+if ( not defined $ARGV[0] ) {
+    # locate all *.*OPS_*TYPES pre-compiled files in PATH_PRECOMPILED directory
+    find(
+        sub {
+            my $file = $File::Find::name;
+#           RPerl::diag('in 13_generate.t, have $file = ' . $file . "\n");
+#            if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
+#            if ( $file !~ m/.*Module\/.*$/xms ) { # TEMP DEBUGGING, ONLY FIND FILES IN A CERTAIN DIRECTORY
+#            if ( $file =~ m/^(.*foo_bar_arith.*)[.].*OPS.*$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
+            if ( $file =~ m/^(.+)[.]\w+OPS_\w+TYPES$/gxms ) {    # find all pre-compiled files
+                my string $file_base = $1;
+#                RPerl::diag('in 13_generate.t, have pre-compiled $file        = ' . $file . "\n");
+#                RPerl::diag('in 13_generate.t, have pre-compiled $file_base   = ' . $file_base . "\n");
+                if (($file_base =~ m/^(.*)[.]cpp$/gxms) or ($file_base =~ m/^(.*)[.]h$/gxms) or ($file_base =~ m/^(.*)[.]pmc$/gxms)) {
+                    my string $file_prefix = $1;
+#                    RPerl::diag('in 13_generate.t, have pre-compiled $file_prefix = ' . $file_prefix . "\n");
+                    if ((-e ($file_prefix . '.pl')) and (-f ($file_prefix . '.pl')) and (-T ($file_prefix . '.pl'))) {
+                        $test_files->{$file_prefix . '.pl'} = undef;
+                    }
+                    elsif ((-e ($file_prefix . '.pm')) and (-f ($file_prefix . '.pm')) and (-T ($file_prefix . '.pm'))) {
+                        $test_files->{$file_prefix . '.pm'} = undef;
+                    }
+                    else {
+                        RPerl::warning( 'WARNING WTE13GE01, TEST GROUP 13, CODE GENERATOR: Missing non-compiled source code reference file ' . q{'} . $file_prefix . '.pl' . q{'} . ' or '  . q{'} . $file_prefix . '.pm' . q{'} . ', not performing difference check' . "\n" );
+                    }
                 }
                 else {
-                    RPerl::warning( 'WARNING WTE13GE01, TEST GROUP 13, CODE GENERATOR: Missing non-compiled source code reference file ' . q{'} . $file_prefix . '.pl' . q{'} . ' or '  . q{'} . $file_prefix . '.pm' . q{'} . ', not performing difference check' . "\n" );
+                    RPerl::warning( 'WARNING WTE13GE02, TEST GROUP 13, CODE GENERATOR: Unrecognized pre-compiled source code reference file base ' . q{'} . $file_base . q{'} . ', not performing difference check' . "\n" );
                 }
             }
-            else {
-                RPerl::warning( 'WARNING WTE13GE02, TEST GROUP 13, CODE GENERATOR: Unrecognized pre-compiled source code reference file base ' . q{'} . $file_base . q{'} . ', not performing difference check' . "\n" );
+            else {  # not a pre-compiled file
+#                RPerl::diag('in 13_generate.t, have NOT pre-compiled $file = ' . $file . "\n");
+                return;
             }
-        }
-        else {  # not a pre-compiled file
-#            RPerl::diag('in 13_generate.t, have NOT pre-compiled $file = ' . $file . "\n");
-            return;
-        }
-    },
-    PATH_PRECOMPILED()
-);
+        },
+        PATH_PRECOMPILED()
+    );
 }
 
 #=cut
@@ -192,12 +191,12 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
 
     TEST_FILE_LOOP: foreach my $test_file ( sort keys %{$test_files} ) {
         $reference_file_name_group = {};
-#        RPerl::diag( 'in 13_generate.t, top of secondary runloop, have $test_file = ' . $test_file . "\n" );
+        RPerl::diag( 'in 13_generate.t, top of secondary runloop, have $test_file = ' . $test_file . "\n" );
 #        $number_of_test_files = scalar keys %{$test_files};
 #        RPerl::diag( 'in 13_generate.t, top of secondary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
 
         $modes = {
-#            dependencies => 'OFF',  # unnecessary, handled by explicitly calling find_dependencies() below, only used for RPerl system deps
+#            dependencies => 'OFF',  # unnecessary, handled by explicitly calling find_dependencies() below, only used for RPerl system deps; also find_parents()
             ops     => $ops,
             types   => $types,
 #            check        => 'TRACE',  # unnecessary
@@ -209,6 +208,39 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
             execute => 'OFF',
             label   => 'OFF'          # don't label source code, will strip comments before diff check
         };
+
+        # DEV NOTE: must recursively find & parse ((great)*grand)?parents to receive any inherited class $properties
+        my string_arrayref $parent_files = find_parents( $test_file, 1, $modes );  # second argument set to 1 for true value of $find_grandparents_recurse
+
+        # generate starting with furthest ancestor & ending with parent,
+        # to avoid errors due to one parent not properly receiving their own inheritance from an older grandparent, etc.
+        $parent_files = [reverse @{$parent_files}];
+
+#        RPerl::diag( 'in 13_generate.t, have $parent_files = ' . Dumper($parent_files) );
+
+        foreach my string $parent_file (@{$parent_files}) {
+            # trim unnecessary (and possibly problematic) absolute paths from parent file names
+            $parent_file = RPerl::Compiler::post_processor__absolute_path_delete( $parent_file );
+    
+            # [[[ PARSE PARENTS ]]]
+            $eval_return_value = eval { RPerl::Parser::rperl_to_ast__parse($parent_file); };
+            if ( not( ( defined $eval_return_value ) and $eval_return_value ) ) {
+                ok( 0, q{Program or module's parent parses with errors, code generation not reached, test aborted:} . (q{ } x 2) . $parent_file );
+                diag('Error output captured:' . "\n" . $EVAL_ERROR);
+                next;
+            }
+            my object $rperl_ast_parent = $eval_return_value;
+
+            $modes->{_input_file_name} = $parent_file;
+     
+            # [[[ GENERATE PARENTS ]]]
+            if ( $ops eq 'PERL' ) {
+                $eval_return_value = eval { RPerl::Generator::ast_to_rperl__generate( $rperl_ast_parent, $modes ); };
+            }
+            else {    # $ops eq 'CPP'
+                $eval_return_value = eval { RPerl::Generator::ast_to_cpp__generate( $rperl_ast_parent, $modes ); };
+            }
+        }
 
         # DEV NOTE: do not actually follow or compile dependencies;
         # find RPerl system deps such as 'use rperlsse;', 'use rperlgmp;', etc.;
@@ -296,6 +328,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
         $eval_return_value = eval { RPerl::Parser::rperl_to_ast__parse($test_file); };
         if ( not( ( defined $eval_return_value ) and $eval_return_value ) ) {
             ok( 0, 'Program or module parses with errors, code generation not reached, test aborted:' . (q{ } x 2) . $test_file );
+            diag('Error output captured:' . "\n" . $EVAL_ERROR);
 #            $number_of_tests_run++;
             next;
         }
@@ -452,19 +485,21 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
                     }
                 }
                 ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program or module generates with expected error(s):' . (q{ } x 10) . $test_file );
+                if (( scalar @{$missing_errors} ) != 0) {
+                    diag((join "\n", @{$missing_errors}) . "\n");
+                }
 #                $number_of_tests_run++;
             }
             else {
 #                RPerl::diag( 'in 13_generate.t, have $test_file NOT named *Bad* or *bad*' . "\n" );
                 if ( $EVAL_ERROR =~ /Can't\slocate\sobject\smethod\s"ast_to_\w*__generate"\svia\spackage/xms ) {
-                    RPerl::warning( 'WARNING WTE13GE00, TEST GROUP 13, CODE GENERATOR: Missing code generation method, received error message...' . "\n"
-                            . $EVAL_ERROR
-                            . "\n" );
                     ok( 0, 'Program or module generates without errors, missing code generator:' . (q{ } x 1) . $test_file );
+                    diag('Error output captured:' . "\n" . $EVAL_ERROR);
 #                    $number_of_tests_run++;
                 }
                 else {
                     ok( 0, 'Program or module generates without errors:' . (q{ } x 18) . $test_file );
+                    diag('Error output captured:' . "\n" . $EVAL_ERROR);
 #                    $number_of_tests_run++;
                 }
             }

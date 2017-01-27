@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.022_000;
+our $VERSION = 0.023_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -53,7 +53,7 @@ our hashref_hashref $filename_suffixes_supported = {
 
 our string_arrayref $find_parents = sub {
     ( my string $file_name, my boolean $find_grandparents_recurse, my string_hashref $modes ) = @_;
-#    RPerl::diag( 'in Compiler::find_parents(), received $file_name = ' . $file_name . "\n" );
+    RPerl::diag( 'in Compiler::find_parents(), received $file_name = ' . $file_name . "\n" );
 
     # trim unnecessary (and possibly problematic) absolute paths from input file name
     $file_name = post_processor__absolute_path_delete($file_name);
@@ -78,9 +78,15 @@ our string_arrayref $find_parents = sub {
     while ( $file_line = <$FILE_HANDLE> ) {
 #        RPerl::diag('in Compiler::find_parents(), top of while loop, have $file_line = ' . $file_line . "\n");
 
-        if ( ( $file_line =~ /^\s*package\s+[\w:]+\s*;\s*$/xms ) and ( not defined $top_level_package_name ) ) {
-            $top_level_package_name = $file_line;
-            $top_level_package_name =~ s/^\s*package\s+([\w:]+)\s*;\s*$/$1/gxms;
+        if ( $file_line =~ /^\s*package\s+[\w:]+\s*;\s*$/xms ) {
+            if ( not defined $top_level_package_name ) {
+                $top_level_package_name = $file_line;
+                $top_level_package_name =~ s/^\s*package\s+([\w:]+)\s*;\s*$/$1/gxms;
+            }
+            # DEV NOTE: for monolithic modules (more than one package), we only find parents of the first package, to avoid incorrect parent lists & infinite recursion
+            else {
+                last;
+            }
         }
 
         if ( $file_line =~ /^\s*use\s+[\w:]+/xms ) {
@@ -142,7 +148,7 @@ our string_arrayref $find_parents = sub {
                     ' in @INC, included from file ', q{'}, $file_name, q{'}, ', dying', "\n";
             }
 
-#            RPerl::diag( 'in Compiler::find_parents(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
+            RPerl::diag( 'in Compiler::find_parents(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
 
             my string $package_file_name_included_relative = post_processor__absolute_path_delete( $package_file_name_included );
             push @{$parents}, $package_file_name_included_relative;

@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.009_000;
+our $VERSION = 0.010_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -81,7 +81,7 @@ find(
             return;
         }
     },
-    (defined $ARGV[0]) ? PATH_TESTS() . q{/} . $ARGV[0] : PATH_TESTS()
+    (defined $ARGV[0]) ? $ARGV[0] : PATH_TESTS()  # accept optional command-line argument
 );
 
 my integer $number_of_test_files = scalar keys %{$test_files};
@@ -105,7 +105,7 @@ for my $test_file ( sort keys %{$test_files} ) {
     $test_file = RPerl::Compiler::post_processor__absolute_path_delete( $test_file );
 
     #    RPerl::diag( 'in 12_parse.t, have $test_file = ' . $test_file . "\n" );
-    ( my string $rperl_input_file_name, my string_hashref $cpp_output_file_name_group, my string_hashref $cpp_source_group, my string_hashref $modes ) = @_;
+    ( my string $rperl_input_file_name, my string_hashref $cpp_output_file_name_group, my string_hashref $cpp_source_group, my string_hashref $modes ) = @ARG;
 
     # NEED UPGRADE: enable file dependencies as in script/rperl depends_parse_generate_save_subcompile_execute()
     my $eval_return_value = eval {
@@ -160,10 +160,14 @@ for my $test_file ( sort keys %{$test_files} ) {
                 }
             }
             ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program or module parses with expected error(s):' . (q{ } x 2) . $test_file );
+            if (( scalar @{$missing_errors} ) != 0) {
+                diag((join "\n", @{$missing_errors}) . "\n");
+            }
 #            $number_of_tests_run++;
         }
         else {
             ok( 0, 'Program or module parses without errors:' . (q{ } x 10) . $test_file );
+            diag('Error output captured:' . "\n" . $EVAL_ERROR);
 #            $number_of_tests_run++;
         }
     }
@@ -173,3 +177,4 @@ for my $test_file ( sort keys %{$test_files} ) {
 
 done_testing();
 #done_testing($number_of_tests_run);
+
