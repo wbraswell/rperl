@@ -11,9 +11,9 @@ DONE
 
 DOING
     Monolithic Modules, Fix Deps Warning
-        START HERE: subclass monolith???, upgrade tests, fix monolith dep warnings
-        START HERE: subclass monolith???, upgrade tests, fix monolith dep warnings
-        START HERE: subclass monolith???, upgrade tests, fix monolith dep warnings
+        START HERE: find & parse deps in t/13, upgrade OO inheritance tests, subclass monolith???, upgrade n_body tests?, fix monolith dep warnings
+        START HERE: find & parse deps in t/13, upgrade OO inheritance tests, subclass monolith???, upgrade n_body tests?, fix monolith dep warnings
+        START HERE: find & parse deps in t/13, upgrade OO inheritance tests, subclass monolith???, upgrade n_body tests?, fix monolith dep warnings
 
     REMOVE EXPLICIT PROPERTIES INHERITANCE, Generator.pm & Grammar.eyp
 

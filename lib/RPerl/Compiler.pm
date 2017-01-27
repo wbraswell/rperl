@@ -51,6 +51,130 @@ our hashref_hashref $filename_suffixes_supported = {
 
 # [[[ SUBROUTINES ]]]
 
+our string_arrayref $find_parents = sub {
+    ( my string $file_name, my boolean $find_grandparents_recurse, my string_hashref $modes ) = @_;
+#    RPerl::diag( 'in Compiler::find_parents(), received $file_name = ' . $file_name . "\n" );
+
+    # trim unnecessary (and possibly problematic) absolute paths from input file name
+    $file_name = post_processor__absolute_path_delete($file_name);
+#    RPerl::diag( 'in Compiler::find_parents(), have possibly-trimmed $file_name = ' . $file_name . "\n" );
+
+    my string_arrayref $parents = [];
+
+    if ( not -f $file_name ) {
+        die 'ERROR ECOCOPA00, COMPILER, FIND PARENTS: File not found, ' . q{'} . $file_name . q{'} . ', dying' . "\n";
+    }
+
+    open my filehandleref $FILE_HANDLE, '<', $file_name
+        or die 'ERROR ECOCOPA01, COMPILER, FIND PARENTS: Cannot open file ' . q{'} . $file_name . q{'} . ' for reading, ' . $OS_ERROR . ', dying' . "\n";
+
+    # read in input file, match on 'use' includes for parents
+    my string $file_line;
+    my string $top_level_package_name = undef;
+    my boolean $use_rperl = 0;
+
+    # NEED FIX: do not make recursive calls until after closing file, to avoid
+    # ERROR ECOCOPA01, COMPILER, FIND PARENTS: Cannot open file Foo/Bar.pm for reading, Too many open files, dying
+    while ( $file_line = <$FILE_HANDLE> ) {
+#        RPerl::diag('in Compiler::find_parents(), top of while loop, have $file_line = ' . $file_line . "\n");
+
+        if ( ( $file_line =~ /^\s*package\s+[\w:]+\s*;\s*$/xms ) and ( not defined $top_level_package_name ) ) {
+            $top_level_package_name = $file_line;
+            $top_level_package_name =~ s/^\s*package\s+([\w:]+)\s*;\s*$/$1/gxms;
+        }
+
+        if ( $file_line =~ /^\s*use\s+[\w:]+/xms ) {
+#            RPerl::diag('in Compiler::find_parents(), found use line, have $file_line = ' . $file_line . "\n");
+            if ( $file_line =~ /use\s+RPerl\s*;/ ) {
+                $use_rperl = 1;
+                next;
+            }
+            elsif ( $file_line =~ /use\s+lib/ ) {
+                die
+                    q{ERROR ECOCOPA02, COMPILER, FIND PARENTS: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, file }
+                    . q{'}
+                    . $file_name . q{'}
+                    . ', dying' . "\n";
+            }
+            elsif ( $file_line !~ /use\s+parent/ )
+            {
+                # safely ignore these not-parent uses
+                next;
+            }
+
+            # 'use RPerl;' must appear before any other 'use Foo;' statements, or else this is not a valid RPerl input file and we return empty deps
+            if (not $use_rperl) {
+                last; 
+            }
+
+            my string $package_file_name_included;
+            my string $package_name = $file_line;
+            # remove everything except the package name
+            $package_name =~ s/^(\s*)//gxms;  # strip leading whitespace
+            substr $package_name, 0, 14, q{};  # strip leading 'use parent qw('
+            $package_name =~ s/([\w:]+)(.*)$/$1/gxms;  # strip trailing everything
+#            RPerl::diag('in Compiler::find_parents(), have $package_name = ' . $package_name . "\n\n");
+
+            # safely skip base class for no parent inheritance
+            if ($package_name eq 'RPerl::CompileUnit::Module::Class') {
+                next;
+            }
+
+            my string $package_file_name = $package_name;
+            $package_file_name =~ s/::/\//gxms;    # replace double-colon :: scope delineator with forward-slash / directory delineator
+            $package_file_name .= '.pm';
+
+            # find specific included dependency file in @INC
+            foreach my string $INC_directory (@INC) {
+#                RPerl::diag( 'in Compiler::find_parents(), top of @INC foreach loop, have $INC_directory = ' . $INC_directory . "\n" );
+                $package_file_name_included = $INC_directory . '/' . $package_file_name;
+#                RPerl::diag( 'in Compiler::find_parents(), inside @INC foreach loop, have $package_file_name_included = ' . $package_file_name_included . "\n" );
+                if (-e $package_file_name_included) {
+#                    RPerl::diag( 'in Compiler::find_parents(), inside @INC foreach loop, have EXISTING $package_file_name_included = ' . $package_file_name_included . "\n" );
+                    last;
+                }
+                else {
+                    $package_file_name_included = q{};
+                }
+            }
+            if ($package_file_name_included eq q{}) {
+                die 'ERROR ECOCOPA04, COMPILER, FIND PARENTS: Failed to find package file ', q{'}, $package_file_name, q{'},
+                    ' in @INC, included from file ', q{'}, $file_name, q{'}, ', dying', "\n";
+            }
+
+#            RPerl::diag( 'in Compiler::find_parents(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
+
+            my string $package_file_name_included_relative = post_processor__absolute_path_delete( $package_file_name_included );
+            push @{$parents}, $package_file_name_included_relative;
+    
+#            RPerl::diag( 'in Compiler::find_parents(), have PRE-SUBDEPS $parents = ' . Dumper($parents) . "\n" );
+
+            if ($find_grandparents_recurse) {
+    
+                # recursively find grandparents
+                my string_arrayref $grandparents = find_parents( $package_file_name_included, $find_grandparents_recurse, $modes );
+    
+                # discard duplicate parents that now appear in grandparents
+                $parents = [ uniq @{$grandparents}, @{$parents} ];
+    
+#                RPerl::diag( 'in Compiler::find_parents(), have POST-SUBDEPS $parents = ' . Dumper($parents) . "\n" );
+            }
+        }
+    }
+
+    close $FILE_HANDLE
+        or die 'ERROR ECOCOPA05, COMPILER, FIND PARENTS: Cannot close file ' . q{'}
+        . $file_name . q{'}
+        . ' after reading, '
+        . $OS_ERROR
+        . ', dying' . "\n";
+
+#    RPerl::diag( 'in Compiler::find_parents(), returning $parents = ' . Dumper($parents) . "\n" );
+#    RPerl::diag('in Compiler::find_parents(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
+#    RPerl::diag('in Compiler::find_parents(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+    return $parents;
+};
+
 our string_arrayref $find_dependencies = sub {
     ( my string $file_name, my boolean $find_subdependencies_recurse, my string_hashref $modes ) = @_;
 #    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
@@ -60,7 +184,7 @@ our string_arrayref $find_dependencies = sub {
 #    RPerl::diag( 'in Compiler::find_dependencies(), have possibly-trimmed $file_name = ' . $file_name . "\n" );
 
     my string_arrayref $dependencies = [];
-    my string_arrayref $pmc_disable_paths = [];
+#    my string_arrayref $pmc_disable_paths = [];  # DISABLE_DYNAMIC_DEPS_ANALYSIS
 
     if ( not -f $file_name ) {
         die 'ERROR ECOCODE00, COMPILER, FIND DEPENDENCIES: File not found, ' . q{'} . $file_name . q{'} . ', dying' . "\n";
@@ -159,10 +283,11 @@ our string_arrayref $find_dependencies = sub {
                 last; 
             }
 
-            # disable PMC file before finding subdependencies
             my string $package_file_name_included;
             my string $package_name = $file_line;
             $package_name =~ s/^\s*use\s+([\w:]+)\s*.*\s*;\s*$/$1/gxms;    # remove everything except the package name
+
+            # disable PMC file before finding subdependencies
 #            my string $pmc_disable_path = pmc_disable($package_name);  # DISABLE_DYNAMIC_DEPS_ANALYSIS
 
             my string $package_file_name = $package_name;
