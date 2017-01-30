@@ -14,7 +14,7 @@ use RPerl::Algorithm;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = {};
+our hashref $properties = { usefulness => my string $TYPED_usefulness = undef };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 

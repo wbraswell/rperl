@@ -14,7 +14,7 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = {};
+our hashref $properties = { complexity => my string $TYPED_complexity = undef };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 

@@ -15,6 +15,8 @@ use RPerl::Algorithm::Sort;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {
+    complexity => my string $TYPED_complexity = 'O($n ** 2)',
+    usefulness => my string $TYPED_usefulness = 'simple educational example',
     integer_data => my integer_arrayref $TYPED_integer_data = undef,
     number_data  => my number_arrayref $TYPED_number_data   = undef
 };
