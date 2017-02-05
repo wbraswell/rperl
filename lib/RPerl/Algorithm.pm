@@ -3,7 +3,7 @@ package RPerl::Algorithm;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);    # no non-system inheritance, only inherit from base class
@@ -22,6 +22,12 @@ our void::method $inherited__Algorithm = sub {
     ( my RPerl::Algorithm $self, my string $person ) = @ARG;
     RPerl::diag(
         'in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FNORD' . "\n" );
+};
+
+our void::method $inherited__Algorithm_complexity_modify = sub {
+    ( my RPerl::Algorithm $self, my string $complexity_new ) = @ARG;
+    RPerl::diag( 'in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm_complexity_modify(), have ::class($self) = ' . ::class($self) . ' and $complexity_new = ' . $complexity_new . ', FNORD' . "\n" );
+    $self->{complexity} = $complexity_new;
 };
 
 #our void::method $inherited = sub {
