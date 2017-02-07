@@ -3,7 +3,7 @@ package RPerl::Algorithm::Inefficient;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Algorithm);
@@ -21,6 +21,12 @@ our hashref $properties = { usefulness => my string $TYPED_usefulness = undef };
 our void::method $inherited__Inefficient = sub {
     ( my object $self, my string $person ) = @ARG;
     RPerl::diag( 'in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FLUFFY' . "\n" );
+};
+
+our void::method $inherited__Inefficient_usefulness_modify = sub {
+    ( my object $self, my string $usefulness_new ) = @ARG;
+    RPerl::diag( 'in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient_usefulness_modify(), have ::class($self) = ' . ::class($self) . ' and $usefulness_new = ' . $usefulness_new . ', FLUFFY' . "\n" );
+    $self->{usefulness} = $usefulness_new;
 };
 
 our void::method $inherited = sub {
