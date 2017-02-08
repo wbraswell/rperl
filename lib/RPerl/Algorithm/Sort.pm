@@ -3,7 +3,7 @@ package RPerl::Algorithm::Sort;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Algorithm);
@@ -19,12 +19,18 @@ our hashref $properties = {};
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 our void::method $inherited__Sort = sub {
-    ( my object $self, my string $person ) = @ARG;
+    ( my RPerl::Algorithm::Sort $self, my string $person ) = @ARG;
     RPerl::diag( 'in PERLOPS_PERLTYPES Sort->inherited__Sort(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FISH' . "\n" );
 };
 
+our void::method $inherited__Sort_complexity_modify = sub {
+    ( my RPerl::Algorithm::Sort $self, my string $complexity_new ) = @ARG;
+    RPerl::diag( 'in PERLOPS_PERLTYPES Sort->inherited__Sort_complexity_modify(), have ::class($self) = ' . ::class($self) . ' and $complexity_new = ' . $complexity_new . ', FISH' . "\n" );
+    $self->{complexity} = $complexity_new;
+};
+
 #our void::method $inherited = sub {
-#    ( my object $self, my string $person) = @ARG;
+#    ( my RPerl::Algorithm::Sort $self, my string $person) = @ARG;
 #    RPerl::diag( 'in PERLOPS_PERLTYPES Sort->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', IN' . "\n" );
 #};
 
