@@ -3,7 +3,7 @@ package RPerl::Algorithm::Inefficient;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.008_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Algorithm);
@@ -17,6 +17,8 @@ use RPerl::Algorithm;
 our hashref $properties = { usefulness => my string $TYPED_usefulness = undef };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
+
+# [ INHERITANCE TESTING ]
 
 our void::method $inherited__Inefficient = sub {
     ( my RPerl::Algorithm::Inefficient $self, my string $person ) = @ARG;

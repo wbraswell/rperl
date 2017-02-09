@@ -3,7 +3,7 @@ package RPerl::Algorithm;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.006_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);    # no non-system inheritance, only inherit from base class
@@ -17,6 +17,8 @@ use RPerl::CompileUnit::Module::Class;
 our hashref $properties = { complexity => my string $TYPED_complexity = undef };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
+
+# [ INHERITANCE TESTING ]
 
 our void::method $inherited__Algorithm = sub {
     ( my RPerl::Algorithm $self, my string $person ) = @ARG;

@@ -3,7 +3,7 @@ package RPerl::Algorithm::Sort;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.006_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Algorithm);
@@ -17,6 +17,8 @@ use RPerl::Algorithm;
 our hashref $properties = {};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
+
+# [ INHERITANCE TESTING ]
 
 our void::method $inherited__Sort = sub {
     ( my RPerl::Algorithm::Sort $self, my string $person ) = @ARG;

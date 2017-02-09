@@ -3,15 +3,13 @@ package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
 use RPerl;
-our $VERSION = 0.004_031;
+our $VERSION = 0.004_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Algorithm::Sort);    # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
-
-#use parent qw(RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient); # OO INHERITANCE TESTING; NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
+#use parent qw(RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient);  # DEV NOTE, CORRELATION #rp023: need upgrade Inline::CPP to support multiple inheritance
 use RPerl::Algorithm::Sort;
-
-#use RPerl::Algorithm::Inefficient;    # OO INHERITANCE TESTING; NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
+#use RPerl::Algorithm::Inefficient;  # DEV NOTE, CORRELATION #rp023: need upgrade Inline::CPP to support multiple inheritance
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
