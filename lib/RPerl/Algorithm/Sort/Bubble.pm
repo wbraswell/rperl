@@ -3,7 +3,7 @@ package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Algorithm::Sort);
@@ -24,12 +24,12 @@ our hashref $properties = {
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 our void::method $integer_sort = sub {
-    ( my object $self ) = @ARG;
+    ( my RPerl::Algorithm::Sort::Bubble $self ) = @ARG;
     $self->{integer_data} = RPerl::Algorithm::Sort::Bubble::integer_bubblesort( $self->{integer_data} );
 };
 
 our void::method $number_sort = sub {
-    ( my object $self ) = @ARG;
+    ( my RPerl::Algorithm::Sort::Bubble $self ) = @ARG;
     $self->{number_data} = RPerl::Algorithm::Sort::Bubble::number_bubblesort( $self->{number_data} );
 };
 
@@ -86,26 +86,26 @@ our number_arrayref $number_bubblesort = sub {
 # [ INHERITANCE TESTING ]
 
 our void::method $inherited__Bubble = sub {
-    ( my object $self, my string $person ) = @ARG;
+    ( my RPerl::Algorithm::Sort::Bubble $self, my string $person ) = @ARG;
     RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n" );
-};
-
-our void::method $inherited = sub {
-    ( my object $self, my string $person ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', ILLOGICAL' . "\n" );
 };
 
 # DEV NOTE, CORRELATION #rp023: need upgrade Inline::CPP to support multiple inheritance
 #our void::method $inherited__Bubble_usefulness_modify = sub {
 #    ( my RPerl::Algorithm::Sort::Bubble $self, my string $usefulness_new ) = @ARG;
-#    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble_usefulness_modify(), have ::class($self) = ' . ::class($self) . ' and $usefulness_new = ' . $usefulness_new . ', FLUFFY' . "\n" );
+#    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble_usefulness_modify(), have ::class($self) = ' . ::class($self) . ' and $usefulness_new = ' . $usefulness_new . ', FRIED' . "\n" );
 #    $self->{usefulness} = $usefulness_new;
 #};
 
 our void::method $inherited__Bubble_complexity_modify = sub {
     ( my RPerl::Algorithm::Sort::Bubble $self, my string $complexity_new ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble_complexity_modify(), have ::class($self) = ' . ::class($self) . ' and $complexity_new = ' . $complexity_new . ', FLUFFY' . "\n" );
+    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble_complexity_modify(), have ::class($self) = ' . ::class($self) . ' and $complexity_new = ' . $complexity_new . ', FRIED' . "\n" );
     $self->{complexity} = $complexity_new;
+};
+
+our void::method $inherited = sub {
+    ( my RPerl::Algorithm::Sort::Bubble $self, my string $person ) = @ARG;
+    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', ILLOGICAL' . "\n" );
 };
 
 our string $uninherited__Bubble = sub {
