@@ -7,9 +7,9 @@ our $VERSION = 0.004_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Algorithm::Sort);    # OO INHERITANCE TESTING; SINGLE OO INHERITANCE
-#use parent qw(RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient);  # DEV NOTE, CORRELATION #rp023: need upgrade Inline::CPP to support multiple inheritance
+#use parent qw(RPerl::Algorithm::Sort RPerl::Algorithm::Inefficient);  # NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
 use RPerl::Algorithm::Sort;
-#use RPerl::Algorithm::Inefficient;  # DEV NOTE, CORRELATION #rp023: need upgrade Inline::CPP to support multiple inheritance
+#use RPerl::Algorithm::Inefficient;  # NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator

@@ -3,10 +3,10 @@ package RPerl::DataStructure::Hash::Properties;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_100;
 
 # [[[ OO INHERITANCE ]]]
-#use parent qw(RPerl::GrammarRule RPerl::DataStructure::Hash);  # NEED UPGRADE: multiple inheritance
+#use parent qw(RPerl::GrammarRule RPerl::DataStructure::Hash);  # NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
 use parent qw(RPerl::GrammarRule);
 use RPerl::GrammarRule;
 

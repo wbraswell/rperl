@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.000_020;
+our $VERSION = 0.000_120;
 
 # [[[ CRITICS, INCLUDES ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -39,7 +39,7 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     $sorter->inherited__Bubble('Frozen');         # RPerl yes, C++ yes
     $sorter->inherited__Sort('Frozen');           # RPerl yes, C++ yes
-#    $sorter->inherited__Inefficient('Frozen');    # RPerl yes, C++ yes  # NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
+#    $sorter->inherited__Inefficient('Frozen');    # RPerl yes, C++ yes  # NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
     $sorter->inherited__Algorithm('Frozen');      # RPerl yes, C++ yes
     print "\n";
 
@@ -52,7 +52,7 @@ for my integer $i ( 0 .. $i_MAX ) {
  
     uninherited__Bubble('Claws');         # RPerl yes, C++ yes
     uninherited__Sort('Claws');           # RPerl yes, C++ yes
-#    uninherited__Inefficient('Claws');    # RPerl yes, C++ yes  # NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP
+#    uninherited__Inefficient('Claws');    # RPerl yes, C++ yes  # NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
     uninherited__Algorithm('Claws');      # RPerl yes, C++ yes
     print "\n";
     

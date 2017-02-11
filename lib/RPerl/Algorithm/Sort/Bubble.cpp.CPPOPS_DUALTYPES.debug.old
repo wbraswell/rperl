@@ -2,10 +2,10 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.007_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.007_100
 
 ////# [[[ INCLUDES ]]]
-#include <RPerl/Algorithm/Sort/Bubble.h>  // -> HelperFunctions.cpp && Sort.cpp && NOT Inefficient.cpp (NEED UPGRADE: multiple inheritance not currently supported by Inline::CPP)
+#include <RPerl/Algorithm/Sort/Bubble.h>  // -> HelperFunctions.cpp && Sort.cpp && NOT Inefficient.cpp  // NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
 
 # ifdef __PERL__TYPES
 

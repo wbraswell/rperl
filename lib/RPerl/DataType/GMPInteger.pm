@@ -3,10 +3,10 @@ package RPerl::DataType::GMPInteger;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.003_100;
 
 # [[[ OO INHERITANCE ]]]
-#use parent qw(Math::BigInt RPerl::DataType::Scalar);  # DEV NOTE: multiple inheritance!
+#use parent qw(Math::BigInt RPerl::DataType::Scalar);  # NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
 use parent qw(Math::BigInt);
 use Math::BigInt lib => 'GMP';    # we still actually use GMP in PERLOPS_PERLTYPES mode, albeit indirectly via Math::BigInt::GMP
 use RPerl::DataType::Scalar;

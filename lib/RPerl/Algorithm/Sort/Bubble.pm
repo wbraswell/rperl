@@ -90,7 +90,7 @@ our void::method $inherited__Bubble = sub {
     RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n" );
 };
 
-# DEV NOTE, CORRELATION #rp023: need upgrade Inline::CPP to support multiple inheritance
+# NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
 #our void::method $inherited__Bubble_usefulness_modify = sub {
 #    ( my RPerl::Algorithm::Sort::Bubble $self, my string $usefulness_new ) = @ARG;
 #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble_usefulness_modify(), have ::class($self) = ' . ::class($self) . ' and $usefulness_new = ' . $usefulness_new . ', FRIED' . "\n" );

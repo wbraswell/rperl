@@ -2,11 +2,11 @@ package RPerl::DataStructure::LinkedList::Node;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.001_100;
 
 package RPerl::DataStructure::LinkedList::NodeReference;
-#use parent qw(RPerl::DataStructure RPerl::DataType::Modifier::Reference);  # NEED UPGRADE: multiple inheritance
-use parent qw(RPerl::DataType::Modifier::Reference);  # NEED UPGRADE: multiple inheritance
+#use parent qw(RPerl::DataStructure RPerl::DataType::Modifier::Reference);  # NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
+use parent qw(RPerl::DataType::Modifier::Reference);
 #use RPerl::DataStructure;
 use RPerl::DataType::Modifier::Reference;
 
