@@ -2,7 +2,8 @@
 package RPerl::Algorithm::Sort::Bubble;
 use strict;
 use warnings;
-use RPerl::AfterSubclass;
+#use RPerl::AfterSubclass;  # NEED REMOVE???
+use RPerl;
 our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]

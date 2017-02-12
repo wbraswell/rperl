@@ -2,7 +2,8 @@
 package RPerl::Algorithm::Inefficient;
 use strict;
 use warnings;
-use RPerl::AfterSubclass;
+#use RPerl::AfterSubclass;  # NEED REMOVE???
+use RPerl;
 our $VERSION = 0.008_100;
 
 # [[[ OO INHERITANCE ]]]
