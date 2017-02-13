@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.023_000;
+our $VERSION = 0.024_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -228,7 +228,8 @@ our string_arrayref $find_dependencies = sub {
         # NEED FIX: remove hard-coded list of not-subdependency uses
         if ( $file_line =~ /^\s*use\s+[\w:]+/xms ) {
 #            RPerl::diag('in Compiler::find_dependencies(), found use line, have $file_line = ' . $file_line . "\n");
-            if ( $file_line =~ /use\s+RPerl\s*;/ ) {
+            if (( $file_line =~ /use\s+RPerl\s*;/ ) or 
+                ( $file_line =~ /use\s+RPerl::AfterSubclass\s*;/ )) {
                 $use_rperl = 1;
                 next;
             }
@@ -236,7 +237,6 @@ our string_arrayref $find_dependencies = sub {
                 or ( $file_line =~ /use\s+warnings\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::CompileUnit::Module::Class\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::Class\s*;/ )
-                or ( $file_line =~ /use\s+RPerl::AfterSubclass\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::Config\s*;/ )
                 or ( $file_line =~ /use\s+\w+Perl::Config\s*;/ )    # DEV NOTE, CORRELATION #rp027: MathPerl::Config, PhysicsPerl::Config, etc
                 or ( $file_line =~ /use\s+parent/ )
@@ -284,7 +284,7 @@ our string_arrayref $find_dependencies = sub {
                     . ', dying' . "\n";
             }
 
-            # 'use RPerl;' must appear before any other 'use Foo;' statements, or else this is not a valid RPerl input file and we return empty deps
+            # 'use RPerl;' or 'use RPerl::AfterSubclass;' must appear before any other 'use Foo;' statements, or else this is not a valid RPerl input file and we return empty deps
             if (not $use_rperl) {
                 last; 
             }

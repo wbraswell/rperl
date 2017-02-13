@@ -2,9 +2,8 @@
 package RPerl::Algorithm::Sort;
 use strict;
 use warnings;
-#use RPerl::AfterSubclass;  # NEED REMOVE???
-use RPerl;
-our $VERSION = 0.006_100;
+use RPerl::AfterSubclass;
+our $VERSION = 0.006_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Algorithm);

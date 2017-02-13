@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.004_000;
+    our $VERSION = 0.005_000;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -32,7 +32,7 @@
 %token SHEBANG               = /(^#!\/(?:\w+\/)*perl)/                   # begin line, hash (octothorpe), bang, *NIX path to Perl; ex. '#!/usr/bin/perl'
 %token USE_RPERL             = /(\s*use\s+RPerl\s*;\s*)/                 # 'use RPerl;'
 %token USE_RPERL_AFTER       = /(\s*use\s+RPerl::AfterSubclass\s*;\s*)/  # 'use RPerl::AfterSubclass;'
-%token USE_OR_REQUIRE        = /(use|require)/                           # 'use' or 'require'
+%token USE_OR_REQUIRE        = /(use\s+|require\s+)/                     # 'use ' or 'require '
 %token VERSION_NUMBER_ASSIGN = /\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/    # DEV NOTE, CORRELATION #rp014: $VERSION assign v-number, only capture v-number, not a normal number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
 %token MY                    = /(my)/                                    # 'my'
 %token LITERAL_NUMBER        = /([+-]?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?(e[+-]?\d+)?)/   # number w/ underscores, optional scientific notation; ex. '12_345_678.910_1'

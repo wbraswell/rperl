@@ -2,9 +2,8 @@
 package RPerl::Algorithm;
 use strict;
 use warnings;
-#use RPerl::AfterSubclass;  # NEED REMOVE???
-use RPerl;
-our $VERSION = 0.006_100;
+use RPerl::AfterSubclass;
+our $VERSION = 0.006_200;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);    # no non-system inheritance, only inherit from base class
