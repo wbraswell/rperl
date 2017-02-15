@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.024_000;
+our $VERSION = 0.025_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -53,7 +53,7 @@ our hashref_hashref $filename_suffixes_supported = {
 
 our string_arrayref $find_parents = sub {
     ( my string $file_name, my boolean $find_grandparents_recurse, my string_hashref $modes ) = @_;
-    RPerl::diag( 'in Compiler::find_parents(), received $file_name = ' . $file_name . "\n" );
+#    RPerl::diag( 'in Compiler::find_parents(), received $file_name = ' . $file_name . "\n" );
 
     # trim unnecessary (and possibly problematic) absolute paths from input file name
     $file_name = post_processor__absolute_path_delete($file_name);
@@ -91,7 +91,8 @@ our string_arrayref $find_parents = sub {
 
         if ( $file_line =~ /^\s*use\s+[\w:]+/xms ) {
 #            RPerl::diag('in Compiler::find_parents(), found use line, have $file_line = ' . $file_line . "\n");
-            if ( $file_line =~ /use\s+RPerl\s*;/ ) {
+            if (( $file_line =~ /use\s+RPerl\s*;/ ) or 
+                ( $file_line =~ /use\s+RPerl::AfterSubclass\s*;/ )) {
                 $use_rperl = 1;
                 next;
             }

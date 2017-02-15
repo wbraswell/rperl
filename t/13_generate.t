@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.021_000;
+our $VERSION = 0.022_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -191,7 +191,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
 
     TEST_FILE_LOOP: foreach my $test_file ( sort keys %{$test_files} ) {
         $reference_file_name_group = {};
-        RPerl::diag( 'in 13_generate.t, top of secondary runloop, have $test_file = ' . $test_file . "\n" );
+#        RPerl::diag( 'in 13_generate.t, top of secondary runloop, have $test_file = ' . $test_file . "\n" );
 #        $number_of_test_files = scalar keys %{$test_files};
 #        RPerl::diag( 'in 13_generate.t, top of secondary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
 
@@ -245,7 +245,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
         # DEV NOTE: do not actually follow or compile dependencies;
         # find RPerl system deps such as 'use rperlsse;', 'use rperlgmp;', etc.;
         # ignore return value, here we only care about $modes->{_enable_sse}, $modes->{_enable_gmp}, etc.;
-        find_dependencies( $test_file, 0, $modes );  # second argument set to 0 for false value of $find_subdependencies_recurse
+#        find_dependencies( $test_file, 0, $modes );  # second argument set to 0 for false value of $find_subdependencies_recurse
 
         $output_file_name_groups_tmp = generate_output_file_names( [$test_file], [], 1, $modes );
         $output_file_name_group = $output_file_name_groups_tmp->[0];
@@ -441,9 +441,8 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
 #                        $number_of_tests_run++;
                     }
                     elsif ( $diff_check_retval->{diff_line} > 0 ) {
-#                        ok( 0, 'Program or module generates without errors, yes diff check, output file ' . $output_file_name_group->{$suffix_key} . ' and reference file ' . $test_file_reference . ' differ at line ' . $diff_check_retval->{diff_line} . ', have $diff_check_retval->{line_reference} = ' . "\n" . $diff_check_retval->{line_reference} . "\n" . 'have $diff_check_retval->{line_generated} = ' . "\n" . $diff_check_retval->{line_generated} . "\n");
-                        ok( 0, 'Program or module generates without errors, yes diff check, output file ' . $output_file_name_group->{$suffix_key} . ' and reference file ' . $test_file_reference . ' differ at line ' . $diff_check_retval->{diff_line} );
-                        diag( 'have $diff_check_retval->{line_reference} = ' . "\n" . $diff_check_retval->{line_reference} . "\n" . 'have $diff_check_retval->{line_generated} = ' . "\n" . $diff_check_retval->{line_generated} . "\n");
+#                        ok( 0, 'Program or module generates without errors, yes diff check, output file ' . $output_file_name_group->{$suffix_key} . ' and reference file ' . $test_file_reference . ' differ at line ' . $diff_check_retval->{diff_line} );
+                        ok( 0, 'Program or module generates without errors, yes diff check, output file ' . $output_file_name_group->{$suffix_key} . ' and reference file ' . $test_file_reference . ' differ at line ' . $diff_check_retval->{diff_line} . ', have $diff_check_retval->{line_reference} = ' . "\n" . $diff_check_retval->{line_reference} . "\n" . 'have $diff_check_retval->{line_generated} = ' . "\n" . $diff_check_retval->{line_generated} . "\n");
 #                        $number_of_tests_run++;
                     }
                     else {    # $diff_check_retval->{diff_line} < 0

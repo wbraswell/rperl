@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::Literal::String;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression::Literal);
