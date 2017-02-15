@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 0.005_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 0.008_200
 
 // [[[ INCLUDES ]]]
 #include "RPerl/Algorithm/Inefficient.h"
@@ -21,6 +21,16 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 
 void RPerl__Algorithm__Inefficient::inherited__Inefficient(string person) {
     RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FLUFFY" + (const string) "\n");
+}
+
+void RPerl__Algorithm__Inefficient::inherited__Inefficient_usefulness_modify(string usefulness_new) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient_usefulness_modify(), have ::class($self) = " + classname(this) + (const string) " and $usefulness_new = " + usefulness_new + (const string) ", FLUFFY" + (const string) "\n");
+    this->usefulness = usefulness_new;
+}
+
+void RPerl__Algorithm__Inefficient::inherited__Inefficient_complexity_modify(string complexity_new) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient_complexity_modify(), have ::class($self) = " + classname(this) + (const string) " and $complexity_new = " + complexity_new + (const string) ", FLUFFY" + (const string) "\n");
+    this->complexity = complexity_new;
 }
 
 void RPerl__Algorithm__Inefficient::inherited(string person) {
@@ -43,3 +53,5 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # endif
 
 #endif
+
+// end of class

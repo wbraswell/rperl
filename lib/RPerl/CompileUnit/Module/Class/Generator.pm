@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -518,6 +518,7 @@ EOL
     # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryProperties STAR-27 '}' ';'
     # HashEntryProperties -> WORD OP20_HASH_FATARROW TypeInnerProperties
     if ( ref $properties eq 'Properties_65' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+        $modes->{_inside_class_properties} = 1;
         $property_declaration = q{};
         my object $property_0        = $properties->{children}->[3];
         my object $properties_1_to_n = $properties->{children}->[4];
@@ -713,6 +714,7 @@ EOL
                 push @{$properties_accessors_mutators_shims}, $cpp_source_subgroup->{PMC};
             }
         }
+        delete $modes->{_inside_class_properties};
     }
     # NEED REMOVE EXPLICIT PROPERTIES INHERITANCE
     # inherited OO $properties

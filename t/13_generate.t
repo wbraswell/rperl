@@ -441,8 +441,9 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
 #                        $number_of_tests_run++;
                     }
                     elsif ( $diff_check_retval->{diff_line} > 0 ) {
-#                        ok( 0, 'Program or module generates without errors, yes diff check, output file ' . $output_file_name_group->{$suffix_key} . ' and reference file ' . $test_file_reference . ' differ at line ' . $diff_check_retval->{diff_line} );
-                        ok( 0, 'Program or module generates without errors, yes diff check, output file ' . $output_file_name_group->{$suffix_key} . ' and reference file ' . $test_file_reference . ' differ at line ' . $diff_check_retval->{diff_line} . ', have $diff_check_retval->{line_reference} = ' . "\n" . $diff_check_retval->{line_reference} . "\n" . 'have $diff_check_retval->{line_generated} = ' . "\n" . $diff_check_retval->{line_generated} . "\n");
+#                        ok( 0, 'Program or module generates without errors, yes diff check, output file ' . $output_file_name_group->{$suffix_key} . ' and reference file ' . $test_file_reference . ' differ at line ' . $diff_check_retval->{diff_line} . ', have $diff_check_retval->{line_reference} = ' . "\n" . $diff_check_retval->{line_reference} . "\n" . 'have $diff_check_retval->{line_generated} = ' . "\n" . $diff_check_retval->{line_generated} . "\n");
+                        ok( 0, 'Program or module generates without errors, yes diff check, output file ' . $output_file_name_group->{$suffix_key} . ' and reference file ' . $test_file_reference . ' differ at line ' . $diff_check_retval->{diff_line} );
+                        diag( 'have $diff_check_retval->{line_reference} = ' . "\n" . $diff_check_retval->{line_reference} . "\n" . 'have $diff_check_retval->{line_generated} = ' . "\n" . $diff_check_retval->{line_generated} . "\n");
 #                        $number_of_tests_run++;
                     }
                     else {    # $diff_check_retval->{diff_line} < 0

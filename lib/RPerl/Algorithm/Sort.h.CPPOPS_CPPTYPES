@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort_h 0.005_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort_h 0.006_200
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
@@ -23,6 +23,10 @@ class RPerl__Algorithm__Sort : public RPerl__Algorithm {
 public:
     // [[[ OO METHODS ]]]
 
+    // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
+    string get_complexity() { return this->complexity; }
+    void set_complexity(string complexity_new) { this->complexity = complexity_new; }
+
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm__Sort() {}
     ~RPerl__Algorithm__Sort() {}
@@ -32,6 +36,7 @@ public:
 
     // <<< USER-DEFINED METHODS >>>
     void inherited__Sort(string person);
+    void inherited__Sort_complexity_modify(string complexity_new);
 };  // end of class
 
 // [[[ OO SUBCLASSES ]]]
@@ -43,6 +48,8 @@ typedef std::unordered_map<string, RPerl__Algorithm__Sort_ptr>::iterator RPerl__
 
 // [[[ SUBROUTINES ]]]
 string RPerl__Algorithm__Sort__uninherited__Sort(string person);
+
+// <<< SHIM MACROS >>>
 #define uninherited__Sort(person) RPerl__Algorithm__Sort__uninherited__Sort(person)
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
@@ -59,3 +66,5 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # endif
 
 #endif
+
+// end of class

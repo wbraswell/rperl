@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.007_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.008_100
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
@@ -22,12 +22,18 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort {
 public:
     // [[[ OO PROPERTIES ]]]
+    string complexity = "O($n ** 2)";
+    string usefulness = "simple educational example";
     integer_arrayref integer_data;
     number_arrayref number_data;
 
     // [[[ OO METHODS ]]]
 
     // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
+    string get_complexity() { return this->complexity; }
+    void set_complexity(string complexity_new) { this->complexity = complexity_new; }
+    string get_usefulness() { return this->usefulness; }
+    void set_usefulness(string usefulness_new) { this->usefulness = usefulness_new; }
     integer_arrayref get_integer_data() { return this->integer_data; }
     void set_integer_data(integer_arrayref integer_data_new) { this->integer_data = integer_data_new; }
     number_arrayref get_number_data() { return this->number_data; }
@@ -44,6 +50,7 @@ public:
     void integer_sort();
     void number_sort();
     void inherited__Bubble(string person);
+    void inherited__Bubble_complexity_modify(string complexity_new);
     void inherited(string person);
 };  // end of class
 
@@ -61,6 +68,8 @@ string RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(string person);
 string RPerl__Algorithm__Sort__Bubble__uninherited(string person);
 string RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(integer_arrayref lucky_integers);
 string RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(number_arrayref lucky_numbers);
+
+// <<< SHIM MACROS >>>
 #define integer_bubblesort(integer_data) RPerl__Algorithm__Sort__Bubble__integer_bubblesort(integer_data)
 #define number_bubblesort(number_data) RPerl__Algorithm__Sort__Bubble__number_bubblesort(number_data)
 #define uninherited__Bubble(person) RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(person)
@@ -82,3 +91,5 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # endif
 
 #endif
+
+// end of class

@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::Literal::String;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression::Literal);
@@ -87,15 +87,26 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in Literal::String->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_inside_list_elements} = ' . $modes->{_inside_list_elements} . "\n" );
 #    RPerl::diag( 'in Literal::String->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_inside_cat_operator} = ' . $modes->{_inside_cat_operator} . "\n" );
 
-    if (    (
-                ((exists $modes->{_inside_print_operator}) and (defined $modes->{_inside_print_operator}) and $modes->{_inside_print_operator}) or
-                ((exists $modes->{_inside_die_operator}) and (defined $modes->{_inside_die_operator}) and $modes->{_inside_die_operator})
-            ) and 
-            (exists $modes->{_inside_list_elements})  and (defined $modes->{_inside_list_elements})  and $modes->{_inside_list_elements}) {  # and
+    my boolean $cast_literal = 0;
+    if ((exists $modes->{_inside_class_properties}) and (defined $modes->{_inside_class_properties}) and $modes->{_inside_class_properties}) {
+        $cast_literal = 1;
+    }
+
+    if ((
+               ((exists $modes->{_inside_print_operator}) and (defined $modes->{_inside_print_operator}) and $modes->{_inside_print_operator}) or
+               ((exists $modes->{_inside_die_operator}) and (defined $modes->{_inside_die_operator}) and $modes->{_inside_die_operator})
+           ) and 
+           (exists $modes->{_inside_list_elements})  and (defined $modes->{_inside_list_elements})  and $modes->{_inside_list_elements}) {  # and
 #        not ((exists $modes->{_inside_cat_operator})   and (defined $modes->{_inside_cat_operator})   and $modes->{_inside_cat_operator})) {
 #    if (1) {
-        # don't cast string literals when inside print or die operator, and also inside list elements, and also NOT inside string concatenation operator;
+        # don't cast string literals when:
+        # inside OO class properties; OR
+        # inside print or die operator, and also inside list elements, and also NOT inside string concatenation operator;
         # cout << will automatically detect type
+        $cast_literal = 1;
+    }
+
+    if ($cast_literal) {
         $cpp_source_group->{CPP} = $cpp_source_group->{CPP};
     }
     else {

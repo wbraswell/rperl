@@ -15,7 +15,10 @@ DOING
         START HERE: upgrade OO inheritance tests, fix monolith dep warnings, monolith tests
         START HERE: upgrade OO inheritance tests, fix monolith dep warnings, monolith tests
 
+    update CPPOPS_DUALTYPES files
     REMOVE EXPLICIT PROPERTIES INHERITANCE, Generator.pm & Grammar.eyp
+
+    do not rearrange subs & methods in CPPOPS_CPPTYPES output code, as occurs w/ Bubble.pm
 
     replace @_ with @ARG in system code
     'cannot' -> 'can not' in all docs & source files

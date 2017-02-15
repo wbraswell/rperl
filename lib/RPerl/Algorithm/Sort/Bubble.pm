@@ -5,6 +5,10 @@ use warnings;
 use RPerl::AfterSubclass;
 our $VERSION = 0.008_100;
 
+# START HERE: fix compile errors
+# START HERE: fix compile errors
+# START HERE: fix compile errors
+
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Algorithm::Sort);
 use RPerl::Algorithm::Sort;

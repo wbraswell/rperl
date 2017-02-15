@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h 0.005_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h 0.008_200
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
@@ -21,7 +21,16 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 // [[[ OO INHERITANCE ]]]
 class RPerl__Algorithm__Inefficient : public RPerl__Algorithm {
 public:
+    // [[[ OO PROPERTIES ]]]
+    string usefulness;
+
     // [[[ OO METHODS ]]]
+
+    // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
+    string get_usefulness() { return this->usefulness; }
+    void set_usefulness(string usefulness_new) { this->usefulness = usefulness_new; }
+    string get_complexity() { return this->complexity; }
+    void set_complexity(string complexity_new) { this->complexity = complexity_new; }
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm__Inefficient() {}
@@ -32,6 +41,8 @@ public:
 
     // <<< USER-DEFINED METHODS >>>
     void inherited__Inefficient(string person);
+    void inherited__Inefficient_usefulness_modify(string usefulness_new);
+    void inherited__Inefficient_complexity_modify(string complexity_new);
     void inherited(string person);
 };  // end of class
 
@@ -44,6 +55,8 @@ typedef std::unordered_map<string, RPerl__Algorithm__Inefficient_ptr>::iterator 
 
 // [[[ SUBROUTINES ]]]
 string RPerl__Algorithm__Inefficient__uninherited__Inefficient(string person);
+
+// <<< SHIM MACROS >>>
 #define uninherited__Inefficient(person) RPerl__Algorithm__Inefficient__uninherited__Inefficient(person)
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
@@ -60,3 +73,5 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # endif
 
 #endif
+
+// end of class
