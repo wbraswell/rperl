@@ -1,13 +1,5 @@
 DONE
-    Parser, fix false error triggered by RPerl debug statements
-    CPPOPS_CPPTYPES bug fix, program header line miscalculation
-    CPPOPS_CPPTYPES enable subroutines inside programs
-    CPPOPS_CPPTYPES execute via compiled copy not interpreted
-    CPPOPS_CPPTYPES enable double-quote characters w/in single-quoted and q-quoted strings
-    tests, allow single-line subroutines
-    create RPerl::eval_use()
-    split create_symtab_entries_and_accessors_mutators() out of INIT{}, optimize by adding missing skip entries in rperlnamespaces_generated.pm
-    Compiler, Fix Uncompile Bug, Find Dependencies Via Static Analysis Only & Disable Dynamic Analysis
+
 
 DOING
     Monolithic Modules, Fix Deps Warning
@@ -15,10 +7,11 @@ DOING
         START HERE: upgrade OO inheritance tests, fix monolith dep warnings, monolith tests
         START HERE: upgrade OO inheritance tests, fix monolith dep warnings, monolith tests
 
-    update CPPOPS_DUALTYPES files
+    update CPPOPS_DUALTYPES reference files
     REMOVE EXPLICIT PROPERTIES INHERITANCE, Generator.pm & Grammar.eyp
 
-    do not rearrange subs & methods in CPPOPS_CPPTYPES output code, as occurs w/ Bubble.pm
+    do not rearrange subs & methods in CPPOPS_CPPTYPES output code, as occurs w/ Bubble.pm, 
+        or is rearranging necessary due to division of subs & methods in Bubble.h output file?
 
     replace @_ with @ARG in system code
     'cannot' -> 'can not' in all docs & source files

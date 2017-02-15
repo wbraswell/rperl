@@ -1,5 +1,20 @@
 Revision history for Perl compiler RPerl.
 
+2.450000 2017-02-14 Codename Perseus
+
+    - HOLIDAY EDITION: Happy Saint Valentine's Day!
+    - OO Class Property Inheritance, Compatible With C++ Behavior
+    - Parser, Fix False Errors Triggered By RPerl Debug Statements
+    - CPPOPS_CPPTYPES Mode, Bug Fix, Program Header Line Miscalculation
+    - CPPOPS_CPPTYPES Mode, Bug Fix, Execute Via Compiled Copy (Not Interpreted Copy)
+    - CPPOPS_CPPTYPES Mode, Enable Subroutines Inside Programs
+    - CPPOPS_CPPTYPES Mode, Enable Double-Quote Characters Within Single-Quoted & q-Quoted Strings
+    - Tests, Allow Single-Line Subroutines
+    - Compiler, Create RPerl::eval_use()
+    - Compiler, Optimize By Adding Missing Skip Entries In rperlnamespaces_generated.pm,
+        Split create_symtab_entries_and_accessors_mutators() Out Of INIT{}, 
+    - Compiler, Fix Uncompile Bug, Find Dependencies Via Static Analysis Only & Disable Dynamic Analysis
+
 2.410000 2017-01-13
 
     - Bug Fix, Avoid False Failures Caused By Perl::Critic::Policy::Bangs::ProhibitBitwiseOperators
