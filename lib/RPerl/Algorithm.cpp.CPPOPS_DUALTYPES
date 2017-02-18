@@ -15,14 +15,6 @@ using std::cout;  using std::cerr;  using std::endl;
 
 // [[[ SUBROUTINES & OO METHODS ]]]
 
-
-
-// START HERE: continue converting manually-compiled ref files for t/10
-// START HERE: continue converting manually-compiled ref files for t/10
-// START HERE: continue converting manually-compiled ref files for t/10
-
-
-
 void RPerl__Algorithm::inherited__Algorithm(SV* person) {
     cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FNORD" << "\n";
 }

@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -220,7 +220,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 . ', dying' . "\n";
         }
 
-        RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), property 0, have $parent_package_names = ' . "\n" . Dumper($parent_package_names) . "\n" ) if (scalar @{$parent_package_names});
+#        RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), property 0, have $parent_package_names = ' . "\n" . Dumper($parent_package_names) . "\n" ) if (scalar @{$parent_package_names});
 
         # disallow name masking of inherited $properties, causes mismatching behavior in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES
         foreach my $parent_package_name (@{$parent_package_names}) {
@@ -325,7 +325,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                         . ', dying' . "\n";
                 }
 
-                RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), property ' . $i . ', have $parent_package_names = ' . "\n" . Dumper($parent_package_names) . "\n" ) if (scalar @{$parent_package_names});
+#                RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), property ' . $i . ', have $parent_package_names = ' . "\n" . Dumper($parent_package_names) . "\n" ) if (scalar @{$parent_package_names});
 
                 # disallow name masking of inherited $properties, causes mismatching behavior in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES
                 foreach my $parent_package_name (@{$parent_package_names}) {
@@ -650,7 +650,7 @@ EOL
                 . ', dying' . "\n";
         }
 
-        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $parent_package_names = ' . "\n" . Dumper($parent_package_names) . "\n" ) if (scalar @{$parent_package_names});
+#        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $parent_package_names = ' . "\n" . Dumper($parent_package_names) . "\n" ) if (scalar @{$parent_package_names});
 
         # disallow name masking of inherited $properties, causes mismatching behavior in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES
         foreach my $parent_package_name (@{$parent_package_names}) {
@@ -764,7 +764,7 @@ EOL
                     . ', dying' . "\n";
             }
 
-            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property ' . $i . ', have $parent_package_names = ' . "\n" . Dumper($parent_package_names) . "\n" ) if (scalar @{$parent_package_names});
+#            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property ' . $i . ', have $parent_package_names = ' . "\n" . Dumper($parent_package_names) . "\n" ) if (scalar @{$parent_package_names});
     
             # disallow name masking of inherited $properties, causes mismatching behavior in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES
             foreach my $parent_package_name (@{$parent_package_names}) {

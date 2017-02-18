@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.023_000;
+our $VERSION = 0.024_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -234,6 +234,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
             $modes->{_input_file_name} = $parent_file;
 
             # [[[ GENERATE PARENTS ]]]
+            $modes->{_symbol_table} = { _namespace => 'main::', _subroutine => q{} };  # initialize empty symbol table for each generate phase of each file
             if ( $ops eq 'PERL' ) {
                 $eval_return_value = eval { RPerl::Generator::ast_to_rperl__generate( $rperl_ast_parent, $modes ); };
 #                RPerl::diag( 'in 13_generate.t, have $ops = ' . $ops . ', $parent_file = ' . $parent_file . ', $eval_return_value = ' . Dumper($eval_return_value) );
@@ -345,6 +346,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
         $modes->{_input_file_name} = $test_file;
  
         # [[[ GENERATE ]]]
+        $modes->{_symbol_table} = { _namespace => 'main::', _subroutine => q{} };  # initialize empty symbol table for each generate phase of each file
         if ( $ops eq 'PERL' ) {
             $eval_return_value = eval { RPerl::Generator::ast_to_rperl__generate( $rperl_ast, $modes ); };
         }

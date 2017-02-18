@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -42,8 +42,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $semicolon = $self->{children}->[3];
         $rperl_source_group->{PMC} .= $my . q{ } . $type . q{ } . $symbol . $semicolon . "\n";
 
+#        RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
+#        RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), have $modes->{_symbol_table}->{_namespace} = ' . "\n" . Dumper($modes->{_symbol_table}->{_namespace}) . "\n" );
+#        RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), have $modes->{_symbol_table}->{_subroutine} = ' . "\n" . Dumper($modes->{_symbol_table}->{_subroutine}) . "\n" );
+
         # CREATE SYMBOL TABLE ENTRY
-        if (not exists $modes->{_symbol_table}) { $modes->{_symbol_table} = {}; }  # initialize symbol table if not already done
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
             die 'ERROR ECOGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
                 . $symbol
@@ -140,7 +143,6 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             }
 
             # CREATE SYMBOL TABLE ENTRY
-            if (not exists $modes->{_symbol_table}) { $modes->{_symbol_table} = {}; }  # initialize symbol table if not already done
             # in a *.pl program, you can have variables declared outside of any namespace, which means they are in the default 'main::' namespace AKA '::' using Perl rules
             if ((not exists $modes->{_symbol_table}->{_namespace}) or (not defined $modes->{_symbol_table}->{_namespace})) {
                 $modes->{_symbol_table}->{_namespace} = 'main::'; 

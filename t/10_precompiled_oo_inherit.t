@@ -156,7 +156,7 @@ my string $algorithm_pmc_filename_manual = $algorithm_pmc_filename . '.CPPOPS_DU
 
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-for my integer $mode_id ( 1 ) {    # TEMPORARY DEBUGGING xOPS_xTYPES ONLY
+for my integer $mode_id ( 0, 2 ) {    # TEMPORARY DEBUGGING xOPS_xTYPES ONLY
 
     # [[[ MODE SETUP ]]]
     #    RPerl::diag("in 10_precompiled_oo_inherit.t, top of for() loop, have \$mode_id = $mode_id\n");

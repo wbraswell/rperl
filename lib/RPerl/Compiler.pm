@@ -149,7 +149,7 @@ our string_arrayref $find_parents = sub {
                     ' in @INC, included from file ', q{'}, $file_name, q{'}, ', dying', "\n";
             }
 
-            RPerl::diag( 'in Compiler::find_parents(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
+#            RPerl::diag( 'in Compiler::find_parents(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
 
             my string $package_file_name_included_relative = post_processor__absolute_path_delete( $package_file_name_included );
             push @{$parents}, $package_file_name_included_relative;
