@@ -2,10 +2,10 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp 0.005_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp 0.010_000
 
 // [[[ INCLUDES ]]]
-#include "RPerl/Algorithm/Sort.h"  // -> (RPerl.cpp; Algorithm.cpp)
+#include "RPerl/Algorithm/Sort.h"
 
 # ifdef __PERL__TYPES
 
@@ -19,9 +19,19 @@ void RPerl__Algorithm__Sort::inherited__Sort(SV* person) {
     cout << "in CPPOPS_PERLTYPES Sort->inherited__Sort(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FISH\n";
 }
 
+SV* RPerl__Algorithm__Sort::inherited__Sort_foo_get() {
+    cout << "in CPPOPS_PERLTYPES Sort->inherited__Sort_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FISH\n";
+    return SvREFCNT_inc(this->foo);
+}
+
+void RPerl__Algorithm__Sort::inherited__Sort_foo_set(SV* foo_new) {
+    cout << "in CPPOPS_PERLTYPES Sort->inherited__Sort_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FISH\n";
+    this->foo = SvREFCNT_inc(foo_new);
+}
+
 SV* RPerl__Algorithm__Sort__uninherited__Sort(SV* person) {
     cout << "in CPPOPS_PERLTYPES Sort::uninherited__Sort(), received $person = " << SvPV_nolen(person) << ", MY\n";
-    return newSVpv("Sort::uninherited__Sort() RULES! CPPOPS_PERLTYPES", 0);
+    return SvREFCNT_inc(newSVpv("Sort::uninherited__Sort() RULES! CPPOPS_PERLTYPES", 0));
 }
 
 // [[[<<< END PERL TYPES >>>]]]
@@ -38,6 +48,16 @@ SV* RPerl__Algorithm__Sort__uninherited__Sort(SV* person) {
 
 void RPerl__Algorithm__Sort::inherited__Sort(string person) {
     RPerl__diag((const string) "in CPPOPS_CPPTYPES Sort->inherited__Sort(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FISH" + (const string) "\n");
+}
+
+string RPerl__Algorithm__Sort::inherited__Sort_foo_get() {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Sort->inherited__Sort_foo_get(), have ::class($self) = " + classname(this) + (const string) ", FISH" + (const string) "\n");
+    return this->foo;
+}
+
+void RPerl__Algorithm__Sort::inherited__Sort_foo_set(string foo_new) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Sort->inherited__Sort_foo_set(), have ::class($self) = " + classname(this) + (const string) " and $foo_new = " + foo_new + (const string) ", FISH" + (const string) "\n");
+    this->foo = foo_new;
 }
 
 string RPerl__Algorithm__Sort__uninherited__Sort(string person) {

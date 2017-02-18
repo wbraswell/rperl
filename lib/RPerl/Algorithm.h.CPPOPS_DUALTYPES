@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm_h
-#define __CPP__INCLUDED__RPerl__Algorithm_h 0.005_000
+#define __CPP__INCLUDED__RPerl__Algorithm_h 0.010_000
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
@@ -17,17 +17,27 @@ using std::cout;  using std::cerr;  using std::endl;
 // [[[ OO INHERITANCE ]]]
 class RPerl__Algorithm : public RPerl__CompileUnit__Module__Class__CPP {
 public:
+    // [[[ OO PROPERTIES ]]]
+    SV* foo = newSVpv("<<< DEFAULT, ALGORITHM >>>", 0);
+
     // [[[ OO METHODS ]]]
 
+    // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
+    SV* get_foo() { return SvREFCNT_inc(this->foo); }
+    void set_foo(SV* foo_new) { this->foo = SvREFCNT_inc(foo_new); }
+
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
-    RPerl__Algorithm() {}
+//    RPerl__Algorithm() {}
+    RPerl__Algorithm() { SvREFCNT_inc(this->foo); }
     ~RPerl__Algorithm() {}
 
     // <<< CLASS NAME REPORTER >>>
-    virtual SV* myclassname() { return newSVpv("RPerl::Algorithm", 0); }
+    virtual SV* myclassname() { return SvREFCNT_inc(newSVpv("RPerl::Algorithm", 0)); }
 
     // <<< USER-DEFINED METHODS >>>
     void inherited__Algorithm(SV* person);
+    SV* inherited__Algorithm_foo_get();
+    void inherited__Algorithm_foo_set(SV* foo_new);
 };  // end of class
 
 // [[[ OO SUBCLASSES ]]]
@@ -39,6 +49,8 @@ typedef std::unordered_map<string, RPerl__Algorithm_ptr>::iterator RPerl__Algori
 
 // [[[ SUBROUTINES ]]]
 SV* RPerl__Algorithm__uninherited__Algorithm(SV* person);
+
+// <<< SHIM MACROS >>>
 #define uninherited__Algorithm(person) RPerl__Algorithm__uninherited__Algorithm(person)
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
@@ -54,10 +66,23 @@ SV* RPerl__Algorithm__MODE_ID() { return newSViv(1); }  // CPPOPS_PERLTYPES is 1
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
+// [[[ CONSTANTS ]]]
+const string RPerl__Algorithm__TIME_BEST = (const string) "<<< UNKNOWN >>>";
+const string RPerl__Algorithm__TIME_AVERAGE = (const string) "<<< UNKNOWN >>>";
+const string RPerl__Algorithm__TIME_WORST = (const string) "<<< UNKNOWN >>>";
+const string RPerl__Algorithm__SPACE_WORST = (const string) "<<< UNKNOWN >>>";
+
 // [[[ OO INHERITANCE ]]]
 class RPerl__Algorithm : public RPerl__CompileUnit__Module__Class__CPP {
 public:
+    // [[[ OO PROPERTIES ]]]
+    string foo = "<<< DEFAULT, ALGORITHM >>>";
+
     // [[[ OO METHODS ]]]
+
+    // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
+    string get_foo() { return this->foo; }
+    void set_foo(string foo_new) { this->foo = foo_new; }
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm() {}
@@ -66,8 +91,16 @@ public:
     // <<< CLASS NAME REPORTER >>>
     virtual string myclassname() { return (const string) "RPerl::Algorithm"; }
 
+    // <<< CONSTANTS, SHIMS >>>
+    const string TIME_BEST() { return RPerl__Algorithm__TIME_BEST; }
+    const string TIME_AVERAGE() { return RPerl__Algorithm__TIME_AVERAGE; }
+    const string TIME_WORST() { return RPerl__Algorithm__TIME_WORST; }
+    const string SPACE_WORST() { return RPerl__Algorithm__SPACE_WORST; }
+
     // <<< USER-DEFINED METHODS >>>
     void inherited__Algorithm(string person);
+    string inherited__Algorithm_foo_get();
+    void inherited__Algorithm_foo_set(string foo_new);
 };  // end of class
 
 // [[[ OO SUBCLASSES ]]]
@@ -79,6 +112,8 @@ typedef std::unordered_map<string, RPerl__Algorithm_ptr>::iterator RPerl__Algori
 
 // [[[ SUBROUTINES ]]]
 string RPerl__Algorithm__uninherited__Algorithm(string person);
+
+// <<< SHIM MACROS >>>
 #define uninherited__Algorithm(person) RPerl__Algorithm__uninherited__Algorithm(person)
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>

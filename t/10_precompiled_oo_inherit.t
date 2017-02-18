@@ -1,11 +1,8 @@
 #!/usr/bin/perl
 
-# START HERE: fix bugs...
-# START HERE: fix bugs...
-# START HERE: fix bugs...
-
-# NEED FIX: Use of uninitialized value $type in hash element at (eval 1630) line 30. ...etc
-# NEED FIX: Subroutine RPerl::Algorithm::inherited__Algorithm redefined at /usr/lib/perl/5.18/DynaLoader.pm line 207. ...etc
+# NEED FIX: various bugs, including...
+# Subroutine RPerl::Algorithm::inherited__Algorithm redefined at /usr/lib/perl/5.18/DynaLoader.pm line 207.
+# Constant subroutine RPerl::Algorithm::TIME_BEST redefined at /usr/lib/x86_64-linux-gnu/perl/5.22/DynaLoader.pm line 210.
 
 # [[[ PRE-HEADER ]]]
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s),
@@ -88,21 +85,10 @@ BEGIN {
         }
     }
 
-
-
-
     # DEV NOTE, CORRELATION #rp015: suppress 'Too late to run INIT block' at run-time loading via require or eval
     lives_and( sub { require_ok('RPerl::Algorithm::Sort::Bubble'); }, q{require_ok('RPerl::Algorithm::Sort::Bubble') lives} );
     lives_and( sub { require_ok('RPerl::Algorithm::Inefficient'); },  q{require_ok('RPerl::Algorithm::Inefficient') lives} );
 }
-
-
-
-
-
-
-
-
 
 my string $bubble_pm_filename      = 'RPerl/Algorithm/Sort/Bubble.pm';
 my string $sort_pm_filename        = 'RPerl/Algorithm/Sort.pm';
@@ -154,9 +140,16 @@ my string $algorithm_pmc_filename_manual = $algorithm_pmc_filename . '.CPPOPS_DU
 # [[[ PRIMARY RUNLOOP ]]]
 # [[[ PRIMARY RUNLOOP ]]]
 
+
+
+# START HERE: figure out why Inefficient is dying in PERLOPS_PERLTYPES only when all 3 modes are enabled
+# START HERE: figure out why Inefficient is dying in PERLOPS_PERLTYPES only when all 3 modes are enabled
+# START HERE: figure out why Inefficient is dying in PERLOPS_PERLTYPES only when all 3 modes are enabled
+
+
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
-#foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-for my integer $mode_id ( 0, 2 ) {    # TEMPORARY DEBUGGING xOPS_xTYPES ONLY
+foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
+#for my integer $mode_id ( 1 ) {    # TEMPORARY DEBUGGING xOPS_xTYPES ONLY
 
     # [[[ MODE SETUP ]]]
     #    RPerl::diag("in 10_precompiled_oo_inherit.t, top of for() loop, have \$mode_id = $mode_id\n");

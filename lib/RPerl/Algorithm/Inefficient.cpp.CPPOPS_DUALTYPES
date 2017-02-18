@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 0.005_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 0.011_000
 
 // [[[ INCLUDES ]]]
 #include "RPerl/Algorithm/Inefficient.h"
@@ -19,13 +19,33 @@ void RPerl__Algorithm__Inefficient::inherited__Inefficient(SV* person) {
     cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FLUFFY" << "\n";
 }
 
+SV* RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_get() {
+    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient_bar_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FLUFFY" << "\n";
+    return SvREFCNT_inc(this->bar);
+}
+
+void RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_set(SV* bar_new) {
+    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient_bar_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $bar_new = " << SvPV_nolen(bar_new) << ", FLUFFY" << "\n";
+    this->bar = SvREFCNT_inc(bar_new);
+}
+
+SV* RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_get() {
+    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FLUFFY" << "\n";
+    return SvREFCNT_inc(this->foo);
+}
+
+void RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_set(SV* foo_new) {
+    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FLUFFY" << "\n";
+    this->foo = SvREFCNT_inc(foo_new);
+}
+
 void RPerl__Algorithm__Inefficient::inherited(SV* person) {
     cout << "in CPPOPS_PERLTYPES Inefficient->inherited(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", INCOMPATIBLE" << "\n";
 }
 
 SV* RPerl__Algorithm__Inefficient__uninherited__Inefficient(SV* person) {
     cout << "in CPPOPS_PERLTYPES Inefficient::uninherited__Inefficient(), received $person = " << SvPV_nolen(person) << ", MESSY" << "\n";
-    return newSVpv("Inefficient::uninherited__Inefficient() RULES! CPPOPS_PERLTYPES", 0);
+    return SvREFCNT_inc(newSVpv("Inefficient::uninherited__Inefficient() RULES! CPPOPS_PERLTYPES", 0));
 }
 
 // [[[<<< END PERL TYPES >>>]]]
@@ -42,6 +62,26 @@ SV* RPerl__Algorithm__Inefficient__uninherited__Inefficient(SV* person) {
 
 void RPerl__Algorithm__Inefficient::inherited__Inefficient(string person) {
     RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FLUFFY" + (const string) "\n");
+}
+
+string RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_get() {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient_bar_get(), have ::class($self) = " + classname(this) + (const string) ", FLUFFY" + (const string) "\n");
+    return this->bar;
+}
+
+void RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_set(string bar_new) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient_bar_set(), have ::class($self) = " + classname(this) + (const string) " and $bar_new = " + bar_new + (const string) ", FLUFFY" + (const string) "\n");
+    this->bar = bar_new;
+}
+
+string RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_get() {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient_foo_get(), have ::class($self) = " + classname(this) + (const string) ", FLUFFY" + (const string) "\n");
+    return this->foo;
+}
+
+void RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_set(string foo_new) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient_foo_set(), have ::class($self) = " + classname(this) + (const string) " and $foo_new = " + foo_new + (const string) ", FLUFFY" + (const string) "\n");
+    this->foo = foo_new;
 }
 
 void RPerl__Algorithm__Inefficient::inherited(string person) {

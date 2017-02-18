@@ -21,17 +21,17 @@ void RPerl__Algorithm::inherited__Algorithm(SV* person) {
 
 SV* RPerl__Algorithm::inherited__Algorithm_foo_get() {
     cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FNORD" << "\n";
-    return this->foo;
+    return SvREFCNT_inc(this->foo);
 }
 
 void RPerl__Algorithm::inherited__Algorithm_foo_set(SV* foo_new) {
     cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FNORD" << "\n";
-    this->foo = foo_new;
+    this->foo = SvREFCNT_inc(foo_new);
 }
 
 SV* RPerl__Algorithm__uninherited__Algorithm(SV* person) {
     cout << "in CPPOPS_PERLTYPES Algorithm::uninherited__Algorithm(), received $person = " << SvPV_nolen(person) << ", MYSTIC" << "\n";
-    return newSVpv("Algorithm::uninherited__Algorithm() RULES! CPPOPS_PERLTYPES", 0);
+    return SvREFCNT_inc(newSVpv("Algorithm::uninherited__Algorithm() RULES! CPPOPS_PERLTYPES", 0));
 }
 
 // [[[<<< END PERL TYPES >>>]]]
