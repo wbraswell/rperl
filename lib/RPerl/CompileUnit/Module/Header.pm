@@ -43,10 +43,31 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my string $our_keyword              = $self->{children}->[5]->{children}->[3];    # PERLOPS only
     my string $version_number           = $self->{children}->[5]->{children}->[4];
 
+
+
+
+
+    # REALLY START HERE: create $modes->{_symbol_table}->{_subroutine} in PERLOPS_PERLTYPES, go back to search & complete all normal $modes->{_symbol_table} entries
+    # REALLY START HERE: create $modes->{_symbol_table}->{_subroutine} in PERLOPS_PERLTYPES, go back to search & complete all normal $modes->{_symbol_table} entries
+    # REALLY START HERE: create $modes->{_symbol_table}->{_subroutine} in PERLOPS_PERLTYPES, go back to search & complete all normal $modes->{_symbol_table} entries
+
+
+    # CREATE SYMBOL TABLE ENTRY
     if ((substr $package_name, 0, 1) eq '_') {
         die 'ERROR ECOGEASRP07, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: package name ' . ($package_name)
                 . ' must not start with underscore, dying' . "\n";
     }
+    
+    $modes->{_symbol_table}->{_namespace} = $package_name . '::';  # set current namespace
+    
+#    RPerl::diag( 'in Header->ast_to_cpp__generate_begin__PERLOPS_PERLTYPES(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
+
+
+
+
+
+
+
 
     $rperl_source_group->{PMC} = q{};
     if ( ( exists $critic_optional->{children}->[0] ) and ( defined $critic_optional->{children}->[0] ) ) {
@@ -104,6 +125,7 @@ our string_hashref::method $ast_to_cpp__generate_begin__CPPOPS_CPPTYPES = sub {
     my object $package_name   = $self->{children}->[3]->{children}->[0];
     my string $version_number = $self->{children}->[5]->{children}->[4];
 
+    # CREATE SYMBOL TABLE ENTRY
     if ((substr $package_name, 0, 1) eq '_') {
         die 'ERROR ECOGEASCP07, CODE GENERATOR, ABSTRACT SYNTAX TO C++: package name ' . ($package_name)
                 . ' must not start with underscore, dying' . "\n";

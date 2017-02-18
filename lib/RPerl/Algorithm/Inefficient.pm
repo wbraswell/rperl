@@ -3,7 +3,7 @@ package RPerl::Algorithm::Inefficient;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_200;
+our $VERSION = 0.011_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Algorithm);
@@ -12,9 +12,15 @@ use RPerl::Algorithm;
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+
+# [[[ CONSTANTS ]]]
+use constant USEFULNESS => my string $TYPED_USEFULNESS = '<<< UNKNOWN >>>';
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = { usefulness => my string $TYPED_usefulness = undef };
+our hashref $properties = {
+    bar => my string $TYPED_bar = '<<< DEFAULT, INEFFICIENT >>>'
+};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
@@ -25,16 +31,28 @@ our void::method $inherited__Inefficient = sub {
     RPerl::diag( 'in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FLUFFY' . "\n" );
 };
 
-our void::method $inherited__Inefficient_usefulness_modify = sub {
-    ( my RPerl::Algorithm::Inefficient $self, my string $usefulness_new ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient_usefulness_modify(), have ::class($self) = ' . ::class($self) . ' and $usefulness_new = ' . $usefulness_new . ', FLUFFY' . "\n" );
-    $self->{usefulness} = $usefulness_new;
+our string::method $inherited__Inefficient_bar_get = sub {
+    ( my RPerl::Algorithm::Inefficient $self ) = @ARG;
+    RPerl::diag( 'in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient_bar_get(), have ::class($self) = ' . ::class($self) . ', FLUFFY' . "\n" );
+    return $self->{bar};
 };
 
-our void::method $inherited__Inefficient_complexity_modify = sub {
-    ( my RPerl::Algorithm::Inefficient $self, my string $complexity_new ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient_complexity_modify(), have ::class($self) = ' . ::class($self) . ' and $complexity_new = ' . $complexity_new . ', FLUFFY' . "\n" );
-    $self->{complexity} = $complexity_new;
+our void::method $inherited__Inefficient_bar_set = sub {
+    ( my RPerl::Algorithm::Inefficient $self, my string $bar_new ) = @ARG;
+    RPerl::diag( 'in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient_bar_set(), have ::class($self) = ' . ::class($self) . ' and $bar_new = ' . $bar_new . ', FLUFFY' . "\n" );
+    $self->{bar} = $bar_new;
+};
+
+our string::method $inherited__Inefficient_foo_get = sub {
+    ( my RPerl::Algorithm::Inefficient $self ) = @ARG;
+    RPerl::diag( 'in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient_foo_get(), have ::class($self) = ' . ::class($self) . ', FLUFFY' . "\n" );
+    return $self->{foo};
+};
+
+our void::method $inherited__Inefficient_foo_set = sub {
+    ( my RPerl::Algorithm::Inefficient $self, my string $foo_new ) = @ARG;
+    RPerl::diag( 'in PERLOPS_PERLTYPES Inefficient->inherited__Inefficient_foo_set(), have ::class($self) = ' . ::class($self) . ' and $foo_new = ' . $foo_new . ', FLUFFY' . "\n" );
+    $self->{foo} = $foo_new;
 };
 
 our void::method $inherited = sub {

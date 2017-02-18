@@ -232,20 +232,35 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
             my object $rperl_ast_parent = $eval_return_value;
 
             $modes->{_input_file_name} = $parent_file;
-     
+
             # [[[ GENERATE PARENTS ]]]
             if ( $ops eq 'PERL' ) {
                 $eval_return_value = eval { RPerl::Generator::ast_to_rperl__generate( $rperl_ast_parent, $modes ); };
+#                RPerl::diag( 'in 13_generate.t, have $ops = ' . $ops . ', $parent_file = ' . $parent_file . ', $eval_return_value = ' . Dumper($eval_return_value) );
             }
             else {    # $ops eq 'CPP'
                 $eval_return_value = eval { RPerl::Generator::ast_to_cpp__generate( $rperl_ast_parent, $modes ); };
+#                RPerl::diag( 'in 13_generate.t, have $ops = ' . $ops . ', $parent_file = ' . $parent_file . ', $eval_return_value = ' . Dumper($eval_return_value) );
             }
+#            RPerl::diag( 'in 13_generate.t, have $ops = ' . $ops . ', $modes = ' . Dumper($modes) );
+#            RPerl::diag( 'in 13_generate.t, have $ops = ' . $ops . ', $modes->{_symbol_table} = ' . Dumper($modes->{_symbol_table}) );
         }
+
+
+
+
+# START HERE: build symbol table in PERLOPS_PERLTYPES, ensure `perl t/13_generate.t lib/RPerl/Test/Properties/Class_01_Bad_00.pm` works in PERLOPS_PERLTYPES, continue converting manually-compiled ref files for t/10
+# START HERE: build symbol table in PERLOPS_PERLTYPES, ensure `perl t/13_generate.t lib/RPerl/Test/Properties/Class_01_Bad_00.pm` works in PERLOPS_PERLTYPES, continue converting manually-compiled ref files for t/10
+# START HERE: build symbol table in PERLOPS_PERLTYPES, ensure `perl t/13_generate.t lib/RPerl/Test/Properties/Class_01_Bad_00.pm` works in PERLOPS_PERLTYPES, continue converting manually-compiled ref files for t/10
+
+
+
 
         # DEV NOTE: do not actually follow or compile dependencies;
         # find RPerl system deps such as 'use rperlsse;', 'use rperlgmp;', etc.;
         # ignore return value, here we only care about $modes->{_enable_sse}, $modes->{_enable_gmp}, etc.;
 #        find_dependencies( $test_file, 0, $modes );  # second argument set to 0 for false value of $find_subdependencies_recurse
+#        find_dependencies( $test_file, 1, $modes );
 
         $output_file_name_groups_tmp = generate_output_file_names( [$test_file], [], 1, $modes );
         $output_file_name_group = $output_file_name_groups_tmp->[0];

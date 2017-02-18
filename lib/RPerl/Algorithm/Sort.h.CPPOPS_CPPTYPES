@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort_h 0.006_200
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort_h 0.010_000
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
@@ -24,8 +24,8 @@ public:
     // [[[ OO METHODS ]]]
 
     // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
-    string get_complexity() { return this->complexity; }
-    void set_complexity(string complexity_new) { this->complexity = complexity_new; }
+    string get_foo() { return this->foo; }
+    void set_foo(string foo_new) { this->foo = foo_new; }
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm__Sort() {}
@@ -36,7 +36,8 @@ public:
 
     // <<< USER-DEFINED METHODS >>>
     void inherited__Sort(string person);
-    void inherited__Sort_complexity_modify(string complexity_new);
+    string inherited__Sort_foo_get();
+    void inherited__Sort_foo_set(string foo_new);
 };  // end of class
 
 // [[[ OO SUBCLASSES ]]]

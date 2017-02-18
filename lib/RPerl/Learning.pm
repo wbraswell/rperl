@@ -11818,7 +11818,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+    ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $variable_symbol
                 . ' already declared in this scope, namespace '
                 . $modes->{_symbol_table}->{_namespace}
@@ -11836,7 +11836,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
+    ERROR ECOGEASCP13, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
 
 =for rperl X</noncode>
 
@@ -17531,7 +17531,7 @@ The following example shows multiple instances of the loop iterator variable C<$
     # do stuff outside loops, using $i; causes error in second loop below
     my integer $i = 100;
 
-    # ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: 
+    # ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: 
     # variable i already declared in this scope, namespace main::, subroutine/method main(), dying
     for my integer $i ( 20 .. 30 ) {
         # do stuff inside second loop,
@@ -18224,7 +18224,7 @@ However, when we try to compile the source code, we experience an error:
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
+    ERROR ECOGEASCP13, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
 
 =for rperl X</noncode>
 

@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.008_100
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_cpp 0.010_000
 
 // [[[ INCLUDES ]]]
 #include "RPerl/Algorithm/Sort/Bubble.h"
@@ -31,9 +31,14 @@ void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(string person) {
     RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited__Bubble(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FRIED" + (const string) "\n");
 }
 
-void RPerl__Algorithm__Sort__Bubble::inherited__Bubble_complexity_modify(string complexity_new) {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited__Bubble_complexity_modify(), have ::class($self) = " + classname(this) + (const string) " and $complexity_new = " + complexity_new + (const string) ", FRIED" + (const string) "\n");
-    this->complexity = complexity_new;
+string RPerl__Algorithm__Sort__Bubble::inherited__Bubble_foo_get() {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited__Bubble_foo_get(), have ::class($self) = " + classname(this) + (const string) ", FRIED" + (const string) "\n");
+    return this->foo;
+}
+
+void RPerl__Algorithm__Sort__Bubble::inherited__Bubble_foo_set(string foo_new) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited__Bubble_foo_set(), have ::class($self) = " + classname(this) + (const string) " and $foo_new = " + foo_new + (const string) ", FRIED" + (const string) "\n");
+    this->foo = foo_new;
 }
 
 void RPerl__Algorithm__Sort__Bubble::inherited(string person) {

@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm_h
-#define __CPP__INCLUDED__RPerl__Algorithm_h 0.006_200
+#define __CPP__INCLUDED__RPerl__Algorithm_h 0.010_000
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
@@ -18,17 +18,23 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
+// [[[ CONSTANTS ]]]
+const string RPerl__Algorithm__TIME_BEST = (const string) "<<< UNKNOWN >>>";
+const string RPerl__Algorithm__TIME_AVERAGE = (const string) "<<< UNKNOWN >>>";
+const string RPerl__Algorithm__TIME_WORST = (const string) "<<< UNKNOWN >>>";
+const string RPerl__Algorithm__SPACE_WORST = (const string) "<<< UNKNOWN >>>";
+
 // [[[ OO INHERITANCE ]]]
 class RPerl__Algorithm : public RPerl__CompileUnit__Module__Class__CPP {
 public:
     // [[[ OO PROPERTIES ]]]
-    string complexity;
+    string foo = "<<< DEFAULT, ALGORITHM >>>";
 
     // [[[ OO METHODS ]]]
 
     // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
-    string get_complexity() { return this->complexity; }
-    void set_complexity(string complexity_new) { this->complexity = complexity_new; }
+    string get_foo() { return this->foo; }
+    void set_foo(string foo_new) { this->foo = foo_new; }
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm() {}
@@ -37,9 +43,16 @@ public:
     // <<< CLASS NAME REPORTER >>>
     virtual string myclassname() { return (const string) "RPerl::Algorithm"; }
 
+    // <<< CONSTANTS, SHIMS >>>
+    const string TIME_BEST() { return RPerl__Algorithm__TIME_BEST; }
+    const string TIME_AVERAGE() { return RPerl__Algorithm__TIME_AVERAGE; }
+    const string TIME_WORST() { return RPerl__Algorithm__TIME_WORST; }
+    const string SPACE_WORST() { return RPerl__Algorithm__SPACE_WORST; }
+
     // <<< USER-DEFINED METHODS >>>
     void inherited__Algorithm(string person);
-    void inherited__Algorithm_complexity_modify(string complexity_new);
+    string inherited__Algorithm_foo_get();
+    void inherited__Algorithm_foo_set(string foo_new);
 };  // end of class
 
 // [[[ OO SUBCLASSES ]]]

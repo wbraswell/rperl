@@ -131,7 +131,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 	$cpp_source_group->{CPP} .= q{)} . $right_paren;
     }
     elsif ( $operator_named_class eq 'OperatorVoid_123' ) {    # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP13b, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP14b, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
                 . $operator_named->{children}->[0]
                 . ' does not accept multiple arguments, dying' )
             . "\n";

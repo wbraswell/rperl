@@ -2,10 +2,10 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm_cpp 0.005_000
+#define __CPP__INCLUDED__RPerl__Algorithm_cpp 0.010_000
 
 // [[[ INCLUDES ]]]
-#include <RPerl/Algorithm.h>  // -> (RPerl.cpp; Class.cpp)
+#include "RPerl/Algorithm.h"
 
 # ifdef __PERL__TYPES
 
@@ -17,6 +17,16 @@ using std::cout;  using std::cerr;  using std::endl;
 
 void RPerl__Algorithm::inherited__Algorithm(SV* person) {
     cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FNORD" << "\n";
+}
+
+SV* RPerl__Algorithm::inherited__Algorithm_foo_get() {
+    cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FNORD" << "\n";
+    return this->foo;
+}
+
+void RPerl__Algorithm::inherited__Algorithm_foo_set(SV* foo_new) {
+    cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FNORD" << "\n";
+    this->foo = foo_new;
 }
 
 SV* RPerl__Algorithm__uninherited__Algorithm(SV* person) {
@@ -40,6 +50,16 @@ void RPerl__Algorithm::inherited__Algorithm(string person) {
     RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm->inherited__Algorithm(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FNORD" + (const string) "\n");
 }
 
+string RPerl__Algorithm::inherited__Algorithm_foo_get() {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm->inherited__Algorithm_foo_get(), have ::class($self) = " + classname(this) + (const string) ", FNORD" + (const string) "\n");
+    return this->foo;
+}
+
+void RPerl__Algorithm::inherited__Algorithm_foo_set(string foo_new) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm->inherited__Algorithm_foo_set(), have ::class($self) = " + classname(this) + (const string) " and $foo_new = " + foo_new + (const string) ", FNORD" + (const string) "\n");
+    this->foo = foo_new;
+}
+
 string RPerl__Algorithm__uninherited__Algorithm(string person) {
     RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm::uninherited__Algorithm(), received $person = " + person + (const string) ", MYSTIC" + (const string) "\n");
     return (const string) "Algorithm::uninherited__Algorithm() RULES! CPPOPS_CPPTYPES";
@@ -56,3 +76,5 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # endif
 
 #endif
+
+// end of class

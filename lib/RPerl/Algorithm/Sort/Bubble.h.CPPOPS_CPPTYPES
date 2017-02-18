@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.008_100
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.010_000
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
@@ -18,26 +18,28 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 // [[[<<< BEGIN CPP TYPES >>>]]]
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
+// [[[ CONSTANTS ]]]
+const string RPerl__Algorithm__Sort__Bubble__TIME_BEST = (const string) "O($n)";
+const string RPerl__Algorithm__Sort__Bubble__TIME_AVERAGE = (const string) "O($n ** 2)";
+const string RPerl__Algorithm__Sort__Bubble__TIME_WORST = (const string) "O($n ** 2)";
+const string RPerl__Algorithm__Sort__Bubble__SPACE_WORST = (const string) "O(1)";
+
 // [[[ OO INHERITANCE ]]]
 class RPerl__Algorithm__Sort__Bubble : public RPerl__Algorithm__Sort {
 public:
     // [[[ OO PROPERTIES ]]]
-    string complexity = "O($n ** 2)";
-    string usefulness = "simple educational example";
     integer_arrayref integer_data;
     number_arrayref number_data;
 
     // [[[ OO METHODS ]]]
 
     // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
-    string get_complexity() { return this->complexity; }
-    void set_complexity(string complexity_new) { this->complexity = complexity_new; }
-    string get_usefulness() { return this->usefulness; }
-    void set_usefulness(string usefulness_new) { this->usefulness = usefulness_new; }
     integer_arrayref get_integer_data() { return this->integer_data; }
     void set_integer_data(integer_arrayref integer_data_new) { this->integer_data = integer_data_new; }
     number_arrayref get_number_data() { return this->number_data; }
     void set_number_data(number_arrayref number_data_new) { this->number_data = number_data_new; }
+    string get_foo() { return this->foo; }
+    void set_foo(string foo_new) { this->foo = foo_new; }
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm__Sort__Bubble() {}
@@ -46,11 +48,18 @@ public:
     // <<< CLASS NAME REPORTER >>>
     virtual string myclassname() { return (const string) "RPerl::Algorithm::Sort::Bubble"; }
 
+    // <<< CONSTANTS, SHIMS >>>
+    const string TIME_BEST() { return RPerl__Algorithm__Sort__Bubble__TIME_BEST; }
+    const string TIME_AVERAGE() { return RPerl__Algorithm__Sort__Bubble__TIME_AVERAGE; }
+    const string TIME_WORST() { return RPerl__Algorithm__Sort__Bubble__TIME_WORST; }
+    const string SPACE_WORST() { return RPerl__Algorithm__Sort__Bubble__SPACE_WORST; }
+
     // <<< USER-DEFINED METHODS >>>
     void integer_sort();
     void number_sort();
     void inherited__Bubble(string person);
-    void inherited__Bubble_complexity_modify(string complexity_new);
+    string inherited__Bubble_foo_get();
+    void inherited__Bubble_foo_set(string foo_new);
     void inherited(string person);
 };  // end of class
 

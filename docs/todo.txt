@@ -2,13 +2,13 @@ DONE
 
 
 DOING
-    Monolithic Modules, Fix Deps Warning
-        START HERE: upgrade OO inheritance tests, fix monolith dep warnings, monolith tests
-        START HERE: upgrade OO inheritance tests, fix monolith dep warnings, monolith tests
-        START HERE: upgrade OO inheritance tests, fix monolith dep warnings, monolith tests
+    START HERE: disallow name masking??? upgrade OO inheritance tests
+    Monolithic Modules, Fix Deps Warning & Create Tests
 
+    update tests to emit more useful failure info, for CPAN testers debugging
     update CPPOPS_DUALTYPES reference files
-    REMOVE EXPLICIT PROPERTIES INHERITANCE, Generator.pm & Grammar.eyp
+    remove explicit properties inheritance, Generator.pm & Grammar.eyp
+    OO class properties, detect user-defined init() subroutine & call from C++ constructor 
 
     do not rearrange subs & methods in CPPOPS_CPPTYPES output code, as occurs w/ Bubble.pm, 
         or is rearranging necessary due to division of subs & methods in Bubble.h output file?
@@ -108,7 +108,7 @@ LEARNING RPERL
     docbook2pdf segfault
     sgml table cell padding
     foreword
-    chapters 2 - 17
+    chapters 5 - 17
     illustrations: images & ASCII art
     covers
     publish
@@ -336,7 +336,7 @@ ERROR CODES
     RPerl::CompileUnit::Module::Class (global base class) needs error codes added for all croak() or die() statements
 
 GRAMMAR
-    remove 'undef' from all possible locations in grammar for C++ compatibility
+    undef values, either remove from all possible locations in grammar for C++ compatibility, OR enable in C++ by special strings, numeric values, etc.
     fix 'x' string repeat operator vs 'x' string or bareword hash key, already fixed???
     decide if we will allow '#!/usr/bin/env perl' as a SHEBANG, or only allow '#!/usr/bin/perl' style and allow EU::MM to mangle shebang on install?
         https://perlbrew.pl/Dealing-with-shebangs.html

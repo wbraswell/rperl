@@ -41,6 +41,31 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $symbol    = $self->{children}->[2];
         my string $semicolon = $self->{children}->[3];
         $rperl_source_group->{PMC} .= $my . q{ } . $type . q{ } . $symbol . $semicolon . "\n";
+
+
+
+
+
+        # CREATE SYMBOL TABLE ENTRY
+        if (not exists $modes->{_symbol_table}) { $modes->{_symbol_table} = {}; }  # initialize symbol table if not already done
+        if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
+            die 'ERROR ECOGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
+                . $symbol
+                . ' already declared in this scope, namespace '
+                . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
+                . ', subroutine/method '
+                . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
+                . ', dying' . "\n";
+        }
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
+            = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
+
+
+
+
+
+
+
     }
     elsif ( $self_class eq 'VariableDeclaration_183' ) {    # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExpIn
         my string $my                                = $self->{children}->[0];
@@ -125,6 +150,51 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 }
             }
 
+
+
+
+
+
+
+
+            # CREATE SYMBOL TABLE ENTRY
+            if (not exists $modes->{_symbol_table}) { $modes->{_symbol_table} = {}; }  # initialize symbol table if not already done
+            # in a *.pl program, you can have variables declared outside of any namespace, which means they are in the default 'main::' namespace AKA '::' using Perl rules
+            if ((not exists $modes->{_symbol_table}->{_namespace}) or (not defined $modes->{_symbol_table}->{_namespace})) {
+                $modes->{_symbol_table}->{_namespace} = 'main::'; 
+            }
+
+            # in a *.pl program, you can have variables declared outside of any subroutine, which means they are in the default 'main()' subroutine using C++ rules
+            if ((not exists $modes->{_symbol_table}->{_subroutine}) or (not defined $modes->{_symbol_table}->{_subroutine})) {
+                $modes->{_symbol_table}->{_subroutine} = 'main'; 
+            }
+
+#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__PERLOPS_PERLTYPES(), have $symbol = ' . $symbol . "\n");
+#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__PERLOPS_PERLTYPES(), have $modes->{_symbol_table} = ' . Dumper($modes->{_symbol_table}) . "\n");
+#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__PERLOPS_PERLTYPES(), have $modes->{_symbol_table}->{_namespace} = ' . $modes->{_symbol_table}->{_namespace} . "\n");
+#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__PERLOPS_PERLTYPES(), have $modes->{_symbol_table}->{_subroutine} = ' . $modes->{_symbol_table}->{_subroutine} . "\n");
+
+            if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
+                die 'ERROR ECOGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
+                    . $symbol
+                    . ' already declared in this scope, namespace '
+                    . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
+                    . ', subroutine/method '
+                    . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
+                    . ', dying' . "\n";
+            }
+            $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
+                = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
+
+
+
+
+
+
+
+
+
+
             $rperl_source_subgroup = $opnamed_or_subexp_or_input_scolon->{children}->[0]->ast_to_rperl__generate($modes);    # subexpression
             RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
             $rperl_source_group->{PMC} .= $opnamed_or_subexp_or_input_scolon->{children}->[1];                               # semicolon
@@ -149,6 +219,31 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $undef              = $self->{children}->[7];
         my string $semicolon          = $self->{children}->[8];
 
+
+
+
+
+
+
+        # CREATE SYMBOL TABLE ENTRY
+        if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
+            die 'ERROR ECOGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
+                . $symbol
+                . ' already declared in this scope, namespace '
+                . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
+                . ', subroutine/method '
+                . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
+                . ', dying' . "\n";
+        }
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
+            = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
+
+
+
+
+
+
+
         $rperl_source_group->{PMC} .= $my . q{ } . $type . q{ } . $symbol . $arrow_left_bracket . q{ };
         $rperl_source_subgroup = $subexpression->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
@@ -159,6 +254,34 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $type_fhref   = $self->{children}->[1];
         my string $symbol_fhref = $self->{children}->[2];
         my string $semicolon    = $self->{children}->[3];
+
+
+
+
+
+
+
+
+        # CREATE SYMBOL TABLE ENTRY
+        if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref} ) {
+            die 'ERROR ECOGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
+                . $symbol
+                . ' already declared in this scope, namespace '
+                . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
+                . ', subroutine/method '
+                . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
+                . ', dying' . "\n";
+        }
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref}
+            = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type_fhref };
+
+
+
+
+
+
+
+
         $rperl_source_group->{PMC} .= $my . q{ } . $type_fhref . q{ } . $symbol_fhref . $semicolon . "\n";
     }
     else {
@@ -198,14 +321,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string $symbol = $self->{children}->[2];
         substr $symbol, 0, 1, q{};                       # remove leading $ sigil
 
+        # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
-            die 'ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+            die 'ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $symbol
                 . ' already declared in this scope, namespace '
-                . $modes->{_symbol_table}->{_namespace}
+                . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
-                . $modes->{_symbol_table}->{_subroutine}
-                . '(), dying' . "\n";
+                . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
+                . ', dying' . "\n";
         }
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
@@ -298,6 +422,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 }
             }
 
+            # CREATE SYMBOL TABLE ENTRY
             # in a *.pl program, you can have variables declared outside of any namespace, which means they are in the default 'main::' namespace AKA '::' using Perl rules
             if ((not exists $modes->{_symbol_table}->{_namespace}) or (not defined $modes->{_symbol_table}->{_namespace})) {
                 $modes->{_symbol_table}->{_namespace} = 'main::'; 
@@ -314,13 +439,13 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{_subroutine} = ' . $modes->{_symbol_table}->{_subroutine} . "\n");
 
             if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
-                die 'ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                 die 'ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                     . $symbol
                     . ' already declared in this scope, namespace '
-                    . $modes->{_symbol_table}->{_namespace}
+                    . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                     . ', subroutine/method '
-                    . $modes->{_symbol_table}->{_subroutine}
-                    . '(), dying' . "\n";
+                    . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
+                    . ', dying' . "\n";
             }
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
                 = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
@@ -436,14 +561,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
 #        RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subexpression = ' . RPerl::Parser::rperl_ast__dump($subexpression) . "\n" );
 
+        # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
-            die 'ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+            die 'ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $symbol
                 . ' already declared in this scope, namespace '
-                . $modes->{_symbol_table}->{_namespace}
+                . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
-                . $modes->{_symbol_table}->{_subroutine}
-                . '(), dying' . "\n";
+                . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
+                . ', dying' . "\n";
         }
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
@@ -471,14 +597,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string $symbol_fhref = $self->{children}->[2];
         substr $symbol_fhref, 0, 1, q{};                       # remove leading $ sigil
 
+        # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref} ) {
-            die 'ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
-                . $symbol_fhref
+            die 'ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+                . $symbol
                 . ' already declared in this scope, namespace '
-                . $modes->{_symbol_table}->{_namespace}
+                . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
-                . $modes->{_symbol_table}->{_subroutine}
-                . '(), dying' . "\n";
+                . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
+                . ', dying' . "\n";
         }
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type_fhref };

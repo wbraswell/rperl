@@ -3,7 +3,7 @@ package RPerl::Algorithm;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_200;
+our $VERSION = 0.010_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);    # no non-system inheritance, only inherit from base class
@@ -12,9 +12,16 @@ use RPerl::CompileUnit::Module::Class;
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(ProhibitConstantPragma ProhibitMagicNumbers)  # USER DEFAULT 3: allow constants
+
+# [[[ CONSTANTS ]]]
+use constant TIME_BEST    => my string $TYPED_TIME_BEST    = '<<< UNKNOWN >>>';
+use constant TIME_AVERAGE => my string $TYPED_TIME_AVERAGE = '<<< UNKNOWN >>>';
+use constant TIME_WORST   => my string $TYPED_TIME_WORST   = '<<< UNKNOWN >>>';
+use constant SPACE_WORST  => my string $TYPED_SPACE_WORST  = '<<< UNKNOWN >>>';
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = { complexity => my string $TYPED_complexity = undef };
+our hashref $properties = { foo => my string $TYPED_foo = '<<< DEFAULT, ALGORITHM >>>' };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
@@ -26,10 +33,16 @@ our void::method $inherited__Algorithm = sub {
         'in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FNORD' . "\n" );
 };
 
-our void::method $inherited__Algorithm_complexity_modify = sub {
-    ( my RPerl::Algorithm $self, my string $complexity_new ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm_complexity_modify(), have ::class($self) = ' . ::class($self) . ' and $complexity_new = ' . $complexity_new . ', FNORD' . "\n" );
-    $self->{complexity} = $complexity_new;
+our string::method $inherited__Algorithm_foo_get = sub {
+    ( my RPerl::Algorithm $self ) = @ARG;
+    RPerl::diag( 'in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm_foo_get(), have ::class($self) = ' . ::class($self) . ', FNORD' . "\n" );
+    return $self->{foo};
+};
+
+our void::method $inherited__Algorithm_foo_set = sub {
+    ( my RPerl::Algorithm $self, my string $foo_new ) = @ARG;
+    RPerl::diag( 'in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm_foo_set(), have ::class($self) = ' . ::class($self) . ' and $foo_new = ' . $foo_new . ', FNORD' . "\n" );
+    $self->{foo} = $foo_new;
 };
 
 #our void::method $inherited = sub {
