@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_100;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine);
@@ -52,6 +52,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die 'ERROR ECOGEASRP09, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: method name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
+
+    # CREATE SYMBOL TABLE ENTRY
+    $modes->{_symbol_table}->{_subroutine} = $name;  # set current subroutine/method
+    $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name} = {isa => 'RPerl::CodeBlock::Subroutine::Method', type => $return_type};  # create individual symtab entry
  
     $rperl_source_group->{PMC} .= $our . q{ } . $return_type . q{ } . $name . q{ } . $equal_sub . "\n";
 
@@ -100,6 +104,8 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
         die 'ERROR ECOGEASCP09, CODE GENERATOR, ABSTRACT SYNTAX TO C++: method name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
+
+    # CREATE SYMBOL TABLE ENTRY
     $modes->{_symbol_table}->{_subroutine} = $name;  # set current subroutine/method
     $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name} = {isa => 'RPerl::CodeBlock::Subroutine::Method', type => $return_type};  # create individual symtab entry
 

@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.011_000;
+our $VERSION = 0.012_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -72,6 +72,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 . ' must not start with underscore, dying' . "\n";
     }
 
+    # CREATE SYMBOL TABLE ENTRY
+    $modes->{_symbol_table}->{_subroutine} = $name;  # set current subroutine/method
+    $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name} = {isa => 'RPerl::CodeBlock::Subroutine', type => $return_type};  # create individual symtab entry
+
     # NEED UPGRADE, CORRELATION #rp035: allow multi-line subroutines & other code blocks, where they would be less than 160 chars if on a single line
     # DEV NOTE: no newline appended in the next line, all newlines removed from subroutine body via regex replacement after foreach loop below,
     # thus allowing for single-line subroutines as well as multi-line subroutines, at the control of Perl::Tidy
@@ -119,11 +123,13 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
 
     substr $name, 0, 1, q{};            # remove leading $ sigil
     my string_arrayref $arguments = [];
- 
+
     if ((substr $name, 0, 1) eq '_') {
         die 'ERROR ECOGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
+
+    # CREATE SYMBOL TABLE ENTRY
     $modes->{_symbol_table}->{_subroutine} = $name;  # set current subroutine/method
     $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name} = {isa => 'RPerl::CodeBlock::Subroutine', type => $return_type};  # create individual symtab entry
 

@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::Loop::For;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.007_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::Loop);
@@ -47,6 +47,24 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $right_paren     = $self->{children}->[8];
         my object $codeblock       = $self->{children}->[9];
 
+        # CREATE SYMBOL TABLE ENTRY
+        # DEV NOTE: allow re-declaration of loop iterator variables within other loop headers, they should not conflict
+        if (( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol} )
+            and ( $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol}->{isa} ne
+                'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator' )
+            )
+        {
+            die 'ERROR ECOGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
+                . $variable_symbol
+                . ' already declared in this scope, namespace '
+                . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
+                . ', subroutine/method '
+                . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
+                . ', dying' . "\n";
+        }
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol}
+            = { isa => 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator', type => $type_integer }; # NEED UPGRADE: replace fake class isa w/ real class here and below?
+
         $rperl_source_group->{PMC} .= $for . q{ } . $my . q{ } . $type_integer . q{ } . $variable_symbol . q{ } . $left_paren . q{ };
         $rperl_source_subgroup = $subexpression0->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
@@ -80,6 +98,23 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 . $variable_symbol1 . q{'}
                 . ', dying' . "\n";
         }
+
+        # CREATE SYMBOL TABLE ENTRY
+        if (( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol0} )
+            and ( $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol0}->{isa} ne
+                'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator' )
+            )
+        {
+            die 'ERROR ECOGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
+                . $variable_symbol0
+                . ' already declared in this scope, namespace '
+                . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
+                . ', subroutine/method '
+                . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
+                . ', dying' . "\n";
+        }
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol0}
+            = { isa => 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator', type => $type_integer };
 
         $rperl_source_group->{PMC} .= $for . q{ } . $left_paren_my . q{ } . $type_integer . q{ } . $variable_symbol0 . q{ } . $assign . q{ };
 
@@ -205,6 +240,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{_namespace} = ' . "\n" . Dumper($modes->{_symbol_table}->{_namespace}) . "\n" );
 #        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{_subroutine} = ' . "\n" . Dumper($modes->{_symbol_table}->{_subroutine}) . "\n" );
 
+        # CREATE SYMBOL TABLE ENTRY
         # DEV NOTE: allow re-declaration of loop iterator variables within other loop headers, they should not conflict
         if (( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol} )
             and ( $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol}->{isa} ne
@@ -214,10 +250,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             die 'ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $variable_symbol
                 . ' already declared in this scope, namespace '
-                . $modes->{_symbol_table}->{_namespace}
+                . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
-                . $modes->{_symbol_table}->{_subroutine}
-                . '(), dying' . "\n";
+                . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
+                . ', dying' . "\n";
         }
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator', type => $type_integer }; # NEED UPGRADE: replace fake class isa w/ real class here and below?
@@ -302,6 +338,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         substr $variable_symbol0, 0, 1, q{};    # remove leading $ sigil
         substr $variable_symbol1, 0, 1, q{};    # remove leading $ sigil
 
+        # CREATE SYMBOL TABLE ENTRY
         if (( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol0} )
             and ( $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol0}->{isa} ne
                 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator' )
@@ -310,10 +347,10 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             die 'ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $variable_symbol0
                 . ' already declared in this scope, namespace '
-                . $modes->{_symbol_table}->{_namespace}
+                . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
-                . $modes->{_symbol_table}->{_subroutine}
-                . '(), dying' . "\n";
+                . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
+                . ', dying' . "\n";
         }
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$variable_symbol0}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable::LoopIterator', type => $type_integer };

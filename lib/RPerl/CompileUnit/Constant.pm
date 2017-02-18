@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Constant;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_200;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit);
@@ -36,6 +36,19 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my string $type_inner_constant_equal = $type_inner_constant->{children}->[4];
     my object $subexpression             = $self->{children}->[4];
     my string $semicolon                 = $self->{children}->[5];
+
+    # CREATE SYMBOL TABLE ENTRY
+    if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_global}->{$name} ) {
+        die 'ERROR ECOGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
+            . $name
+            . ' already declared in this scope, namespace '
+            . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
+            . ', subroutine/method '
+            . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
+            . ', dying' . "\n";
+    }
+    $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_global}->{$name}
+        = { isa => 'RPerl::CompileUnit::Constant', type => $type_inner_constant_type };
 
     $rperl_source_group->{PMC}
         .= $use_constant . q{ }
@@ -73,14 +86,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     my string $type_inner_constant_type = $self->{children}->[3]->{children}->[1]->{children}->[0];
     my object $subexpression            = $self->{children}->[4];
 
+    # CREATE SYMBOL TABLE ENTRY
     if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_global}->{$name} ) {
         die 'ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
             . $name
             . ' already declared in this scope, namespace '
-            . $modes->{_symbol_table}->{_namespace}
+            . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
             . ', subroutine/method '
-            . $modes->{_symbol_table}->{_subroutine}
-            . '(), dying' . "\n";
+            . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
+            . ', dying' . "\n";
     }
     $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_global}->{$name}
         = { isa => 'RPerl::CompileUnit::Constant', type => $type_inner_constant_type };

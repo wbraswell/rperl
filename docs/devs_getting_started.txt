@@ -75,7 +75,7 @@ https://github.com/wbraswell/rperl/tree/master/lib/RPerl/Operation/Expression/Op
 
 Each operator's Perl module file in the 2 URLs above has 3 primary subroutines, which correspond to RPerl's 3 primary modes, and each generate source code as output:
 
-ast_to_cpp__generate__PERLOPS_PERLTYPES()
+ast_to_rperl__generate()
 ast_to_cpp__generate__CPPOPS_PERLTYPES()
 ast_to_cpp__generate__CPPOPS_CPPTYPES()
 
@@ -93,7 +93,7 @@ Each of the subroutines generates as output a source group variable, which is an
 
 In CPPOPS_PERLTYPES and CPPOPS_CPPTYPES modes, the $cpp_source_group hash variable contains at least the 'CPP' key which can be saved to a '.cpp' output C++ source code file.  The $cpp_source_group hash may also contain 'H' and 'PMC' keys, although most named operators will only need to output into the 'CPP' source code.
 
-The PERLOPS_PERLTYPES subroutine is implemented first for all operators, and in the cases where an operator's Perl module file has already been created, there should already be a completed 'ast_to_cpp__generate__PERLOPS_PERLTYPES()' subroutine present.  The CPPOPS_PERLTYPES mode is currently not implemented for most RPerl operators, and will be left as a stub containing "DUMMY_SOURCE_CODE" until a later version of RPerl.  The CPPOPS_CPPTYPES mode is the main focus of our RPerl system development efforts, because it offers the most speed benefits by far.  Do not attempt to implement any CPPOPS_PERLTYPES code whatsoever, only the other 2 modes.
+The PERLOPS_PERLTYPES subroutine is implemented first for all operators, and in the cases where an operator's Perl module file has already been created, there should already be a completed 'ast_to_rperl__generate()' subroutine present.  The CPPOPS_PERLTYPES mode is currently not implemented for most RPerl operators, and will be left as a stub containing "DUMMY_SOURCE_CODE" until a later version of RPerl.  The CPPOPS_CPPTYPES mode is the main focus of our RPerl system development efforts, because it offers the most speed benefits by far.  Do not attempt to implement any CPPOPS_PERLTYPES code whatsoever, only the other 2 modes.
 
 
 STEP 3.  Make A Fork On GitHub

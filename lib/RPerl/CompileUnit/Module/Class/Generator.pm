@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.007_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -102,17 +102,13 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $rperl_source_group->{PMC} .= "\n" . '# [[[ OO PROPERTIES ]]]' . "\n";
     }
 
-
     # prepare for later use in:
     # disallow name masking of inherited $properties, AND
     # generate accessors & mutators for inherited $properties
     my string $package_name_colons = $package_name_underscores;
     $package_name_colons =~ s/__/::/gxms;
     my $parent_package_names = RPerl::CompileUnit::Module::Class::parent_and_grandparent_package_names($package_name_colons);
-#    RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__PERLOPS_PERLTYPES(), have $parent_package_names = ' . Dumper($parent_package_names) . "\n" );
-
-
-
+#    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), have $parent_package_names = ' . Dumper($parent_package_names) . "\n" );
 
     if ( ref $properties eq 'Properties_65' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
                                                 # non-empty $properties
@@ -161,29 +157,6 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 . $property_key . q{'}
                 . ', dying' . "\n";
         }
-
-
-
-
-
-        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__PERLOPS_PERLTYPES(), property 0, have $parent_package_names = ' . "\n" . Dumper($parent_package_names) . "\n" ) if (scalar @{$parent_package_names});
-        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__PERLOPS_PERLTYPES(), property 0, have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" ) if (scalar @{$parent_package_names});
-
-        # disallow name masking of inherited $properties, causes mismatching behavior in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES
-        foreach my $parent_package_name (@{$parent_package_names}) {
-            if ( exists $modes->{_symbol_table}->{ $parent_package_name . q{::} }->{_properties}->{$property_key} ) {
-                die 'ERROR ECOGEASRP11, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: OO property '
-                    . q{'} . $property_key . q{'}
-                    . ' already declared in parent namespace '
-                    . q{'} . $parent_package_name . q{::} . q{'}
-                    . ', name masking disallowed, dying' . "\n";
-            }
-        }
-
-
-
-
-
 
         # TypeInnerProperties -> MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression
         if ( ref $property_type_inner eq 'TypeInnerProperties_225' ) {
@@ -238,6 +211,31 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 . "\n";
         }
 
+        # CREATE SYMBOL TABLE ENTRY
+        if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key} ) {
+            die 'ERROR ECOGEASRP10, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: OO property '
+                . q{'} . $property_key . q{'}
+                . ' already declared in this scope, namespace '
+                . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
+                . ', dying' . "\n";
+        }
+
+        RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), property 0, have $parent_package_names = ' . "\n" . Dumper($parent_package_names) . "\n" ) if (scalar @{$parent_package_names});
+
+        # disallow name masking of inherited $properties, causes mismatching behavior in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES
+        foreach my $parent_package_name (@{$parent_package_names}) {
+            if ( exists $modes->{_symbol_table}->{ $parent_package_name . q{::} }->{_properties}->{$property_key} ) {
+                die 'ERROR ECOGEASRP11, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: OO property '
+                    . q{'} . $property_key . q{'}
+                    . ' already declared in parent namespace '
+                    . q{'} . $parent_package_name . q{::} . q{'}
+                    . ', name masking disallowed, dying' . "\n";
+            }
+        }
+
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}
+            = { isa => 'RPerl::DataStructure::Hash::Properties', type => $property_type };
+
         my integer $i = 0;
         foreach my object $property ( @{ $properties_1_to_n->{children} } ) {
             if ( ( ref $property ) eq 'TERMINAL' ) {
@@ -264,30 +262,6 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                         . $property_key . q{'}
                         . ', dying' . "\n";
                 }
-
-
-
-
-
-
-
-                RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__PERLOPS_PERLTYPES(), property ' . $i . ', have $parent_package_names = ' . "\n" . Dumper($parent_package_names) . "\n" ) if (scalar @{$parent_package_names});
-
-                # disallow name masking of inherited $properties, causes mismatching behavior in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES
-                foreach my $parent_package_name (@{$parent_package_names}) {
-                    if ( exists $modes->{_symbol_table}->{ $parent_package_name . q{::} }->{_properties}->{$property_key} ) {
-                        die 'ERROR ECOGEASRP11, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: OO property '
-                            . q{'} . $property_key . q{'}
-                            . ' already declared in parent namespace '
-                            . q{'} . $parent_package_name . q{::} . q{'}
-                            . ', name masking disallowed, dying' . "\n";
-                    }
-                }
-
-
-
-
-
 
                 # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
                 if ( ref $property_type_inner eq 'TypeInnerProperties_225' ) {
@@ -341,6 +315,31 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                             . ' found where TypeInnerProperties_225 or TypeInnerProperties_226 expected, dying' )
                         . "\n";
                 }
+
+                # CREATE SYMBOL TABLE ENTRY
+                if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key} ) {
+                    die 'ERROR ECOGEASRP10, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: OO property '
+                        . $property_key
+                        . ' already declared in this scope, namespace '
+                        . $modes->{_symbol_table}->{_namespace}
+                        . ', dying' . "\n";
+                }
+
+                RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), property ' . $i . ', have $parent_package_names = ' . "\n" . Dumper($parent_package_names) . "\n" ) if (scalar @{$parent_package_names});
+
+                # disallow name masking of inherited $properties, causes mismatching behavior in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES
+                foreach my $parent_package_name (@{$parent_package_names}) {
+                    if ( exists $modes->{_symbol_table}->{ $parent_package_name . q{::} }->{_properties}->{$property_key} ) {
+                        die 'ERROR ECOGEASRP11, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: OO property '
+                            . q{'} . $property_key . q{'}
+                            . ' already declared in parent namespace '
+                            . q{'} . $parent_package_name . q{::} . q{'}
+                            . ', name masking disallowed, dying' . "\n";
+                    }
+                }
+
+                $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}
+                    = { isa => 'RPerl::DataStructure::Hash::Properties', type => $property_type };
             }
         }
         $rperl_source_group->{PMC} .= "\n" . $properties_right_brace . $properties_semicolon . "\n";
@@ -642,6 +641,7 @@ EOL
 #        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type) . "\n" );
 #        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property 0, have $property_arrayref_index_max = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_arrayref_index_max) . "\n" );
 
+        # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key} ) {
             die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
                 . q{'} . $property_key . q{'}
@@ -755,6 +755,7 @@ EOL
 #            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property ' . $i . ', have $property_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_type) . "\n" );
 #            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), property ' . $i . ', have $property_arrayref_index_max = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_arrayref_index_max) . "\n" );
 
+            # CREATE SYMBOL TABLE ENTRY
             if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key} ) {
                 die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
                     . $property_key

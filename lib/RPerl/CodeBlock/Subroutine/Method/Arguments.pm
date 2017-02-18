@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method::Arguments;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_200;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine::Arguments);
@@ -37,6 +37,13 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     my string $equal                   = $self->{children}->[5];
     my string $at_underscore_semicolon = $self->{children}->[6];
 
+    # CREATE SYMBOL TABLE ENTRY
+    # discard trailing '::' to go from namespace to class-name-as-type
+    $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{this} = {
+        isa  => 'RPerl::CodeBlock::Subroutine::Arguments',
+        type => ( substr $modes->{_symbol_table}->{_namespace}, 0, ( ( length $modes->{_symbol_table}->{_namespace} ) - 2 ) )
+    };
+
     $rperl_source_group->{PMC} .= $lparen_my . q{ } . $self_type->{children}->[0] . q{ } . $self_symbol;
 
     # (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)*
@@ -46,6 +53,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my object $my    = shift @{ $arguments_star_dclone->{children} };
         my object $type  = shift @{ $arguments_star_dclone->{children} };
         my object $name  = shift @{ $arguments_star_dclone->{children} };
+
+        # CREATE SYMBOL TABLE ENTRY
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{ $name }
+            = { isa => 'RPerl::CodeBlock::Subroutine::Method::Arguments', type => $type->{children}->[0] };
+
         # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
         $rperl_source_group->{PMC} .= $comma->{attr} . q{ } . $my->{attr} . q{ } . $type->{children}->[0] . q{ } . $name->{attr};
     }
@@ -71,12 +83,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my object $arguments_star = $self->{children}->[3];
 
-    my string_arrayref $arguments = [];
+    # CREATE SYMBOL TABLE ENTRY
     # discard trailing '::' to go from namespace to class-name-as-type
     $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{this} = {
         isa  => 'RPerl::CodeBlock::Subroutine::Arguments',
         type => ( substr $modes->{_symbol_table}->{_namespace}, 0, ( ( length $modes->{_symbol_table}->{_namespace} ) - 2 ) )
     };
+
+    my string_arrayref $arguments = [];
 
 #RPerl::diag( 'in Method::Arguments->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments_star = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_star) . "\n" );
 
@@ -85,16 +99,18 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     while ( exists $arguments_star_dclone->{children}->[0] ) {
         shift @{ $arguments_star_dclone->{children} };    # discard $comma
         shift @{ $arguments_star_dclone->{children} };    # discard $my
-        my object $arguments_type = shift @{ $arguments_star_dclone->{children} };
-        my string $arguments_name = shift @{ $arguments_star_dclone->{children} };
-        $arguments_name = $arguments_name->{attr};  # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
-        substr $arguments_name, 0, 1, q{};        # remove leading $ sigil
+        my object $type = shift @{ $arguments_star_dclone->{children} };
+        my string $name = shift @{ $arguments_star_dclone->{children} };
+        $name = $name->{attr};  # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
+        substr $name, 0, 1, q{};        # remove leading $ sigil
 
-        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{ $arguments_name }
-            = { isa => 'RPerl::CodeBlock::Subroutine::Method::Arguments', type => $arguments_type->{children}->[0] };
-        $arguments_type->{children}->[0] =~ s/^constant_/const\ /gxms;    # 'constant_foo' becomes 'const foo'
-        $arguments_type->{children}->[0] =~ s/::/__/gxms;                 # 'Class::Subclass' becomes 'Class__Subclass'
-        push @{$arguments}, ( $arguments_type->{children}->[0] . q{ } . $arguments_name );
+        # CREATE SYMBOL TABLE ENTRY
+        $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{ $name }
+            = { isa => 'RPerl::CodeBlock::Subroutine::Method::Arguments', type => $type->{children}->[0] };
+
+        $type->{children}->[0] =~ s/^constant_/const\ /gxms;    # 'constant_foo' becomes 'const foo'
+        $type->{children}->[0] =~ s/::/__/gxms;                 # 'Class::Subclass' becomes 'Class__Subclass'
+        push @{$arguments}, ( $type->{children}->[0] . q{ } . $name );
     }
     $cpp_source_group->{CPP} .= join ', ', @{$arguments};
     return $cpp_source_group;

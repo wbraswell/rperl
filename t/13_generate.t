@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.022_000;
+our $VERSION = 0.023_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -245,16 +245,6 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
 #            RPerl::diag( 'in 13_generate.t, have $ops = ' . $ops . ', $modes = ' . Dumper($modes) );
 #            RPerl::diag( 'in 13_generate.t, have $ops = ' . $ops . ', $modes->{_symbol_table} = ' . Dumper($modes->{_symbol_table}) );
         }
-
-
-
-
-# START HERE: build symbol table in PERLOPS_PERLTYPES, ensure `perl t/13_generate.t lib/RPerl/Test/Properties/Class_01_Bad_00.pm` works in PERLOPS_PERLTYPES, continue converting manually-compiled ref files for t/10
-# START HERE: build symbol table in PERLOPS_PERLTYPES, ensure `perl t/13_generate.t lib/RPerl/Test/Properties/Class_01_Bad_00.pm` works in PERLOPS_PERLTYPES, continue converting manually-compiled ref files for t/10
-# START HERE: build symbol table in PERLOPS_PERLTYPES, ensure `perl t/13_generate.t lib/RPerl/Test/Properties/Class_01_Bad_00.pm` works in PERLOPS_PERLTYPES, continue converting manually-compiled ref files for t/10
-
-
-
 
         # DEV NOTE: do not actually follow or compile dependencies;
         # find RPerl system deps such as 'use rperlsse;', 'use rperlgmp;', etc.;

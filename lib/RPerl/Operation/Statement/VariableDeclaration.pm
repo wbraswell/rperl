@@ -42,10 +42,6 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $semicolon = $self->{children}->[3];
         $rperl_source_group->{PMC} .= $my . q{ } . $type . q{ } . $symbol . $semicolon . "\n";
 
-
-
-
-
         # CREATE SYMBOL TABLE ENTRY
         if (not exists $modes->{_symbol_table}) { $modes->{_symbol_table} = {}; }  # initialize symbol table if not already done
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
@@ -59,13 +55,6 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         }
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
-
-
-
-
-
-
-
     }
     elsif ( $self_class eq 'VariableDeclaration_183' ) {    # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExpIn
         my string $my                                = $self->{children}->[0];
@@ -150,13 +139,6 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 }
             }
 
-
-
-
-
-
-
-
             # CREATE SYMBOL TABLE ENTRY
             if (not exists $modes->{_symbol_table}) { $modes->{_symbol_table} = {}; }  # initialize symbol table if not already done
             # in a *.pl program, you can have variables declared outside of any namespace, which means they are in the default 'main::' namespace AKA '::' using Perl rules
@@ -169,10 +151,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
                 $modes->{_symbol_table}->{_subroutine} = 'main'; 
             }
 
-#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__PERLOPS_PERLTYPES(), have $symbol = ' . $symbol . "\n");
-#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__PERLOPS_PERLTYPES(), have $modes->{_symbol_table} = ' . Dumper($modes->{_symbol_table}) . "\n");
-#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__PERLOPS_PERLTYPES(), have $modes->{_symbol_table}->{_namespace} = ' . $modes->{_symbol_table}->{_namespace} . "\n");
-#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__PERLOPS_PERLTYPES(), have $modes->{_symbol_table}->{_subroutine} = ' . $modes->{_symbol_table}->{_subroutine} . "\n");
+#            RPerl::diag('in VariableDeclaration->ast_to_rperl__generate(), have $symbol = ' . $symbol . "\n");
+#            RPerl::diag('in VariableDeclaration->ast_to_rperl__generate(), have $modes->{_symbol_table} = ' . Dumper($modes->{_symbol_table}) . "\n");
+#            RPerl::diag('in VariableDeclaration->ast_to_rperl__generate(), have $modes->{_symbol_table}->{_namespace} = ' . $modes->{_symbol_table}->{_namespace} . "\n");
+#            RPerl::diag('in VariableDeclaration->ast_to_rperl__generate(), have $modes->{_symbol_table}->{_subroutine} = ' . $modes->{_symbol_table}->{_subroutine} . "\n");
 
             if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
                 die 'ERROR ECOGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
@@ -185,15 +167,6 @@ our string_hashref::method $ast_to_rperl__generate = sub {
             }
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
                 = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
-
-
-
-
-
-
-
-
-
 
             $rperl_source_subgroup = $opnamed_or_subexp_or_input_scolon->{children}->[0]->ast_to_rperl__generate($modes);    # subexpression
             RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
@@ -219,12 +192,6 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $undef              = $self->{children}->[7];
         my string $semicolon          = $self->{children}->[8];
 
-
-
-
-
-
-
         # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
             die 'ERROR ECOGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
@@ -238,12 +205,6 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
 
-
-
-
-
-
-
         $rperl_source_group->{PMC} .= $my . q{ } . $type . q{ } . $symbol . $arrow_left_bracket . q{ };
         $rperl_source_subgroup = $subexpression->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
@@ -255,17 +216,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $symbol_fhref = $self->{children}->[2];
         my string $semicolon    = $self->{children}->[3];
 
-
-
-
-
-
-
-
         # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref} ) {
             die 'ERROR ECOGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
-                . $symbol
+                . $symbol_fhref
                 . ' already declared in this scope, namespace '
                 . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
@@ -274,13 +228,6 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         }
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref}
             = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type_fhref };
-
-
-
-
-
-
-
 
         $rperl_source_group->{PMC} .= $my . q{ } . $type_fhref . q{ } . $symbol_fhref . $semicolon . "\n";
     }
@@ -600,7 +547,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref} ) {
             die 'ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
-                . $symbol
+                . $symbol_fhref
                 . ' already declared in this scope, namespace '
                 . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
