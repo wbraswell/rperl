@@ -13,7 +13,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.007_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -142,14 +142,14 @@ my string $algorithm_pmc_filename_manual = $algorithm_pmc_filename . '.CPPOPS_DU
 
 
 
-# START HERE: figure out why Inefficient is dying in PERLOPS_PERLTYPES only when all 3 modes are enabled
-# START HERE: figure out why Inefficient is dying in PERLOPS_PERLTYPES only when all 3 modes are enabled
-# START HERE: figure out why Inefficient is dying in PERLOPS_PERLTYPES only when all 3 modes are enabled
+# START HERE: remove unneeded SvREFCNT_inc(), add missing constants
+# START HERE: remove unneeded SvREFCNT_inc(), add missing constants
+# START HERE: remove unneeded SvREFCNT_inc(), add missing constants
 
 
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-#for my integer $mode_id ( 1 ) {    # TEMPORARY DEBUGGING xOPS_xTYPES ONLY
+#for my integer $mode_id ( 0, 1, 2 ) {    # TEMPORARY DEBUGGING xOPS_xTYPES ONLY
 
     # [[[ MODE SETUP ]]]
     #    RPerl::diag("in 10_precompiled_oo_inherit.t, top of for() loop, have \$mode_id = $mode_id\n");
