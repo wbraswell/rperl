@@ -83,11 +83,11 @@ find(
         }
 
         if ( ( $file =~ m/Good/ms ) or ( $file =~ m/good/ms ) ) {
-            RPerl::diag('in 13_generate.t, find0, have good $file = ' . $file . "\n");
+#            RPerl::diag('in 13_generate.t, find0, have good $file = ' . $file . "\n");
             $test_files->{$file} = undef;
         }
         elsif ( ( $file =~ m/Bad/ms ) or ( $file =~ m/bad/ms ) ) {
-            RPerl::diag('in 13_generate.t, find0, have bad  $file = ' . $file . "\n");
+#            RPerl::diag('in 13_generate.t, find0, have bad  $file = ' . $file . "\n");
 
             # NEED FIX: remove use of $_ magic variable
             open my filehandleref $FILE_HANDLE, '<', $_

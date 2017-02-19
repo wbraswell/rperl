@@ -1,6 +1,9 @@
+
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'No such class RPerl::Test::Subclass::MySubclasserB_Bad_00_arrayref::methodd' >>>
+# <<< GENERATE_ERROR: 'ERROR ECOGEAS' >>>
+# <<< GENERATE_ERROR: 'P11' >>>
+# <<< GENERATE_ERROR: "OO property 'preschool' already declared in parent namespace 'RPerl::Test::Subclass::MySubclasserA_Good::'" >>>
+# <<< GENERATE_ERROR: 'name masking disallowed' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -19,7 +22,10 @@ use RPerl::Test::Subclass::MySubclasserA_Good;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = { preschool => my string $TYPED_preschool = 'Eager Muskrat', kindergarten => my string $TYPED_kindergarten = 'Eagle Elementary' };
+our hashref $properties = {
+    preschool    => my string $TYPED_preschool    = 'Eager Muskrat',
+    kindergarten => my string $TYPED_kindergarten = 'Eagle Elementary'
+};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
@@ -31,7 +37,7 @@ our RPerl::Test::Subclass::MySubclasserB_Bad_00::method $alphabet = sub {
     return $chum;
 };
 
-our RPerl::Test::Subclass::MySubclasserB_Bad_00_arrayref::methodd $brush_paints = sub {
+our RPerl::Test::Subclass::MySubclasserB_Bad_00_arrayref::method $brush_paints = sub {
     ( my RPerl::Test::Subclass::MySubclasserB_Bad_00 $self ) = @ARG;
     $self->{kindergarten} .= '; green blue purple';
     my RPerl::Test::Subclass::MySubclasserB_Bad_00_arrayref $friends
@@ -60,10 +66,8 @@ our RPerl::Test::Subclass::MySubclasserB_Bad_00_arrayref $seesaw = sub {
 };
 
 our RPerl::Test::Subclass::MySubclasserB_Bad_00_hashref $erector_set = sub {
-    my RPerl::Test::Subclass::MySubclasserA_Good_hashref $teachers = {
-        'launchpad' => RPerl::Test::Subclass::MySubclasserA_Good->new(),
-        'donald'    => RPerl::Test::Subclass::MySubclasserA_Good->new()
-    };
+    my RPerl::Test::Subclass::MySubclasserA_Good_hashref $teachers
+        = { 'launchpad' => RPerl::Test::Subclass::MySubclasserA_Good->new(), 'donald' => RPerl::Test::Subclass::MySubclasserA_Good->new() };
     my RPerl::Test::Subclass::MySubclasserB_Bad_00_hashref $peers = { 'webbigail' => RPerl::Test::Subclass::MySubclasserB_Bad_00->new() };
     return $peers;
 };

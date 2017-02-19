@@ -15,10 +15,7 @@ use RPerl::Test::Subclass::MySubclasserA_Good;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = {
-    preschool    => my string $TYPED_preschool    = 'Eager Muskrat',
-    kindergarten => my string $TYPED_kindergarten = 'Eagle Elementary'
-};
+our hashref $properties = { kindergarten => my string $TYPED_kindergarten = 'Eagle Elementary' };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
