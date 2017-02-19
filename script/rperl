@@ -346,7 +346,8 @@ sub verify_and_default_modes {
     }
 
     # initialize empty symbol table, to be populated during GENERATE phase
-    $modes->{_symbol_table} = { _namespace => 'main::', _subroutine => q{} };
+#    $modes->{_symbol_table} = { _namespace => 'main::', _subroutine => q{} };  # NEED REMOVE, DEPRECATED
+    $modes->{_symbol_table} = { _namespace => q{}, _subroutine => q{} };
 
     # defaults when mode(s) not provided
     foreach my string $mode_default_key ( keys %{$modes_default} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
@@ -697,7 +698,8 @@ sub depends_parse_generate_save_subcompile_execute {
         $modes->{_input_file_name} = $input_file_name;
 
         # clear symtab before each input file, use automatic dependencies mode (enabled by default) to compile multiple files within a single symtab
-        $modes->{_symbol_table} = {};
+#        $modes->{_symbol_table} = {};  # NEED REMOVE, DEPRECATED
+        $modes->{_symbol_table} = { _namespace => q{}, _subroutine => q{} };
 
         # only execute *.pl program files, executing *.pm module files causes useless additional subcompile to occur
         if ( ( $modes->{execute} eq 'ON' ) and ( $input_file_name !~ /[.]pl$/xms ) ) {
