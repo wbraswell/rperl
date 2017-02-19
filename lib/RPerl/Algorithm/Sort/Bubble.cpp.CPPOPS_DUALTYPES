@@ -36,7 +36,7 @@ SV* RPerl__Algorithm__Sort__Bubble::inherited__Bubble_foo_get() {
 
 void RPerl__Algorithm__Sort__Bubble::inherited__Bubble_foo_set(SV* foo_new) {
     cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FRIED\n";
-    this->foo = SvREFCNT_inc(foo_new);
+    this->foo = foo_new;
 }
 
 void RPerl__Algorithm__Sort__Bubble::inherited(SV* person) {
@@ -95,22 +95,22 @@ SV* RPerl__Algorithm__Sort__Bubble__number_bubblesort(SV* number_data) {
 
 SV* RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(SV* person) {
     cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = " << SvPV_nolen(person) << ", MITOCHONDRIAL\n";
-    return SvREFCNT_inc((newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0)));
+    return (newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0));
 }
 
 SV* RPerl__Algorithm__Sort__Bubble__uninherited(SV* person) {
     cout << "in CPPOPS_PERLTYPES Bubble::uninherited(), received person = " << SvPV_nolen(person) << ", TETRAHEDRON\n";
-    return SvREFCNT_inc((newSVpv("Bubble::uninherited() ROCKS! CPPOPS_PERLTYPES", 0)));
+    return (newSVpv("Bubble::uninherited() ROCKS! CPPOPS_PERLTYPES", 0));
 }
 
 SV* RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(SV* lucky_integers) {
     integer_arrayref_CHECKTRACE(lucky_integers, "lucky_integers", "integer_bubblesort__typetest0()");
-    return SvREFCNT_inc((newSVpvf("%s%s", SvPV_nolen(integer_arrayref_to_string(RPerl__Algorithm__Sort__Bubble__integer_bubblesort(lucky_integers))), "CPPOPS_PERLTYPES")));
+    return (newSVpvf("%s%s", SvPV_nolen(integer_arrayref_to_string(RPerl__Algorithm__Sort__Bubble__integer_bubblesort(lucky_integers))), "CPPOPS_PERLTYPES"));
 }
 
 SV* RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(SV* lucky_numbers) {
     number_arrayref_CHECKTRACE(lucky_numbers, "lucky_numbers", "number_bubblesort__typetest0()");
-    return SvREFCNT_inc((newSVpvf("%s%s", SvPV_nolen(number_arrayref_to_string(RPerl__Algorithm__Sort__Bubble__number_bubblesort(lucky_numbers))), "CPPOPS_PERLTYPES")));
+    return (newSVpvf("%s%s", SvPV_nolen(number_arrayref_to_string(RPerl__Algorithm__Sort__Bubble__number_bubblesort(lucky_numbers))), "CPPOPS_PERLTYPES"));
 }
 
 // [[[<<< END PERL TYPES >>>]]]

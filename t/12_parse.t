@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -25,6 +25,8 @@ use Test::More;
 use Test::Exception;
 use File::Find qw(find);
 use English;  # $EVAL_ERROR not defined after moving RPerl::* into lives_and() tests in BEGIN block below
+use Cwd;
+use File::Spec;
 
 # [[[ CONSTANTS ]]]
 use constant PATH_TESTS => my string $TYPED_PATH_TESTS = $RPerl::INCLUDE_PATH . '/RPerl/Test';
@@ -49,11 +51,24 @@ BEGIN {
 #my integer $number_of_tests_run = 4;  # initialize to 4 for use_ok() calls in BEGIN block above
 
 my $test_files = {};    # string_hashref
+
+# save current directory for file checks, because File::Find changes directory;
+# use File::Spec for MS Windows support, etc.
+my $current_working_directory = getcwd;
+(my $volume, my $directories, my $dummy_file) = File::Spec->splitpath( $current_working_directory, 1 );  # no_file = 1
+
 find(
     sub {
         my $file = $File::Find::name;
 
         #        RPerl::diag('in 12_parse.t, have $file = ' . $file . "\n");
+
+        if (defined $ARGV[0]) {
+            # restore saved path, because File::Find changes directories while searching for files
+            my $file_full_path = File::Spec->catpath( $volume, $directories, $file );
+            RPerl::diag('in 09_interpret_execute.t, have $file_full_path = ' . $file_full_path . "\n");
+            $file = $file_full_path;
+        }
 
 #        if ( $file !~ m/.*Header\/program_00_bad_00.*[.]p[lm]$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
 #        if ( $file !~ m/.*Operator12CompareEqualNotEqual\/\w+[.]p[lm]$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN DIRECTORY

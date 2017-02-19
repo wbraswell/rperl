@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'Eager Muskrat' >>>
+# <<< EXECUTE_SUCCESS: 'Busy Beaver' >>>
 # <<< EXECUTE_SUCCESS: 'calvin,susie' >>>
-# <<< EXECUTE_SUCCESS: 'Eager Muskrat; ABCDEFG' >>>
+# <<< EXECUTE_SUCCESS: 'Busy Beaver; ABCDEFG' >>>
 # <<< EXECUTE_SUCCESS: 'Busy Beaver; orange yellow red' >>>
 # <<< EXECUTE_SUCCESS: 'Busy Beaver; castle' >>>
 # <<< EXECUTE_SUCCESS: 'alvin,simon,theodore' >>>

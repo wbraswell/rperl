@@ -30,15 +30,14 @@ public:
     SV* get_number_data() { return SvREFCNT_inc(this->number_data); }
     void set_number_data(SV* number_data_new) { this->number_data = number_data_new; }
     SV* get_foo() { return SvREFCNT_inc(this->foo); }
-    void set_foo(SV* foo_new) { this->foo = SvREFCNT_inc(foo_new); }
+    void set_foo(SV* foo_new) { this->foo = foo_new; }
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
-//    RPerl__Algorithm__Sort__Bubble() {}
-    RPerl__Algorithm__Sort__Bubble() { SvREFCNT_inc(this->foo); }
+    RPerl__Algorithm__Sort__Bubble() {}
     ~RPerl__Algorithm__Sort__Bubble() {}
 
     // <<< CLASS NAME REPORTER >>>
-    virtual SV* myclassname() { return SvREFCNT_inc(newSVpv("RPerl::Algorithm::Sort::Bubble", 0)); }
+    virtual SV* myclassname() { return newSVpv("RPerl::Algorithm::Sort::Bubble", 0); }
 
     // <<< USER-DEFINED METHODS >>>
     void integer_sort();

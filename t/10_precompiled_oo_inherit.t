@@ -13,7 +13,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -21,7 +21,7 @@ our $VERSION = 0.007_000;
 ## no critic qw(RequireCheckingReturnValueOfEval)  ## SYSTEM DEFAULT 4: allow eval() test code blocks
 
 # [[[ INCLUDES ]]]
-use Test::More; # tests => 251;  # NEED RE-ENABLE
+use Test::More tests => 521;
 use Test::Exception;
 use RPerl::Test;
 use File::Copy;
@@ -142,9 +142,9 @@ my string $algorithm_pmc_filename_manual = $algorithm_pmc_filename . '.CPPOPS_DU
 
 
 
-# START HERE: remove unneeded SvREFCNT_inc(), add missing constants
-# START HERE: remove unneeded SvREFCNT_inc(), add missing constants
-# START HERE: remove unneeded SvREFCNT_inc(), add missing constants
+# START HERE: remove unneeded SvREFCNT_inc(), add missing constants, update CPPOPS_PERLTYPES ref files
+# START HERE: remove unneeded SvREFCNT_inc(), add missing constants, update CPPOPS_PERLTYPES ref files
+# START HERE: remove unneeded SvREFCNT_inc(), add missing constants, update CPPOPS_PERLTYPES ref files
 
 
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES

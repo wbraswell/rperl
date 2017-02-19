@@ -26,7 +26,7 @@ SV* RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_get() {
 
 void RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_set(SV* bar_new) {
     cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient_bar_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $bar_new = " << SvPV_nolen(bar_new) << ", FLUFFY" << "\n";
-    this->bar = SvREFCNT_inc(bar_new);
+    this->bar = bar_new;
 }
 
 SV* RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_get() {
@@ -36,7 +36,7 @@ SV* RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_get() {
 
 void RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_set(SV* foo_new) {
     cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FLUFFY" << "\n";
-    this->foo = SvREFCNT_inc(foo_new);
+    this->foo = foo_new;
 }
 
 void RPerl__Algorithm__Inefficient::inherited(SV* person) {
@@ -45,7 +45,7 @@ void RPerl__Algorithm__Inefficient::inherited(SV* person) {
 
 SV* RPerl__Algorithm__Inefficient__uninherited__Inefficient(SV* person) {
     cout << "in CPPOPS_PERLTYPES Inefficient::uninherited__Inefficient(), received $person = " << SvPV_nolen(person) << ", MESSY" << "\n";
-    return SvREFCNT_inc(newSVpv("Inefficient::uninherited__Inefficient() RULES! CPPOPS_PERLTYPES", 0));
+    return newSVpv("Inefficient::uninherited__Inefficient() RULES! CPPOPS_PERLTYPES", 0);
 }
 
 // [[[<<< END PERL TYPES >>>]]]

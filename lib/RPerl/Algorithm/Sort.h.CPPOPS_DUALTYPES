@@ -21,15 +21,14 @@ public:
 
     // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
     SV* get_foo() { return SvREFCNT_inc(this->foo); }
-    void set_foo(SV* foo_new) { this->foo = SvREFCNT_inc(foo_new); }
+    void set_foo(SV* foo_new) { this->foo = foo_new; }
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
-//    RPerl__Algorithm__Sort() {}
-    RPerl__Algorithm__Sort() { SvREFCNT_inc(this->foo); }
+    RPerl__Algorithm__Sort() {}
     ~RPerl__Algorithm__Sort() {}
 
     // <<< CLASS NAME REPORTER >>>
-    virtual SV* myclassname() { return SvREFCNT_inc(newSVpv("RPerl::Algorithm::Sort", 0)); }
+    virtual SV* myclassname() { return newSVpv("RPerl::Algorithm::Sort", 0); }
 
     // <<< USER-DEFINED METHODS >>>
     void inherited__Sort(SV* person);

@@ -28,6 +28,8 @@ use File::Find qw(find);
 #use IPC::Open3;
 #use IO::Select;
 use IPC::Run3 qw(run3);
+use Cwd;
+use File::Spec;
 
 # [[[ CONSTANTS ]]]
 use constant PATH_TESTS => my string $TYPED_PATH_TESTS = $RPerl::INCLUDE_PATH . '/RPerl/Test';
@@ -52,20 +54,32 @@ BEGIN {
 #my integer $number_of_tests_run = 4;  # initialize to 4 for use_ok() calls in BEGIN block above
 
 my $test_files = {};    # string_hashref
+
+# save current directory for file checks, because File::Find changes directory;
+# use File::Spec for MS Windows support, etc.
+my $current_working_directory = getcwd;
+(my $volume, my $directories, my $dummy_file) = File::Spec->splitpath( $current_working_directory, 1 );  # no_file = 1
+
 find(
     sub {
         my $file = $File::Find::name;
-
 #        RPerl::diag('in 09_interpret_execute.t, have $file = ' . $file . "\n");
+
+        if (defined $ARGV[0]) {
+            # restore saved path, because File::Find changes directories while searching for files
+            my $file_full_path = File::Spec->catpath( $volume, $directories, $file );
+            RPerl::diag('in 09_interpret_execute.t, have $file_full_path = ' . $file_full_path . "\n");
+            $file = $file_full_path;
+        }
 
         #        if ( $file !~ m/.*OperatorVoid01NamedVoid.*[.]p[ml]$/xms ) { # TEMP DEBUGGING, ONLY FIND OperatorVoid01NamedVoid*/*.pm & *.pl
         if ( $file !~ m/.pl$/xms ) {
             return;
         }
-
         elsif ( ( $file =~ m/NotGood/ms ) or ( $file =~ m/not_good/ms ) ) {
             preprocess_execute_error($test_files, $file);
         }
+
         if ( ( $file =~ m/Good/ms ) or ( $file =~ m/good/ms ) or ( $file =~ m/NotBad/ms ) or ( $file =~ m/not_bad/ms ) ) {
 
             open my filehandleref $FILE_HANDLE, '<', $file
@@ -97,7 +111,7 @@ find(
             return;
         }
     },
-    (defined $ARGV[0]) ? PATH_TESTS() . q{/} . $ARGV[0] : PATH_TESTS()
+    (defined $ARGV[0]) ? $ARGV[0] : PATH_TESTS()
 );
 
 # trim unnecessary (and possibly problematic) absolute paths from input file names
@@ -345,7 +359,7 @@ FOREACH_STDOUT_LINE: foreach my string $stdout_generated_line ( @{$stdout_genera
 #        else { RPerl::diag( 'in 09_interpret_execute.t success_match(), NO MATCH' . "\n" ); }
     }
 #    RPerl::diag( 'in 09_interpret_execute.t success_match(), have missing successes =' . "\n" . Dumper( $test_file_successes ) . "\n" );
-    ok( ( ( scalar @{ $test_file_successes } ) == 0 ), 'Program interprets and executes without errors:' . ( q{ } x 10 ) . $test_file );
+    ok( ( ( scalar @{ $test_file_successes } ) == 0 ), 'Program interprets and executes without errors & with expected output:' . ( q{ } x 10 ) . $test_file );
 #    $number_of_tests_run++;
 }
 
