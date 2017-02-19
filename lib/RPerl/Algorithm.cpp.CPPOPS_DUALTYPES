@@ -15,22 +15,24 @@ using std::cout;  using std::cerr;  using std::endl;
 
 // [[[ SUBROUTINES & OO METHODS ]]]
 
+// NEED FIX, CORRELATION #rp090: most cout disabled in CPPOPS_PERLTYPES, 4096-character STDOUT buffer dump in middle of test output, causes "Parse errors: Tests out of sequence."
+
 void RPerl__Algorithm::inherited__Algorithm(SV* person) {
     cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FNORD" << "\n";
 }
 
 SV* RPerl__Algorithm::inherited__Algorithm_foo_get() {
-    cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FNORD" << "\n";
+//    cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FNORD" << "\n";
     return SvREFCNT_inc(this->foo);
 }
 
 void RPerl__Algorithm::inherited__Algorithm_foo_set(SV* foo_new) {
-    cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FNORD" << "\n";
+//    cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FNORD" << "\n";
     this->foo = foo_new;
 }
 
 SV* RPerl__Algorithm__uninherited__Algorithm(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Algorithm::uninherited__Algorithm(), received $person = " << SvPV_nolen(person) << ", MYSTIC" << "\n";
+//    cout << "in CPPOPS_PERLTYPES Algorithm::uninherited__Algorithm(), received $person = " << SvPV_nolen(person) << ", MYSTIC" << "\n";
     return newSVpv("Algorithm::uninherited__Algorithm() RULES! CPPOPS_PERLTYPES", 0);
 }
 

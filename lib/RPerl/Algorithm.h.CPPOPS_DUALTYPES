@@ -14,6 +14,12 @@ using std::cout;  using std::cerr;  using std::endl;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
+// [[[ CONSTANTS ]]]
+const SV* RPerl__Algorithm__TIME_BEST = (const SV*) newSVpv("<<< UNKNOWN >>>", 0);
+const SV* RPerl__Algorithm__TIME_AVERAGE = (const SV*) newSVpv("<<< UNKNOWN >>>", 0);
+const SV* RPerl__Algorithm__TIME_WORST = (const SV*) newSVpv("<<< UNKNOWN >>>", 0);
+const SV* RPerl__Algorithm__SPACE_WORST = (const SV*) newSVpv("<<< UNKNOWN >>>", 0);
+
 // [[[ OO INHERITANCE ]]]
 class RPerl__Algorithm : public RPerl__CompileUnit__Module__Class__CPP {
 public:
@@ -32,6 +38,12 @@ public:
 
     // <<< CLASS NAME REPORTER >>>
     virtual SV* myclassname() { return newSVpv("RPerl::Algorithm", 0); }
+
+    // <<< CONSTANTS, SHIMS >>>
+    const SV* TIME_BEST() { return RPerl__Algorithm__TIME_BEST; }
+    const SV* TIME_AVERAGE() { return RPerl__Algorithm__TIME_AVERAGE; }
+    const SV* TIME_WORST() { return RPerl__Algorithm__TIME_WORST; }
+    const SV* SPACE_WORST() { return RPerl__Algorithm__SPACE_WORST; }
 
     // <<< USER-DEFINED METHODS >>>
     void inherited__Algorithm(SV* person);

@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp 0.005_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort_cpp 0.010_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/Algorithm/Sort.h>  // -> (RPerl.cpp; Algorithm.cpp)
@@ -17,6 +17,16 @@ using std::cout;  using std::cerr;  using std::endl;
 
 void RPerl__Algorithm__Sort::inherited__Sort(SV* person) {
     cout << "in CPPOPS_PERLTYPES Sort->inherited__Sort(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FISH\n";
+}
+
+SV* RPerl__Algorithm__Sort::inherited__Sort_foo_get() {
+    cout << "in CPPOPS_PERLTYPES Sort->inherited__Sort_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FISH\n";
+    return SvREFCNT_inc(this->foo);
+}
+
+void RPerl__Algorithm__Sort::inherited__Sort_foo_set(SV* foo_new) {
+    cout << "in CPPOPS_PERLTYPES Sort->inherited__Sort_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FISH\n";
+    this->foo = foo_new;
 }
 
 SV* RPerl__Algorithm__Sort__uninherited__Sort(SV* person) {

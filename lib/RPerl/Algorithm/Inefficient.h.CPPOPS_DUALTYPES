@@ -14,6 +14,9 @@ using std::cout;  using std::cerr;  using std::endl;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
+// [[[ CONSTANTS ]]]
+const SV* RPerl__Algorithm__Inefficient__USEFULNESS = (const SV*) newSVpv("<<< UNKNOWN >>>", 0);
+
 // [[[ OO INHERITANCE ]]]
 class RPerl__Algorithm__Inefficient : public RPerl__Algorithm {
 public:
@@ -34,6 +37,9 @@ public:
 
     // <<< CLASS NAME REPORTER >>>
     virtual SV* myclassname() { return newSVpv("RPerl::Algorithm::Inefficient", 0); }
+
+    // <<< CONSTANTS, SHIMS >>>
+    const SV* USEFULNESS() { return RPerl__Algorithm__Inefficient__USEFULNESS; }
 
     // <<< USER-DEFINED METHODS >>>
     void inherited__Inefficient(SV* person);

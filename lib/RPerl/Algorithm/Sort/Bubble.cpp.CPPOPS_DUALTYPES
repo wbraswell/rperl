@@ -15,6 +15,8 @@ using std::cout;  using std::cerr;  using std::endl;
 
 // [[[ SUBROUTINES & OO METHODS ]]]
 
+// NEED FIX, CORRELATION #rp090: most cout disabled in CPPOPS_PERLTYPES, 4096-character STDOUT buffer dump in middle of test output, causes "Parse errors: Tests out of sequence."
+
 void RPerl__Algorithm__Sort__Bubble::integer_sort() {
     this->integer_data = RPerl__Algorithm__Sort__Bubble__integer_bubblesort(this->integer_data);
     SvREFCNT_dec(this->integer_data);
@@ -30,12 +32,12 @@ void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV* person) {
 }
 
 SV* RPerl__Algorithm__Sort__Bubble::inherited__Bubble_foo_get() {
-    cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FRIED\n";
+//    cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FRIED\n";
     return SvREFCNT_inc(this->foo);
 }
 
 void RPerl__Algorithm__Sort__Bubble::inherited__Bubble_foo_set(SV* foo_new) {
-    cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FRIED\n";
+//    cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FRIED\n";
     this->foo = foo_new;
 }
 
@@ -94,12 +96,12 @@ SV* RPerl__Algorithm__Sort__Bubble__number_bubblesort(SV* number_data) {
 }
 
 SV* RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = " << SvPV_nolen(person) << ", MITOCHONDRIAL\n";
+//    cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = " << SvPV_nolen(person) << ", MITOCHONDRIAL\n";
     return (newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0));
 }
 
 SV* RPerl__Algorithm__Sort__Bubble__uninherited(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Bubble::uninherited(), received person = " << SvPV_nolen(person) << ", TETRAHEDRON\n";
+//    cout << "in CPPOPS_PERLTYPES Bubble::uninherited(), received person = " << SvPV_nolen(person) << ", TETRAHEDRON\n";
     return (newSVpv("Bubble::uninherited() ROCKS! CPPOPS_PERLTYPES", 0));
 }
 

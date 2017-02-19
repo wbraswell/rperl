@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort_h 0.005_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort_h 0.010_000
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
@@ -19,6 +19,10 @@ class RPerl__Algorithm__Sort : public RPerl__Algorithm {
 public:
     // [[[ OO METHODS ]]]
 
+    // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
+    SV* get_foo() { return SvREFCNT_inc(this->foo); }
+    void set_foo(SV* foo_new) { this->foo = foo_new; }
+
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm__Sort() {}
     ~RPerl__Algorithm__Sort() {}
@@ -27,7 +31,9 @@ public:
     virtual SV* myclassname() { return newSVpv("RPerl::Algorithm::Sort", 0); }
 
     // <<< USER-DEFINED METHODS >>>
-	void inherited__Sort(SV* person);
+    void inherited__Sort(SV* person);
+    SV* inherited__Sort_foo_get();
+    void inherited__Sort_foo_set(SV* foo_new);
 };  // end of class
 
 // [[[ OO SUBCLASSES ]]]
@@ -39,6 +45,8 @@ typedef std::unordered_map<string, RPerl__Algorithm__Sort_ptr>::iterator RPerl__
 
 // [[[ SUBROUTINES ]]]
 SV* RPerl__Algorithm__Sort__uninherited__Sort(SV* person);
+
+// <<< SHIM MACROS >>>
 #define uninherited__Sort(person) RPerl__Algorithm__Sort__uninherited__Sort(person)
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>

@@ -7,7 +7,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.007_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Sort__Bubble_h 0.010_000
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
@@ -18,6 +18,12 @@ using std::cout;  using std::cerr;  using std::endl;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
+
+// [[[ CONSTANTS ]]]
+const SV* RPerl__Algorithm__Sort__Bubble__TIME_BEST = (const SV*) newSVpv("O($n)", 0);
+const SV* RPerl__Algorithm__Sort__Bubble__TIME_AVERAGE = (const SV*) newSVpv("O($n ** 2)", 0);
+const SV* RPerl__Algorithm__Sort__Bubble__TIME_WORST = (const SV*) newSVpv("O($n ** 2)", 0);
+const SV* RPerl__Algorithm__Sort__Bubble__SPACE_WORST = (const SV*) newSVpv("O(1)", 0);
 
 // [[[ OO INHERITANCE ]]]
 
@@ -34,6 +40,8 @@ public:
     void set_integer_data(SV* integer_data_new) { this->integer_data = integer_data_new; }
     SV* get_number_data() { return SvREFCNT_inc(this->number_data); }
     void set_number_data(SV* number_data_new) { this->number_data = number_data_new; }
+    SV* get_foo() { return SvREFCNT_inc(this->foo); }
+    void set_foo(SV* foo_new) { this->foo = foo_new; }
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm__Sort__Bubble() {}
@@ -42,10 +50,18 @@ public:
     // <<< CLASS NAME REPORTER >>>
     virtual SV* myclassname() { return newSVpv("RPerl::Algorithm::Sort::Bubble", 0); }
 
+    // <<< CONSTANTS, SHIMS >>>
+    const SV* TIME_BEST() { return RPerl__Algorithm__Sort__Bubble__TIME_BEST; }
+    const SV* TIME_AVERAGE() { return RPerl__Algorithm__Sort__Bubble__TIME_AVERAGE; }
+    const SV* TIME_WORST() { return RPerl__Algorithm__Sort__Bubble__TIME_WORST; }
+    const SV* SPACE_WORST() { return RPerl__Algorithm__Sort__Bubble__SPACE_WORST; }
+
     // <<< USER-DEFINED METHODS >>>
     void integer_sort();
     void number_sort();
     void inherited__Bubble(SV* person);
+    SV* inherited__Bubble_foo_get();
+    void inherited__Bubble_foo_set(SV* foo_new);
     void inherited(SV* person);
 };  // end of class
 
@@ -63,6 +79,14 @@ SV* RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(SV* person);
 SV* RPerl__Algorithm__Sort__Bubble__uninherited(SV* person);
 SV* RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(SV* lucky_integers);
 SV* RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(SV* lucky_numbers);
+
+// <<< SHIM MACROS >>>
+#define integer_bubblesort(integer_data) RPerl__Algorithm__Sort__Bubble__integer_bubblesort(integer_data)
+#define number_bubblesort(number_data) RPerl__Algorithm__Sort__Bubble__number_bubblesort(number_data)
+#define uninherited__Bubble(person) RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(person)
+#define uninherited(person) RPerl__Algorithm__Sort__Bubble__uninherited(person)
+#define integer_bubblesort__typetest0(lucky_integers) RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(lucky_integers)
+#define number_bubblesort__typetest0(lucky_numbers) RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(lucky_numbers)
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
 SV* RPerl__Algorithm__Sort__Bubble__MODE_ID() { return newSViv(1); }  // CPPOPS_PERLTYPES is 1

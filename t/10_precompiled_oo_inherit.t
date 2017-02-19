@@ -13,7 +13,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.009_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -139,13 +139,6 @@ my string $algorithm_pmc_filename_manual = $algorithm_pmc_filename . '.CPPOPS_DU
 # [[[ PRIMARY RUNLOOP ]]]
 # [[[ PRIMARY RUNLOOP ]]]
 # [[[ PRIMARY RUNLOOP ]]]
-
-
-
-# START HERE: remove unneeded SvREFCNT_inc(), add missing constants, update CPPOPS_PERLTYPES ref files
-# START HERE: remove unneeded SvREFCNT_inc(), add missing constants, update CPPOPS_PERLTYPES ref files
-# START HERE: remove unneeded SvREFCNT_inc(), add missing constants, update CPPOPS_PERLTYPES ref files
-
 
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {

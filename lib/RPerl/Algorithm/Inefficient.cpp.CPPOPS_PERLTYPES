@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 0.005_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 0.011_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/Algorithm/Inefficient.h>
@@ -17,6 +17,26 @@ using std::cout;  using std::cerr;  using std::endl;
 
 void RPerl__Algorithm__Inefficient::inherited__Inefficient(SV* person) {
     cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FLUFFY" << "\n";
+}
+
+SV* RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_get() {
+    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient_bar_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FLUFFY" << "\n";
+    return SvREFCNT_inc(this->bar);
+}
+
+void RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_set(SV* bar_new) {
+    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient_bar_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $bar_new = " << SvPV_nolen(bar_new) << ", FLUFFY" << "\n";
+    this->bar = bar_new;
+}
+
+SV* RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_get() {
+    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FLUFFY" << "\n";
+    return SvREFCNT_inc(this->foo);
+}
+
+void RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_set(SV* foo_new) {
+    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FLUFFY" << "\n";
+    this->foo = foo_new;
 }
 
 void RPerl__Algorithm__Inefficient::inherited(SV* person) {

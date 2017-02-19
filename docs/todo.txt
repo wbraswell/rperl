@@ -1,8 +1,9 @@
 DONE
+    OO Class Property Inheritance, Disallow Name Masking
+    OO Class Property Inheritance, Compatible With C++ Behavior, Upgrade Tests, CPPOPS_*TYPES
 
 
 DOING
-    START HERE: disallow name masking??? upgrade OO inheritance tests
     Monolithic Modules, Fix Deps Warning & Create Tests
 
     update tests to emit more useful failure info, for CPAN testers debugging

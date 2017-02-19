@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h
-#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h 0.005_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_h 0.011_000
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
@@ -14,10 +14,22 @@ using std::cout;  using std::cerr;  using std::endl;
 // [[[<<< BEGIN PERL TYPES >>>]]]
 // [[[<<< BEGIN PERL TYPES >>>]]]
 
+// [[[ CONSTANTS ]]]
+const SV* RPerl__Algorithm__Inefficient__USEFULNESS = (const SV*) newSVpv("<<< UNKNOWN >>>", 0);
+
 // [[[ OO INHERITANCE ]]]
 class RPerl__Algorithm__Inefficient : public RPerl__Algorithm {
 public:
+    // [[[ OO PROPERTIES ]]]
+    SV* bar = newSVpv("<<< DEFAULT, INEFFICIENT >>>", 0);
+
     // [[[ OO METHODS ]]]
+
+    // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
+    SV* get_bar() { return SvREFCNT_inc(this->bar); }
+    void set_bar(SV* bar_new) { this->bar = bar_new; }
+    SV* get_foo() { return SvREFCNT_inc(this->foo); }
+    void set_foo(SV* foo_new) { this->foo = foo_new; }
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm__Inefficient() {}
@@ -26,8 +38,15 @@ public:
     // <<< CLASS NAME REPORTER >>>
     virtual SV* myclassname() { return newSVpv("RPerl::Algorithm::Inefficient", 0); }
 
+    // <<< CONSTANTS, SHIMS >>>
+    const SV* USEFULNESS() { return RPerl__Algorithm__Inefficient__USEFULNESS; }
+
     // <<< USER-DEFINED METHODS >>>
     void inherited__Inefficient(SV* person);
+    SV* inherited__Inefficient_bar_get();
+    void inherited__Inefficient_bar_set(SV* bar_new);
+    SV* inherited__Inefficient_foo_get();
+    void inherited__Inefficient_foo_set(SV* foo_new);
     void inherited(SV* person);
 };  // end of class
 
@@ -40,6 +59,8 @@ typedef std::unordered_map<string, RPerl__Algorithm__Inefficient_ptr>::iterator 
 
 // [[[ SUBROUTINES ]]]
 SV* RPerl__Algorithm__Inefficient__uninherited__Inefficient(SV* person);
+
+// <<< SHIM MACROS >>>
 #define uninherited__Inefficient(person) RPerl__Algorithm__Inefficient__uninherited__Inefficient(person)
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
