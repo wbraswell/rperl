@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_100;
+our $VERSION = 0.008_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -81,7 +81,6 @@ find(
         }
 
         if ( ( $file =~ m/Good/ms ) or ( $file =~ m/good/ms ) or ( $file =~ m/NotBad/ms ) or ( $file =~ m/not_bad/ms ) ) {
-
             open my filehandleref $FILE_HANDLE, '<', $file
                 or croak 'ERROR, Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
             while (<$FILE_HANDLE>) {
@@ -142,8 +141,8 @@ if ( $ENV{RPERL_VERBOSE} ) {
 
 my integer $i = 0;
 
+# NEED ANSWER: keep IPC::Run3 code, or revert back to original IPC::Open3 code???
 foreach my $test_file ( sort keys %{$test_files} ) {
-
     $i++;
     if ( $ENV{RPERL_VERBOSE} ) {
         Test::More::diag( 'Test File #' . $i . ' of ' . $number_of_test_files . ': ' . $test_file );
@@ -306,7 +305,7 @@ foreach my $test_file ( sort keys %{$test_files} ) {
 }
 
 sub preprocess_execute_error {
-    (my string_hashref $test_files, my string $file) = @_;
+    (my string_hashref $test_files, my string $file) = @ARG;
     open my filehandleref $FILE_HANDLE, '<', $file
         or croak 'ERROR, Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
     while (<$FILE_HANDLE>) {
@@ -319,7 +318,7 @@ sub preprocess_execute_error {
 }
 
 sub missing_errors_count {
-    (my string_hashref $test_files, my string $test_file, my string $stdout_generated, my string $stderr_generated) = @_;
+    (my string_hashref $test_files, my string $test_file, my string $stdout_generated, my string $stderr_generated) = @ARG;
     my $missing_errors = [];
     if ( defined $test_files->{$test_file}->{errors} ) {
         foreach my $error ( @{ $test_files->{$test_file}->{errors} } ) {
@@ -334,7 +333,7 @@ sub missing_errors_count {
 }
 
 sub success_match {
-    (my string $test_file, my string_arrayref $test_file_successes, my string $stdout_generated_lines) = @_;
+    (my string $test_file, my string_arrayref $test_file_successes, my string $stdout_generated_lines) = @ARG;
 #    $RPerl::DEBUG   = 0;
 #    $RPerl::VERBOSE = 0;
 
@@ -350,7 +349,6 @@ FOREACH_STDOUT_LINE: foreach my string $stdout_generated_line ( @{$stdout_genera
 
         # each stdout line is only allowed to match one success string
         if ( $stdout_generated_line =~ /\Q$success\E/xms ) {
-
 #            RPerl::diag( 'in 09_interpret_execute.t success_match(), MATCH' . "\n" );
             shift @{ $test_file_successes };
             if ( ( scalar @{ $test_file_successes } ) == 0 ) { last FOREACH_STDOUT_LINE; }

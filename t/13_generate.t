@@ -107,56 +107,55 @@ find(
     (defined $ARGV[0]) ? $ARGV[0] : PATH_TESTS()  # accept optional command-line argument
 );
 
-    # locate all *.*OPS_*TYPES pre-compiled files in PATH_PRECOMPILED directory or ARGV command-line argument directory
-    find(
-        sub {
-            my $file = $File::Find::name;
-#           RPerl::diag('in 13_generate.t, find1, have $file = ' . $file . "\n");
-#            if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
-#            if ( $file !~ m/.*Module\/.*$/xms ) { # TEMP DEBUGGING, ONLY FIND FILES IN A CERTAIN DIRECTORY
-#            if ( $file =~ m/^(.*foo_bar_arith.*)[.].*OPS.*$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
-            if ( $file =~ m/^(.+)[.]\w+OPS_\w+TYPES$/gxms ) {    # find all pre-compiled files
-                my string $file_base = $1;
-#                RPerl::diag('in 13_generate.t, have pre-compiled $file        = ' . $file . "\n");
-#                RPerl::diag('in 13_generate.t, have pre-compiled $file_base   = ' . $file_base . "\n");
-                if (($file_base =~ m/^(.*)[.]cpp$/gxms) or ($file_base =~ m/^(.*)[.]h$/gxms) or ($file_base =~ m/^(.*)[.]pmc$/gxms)) {
-                    my string $file_prefix = $1;
-#                    RPerl::diag('in 13_generate.t, find1, have pre-compiled $file_prefix = ' . $file_prefix . "\n");
+# locate all *.*OPS_*TYPES pre-compiled files in PATH_PRECOMPILED directory or ARGV command-line argument directory
+find(
+    sub {
+        my $file = $File::Find::name;
+#        RPerl::diag('in 13_generate.t, find1, have $file = ' . $file . "\n");
+#        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
+#        if ( $file !~ m/.*Module\/.*$/xms ) { # TEMP DEBUGGING, ONLY FIND FILES IN A CERTAIN DIRECTORY
+#        if ( $file =~ m/^(.*foo_bar_arith.*)[.].*OPS.*$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
+        if ( $file =~ m/^(.+)[.]\w+OPS_\w+TYPES$/gxms ) {    # find all pre-compiled files
+            my string $file_base = $1;
+#            RPerl::diag('in 13_generate.t, have pre-compiled $file        = ' . $file . "\n");
+#            RPerl::diag('in 13_generate.t, have pre-compiled $file_base   = ' . $file_base . "\n");
+            if (($file_base =~ m/^(.*)[.]cpp$/gxms) or ($file_base =~ m/^(.*)[.]h$/gxms) or ($file_base =~ m/^(.*)[.]pmc$/gxms)) {
+                my string $file_prefix = $1;
+#                RPerl::diag('in 13_generate.t, find1, have pre-compiled $file_prefix = ' . $file_prefix . "\n");
 
-                    # restore saved path, because File::Find changes directories while searching for files
-                    my string $file_program = $file_prefix . '.pl';
-                    my string $file_module = $file_prefix . '.pm';
-#                    RPerl::diag('in 13_generate.t, find1, have $file_program = ' . $file_program . "\n");
-#                    RPerl::diag('in 13_generate.t, find1, have $file_module = ' . $file_module . "\n");
-                    my $file_program_full_path = File::Spec->catpath( $volume, $directories, $file_program );
-                    my $file_module_full_path = File::Spec->catpath( $volume, $directories, $file_module );
-#                    RPerl::diag('in 13_generate.t, find1, have $file_program_full_path = ' . $file_program_full_path . "\n");
-#                    RPerl::diag('in 13_generate.t, find1, have $file_module_full_path = ' . $file_module_full_path . "\n");
+                # restore saved path, because File::Find changes directories while searching for files
+                my string $file_program = $file_prefix . '.pl';
+                my string $file_module = $file_prefix . '.pm';
+#                RPerl::diag('in 13_generate.t, find1, have $file_program = ' . $file_program . "\n");
+#                RPerl::diag('in 13_generate.t, find1, have $file_module = ' . $file_module . "\n");
+                my $file_program_full_path = File::Spec->catpath( $volume, $directories, $file_program );
+                my $file_module_full_path = File::Spec->catpath( $volume, $directories, $file_module );
+#                RPerl::diag('in 13_generate.t, find1, have $file_program_full_path = ' . $file_program_full_path . "\n");
+#                RPerl::diag('in 13_generate.t, find1, have $file_module_full_path = ' . $file_module_full_path . "\n");
 
-                    if ((-e $file_program_full_path) and (-f $file_program_full_path) and (-T $file_program_full_path)) {
-#                        RPerl::diag('in 13_generate.t, find1, have all reference code for *.pl file, pre-compiled $file_prefix = ' . $file_prefix . "\n");
-                        $test_files->{$file_prefix . '.pl'} = undef;
-                    }
-                    elsif ((-e $file_module_full_path) and (-f $file_module_full_path) and (-T $file_module_full_path)) {
-#                        RPerl::diag('in 13_generate.t, find1, have all reference code for *.pm file, pre-compiled $file_prefix = ' . $file_prefix . "\n");
-                        $test_files->{$file_prefix . '.pm'} = undef;
-                    }
-                    else {
-                        RPerl::warning( 'WARNING WTE13GE01, TEST GROUP 13, CODE GENERATOR: Missing non-compiled source code reference file ' . q{'} . $file_prefix . '.pl' . q{'} . ' or '  . q{'} . $file_prefix . '.pm' . q{'} . ', not performing difference check' . "\n" );
-                    }
+                if ((-e $file_program_full_path) and (-f $file_program_full_path) and (-T $file_program_full_path)) {
+#                    RPerl::diag('in 13_generate.t, find1, have all reference code for *.pl file, pre-compiled $file_prefix = ' . $file_prefix . "\n");
+                    $test_files->{$file_prefix . '.pl'} = undef;
+                }
+                elsif ((-e $file_module_full_path) and (-f $file_module_full_path) and (-T $file_module_full_path)) {
+#                    RPerl::diag('in 13_generate.t, find1, have all reference code for *.pm file, pre-compiled $file_prefix = ' . $file_prefix . "\n");
+                    $test_files->{$file_prefix . '.pm'} = undef;
                 }
                 else {
-                    RPerl::warning( 'WARNING WTE13GE02, TEST GROUP 13, CODE GENERATOR: Unrecognized pre-compiled source code reference file base ' . q{'} . $file_base . q{'} . ', not performing difference check' . "\n" );
+                    RPerl::warning( 'WARNING WTE13GE01, TEST GROUP 13, CODE GENERATOR: Missing non-compiled source code reference file ' . q{'} . $file_prefix . '.pl' . q{'} . ' or '  . q{'} . $file_prefix . '.pm' . q{'} . ', not performing difference check' . "\n" );
                 }
             }
-            else {  # not a pre-compiled file
-#                RPerl::diag('in 13_generate.t, have NOT pre-compiled $file = ' . $file . "\n");
-                return;
+            else {
+                RPerl::warning( 'WARNING WTE13GE02, TEST GROUP 13, CODE GENERATOR: Unrecognized pre-compiled source code reference file base ' . q{'} . $file_base . q{'} . ', not performing difference check' . "\n" );
             }
-        },
-#        PATH_PRECOMPILED()
-        (defined $ARGV[0]) ? $ARGV[0] : PATH_PRECOMPILED()  # accept optional command-line argument
-    );
+        }
+        else {  # not a pre-compiled file
+#            RPerl::diag('in 13_generate.t, have NOT pre-compiled $file = ' . $file . "\n");
+            return;
+        }
+    },
+    (defined $ARGV[0]) ? $ARGV[0] : PATH_PRECOMPILED()  # accept optional command-line argument
+);
 
 #=cut
 
@@ -216,7 +215,6 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
 #        RPerl::diag( 'in 13_generate.t, top of secondary runloop, have $number_of_test_files = ' . $number_of_test_files . "\n" );
 
         $modes = {
-#            dependencies => 'OFF',  # unnecessary, handled by explicitly calling find_dependencies() below, only used for RPerl system deps; also find_parents()
             dependencies => 'ON',
             ops     => $ops,
             types   => $types,
@@ -276,7 +274,6 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
         # find RPerl system deps such as 'use rperlsse;', 'use rperlgmp;', etc.;
         # ignore return value, here we only care about $modes->{_enable_sse}, $modes->{_enable_gmp}, etc.;
 #        find_dependencies( $test_file, 0, $modes );  # second argument set to 0 for false value of $find_subdependencies_recurse
-#        find_dependencies( $test_file, 1, $modes );
 
         $output_file_name_groups_tmp = generate_output_file_names( [$test_file], [], 1, $modes );
         $output_file_name_group = $output_file_name_groups_tmp->[0];

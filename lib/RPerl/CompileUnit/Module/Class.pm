@@ -838,6 +838,17 @@ sub activate_subroutine {
         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
     }
     else {
+
+
+
+
+# START HERE: why is sun() getting redefined and trigger ECOPR00 below???
+# START HERE: why is sun() getting redefined and trigger ECOPR00 below???
+# START HERE: why is sun() getting redefined and trigger ECOPR00 below???
+
+
+
+
         #        RPerl::diag( "in Class::activate_subroutine(), $subroutine_name is a non-method subroutine\n" );
         if ( eval( 'defined(&main::' . $subroutine_name . ')' ) ) {
             croak
