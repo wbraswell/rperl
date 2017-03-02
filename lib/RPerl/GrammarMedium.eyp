@@ -1,0 +1,447 @@
+# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  this is EYAPP syntax, not pure Perl syntax
+
+# [[[ EYAPP SETUP & CONFIG ]]]
+
+%{
+    # [[[ HEADER ]]]
+    use strict;
+    use warnings;
+    our $VERSION = 0.006_100;
+
+    use Carp;
+    use rperlrules;  # affirmative, it totally does
+%}
+
+%strict                               # require all tokens to be declared, etc.
+%tree                                 # automatically create AST
+
+# [[[ LEXICON TOKENS, WHITESPACE ]]]
+
+%whites /((?:\s*(?:[#][^#!].*)?\s*)*|\s)/  # actual whitespace, or one or more normal comments; neither shebang '#!', nor double-hash critics '##'
+
+# [[[ SEMANTIC ACTION, ABSTRACT SYNTAX TREE NODE CONSTRUCTOR ]]]
+
+%defaultaction {
+    my $self = shift;
+    my $name = $self->YYName();
+    bless { children => [ @_ ], line_number => ($self->{TOKENLINE} + 1) }, $name;
+}
+
+# [[[ LEXICON TOKENS, TYPES & RESERVED WORDS ]]]
+
+%token SHEBANG               = /(^#!\/(?:\w+\/)*perl)/                   # begin line, hash (octothorpe), bang, *NIX path to Perl; ex. '#!/usr/bin/perl'
+%token USE_RPERL             = /(\s*use\s+RPerl\s*;\s*)/                 # 'use RPerl;'
+%token USE_RPERL_AFTER       = /(\s*use\s+RPerl::AfterSubclass\s*;\s*)/  # 'use RPerl::AfterSubclass;'
+%token USE                   = /(use\s+)/                                # 'use '
+%token VERSION_NUMBER_ASSIGN = /\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/    # DEV NOTE, CORRELATION #rp014: $VERSION assign v-number, only capture v-number, not a normal number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
+%token MY                    = /(my)/                                    # 'my'
+%token LITERAL_NUMBER        = /([+-]?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?(e[+-]?\d+)?)/   # number w/ underscores, optional scientific notation; ex. '12_345_678.910_1'
+%token LITERAL_STRING        = /(('([^'\\]+|(?:\\\\)+)+')|("((\\n)|(\\t)|[^"\@\$\\])*((\\n)|(\\t))+((\\n)|(\\t)|[^"\@\$\\])*")|(q\{([^}\\]+|(?:\\\\)+)*\}))/  # single quotes non-empty w/out odd backslashes; double quotes non-empty w/out sigils or extra backslashes & w/ newline or tab; or single q-braces w/out odd backslashes; ex. 'howdy $foo!' or "howdy foo!\n" or q{howdy $foo!} 
+%token SELF                  = /(\$self)/                                # '$self'
+%token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z]\w*)?[a-z]\w*(::[a-zA-Z]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$Foo::Bar::baz'
+%token FHREF_SYMBOL_IN       = /(\<\$[A-Z][A-Z0-9_]*\>)/                 # less-than, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, greater-than; ex. '<$MY_FILEHANDLE_23>'
+%token FHREF_SYMBOL_BRACES   = /(\{\$[A-Z][A-Z0-9_]*\})/                 # left brace, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, right brace; ex. '{$MY_FILEHANDLE_23}'
+%token FHREF_SYMBOL          = /(\$[A-Z][A-Z0-9_]*)/                     # dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. '$MY_FILEHANDLE_23'
+%token TYPE_INTEGER          = /(integer|unsigned_integer)\s+/           # 'integer' or 'unsigned_integer' followed by whitespace
+%token TYPE_FHREF            = /(filehandleref\s+)/                      # 'filehandleref' followed by whitespace
+%token TYPE_METHOD           = /((?:[a-zA-Z]\w*)+(?:::[a-zA-Z]\w*)*::method)/  # optionally-scoped word, followed by '::method'; ex. 'string_arrayref::method' or 'Foo::Bar::method'
+%token CONSTANT_CALL_SCOPED  = /((?:[a-zA-Z]\w*)(?:::[a-zA-Z]\w*)*(?:::[A-Z0-9_]*)\(\))/  # optionally-scoped constant call; ex. 'MY_CONST()' or 'Foo::Bar::BAZ_CONST()'
+%token WORD_SCOPED           = /((?:[a-zA-Z]\w*)?(?:::[a-zA-Z]\w*)+)/    # optionally-scoped word; ex. 'my_word' or 'My_Word' or 'Foo::Bar::baz_word'
+%token STDOUT_STDERR         = /(\{\*STDOUT\}|\{\*STDERR\})/             # '{*STDOUT}' or '{*STDERR}'
+%token STDIN                 = /(<STDIN>)/                               # '<STDIN>'
+%token ARGV                  = /(\@ARGV)/                                # '@ARGV'
+%token ENV                   = /(\%ENV)/                                 # '%ENV'
+
+# FEATURE BOUNTY #000, 1_000 CodeCoin: Implement all Perl functions AKA builtins (PERLOPS_PERLTYPES) as C++ functions (CPPOPS_*TYPES)
+# Affects OP01_NAMED, OP01_NAMED_VOID, and OP10_NAMED_UNARY below, corresponding RPerl::Test::Operator* and C++ code;  http://perldoc.perl.org/perlfunc.html
+
+# [[[ LEXICON TOKENS, OPERATORS ]]]
+
+# LEXICAL MATCHING: earlier declaration gets tried first, must be in correct order for all regexes to match
+# DEV NOTE: tokens which are all letters (or, ne, x, print, open, ETC) & are always followed by whitespace when tidy (NOT not or argumentless next, last, croak, return, exit, chdir, etc)
+# must be explicitly made to match the trailing whitespace in the regular expressions below, in order to avoid incorrectly matching substrings of user-defined words
+%token OP24_LOGICAL_OR_XOR       = /(or|xor)\s/                  # precedence 24 infix: logical 'or' and 'xor', equivalent to '||' except for precedence
+%token OP23_LOGICAL_AND          = /(and)\s/                     # precedence 23 infix: logical 'and', equivalent to '&&' except for precedence
+%token OP22_LOGICAL_NEG          = /(not)/                       # precedence 22 prefix: logical negation 'not', equivalent to '!' except for precedence
+%token OP21_LIST_COMMA           = /(,)/                         # precedence 21 infix: "list operators (rightward)" [1] AKA comma ','
+%token OP20_HASH_FATARROW        = /(=>)/                        # precedence 20 infix: hash entry fat arrow AKA fat comma '=>'
+%token OP19_LOOP_CONTROL_SCOLON  = /(next;|last;)/               # precedence 19 prefix void: loop control 'next;', 'last;'
+%token OP19_LOOP_CONTROL         = /(next|last|redo)\s/          # precedence 19 prefix void: same as above, except allows 'redo' and requires loop label
+%token OP18_TERNARY              = /(\?)/                        # precedence 18 infix: ternary conditional '?'
+%token OP17_LIST_RANGE           = /(\.\.)/                      # precedence 17 infix: range '..'
+%token OP16_LOGICAL_OR           = /(\|\|)/                      # precedence 16 infix: logical or '||'
+%token OP15_LOGICAL_AND          = /(&&)/                        # precedence 15 infix: logical and '&&'
+%token OP14_BITWISE_OR_XOR       = /(\||\^)/                     # precedence 14 infix: bitwise or '|', bitwise xor '^'
+%token OP13_BITWISE_AND          = /(&)/                         # precedence 13 infix: bitwise and '&'
+%token OP12_COMPARE_EQ_NE        = /(==|!=|<=>|eq|ne|cmp)\s/     # precedence 12 infix: comparison numeric equal '==', numeric not equal '!=', numeric three-way '<=>', string equal 'eq', string not equal 'ne', string three-way 'cmp'
+%token OP09_BITWISE_SHIFT        = /(<<|>>)/                     # precedence 09 infix: bitwise shift left '<<', shift right '>>'
+                                                                 # precedence 10 prefix: "named unary operators" [1] and Programming Perl, Chapter 3, List of All Named Unary Operators; 'scalar' not 'scalartype'
+%token OP10_NAMED_UNARY_SCOLON   = /(-A;|-B;|-C;|-M;|-O;|-R;|-S;|-T;|-W;|-X;|-b;|-c;|-d;|-e;|-f;|-g;|-k;|-l;|-o;|-p;|-r;|-s;|-t;|-u;|-w;|-x;|-z;|alarm;|caller;|chdir;|chroot;|cos;|defined;|delete;|do;|eval;|exists;|gethostbyname;|getnetbyname;|getpgrp;|getprotobyname;|glob;|gmtime;|goto;|hex;|int;|lc;|lcfirst;|length;|localtime;|lock;|log;|lstat;|oct;|ord;|quotemeta;|rand;|readlink;|ref;|require;|rmdir;|scalar;|sin;|sleep;|sqrt;|srand;|stat;|uc;|ucfirst;|umask;)/
+%token OP10_NAMED_UNARY          = /(-A\s|-B\s|-C\s|-M\s|-O\s|-R\s|-S\s|-T\s|-W\s|-X\s|-b\s|-c\s|-d\s|-e\s|-f\s|-g\s|-k\s|-l\s|-o\s|-p\s|-r\s|-s\s|-t\s|-u\s|-w\s|-x\s|-z\s|alarm\s|caller\s|chdir\s|chroot\s|cos\s|defined\s|delete\s|do\s|eval\s|exists\s|gethostbyname\s|getnetbyname\s|getpgrp\s|getprotobyname\s|glob\s|gmtime\s|goto\s|hex\s|int\s|lc\s|lcfirst\s|length\s|localtime\s|lock\s|log\s|lstat\s|oct\s|ord\s|quotemeta\s|rand\s|readlink\s|ref\s|require\s|rmdir\s|scalar\s|sin\s|sleep\s|sqrt\s|srand\s|stat\s|uc\s|ucfirst\s|umask\s)/
+%token OP19_VARIABLE_ASSIGN_BY   = /(\+=|-=|\*=|\/=|\.=)/        # precedence 19 infix: add assign '+=', subtract assign '-=', multiply assign '*=', divide assign '/=', string concatenation assign '.='
+%token OP08_STRING_CAT           = /(\.)/                        # precedence 08 infix: string concatenate '.'
+%token OP03_MATH_INC_DEC         = /(\+\+|--)/                   # precedence 03 prefix and postfix: increment '++', decrement '--'
+%token OP04_MATH_POW             = /(\*\*)/                      # precedence 04 infix: arithmetic exponent AKA power '**'
+%token OP07_MATH_MULT_DIV_MOD    = /(\*|\/|\%|sse_mul|sse_div)/  # precedence 07 infix: arithmetic multiply '*', divide '/', modulo '%', SSE multiply 'sse_mul', SSE divide 'sse_div'
+%token OP07_STRING_REPEAT        = /(x)\s/                       # precedence 07 infix: string repetition 'x'
+%token OP06_REGEX_PATTERN        = /([ms]\/.*(?:\/.*)?\/[a-z]*)/ # precedence 06 infix: regular expression pattern; ex. 'm/foo.*/xms' or 's/foo/bar/gxms'
+%token OP06_REGEX_MATCH          = /(=\~|!\~)/                   # precedence 06 infix: regular expression match '=~', not match '!~'
+%token OP05_LOGICAL_NEG          = /(!)/                         # precedence 05 prefix: logical negation '!'
+%token OP05_BITWISE_NEG_LPAREN   = /(\~\()/                      # precedence 05 prefix: bitwise negation '~', AKA one's complement; include paren to disambiguate from regex or smartmatch
+%token OP02_HASH_THINARROW       = /(->\{)/                      # precedence 02 infix: thin arrow, hash dereference and retrieval '->{'
+%token OP02_ARRAY_THINARROW      = /(->\[)/                      # precedence 02 infix: thin arrow, array dereference and retrieval '->['
+%token OP02_METHOD_THINARROW_NEW = /(->new\()/                   # precedence 02 infix: thin arrow, class constructor '->new('
+%token OP02_METHOD_THINARROW     = /(->[a-zA-Z]\w*)/             # precedence 02 infix: thin arrow, method dereference and call; ex. '->foo' or '->Bar23'
+%token OP05_MATH_NEG_LPAREN      = /(-\()/                       # precedence 05 prefix: arithmetic negative '-('; include paren to disambiguate from literal negative sign and subtraction operator
+%token OP08_MATH_ADD_SUB         = /(\+|-\s|sse_add|sse_sub)/    # precedence 08 infix: arithmetic add '+', subtract '-', SSE add 'sse_add', SSE subtract 'sse_sub'
+%token OP11_COMPARE_LT_GT        = /(<=|>=|<|>|le|ge|lt|gt)\s/   # precedence 11 infix: numeric comparison less or equal '<=', greater or equal '>=', less than '<', greater than '>'; string comparison less or equal 'le', greater or equal 'ge', less than 'lt', greater than 'gt'
+%token OP19_VARIABLE_ASSIGN      = /(=)/                         # precedence 19 infix: assign '='
+%token OP01_PRINT                = /(print|printf)\s/            # precedence 01 prefix void: 'print' or 'printf' to STDOUT, STDERR, or filehandle
+%token OP01_NAMED_VOID_SCOLON    = /(croak;|die;|exit;|return;)/ # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value; 'croak;', 'die;', 'exit;', 'return;'
+%token OP01_NAMED_VOID_LPAREN    = /(croak\(|exit\(|return\()/   # precedence 01 prefix void: same as above, except w/ parenthesis & w/out semicolon & w/out die; 'croak(', 'exit(', 'return('; ProhibitParensWithBuiltins excepts return() & exit(...); RequireTidyCode & RequireCarping excepts croak() 
+%token OP01_NAMED_VOID           = /(croak|die|exit|return)\s/   # precedence 01 prefix void: same as above, except accepts argument(s); 'croak', 'die', 'exit', 'return'
+%token OP01_QW                   = /(qw\([^()]*\))/              # precedence 01 closed: quote word; ex. 'qw()' or 'qw(foo bar baz)' or 'qw(Foo23 BarBax Ba_z 123)'
+%token OP01_OPEN                 = /(open)\s/                    # precedence 01 prefix: 'open' filehandle
+%token OP01_CLOSE                = /(close)\s/                   # precedence 01 prefix: 'close' filehandle
+                                                                 # precedence 01 prefix: "terms and list operators (leftward)" [1] AKA builtins; http://perl5.git.perl.org/perl.git/blob/HEAD:/t/op/cproto.t [2]
+# w/out all-uppercase Perl system builtin keywords ('__DATA__', 'AUTOLOAD', 'CHECK', etc); named unary operators above ('defined', 'exists', etc); and RPerl keywords ('use', 'our', 'my', 'package', 'for', etc)
+%token OP01_NAMED_SCOLON         = /(abs;|accept;|atan2;|bind;|binmode;|bless;|break;|chmod;|chomp;|chop;|chown;|chr;|closedir;|connect;|continue;|crypt;|dbmclose;|dbmopen;|default;|dump;|each;|endgrent;|endhostent;|endnetent;|endprotoent;|endpwent;|endservent;|eof;|evalbytes;|exec;|exp;|fc;|fcntl;|fileno;|flock;|fork;|format;|formline;|getc;|getgrent;|getgrgid;|getgrnam;|gethostbyaddr;|gethostent;|getlogin;|getnetbyaddr;|getnetent;|getpeername;|getppid;|getpriority;|getprotobynumber;|getprotoent;|getpwent;|getpwnam;|getpwuid;|getservbyname;|getservbyport;|getservent;|getsockname;|getsockopt;|given;|grep;|index;|ioctl;|join;|keys;|kill;|link;|listen;|local;|m;|map;|mkdir;|msgctl;|msgget;|msgrcv;|msgsnd;|opendir;|pack;|pipe;|pop;|pos;|prototype;|push;|q;|qq;|qr;|qx;|read;|readdir;|readline;|readpipe;|recv;|rename;|reset;|reverse;|rewinddir;|rindex;|s;|say;|seek;|seekdir;|select;|semctl;|semget;|semop;|send;|setgrent;|sethostent;|setnetent;|setpgrp;|setpriority;|setprotoent;|setpwent;|setservent;|setsockopt;|shift;|shmctl;|shmget;|shmread;|shmwrite;|shutdown;|socket;|socketpair;|sort;|splice;|split;|sprintf;|state;|study;|substr;|symlink;|syscall;|sysopen;|sysread;|sysseek;|system;|syswrite;|tell;|telldir;|tie;|tied;|time;|times;|tr;|truncate;|unless;|unlink;|unpack;|unshift;|untie;|until;|utime;|values;|vec;|wait;|waitpid;|wantarray;|warn;|when;|write;|y;)/
+%token OP01_NAMED                = /(abs\s|accept\s|atan2\s|bind\s|binmode\s|bless\s|break\s|chmod\s|chomp\s|chop\s|chown\s|chr\s|closedir\s|connect\s|continue\s|crypt\s|dbmclose\s|dbmopen\s|default\s|dump\s|each\s|endgrent\s|endhostent\s|endnetent\s|endprotoent\s|endpwent\s|endservent\s|eof\s|evalbytes\s|exec\s|exp\s|fc\s|fcntl\s|fileno\s|flock\s|fork\s|format\s|formline\s|getc\s|getgrent\s|getgrgid\s|getgrnam\s|gethostbyaddr\s|gethostent\s|getlogin\s|getnetbyaddr\s|getnetent\s|getpeername\s|getppid\s|getpriority\s|getprotobynumber\s|getprotoent\s|getpwent\s|getpwnam\s|getpwuid\s|getservbyname\s|getservbyport\s|getservent\s|getsockname\s|getsockopt\s|given\s|grep\s|index\s|ioctl\s|join\s|keys\s|kill\s|link\s|listen\s|local\s|m\s|map\s|mkdir\s|msgctl\s|msgget\s|msgrcv\s|msgsnd\s|opendir\s|pack\s|pipe\s|pop\s|pos\s|prototype\s|push\s|q\s|qq\s|qr\s|qx\s|read\s|readdir\s|readline\s|readpipe\s|recv\s|rename\s|reset\s|reverse\s|rewinddir\s|rindex\s|s\s|say\s|seek\s|seekdir\s|select\s|semctl\s|semget\s|semop\s|send\s|setgrent\s|sethostent\s|setnetent\s|setpgrp\s|setpriority\s|setprotoent\s|setpwent\s|setservent\s|setsockopt\s|shift\s|shmctl\s|shmget\s|shmread\s|shmwrite\s|shutdown\s|socket\s|socketpair\s|sort\s|splice\s|split\s|sprintf\s|state\s|study\s|substr\s|symlink\s|syscall\s|sysopen\s|sysread\s|sysseek\s|system\s|syswrite\s|tell\s|telldir\s|tie\s|tied\s|time\s|times\s|tr\s|truncate\s|unless\s|unlink\s|unpack\s|unshift\s|untie\s|until\s|utime\s|values\s|vec\s|wait\s|waitpid\s|wantarray\s|warn\s|when\s|write\s|y\s)/
+
+# [[[ SYNTAX, OPERATOR PRECEDENCE & ASSOCIATIVITY ]]]
+
+# later declaration gets higher priority; http://perldoc.perl.org/perlop.html#Operator-Precedence-and-Associativity [1]
+%left       OP24_LOGICAL_OR_XOR
+%left       OP23_LOGICAL_AND
+%right      OP22_LOGICAL_NEG
+%left       OP21_LIST_COMMA
+%left       OP20_HASH_FATARROW
+%right      OP19_LOOP_CONTROL_SCOLON
+%right      OP19_LOOP_CONTROL
+%right      OP19_VARIABLE_ASSIGN_BY
+%right      OP19_VARIABLE_ASSIGN
+%right      OP18_TERNARY
+%nonassoc   OP17_LIST_RANGE
+%left       OP16_LOGICAL_OR
+%left       OP15_LOGICAL_AND
+%left       OP14_BITWISE_OR_XOR
+%left       OP13_BITWISE_AND
+%nonassoc   OP12_COMPARE_EQ_NE
+%nonassoc   OP11_COMPARE_LT_GT
+%nonassoc   OP10_NAMED_UNARY
+%nonassoc   OP10_NAMED_UNARY_SCOLON
+%left       OP09_BITWISE_SHIFT
+%left       OP08_STRING_CAT
+%left       OP08_MATH_ADD_SUB
+%left       OP07_MATH_MULT_DIV_MOD
+%left       OP07_STRING_REPEAT
+%left       OP06_REGEX_MATCH
+%left       OP06_REGEX_PATTERN
+%right      OP05_MATH_NEG_LPAREN
+%right      OP05_LOGICAL_NEG
+%right      OP05_BITWISE_NEG_LPAREN
+%right      OP04_MATH_POW
+%nonassoc   OP03_MATH_INC_DEC
+%left       OP02_HASH_THINARROW
+%left       OP02_ARRAY_THINARROW
+%left       OP02_METHOD_THINARROW_NEW
+%left       OP02_METHOD_THINARROW
+%left       OP01_NAMED
+%left       OP01_NAMED_SCOLON
+%left       OP01_CLOSE
+%left       OP01_OPEN
+%left       OP01_QW
+%left       OP01_NAMED_VOID_SCOLON
+%left       OP01_NAMED_VOID_LPAREN
+%left       OP01_NAMED_VOID
+%left       OP01_PRINT
+
+# [[[ LEXICON TOKENS, PUNCTUATION & USER-DEFINED WORDS ]]]
+
+%token COLON                = /(:)/                           # ':'
+%token LPAREN_MY            = /(\(\s*my)/                     # '(my'
+%token LPAREN               = /(\()/                          # '('
+%token LBRACKET             = /(\[)/                          # '['
+%token LBRACE               = /(\{)/                          # '{'
+%token WORD                 = /([a-z]\w*|[A-Z]\w*[a-z]\w*)/   # lowercase letter followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters; ex. 'foo' or 'foo23' or 'Foo23'
+%token WORD_UPPERCASE       = /([A-Z][A-Z0-9_]*|[A-Z])/       # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOO' or 'FOOBAR_42_HOWDY'
+
+%%
+
+# [[[ SYNTAX PRODUCTION RULES, FILE FORMATS ]]]
+
+CompileUnit:             Program | (ModuleHeader Module)+ ;
+Program:                 SHEBANG Critic? USE_RPERL Header Critic* Include* Constant* Subroutine* Operation+ ;
+ModuleHeader:            Critic? USE_RPERL? 'package' WordScoped ';' Header ;
+Module:                  Package | Class ;
+Package:                 Critic* Include* Constant* Subroutine+ LITERAL_NUMBER ';' ;
+Header:                  'use strict;' 'use warnings;' USE_RPERL_AFTER? 'our' VERSION_NUMBER_ASSIGN;
+Critic:                  '## no critic qw(' WORD+ ')';
+Include:                 USE WordScoped ';' | USE WordScoped OP01_QW ';' ;
+Constant:                'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';' ;
+#Constant:               'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
+#ConstantValue:          Literal | LBRACKET TypeInnerConstant? Literal (OP21_LIST_COMMA TypeInnerConstant? Literal)* ']' | 
+#                        LBRACE WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal (OP21_LIST_COMMA WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal)* '}' ;
+Subroutine:              'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation* '}' ';' ;
+SubroutineArguments:     LPAREN_MY Type VARIABLE_SYMBOL (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
+Class:                   'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties SubroutineOrMethod* LITERAL_NUMBER ';' ;
+Properties:              'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryProperties (OP21_LIST_COMMA HashEntryProperties)* '}' ';' |
+                         'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';';
+Method:                  'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation* '}' ';' ;
+MethodArguments:         LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
+SubroutineOrMethod:      Subroutine | Method ;
+
+# [[[ SYNTAX PRODUCTION RULES, OPERATIONS ]]]
+
+Operation:               Expression ';' | OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | Statement ;
+Operator:                LPAREN OP01_PRINT FHREF_SYMBOL_BRACES ListElements ')' |
+                         OP01_NAMED SubExpression | LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' |
+                         OP01_OPEN MY TYPE_FHREF FHREF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
+                         OP01_CLOSE FHREF_SYMBOL | OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
+                         OP05_BITWISE_NEG_LPAREN SubExpression ')' | OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG_LPAREN SubExpression ')' |
+                         SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN | SubExpression OP07_STRING_REPEAT SubExpression |
+                         SubExpression OP07_MATH_MULT_DIV_MOD SubExpression | SubExpression OP08_MATH_ADD_SUB SubExpression |
+                         SubExpression OP08_STRING_CAT SubExpression | SubExpression OP09_BITWISE_SHIFT SubExpression |
+                         OP10_NAMED_UNARY SubExpression | OP10_NAMED_UNARY | SubExpression OP11_COMPARE_LT_GT SubExpression |
+                         SubExpression OP12_COMPARE_EQ_NE SubExpression | SubExpression OP13_BITWISE_AND SubExpression |
+                         SubExpression OP14_BITWISE_OR_XOR SubExpression | SubExpression OP15_LOGICAL_AND SubExpression | SubExpression OP16_LOGICAL_OR SubExpression |
+                         SubExpression OP17_LIST_RANGE SubExpression | SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral |
+                         OP22_LOGICAL_NEG SubExpression | SubExpression OP23_LOGICAL_AND SubExpression | SubExpression OP24_LOGICAL_OR_XOR SubExpression ;
+OperatorVoid:            OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRINT FHREF_SYMBOL_BRACES ListElements ';' |
+                         OP01_NAMED_VOID_SCOLON | OP01_NAMED_VOID_LPAREN ListElements? ')' ';' | OP01_NAMED_VOID ListElements ';' | 
+                         OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' | OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL LoopLabel ';' ;
+Expression:              Operator | WORD_UPPERCASE LPAREN ')' | CONSTANT_CALL_SCOPED | WordScoped LPAREN ListElements? ')' |
+                         Variable OP02_METHOD_THINARROW LPAREN ListElements? ')' | WordScoped OP02_METHOD_THINARROW_NEW ')' ;
+SubExpression:           Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereference | HashReference | HashDereference | LPAREN SubExpression ')' ;
+SubExpressionOrInput:    SubExpression | FHREF_SYMBOL_IN | STDIN;
+SubExpressionOrVarMod:   SubExpression | VariableModification;
+Statement:               Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ';' ;
+Conditional:             'if' LPAREN SubExpression ')' CodeBlock ('elsif' LPAREN SubExpression ')' CodeBlock)* ('else' CodeBlock)? ;
+Loop:                    LoopFor | LoopForEach | LoopWhile ;
+LoopFor:                 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock |
+                         'for' LPAREN_MY TYPE_INTEGER VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExp VARIABLE_SYMBOL OP11_COMPARE_LT_GT OpNamedScolonOrSubExp SubExpressionOrVarMod ')' CodeBlock ;
+LoopForEach:             'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock ;
+LoopWhile:               'while' LPAREN SubExpression ')' CodeBlock | 'while' LPAREN_MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrInput ')' CodeBlock;
+CodeBlock:               LBRACE Operation+ '}' ;
+
+# [[[ SYNTAX PRODUCTION RULES, VARIABLE DATA ]]]
+
+Variable:                VariableSymbolOrSelf VariableRetrieval* ;
+VariableRetrieval:       OP02_ARRAY_THINARROW SubExpression ']' | OP02_HASH_THINARROW SubExpression '}' | OP02_HASH_THINARROW WORD '}' ;
+VariableDeclaration:     MY Type VARIABLE_SYMBOL ';' | MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExpIn | 
+                         MY Type VARIABLE_SYMBOL OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ';' | MY TYPE_FHREF FHREF_SYMBOL ';' ;
+VariableModification:    Variable OP19_VARIABLE_ASSIGN SubExpressionOrInput | Variable OP19_VARIABLE_ASSIGN_BY SubExpression ;
+ListElements:            ListElement (OP21_LIST_COMMA ListElement)* ;
+ListElement:             SubExpression | TypeInner SubExpression | OP01_QW | ARGV;
+ArrayReference:          LBRACKET ListElements? ']' ;
+ArrayDereference:        '@{' Variable '}' | '@{' TypeInner? ArrayReference '}' ;
+HashEntry:               VarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | HashDereference | ENV ;
+HashEntryProperties:     OpStringOrWord OP20_HASH_FATARROW TypeInnerProperties ;
+HashReference:           LBRACE HashEntry (OP21_LIST_COMMA HashEntry)* '}' | LBRACE '}' ;
+HashDereference:         '%{' Variable '}' | '%{' TypeInner? HashReference '}' ;
+
+# [[[ SYNTAX PRODUCTION RULES, USER-DEFINED WORDS ]]]
+
+WordScoped:              WORD | WORD_SCOPED ;
+LoopLabel:               WORD_UPPERCASE ;
+Type:                    WORD | WORD_SCOPED | TYPE_INTEGER ;
+TypeInner:               MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN ;
+TypeInnerProperties:     MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression | 
+                         MY Type '$TYPED_' OpStringOrWord OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ;
+TypeInnerConstant:       MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN ;
+VariableOrLiteral:       Variable | Literal ;
+VarOrLitOrOpStrOrWord:   Variable | Literal | OpStringOrWord ;
+VariableSymbolOrSelf:    VARIABLE_SYMBOL | SELF ;
+Literal:                 LITERAL_NUMBER | LITERAL_STRING ;
+OpNamedScolonOrSubExp:   OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | SubExpression ';' ;
+OpNamedScolonOrSubExpIn: OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | SubExpressionOrInput ';' ;
+OpStringOrWord:          OP24_LOGICAL_OR_XOR | OP23_LOGICAL_AND | OP22_LOGICAL_NEG | OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL | OP12_COMPARE_EQ_NE |
+                         OP11_COMPARE_LT_GT | OP10_NAMED_UNARY | OP08_MATH_ADD_SUB | OP07_MATH_MULT_DIV_MOD | OP07_STRING_REPEAT | OP01_NAMED | OP01_CLOSE | 
+                         OP01_OPEN | OP01_NAMED_VOID | OP01_PRINT | WORD ;
+
+%%
+
+# [[[ SEMANTIC MAP, ABSTRACT SYNTAX TREE NODES TO CLASSES ]]]
+
+{
+# Map from abstract syntax tree to classes
+# DEV NOTE: derived from grammar rules in GrammarMedium.output file, use the following process for grammar updates...
+# 1.  Update grammar code in this file, above this line only
+# 2.  Run `script/development/grammar_medium_recompile.sh`
+# 3.  Run `perl t/12_parse.t` for new & existing grammar parse-only tests, if errors goto step 1
+# 4.  Inspect updates from GrammarMedium.output file, note starting & finishing & increment/decrement numbers if any rule numbers have changed
+# 5a. Run `scripts/development/grammar_medium_increment.pl START FINISH INCREMENT` if rules added from step 4, repeat if needed
+# 5b. Run `scripts/development/grammar_medium_decrement.pl START FINISH DECREMENT` if rules deleted from step 4, repeat if needed
+# 6.  Copy updates from GrammarMedium.output file into this file with now-unique numbers, below this line only, if rules added
+# 7.  Run `script/development/grammar_medium_recompile.sh` again
+our string_hashref $RULES = {
+CompileUnit_4 => 'RPerl::CompileUnit::Program',                             # CompileUnit -> Program
+CompileUnit_5 => 'RPerl::CompileUnit::Module',                              # CompileUnit -> PLUS-2
+Program_18 => 'RPerl::CompileUnit::Program',                                # Program -> SHEBANG OPTIONAL-3 USE_RPERL Header STAR-4 STAR-5 STAR-6 STAR-7 PLUS-8
+ModuleHeader_23 => 'RPerl::CompileUnit::Module::Header',                    # ModuleHeader -> OPTIONAL-9 OPTIONAL-10 'package' WordScoped ';' Header
+Module_24 => 'RPerl::CompileUnit::Module::Package',                         # Module -> Package
+Module_25 => 'RPerl::CompileUnit::Module::Class::Generator',                # Module -> Class
+Package_34 => 'RPerl::CompileUnit::Module::Package',                        # Package -> STAR-10 STAR-11 STAR-12 PLUS-13 LITERAL_NUMBER ';'
+Header_37 => 'RPerl::NonGenerator',                                         # Header -> 'use strict;' 'use warnings;' OPTIONAL-15 'our' VERSION_NUMBER_ASSIGN
+Critic_40 => 'RPerl::CompileUnit::Critic',                                  # Critic -> '## no critic qw(' PLUS-14 ')'
+Include_41 => 'RPerl::CompileUnit::Include',                                # Include -> USE WordScoped ';'
+Include_42 => 'RPerl::CompileUnit::Include',                                # Include -> USE WordScoped OP01_QW ';'
+Constant_43 => 'RPerl::CompileUnit::Constant',                              # Constant -> 'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';'
+Subroutine_48 => 'RPerl::CodeBlock::Subroutine',                            # Subroutine -> 'our' Type VARIABLE_SYMBOL '= sub {' OPTIONAL-16 STAR-17 '}' ';'
+SubroutineArguments_52 => 'RPerl::CodeBlock::Subroutine::Arguments',        # SubroutineArguments -> LPAREN_MY Type VARIABLE_SYMBOL STAR-19 ')' OP19_VARIABLE_ASSIGN '@ARG;'
+Class_61 => 'RPerl::CompileUnit::Module::Class::Generator',                 # Class -> 'use parent qw(' WordScoped ')' ';' Include STAR-20 STAR-21 STAR-22 Properties STAR-23 LITERAL_NUMBER ';'
+Properties_65 => 'RPerl::NonGenerator',                                     # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryProperties STAR-27 '}' ';'
+Properties_66 => 'RPerl::NonGenerator',                                     # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';'
+Method_71 => 'RPerl::CodeBlock::Subroutine::Method',                        # Method -> 'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' OPTIONAL-26 STAR-27 '}' ';'
+MethodArguments_75 => 'RPerl::CodeBlock::Subroutine::Method::Arguments',    # MethodArguments -> LPAREN_MY TYPE_SELF STAR-29 ')' OP19_VARIABLE_ASSIGN '@ARG;'
+SubroutineOrMethod_76 => 'RPerl::CodeBlock::Subroutine',                    # SubroutineOrMethod -> Subroutine
+SubroutineOrMethod_77 => 'RPerl::CodeBlock::Subroutine::Method',            # SubroutineOrMethod -> Method
+Operation_78 => 'RPerl::Operation::Expression',                             # Operation -> Expression ';'
+Operation_79 => 'RPerl::Operation::Expression::Operator::Named',            # Operation -> OP01_NAMED_SCOLON
+Operation_80 => 'RPerl::Operation::Expression::Operator::NamedUnary',       # Operation -> OP10_NAMED_UNARY_SCOLON
+Operation_81 => 'RPerl::Operation::Statement',                              # Operation -> Statement
+Operator_82 => 'RPerl::Operation::Expression::Operator::Print',             # Operator -> LPAREN OP01_PRINT FHREF_SYMBOL_BRACES ListElements ')'
+Operator_83 => 'RPerl::Operation::Expression::Operator::Named',             # Operator -> OP01_NAMED SubExpression
+Operator_84 => 'RPerl::Operation::Expression::Operator::Named',             # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+Operator_85 => 'RPerl::Operation::Expression::Operator::Open',              # Operator -> OP01_OPEN MY TYPE_FHREF FHREF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression
+Operator_86 => 'RPerl::Operation::Expression::Operator::Close',             # Operator -> OP01_CLOSE FHREF_SYMBOL
+Operator_87 => 'RPerl::Operation::Expression::Operator::IncrementDecrement',                # Operator -> OP03_MATH_INC_DEC Variable
+Operator_88 => 'RPerl::Operation::Expression::Operator::IncrementDecrement',                # Operator -> Variable OP03_MATH_INC_DEC
+Operator_89 => 'RPerl::Operation::Expression::Operator::Arithmetic::Power',                 # Operator -> SubExpression OP04_MATH_POW SubExpression
+Operator_90 => 'RPerl::Operation::Expression::Operator::Bitwise::Negation',                 # Operator -> OP05_BITWISE_NEG_LPAREN SubExpression ')'
+Operator_91 => 'RPerl::Operation::Expression::Operator::Logical::Negation',                 # Operator -> OP05_LOGICAL_NEG SubExpression
+Operator_92 => 'RPerl::Operation::Expression::Operator::Arithmetic::Negative',              # Operator -> OP05_MATH_NEG_LPAREN SubExpression ')'
+Operator_93 => 'RPerl::Operation::Expression::Operator::RegularExpression',                 # Operator -> SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN
+Operator_94 => 'RPerl::Operation::Expression::Operator::String::Repeat',                    # Operator -> SubExpression OP07_STRING_REPEAT SubExpression
+Operator_95 => 'RPerl::Operation::Expression::Operator::Arithmetic::MultiplyDivideModulo',  # Operator -> SubExpression OP07_MATH_MULT_DIV_MOD SubExpression
+Operator_96 => 'RPerl::Operation::Expression::Operator::Arithmetic::AddSubtract',           # Operator -> SubExpression OP08_MATH_ADD_SUB SubExpression
+Operator_97 => 'RPerl::Operation::Expression::Operator::String::Concatenate',               # Operator -> SubExpression OP08_STRING_CAT SubExpression
+Operator_98 => 'RPerl::Operation::Expression::Operator::Bitwise::Shift',                    # Operator -> SubExpression OP09_BITWISE_SHIFT SubExpression
+Operator_99 => 'RPerl::Operation::Expression::Operator::NamedUnary',                        # Operator -> OP10_NAMED_UNARY SubExpression
+Operator_100 => 'RPerl::Operation::Expression::Operator::NamedUnary',                        # Operator -> OP10_NAMED_UNARY
+Operator_101 => 'RPerl::Operation::Expression::Operator::Compare::LessThanGreaterThan',     # Operator -> SubExpression OP11_COMPARE_LT_GT SubExpression
+Operator_102 => 'RPerl::Operation::Expression::Operator::Compare::EqualNotEqual',           # Operator -> SubExpression OP12_COMPARE_EQ_NE SubExpression
+Operator_103 => 'RPerl::Operation::Expression::Operator::Bitwise::And',                     # Operator -> SubExpression OP13_BITWISE_AND SubExpression
+Operator_104 => 'RPerl::Operation::Expression::Operator::Bitwise::OrXor',                   # Operator -> SubExpression OP14_BITWISE_OR_XOR SubExpression
+Operator_105 => 'RPerl::Operation::Expression::Operator::Logical::And',                     # Operator -> SubExpression OP15_LOGICAL_AND SubExpression
+Operator_106 => 'RPerl::Operation::Expression::Operator::Logical::OrXor',                   # Operator -> SubExpression OP16_LOGICAL_OR SubExpression
+Operator_107 => 'RPerl::Operation::Expression::Operator::List::Range',                      # Operator -> SubExpression OP17_LIST_RANGE SubExpression
+Operator_108 => 'RPerl::Operation::Expression::Operator::Ternary',                          # Operator -> SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral
+Operator_109 => 'RPerl::Operation::Expression::Operator::Logical::Negation',                # Operator -> OP22_LOGICAL_NEG SubExpression
+Operator_110 => 'RPerl::Operation::Expression::Operator::Logical::And',                     # Operator -> SubExpression OP23_LOGICAL_AND SubExpression
+Operator_111 => 'RPerl::Operation::Expression::Operator::Logical::OrXor',                   # Operator -> SubExpression OP24_LOGICAL_OR_XOR SubExpression
+OperatorVoid_117 => 'RPerl::Operation::Statement::OperatorVoid::Print',                     # OperatorVoid -> OP01_PRINT OPTIONAL-31 ListElements ';'
+OperatorVoid_118 => 'RPerl::Operation::Statement::OperatorVoid::Print',                     # OperatorVoid -> OP01_PRINT FHREF_SYMBOL_BRACES ListElements ';'
+OperatorVoid_119 => 'RPerl::Operation::Statement::OperatorVoid::Named',                     # OperatorVoid -> OP01_NAMED_VOID_SCOLON
+OperatorVoid_120 => 'RPerl::Operation::Statement::OperatorVoid::Named',                     # OperatorVoid -> OP01_NAMED_VOID_LPAREN OPTIONAL-32 ')' ';'
+OperatorVoid_121 => 'RPerl::Operation::Statement::OperatorVoid::Named',                     # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
+OperatorVoid_122 => 'RPerl::Operation::Expression::Operator::Named',                        # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+OperatorVoid_123 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',               # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
+OperatorVoid_124 => 'RPerl::Operation::Statement::OperatorVoid::LoopControl',               # OperatorVoid -> OP19_LOOP_CONTROL LoopLabel ';'
+Expression_129 => 'RPerl::Operation::Expression::Operator',                                     # Expression -> Operator
+Expression_130 => 'RPerl::Operation::Expression::ConstantCall',                                 # Expression -> WORD_UPPERCASE LPAREN ')'
+Expression_131 => 'RPerl::Operation::Expression::ConstantCall',                                 # Expression -> CONSTANT_CALL_SCOPED
+Expression_132 => 'RPerl::Operation::Expression::SubroutineCall',                               # Expression -> WordScoped LPAREN OPTIONAL-33 ')'
+Expression_133 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall',                   # Expression -> Variable OP02_METHOD_THINARROW LPAREN OPTIONAL-34 ')'
+Expression_134 => 'RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall',  # Expression -> WordScoped OP02_METHOD_THINARROW_NEW ')'
+SubExpression_135 => 'RPerl::Operation::Expression',                                            # SubExpression -> Expression
+SubExpression_136 => 'RPerl::Operation::Expression::SubExpression::Literal::Undefined',         # SubExpression -> 'undef'
+SubExpression_137 => 'RPerl::Operation::Expression::SubExpression::Literal',                    # SubExpression -> Literal
+SubExpression_138 => 'RPerl::Operation::Expression::SubExpression::Variable',                   # SubExpression -> Variable
+SubExpression_139 => 'RPerl::DataStructure::Array::Reference',                                  # SubExpression -> ArrayReference
+SubExpression_140 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',           # SubExpression -> ArrayDereference
+SubExpression_141 => 'RPerl::DataStructure::Hash::Reference',                                   # SubExpression -> HashReference
+SubExpression_142 => 'RPerl::Operation::Expression::SubExpression::HashDereference',            # SubExpression -> HashDereference
+SubExpression_143 => 'RPerl::Operation::Expression::SubExpression::Parenthesis',                # SubExpression -> LPAREN SubExpression ')'
+SubExpressionOrInput_144 => 'RPerl::Operation::Expression::SubExpression',                      # SubExpressionOrInput -> SubExpression
+SubExpressionOrInput_145 => 'RPerl::InputOutput::FilehandleIn',                                 # SubExpressionOrInput -> FHREF_SYMBOL_IN
+SubExpressionOrInput_146 => 'RPerl::InputOutput::Stdin',                                        # SubExpressionOrInput -> STDIN
+SubExpressionOrVarMod_147 => 'RPerl::Operation::Expression::SubExpression',                     # SubExpressionOrVarMod -> SubExpression
+SubExpressionOrVarMod_148 => 'RPerl::Operation::Statement::VariableModification',               # SubExpressionOrVarMod -> VariableModification
+Statement_152 => 'RPerl::Operation::Statement::Conditional',                                    # Statement -> Conditional
+Statement_153 => 'RPerl::Operation::Statement::Loop',                                           # Statement -> OPTIONAL-36 Loop
+Statement_154 => 'RPerl::Operation::Statement::OperatorVoid',                                   # Statement -> OperatorVoid
+Statement_155 => 'RPerl::Operation::Statement::VariableDeclaration',                            # Statement -> VariableDeclaration
+Statement_156 => 'RPerl::Operation::Statement::VariableModification',                           # Statement -> VariableModification ';'
+Conditional_163 => 'RPerl::Operation::Statement::Conditional',                                  # Conditional -> 'if' LPAREN SubExpression ')' CodeBlock STAR-38 OPTIONAL-40
+Loop_164 => 'RPerl::Operation::Statement::Loop::For',                                           # Loop -> LoopFor
+Loop_165 => 'RPerl::Operation::Statement::Loop::ForEach',                                       # Loop -> LoopForEach
+Loop_166 => 'RPerl::Operation::Statement::Loop::While',                                         # Loop -> LoopWhile
+LoopFor_167 => 'RPerl::Operation::Statement::Loop::For',                                        # LoopFor -> 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock
+LoopFor_168 => 'RPerl::Operation::Statement::Loop::For',                                        # LoopFor -> 'for' LPAREN_MY TYPE_INTEGER VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExp VARIABLE_SYMBOL OP11_COMPARE_LT_GT OpNamedScolonOrSubExp SubExpressionOrVarMod ')' CodeBlock
+LoopForEach_169 => 'RPerl::Operation::Statement::Loop::ForEach',                                # LoopForEach -> 'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock
+LoopWhile_170 => 'RPerl::Operation::Statement::Loop::While',                                    # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
+LoopWhile_171 => 'RPerl::Operation::Statement::Loop::While',                                    # LoopWhile -> 'while' LPAREN_MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrInput ')' CodeBlock
+CodeBlock_174 => 'RPerl::CodeBlock',                                                            # CodeBlock -> LBRACE PLUS-41 '}'
+Variable_177 => 'RPerl::Operation::Expression::SubExpression::Variable',                        # Variable -> VariableSymbolOrSelf STAR-44
+VariableRetrieval_178 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',    # VariableRetrieval -> OP02_ARRAY_THINARROW SubExpression ']'
+VariableRetrieval_179 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',    # VariableRetrieval -> OP02_HASH_THINARROW SubExpression '}'
+VariableRetrieval_180 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',    # VariableRetrieval -> OP02_HASH_THINARROW WORD '}'
+VariableDeclaration_181 => 'RPerl::Operation::Statement::VariableDeclaration',                  # VariableDeclaration -> MY Type VARIABLE_SYMBOL ';'
+VariableDeclaration_182 => 'RPerl::Operation::Statement::VariableDeclaration',                  # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExpIn
+VariableDeclaration_183 => 'RPerl::Operation::Statement::VariableDeclaration',                  # VariableDeclaration -> MY Type VARIABLE_SYMBOL OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ';'
+VariableDeclaration_184 => 'RPerl::Operation::Statement::VariableDeclaration',                  # VariableDeclaration -> MY TYPE_FHREF FHREF_SYMBOL ';'
+VariableModification_185 => 'RPerl::Operation::Statement::VariableModification',                # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrInput
+VariableModification_186 => 'RPerl::Operation::Statement::VariableModification',                # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression
+ListElements_190 => 'RPerl::DataStructure::Array::ListElements',                                # ListElements -> ListElement STAR-43
+ListElement_191 => 'RPerl::Operation::Expression::SubExpression',                               # ListElement -> SubExpression
+ListElement_192 => 'RPerl::Operation::Expression::SubExpression',                               # ListElement -> TypeInner SubExpression
+ListElement_193 => 'RPerl::DataStructure::Array::ListElement',                                  # ListElement -> OP01_QW
+ListElement_194 => 'RPerl::DataStructure::Array::ListElement',                                  # ListElement -> ARGV
+ArrayReference_197 => 'RPerl::DataStructure::Array::Reference',                                 # ArrayReference -> LBRACKET OPTIONAL-45 ']'
+ArrayDereference_200 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',        # ArrayDereference -> '@{' Variable '}'
+ArrayDereference_201 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',        # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
+HashEntry_204 => 'RPerl::DataStructure::Hash::Entry',                                           # HashEntry -> VarOrLitOrOpStrOrWord OP20_HASH_FATARROW OPTIONAL-47 SubExpression
+HashEntry_205 => 'RPerl::Operation::Expression::SubExpression::HashDereference',                # HashEntry -> HashDereference
+HashEntry_206 => 'RPerl::DataStructure::Hash::Entry',                                           # HashEntry -> ENV
+HashEntryProperties_207 => 'RPerl::NonGenerator',                                               # HashEntryProperties -> OpStringOrWord OP20_HASH_FATARROW TypeInnerProperties
+HashReference_211 => 'RPerl::DataStructure::Hash::Reference',                                   # HashReference -> LBRACE HashEntry STAR-50 '}'
+HashReference_212 => 'RPerl::DataStructure::Hash::Reference',                                   # HashReference -> LBRACE '}'
+HashDereference_215 => 'RPerl::Operation::Expression::SubExpression::HashDereference',          # HashDereference -> '%{' Variable '}'
+HashDereference_216 => 'RPerl::Operation::Expression::SubExpression::HashDereference',          # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
+WordScoped_217 => 'RPerl::NonGenerator',                                                        # WordScoped -> WORD
+WordScoped_218 => 'RPerl::NonGenerator',                                                        # WordScoped -> WORD_SCOPED
+LoopLabel_219 => 'RPerl::NonGenerator',                                                         # LoopLabel -> WORD_UPPERCASE  # RPerl::Operation::Statement -> LoopLabel COLON
+Type_220 => 'RPerl::NonGenerator',                                                              # Type -> WORD
+Type_221 => 'RPerl::NonGenerator',                                                              # Type -> WORD_SCOPED
+Type_222 => 'RPerl::NonGenerator',                                                              # Type -> TYPE_INTEGER
+TypeInner_223 => 'RPerl::DataType::TypeInner',                                                  # TypeInner -> MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN
+TypeInnerProperties_224 => 'RPerl::NonGenerator',                                               # TypeInnerProperties -> MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression
+TypeInnerProperties_225 => 'RPerl::NonGenerator',                                               # TypeInnerProperties -> MY Type '$TYPED_' OpStringOrWord OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
+TypeInnerConstant_226 => 'RPerl::NonGenerator',                                                 # TypeInnerConstant -> MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN
+VariableOrLiteral_227 => 'RPerl::Operation::Expression::SubExpression::Variable',               # VariableOrLiteral -> Variable
+VariableOrLiteral_228 => 'RPerl::Operation::Expression::SubExpression::Literal',                # VariableOrLiteral -> Literal
+VarOrLitOrOpStrOrWord_229 => 'RPerl::Operation::Expression::SubExpression::Variable',           # VarOrLitOrOpStrOrWord -> Variable
+VarOrLitOrOpStrOrWord_230 => 'RPerl::Operation::Expression::SubExpression::Literal',            # VarOrLitOrOpStrOrWord -> Literal
+VarOrLitOrOpStrOrWord_231 => 'RPerl::NonGenerator',                                             # VarOrLitOrOpStrOrWord -> OpStringOrWord
+VariableSymbolOrSelf_232 => 'RPerl::NonGenerator',                                              # VariableSymbolOrSelf -> VARIABLE_SYMBOL
+VariableSymbolOrSelf_233 => 'RPerl::NonGenerator',                                              # VariableSymbolOrSelf -> SELF
+Literal_234 => 'RPerl::Operation::Expression::SubExpression::Literal::Number',                  # Literal -> LITERAL_NUMBER
+Literal_235 => 'RPerl::Operation::Expression::SubExpression::Literal::String',                  # Literal -> LITERAL_STRING
+OpNamedScolonOrSubExp_236 => 'RPerl::NonGenerator',                                             # OpNamedScolonOrSubExp -> OP01_NAMED_SCOLON
+OpNamedScolonOrSubExp_237 => 'RPerl::NonGenerator',                                             # OpNamedScolonOrSubExp -> OP10_NAMED_UNARY_SCOLON
+OpNamedScolonOrSubExp_238 => 'RPerl::NonGenerator',                                             # OpNamedScolonOrSubExp -> SubExpression ';'
+OpNamedScolonOrSubExpIn_239 => 'RPerl::NonGenerator',                                           # OpNamedScolonOrSubExpIn -> OP01_NAMED_SCOLON
+OpNamedScolonOrSubExpIn_240 => 'RPerl::NonGenerator',                                           # OpNamedScolonOrSubExpIn -> OP10_NAMED_UNARY_SCOLON
+OpNamedScolonOrSubExpIn_241 => 'RPerl::NonGenerator',                                           # OpNamedScolonOrSubExpIn -> SubExpressionOrInput ';'
+OpStringOrWord_242 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP24_LOGICAL_OR_XOR
+OpStringOrWord_243 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP23_LOGICAL_AND
+OpStringOrWord_244 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP22_LOGICAL_NEG
+OpStringOrWord_245 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP19_LOOP_CONTROL_SCOLON
+OpStringOrWord_246 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP19_LOOP_CONTROL
+OpStringOrWord_247 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP12_COMPARE_EQ_NE
+OpStringOrWord_248 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP11_COMPARE_LT_GT
+OpStringOrWord_249 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP10_NAMED_UNARY
+OpStringOrWord_250 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP08_MATH_ADD_SUB
+OpStringOrWord_251 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP07_MATH_MULT_DIV_MOD
+OpStringOrWord_252 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP07_STRING_REPEAT
+OpStringOrWord_253 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP01_NAMED
+OpStringOrWord_254 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP01_CLOSE
+OpStringOrWord_255 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP01_OPEN
+OpStringOrWord_256 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP01_NAMED_VOID
+OpStringOrWord_257 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> OP01_PRINT
+OpStringOrWord_258 => 'RPerl::NonGenerator',                                                    # OpStringOrWord -> WORD
+};
+
+    1;
+}
