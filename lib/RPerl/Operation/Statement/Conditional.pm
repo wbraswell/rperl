@@ -25,8 +25,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap Conditional_164 from Statement_153
-    if ( $self_class eq 'Statement_153' ) {    # Statement -> Conditional
+    # unwrap Conditional_163 from Statement_152
+    if ( $self_class eq 'Statement_152' ) {    # Statement -> Conditional
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
@@ -34,7 +34,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Conditional->ast_to_rperl__generate(), have possibly-unwrapped $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
   # Conditional -> 'if' LPAREN SubExpression ')' CodeBlock STAR-38 OPTIONAL-40
-    if ( $self_class eq 'Conditional_164' ) {
+    if ( $self_class eq 'Conditional_163' ) {
         my string $if            = $self->{children}->[0];
         my string $left_paren    = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -111,7 +111,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Conditional_164 expected, dying' )
+                . ' found where Conditional_163 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -137,8 +137,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap Conditional_164 from Statement_153
-    if ( $self_class eq 'Statement_153' ) {    # Statement -> Conditional
+    # unwrap Conditional_163 from Statement_152
+    if ( $self_class eq 'Statement_152' ) {    # Statement -> Conditional
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
@@ -146,7 +146,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in Conditional->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have possibly-unwrapped $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
   # Conditional -> 'if' LPAREN SubExpression ')' CodeBlock STAR-38 OPTIONAL-40
-    if ( $self_class eq 'Conditional_164' ) {
+    if ( $self_class eq 'Conditional_163' ) {
         my string $if            = $self->{children}->[0];
         my string $left_paren    = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -223,7 +223,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
-                . ' found where Conditional_164 expected, dying' )
+                . ' found where Conditional_163 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;

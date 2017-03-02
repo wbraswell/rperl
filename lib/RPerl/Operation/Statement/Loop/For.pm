@@ -27,13 +27,13 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    # unwrap LoopFor_168 and LoopFor_169 from Loop_165
-    if ( $self_class eq 'Loop_165' ) {    # Loop -> LoopFor
+    # unwrap LoopFor_167 and LoopFor_168 from Loop_164
+    if ( $self_class eq 'Loop_164' ) {    # Loop -> LoopFor
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( $self_class eq 'LoopFor_168' ) {
+    if ( $self_class eq 'LoopFor_167' ) {
 
         # LoopFor -> 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock
         my string $for             = $self->{children}->[0];
@@ -75,7 +75,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         $rperl_source_subgroup = $codeblock->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
-    elsif ( $self_class eq 'LoopFor_169' ) {
+    elsif ( $self_class eq 'LoopFor_168' ) {
 # LoopFor -> 'for' LPAREN_MY TYPE_INTEGER VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExp VARIABLE_SYMBOL OP11_COMPARE_LT_GT OpNamedScolonOrSubExp SubExpressionOrVarMod ')' CodeBlock
         my string $for                       = $self->{children}->[0];
         my string $left_paren_my             = $self->{children}->[1];
@@ -121,14 +121,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $opnamed_or_subexp_scolon0_type = ref $opnamed_or_subexp_scolon0;
 #        RPerl::diag( 'in Loop::For->ast_to_rperl__generate(), have $opnamed_or_subexp_scolon0_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($opnamed_or_subexp_scolon0_type) . "\n" );
 
-        if (   ( $opnamed_or_subexp_scolon0_type eq 'OpNamedScolonOrSubExp_237' )
-            or ( $opnamed_or_subexp_scolon0_type eq 'OpNamedScolonOrSubExp_238' ) )
+        if (   ( $opnamed_or_subexp_scolon0_type eq 'OpNamedScolonOrSubExp_236' )
+            or ( $opnamed_or_subexp_scolon0_type eq 'OpNamedScolonOrSubExp_237' ) )
         {
             # OpNamedScolonOrSubExp -> OP01_NAMED_SCOLON
             # OpNamedScolonOrSubExp -> OP10_NAMED_UNARY_SCOLON
             $rperl_source_group->{PMC} .= $opnamed_or_subexp_scolon0->{children}->[0];
         }
-        elsif ( $opnamed_or_subexp_scolon0_type eq 'OpNamedScolonOrSubExp_239' ) {    # OpNamedScolonOrSubExp -> SubExpression ';'
+        elsif ( $opnamed_or_subexp_scolon0_type eq 'OpNamedScolonOrSubExp_238' ) {    # OpNamedScolonOrSubExp -> SubExpression ';'
             $rperl_source_subgroup = $opnamed_or_subexp_scolon0->{children}->[0]->ast_to_rperl__generate($modes);    # subexpression
             RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
             $rperl_source_group->{PMC} .= $opnamed_or_subexp_scolon0->{children}->[1];                                         # semicolon
@@ -136,7 +136,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         else {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                     . $opnamed_or_subexp_scolon0_type
-                    . ' found where OpNamedScolonOrSubExp_237, OpNamedScolonOrSubExp_238, or OpNamedScolonOrSubExp_239 expected, dying' )
+                    . ' found where OpNamedScolonOrSubExp_236, OpNamedScolonOrSubExp_237, or OpNamedScolonOrSubExp_238 expected, dying' )
                 . "\n";
         }
 
@@ -145,14 +145,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         my string $opnamed_or_subexp_scolon1_type = ref $opnamed_or_subexp_scolon1;
 #        RPerl::diag( 'in Loop::For->ast_to_rperl__generate(), have $opnamed_or_subexp_scolon1_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($opnamed_or_subexp_scolon1_type) . "\n" );
 
-        if (   ( $opnamed_or_subexp_scolon1_type eq 'OpNamedScolonOrSubExp_237' )
-            or ( $opnamed_or_subexp_scolon1_type eq 'OpNamedScolonOrSubExp_238' ) )
+        if (   ( $opnamed_or_subexp_scolon1_type eq 'OpNamedScolonOrSubExp_236' )
+            or ( $opnamed_or_subexp_scolon1_type eq 'OpNamedScolonOrSubExp_237' ) )
         {
             # OpNamedScolonOrSubExp -> OP01_NAMED_SCOLON
             # OpNamedScolonOrSubExp -> OP10_NAMED_UNARY_SCOLON
             $rperl_source_group->{PMC} .= $opnamed_or_subexp_scolon1->{children}->[0];
         }
-        elsif ( $opnamed_or_subexp_scolon1_type eq 'OpNamedScolonOrSubExp_239' ) {    # OpNamedScolonOrSubExp -> SubExpression ';'
+        elsif ( $opnamed_or_subexp_scolon1_type eq 'OpNamedScolonOrSubExp_238' ) {    # OpNamedScolonOrSubExp -> SubExpression ';'
             $rperl_source_subgroup = $opnamed_or_subexp_scolon1->{children}->[0]->ast_to_rperl__generate($modes);    # subexpression
             RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
             $rperl_source_group->{PMC} .= $opnamed_or_subexp_scolon1->{children}->[1];                               # semicolon
@@ -160,7 +160,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         else {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                     . $opnamed_or_subexp_scolon1_type
-                    . ' found where OpNamedScolonOrSubExp_237, OpNamedScolonOrSubExp_238, or OpNamedScolonOrSubExp_239 expected, dying' )
+                    . ' found where OpNamedScolonOrSubExp_236, OpNamedScolonOrSubExp_237, or OpNamedScolonOrSubExp_238 expected, dying' )
                 . "\n";
         }
 
@@ -174,7 +174,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Loop_165, LoopFor_168, or LoopFor_169 expected, dying' )
+                . ' found where Loop_164, LoopFor_167, or LoopFor_168 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -216,15 +216,15 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     }
 #    RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), top of subroutine, have $modes->{_current_parallel_loop} = ' . "\n" . Dumper($modes->{_current_parallel_loop}) . "\n" );
 
-    # unwrap LoopFor_168 and LoopFor_169 from Loop_165
-    if ( $self_class eq 'Loop_165' ) {    # Loop -> LoopFor
+    # unwrap LoopFor_167 and LoopFor_168 from Loop_164
+    if ( $self_class eq 'Loop_164' ) {    # Loop -> LoopFor
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
     # RANGE FOR LOOP
     # LoopFor -> 'for' MY TYPE_INTEGER VARIABLE_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock
-    if ( $self_class eq 'LoopFor_168' ) {
+    if ( $self_class eq 'LoopFor_167' ) {
         my string $for             = $self->{children}->[0];
         my string $type_integer    = $self->{children}->[2];
         my string $variable_symbol = $self->{children}->[3];
@@ -313,7 +313,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         pop @{$modes->{_current_parallel_loop}};
     }
     # C-STYLE FOR LOOP
-    elsif ( $self_class eq 'LoopFor_169' ) {
+    elsif ( $self_class eq 'LoopFor_168' ) {
 # LoopFor -> 'for' LPAREN_MY TYPE_INTEGER VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExp VARIABLE_SYMBOL OP11_COMPARE_LT_GT OpNamedScolonOrSubExp SubExpressionOrVarMod ')' CodeBlock
         my string $for                       = $self->{children}->[0];
         my string $type_integer              = $self->{children}->[2];
@@ -382,14 +382,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string $opnamed_or_subexp_scolon0_type = ref $opnamed_or_subexp_scolon0;
 #        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $opnamed_or_subexp_scolon0_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($opnamed_or_subexp_scolon0_type) . "\n" );
 
-        if (   ( $opnamed_or_subexp_scolon0_type eq 'OpNamedScolonOrSubExp_237' )
-            or ( $opnamed_or_subexp_scolon0_type eq 'OpNamedScolonOrSubExp_238' ) )
+        if (   ( $opnamed_or_subexp_scolon0_type eq 'OpNamedScolonOrSubExp_236' )
+            or ( $opnamed_or_subexp_scolon0_type eq 'OpNamedScolonOrSubExp_237' ) )
         {
             # OpNamedScolonOrSubExp -> OP01_NAMED_SCOLON
             # OpNamedScolonOrSubExp -> OP10_NAMED_UNARY_SCOLON
             $cpp_source_group->{CPP} .= $opnamed_or_subexp_scolon0->{children}->[0];
         }
-        elsif ( $opnamed_or_subexp_scolon0_type eq 'OpNamedScolonOrSubExp_239' ) {    # OpNamedScolonOrSubExp -> SubExpression ';'
+        elsif ( $opnamed_or_subexp_scolon0_type eq 'OpNamedScolonOrSubExp_238' ) {    # OpNamedScolonOrSubExp -> SubExpression ';'
             $cpp_source_subgroup = $opnamed_or_subexp_scolon0->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);    # subexpression
             RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
             $cpp_source_group->{CPP} .= $opnamed_or_subexp_scolon0->{children}->[1];                                         # semicolon
@@ -397,7 +397,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         else {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                     . $opnamed_or_subexp_scolon0_type
-                    . ' found where OpNamedScolonOrSubExp_237, OpNamedScolonOrSubExp_238, or OpNamedScolonOrSubExp_239 expected, dying' )
+                    . ' found where OpNamedScolonOrSubExp_236, OpNamedScolonOrSubExp_237, or OpNamedScolonOrSubExp_238 expected, dying' )
                 . "\n";
         }
 
@@ -406,14 +406,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         my string $opnamed_or_subexp_scolon1_type = ref $opnamed_or_subexp_scolon1;
 #        RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $opnamed_or_subexp_scolon1_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($opnamed_or_subexp_scolon1_type) . "\n" );
 
-        if (   ( $opnamed_or_subexp_scolon1_type eq 'OpNamedScolonOrSubExp_237' )
-            or ( $opnamed_or_subexp_scolon1_type eq 'OpNamedScolonOrSubExp_238' ) )
+        if (   ( $opnamed_or_subexp_scolon1_type eq 'OpNamedScolonOrSubExp_236' )
+            or ( $opnamed_or_subexp_scolon1_type eq 'OpNamedScolonOrSubExp_237' ) )
         {
             # OpNamedScolonOrSubExp -> OP01_NAMED_SCOLON
             # OpNamedScolonOrSubExp -> OP10_NAMED_UNARY_SCOLON
             $cpp_source_group->{CPP} .= $opnamed_or_subexp_scolon1->{children}->[0];
         }
-        elsif ( $opnamed_or_subexp_scolon1_type eq 'OpNamedScolonOrSubExp_239' ) {    # OpNamedScolonOrSubExp -> SubExpression ';'
+        elsif ( $opnamed_or_subexp_scolon1_type eq 'OpNamedScolonOrSubExp_238' ) {    # OpNamedScolonOrSubExp -> SubExpression ';'
             $cpp_source_subgroup = $opnamed_or_subexp_scolon1->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);    # subexpression
             RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
             $cpp_source_group->{CPP} .= $opnamed_or_subexp_scolon1->{children}->[1];                               # semicolon
@@ -421,7 +421,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         else {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                     . $opnamed_or_subexp_scolon1_type
-                    . ' found where OpNamedScolonOrSubExp_237, OpNamedScolonOrSubExp_238, or OpNamedScolonOrSubExp_239 expected, dying' )
+                    . ' found where OpNamedScolonOrSubExp_236, OpNamedScolonOrSubExp_237, or OpNamedScolonOrSubExp_238 expected, dying' )
                 . "\n";
         }
 
@@ -444,7 +444,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
-                . ' found where Loop_165, LoopFor_168, or LoopFor_169 expected, dying' )
+                . ' found where Loop_164, LoopFor_167, or LoopFor_168 expected, dying' )
             . "\n";
     }
 #    RPerl::diag( 'in Loop::For->ast_to_cpp__generate__CPPOPS_CPPTYPES(), bottom of subroutine, have $modes->{_loop_iterators} = ' . "\n" . Dumper($modes->{_loop_iterators}) . "\n" );

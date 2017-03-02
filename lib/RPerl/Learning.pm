@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.181_000;
+our $VERSION = 0.181_100;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -11619,7 +11619,7 @@ X<ENABLE_LIST_SPACING>
 
     ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                     . ( ref $self )
-                    . ' found where TypeInnerProperties_225 or TypeInnerProperties_226 expected, dying
+                    . ' found where TypeInnerProperties_224 or TypeInnerProperties_225 expected, dying
 
 =for rperl X</noncode>
 
@@ -12203,34 +12203,6 @@ X<ENABLE_LIST_SPACING>
     ERROR ECOGEASRP35, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Module found without first finding ModuleHeader, dying
 
     ERROR ECOGEASCP35, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Module found without first finding ModuleHeader, dying
-
-=for rperl X</noncode>
-
-I<SOLUTION: BAZ_SOLUTION>
-
-X<ENABLE_LIST_SPACING>
-
-=item * PROBLEM: BAZ_PROBLEM_LABEL
-
-=for rperl X<noncode>
-
-    ERROR ECOGEASRP36, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Class FOO is attempting to inherit OO properties from non-properties variable $BAR, dying
- 
-    ERROR ECOGEASCP36, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Class FOO is attempting to inherit OO properties from non-properties variable $BAR, dying
-
-=for rperl X</noncode>
-
-I<SOLUTION: BAZ_SOLUTION>
-
-X<ENABLE_LIST_SPACING>
-
-=item * PROBLEM: BAZ_PROBLEM_LABEL
-
-=for rperl X<noncode>
-
-    ERROR ECOGEASRP37, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Class FOO inherits OO functionality from parent class BAR but is attempting to inherit OO properties from non-matching class BAZ, dying
- 
-    ERROR ECOGEASCP37, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Class FOO inherits OO functionality from parent class BAR but is attempting to inherit OO properties from non-matching class BAZ, dying
 
 =for rperl X</noncode>
 

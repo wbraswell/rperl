@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: 'ERROR ECOGEASRP37' >>>
-# <<< GENERATE_ERROR: 'Class Class_01_Bad_01 inherits OO functionality from parent class RPerl::Test::Module::Class_01_Bad_01 but is attempting to inherit OO properties from non-matching class RPerl::Test' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  require' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

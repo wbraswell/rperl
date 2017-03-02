@@ -1,6 +1,10 @@
+# [[[ PREPROCESSOR ]]]
+# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  require' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Module::Class_01_Good;
+package RPerl::Test::Module::Class_01_Bad_02;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;

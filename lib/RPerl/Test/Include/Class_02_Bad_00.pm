@@ -1,20 +1,20 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'near "require RPerl::Test::Foo qw(quux quince qorge)"' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  require' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Include::Class_02_Good;
+package RPerl::Test::Include::Class_02_Bad_00;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Test);
-use RPerl::Test;
+require RPerl::Test;
 
 # [[[ INCLUDES ]]]
-require RPerl::Test::Foo qw(quux quince qorge);
+use RPerl::Test::Foo qw(quux quince qorge);
 use RPerl::Test::Bar;
 
 # [[[ OO PROPERTIES ]]]

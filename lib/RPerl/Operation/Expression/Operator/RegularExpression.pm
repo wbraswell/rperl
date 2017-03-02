@@ -25,7 +25,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::RegularExpression->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'Operator_94' ) { # Operator -> SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN
+    if ( $self_class eq 'Operator_93' ) { # Operator -> SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN
         my string_hashref $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
@@ -37,7 +37,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Operator_94 expected, dying' )
+                . ' found where Operator_93 expected, dying' )
             . "\n";
     }
 

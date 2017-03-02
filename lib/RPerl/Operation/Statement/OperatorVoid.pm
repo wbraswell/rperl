@@ -31,14 +31,14 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     # Print, OperatorNamedVoid, OperatorNamed, LoopControl
     my string $child0_class = ref $self->{children}->[0];
-    if (   ( $child0_class eq 'OperatorVoid_118' )
+    if (   ( $child0_class eq 'OperatorVoid_117' )
+        or ( $child0_class eq 'OperatorVoid_118' )
         or ( $child0_class eq 'OperatorVoid_119' )
         or ( $child0_class eq 'OperatorVoid_120' )
         or ( $child0_class eq 'OperatorVoid_121' )
         or ( $child0_class eq 'OperatorVoid_122' )
         or ( $child0_class eq 'OperatorVoid_123' )
-        or ( $child0_class eq 'OperatorVoid_124' )
-        or ( $child0_class eq 'OperatorVoid_125' ) )
+        or ( $child0_class eq 'OperatorVoid_124' ) )
     {
         $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
@@ -49,7 +49,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $child0_class
-                . ' found where OperatorVoid_118, OperatorVoid_119, OperatorVoid_120, OperatorVoid_121, OperatorVoid_122, OperatorVoid_123, OperatorVoid_124, or OperatorVoid_125 expected, dying'
+                . ' found where OperatorVoid_117, OperatorVoid_118, OperatorVoid_119, OperatorVoid_120, OperatorVoid_121, OperatorVoid_122, OperatorVoid_123, or OperatorVoid_124 expected, dying'
         ) . "\n";
     }
 
@@ -77,14 +77,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     # Print, OperatorNamedVoid, OperatorNamed, LoopControl
     my string $child0_class = ref $self->{children}->[0];
-    if (   ( $child0_class eq 'OperatorVoid_118' )
+    if (   ( $child0_class eq 'OperatorVoid_117' )
+        or ( $child0_class eq 'OperatorVoid_118' )
         or ( $child0_class eq 'OperatorVoid_119' )
         or ( $child0_class eq 'OperatorVoid_120' )
         or ( $child0_class eq 'OperatorVoid_121' )
         or ( $child0_class eq 'OperatorVoid_122' )
         or ( $child0_class eq 'OperatorVoid_123' )
-        or ( $child0_class eq 'OperatorVoid_124' )
-        or ( $child0_class eq 'OperatorVoid_125' ) )
+        or ( $child0_class eq 'OperatorVoid_124' ) )
     {
         $cpp_source_subgroup
             = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
@@ -96,7 +96,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $child0_class
-                . ' found where OperatorVoid_118, OperatorVoid_119, OperatorVoid_120, OperatorVoid_121, OperatorVoid_122, OperatorVoid_123, OperatorVoid_124, or OperatorVoid_125 expected, dying'
+                . ' found where OperatorVoid_117, OperatorVoid_118, OperatorVoid_119, OperatorVoid_120, OperatorVoid_121, OperatorVoid_122, OperatorVoid_123, or OperatorVoid_124 expected, dying'
         ) . "\n";
     }
 

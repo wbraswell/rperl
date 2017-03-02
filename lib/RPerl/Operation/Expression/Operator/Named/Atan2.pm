@@ -22,7 +22,7 @@ use RPerl::Operation::Expression::Operator::Named;
 use constant NAME => my string $TYPED_NAME = 'atan2';
 
 # DEV NOTE: with min & max args of 1, compile-time args length checking short-circuited first by Parse Phase 0 ERROR ECOPAPL03 'Useless use of FOO in void context'
-# or ERROR ECOPARP00 'Unexpected Token:  ,'; short-circuited second by ERROR ECOGEASRP13 on Operator_85 & OperatorVoid_123 multiple-argument productions below;
+# or ERROR ECOPARP00 'Unexpected Token:  ,'; short-circuited second by ERROR ECOGEASRP13 on Operator_84 & OperatorVoid_122 multiple-argument productions below;
 # can't figure out how to create test which gets past ECOPAPL03 & ECOPARP00 to trigger ECOGEASRP13
 use constant ARGUMENTS_MIN => my integer $TYPED_ARGUMENTS_MIN = 2;
 use constant ARGUMENTS_MAX => my integer $TYPED_ARGUMENTS_MAX = 2;
@@ -40,20 +40,20 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::Named::Atan2->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
 
     my string $operator_named_class = ref $operator_named;
-    if ( $operator_named_class eq 'Operation_80' ) {    # Operation -> OP01_NAMED_SCOLON
+    if ( $operator_named_class eq 'Operation_79' ) {    # Operation -> OP01_NAMED_SCOLON
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly two arguments, dying' )
             . "\n";
     }
-    elsif ( $operator_named_class eq 'Operator_84' ) {    # Operator -> OP01_NAMED SubExpression
+    elsif ( $operator_named_class eq 'Operator_83' ) {    # Operator -> OP01_NAMED SubExpression
 	die RPerl::Parser::rperl_rule__replace(
 	    'ERROR ECOGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
 	    	. $operator_named->{children}->[0]
 		. 'requires excatly two arguments, dying' )
 	    . "\n";
     }
-    elsif ( $operator_named_class eq 'Operator_85' ) {    # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+    elsif ( $operator_named_class eq 'Operator_84' ) {    # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
 	my string $left_paren = $operator_named->{children}->[0];
 	my string $operator_name = $operator_named->{children}->[1];
 	my object $argument0 = $operator_named->{children}->[2];
@@ -69,7 +69,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 	RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
 	$rperl_source_group->{PMC} .= q{ } . $right_paren;
     }
-    elsif ( $operator_named_class eq 'OperatorVoid_123' ) {    # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+    elsif ( $operator_named_class eq 'OperatorVoid_122' ) {    # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP13b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: named operator '
                 . $operator_named->{children}->[0]
                 . ' does not accept multiple arguments, dying' )
@@ -78,7 +78,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: grammar rule '
                 . ($operator_named_class)
-                . ' found where Operation_80, Operator_84, Operator_85, or OperatorVoid_123 expected, dying' )
+                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_122 expected, dying' )
             . "\n";
     }
 
@@ -101,20 +101,20 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in Operator::Named::Atan2->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
 
     my string $operator_named_class = ref $operator_named;
-    if ( $operator_named_class eq 'Operation_80' ) {    # Operation -> OP01_NAMED_SCOLON
+    if ( $operator_named_class eq 'Operation_79' ) {    # Operation -> OP01_NAMED_SCOLON
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP15, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly one argument, dying' )
             . "\n";
     }
-    elsif ( $operator_named_class eq 'Operator_84' ) {    # Operator -> OP01_NAMED SubExpression
+    elsif ( $operator_named_class eq 'Operator_83' ) {    # Operator -> OP01_NAMED SubExpression
 	die RPerl::Parser::rperl_rule__replace(
 	    'ERROR ECOGEASCP18, CODE GENERATOR, ABSTRACT SYNTAX TO C++ Named operator '
 	    . $operator_named->{children}->[0]
 	    . 'requires excatly two arguments, dying' )
 	. "\n";
     }
-    elsif ( $operator_named_class eq 'Operator_85' ) {    # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+    elsif ( $operator_named_class eq 'Operator_84' ) {    # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
 	my string $left_paren = $operator_named->{children}->[0];
 	my string $operator_name = $operator_named->{children}->[1];
 	my object $argument0 = $operator_named->{children}->[2];
@@ -130,7 +130,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 	RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
 	$cpp_source_group->{CPP} .= q{)} . $right_paren;
     }
-    elsif ( $operator_named_class eq 'OperatorVoid_123' ) {    # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+    elsif ( $operator_named_class eq 'OperatorVoid_122' ) {    # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP14b, CODE GENERATOR, ABSTRACT SYNTAX TO C++: named operator '
                 . $operator_named->{children}->[0]
                 . ' does not accept multiple arguments, dying' )
@@ -139,7 +139,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: grammar rule '
                 . ($operator_named_class)
-                . ' found where Operation_80, Operator_84, Operator_85, or OperatorVoid_123 expected, dying' )
+                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_122 expected, dying' )
             . "\n";
     }
 

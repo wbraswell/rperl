@@ -37,21 +37,21 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::Named::Unshift->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
 
     my string $operator_named_class = ref $operator_named;
-    if ( $operator_named_class eq 'Operation_80' ) { # Operation -> OP01_NAMED_SCOLON
+    if ( $operator_named_class eq 'Operation_79' ) { # Operation -> OP01_NAMED_SCOLON
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires multiple arguments, dying' )
             . "\n";
     }
-    elsif ( $operator_named_class eq 'Operator_84' ) { # Operator -> OP01_NAMED SubExpression
+    elsif ( $operator_named_class eq 'Operator_83' ) { # Operator -> OP01_NAMED SubExpression
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires multiple arguments, dying' )
             . "\n";
     }
-    elsif ( $operator_named_class eq 'Operator_85' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+    elsif ( $operator_named_class eq 'Operator_84' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         my string $left_paren = $operator_named->{children}->[0];
         my string $operator_name = $operator_named->{children}->[1];
         my object $argument0 = $operator_named->{children}->[2];
@@ -93,7 +93,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_paren;
     }
-    elsif ( $operator_named_class eq 'OperatorVoid_123' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+    elsif ( $operator_named_class eq 'OperatorVoid_122' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
         my string $operator_name = $operator_named->{children}->[0];
         my object $argument0 = $operator_named->{children}->[1];
         my string $list_comma = $operator_named->{children}->[2];
@@ -138,7 +138,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($operator_named_class)
-                . ' found where Operation_80, Operator_84, Operator_85, or OperatorVoid_123 expected, dying'
+                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_122 expected, dying'
         ) . "\n";
     }
 

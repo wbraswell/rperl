@@ -25,7 +25,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in Operator::Bitwise::OrXor->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'Operator_105' ) { # Operator -> SubExpression OP14_BITWISE_OR_XOR SubExpression
+    if ( $self_class eq 'Operator_104' ) { # Operator -> SubExpression OP14_BITWISE_OR_XOR SubExpression
         my string_hashref $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
@@ -40,7 +40,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Operator_105 expected, dying' )
+                . ' found where Operator_104 expected, dying' )
             . "\n";
     }
 

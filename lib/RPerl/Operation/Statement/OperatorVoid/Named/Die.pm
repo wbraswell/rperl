@@ -34,10 +34,10 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 #    RPerl::diag( 'in OperatorVoid::Named::Die->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag( 'in OperatorVoid::Named::Die->ast_to_rperl__generate(), received $operator_void_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_void_named) . "\n" );
 
-    if ( ref $operator_void_named eq 'OperatorVoid_120' ) {    # OperatorVoid -> OP01_NAMED_VOID_SCOLON
+    if ( ref $operator_void_named eq 'OperatorVoid_119' ) {    # OperatorVoid -> OP01_NAMED_VOID_SCOLON
         $rperl_source_group->{PMC} .= $operator_void_named->{children}->[0];    # name semicolon
     }
-    elsif ( ref $operator_void_named eq 'OperatorVoid_122' ) {                  # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
+    elsif ( ref $operator_void_named eq 'OperatorVoid_121' ) {                  # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
         $rperl_source_group->{PMC}
             .= $operator_void_named->{children}->[0] . q{ };                    # name
         my object $arguments       = $operator_void_named->{children}->[1];
@@ -59,7 +59,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $operator_void_named )
-                . ' found where OperatorVoid_120 or OperatorVoid_122 expected, dying' )
+                . ' found where OperatorVoid_119 or OperatorVoid_121 expected, dying' )
             . "\n";
     }
 
@@ -82,11 +82,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 #    RPerl::diag( 'in OperatorVoid::Named::Die->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag( 'in OperatorVoid::Named::Die->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $operator_void_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_void_named) . "\n" );
 
-    if ( ref $operator_void_named eq 'OperatorVoid_120' ) {    # OperatorVoid -> OP01_NAMED_VOID_SCOLON
+    if ( ref $operator_void_named eq 'OperatorVoid_119' ) {    # OperatorVoid -> OP01_NAMED_VOID_SCOLON
         # DEV NOTE, CORRELATION #rp102: renamed from Perl die to C++ Die to avoid error redefining Perl's embed.h die
         $cpp_source_group->{CPP} .= ucfirst $operator_void_named->{children}->[0];    # Name semicolon
     }
-    elsif ( ref $operator_void_named eq 'OperatorVoid_122' ) {                  # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
+    elsif ( ref $operator_void_named eq 'OperatorVoid_121' ) {                  # OperatorVoid -> OP01_NAMED_VOID ListElements ';'
         # DEV NOTE, CORRELATION #rp102: renamed from Perl die to C++ Die to avoid error redefining Perl's embed.h die
         # DEV NOTE, CORRELATION #rp102a: C++ cerr w/ recursive variadic template and exit() is equivalent to Perl die, DISABLED
         # DEV NOTE, CORRELATION #rp102b: C++ cerr w/ inlined exit() is equivalent to Perl die
@@ -126,7 +126,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $operator_void_named )
-                . ' found where OperatorVoid_120 or OperatorVoid_122 expected, dying' )
+                . ' found where OperatorVoid_119 or OperatorVoid_121 expected, dying' )
             . "\n";
     }
 

@@ -25,8 +25,8 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     #    RPerl::diag( 'in Operator::Logical::And->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if (( $self_class eq 'Operator_106' )       # Operator -> SubExpression OP15_LOGICAL_AND SubExpression
-        or ( $self_class eq 'Operator_111' )    # Operator -> SubExpression OP23_LOGICAL_AND SubExpression
+    if (( $self_class eq 'Operator_105' )       # Operator -> SubExpression OP15_LOGICAL_AND SubExpression
+        or ( $self_class eq 'Operator_110' )    # Operator -> SubExpression OP23_LOGICAL_AND SubExpression
         )
     {
         my string_hashref $rperl_source_subgroup
@@ -40,7 +40,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Operator_106 or Operator_111 expected, dying' )
+                . ' found where Operator_105 or Operator_110 expected, dying' )
             . "\n";
     }
 
@@ -66,8 +66,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     # in order to replicate the precedence behavior?
 
     my string $self_class = ref $self;
-    if (( $self_class eq 'Operator_106' )       # Operator -> SubExpression OP15_LOGICAL_AND SubExpression
-        or ( $self_class eq 'Operator_111' )    # Operator -> SubExpression OP23_LOGICAL_AND SubExpression
+    if (( $self_class eq 'Operator_105' )       # Operator -> SubExpression OP15_LOGICAL_AND SubExpression
+        or ( $self_class eq 'Operator_110' )    # Operator -> SubExpression OP23_LOGICAL_AND SubExpression
         )
     {
         my string_hashref $cpp_source_subgroup = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
@@ -79,7 +79,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
-                . ' found where Operator_106 or Operator_111 expected, dying' )
+                . ' found where Operator_105 or Operator_110 expected, dying' )
             . "\n";
     }
 
