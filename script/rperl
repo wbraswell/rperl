@@ -433,7 +433,7 @@ sub multi_file_settings {
         $retval .= q{    } . stringify_output_file_name_group($output_file_name_group, $filename_suffixes_supported) . "\n";
     }
     $retval .= 'Modes:' . "\n";
-    foreach my string $mode_key ( keys %{$modes} ) {
+    foreach my string $mode_key ( sort keys %{$modes} ) {
         $retval .= q{    } . $mode_key . ' => ' . $modes->{$mode_key} . "\n";
     }
     return $retval;
@@ -551,9 +551,13 @@ sub depends_delete {
 
         RPerl::verbose( 'Input File:         ' . $input_file_name . "\n" );
         RPerl::verbose( 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_group, $filename_suffixes_supported) . "\n" );
-        RPerl::verbose( 'Modes:              ops => '
+        RPerl::verbose( 'Modes:              magic => '
+                . $modes->{magic}
+                . ', code => '
+                . $modes->{code}
+                . ', ops => '
                 . $modes->{ops}
-                . ', types => '
+                . ', check => '
                 . $modes->{types}
                 . ', check => '
                 . $modes->{check}
@@ -713,7 +717,11 @@ sub depends_parse_generate_save_subcompile_execute {
 
         RPerl::verbose( 'Input File:         ' . $input_file_name . "\n" );
         RPerl::verbose( 'Output File(s):     ' . stringify_output_file_name_group($output_file_name_group, $filename_suffixes_supported) . "\n" );
-        RPerl::verbose( 'Modes:              ops => '
+        RPerl::verbose( 'Modes:              magic => '
+                . $modes->{magic}
+                . ', code => '
+                . $modes->{code}
+                . ', ops => '
                 . $modes->{ops}
                 . ', types => '
                 . $modes->{types}
