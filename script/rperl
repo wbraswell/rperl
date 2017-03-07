@@ -9,8 +9,8 @@ use RPerl;
 # DEV NOTE, CORRELATION #rp016: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
 our $VERSION = '2.450000';
 
-#our $VERSION = 20170214;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2017.045;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20170306;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2017.065;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -115,6 +115,9 @@ sub verify_and_default_modes {
         my string_hashref $modes_default,
         my arrayref_hashref $modes_supported,
         my integer $dependencies_flag,
+        my integer $magic_low_flag,
+        my integer $magic_medium_flag,
+        my integer $magic_high_flag,
         my integer $uncompile_flag,
         my integer $compile_flag,
         my integer $subcompile_assemble_flag,
@@ -135,6 +138,33 @@ sub verify_and_default_modes {
         }
         else {
             $modes->{dependencies} = 'OFF';
+        }
+    }
+
+    if ( defined $magic_low_flag ) {
+        if ( $magic_low_flag ) {
+            if ( ( defined $magic_medium_flag ) and $magic_medium_flag ) {
+                die 'ERROR EAR18: Incompatible command-line argument flags provided, both --low and --medium, dying' . "\n";
+            }
+            if ( ( defined $magic_high_flag ) and $magic_high_flag ) {
+                die 'ERROR EAR18: Incompatible command-line argument flags provided, both --low and --high, dying' . "\n";
+            }
+            $modes->{magic} = 'LOW';
+        }
+    }
+
+    if ( defined $magic_medium_flag ) {
+        if ( $magic_medium_flag ) {
+            if ( ( defined $magic_high_flag ) and $magic_high_flag ) {
+                die 'ERROR EAR19: Incompatible command-line argument flags provided, both --medium and --high, dying' . "\n";
+            }
+            $modes->{magic} = 'MEDIUM';
+        }
+    }
+
+    if ( defined $magic_high_flag ) {
+        if ( $magic_high_flag ) {
+            $modes->{magic} = 'HIGH';
         }
     }
 
@@ -450,6 +480,9 @@ sub store_unlabeled_arguments {
 # print value of argument flags
 sub verbose_flags {
     (   my integer $dependencies_flag,
+        my integer $magic_low_flag,
+        my integer $magic_medium_flag,
+        my integer $magic_high_flag,
         my integer $uncompile_flag,
         my integer $compile_flag,
         my integer $subcompile_assemble_flag,
@@ -465,6 +498,15 @@ sub verbose_flags {
     RPerl::verbose( 'Debug Flag........... ' . $RPerl::DEBUG . "\n" );
     if ( defined $dependencies_flag ) {
         RPerl::verbose( 'Dependencies Flag.... ' . $dependencies_flag . "\n" );
+    }
+    if ( defined $magic_low_flag ) {
+        RPerl::verbose( 'Low Magic Flag....... ' . $magic_low_flag . "\n" );
+    }
+    if ( defined $magic_medium_flag ) {
+        RPerl::verbose( 'Medium Magic Flag.... ' . $magic_medium_flag . "\n" );
+    }
+    if ( defined $magic_high_flag ) {
+        RPerl::verbose( 'High Magic Flag...... ' . $magic_high_flag . "\n" );
     }
     if ( defined $uncompile_flag ) {
         RPerl::verbose( 'Uncompile Flag....... ' . $uncompile_flag . "\n" );
@@ -948,7 +990,7 @@ if (defined $::uncompile_source_binary_flag) { if ($::uncompile_source_binary_fl
 if (defined $::uncompile_source_binary_inline_flag) { if ($::uncompile_source_binary_inline_flag) { $::uncompile_flag = 3; } else { $::uncompile_flag = 0; } }
 
 verbose_flags(
-    $::dependencies_flag, $::uncompile_flag, $::compile_flag, $::subcompile_assemble_flag,
+    $::dependencies_flag, $::magic_low_flag, $::magic_medium_flag, $::magic_high_flag, $::uncompile_flag, $::compile_flag, $::subcompile_assemble_flag,
     $::subcompile_archive_flag,      $::subcompile_shared_flag,           $::subcompile_static_flag, $::parallel_flag,        $::execute_flag, $::test_flag
 );
 
@@ -958,7 +1000,8 @@ $::input_file_names  = accept_and_verify_input_files( $::input_file_names, $::in
 #if ( ( scalar @{$::input_file_names} ) == 0 ) { return 1; }  # allow require of this file
 $input_files_count = scalar @{$::input_file_names};
 $::modes             = verify_and_default_modes(
-    $::modes,              $::modes_default, $::modes_supported, $::dependencies_flag, $::uncompile_flag, $::compile_flag,  
+    $::modes,              $::modes_default, $::modes_supported, $::dependencies_flag,
+    $::magic_low_flag, $::magic_medium_flag, $::magic_high_flag, $::uncompile_flag, $::compile_flag,  
     $::subcompile_assemble_flag,   $::subcompile_archive_flag,      $::subcompile_shared_flag,
     $::subcompile_static_flag, $::subcompile_CXX, $::parallel_flag, $::num_cores, $::execute_flag,  $::test_flag, $::input_file_names
 );
