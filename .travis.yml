@@ -1,5 +1,5 @@
 language: perl
-# v0.011_000
+# v0.012_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -86,6 +86,8 @@ before_script:
 #    - export RPERL_DEBUG=1
 # UNCOMMENT FOLLOWING LINE FOR DEV VERSIONS OF MODULES, which travis can't get from Makefile.PL
 #    - cpanm -n INGY/Inline-C-0.62_03.tar.gz
+# DEV NOTE: Alien::base v0.036 requires Test2::Suite which seems to be causing RPerl builds to error
+    - cpanm Test2::Suite
 # DEV NOTE, CORRELATION #rp011: following line was not necessary until before_install & install sections added
 #    - cpanm --quiet --installdeps --notest .
     - cpanm --verbose --installdeps .
