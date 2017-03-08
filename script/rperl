@@ -114,10 +114,10 @@ sub verify_and_default_modes {
     (   my string_hashref $modes,
         my string_hashref $modes_default,
         my arrayref_hashref $modes_supported,
-        my integer $dependencies_flag,
         my integer $magic_low_flag,
         my integer $magic_medium_flag,
         my integer $magic_high_flag,
+        my integer $dependencies_flag,
         my integer $uncompile_flag,
         my integer $compile_flag,
         my integer $subcompile_assemble_flag,
@@ -479,10 +479,10 @@ sub store_unlabeled_arguments {
 
 # print value of argument flags
 sub verbose_flags {
-    (   my integer $dependencies_flag,
         my integer $magic_low_flag,
         my integer $magic_medium_flag,
         my integer $magic_high_flag,
+    (   my integer $dependencies_flag,
         my integer $uncompile_flag,
         my integer $compile_flag,
         my integer $subcompile_assemble_flag,
@@ -990,7 +990,7 @@ if (defined $::uncompile_source_binary_flag) { if ($::uncompile_source_binary_fl
 if (defined $::uncompile_source_binary_inline_flag) { if ($::uncompile_source_binary_inline_flag) { $::uncompile_flag = 3; } else { $::uncompile_flag = 0; } }
 
 verbose_flags(
-    $::dependencies_flag, $::magic_low_flag, $::magic_medium_flag, $::magic_high_flag, $::uncompile_flag, $::compile_flag, $::subcompile_assemble_flag,
+    $::magic_low_flag, $::magic_medium_flag, $::magic_high_flag, $::dependencies_flag, $::uncompile_flag, $::compile_flag, $::subcompile_assemble_flag,
     $::subcompile_archive_flag,      $::subcompile_shared_flag,           $::subcompile_static_flag, $::parallel_flag,        $::execute_flag, $::test_flag
 );
 
@@ -1000,8 +1000,9 @@ $::input_file_names  = accept_and_verify_input_files( $::input_file_names, $::in
 #if ( ( scalar @{$::input_file_names} ) == 0 ) { return 1; }  # allow require of this file
 $input_files_count = scalar @{$::input_file_names};
 $::modes             = verify_and_default_modes(
-    $::modes,              $::modes_default, $::modes_supported, $::dependencies_flag,
-    $::magic_low_flag, $::magic_medium_flag, $::magic_high_flag, $::uncompile_flag, $::compile_flag,  
+    $::modes,              $::modes_default, $::modes_supported, 
+    $::magic_low_flag, $::magic_medium_flag, $::magic_high_flag, 
+    $::dependencies_flag, $::uncompile_flag, $::compile_flag,  
     $::subcompile_assemble_flag,   $::subcompile_archive_flag,      $::subcompile_shared_flag,
     $::subcompile_static_flag, $::subcompile_CXX, $::parallel_flag, $::num_cores, $::execute_flag,  $::test_flag, $::input_file_names
 );
@@ -1113,7 +1114,49 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.6: Modes, Operations
+=for comment head2 B.6: Modes, Magic
+
+=over
+
+=item B<--mode magic=LOW ...OR... -m magic=LOW>
+
+=item B<--mode magic=MEDIUM ...OR... -m magic=MEDIUM>
+
+=item B<--mode magic=HIGH ...OR... -m magic=HIGH>
+
+=for rperl X<noncode>
+
+    Specify magic mode, LOW by default.
+    If set to LOW, accept low-magic (static) Perl source code in the source code input file(s).
+    If set to MEDIUM, accept medium-magic (mostly static) Perl source code in the source code input file(s).
+    If set to HIGH, accept high-magic (dynamic) Perl source code in the source code input file(s).
+    Because only low-magic mode is supported at this time, this option does not currently have any effect.
+
+=for rperl X</noncode>
+
+=back
+
+=for comment head2 B.7: Modes, Code
+
+=over
+
+=item B<--mode code=PERL ...OR... -m code=PERL>
+
+=item B<--mode code=CPP ...OR... -m code=CPP>
+
+=for rperl X<noncode>
+
+    Specify source code mode, CPP by default.
+    If set to PERL, generate Perl source code in the source code output file(s).
+    If set to CPP, generate C++ source code in the source code output file(s).
+    PERL operations mode forces PERL code mode; CPP operations mode forces CPP code mode.
+    Because code mode is dependent upon operations mode, this option does not currently have any effect.
+
+=for rperl X</noncode>
+
+=back
+
+=for comment head2 B.8: Modes, Operations
 
 =over
 
@@ -1132,7 +1175,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.7: Modes, Types
+=for comment head2 B.9: Modes, Types
 
 =over
 
@@ -1154,7 +1197,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.8: Modes, Integer Type
+=for comment head2 B.10: Modes, Integer Type
 
 =over
 
@@ -1172,7 +1215,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.9: Modes, Number Type
+=for comment head2 B.11: Modes, Number Type
 
 =over
 
@@ -1190,7 +1233,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.10: Modes, Type Checking
+=for comment head2 B.12: Modes, Type Checking
 
 =over
 
@@ -1211,7 +1254,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.11: Modes, Dependencies
+=for comment head2 B.13: Modes, Dependencies
 
 =over
 
@@ -1230,7 +1273,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.12: Modes, Uncompile
+=for comment head2 B.14: Modes, Uncompile
 
 =over
 
@@ -1260,7 +1303,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.13: Modes, Compile
+=for comment head2 B.15: Modes, Compile
 
 =over
 
@@ -1286,7 +1329,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.14: Modes, Subcompile
+=for comment head2 B.16: Modes, Subcompile
 
 =over
 
@@ -1315,7 +1358,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.15: Modes, C++ Compiler
+=for comment head2 B.17: Modes, C++ Compiler
 
 =over
 
@@ -1329,7 +1372,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.16: Modes, Parallelize
+=for comment head2 B.18: Modes, Parallelize
 
 =over
 
@@ -1353,7 +1396,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.17: Modes, Parallelize, Number Of Cores
+=for comment head2 B.19: Modes, Parallelize, Number Of Cores
 
 =over
 
@@ -1373,7 +1416,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.18: Modes, Execute
+=for comment head2 B.20: Modes, Execute
 
 =over
 
@@ -1392,7 +1435,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.19: Modes, Source Code Labels
+=for comment head2 B.21: Modes, Source Code Labels
 
 =over
 
@@ -1410,7 +1453,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.20: Flags, Verbose
+=for comment head2 B.22: Flags, Verbose
 
 =over
 
@@ -1429,7 +1472,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.21: Flags, Debug
+=for comment head2 B.23: Flags, Debug
 
 =over
 
@@ -1448,7 +1491,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.22: Flags, Warnings
+=for comment head2 B.24: Flags, Warnings
 
 =over
 
@@ -1466,7 +1509,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.23: Flags, Test
+=for comment head2 B.25: Flags, Test
 
 =over
 
@@ -1482,7 +1525,57 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.24: Flags, Dependencies
+=for comment head2 B.26: Flags, Low Magic
+
+=over
+
+=item B<--low ...OR... -l>
+
+=for rperl X<noncode>
+
+    Accept low-magic (static) Perl source code in the source code input file(s).
+    Enabled by default, equivalent to '--mode magic=LOW' argument.
+    Because only low-magic mode is supported at this time, this option does not currently have any effect.
+
+=for rperl X</noncode>
+
+=back
+
+=for comment head2 B.27: Flags, Medium Magic
+
+=over
+
+=item B<--medium>
+
+=for rperl X<noncode>
+
+    Accept medium-magic (mostly static) Perl source code in the source code input file(s).
+    Disabled by default, equivalent to '--mode magic=MEDIUM' argument.
+    Because only low-magic mode is supported at this time, this option does not currently have any effect.
+    Shorthand '-m' used for '--mode' argument, not '--medium' argument.
+
+=for rperl X</noncode>
+
+=back
+
+=for comment head2 B.28: Flags, High Magic
+
+=over
+
+=item B<--high>
+
+=for rperl X<noncode>
+
+    Accept high-magic (dynamic) Perl source code in the source code input file(s).
+    Disabled by default, equivalent to '--mode magic=HIGH' argument.
+    Because only low-magic mode is supported at this time, this option does not currently have any effect.
+    Shorthand '-h' used for '--help' argument, not '--high' argument.
+
+=for rperl X</noncode>
+
+=back
+
+=for comment head2 B.29: Flags, Dependencies
 
 =over
 
@@ -1500,7 +1593,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.25: Flags, Uncompile
+=for comment head2 B.30: Flags, Uncompile
 
 =over
 
@@ -1530,7 +1623,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.26: Flags, Compile
+=for comment head2 B.31: Flags, Compile
 
 =over
 
@@ -1547,7 +1640,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.27: Flags, Subcompile, Assemble
+=for comment head2 B.32: Flags, Subcompile, Assemble
 
 =over
 
@@ -1563,7 +1656,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.28: Flags, Subcompile, Archive
+=for comment head2 B.33: Flags, Subcompile, Archive
 
 =over
 
@@ -1579,7 +1672,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.29: Flags, Subcompile, Shared Object
+=for comment head2 B.34: Flags, Subcompile, Shared Object
 
 =over
 
@@ -1595,7 +1688,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.30: Flags, Subcompile, Static
+=for comment head2 B.35: Flags, Subcompile, Static
 
 =over
 
@@ -1614,7 +1707,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.31: Flags, Parallelize
+=for comment head2 B.36: Flags, Parallelize
 
 =over
 
@@ -1632,7 +1725,7 @@ Restricted Perl, The Optimizing Perl 5 Compiler
 
 =back
 
-=for comment head2 B.32: Flags, Execute
+=for comment head2 B.37: Flags, Execute
 
 =over
 

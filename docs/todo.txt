@@ -1,9 +1,13 @@
 DONE
     OO Class Property Inheritance, Disallow Name Masking
     OO Class Property Inheritance, Compatible With C++ Behavior, Upgrade Tests, CPPOPS_*TYPES
-
+    add source code mode command-line argument and placeholder in $modes hash
+    add magic mode command-line argument and placeholder in $modes hash
+    create initial GrammarMedium.eyp & associated utilities, etc.
 
 DOING
+    update Learning RPerl 'DEV NOTE, CORRELATION #rp029' sections as already done in script/rperl
+
     Monolithic Modules, Fix Deps Warning & Create Tests
     Parse::Eyapp regex fix & CPAN upload
     implement 10 ops in CPPOPS_CPPTYPES

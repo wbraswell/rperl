@@ -100,6 +100,7 @@ our $modes_supported = my arrayref_hashref $TYPED_modes_supported = {
 };
 
 our $rperl_options = my hashref $TYPED_rperl_options = {
+    'h'             => \$help_flag,  # allow -h to be unambiguous shorthand for --help (not --high)
     'help|?'        => \$help_flag,
     'v'             => \$version_flag,
     'version'       => \$version_flag,
@@ -128,6 +129,7 @@ our $rperl_options = my hashref $TYPED_rperl_options = {
     'test'          => \$test_flag,
     'infile=s{1,}'  => \@{$input_file_names},
     'outfile=s{1,}' => \@{$output_file_name_prefixes},
+    'm=s%'          => \$modes,  # allow -m to be unambiguous shorthand for --mode (not --medium)
     'mode=s%'       => \$modes,
     '<>'            => \&store_unlabeled_arguments  # DEV NOTE: amazingly, this coderef works correctly and calls to the subroutine stored in the file script/rperl
 };
