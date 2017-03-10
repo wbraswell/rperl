@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.181_100;
+our $VERSION = 0.182_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -19515,62 +19515,71 @@ Example execution and output for 2a and 2b:
 =for rperl X<noncode>
 
     $ rperl -?
-    Usage:
-                rperl [ARGUMENTS] input_program_0.pl [input_program_1.pl input_program_2.pl ...]
-                rperl [ARGUMENTS] MyClassFoo.pm [MyClassBar.pm MyClassBat.pm ...]
-                rperl [ARGUMENTS] input_program_0.pl MyClassFoo.pm [input_program_1.pl ... MyClassBar.pm ...]
-    
-    Arguments:
-        --help ...OR... -h ...OR... -?
-                Print this (relatively) brief help message for command-line usage.
-                For additional explanations, run the command `perldoc RPerl::Learning` and see Appendix B.
-    
-        --version ...OR... -v
-        --vversion ...OR... -vv
-                Print version number and copyright information.
-                Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary argument.
-                Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument.
-    
-        --infile=MyFile.pm ...OR... -i=MyFile.pm
-                Specify input file, may be repeated for multiple input files.
-                Argument prefix '--infile' may be entirely omitted.
-                Argument prefix MUST be omitted to specify wildcard for multiple input files.
-    
-        --outfile=MyCompiledModule ...OR... -o=MyCompiledModule
-        --outfile=my_compiled_program ...OR... -o=my_compiled_program
-                Specify output file prefix, may be repeated for multiple output files.
-                RPerl *.pm input file with PERL ops will create MyCompiledModule.pmc output file.
-                RPerl *.pl input file with PERL ops will create my_compiled_program (or my_compiled_program.exe on Windows) output file.
-                RPerl *.pm input file with CPP  ops will create MyCompiledModule.pmc, MyCompiledModule.cpp, & MyCompiledModule.h output files.
-                RPerl *.pl input file with CPP  ops will create my_compiled_program (or my_compiled_program.exe on Windows) & my_compiled_program.cpp output files.
-                Argument may be entirely omitted, foo.* input file will default to foo.* output file(s).
-    
-        --CXX=/path/to/compiler
-                Specify path to C++ compiler for use in subcompile modes, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument, 'g++' by default.
-    
-        --mode ops=PERL ...OR... -m ops=PERL
-        --mode ops=CPP ...OR... -m ops=CPP
-                Specify operations mode, CPP by default.
-                If set to PERL, generate Perl operations in the source code output file(s).
-                If set to CPP, generate C++ operations in the source code output file(s).
-                PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
-    
-        --mode types=PERL ...OR... -m types=PERL
-        --mode types=CPP ...OR... -m types=CPP
-        --mode types=DUAL ...OR... -m types=DUAL
-                Specify data types mode, CPP by default.
-                If set to PERL, generate Perl data types in the source code output file(s).
-                If set to CPP, generate C++ data types in the source code output file(s).
-                If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
-                DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile argument.
-    
-        --mode check=OFF ...OR... -m check=OFF
-        --mode check=ON ...OR... -m check=ON
-        --mode check=TRACE ...OR... -m check=TRACE
-                Specify data type checking mode, TRACE by default.
-                If set to OFF, do not perform dynamic type checking, only built-in C++ static type checking.
-                If set to ON, perform dynamic type checking in addition to built-in C++ static type checking.
-                If set to TRACE, perform dynamic type checking in addition to built-in C++ static type checking, with subroutine-and-variable trace information.
+	Usage:
+	            rperl [ARGUMENTS] input_program_0.pl [input_program_1.pl input_program_2.pl ...]
+	            rperl [ARGUMENTS] MyClassFoo.pm [MyClassBar.pm MyClassBat.pm ...]
+	            rperl [ARGUMENTS] input_program_0.pl MyClassFoo.pm [input_program_1.pl ... MyClassBar.pm ...]
+
+	Arguments:
+	    --help ...OR... -h ...OR... -?
+	            Print this (relatively) brief help message for command-line usage.
+	            For additional explanations, run the command `perldoc RPerl::Learning` and see Appendix B.
+
+	    --version ...OR... -v
+	    --vversion ...OR... -vv
+    	        Print version number and copyright information.
+	            Repeat as 'vv' for more technical information, similar to `perl -V` configuration summary argument.
+	            Lowercase 'v' not to be confused with uppercase 'V' in 'Verbose' argument.
+
+	    --infile=MyFile.pm ...OR... -i=MyFile.pm
+	            Specify input file, may be repeated for multiple input files.
+    	        Argument prefix '--infile' may be entirely omitted.
+	            Argument prefix MUST be omitted to specify wildcard for multiple input files.
+
+	    --outfile=MyCompiledModule ...OR... -o=MyCompiledModule
+    	--outfile=my_compiled_program ...OR... -o=my_compiled_program
+	            Specify output file prefix, may be repeated for multiple output files.
+	            RPerl *.pm input file with PERL ops will create MyCompiledModule.pmc output file.
+	            RPerl *.pl input file with PERL ops will create my_compiled_program (or my_compiled_program.exe on Windows) output file.
+	            RPerl *.pm input file with CPP  ops will create MyCompiledModule.pmc, MyCompiledModule.cpp, & MyCompiledModule.h output files.
+	            RPerl *.pl input file with CPP  ops will create my_compiled_program (or my_compiled_program.exe on Windows) & my_compiled_program.cpp output files.
+    	        Argument may be entirely omitted, foo.* input file will default to foo.* output file(s).
+
+	    --CXX=/path/to/compiler
+	            Specify path to C++ compiler for use in subcompile modes, equivalent to '--mode CXX=/path/to/compiler' or 'CXX' manual Makefile argument, 'g++' by default.
+
+	    --mode magic=LOW ...OR... -m magic=LOW
+	    --mode magic=MEDIUM ...OR... -m magic=MEDIUM
+	    --mode magic=HIGH ...OR... -m magic=HIGH
+    	        Specify magic mode, LOW by default.
+	            If set to LOW, accept low-magic (static) Perl source code in the source code input file(s).
+	            If set to MEDIUM, accept medium-magic (mostly static) Perl source code in the source code input file(s).
+	            If set to HIGH, accept high-magic (dynamic) Perl source code in the source code input file(s).
+	            Because only low-magic mode is supported at this time, this option does not currently have any effect.
+
+	    --mode code=PERL ...OR... -m code=PERL
+	    --mode code=CPP ...OR... -m code=CPP
+	            Specify source code mode, CPP by default.
+	            If set to PERL, generate Perl source code in the source code output file(s).
+	            If set to CPP, generate C++ source code in the source code output file(s).
+	            PERL operations mode forces PERL code mode; CPP operations mode forces CPP code mode.
+	            Because code mode is dependent upon operations mode, this option does not currently have any effect.
+
+	    --mode ops=PERL ...OR... -m ops=PERL
+	    --mode ops=CPP ...OR... -m ops=CPP
+	            Specify operations mode, CPP by default.
+	            If set to PERL, generate Perl operations in the source code output file(s).
+	            If set to CPP, generate C++ operations in the source code output file(s).
+	            PERL ops mode forces PERL types mode & PARSE or GENERATE compile mode; PERLOPS_PERLTYPES is test mode, does not actually compile.
+
+	    --mode types=PERL ...OR... -m types=PERL
+	    --mode types=CPP ...OR... -m types=CPP
+	    --mode types=DUAL ...OR... -m types=DUAL
+	            Specify data types mode, CPP by default.
+	            If set to PERL, generate Perl data types in the source code output file(s).
+	            If set to CPP, generate C++ data types in the source code output file(s).
+    	        If set to DUAL, generate both Perl and C++ data types in the source code output file(s).
+	            DUAL mode allows generate-once-compile-many types, selected by '#define __FOO__TYPES' in lib/rperltypes_mode.h or `gcc -D__FOO__TYPES` manual subcompile argument.
 
     [[[ REMAINING ARGUMENTS OMITTED FOR BREVITY ]]]
 
