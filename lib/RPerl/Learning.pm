@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.182_000;
+our $VERSION = 0.183_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -1531,7 +1531,7 @@ $z = q{<<< END TEXT EVAL >>>};
 
 The single most significant new feature included in RPerl v2.0 is automatic parallelization.  This long-awaited software feature was promised from the very beginning of RPerl's initial development, with RPerl v2.0 being the originally-designated target for release of auto-parallel capabilities.  We stuck to the plan and delivered on time: the 4th of July, 2016.
 
-Automatic parallelization is now enabled on 4 parallel CPU cores by default, because quad-core CPUs are common at this time.  You may utilize the C<--num_cores=8> command-line argument to double the default number of parallel cores, for example.  (Please see L</B.16: Modes, Parallelize> and L</B.17: Modes, Parallelize, Number Of Cores> for more information about auto-parallelization arguments.)
+Automatic parallelization is now enabled on 4 parallel CPU cores by default, because quad-core CPUs are common at this time.  You may utilize the C<--num_cores=8> command-line argument to double the default number of parallel cores, for example.  (Please see L</B.18: Modes, Parallelize> and L</B.19: Modes, Parallelize, Number Of Cores> for more information about auto-parallelization arguments.)
 
 Currently, shared memory parallel hardware platforms are supported, such as multi-core CPUs and supercomputers, by utilizing the L<OpenMP|https://en.wikipedia.org/wiki/OpenMP> parallelization software.  In the near future we will add support for distributed memory platforms, such as clusters and the cloud, by utilizing the L<MPI|https://en.wikipedia.org/wiki/Message_Passing_Interface> parallelization software, as well as GPUs and other specialty hardware by utilizing the L<OpenCL|https://en.wikipedia.org/wiki/OpenCL> parallelization software. 
 
@@ -21416,13 +21416,55 @@ I<If the output file option is omitted, then the original prefix of each input f
 
 I<The C++ compiler option tells RPerl which subcompiler to use for converting C++ source code into binary machine code.>
 
-I<This option is a shorthand provided for brevity, please see: L</B.15: Modes, C++ Compiler>>
+I<This option is a shorthand provided for brevity, please see: L</B.17: Modes, C++ Compiler>>
 
 I<If both the shorthand and longhand forms of the C++ compiler option are omitted, then RPerl will utilize the GNU C++ compiler or give an error if it is not installed.>
 
 =back
 
-=head2 B.6: Modes, Operations
+=head2 B.6: Modes, Magic
+
+=over
+
+=item B<--mode magic=LOW ...OR... -m magic=LOW>
+
+=item B<--mode magic=MEDIUM ...OR... -m magic=MEDIUM>
+
+=item B<--mode magic=HIGH ...OR... -m magic=HIGH>
+
+=for rperl X<noncode>
+
+    Specify magic mode, LOW by default.
+    If set to LOW, accept low-magic (static) Perl source code in the source code input file(s).
+    If set to MEDIUM, accept medium-magic (mostly static) Perl source code in the source code input file(s).
+    If set to HIGH, accept high-magic (dynamic) Perl source code in the source code input file(s).
+    Because only low-magic mode is supported at this time, this option does not currently have any effect.
+
+=for rperl X</noncode>
+
+=back
+
+=head2 B.7: Modes, Code
+
+=over
+
+=item B<--mode code=PERL ...OR... -m code=PERL>
+
+=item B<--mode code=CPP ...OR... -m code=CPP>
+
+=for rperl X<noncode>
+
+    Specify source code mode, CPP by default.
+    If set to PERL, generate Perl source code in the source code output file(s).
+    If set to CPP, generate C++ source code in the source code output file(s).
+    PERL operations mode forces PERL code mode; CPP operations mode forces CPP code mode.
+    Because code mode is dependent upon operations mode, this option does not currently have any effect.
+
+=for rperl X</noncode>
+
+=back
+
+=head2 B.8: Modes, Operations
 
 =over
 
@@ -21447,7 +21489,7 @@ I<Normal Perl is considered an interpreted language and uses Perl operations.  W
 
 =back
 
-=head2 B.7: Modes, Types
+=head2 B.9: Modes, Types
 
 =over
 
@@ -21475,7 +21517,7 @@ I<Because RPerl's first goal is performance, support for C++-ops-Perl-types mode
 
 =back
 
-=head2 B.8: Modes, Integer Type
+=head2 B.10: Modes, Integer Type
 
 =over
 
@@ -21499,7 +21541,7 @@ I<By default, RPerl will set this mode option to match the internal C data type 
 
 =back
 
-=head2 B.9: Modes, Number Type
+=head2 B.11: Modes, Number Type
 
 =over
 
@@ -21525,7 +21567,7 @@ I<By default, RPerl will set this mode option to match the internal C data type 
 
 =back
 
-=head2 B.10: Modes, Type Checking
+=head2 B.12: Modes, Type Checking
 
 =over
 
@@ -21552,7 +21594,7 @@ I<If the type checking mode is set to TRACE, then the name of the problematic su
 
 =back
 
-=head2 B.11: Modes, Dependencies
+=head2 B.13: Modes, Dependencies
 
 =over
 
@@ -21577,7 +21619,7 @@ I<If the dependencies mode option is set to OFF, then you will likely encounter 
 
 =back
 
-=head2 B.12: Modes, Uncompile
+=head2 B.14: Modes, Uncompile
 
 =over
 
@@ -21613,7 +21655,7 @@ I<RPerl will attempt to overwrite any files generated by previous RPerl executio
 
 =back
 
-=head2 B.13: Modes, Compile
+=head2 B.15: Modes, Compile
 
 =over
 
@@ -21645,7 +21687,7 @@ I<Both the SAVE and SUBCOMPILE phase categories save output files to disk, so th
 
 =back
 
-=head2 B.14: Modes, Subcompile
+=head2 B.16: Modes, Subcompile
 
 =over
 
@@ -21686,7 +21728,7 @@ I<L<https://gcc.gnu.org/onlinedocs/gcc/Link-Options.html>>
 
 =back
 
-=head2 B.15: Modes, C++ Compiler
+=head2 B.17: Modes, C++ Compiler
 
 =over
 
@@ -21706,7 +21748,7 @@ L<https://en.wikipedia.org/wiki/C++11>
 
 =back
 
-=head2 B.16: Modes, Parallelize
+=head2 B.18: Modes, Parallelize
 
 =over
 
@@ -21738,7 +21780,7 @@ I<COMING SOON: The "OPENCL" parallel mode utilizes the OpenCL software to provid
 
 =back
 
-=head2 B.17: Modes, Parallelize, Number Of Cores
+=head2 B.19: Modes, Parallelize, Number Of Cores
 
 =over
 
@@ -21764,7 +21806,7 @@ I<It may be best to choose a value which is a power of 2, although this is not r
 
 =back
 
-=head2 B.18: Modes, Execute
+=head2 B.20: Modes, Execute
 
 =over
 
@@ -21789,7 +21831,7 @@ I<When *.pm RPerl module input file(s) are provided, then no execution occurs be
 
 =back
 
-=head2 B.19: Modes, Source Code Labels
+=head2 B.21: Modes, Source Code Labels
 
 =over
 
@@ -21809,7 +21851,7 @@ I<The source code label mode option tells RPerl if it should create human-readab
 
 =back
 
-=head2 B.20: Flags, Verbose
+=head2 B.22: Flags, Verbose
 
 =over
 
@@ -21836,7 +21878,7 @@ L<https://en.wikipedia.org/wiki/*nix>
 
 =back
 
-=head2 B.21: Flags, Debug
+=head2 B.23: Flags, Debug
 
 =over
 
@@ -21861,7 +21903,7 @@ I<Use of both the verbose and debug flags C<`rperl -V -D`> is recommended for RP
 
 =back
 
-=head2 B.22: Flags, Warnings
+=head2 B.24: Flags, Warnings
 
 =over
 
@@ -21883,7 +21925,7 @@ I<The default behavior is that RPerl should display warnings, in order to encour
 
 =back
 
-=head2 B.23: Flags, Test
+=head2 B.25: Flags, Test
 
 =over
 
@@ -21901,7 +21943,57 @@ I<The test flag option tells RPerl to operate in test mode, which means RPerl wi
 
 =back
 
-=head2 B.24: Flags, Dependencies
+=head2 B.26: Flags, Low Magic
+
+=over
+
+=item B<--low ...OR... -l>
+
+=for rperl X<noncode>
+
+    Accept low-magic (static) Perl source code in the source code input file(s).
+    Enabled by default, equivalent to '--mode magic=LOW' argument.
+    Because only low-magic mode is supported at this time, this option does not currently have any effect.
+
+=for rperl X</noncode>
+
+=back
+
+=head2 B.27: Flags, Medium Magic
+
+=over
+
+=item B<--medium>
+
+=for rperl X<noncode>
+
+    Accept medium-magic (mostly static) Perl source code in the source code input file(s).
+    Disabled by default, equivalent to '--mode magic=MEDIUM' argument.
+    Because only low-magic mode is supported at this time, this option does not currently have any effect.
+    Shorthand '-m' used for '--mode' argument, not '--medium' argument.
+
+=for rperl X</noncode>
+
+=back
+
+=head2 B.28: Flags, High Magic
+
+=over
+
+=item B<--high>
+
+=for rperl X<noncode>
+
+    Accept high-magic (dynamic) Perl source code in the source code input file(s).
+    Disabled by default, equivalent to '--mode magic=HIGH' argument.
+    Because only low-magic mode is supported at this time, this option does not currently have any effect.
+    Shorthand '-h' used for '--help' argument, not '--high' argument.
+
+=for rperl X</noncode>
+
+=back
+
+=head2 B.29: Flags, Dependencies
 
 =over
 
@@ -21919,11 +22011,11 @@ I<The test flag option tells RPerl to operate in test mode, which means RPerl wi
 
 I<The dependencies flag option tells RPerl if it should recursively follow and compile all dependencies of all RPerl source code input files.>
 
-I<This option is a shorthand provided for brevity, please see: L</B.11: Modes, Dependencies>>
+I<This option is a shorthand provided for brevity, please see: L</B.13: Modes, Dependencies>>
 
 =back
 
-=head2 B.25: Flags, Uncompile
+=head2 B.30: Flags, Uncompile
 
 =over
 
@@ -21953,11 +22045,11 @@ I<This option is a shorthand provided for brevity, please see: L</B.11: Modes, D
 
 I<The uncompile flag option tells RPerl to uncompile the input file(s) instead of compiling them.  The "u" of "uncompile" may be repeated as "uu" or "uuu" for greater uncompile effect (more files deleted).>
 
-I<This option is a shorthand provided for brevity, please see: L</B.12: Modes, Uncompile>>
+I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, Uncompile>>
 
 =back
 
-=head2 B.26: Flags, Compile
+=head2 B.31: Flags, Compile
 
 =over
 
@@ -21976,11 +22068,11 @@ I<The compile flag option tells RPerl if it should compile the source code input
 
 I<If disabled via C<--nocompile> or C<-noc>, RPerl will still perform the PARSE and GENERATE compile phases, but will not perform the SAVE or SUBCOMPILE phases, so no output files are saved to disk or subcompiled to binary using the C++ compiler.  This compile phase effect is similar to test mode in that files are not saved or subcompiled, but without automatically setting the operations or data types modes to Perl.>
 
-I<This option is a shorthand provided for brevity, please see: L</B.13: Modes, Compile>>
+I<This option is a shorthand provided for brevity, please see: L</B.15: Modes, Compile>>
 
 =back
 
-=head2 B.27: Flags, Subcompile, Assemble
+=head2 B.32: Flags, Subcompile, Assemble
 
 =over
 
@@ -21996,11 +22088,11 @@ I<This option is a shorthand provided for brevity, please see: L</B.13: Modes, C
 
 I<The assemble flag tells RPerl to run the C++ assembler and save non-executable binary *.o object file(s) to disk.>
 
-I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, Subcompile>>
+I<This option is a shorthand provided for brevity, please see: L</B.16: Modes, Subcompile>>
 
 =back
 
-=head2 B.28: Flags, Subcompile, Archive
+=head2 B.33: Flags, Subcompile, Archive
 
 =over
 
@@ -22016,11 +22108,11 @@ I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, S
 
 I<The archive flag tells RPerl to run the C++ compiler and save non-executable binary *.a archive library file(s) to disk.>
 
-I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, Subcompile>>
+I<This option is a shorthand provided for brevity, please see: L</B.16: Modes, Subcompile>>
 
 =back
 
-=head2 B.29: Flags, Subcompile, Shared Object
+=head2 B.34: Flags, Subcompile, Shared Object
 
 =over
 
@@ -22036,11 +22128,11 @@ I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, S
 
 I<The archive flag tells RPerl to run the C++ compiler and save non-executable binary *.so shared object library file(s) to disk.>
 
-I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, Subcompile>>
+I<This option is a shorthand provided for brevity, please see: L</B.16: Modes, Subcompile>>
 
 =back
 
-=head2 B.30: Flags, Subcompile, Static
+=head2 B.35: Flags, Subcompile, Static
 
 =over
 
@@ -22061,11 +22153,11 @@ I<The static flag tells RPerl to run the C++ compiler and save executable binary
 
 I<There is no equivalent C<--dynamic> flag, because dynamic subcompile mode is already the default behavior.>
 
-I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, Subcompile>>
+I<This option is a shorthand provided for brevity, please see: L</B.16: Modes, Subcompile>>
 
 =back
 
-=head2 B.31: Flags, Parallelize
+=head2 B.36: Flags, Parallelize
 
 =over
 
@@ -22083,11 +22175,11 @@ I<This option is a shorthand provided for brevity, please see: L</B.14: Modes, S
 
 I<The parallel flag tells RPerl if it should auto-parallelize the RPerl input file(s).>
 
-I<This option is a shorthand provided for brevity, please see: L</B.16: Modes, Parallelize>>
+I<This option is a shorthand provided for brevity, please see: L</B.18: Modes, Parallelize>>
 
 =back
 
-=head2 B.32: Flags, Execute
+=head2 B.37: Flags, Execute
 
 =over
 
@@ -22105,11 +22197,9 @@ I<This option is a shorthand provided for brevity, please see: L</B.16: Modes, P
 
 I<The execute flag tells RPerl if it should execute a *.pl RPerl program input file.>
 
-I<This option is a shorthand provided for brevity, please see: L</B.18: Modes, Execute>>
+I<This option is a shorthand provided for brevity, please see: L</B.20: Modes, Execute>>
 
 =back
-
-X<br>
 
 
 =head1 APPENDIX C: RPERL CRITICS
