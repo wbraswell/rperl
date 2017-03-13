@@ -5,7 +5,7 @@ package RPerl;
 use strict;
 use warnings;
 
-# DEV NOTE, CORRELATION #rp016: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
+# DEV NOTE, CORRELATION #rp016: CPAN's underscore-is-beta (NOT RPerl's underscore-is-comma) numbering scheme utilized here, to preserve trailing zeros
 our $VERSION = '2.450000';
 
 #our $VERSION = 20170214;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE

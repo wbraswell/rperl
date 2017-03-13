@@ -21316,6 +21316,10 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
 Additional explanations for each argument are provided I<with emphasis.>
 
+=for START HERE: add italic content for new args
+=for START HERE: add italic content for new args
+=for START HERE: add italic content for new args
+
 =head2 B.1: Help
 
 =over

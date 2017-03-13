@@ -6,7 +6,7 @@ use RPerl;
 use RPerl;
 #use RPerl::AfterSubclass;
 
-# DEV NOTE, CORRELATION #rp016: RPerl's underscore-is-comma (not CPAN's underscore-is-beta) numbering scheme utilized here
+# DEV NOTE, CORRELATION #rp016: CPAN's underscore-is-beta (NOT RPerl's underscore-is-comma) numbering scheme utilized here, to preserve trailing zeros
 our $VERSION = '2.450000';
 
 #our $VERSION = 20170306;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
@@ -399,8 +399,10 @@ sub verify_and_default_modes {
 sub verbose_versions {
     RPerl::verbose( 'RPERL VERBOSE VERSIONS & OTHER CONFIG INFO' . "\n\n" );
 
-    RPerl::verbose( '$RPerl::VERSION    ' . RPerl::DataType::Number::number_to_string($RPerl::VERSION) . "\n" );
-    RPerl::verbose( ' rperl $VERSION    ' . RPerl::DataType::Number::number_to_string($VERSION) . "\n\n" );
+    RPerl::verbose( q{$RPerl::VERSION using  CPAN's underscore-is-beta  numbering scheme    } . $RPerl::VERSION . "\n" );
+    RPerl::verbose( q{$RPerl::VERSION using RPerl's underscore-is-comma numbering scheme    } . RPerl::DataType::Number::number_to_string(RPerl::DataType::String::string_to_number($RPerl::VERSION)) . "\n" );
+    RPerl::verbose( q{ rperl $VERSION using  CPAN's underscore-is-beta  numbering scheme    } . $VERSION . "\n" );
+    RPerl::verbose( q{ rperl $VERSION using RPerl's underscore-is-comma numbering scheme    } . RPerl::DataType::Number::number_to_string(RPerl::DataType::String::string_to_number($VERSION)) . "\n\n" );
 
     my string $ccflags = [ config_re('ccflags') ]->[0];
     substr $ccflags, 0,  9, q{};                 # remove leading ccflags='
