@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.183_000;
+our $VERSION = 0.184_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -21316,10 +21316,6 @@ Below is a comprehensive list of all RPerl command-line arguments, as reported b
 
 Additional explanations for each argument are provided I<with emphasis.>
 
-=for START HERE: add italic content for new args
-=for START HERE: add italic content for new args
-=for START HERE: add italic content for new args
-
 =head2 B.1: Help
 
 =over
@@ -21446,6 +21442,10 @@ I<If both the shorthand and longhand forms of the C++ compiler option are omitte
 
 =for rperl X</noncode>
 
+I<The magic mode option tells RPerl which grammar to use when parsing the input source code.>
+
+I<Low-magic parsing uses the Grammar.eyp EYAPP grammar file, medium-magic parsing will uses GrammarMedium.eyp, and high-magic parsing will use GrammarHigh.eyp.>
+
 =back
 
 =head2 B.7: Modes, Code
@@ -21465,6 +21465,12 @@ I<If both the shorthand and longhand forms of the C++ compiler option are omitte
     Because code mode is dependent upon operations mode, this option does not currently have any effect.
 
 =for rperl X</noncode>
+
+I<The source code mode option tells RPerl which grammar to use when generating the output source code.>
+
+I<Perl code generating will produce output source code which can be parsed using RPerl itself.>
+
+I<C++ code generating will produce output source code which can be parsed using any standards-compliant C++ compiler.>
 
 =back
 
