@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.184_000;
+our $VERSION = 0.185_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -21967,6 +21967,10 @@ I<The test flag option tells RPerl to operate in test mode, which means RPerl wi
 
 =for rperl X</noncode>
 
+I<The low-magic flag option tells RPerl to operate in low-magic mode, which supports a small subset of Perl and runs at the fastest speed.>
+
+I<This option is a shorthand provided for brevity, please see: L</B.6: Modes, Magic>>
+
 =back
 
 =head2 B.27: Flags, Medium Magic
@@ -21984,6 +21988,10 @@ I<The test flag option tells RPerl to operate in test mode, which means RPerl wi
 
 =for rperl X</noncode>
 
+I<The medium-magic flag option tells RPerl to operate in medium-magic mode, which supports a large subset of Perl and runs at a very fast speed.>
+
+I<This option is a shorthand provided for brevity, please see: L</B.6: Modes, Magic>>
+
 =back
 
 =head2 B.28: Flags, High Magic
@@ -22000,6 +22008,10 @@ I<The test flag option tells RPerl to operate in test mode, which means RPerl wi
     Shorthand '-h' used for '--help' argument, not '--high' argument.
 
 =for rperl X</noncode>
+
+I<The high-magic flag option tells RPerl to operate in high-magic mode, which supports all of Perl and runs at a fast speed.>
+
+I<This option is a shorthand provided for brevity, please see: L</B.6: Modes, Magic>>
 
 =back
 
