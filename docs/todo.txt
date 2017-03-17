@@ -4,10 +4,9 @@ DONE
     add source code mode command-line argument and placeholder in $modes hash
     add magic mode command-line argument and placeholder in $modes hash
     create initial GrammarMedium.eyp & associated utilities, etc.
-
-DOING
     update Learning RPerl 'DEV NOTE, CORRELATION #rp029' sections as already done in script/rperl
 
+DOING
     Monolithic Modules, Fix Deps Warning & Create Tests
     Parse::Eyapp regex fix & CPAN upload
     implement 10 ops in CPPOPS_CPPTYPES
@@ -16,7 +15,7 @@ DOING
         finish .pl body generation
         subroutines, final operation must be return operator
         WHAT ELSE?!?
-    
+
     update pluto URL to official github repo, delete mirror repo
     update tests to emit more useful failure info, for CPAN testers debugging
     update CPPOPS_DUALTYPES reference files
