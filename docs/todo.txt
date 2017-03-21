@@ -7,6 +7,8 @@ DONE
     update Learning RPerl 'DEV NOTE, CORRELATION #rp029' sections as already done in script/rperl
 
 DOING
+    Inline::RPerl, reserve namespace
+    Learning RPerl exercises, add missing newline at end of files, check on CloudForFree.org
     Monolithic Modules, Fix Deps Warning & Create Tests
     Parse::Eyapp regex fix & CPAN upload
     implement 10 ops in CPPOPS_CPPTYPES
@@ -36,7 +38,6 @@ DOING
         abs & mako's other new ops are no longer "Coming Soon"
     print dot-to-comma in lib/RPerl/Test/*
     templateperl
-    Inline::RPerl
     mv sort to standardperl
     all servers online
         rperl
