@@ -5,9 +5,9 @@ DONE
     add magic mode command-line argument and placeholder in $modes hash
     create initial GrammarMedium.eyp & associated utilities, etc.
     update Learning RPerl 'DEV NOTE, CORRELATION #rp029' sections as already done in script/rperl
+    Inline::RPerl, reserve namespace
 
 DOING
-    Inline::RPerl, reserve namespace
     Learning RPerl exercises, add missing newline at end of files, check on CloudForFree.org
     Monolithic Modules, Fix Deps Warning & Create Tests
     Parse::Eyapp regex fix & CPAN upload

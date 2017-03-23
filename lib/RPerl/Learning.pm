@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.185_000;
+our $VERSION = 0.186_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -13969,7 +13969,7 @@ Running the code example above will produce the following output:
 
 =for comment [ START HERE: need add post-table examples ]
 
-=head3 Section 2.4.12: Increment & Decrement Operators
+=head3 Section 2.4.12: Auto-Increment & Auto-Decrement Operators
 
 =for comment [ START HERE: need add pre-table content ]
 
@@ -14016,7 +14016,7 @@ l l l l r l l .
 =begin docbook
 
 <table id="learning_rperl-section_2.4.12-table_1" label="" frame="all" colsep="1" rowsep="1">
-<title>Increment & Decrement Operators</title>
+<title>Auto-Increment & Auto-Decrement Operators</title>
 <tgroup cols="6">
 
 =end docbook

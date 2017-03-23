@@ -6,26 +6,93 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(RPerl::CompileUnit::Module::Class);
-use RPerl::CompileUnit::Module::Class;
+use parent qw(Inline);
+use Inline;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ INCLUDES ]]]
-use RPerl::Test::Foo;
+use Carp;
+use File::Spec;
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = {
-    foo => my integer $TYPED_foo         = 23,
-};
+our hashref $properties = {};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
-# <<< CHANGE_ME: delete for no subroutines/methods, or replace with real subroutine(s)/method(s) >>>
-our void $bar = sub {
-    print 'in subroutine bar()...', "\n";
-};
+sub register {
+    return {
+        language => 'RPerl',  # do not alias lowercase 'rperl' to avoid ambiguity or confusion
+        type => 'compiled',
+        suffix => 'pmc',  # suffix of output files
+    };
+}
+
+sub usage_config {
+    my $key = shift;
+    return q{'} . $key . q{'} . 'is not a valid config option for Inline::RPerl' . "\n";
+}
+
+sub usage_config_bar {
+    "Invalid value for Inline::RPerl config option BAR";
+}
+
+sub validate {
+    my $o = shift;
+    $o->{ILSM}{PATTERN} ||= 'foo-';
+    $o->{ILSM}{BAR} ||= 0;
+    while (@_) {
+        my ($key, $value) = splice @_, 0, 2;
+        if ($key eq 'PATTERN') {
+            $o->{ILSM}{PATTERN} = $value;
+            next;
+        }
+        if ($key eq 'BAR') {
+            croak usage_config_bar
+              unless $value =~ /^[01]$/;
+            $o->{ILSM}{BAR} = $value;
+            next;
+        }
+        croak usage_config($key);
+    }
+}
+
+sub build {
+    my $o = shift;
+    my $code = $o->{API}{code};
+    my $pattern = $o->{ILSM}{PATTERN};
+    $code =~ s/$pattern//g;
+    $code =~ s/bar-//g if $o->{ILSM}{BAR};
+    {
+        package Foo::Tester;
+        our $VERSION = 0.001_000;
+        eval $code;
+    }
+    croak "Foo build failed:\n$@" if $@;
+    my $path = File::Spec->catdir($o->{API}{install_lib},'auto',$o->{API}{modpname});
+    my $obj = $o->{API}{location};
+    $o->mkpath($path) unless -d $path;
+    open FOO_OBJ, "> $obj"
+      or croak "Can't open $obj for output\n$!";
+    print FOO_OBJ $code;
+    close \*FOO_OBJ;
+}
+
+sub load {
+    my $o = shift;
+    my $obj = $o->{API}{location};
+    open FOO_OBJ, "< $obj"
+      or croak "Can't open $obj for output\n$!";
+    my $code = join '', <FOO_OBJ>;
+    close \*FOO_OBJ;
+    eval "package $o->{API}{pkg};\n$code";
+    croak "Unable to load Foo module $obj:\n$@" if $@;
+}
+
+sub info {
+    my $o = shift;
+}
 
 1;    # end of class
