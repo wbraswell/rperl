@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.187_000;
+our $VERSION = 0.188_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -334,9 +334,9 @@ X<br>
 
 =item * L</CHAPTER 11: CLASSES, PACKAGES, MODULES, LIBRARIES>
 
-=item * L</CHAPTER 12: TESTING FILE PROPERTIES>
+=item * L</CHAPTER 12: TESTING FILES & DIRECTORIES>
 
-=item * L</CHAPTER 13: TESTING DIRECTORY PROPERTIES>
+=item * L</CHAPTER 13: MANIPULATING FILES & DIRECTORIES>
 
 =item * L</CHAPTER 14: SORTING TEXT VALUES>
 
@@ -19372,7 +19372,7 @@ X<br>
 X<br>
 
 
-=head1 CHAPTER 12: TESTING FILE PROPERTIES
+=head1 CHAPTER 12: TESTING FILES & DIRECTORIES
 
 =for comment [ INSERT CHAPTER ]
 
@@ -19383,7 +19383,7 @@ X<br>
 X<br>
 
 
-=head1 CHAPTER 13: TESTING DIRECTORY PROPERTIES
+=head1 CHAPTER 13: MANIPULATING FILES & DIRECTORIES
 
 =for comment [ INSERT CHAPTER ]
 
