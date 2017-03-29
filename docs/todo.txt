@@ -33,6 +33,8 @@ DOING
     uncompile delete EXE files
     disable variable declaration w/out initial value, grammar & tests & docs
     Learning
+        upgrade install instructions
+        add bitstrings to 2.1.15, mentioned in LP189
         EAR17 & Exxx & any other new errors
         update appendix with grammar changes: bitwise_negation_lparen, additional operators?
         abs & mako's other new ops are no longer "Coming Soon"
