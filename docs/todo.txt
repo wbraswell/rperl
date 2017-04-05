@@ -19,6 +19,7 @@ DOING
         WHAT ELSE?!?
 
     update pluto URL to official github repo, delete mirror repo
+    Inline::Pluto
     update tests to emit more useful failure info, for CPAN testers debugging
     update CPPOPS_DUALTYPES reference files
     remove explicit properties inheritance, Generator.pm & Grammar.eyp
@@ -32,8 +33,10 @@ DOING
     uncompile w/ corrupted or missing PMC, CPP, H files
     uncompile delete EXE files
     disable variable declaration w/out initial value, grammar & tests & docs
-    Learning
+    Learning RPerl
         upgrade install instructions
+        add chapter 1 bonus exercise, create stand-alone executable for Hello World
+        add missing operator tables as with 2.4.13 chop & chomp, etc
         add bitstrings to 2.1.15, mentioned in LP189
         EAR17 & Exxx & any other new errors
         update appendix with grammar changes: bitwise_negation_lparen, additional operators?
