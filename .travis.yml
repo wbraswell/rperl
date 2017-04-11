@@ -1,5 +1,5 @@
 language: perl
-# v0.019_000
+# v0.019_100
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -60,7 +60,7 @@ install:
     - sudo apt-get install libgmp-dev
     # begin Pluto PolyCC
     - sudo apt-get install texinfo
-    #- wget https://github.com/wbraswell/pluto-mirror/raw/master/backup/pluto-0.11.4.tar.gz  # prefer official Pluto repo below
+    #- wget https://github.com/wbraswell/pluto-mirror/raw/master/backup/pluto-0.11.4.tar.gz  # prefer official repo below
     - wget https://github.com/bondhugula/pluto/files/737550/pluto-0.11.4.tar.gz
     - tar -xzvf pluto-0.11.4.tar.gz
     - cd pluto-0.11.4/
