@@ -1,7 +1,7 @@
 #!/bin/bash
 # Copyright © 2014, 2015, 2016, William N. Braswell, Jr.. All Rights Reserved. This work is Free \& Open Source; you can redistribute it and/or modify it under the same terms as Perl 5.24.0.
 # RPerl Installer Script
-VERSION='0.115_000'
+VERSION='0.116_000'
 
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
@@ -433,7 +433,8 @@ if [ $MENU_CHOICE -le 25 ]; then
         B astyle -V
 
         echo '[ ANY OPTION: Install RPerl Dependency Pluto PolyCC, Download ]'
-        B 'wget https://github.com/wbraswell/pluto-mirror/raw/master/backup/pluto-0.11.4.tar.gz; tar -xzvf pluto-0.11.4.tar.gz'
+        # B 'wget https://github.com/wbraswell/pluto-mirror/raw/master/backup/pluto-0.11.4.tar.gz; tar -xzvf pluto-0.11.4.tar.gz'  # prefer official repo below
+        B 'wget https://github.com/bondhugula/pluto/files/737550/pluto-0.11.4.tar.gz; tar -xzvf pluto-0.11.4.tar.gz'
         echo '[ ANY OPTION: Install RPerl Dependency Pluto PolyCC, Build ]'
         B 'cd pluto-0.11.4; ./configure; make; make test'
         echo '[ ANY OPTION: Install RPerl Dependency Pluto PolyCC, Install ]'
