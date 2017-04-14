@@ -325,9 +325,10 @@ $ export RPERL_VERBOSE=1
 $ export RPERL_DEBUG=1
 $
 $ #### you may want to use perl switches '-Mblib' and '-Mlib=lib' ####
-$ perl ./t/09_interpret_execute.t Operator01NamedAbsoluteValue
-$ perl ./t/12_parse.t Operator01NamedAbsoluteValue
-$ perl ./t/13_generate.t Operator01NamedAbsoluteValue
+$
+$ perl ./t/09_interpret_execute.t lib/RPerl/Test/Operator01NamedAbsoluteValue
+$ perl ./t/12_parse.t             lib/RPerl/Test/Operator01NamedAbsoluteValue
+$ perl ./t/13_generate.t          lib/RPerl/Test/Operator01NamedAbsoluteValue
 
 You should see over 3,300 tests pass without 1 single failure when the entire test suite runs correctly via the `make test` command above.  Feels good, doesn't it?
 
