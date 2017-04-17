@@ -1,6 +1,5 @@
 DONE
 
-
 DOING
     Learning RPerl exercises, check on CloudForFree.org
 
