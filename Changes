@@ -1,7 +1,18 @@
 Revision history for Perl compiler RPerl.
 
-2.451000 2017-03-23
+2.600000 2017-04-16 Codename Pisces
 
+    - HOLIDAY EDITION: Happy Easter!
+    - OO Class Property Inheritance, Disallow Name Masking
+    - OO Class Property Inheritance, Compatible With C++ Behavior, Upgrade Tests, CPPOPS_*TYPES
+    - Add Source Code Mode Command-Line Argument & Placeholder In $modes Hash
+    - Add Magic Mode Command-Line Argument & Placeholder In $modes Hash
+    - Create Initial GrammarMedium.eyp & Associated Utilities
+    - Inline::RPerl, Reserve Namespace
+    - Learning RPerl, Update 'DEV NOTE, CORRELATION #rp029' Sections As Already Done In script/rperl
+    - Learning RPerl, Exercises, Add Missing Newlines At End Of Files
+    - Pluto, Update URL To Official GitHub Repo
+    - Alien::astyle, Fix https Error In Appveyor, Require New Version In RPerl 
 
 2.450000 2017-02-14 Codename Perseus
 
