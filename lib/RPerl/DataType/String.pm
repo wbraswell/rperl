@@ -40,9 +40,17 @@ use warnings;
 
 # [[[ INCLUDES ]]]
 use POSIX qw(floor);
+
+BEGIN { print '<<< DEBUG String.pm 0a0 >>>', "\n"; }
 # DEV NOTE: do not put inside INIT{} block, because it will be "too late to run INIT block" in some cases, such as inside Catalyst
-use RPerl::HelperFunctions_cpp;  # main::RPerl_SvPOKp
-RPerl::HelperFunctions_cpp::cpp_load();
+
+if ((not exists $main::{'RPerl::SvPOKp'} ) or (not defined &{ $main::{'RPerl::SvPOKp'} })) {
+BEGIN { print '<<< DEBUG String.pm 0a1 >>>', "\n"; }
+    use RPerl::HelperFunctions_cpp;  # main::RPerl_SvPOKp
+BEGIN { print '<<< DEBUG String.pm 0a2 >>>', "\n"; }
+    RPerl::HelperFunctions_cpp::cpp_load();
+}
+BEGIN { print '<<< DEBUG String.pm 0a3 >>>', "\n"; }
 
 # [[[ EXPORTS ]]]
 use Exporter 'import';

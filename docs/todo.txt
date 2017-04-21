@@ -13,7 +13,7 @@ DOING
         subroutines, final operation must be return operator
         WHAT ELSE?!?
 
-    Inline::Pluto
+    Alien::Pluto
     Inline::RPerl
     update tests to emit more useful failure info, for CPAN testers debugging
     update CPPOPS_DUALTYPES reference files

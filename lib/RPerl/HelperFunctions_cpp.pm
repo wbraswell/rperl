@@ -21,8 +21,8 @@ sub cpp_load {
     if (    ( exists $main::{'RPerl__HelperFunctions__MODE_ID'} )
         and ( defined &{ $main::{'RPerl__HelperFunctions__MODE_ID'} } ) )
     {
-#        RPerl::diag("in HelperFunctions_cpp::cpp_load, RPerl__HelperFunctions__MODE_ID() exists & defined\n");
-#        RPerl::diag(q{in HelperFunctions_cpp::cpp_load, have RPerl__HelperFunctions__MODE_ID() retval = '} . main::RPerl__HelperFunctions__MODE_ID() . "'\n");
+        RPerl::diag("in HelperFunctions_cpp::cpp_load, RPerl__HelperFunctions__MODE_ID() exists & defined\n");
+        RPerl::diag(q{in HelperFunctions_cpp::cpp_load, have RPerl__HelperFunctions__MODE_ID() retval = '} . main::RPerl__HelperFunctions__MODE_ID() . "'\n");
         if ( $RPerl::MODES
             ->{ main::RPerl__HelperFunctions__MODE_ID() }->{ops} ne
             'CPP' )
@@ -31,13 +31,13 @@ sub cpp_load {
         }
     }
     else {
-#        RPerl::diag("in HelperFunctions_cpp::cpp_load, RPerl__HelperFunctions__MODE_ID() does not exist or undefined\n");
+        RPerl::diag("in HelperFunctions_cpp::cpp_load, RPerl__HelperFunctions__MODE_ID() does not exist or undefined\n");
         $need_load_cpp = 1;
     }
 
     if ($need_load_cpp) {
 
-#        RPerl::diag("in HelperFunctions_cpp::cpp_load, need load CPP code\n");
+        RPerl::diag("in HelperFunctions_cpp::cpp_load, need load CPP code\n");
 
 #BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1); }
         my $eval_string = <<"EOF";
@@ -52,8 +52,8 @@ EOF
         $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypessizes::type_number_native_ccflag();
         $RPerl::Inline::ARGS{cppflags} = $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypessizes::type_number_native_ccflag();
 
-#        RPerl::diag("in HelperFunctions_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n");
-#        RPerl::diag("in HelperFunctions_cpp::cpp_load(), CPP not yet loaded, have \%RPerl::Inline::ARGS =\n" . Dumper(\%RPerl::Inline::ARGS) . "\n");
+        RPerl::diag("in HelperFunctions_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n");
+        RPerl::diag("in HelperFunctions_cpp::cpp_load(), CPP not yet loaded, have \%RPerl::Inline::ARGS =\n" . Dumper(\%RPerl::Inline::ARGS) . "\n");
 
         eval $eval_string or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
@@ -61,7 +61,7 @@ EOF
 #RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1);
     }
 
-#	else { RPerl::diag("in HelperFunctions_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"); }
+	else { RPerl::diag("in HelperFunctions_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"); }
 }
 
 1;
