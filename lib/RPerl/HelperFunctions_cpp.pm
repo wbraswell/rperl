@@ -42,6 +42,7 @@ sub cpp_load {
 #BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1); }
         my $eval_string = <<"EOF";
 package main;
+BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2x >>>', "\n"; }
 use RPerl::Inline;
 BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2a >>>', "\n"; }
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1); }
