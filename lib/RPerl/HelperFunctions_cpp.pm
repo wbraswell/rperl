@@ -14,8 +14,14 @@ our $VERSION = 0.004_000;
 use RPerl::Inline;
 use rperltypessizes;  # get type_integer_native_ccflag() & type_number_native_ccflag() w/out loading the entire RPerl type system via 'use rperltypes;'
 
+
+
+
 # [[[ SPECIAL PACKAGE VARIABLES ]]]
 our $LOADING = 0;
+$ENV{RPERL_HELPERS_LOADING} = 0;
+
+
 
 # [[[ SUBROUTINES ]]]
 #our void::method $cpp_load = sub {  # DEV NOTE: remove dependency on RPerl
@@ -40,21 +46,30 @@ sub cpp_load {
 
     if ($need_load_cpp) {
         $RPerl::HelperFunctions_cpp::LOADING = 1;
+        $ENV{RPERL_HELPERS_LOADING} = 1;
 
         RPerl::diag("in HelperFunctions_cpp::cpp_load, need load CPP code\n");
 
 #BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1); }
         my $eval_string = <<"EOF";
 package main;
-BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2x, have \$RPerl::HelperFunctions_cpp::LOADING = ', $RPerl::HelperFunctions_cpp::LOADING, ' >>>', "\n"; }
+
+#BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2x, have \$RPerl::HelperFunctions_cpp::LOADING = ', $RPerl::HelperFunctions_cpp::LOADING, ' >>>', "\n"; }
+BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2x, have \$ENV{RPERL_HELPERS_LOADING} = ', $ENV{RPERL_HELPERS_LOADING}, ' >>>', "\n"; }
+
 use RPerl::Inline;
+
 BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2a >>>', "\n"; }
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1); }
 BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2b >>>', "\n"; }
 
+
 # START HERE: why is the following 'use Inline' call recursing???
 # START HERE: why is the following 'use Inline' call recursing???
 # START HERE: why is the following 'use Inline' call recursing???
+
+BEGIN { \$DB::single=2; }
+
 
 use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/HelperFunctions.cpp', \%RPerl::Inline::ARGS);
 BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2c >>>', "\n"; }
