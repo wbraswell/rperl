@@ -54,10 +54,13 @@ sub cpp_load {
         my $eval_string = <<"EOF";
 package main;
 
-#BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2x, have \$RPerl::HelperFunctions_cpp::LOADING = ', $RPerl::HelperFunctions_cpp::LOADING, ' >>>', "\n"; }
+#BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2x, have \$RPerl::HelperFunctions_cpp::LOADING = ', $RPerl::HelperFunctions_cpp::LOADING, ' >>>', "\\n"; }
 BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2x, have \$ENV{RPERL_HELPERS_LOADING} = ', $ENV{RPERL_HELPERS_LOADING}, ' >>>', "\n"; }
 
-use RPerl::Inline;
+
+# NEED UNCOMMENT
+#use RPerl::Inline;
+
 
 BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2a >>>', "\n"; }
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1); }
@@ -68,10 +71,14 @@ BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2b >>>', "\n"; }
 # START HERE: why is the following 'use Inline' call recursing???
 # START HERE: why is the following 'use Inline' call recursing???
 
-BEGIN { \$DB::single=2; }
+
+# NEED UNCOMMENT
+#use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/HelperFunctions.cpp', \%RPerl::Inline::ARGS);
+BEGIN{ \$DB::single = 1; }
+BEGIN{ use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/HelperFunctions.cpp', \%RPerl::Inline::ARGS); }
 
 
-use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/HelperFunctions.cpp', \%RPerl::Inline::ARGS);
+
 BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2c >>>', "\n"; }
 RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1);
 1;
