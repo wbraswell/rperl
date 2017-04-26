@@ -41,12 +41,16 @@ use warnings;
 # [[[ INCLUDES ]]]
 use POSIX qw(floor);
 
-BEGIN { print '<<< DEBUG String.pm 0a0 >>>', "\n"; }
+#BEGIN { print '<<< DEBUG String.pm 0a0 >>>', "\n"; }
+#BEGIN { print '<<< DEBUG String.pm 0a0 >>>, have @ARGV = ', Dumper(\@ARGV), "\n"; }
+#BEGIN { print '<<< DEBUG String.pm 0a0 >>>, have $ARGV[0] = ', $ARGV[0], "\n"; }
+BEGIN { print '<<< DEBUG String.pm 0a0 >>>, have (substr $ARGV[0], -7, 7) = ', (substr $ARGV[0], -7, 7), "\n"; }
 # DEV NOTE: do not put inside INIT{} block, because it will be "too late to run INIT block" in some cases, such as inside Catalyst
 
 #if ((not exists $main::{'RPerl::SvPOKp'} ) or (not defined &{ $main::{'RPerl::SvPOKp'} })) {
 #if (not $RPerl::HelperFunctions_cpp::LOADING) {
-if ((not exists $ENV{RPERL_HELPERS_LOADING}) or (not defined $ENV{RPERL_HELPERS_LOADING}) or (not $ENV{RPERL_HELPERS_LOADING})) {
+#if ((not exists $ENV{RPERL_HELPERS_LOADING}) or (not defined $ENV{RPERL_HELPERS_LOADING}) or (not $ENV{RPERL_HELPERS_LOADING})) {
+if ((exists $ARGV[0]) and (defined $ARGV[0]) and ((substr $ARGV[0], -7, 7) eq '_Inline')) {
 BEGIN { print '<<< DEBUG String.pm 0a1 >>>', "\n"; }
     use RPerl::HelperFunctions_cpp;  # main::RPerl_SvPOKp
 #BEGIN { print '<<< DEBUG String.pm 0a2, have $RPerl::HelperFunctions_cpp::LOADING = ', $RPerl::HelperFunctions_cpp::LOADING, ' >>>', "\n"; }

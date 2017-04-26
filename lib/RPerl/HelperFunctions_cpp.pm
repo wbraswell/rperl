@@ -74,7 +74,7 @@ BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2b >>>', "\n"; }
 
 # NEED UNCOMMENT
 #use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/HelperFunctions.cpp', \%RPerl::Inline::ARGS);
-BEGIN{ \$DB::single = 1; }
+#BEGIN{ \$DB::single = 1; }
 BEGIN{ use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/HelperFunctions.cpp', \%RPerl::Inline::ARGS); }
 
 
