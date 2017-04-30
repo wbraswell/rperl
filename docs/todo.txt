@@ -1,4 +1,5 @@
 DONE
+    Fix recursive dependencies from Inline::create_config_file() system() call
 
 DOING
     Learning RPerl exercises, check on CloudForFree.org
