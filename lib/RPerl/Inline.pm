@@ -4,13 +4,9 @@ use strict;
 use warnings;
 our $VERSION = 0.001_400;
 
-BEGIN { print '<<< DEBUG Inline.pm 0a2x0 >>>', "\n"; }
-
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
 use RPerl::Config;  # for $RPerl::DEBUG
-
-BEGIN { print '<<< DEBUG Inline.pm 0a2x1 >>>', "\n"; }
 
 # long form
 #use Inline CPP => config => classes =>
@@ -66,7 +62,5 @@ our %ARGS = (
     ],
     classes => sub { join('::', split('__', shift)); }
 );
- 
-BEGIN { print '<<< DEBUG Inline.pm 0a2x2 >>>', "\n"; }
 
 1;

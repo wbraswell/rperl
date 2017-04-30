@@ -5,7 +5,7 @@ use warnings;
 use RPerl::Config; # get Carp, English, $RPerl::INCLUDE_PATH without 'use RPerl;'
 
 #use RPerl;  # DEV NOTE: need to use HelperFunctions in RPerl::DataStructure::Array for type checking SvIOKp() etc; remove dependency on RPerl void::method type so HelperFunctions can be loaded by RPerl type system
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
@@ -13,15 +13,6 @@ our $VERSION = 0.004_000;
 # [[[ INCLUDES ]]]
 use RPerl::Inline;
 use rperltypessizes;  # get type_integer_native_ccflag() & type_number_native_ccflag() w/out loading the entire RPerl type system via 'use rperltypes;'
-
-
-
-
-# [[[ SPECIAL PACKAGE VARIABLES ]]]
-our $LOADING = 0;
-$ENV{RPERL_HELPERS_LOADING} = 0;
-
-
 
 # [[[ SUBROUTINES ]]]
 #our void::method $cpp_load = sub {  # DEV NOTE: remove dependency on RPerl
@@ -45,41 +36,15 @@ sub cpp_load {
     }
 
     if ($need_load_cpp) {
-        $RPerl::HelperFunctions_cpp::LOADING = 1;
-        $ENV{RPERL_HELPERS_LOADING} = 1;
-
         RPerl::diag("in HelperFunctions_cpp::cpp_load, need load CPP code\n");
 
 #BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1); }
         my $eval_string = <<"EOF";
 package main;
-
-#BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2x, have \$RPerl::HelperFunctions_cpp::LOADING = ', $RPerl::HelperFunctions_cpp::LOADING, ' >>>', "\\n"; }
-BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2x, have \$ENV{RPERL_HELPERS_LOADING} = ', $ENV{RPERL_HELPERS_LOADING}, ' >>>', "\n"; }
-
-
-# NEED UNCOMMENT
-#use RPerl::Inline;
-
-
-BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2a >>>', "\n"; }
+use RPerl::Inline;
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1); }
-BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2b >>>', "\n"; }
-
-
-# START HERE: why is the following 'use Inline' call recursing???
-# START HERE: why is the following 'use Inline' call recursing???
-# START HERE: why is the following 'use Inline' call recursing???
-
-
-# NEED UNCOMMENT
-#use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/HelperFunctions.cpp', \%RPerl::Inline::ARGS);
-#BEGIN{ \$DB::single = 1; }
-BEGIN{ use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/HelperFunctions.cpp', \%RPerl::Inline::ARGS); }
-
-
-
-BEGIN { print '<<< DEBUG HelperFunctions_cpp.pm 0a2c >>>', "\n"; }
+# DEV NOTE, CORRELATION #rp040: fix recursive dependencies of String.pm & HelperFunctions_cpp.pm, as triggered by ingy's Inline::create_config_file() `system` call
+use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/HelperFunctions.cpp', \%RPerl::Inline::ARGS);
 RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/HelperFunctions.cpp' ]]]\n" x 1);
 1;
 EOF
