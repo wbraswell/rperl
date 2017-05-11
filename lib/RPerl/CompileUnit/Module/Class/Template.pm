@@ -45,7 +45,7 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 4: allow eval() test code blocks
 
 ## no critic qw(ProhibitBooleanGrep)  # SYSTEM SPECIAL 1: allow grep
-## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @_
+## no critic qw(ProhibitAutoloading RequireArgUnpacking)  # SYSTEM SPECIAL 2: allow Autoload & read-only @ARG
 ## no critic qw(ProhibitParensWithBuiltins ProhibitNoisyQuotes)  # SYSTEM SPECIAL 3: allow auto-generated code
 ## no critic qw(ProhibitExcessMainComplexity)  # SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
 ## no critic qw(ProhibitExcessComplexity)  # SYSTEM SPECIAL 5: allow complex code inside subroutines, must be after line 1
@@ -105,14 +105,14 @@ our void $pies_are_round = sub {
 };
 
 our number $pi_r_squared = sub {
-    ( my number $r ) = @_;
+    ( my number $r ) = @ARG;
     my number $area = PI() * $r ** 2;
     print 'in subroutine pi_r_squared(), have $area = PI() * $r ** 2 = ', $area, "\n";
     return $area;
 };
 
 our number_arrayref $garply = sub {
-    ( my integer $garply_input, my number_arrayref $garply_array ) = @_;
+    ( my integer $garply_input, my number_arrayref $garply_array ) = @ARG;
     my integer $garply_input_size = scalar @{$garply_array};
     my integer $ungarply_size_typed = scalar @{my integer_arrayref $TYPED_ungarply = [4, 6, 8, 10]};
 #    my integer $ungarply_size_untyped = scalar @{[4, 6, 8, 10]};  missing type_inner, not supported in CPPOPS_CPPTYPES
@@ -125,8 +125,7 @@ our number_arrayref $garply = sub {
 };
 
 our string_hashref $gorce = sub {
-    ( my integer $al, my number $be, my string $ga, my string_hashref $de)
-        = @_;
+    ( my integer $al, my number $be, my string $ga, my string_hashref $de) = @ARG;
     return {
         alpha => integer_to_string($al),
         beta  => number_to_string($be),
@@ -136,7 +135,7 @@ our string_hashref $gorce = sub {
 };
 
 our void::method $quux = sub {
-    ( my object $self) = @_;
+    ( my object $self) = @ARG;
     $self->{plugh} = $self->{plugh} * 2;
 };
 
@@ -148,7 +147,7 @@ our integer::method $quince = sub {
 };
 
 our string_hashref::method $qorge = sub {
-    ( my object $self, my integer $qorge_input ) = @_;
+    ( my object $self, my integer $qorge_input ) = @ARG;
     return {
         a => $self->{xyzzy} x $qorge_input,
         b => 'howdy',
@@ -157,7 +156,7 @@ our string_hashref::method $qorge = sub {
 };
 
 our RPerl::CompileUnit::Module::Class::Template_arrayref::method $qaft = sub {
-    ( my object $self, my integer $foo, my number $bar, my string $bat, my string_hashref $baz ) = @_;
+    ( my object $self, my integer $foo, my number $bar, my string $bat, my string_hashref $baz ) = @ARG;
     my RPerl::CompileUnit::Module::Class::Template_arrayref $retval = [];
     $retval->[0] = RPerl::CompileUnit::Module::Class::Template->new();
     $retval->[0]->{xyzzy} = 'larry';  # saint or stooge?

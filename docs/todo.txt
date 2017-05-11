@@ -225,10 +225,11 @@ MATHPERL
     tan, cot, sec, csc
     Math::Trig support
     Math::Complex support
+    fractal, hsv coloring
 
 PHYSICSPERL
-    nbody, optimize graphics speed
-    fractal, hsv coloring
+    n_body, add command-line option for SystemGasGiants.pm & SystemSSEGasGiants.pm
+    n_body, optimize graphics speed
 
 WEB BACK-END
     asm.js and/or webassembly backend
