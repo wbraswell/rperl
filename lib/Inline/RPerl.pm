@@ -1,9 +1,9 @@
 # [[[ HEADER ]]]
-use RPerl::AfterSubclass;
+# use RPerl::AfterSubclass;  # creates infinite include loop for any call to 'use RPerl;', Inline::* should probably not have any other Inline::* as (sub)dependencies
 package Inline::RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(Inline);
