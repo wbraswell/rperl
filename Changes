@@ -1,5 +1,9 @@
 Revision history for Perl compiler RPerl.
 
+2.601000 2017-06-10
+
+    - Bug Fix, Inline::RPerl Infinite Include Loop
+
 2.600000 2017-04-16 Codename Pisces
 
     - HOLIDAY EDITION: Happy Easter!

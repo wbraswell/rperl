@@ -7,10 +7,10 @@ use RPerl;
 #use RPerl::AfterSubclass;
 
 # DEV NOTE, CORRELATION #rp016: CPAN's underscore-is-beta (NOT RPerl's underscore-is-comma) numbering scheme utilized here, to preserve trailing zeros
-our $VERSION = '2.600000';
+our $VERSION = '2.601000';
 
-#our $VERSION = 20170416;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2017.106;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20170610;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2017.161;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -963,9 +963,9 @@ if ($::version_flag) {
 
     # DEV NOTE, CORRELATION #rp016: numbering schemes mentioned below
     my $version_message = <<EOL;
-This is RPerl version 2.600_000, Long Date 20170416, Star Date 2017.106
-v2.600_000 using RPerl's underscore-is-comma numbering scheme
-v2.600000  using  CPAN's underscore-is-beta  numbering scheme
+This is RPerl version 2.601_000, Long Date 20170610, Star Date 2017.161
+v2.601_000 using RPerl's underscore-is-comma numbering scheme
+v2.601000  using  CPAN's underscore-is-beta  numbering scheme
 
 Copyright © 2013, 2014, 2015, 2016, 2017, William N. Braswell, Jr..  All Rights Reserved.
 RPerl is part of the RPerl Family of software and documentation.
