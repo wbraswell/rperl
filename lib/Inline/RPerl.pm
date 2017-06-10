@@ -18,7 +18,8 @@ use Carp;
 use File::Spec;
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = {};
+# our hashref $properties = {};
+our $properties = {};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
