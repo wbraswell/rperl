@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.019_000;
+our $VERSION = 0.020_000;
 use 5.010;  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 
 use ExtUtils::MakeMaker;
@@ -113,7 +113,7 @@ WriteMakefile(
         'Alien::astyle'       => '0.009',
 
         # RPERL SYSTEM (NON-USER) DEPENDENCIES
-        'Parse::Eyapp'        => '1.2',      # RPerl Grammar; used by grammar_recompile.sh
+        'Parse::Eyapp'        => '1.21',     # RPerl Grammar; used by grammar_recompile.sh
         'File::Which'         => '1.21',     # RPerl Grammar; used by grammar_increment.pl
         'CPAN::Meta'          => '2.150005', # CPAN Distribution Build; used for generating CPAN metadata from this file
         'App::Pod2CpanHtml'   => '0.04',     # Learning RPerl; used by pod2rperlhtml.pl, provides pod2cpanhtml
