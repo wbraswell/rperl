@@ -1,5 +1,5 @@
 language: perl
-# v0.019_100
+# v0.020_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -14,7 +14,8 @@ perl:
     - "5.24"
     # version(s) below are built using Travis-CI Helper
     - "5.25" 
-#    - "dev"  # same as 5.25 above
+    - "5.27" 
+#    - "dev"  # same as latest 5.odd dev version above
     - "blead"
 
 # DEV NOTE, CORRELATION #rp011: update g++ to 4.8 for full C++11 support, including:
@@ -35,7 +36,7 @@ perl:
 # [ BEGIN Travis-CI Helper ]
 matrix:
     allow_failures:
-        - perl: "5.25"
+        - perl: "5.27"
         - perl: "blead"
 before_install:
     - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
