@@ -1,5 +1,10 @@
 Revision history for Perl compiler RPerl.
 
+2.800000 2017-06-16 Codename Copernicus
+
+    - HOLIDAY EDITION: Happy Captain Picard Day!
+    - Perl v5.25 & v5.26 & v5.27 Now Supported, Requires Parse::Eyapp v1.21
+
 2.601000 2017-06-10
 
     - Bug Fix, Inline::RPerl Infinite Include Loop

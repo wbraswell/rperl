@@ -6,10 +6,10 @@ use strict;
 use warnings;
 
 # DEV NOTE, CORRELATION #rp016: CPAN's underscore-is-beta (NOT RPerl's underscore-is-comma) numbering scheme utilized here, to preserve trailing zeros
-our $VERSION = '2.601000';
+our $VERSION = '2.800000';
 
-#our $VERSION = 20170610;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2017.161;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20170616;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2017.167;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
