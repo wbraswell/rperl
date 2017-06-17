@@ -1,7 +1,9 @@
 # To give due honor to those who have made RPerl what it is today,
-# here are all past and current people who have contributed to RPerl.
+# here are all past and current people who have contributed to
+# the RPerl Family of software and documentation.
 
-# These people have either submitted source code or documentation.
+# These people have either submitted source code or documentation,
+# or who are authorized to do so in the future.
 # Corrections, additions, and deletions are welcome; send them to the address
 # below, preferably as the output of diff(1), diff -u or diff -c between the
 # original and a corrected version of this file.
@@ -15,8 +17,10 @@
 # code kit is, of course, allowed.)
 
 # Developers who have completed the instructions in the CONTRIBUTING file
-# and are currently authorized to submit contributions to RPerl are listed 
-# as "AUTHORIZED", followed by their authorization seniority & date.
+# and are currently authorized to submit contributions to the RPerl Family 
+# are listed as "AUTHORIZED", followed by their authorization seniority & date.
+# Developers who have not yet contributed source code or documentation
+# are listed as "FUTURE".
 # Developers who are in the process of obtaining official authorization
 # are listed as "AUTHORIZATION PENDING".
 # Developers who have had 100% of their RPerl contributions removed for any
@@ -24,10 +28,11 @@
 
 -- 
 
-Anonymous Name           AKA bulk88       <bulkdd at NOSPAM.cpan.org>                    [ AUTHORIZED #2 20160516 ]
-Dmitry Karasik                            <dmitry at NOSPAM.karasik.eu.org>
-Mathias Köhler           AKA mako         <ma_ko at NOSPAM.riseup.net>                   [ AUTHORIZED #3 20160722 ]
-Matthew S. Trout         AKA mst          <mst-pause at NOSPAM.shadowcat.co.uk>          [ REDACTED by friendly collaboration to avoid legal assignment ]
-Pablo Rodríguez González                  <pablo.rodriguez.gonzalez at NOSPAM.gmail.com> [ AUTHORIZED #1 20160503 ]
-Reini Urban              AKA rurban       <rurban at NOSPAM.x-ray.at>
-Unknown Name             AKA MasterDuke17                                                [ REDACTION PENDING ]
+Anonymous Name           AKA bulk88        <bulkdd at NOSPAM.cpan.org>                    [ AUTHORIZED #2 20160516 ]
+Dmitry Karasik                             <dmitry at NOSPAM.karasik.eu.org>
+Mathias Köhler           AKA mako          <ma_ko at NOSPAM.riseup.net>                   [ AUTHORIZED #3 20160722 ]
+Matthew S. Trout         AKA mst           <mst-pause at NOSPAM.shadowcat.co.uk>          [ REDACTED by friendly collaboration to avoid legal assignment ]
+Pablo Rodríguez González                   <pablo.rodriguez.gonzalez at NOSPAM.gmail.com> [ AUTHORIZED #1 20160503 ]
+Reini Urban              AKA rurban        <rurban at NOSPAM.x-ray.at>
+Unknown Name             AKA MasterDuke17                                                 [ REDACTION PENDING ]
+Steven Cartoon           AKA LaughingOtter <laughingotter9 at NOSPAM.gmail.com>           [ FUTURE, AUTHORIZED #4 20170512 ]
