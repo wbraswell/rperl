@@ -6,6 +6,7 @@
 package RPerl::Compiler;
 use strict;
 use warnings;
+use Config;
 use RPerl::AfterSubclass;
 our $VERSION = 0.025_000;
 
@@ -1576,6 +1577,8 @@ our void $cpp_to_xsbinary__subcompile = sub {
                 $subcompile_command .= q{ } . '-lm';    # not in original Inline::CPP subcompile command
             }
             $subcompile_command .= q{ } . '-lperl';    # not in original Inline::CPP subcompile command
+	    # find the location of the perl library for this perl
+	    $subcompile_command .= q{ } . '-L' . $Config{archlibexp} . '/CORE';
         }
 
         if ( $modes->{subcompile} eq 'STATIC' ) {
