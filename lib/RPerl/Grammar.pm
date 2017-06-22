@@ -51,7 +51,7 @@ our $LEX = sub {
 
       m{\G(our\ hashref\ \$properties|\#\#\ no\ critic\ qw\(|use\ parent\ qw\(|use\ warnings\;|use\ constant|use\ strict\;|package|\$TYPED_|\=\ sub\ \{|foreach|while|\@ARG\;|undef|elsif|else|our|for|\@\{|if|\%\{|\}|\;|\)|\])}gc and return ($1, $1);
 
-      /\G(^#!\/(?:\w+\/)*perl)/gc and return ('SHEBANG', $1);
+      /\G(^#![^\r\n])*perl)/gc and return ('SHEBANG', $1);
       /\G(\s*use\s+RPerl\s*;\s*)/gc and return ('USE_RPERL', $1);
       /\G(\s*use\s+RPerl::AfterSubclass\s*;\s*)/gc and return ('USE_RPERL_AFTER', $1);
       /\G(use\s+)/gc and return ('USE', $1);
