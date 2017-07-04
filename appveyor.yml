@@ -23,9 +23,9 @@ install:
 
     curl -V
 
-    curl -O http://strawberryperl.com/download/5.24.0.1/strawberry-perl-5.24.0.1-32bit.msi
+    curl -o perl.msi http://strawberryperl.com/download/5.24.0.1/strawberry-perl-5.24.0.1-32bit.msi
 
-    msiexec /i strawberry-perl-5.24.0.1-32bit.msi /quiet /qn /norestart
+    msiexec /i perl.msi /quiet /qn /norestart
 
     set PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;C:\windows\system32;C:\windows;%path%
 
