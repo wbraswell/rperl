@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.020_000;
+our $VERSION = 0.021_000;
 use 5.010;  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 
 use ExtUtils::MakeMaker;
@@ -26,7 +26,8 @@ if ($Config{cc} =~ /clang/) {
     $cxx = 'clang++';
 }
 
-=EXAMPLES
+=begin COMPILER_VERSION_OUTPUT_EXAMPLES
+
 $ g++ --version
 g++ (Ubuntu 5.4.0-6ubuntu1~16.04.4) 5.4.0 20160609
 ...
@@ -40,6 +41,9 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 $ clang++ --version
 Ubuntu clang version 3.4-1ubuntu3 ...
 ...
+
+=end COMPILER_VERSION_OUTPUT_EXAMPLES
+
 =cut
 
 # run external compiler command to get version info
@@ -91,17 +95,17 @@ WriteMakefile(
 #    MAKE             => 'gmake',   # CORRELATION #rp200, Windows + EU::MM + GNU makef
     PREREQ_PM        => {
         # RPERL USER DEPENDENCIES
-        'ExtUtils::MakeMaker' => '7.04',     # for compatibility with Inline::C >= v0.75
-        'Test::Exception'     => '0.43',     # 0.43 needed because Appveyor testing required it
+        'ExtUtils::MakeMaker' => '7.04',      # for compatibility with Inline::C >= v0.75
+        'Test::Exception'     => '0.43',      # 0.43 needed because Appveyor testing required it
         'Test::CPAN::Changes' => '0.400002',
-        'Test::Number::Delta' => '1.06',     # for compatibility with Perls compiled using -Duselongdouble
+        'Test::Number::Delta' => '1.06',      # for compatibility with Perls compiled using -Duselongdouble
         'Test2::Suite'        => '0.000069',  # older versions are broken
         'Perl::Critic'        => '1.121',
         'Perl::Tidy'          => '20140711',
         'Inline'              => '0.80',
-        'Inline::C'           => '0.76',     # wbraswell added CPPFLAGS
-        'Inline::CPP'         => '0.74',     # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack; nanis fixed Win32 filename space bug
-        'Inline::Filters'     => '0.19',     # wbraswell, rurban, & bulk88 added preprocess inc array; wbraswell added CPPFLAGS; bulk88 fix space in path
+        'Inline::C'           => '0.76',      # wbraswell added CPPFLAGS
+        'Inline::CPP'         => '0.74',      # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack; nanis fixed Win32 filename space bug
+        'Inline::Filters'     => '0.19',      # wbraswell, rurban, & bulk88 added preprocess inc array; wbraswell added CPPFLAGS; bulk88 fix space in path
         'PadWalker'           => '2.1',
         'Module::Refresh'     => '0.17',
         'Filter::Simple'      => '0.91',
@@ -109,18 +113,20 @@ WriteMakefile(
         'Time::HiRes'         => '1.9726',
         'List::MoreUtils'     => '0.33',
         'Math::BigInt::GMP'   => '1.46',
-        'IO::Socket::SSL'     => '2.043',    # pre-prerequisite for Alien::astyle
+        'IO::Socket::SSL'     => '2.043',     # pre-prerequisite for Alien::astyle
         'Alien::astyle'       => '0.009',
+        'Alien::PCRE2'        => '0.006',     # for regex support
+        'Alien::JPCRE2'       => '0.001',     # for regex support
 
         # RPERL SYSTEM (NON-USER) DEPENDENCIES
-        'Parse::Eyapp'        => '1.21',     # RPerl Grammar; used by grammar_recompile.sh
-        'File::Which'         => '1.21',     # RPerl Grammar; used by grammar_increment.pl
-        'CPAN::Meta'          => '2.150005', # CPAN Distribution Build; used for generating CPAN metadata from this file
-        'App::Pod2CpanHtml'   => '0.04',     # Learning RPerl; used by pod2rperlhtml.pl, provides pod2cpanhtml
-        'Date::Format'        => '2.24',     # Learning RPerl; used by pod2rperlhtml.pl
-        'Pod::PseudoPod'      => '0.18',     # Learning RPerl; provides ppodchecker, ppod2txt, ppod2html, ppod2docbook
-        'Text::ASCIITable'    => '0.20',     # Learning RPerl; used by pod2text & ppod2txt
-        'IPC::Run3'           => '0.048'     # RPerl Compiler; used for internals (subcompile, testing)
+        'Parse::Eyapp'        => '1.21',      # RPerl Grammar; used by grammar_recompile.sh
+        'File::Which'         => '1.21',      # RPerl Grammar; used by grammar_increment.pl
+        'CPAN::Meta'          => '2.150005',  # CPAN Distribution Build; used for generating CPAN metadata from this file
+        'App::Pod2CpanHtml'   => '0.04',      # Learning RPerl; used by pod2rperlhtml.pl, provides pod2cpanhtml
+        'Date::Format'        => '2.24',      # Learning RPerl; used by pod2rperlhtml.pl
+        'Pod::PseudoPod'      => '0.18',      # Learning RPerl; provides ppodchecker, ppod2txt, ppod2html, ppod2docbook
+        'Text::ASCIITable'    => '0.20',      # Learning RPerl; used by pod2text & ppod2txt
+        'IPC::Run3'           => '0.048'      # RPerl Compiler; used for internals (subcompile, testing)
     },
     META_MERGE => {
         'meta-spec' => {
