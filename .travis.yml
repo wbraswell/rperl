@@ -1,5 +1,5 @@
 language: perl
-# v0.022_000
+# v0.023_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -36,7 +36,9 @@ perl:
 # [ BEGIN Travis-CI Helper ]
 matrix:
     allow_failures:
-#        - perl: "5.27"  # let's try to keep RPerl passing on all new dev versions of Perl!
+        # NEED FIX, CORRELATION #aj100: in Alien::JPCRE2, why is File::Find::Rule from t/02_make_check.t failing in v5.25 and v5.27 only?!?
+        - perl: "5.25"
+        - perl: "5.27"  # let's try to keep RPerl passing on all new dev versions of Perl!
         - perl: "blead"
 before_install:
     - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
@@ -56,8 +58,8 @@ before_install:
     - sudo apt-get update -qq
 
 install:
-    - sudo apt-get install -qq g++-4.8
-    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
+    - sudo apt-get install gcc-5 g++-5
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 90 --slave /usr/bin/g++ g++ /usr/bin/g++-5
     - sudo apt-get install libgmp-dev
     # begin Pluto PolyCC
     - sudo apt-get install texinfo
