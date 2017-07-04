@@ -2,11 +2,27 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.001_400;
+our $VERSION = 0.004_000;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
 use RPerl::Config;  # for $RPerl::DEBUG
+use Alien::PCRE2;   # for regex support
+use Alien::JPCRE2;  # for regex support
+use File::Spec;  # for splitpath() and catpath()
+
+# for regex support, look up include & lib dirs
+my $pcre2_dir = Alien::PCRE2->dist_dir();
+my $jpcre2_dir = Alien::JPCRE2->dist_dir();
+#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $pcre2_dir = '}, $pcre2_dir, q{'}, "\n\n";
+#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $jpcre2_dir = '}, $jpcre2_dir, q{'}, "\n\n";
+
+my $pcre2_include_dir = File::Spec->catpath(q{}, $pcre2_dir, q{include});
+my $jpcre2_include_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{include});
+my $pcre2_lib_dir = File::Spec->catpath(q{}, $pcre2_dir, q{lib});
+#my $jpcre2_lib_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{lib});  # NOT USED
+#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $pcre2_include_dir = '}, $pcre2_include_dir, q{'}, "\n\n";
+#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $jpcre2_include_dir = '}, $jpcre2_include_dir, q{'}, "\n\n";
 
 # long form
 #use Inline CPP => config => classes =>
@@ -30,6 +46,11 @@ my $is_msvc_compiler = ($Config::Config{cc} =~ /cl/);
 our $CCFLAGSEX = $is_msvc_compiler ? '-DNO_XSLOCKS'
     : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
 
+# for regex support
+# NEED ANSWER: should we be linking only the 8-bit or also the 16-bit and 32-bit PCRE2 libs???
+$CCFLAGSEX .= ' -L' . $pcre2_lib_dir . ' -lpcre2-8';
+#$CCFLAGSEX .= ' -L' . $pcre2_lib_dir . ' -lpcre2-8 -lpcre2-16 -lpcre2-32';
+
 our %ARGS = (
     typemaps => "$RPerl::INCLUDE_PATH/typemap.rperl",
      # disable default '-O2 -g' (or similar) from Perl core & Makemaker
@@ -41,7 +62,7 @@ our %ARGS = (
 # NEED UPGRADE: strip C++ incompat CFLAGS
 #  ccflags => $Config{ccflags} . ' -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
 #    force_build => 1,  # debug use only
-    inc               => "-I$RPerl::INCLUDE_PATH -Ilib",
+    inc               => '-I' . $RPerl::INCLUDE_PATH . ' -Ilib -I' . $pcre2_include_dir . ' -I' . $jpcre2_include_dir,
     build_noisy       => ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ),  # suppress or display actual g++ compiler commands
     clean_after_build => 0, # used by Inline::C(PP) to cache build, also used by Inline::Filters to save Filters*.c files for use in gdb debugging
     warnings          => (((not defined $ENV{RPERL_WARNINGS}) or $ENV{RPERL_WARNINGS}) and $RPerl::WARNINGS),  # suppress or display Inline warnings
@@ -59,6 +80,9 @@ our %ARGS = (
         '#include <vector>',
         '#include <math.h>',
         '#include <unordered_map>', # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
+        '#undef do_open',         # for regex support, fix conflict between jpcre2.hpp subdep locale_facets_nonio.h & other uknown file, 'error: macro "do_open" requires 7 arguments, but only 2 given'
+        '#undef do_close',        # for regex support, fix conflict between jpcre2.hpp subdep locale_facets_nonio.h & other uknown file, 'error: macro "do_close" requires 2 arguments, but only 1 given'
+        '#include "jpcre2.hpp"',  # for regex support
     ],
     classes => sub { join('::', split('__', shift)); }
 );
