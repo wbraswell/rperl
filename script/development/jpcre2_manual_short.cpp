@@ -1,15 +1,19 @@
+// NEW CODE
 #include "jpcre2.hpp"
 #include <iostream>
 
-size_t count;
 typedef jpcre2::select<char> jp;
+
+int main() {
+
+
+
+// SAMPLE CODE
 
 //Check if string matches the pattern
 /*
  * The following uses a temporary Regex object.
  */
-
-int main() {
 
     std::cout << "\n\n" << "[[[ DEBUG ]]] BEFORE MATCH 1" << "\n\n";
 
@@ -31,4 +35,8 @@ int main() {
     std::cout << "\n" << jp::Regex("(\\d)|(\\w)","m").match("I am the subject","g");
 
     std::cout << "\n\n" << "[[[ DEBUG ]]] AFTER MATCH 2" << "\n\n";
+
+
+
+// NEW CODE
 }

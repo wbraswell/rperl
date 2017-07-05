@@ -22570,7 +22570,7 @@ precedence 07 infix: string repetition C<x>
 
 precedence 06 infix: regular expression pattern; ex. C<m/foo.*/xms> or C<s/foo/bar/gxms>
 
-=item * OP06_REGEX_MATCH
+=item * OP06_REGEX_BIND
 
 precedence 06 infix: regular expression match C<=~>, not match C<!~>
 
@@ -22740,7 +22740,7 @@ C<[[[ SYNTAX, OPERATOR PRECEDENCE & ASSOCIATIVITY ]]]>
     %left       OP08_MATH_ADD_SUB
     %left       OP07_MATH_MULT_DIV_MOD
     %left       OP07_STRING_REPEAT
-    %left       OP06_REGEX_MATCH
+    %left       OP06_REGEX_BIND
     %left       OP06_REGEX_PATTERN
     %right      OP05_MATH_NEG_LPAREN
     %right      OP05_LOGICAL_NEG
@@ -23217,7 +23217,7 @@ C<[[[ SYNTAX PRODUCTION RULES, OPERATIONS ]]]>
                              OP01_NAMED SubExpression | LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' |
                              OP01_OPEN MY TYPE_FHREF FHREF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
                              OP01_CLOSE FHREF_SYMBOL | OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
-                             OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG_LPAREN SubExpression ')' | SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN |
+                             OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG_LPAREN SubExpression ')' | SubExpression OP06_REGEX_BIND OP06_REGEX_PATTERN |
                              SubExpression OP07_STRING_REPEAT SubExpression | SubExpression OP07_MATH_MULT_DIV_MOD SubExpression |
                              SubExpression OP08_MATH_ADD_SUB SubExpression | SubExpression OP08_STRING_CAT SubExpression | SubExpression OP09_BITWISE_SHIFT SubExpression |
                              OP10_NAMED_UNARY SubExpression | OP10_NAMED_UNARY | SubExpression OP11_COMPARE_LT_GT SubExpression |

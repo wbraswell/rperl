@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.006_100;
+    our $VERSION = 0.007_000;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -85,7 +85,7 @@
 %token OP07_MATH_MULT_DIV_MOD    = /(\*|\/|\%|sse_mul|sse_div)/  # precedence 07 infix: arithmetic multiply '*', divide '/', modulo '%', SSE multiply 'sse_mul', SSE divide 'sse_div'
 %token OP07_STRING_REPEAT        = /(x)\s/                       # precedence 07 infix: string repetition 'x'
 %token OP06_REGEX_PATTERN        = /([ms]\/.*(?:\/.*)?\/[a-z]*)/ # precedence 06 infix: regular expression pattern; ex. 'm/foo.*/xms' or 's/foo/bar/gxms'
-%token OP06_REGEX_MATCH          = /(=\~|!\~)/                   # precedence 06 infix: regular expression match '=~', not match '!~'
+%token OP06_REGEX_BIND           = /(=\~|!\~)/                   # precedence 06 infix: regular expression bind '=~', bind not '!~'
 %token OP05_LOGICAL_NEG          = /(!)/                         # precedence 05 prefix: logical negation '!'
 %token OP05_BITWISE_NEG_LPAREN   = /(\~\()/                      # precedence 05 prefix: bitwise negation '~', AKA one's complement; include paren to disambiguate from regex or smartmatch
 %token OP02_HASH_THINARROW       = /(->\{)/                      # precedence 02 infix: thin arrow, hash dereference and retrieval '->{'
@@ -135,7 +135,7 @@
 %left       OP08_MATH_ADD_SUB
 %left       OP07_MATH_MULT_DIV_MOD
 %left       OP07_STRING_REPEAT
-%left       OP06_REGEX_MATCH
+%left       OP06_REGEX_BIND
 %left       OP06_REGEX_PATTERN
 %right      OP05_MATH_NEG_LPAREN
 %right      OP05_LOGICAL_NEG
@@ -199,7 +199,7 @@ Operator:                LPAREN OP01_PRINT FHREF_SYMBOL_BRACES ListElements ')' 
                          OP01_OPEN MY TYPE_FHREF FHREF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
                          OP01_CLOSE FHREF_SYMBOL | OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
                          OP05_BITWISE_NEG_LPAREN SubExpression ')' | OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG_LPAREN SubExpression ')' |
-                         SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN | SubExpression OP07_STRING_REPEAT SubExpression |
+                         SubExpression OP06_REGEX_BIND OP06_REGEX_PATTERN | SubExpression OP07_STRING_REPEAT SubExpression |
                          SubExpression OP07_MATH_MULT_DIV_MOD SubExpression | SubExpression OP08_MATH_ADD_SUB SubExpression |
                          SubExpression OP08_STRING_CAT SubExpression | SubExpression OP09_BITWISE_SHIFT SubExpression |
                          OP10_NAMED_UNARY SubExpression | OP10_NAMED_UNARY | SubExpression OP11_COMPARE_LT_GT SubExpression |
@@ -311,7 +311,7 @@ Operator_89 => 'RPerl::Operation::Expression::Operator::Arithmetic::Power',     
 Operator_90 => 'RPerl::Operation::Expression::Operator::Bitwise::Negation',                 # Operator -> OP05_BITWISE_NEG_LPAREN SubExpression ')'
 Operator_91 => 'RPerl::Operation::Expression::Operator::Logical::Negation',                 # Operator -> OP05_LOGICAL_NEG SubExpression
 Operator_92 => 'RPerl::Operation::Expression::Operator::Arithmetic::Negative',              # Operator -> OP05_MATH_NEG_LPAREN SubExpression ')'
-Operator_93 => 'RPerl::Operation::Expression::Operator::RegularExpression',                 # Operator -> SubExpression OP06_REGEX_MATCH OP06_REGEX_PATTERN
+Operator_93 => 'RPerl::Operation::Expression::Operator::RegularExpression',                 # Operator -> SubExpression OP06_REGEX_BIND OP06_REGEX_PATTERN
 Operator_94 => 'RPerl::Operation::Expression::Operator::String::Repeat',                    # Operator -> SubExpression OP07_STRING_REPEAT SubExpression
 Operator_95 => 'RPerl::Operation::Expression::Operator::Arithmetic::MultiplyDivideModulo',  # Operator -> SubExpression OP07_MATH_MULT_DIV_MOD SubExpression
 Operator_96 => 'RPerl::Operation::Expression::Operator::Arithmetic::AddSubtract',           # Operator -> SubExpression OP08_MATH_ADD_SUB SubExpression

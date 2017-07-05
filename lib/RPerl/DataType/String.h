@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
-#define __CPP__INCLUDED__RPerl__DataType__String_h 0.009_000
+#define __CPP__INCLUDED__RPerl__DataType__String_h 0.010_000
 
 // [[[ TYPEDEFS ]]]
 # ifndef __CPP__INCLUDED__RPerl__DataType__String_h__typedefs

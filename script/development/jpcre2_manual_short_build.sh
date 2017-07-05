@@ -1,0 +1,1 @@
+g++ jpcre2_manual_short.cpp -o jpcre2_manual_short -lpcre2-8 -I/home/wbraswell/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/auto/share/dist/Alien-PCRE2/include -L/home/wbraswell/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/auto/share/dist/Alien-PCRE2/lib -I/home/wbraswell/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/auto/share/dist/Alien-JPCRE2/include

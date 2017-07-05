@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.025_000;
+our $VERSION = 0.026_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -1509,6 +1509,8 @@ our void $cpp_to_xsbinary__subcompile = sub {
         $subcompile_command .= q{ } . '-I"' . $RPerl::BASE_PATH . '"';
         $subcompile_command .= q{ } . '-I"' . $RPerl::INCLUDE_PATH . '"'; # different than original Inline::CPP subcompile command, double-quotes added to encapsulate user-name directories
         $subcompile_command .= q{ } . '-Ilib';
+        $subcompile_command .= q{ } . '-I"' . $RPerl::Inline::pcre2_include_dir . '"';  # for regex support
+        $subcompile_command .= q{ } . '-I"' . $RPerl::Inline::jpcre2_include_dir . '"';  # for regex support
 
         $subcompile_command .= q{ } . $RPerl::Inline::CCFLAGSEX;
         $subcompile_command .= q{ } . '-D__' . $modes->{types} . '__TYPES'; # same as #define __PERL__TYPES or #define__CPP__TYPES; don't just use hard-coded $RPerl::TYPES_CCFLAG
@@ -1576,6 +1578,8 @@ our void $cpp_to_xsbinary__subcompile = sub {
                 $subcompile_command .= q{ } . '-lm';    # not in original Inline::CPP subcompile command
             }
             $subcompile_command .= q{ } . '-lperl';    # not in original Inline::CPP subcompile command
+            # DEV NOTE, CORRELATION #rp300: must link against all bit width libs to allow automatic selection
+            $subcompile_command .= q{ } . '-lpcre2-8 -lpcre2-16 -lpcre2-32';  # for regex support, not in original Inline::CPP subcompile command
         }
 
         if ( $modes->{subcompile} eq 'STATIC' ) {

@@ -2,7 +2,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -17,8 +17,9 @@ my $jpcre2_dir = Alien::JPCRE2->dist_dir();
 #print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $pcre2_dir = '}, $pcre2_dir, q{'}, "\n\n";
 #print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $jpcre2_dir = '}, $jpcre2_dir, q{'}, "\n\n";
 
-my $pcre2_include_dir = File::Spec->catpath(q{}, $pcre2_dir, q{include});
-my $jpcre2_include_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{include});
+# two 'our' vars below utilized from Compiler.pm
+our $pcre2_include_dir = File::Spec->catpath(q{}, $pcre2_dir, q{include});
+our $jpcre2_include_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{include});
 my $pcre2_lib_dir = File::Spec->catpath(q{}, $pcre2_dir, q{lib});
 #my $jpcre2_lib_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{lib});  # NOT USED
 #print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $pcre2_include_dir = '}, $pcre2_include_dir, q{'}, "\n\n";
@@ -47,9 +48,7 @@ our $CCFLAGSEX = $is_msvc_compiler ? '-DNO_XSLOCKS'
     : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
 
 # for regex support
-# NEED ANSWER: should we be linking only the 8-bit or also the 16-bit and 32-bit PCRE2 libs???
-$CCFLAGSEX .= ' -L' . $pcre2_lib_dir . ' -lpcre2-8';
-#$CCFLAGSEX .= ' -L' . $pcre2_lib_dir . ' -lpcre2-8 -lpcre2-16 -lpcre2-32';
+$CCFLAGSEX .= ' -L"' . $pcre2_lib_dir . '"';
 
 our %ARGS = (
     typemaps => "$RPerl::INCLUDE_PATH/typemap.rperl",
@@ -83,6 +82,8 @@ our %ARGS = (
         '#undef do_open',         # for regex support, fix conflict between jpcre2.hpp subdep locale_facets_nonio.h & other uknown file, 'error: macro "do_open" requires 7 arguments, but only 2 given'
         '#undef do_close',        # for regex support, fix conflict between jpcre2.hpp subdep locale_facets_nonio.h & other uknown file, 'error: macro "do_close" requires 2 arguments, but only 1 given'
         '#include "jpcre2.hpp"',  # for regex support
+        # DEV NOTE, CORRELATION #rp300: must link against all bit width libs to allow automatic selection
+        'typedef jpcre2::select<char> jp;',  # for regex support, automatically selects correct character bit width based on system, 8 or 16 or 32
     ],
     classes => sub { join('::', split('__', shift)); }
 );
