@@ -1,13 +1,14 @@
 DONE
-    Fix recursive dependencies from Inline::create_config_file() system() call
 
 DOING
+    JPCRE2 regex support
+
     Learning RPerl exercises, check on CloudForFree.org
 
     KICKSTARTER:
-    Monolithic Modules, Fix Deps Warning & Create Tests
-    Parse::Eyapp regex fix & CPAN upload
-    implement 10 ops in CPPOPS_CPPTYPES
+    DONE??? Monolithic Modules, Fix Deps Warning & Create Tests
+    DONE! Parse::Eyapp regex fix & CPAN upload
+    DONE??? implement 10 ops in CPPOPS_CPPTYPES
     CODE GENERATION, CPPOPS_CPPTYPES MODE
         ForEach.pm
         finish .pl body generation
@@ -15,6 +16,7 @@ DOING
         WHAT ELSE?!?
 
     Alien::Pluto
+    Alien::astyle upgrade to EU::MM
     Inline::RPerl
     update tests to emit more useful failure info, for CPAN testers debugging
     update CPPOPS_DUALTYPES reference files
@@ -233,14 +235,6 @@ PHYSICSPERL
 
 WEB BACK-END
     asm.js and/or webassembly backend
-
-EYAPP
-    Eyapp unescaped left braces for Perl v5.22 compatibility
-        Unescaped left brace in regex is deprecated, passed through in regex;
-            marked by <-- HERE in m/\G%{ <-- HERE /
-            at /home/wbraswell/perl5/lib/perl5/Parse/Eyapp/Parse.pm line 3239.
-    Typo "synopsis" on bug tracker
-    CPAN release
 
 INSTALL NOTES
     update to use installed dirs, ~/perl5/lib/perl5 for local::lib

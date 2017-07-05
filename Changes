@@ -1,5 +1,11 @@
 Revision history for Perl compiler RPerl.
 
+3.000000 2017-07-04 Codename Mercury
+
+    - HOLIDAY EDITION: Happy Independence Day!
+    - Medium Magic Regular Expressions, Initial Match & Substitute Support,
+        Requires Alien::JPCRE2 v0.002 & Alien::PCRE2 v0.006
+
 2.800000 2017-06-16 Codename Copernicus
 
     - HOLIDAY EDITION: Happy Captain Picard Day!
