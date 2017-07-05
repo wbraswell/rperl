@@ -143,6 +143,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         RPerl::diag( q{in Operator::RegularExpression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $bind = '} . $bind . q{'} . "\n" );
         RPerl::diag( q{in Operator::RegularExpression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $pattern = '} . $pattern . q{'} . "\n" );
 
+        # NEED FIX: DIE ON !~ BINDING OPERATOR, should actually be logic & code generation to implement !~ binding operator
+        if ($bind ne '=~') {
+            die q{ERROR ECOGEASCPxx: Regular expression binding operator '} . $bind . q{' not yet supported, dying};
+        }
+
         # separate pattern into match/substitute flag, bare pattern, and modifiers
         my character $match_or_substitute = substr $pattern, 0, 1;
         my string $modifiers = q{};
@@ -289,7 +294,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             # NEED ADD ERROR CHECK OR GRAMMAR CHANGE: regex substitution must be stand-alone semicolon-ended statement, because PERLOPS_PERLTYPES regex substitute returns count of changes, but CPPOPS_CPPTYPES JPCRE2 regex substitute returns changed string assigned back to original variable, thus any return value used as part of a larger expression would be wrong
             # NEED ADD ERROR CHECK OR GRAMMAR CHANGE: regex substitution's LHS subexpression can only be a variable, because we must return assign value back to variable to emulate PERLOPS_PERLTYPES behavior
             # NEED ADD SUPPORT: non-destructive regex substitution using Perl's /r modifier, and NOT setting the original variable to the return value in C++
-            # NEED ADD LOGIC: bind not instead of only bind!!!
+            # NEED ADD LOGIC: bind not !~ instead of only bind =~, disable die on !~ above !!!
 
             # DEV NOTE: $cpp_source_group->{CPP} already contains the generated subexpression to be used as the subject of the regex
             $cpp_source_group->{CPP} = $cpp_source_group->{CPP} . '= jp::Regex("' . $pattern_find . '"' . $modifiers_compile_CPP . ').replace(' . $cpp_source_group->{CPP} . ', "' . $pattern_replace . '"' . $modifiers_substitute_CPP . ')';
