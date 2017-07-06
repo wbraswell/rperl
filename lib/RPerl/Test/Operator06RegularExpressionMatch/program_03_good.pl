@@ -27,3 +27,10 @@ $bar = $foo =~ m/h[\w]+/gxms;
 print 'have $foo = ', $foo, "\n";
 print 'have $bar = ', $bar, "\n";
 
+# BIND NOT, LITERAL PATTERN
+
+$foo = 'Alpha Bravo Charlie 123';
+$bar = ( $foo !~ m/owdy/gxms );
+
+print 'have $foo = ', $foo, "\n";
+print 'have $bar = ', $bar, "\n";
