@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::RegularExpression;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator);
@@ -225,7 +225,8 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             RPerl::diag( q{in Operator::RegularExpression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modifiers_match_CPP = '} . $modifiers_match_CPP . "\n" );
 
             # DEV NOTE: $cpp_source_group->{CPP} already contains the generated subexpression to be used as the subject of the regex
-            $cpp_source_group->{CPP} = 'jp::Regex("' . $pattern_bare . '"' . $modifiers_compile_CPP . ').match(' . $cpp_source_group->{CPP} . $modifiers_match_CPP . ')';
+            # DEV NOTE: Perl vs JPCRE2 inconsistency, must explicitly cast return value change count as boolean true/false value
+            $cpp_source_group->{CPP} = '(boolean) jp::Regex("' . $pattern_bare . '"' . $modifiers_compile_CPP . ').match(' . $cpp_source_group->{CPP} . $modifiers_match_CPP . ')';
         }
         # substitute
         elsif ($match_or_substitute eq 's') {
@@ -297,6 +298,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             # NEED ADD LOGIC: bind not !~ instead of only bind =~, disable die on !~ above !!!
 
             # DEV NOTE: $cpp_source_group->{CPP} already contains the generated subexpression to be used as the subject of the regex
+            # DEV NOTE: Perl vs JPCRE2 inconsistency, must explicitly assign return value of changed string back into original variable
             $cpp_source_group->{CPP} = $cpp_source_group->{CPP} . '= jp::Regex("' . $pattern_find . '"' . $modifiers_compile_CPP . ').replace(' . $cpp_source_group->{CPP} . ', "' . $pattern_replace . '"' . $modifiers_substitute_CPP . ')';
         }
         else {
