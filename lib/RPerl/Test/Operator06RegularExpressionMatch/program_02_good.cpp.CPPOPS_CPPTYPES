@@ -1,8 +1,15 @@
 //!/usr/bin/rperl
+
+
+
+
+
+
+
 // [[[ HEADER ]]]
 #include <rperlstandalone.h>
-#ifndef __CPP__INCLUDED__program_02_good_cpp
-#define __CPP__INCLUDED__program_02_good_cpp 0.001_000
+#ifndef __CPP__INCLUDED__RPerl__Test__Operator06RegularExpressionMatch__program_02_good_cpp
+#define __CPP__INCLUDED__RPerl__Test__Operator06RegularExpressionMatch__program_02_good_cpp 0.001_000
 # ifdef __CPP__TYPES
 
 
@@ -18,6 +25,13 @@ int main() {
     bar = (boolean) jp::Regex("h[\\w]+", "xms").match(foo, "g");
     print "have $foo = " << foo << endl;
     print "have $bar = " << bar << endl;
+
+
+
+
+
+
+
 
 
 
