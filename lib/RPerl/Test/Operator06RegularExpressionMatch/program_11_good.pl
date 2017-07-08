@@ -1,4 +1,11 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< EXECUTE_SUCCESS: 'have $foo = HOwdy hello aHOy' >>>
+# <<< EXECUTE_SUCCESS: 'have $bax = 2' >>>
+# <<< EXECUTE_SUCCESS: 'have $foo = AlpHAHA Bravo CHAHArlie 123' >>>
+# <<< EXECUTE_SUCCESS: 'have $bax =' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -22,3 +29,4 @@ $bax = ( $foo !~ s/ha/HAHA/gms );
 
 print 'have $foo = ', $foo, "\n";
 print 'have $bax = ', $bax, "\n";
+

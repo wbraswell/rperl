@@ -1,4 +1,17 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< EXECUTE_SUCCESS: 'have $foo = HOwdy hello aHOy' >>>
+# <<< EXECUTE_SUCCESS: 'have $bar = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $bat =' >>>
+# <<< EXECUTE_SUCCESS: 'have $baz = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $bax = 2' >>>
+# <<< EXECUTE_SUCCESS: 'have $foo = AlpHAHA Bravo CHAHArlie 123' >>>
+# <<< EXECUTE_SUCCESS: 'have $bar = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $bat =' >>>
+# <<< EXECUTE_SUCCESS: 'have $baz =' >>>
+# <<< EXECUTE_SUCCESS: 'have $bax =' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;

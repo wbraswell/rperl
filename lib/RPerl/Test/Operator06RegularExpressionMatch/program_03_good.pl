@@ -1,4 +1,13 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< EXECUTE_SUCCESS: 'have $foo = howdy hello ahoy' >>>
+# <<< EXECUTE_SUCCESS: 'have $bar = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $foo = howdy hello ahoy' >>>
+# <<< EXECUTE_SUCCESS: 'have $bar = 1' >>>
+# <<< EXECUTE_SUCCESS: 'have $foo = Alpha Bravo Charlie 123' >>>
+# <<< EXECUTE_SUCCESS: 'have $bar = 1' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;

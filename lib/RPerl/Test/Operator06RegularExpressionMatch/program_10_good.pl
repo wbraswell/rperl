@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< EXECUTE_SUCCESS: 'have $foo = howdy hello ahoy' >>>
+# <<< EXECUTE_SUCCESS: 'have changed $foo = HOwdy hello aHOy' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -16,3 +21,4 @@ print 'have $foo = ', $foo, "\n";
 
 $foo =~ s/ho/HO/gms;
 print 'have changed $foo = ', $foo, "\n";
+
