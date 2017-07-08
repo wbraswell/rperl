@@ -8,8 +8,8 @@
 
 // [[[ HEADER ]]]
 #include <rperlstandalone.h>
-#ifndef __CPP__INCLUDED__RPerl__Test__Operator06RegularExpressionMatch__program_02_good_cpp
-#define __CPP__INCLUDED__RPerl__Test__Operator06RegularExpressionMatch__program_02_good_cpp 0.001_000
+#ifndef __CPP__INCLUDED__RPerl__Test__Operator06RegularExpressionMatch__program_20_good_cpp
+#define __CPP__INCLUDED__RPerl__Test__Operator06RegularExpressionMatch__program_20_good_cpp 0.001_000
 # ifdef __CPP__TYPES
 
 

@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_SUCCESS: 'have $foo = howdy hello ahoy' >>>
-# <<< EXECUTE_SUCCESS: 'have changed $foo = HOwdy hello aHOy' >>>
+# <<< EXECUTE_SUCCESS: "have $bar = $foo =~ m/owdy/gxms = '1'" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -16,9 +16,11 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string $foo  = 'howdy hello ahoy';
-print 'have $foo = ', $foo, "\n";
+# BIND, LITERAL PATTERN
 
-$foo =~ s/ho/HO/gms;
-print 'have changed $foo = ', $foo, "\n";
+my string $foo  = 'howdy hello ahoy';
+my integer $bar = $foo =~ m/owdy/gxms;
+
+print 'have $foo = ', $foo, "\n";
+print q{have $bar = $foo =~ m/owdy/gxms = '}, $bar, q{'}, "\n";
 

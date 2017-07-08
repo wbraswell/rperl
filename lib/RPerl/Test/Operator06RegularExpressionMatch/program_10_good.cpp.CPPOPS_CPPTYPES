@@ -1,4 +1,9 @@
 //!/usr/bin/rperl
+
+
+
+
+
 // [[[ HEADER ]]]
 #include <rperlstandalone.h>
 #ifndef __CPP__INCLUDED__RPerl__Test__Operator06RegularExpressionMatch__program_10_good_cpp
@@ -11,9 +16,16 @@ int main() {
 
 // [[[ OPERATIONS ]]]
     string foo = (const string) "howdy hello ahoy";
+    integer bar = (boolean) jp::Regex("owdy", "xms").match(foo, "g");
     print "have $foo = " << foo << endl;
-    foo= jp::Regex("ho", "ms").replace(foo, "HO", "g");
-    print "have changed $foo = " << foo << endl;
+    print "have $bar = $foo =~ m/owdy/gxms = '" << bar << "'" << endl;
+
+
+
+
+
+
+
 
 
 
