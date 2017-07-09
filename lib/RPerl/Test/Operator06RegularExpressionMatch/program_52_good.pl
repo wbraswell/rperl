@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< EXECUTE_SUCCESS: 'have $foo = HOwdy hello aHOy HOw' >>>
+# <<< EXECUTE_SUCCESS: 'have $bax = 3' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -11,7 +16,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string $foo  = 'howdy hello ahoy';
+my string $foo  = 'howdy hello ahoy how';
 my integer $bax = ( $foo =~ s/ho/HO/gms );
 
 print 'have $foo = ', $foo, "\n";

@@ -291,15 +291,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             # START HERE
             # START HERE
             # START HERE
-            # NEED FEATURE REQUEST: how to find substitution count?
-            # NEED ADD ERROR CHECK OR GRAMMAR CHANGE: regex substitution must be stand-alone semicolon-ended statement, because PERLOPS_PERLTYPES regex substitute returns count of changes, but CPPOPS_CPPTYPES JPCRE2 regex substitute returns changed string assigned back to original variable, thus any return value used as part of a larger expression would be wrong
             # NEED ADD ERROR CHECK OR GRAMMAR CHANGE: regex substitution's LHS subexpression can only be a variable, because we must return assign value back to variable to emulate PERLOPS_PERLTYPES behavior
             # NEED ADD SUPPORT: non-destructive regex substitution using Perl's /r modifier, and NOT setting the original variable to the return value in C++
             # NEED ADD LOGIC: bind not !~ instead of only bind =~, disable die on !~ above !!!
 
             # DEV NOTE: $cpp_source_group->{CPP} already contains the generated subexpression to be used as the subject of the regex
-            # DEV NOTE: Perl vs JPCRE2 inconsistency, must explicitly assign return value of changed string back into original variable
-            $cpp_source_group->{CPP} = $cpp_source_group->{CPP} . '= jp::Regex("' . $pattern_find . '"' . $modifiers_compile_CPP . ').replace(' . $cpp_source_group->{CPP} . ', "' . $pattern_replace . '"' . $modifiers_substitute_CPP . ')';
+            # DEV NOTE: Perl vs JPCRE2 inconsistency, must explicitly assign return value of changed string back into original variable, then use (max_size() * 0) to convert string to discardable integer, then return substitution count
+            # EXAMPLE C++ CODE:  (((foo = jp::Regex("FIND", "MODS_COMP").replace(foo, "REPLACE", "MODS_SUBST")).max_size() * 0) + jp::Regex::getLastReplaceCount())
+            $cpp_source_group->{CPP} = '(((' . $cpp_source_group->{CPP} . ' = jp::Regex("' . $pattern_find . '"' . $modifiers_compile_CPP . ').replace(' . $cpp_source_group->{CPP} . ', "' . $pattern_replace . '"' . $modifiers_substitute_CPP . ')).max_size() * 0) + jp::Regex::getLastReplaceCount())';
         }
         else {
             die q{ERROR ECOGEASCP80: Unrecognized regular expression type '} . $match_or_substitute . q{' found, must be 'm' for match or 's' for substitute, dying};
