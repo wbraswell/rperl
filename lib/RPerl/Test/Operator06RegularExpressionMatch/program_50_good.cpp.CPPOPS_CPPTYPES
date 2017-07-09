@@ -1,4 +1,9 @@
 //!/usr/bin/rperl
+
+
+
+
+
 // [[[ HEADER ]]]
 #include <rperlstandalone.h>
 #ifndef __CPP__INCLUDED__RPerl__Test__Operator06RegularExpressionMatch__program_50_good_cpp
@@ -12,8 +17,13 @@ int main() {
 // [[[ OPERATIONS ]]]
     string foo = (const string) "howdy hello ahoy";
     print "have $foo = " << foo << endl;
-    foo= jp::Regex("ho", "ms").replace(foo, "HO", "g");
+    (((foo = jp::Regex("ho", "ms").replace(foo, "HO", "g")).max_size() * 0) + jp::Regex::getLastReplaceCount());
     print "have changed $foo = " << foo << endl;
+
+
+
+
+
 
 
 
