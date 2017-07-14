@@ -16,8 +16,11 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string $foo  = 'howdy hello ahoy how';
-my integer $bax = ( $foo =~ s/ho/HO/gms );
 
-print 'have $foo = ', $foo, "\n";
+my string $foo  = 'howdy hello ahoy how';
+print 'have pre-regex  $foo = ', $foo, "\n";
+
+my integer $bax = ( $foo =~ s/ho/HO/gms );  # DEFAULT scalar, substitution count
+
+print 'have post-regex $foo = ', $foo, "\n";
 print 'have $bax = ', $bax, "\n";

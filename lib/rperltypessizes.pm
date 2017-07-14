@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -68,7 +68,9 @@ sub type_integer_native_ccflag {
         return ' -D__TYPE__INTEGER__LONG';
     }
     elsif (($ivtype eq 'longlong') or ($ivtype eq 'long long')) {  # DEV NOTE: match both Linux'ish 'longlong' & Windows'ish 'long long'; 'long long' is the real type
-        return ' -D__TYPE__INTEGER__LONG_LONG';
+        # DEV NOTE, CORRELATION #rp041: GMP does not support 'long long' or 'long double', will cause t/07_type_gmp.t to fail
+#        return ' -D__TYPE__INTEGER__LONG_LONG';
+        return ' -D__TYPE__INTEGER__LONG';
     }
     elsif ($ivtype eq '__int8') {
         return ' -D__TYPE__INTEGER____INT8';
@@ -153,7 +155,9 @@ sub type_number_native_ccflag {
         return ' -D__TYPE__NUMBER__DOUBLE';
     }
     elsif ($Config{nvtype} eq 'longdbl') {
-        return ' -D__TYPE__NUMBER__LONG__DOUBLE';
+        # DEV NOTE, CORRELATION #rp041: GMP does not support 'long long' or 'long double', will cause t/07_type_gmp.t to fail
+#        return ' -D__TYPE__NUMBER__LONG__DOUBLE';
+        return ' -D__TYPE__NUMBER__DOUBLE';
     }
 }
 

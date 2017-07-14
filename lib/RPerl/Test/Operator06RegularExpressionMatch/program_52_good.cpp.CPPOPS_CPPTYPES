@@ -16,8 +16,9 @@ int main() {
 
 // [[[ OPERATIONS ]]]
     string foo = (const string) "howdy hello ahoy how";
+    print "have pre-regex  $foo = " << foo << endl;
     integer bax = ((((foo = jp::Regex("ho", "ms").replace(foo, "HO", "g")).max_size() * 0) + jp::Regex::getLastReplaceCount()));
-    print "have $foo = " << foo << endl;
+    print "have post-regex $foo = " << foo << endl;
     print "have $bax = " << bax << endl;
 
 

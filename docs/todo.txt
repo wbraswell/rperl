@@ -1,9 +1,32 @@
 DONE
 
 DOING
-    JPCRE2 regex support
+    Alien::PCRE2
+        update tests to Test::Alien
+        ensure tests pass on both share & system installs
+        replace mirrored DEV version (Windows bug fix) w/ new official version when released
+        extend XS test
+        CPAN testers failures
+    Alien::JPCRE2
+        fix AppVeyor Windows failures
+        new JPCRE2 build
+        add XS test
+        CPAN testers failures
+    regex support
+        new JPCRE2 build, substitution count return value
+        substitution LHS must be variable
+        non-destructive regex /r
+        !~ logic
+
+    allow non-standard shebangs
 
     Learning RPerl exercises, check on CloudForFree.org
+    Moo support
+    RPerl-calling-Perl support
+    database support
+        MongoDB
+        PostgreSQL
+        MySQL
 
     KICKSTARTER:
     DONE??? Monolithic Modules, Fix Deps Warning & Create Tests

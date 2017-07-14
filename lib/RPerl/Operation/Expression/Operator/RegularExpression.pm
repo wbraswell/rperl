@@ -291,6 +291,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             # START HERE
             # START HERE
             # START HERE
+            # NEED UPDATE: new JPCRE2 code
             # NEED ADD ERROR CHECK OR GRAMMAR CHANGE: regex substitution's LHS subexpression can only be a variable, because we must return assign value back to variable to emulate PERLOPS_PERLTYPES behavior
             # NEED ADD SUPPORT: non-destructive regex substitution using Perl's /r modifier, and NOT setting the original variable to the return value in C++
             # NEED ADD LOGIC: bind not !~ instead of only bind =~, disable die on !~ above !!!

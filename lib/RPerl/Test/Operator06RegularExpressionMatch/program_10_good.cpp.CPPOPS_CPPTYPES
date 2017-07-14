@@ -15,10 +15,12 @@ int main() {
     // [[[ OPERATIONS HEADER ]]]
 
 // [[[ OPERATIONS ]]]
-    string foo = (const string) "howdy hello ahoy";
+    string foo = (const string) "howdy dowdy hello ahoy";
     integer bar = (boolean) jp::Regex("owdy", "xms").match(foo, "g");
     print "have $foo = " << foo << endl;
     print "have $bar = $foo =~ m/owdy/gxms = '" << bar << "'" << endl;
+
+
 
 
 
