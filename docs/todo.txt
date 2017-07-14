@@ -1,4 +1,5 @@
 DONE
+    disable 'long long' & 'double long' for GMP compatibility
 
 DOING
     Alien::PCRE2
@@ -303,6 +304,8 @@ PARALLELAPPSTORE.COM
     content
 
 DATA TYPES & STRUCTURES
+    determine if 'long long' or 'long double' can be used at all???
+        DEV NOTE, CORRELATION #rp041: GMP does not support 'long long' or 'long double', will cause t/07_type_gmp.t to fail
     scalar, scalar_arrayref, scalar_hashref, scalar_*
     implement 3-D arrays & hashes
     implement *OPS_*TYPES *_arrayref_arrayref_to_string()

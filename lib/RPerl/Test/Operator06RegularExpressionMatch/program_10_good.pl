@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'have $foo = howdy hello ahoy' >>>
+# <<< EXECUTE_SUCCESS: 'have $foo = howdy dowdy hello ahoy' >>>
 # <<< EXECUTE_SUCCESS: "have $bar = $foo =~ m/owdy/gxms = '1'" >>>
 
 # [[[ HEADER ]]]
