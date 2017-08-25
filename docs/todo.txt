@@ -22,6 +22,7 @@ DOING
         Always
             better subroutine/method return types; GRAMMAR
             new() accept properties init values; GRAMMAR
+            package 'integer' exports sub 'integer()' to check type, and friends
         When Moo(se) is enabled
             'use parent' should not exist, replaced by 'extends'; GRAMMAR
             $properties should not exist, replaced by 'has'; GRAMMAR

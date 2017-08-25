@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use rperlnamespaces;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 
@@ -110,13 +110,17 @@ my $namespaces_rperl_deps = {
     'I18N::'         => 1,
     'Inline::'       => 1,
     'IPC::'          => 1,
+    'JSON::'         => 1,
     'List::'         => 1,
     'Lingua::'         => 1,
     'Locale::'       => 1,
     'Log::'          => 1,
     'MIME::'         => 1,
     'Math::'         => 1,
+    'Method::'         => 1,  # subdependency of Moo(se)
     'Module::'       => 1,
+    'Moo::'       => 1,
+    'Moose::'       => 1,
     'POSIX::'        => 1,
     'PadWalker::'    => 1,
     'Params::'       => 1,

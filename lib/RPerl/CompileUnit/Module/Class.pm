@@ -19,6 +19,7 @@ our $VERSION = 0.042_000;
 
 # [[[ INCLUDES ]]]
 use File::Basename;
+use File::Spec;  # for splitpath() to test if @INC file entries are absolute or relative
 
 # [[[ OO PROPERTIES ]]]
 # BASE CLASS HAS NO PROPERTIES
@@ -155,8 +156,8 @@ sub create_symtab_entries_and_accessors_mutators {
     # DEV NOTE: should be safe to use basename() here instead of fileparse(), because $PROGRAM_NAME should never end in a directory
     $INC{ basename($PROGRAM_NAME) } = $PROGRAM_NAME;
 
-#    RPerl::diag('in Class.pm INIT block, have $INC_ref =' . "\n" . Dumper($INC_ref) . "\n");
-#    RPerl::diag('in Class.pm INIT block, have $rperlnamespaces_generated::CORE =' . "\n" . Dumper($rperlnamespaces_generated::CORE) . "\n");
+    RPerl::diag('in Class.pm INIT block, have $INC_ref =' . "\n" . Dumper($INC_ref) . "\n");
+    RPerl::diag('in Class.pm INIT block, have $rperlnamespaces_generated::CORE =' . "\n" . Dumper($rperlnamespaces_generated::CORE) . "\n");
 
     my $module_filename_long;           # string
     my $use_rperl;                      # boolean
@@ -175,11 +176,11 @@ sub create_symtab_entries_and_accessors_mutators {
     my $inside_subroutine_arguments;    # boolean
     my $subroutine_arguments_line;      # string
 
-#	RPerl::diag(q{in Class.pm INIT block, have $PROGRAM_NAME = '} . $PROGRAM_NAME . "'\n");
+	RPerl::diag(q{in Class.pm INIT block, have $PROGRAM_NAME = '} . $PROGRAM_NAME . "'\n");
 
     foreach my $module_filename_short ( sort keys %{$INC_ref} ) {
 
-#        RPerl::diag("in Class.pm INIT block, have \$module_filename_short = '$module_filename_short'\n");
+        RPerl::diag("in Class.pm INIT block, have \$module_filename_short = '$module_filename_short'\n");
 
         # skip special entry created by Filter::Util::Call
         if ( $module_filename_short eq '-e' ) {
@@ -187,10 +188,24 @@ sub create_symtab_entries_and_accessors_mutators {
         }
 
         $module_filename_long = $INC{$module_filename_short};
+        RPerl::diag( 'in Class.pm INIT block, have $module_filename_long = ' . $module_filename_long . "\n" );
 
+        # determine if both short & long module filenames are absolute;
+        # file names w/out any volume or directories are not absolute, allows 'use Foo;' where "Foo.pm" exists in current directory w/out any volume or directory
+        my $module_is_absolute = 0;
+        if (defined $module_filename_long) {
+            (my $module_volume, my $module_directories, my $module_file) = File::Spec->splitpath( $module_filename_long );
+            if (($module_volume ne q{}) or ($module_directories ne q{})) {
+                if ( $module_filename_long eq $module_filename_short ) {
+                    # absolute module names include volume or directories, and must match both short & long filenames
+                    $module_is_absolute = 1;
+                }
+            }
+        }
+        
         # skip absolute file names (such as Komodo's perl5db.pl) which came from a runtime `require $scalar` or `require 'foo.pm'`,
-        # and we can not determine the correct package from the absolute path name, we don't know how to figure out which part was in @INC from the absolute path
-        if ((not defined $module_filename_long) or ( $module_filename_long eq $module_filename_short )) {
+        # because we can not determine the correct package from the absolute path name, and we don't know how to figure out which part was in @INC from the absolute path;
+        if ((not defined $module_filename_long) or $module_is_absolute) {
             next;
         }
         
@@ -212,7 +227,7 @@ sub create_symtab_entries_and_accessors_mutators {
 
         $namespace_root = RPerl::filename_short_to_namespace_root_guess($module_filename_short);
 
-#	    RPerl::diag(q{in Class.pm INIT block, have $namespace_root = '} . $namespace_root . "'\n");
+	    RPerl::diag(q{in Class.pm INIT block, have $namespace_root = '} . $namespace_root . "'\n");
 
         # DEV NOTE: avoid error...
         # Name "rperlnamespaces_generated::RPERL_DEPS" used only once: possible typo
@@ -223,7 +238,7 @@ sub create_symtab_entries_and_accessors_mutators {
                 ( not exists $rperlnamespaces_generated::RPERL_DEPS->{$namespace_root} ) and
                 ( not exists $rperlnamespaces_generated::RPERL_FILES->{$module_filename_short}) )
         {
-#            RPerl::diag( 'in Class.pm INIT block, not skipping due to CORE & RPERL_DEPS namespaces, $module_filename_long = ' . $module_filename_long . "\n" );
+            RPerl::diag( 'in Class.pm INIT block, not skipping due to CORE & RPERL_DEPS namespaces, $module_filename_long = ' . $module_filename_long . "\n" );
 
             open my $MODULE_FILE, '<', $module_filename_long or croak $OS_ERROR;
         MODULE_FILE_LINE_LOOP:
@@ -325,7 +340,7 @@ sub create_symtab_entries_and_accessors_mutators {
                     # one-line package declaration, indexed by PAUSE unless listed in no_index in Makefile.PL
                     if ( $module_file_line =~ /^\s*package\s+(\w+(::\w+)*)\;.*$/xms ) {
                         $package_name = $1;
-#                        RPerl::diag( 'in Class.pm INIT block, one-line package declaration, have $package name = ' . $package_name . "\n" );
+                        RPerl::diag( 'in Class.pm INIT block, one-line package declaration, have $package name = ' . $package_name . "\n" );
                     }
 
                     # two-line package declaration, not indexed by PAUSE
@@ -334,7 +349,7 @@ sub create_symtab_entries_and_accessors_mutators {
                         chomp $module_file_line;
                         if ( $module_file_line =~ /^\s*(\w+(::\w+)*)\;.*$/xms ) {
                             $package_name = $1;
-#                            RPerl::diag( 'in Class.pm INIT block, two-line package declaration, have $package name = ' . $package_name . "\n" );
+                            RPerl::diag( 'in Class.pm INIT block, two-line package declaration, have $package name = ' . $package_name . "\n" );
                         }
                         else {
                             croak q{Improperly formed two-line package declaration found in file '}
@@ -562,15 +577,16 @@ sub create_symtab_entries_and_accessors_mutators {
             # object properties, save final package's types
             $object_properties_types = save_object_properties_types( $package_name, $object_properties_string, $object_properties_types );
 
-#            RPerl::diag( 'in Class.pm INIT block, have $object_properties_types = ' . "\n" . Dumper($object_properties_types) . "\n" ) if ( keys %{$object_properties_types} );
+            RPerl::diag( 'in Class.pm INIT block, have $object_properties_types = ' . "\n" . Dumper($object_properties_types) . "\n" ) if ( keys %{$object_properties_types} );
 
             # accessor/mutator object methods, deferred creation for all packages found in this file
             foreach $package_name ( sort keys %{$object_properties_types} ) {
+                RPerl::diag("in Class.pm INIT block, about to create accessors/mutators, have \$package_name = '$package_name'\n");
                 $object_properties = eval "\$$package_name\:\:properties";
 
                 foreach my $property_name ( sort keys %{$object_properties} ) {
 
-#						RPerl::diag("in Class.pm INIT block, have \$property_name = '$property_name'\n");
+                    RPerl::diag("in Class.pm INIT block, about to create accessors/mutators, have \$property_name = '$property_name'\n");
                     # DEV NOTE, CORRELATION #rp003: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
                     # because it has a special BEGIN{} block with multiple package names including it's own package name
 
@@ -724,7 +740,7 @@ sub create_symtab_entries_and_accessors_mutators {
             }
         }
 
-#        else { RPerl::diag('in Class.pm INIT block, found existing $rperlnamespaces_generated::CORE->{' . $namespace_root . '}, aborting RPerl activation of entire file' . "\n"); }
+        else { RPerl::diag('in Class.pm INIT block, found existing $rperlnamespaces_generated::CORE->{' . $namespace_root . '}, aborting RPerl activation of entire file' . "\n"); }
     }
 }
 
