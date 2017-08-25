@@ -17,7 +17,30 @@ int main() {
 // [[[ OPERATIONS ]]]
     string foo = (const string) "howdy hello ahoy how";
     print "have pre-regex  $foo = " << foo << endl;
-    integer bax = ((((foo = jp::Regex("ho", "ms").replace(foo, "HO", "g")).max_size() * 0) + jp::Regex::getLastReplaceCount()));
+    integer _fooRC;
+    integer bax = ((((foo = regex("ho", "ms").replace(foo, "HO", "g", (regexsize*) &_fooRC)).max_size() * 0) + _fooRC));
+
+    /*
+    // PERL W/ VAR
+    my string $foo = "SUBJECT";
+    my integer $bax = ( $foo =~ s/FIND/REPLACE_WITH/gms );
+
+    // C++ W/ VAR, CURRENT
+    string foo = (const string) "SUBJECT";
+    integer _fooRC;
+    integer bax = ((((foo = regex("FIND", "ms").replace(foo, "REPLACE_WITH", "g", (regexsize*) &_fooRC)).max_size() * 0) + _fooRC));
+
+    // C++ W/ VAR, NEEDED
+    string foo = (const string) "SUBJECT";
+    integer bax = ((regex("FIND", "ms").preplace(&foo, "REPLACE_WITH", "g"));
+
+    // PERL W/OUT VAR
+    my integer $bax = ( "SUBJECT" =~ s/FIND/REPLACE_WITH/gms );
+
+    // C++ W/OUT VAR, NEEDED
+    integer bax = ((regex("FIND", "ms").preplace("SUBJECT", "REPLACE_WITH", "g"));
+    */
+ 
     print "have post-regex $foo = " << foo << endl;
     print "have $bax = " << bax << endl;
 

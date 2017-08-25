@@ -3,12 +3,12 @@ DONE
 
 DOING
     Alien::PCRE2
-        update tests to Test::Alien
         ensure tests pass on both share & system installs
         replace mirrored DEV version (Windows bug fix) w/ new official version when released
         extend XS test
         CPAN testers failures
     Alien::JPCRE2
+        update tests to Test::Alien
         fix AppVeyor Windows failures
         new JPCRE2 build
         add XS test
@@ -18,11 +18,18 @@ DOING
         substitution LHS must be variable
         non-destructive regex /r
         !~ logic
+    Moo(se) support
+        Always
+            better subroutine/method return types; GRAMMAR
+            new() accept properties init values; GRAMMAR
+        When Moo(se) is enabled
+            'use parent' should not exist, replaced by 'extends'; GRAMMAR
+            $properties should not exist, replaced by 'has'; GRAMMAR
+            new() from Moo(se) instead of RPerl
 
     allow non-standard shebangs
 
     Learning RPerl exercises, check on CloudForFree.org
-    Moo support
     RPerl-calling-Perl support
     database support
         MongoDB

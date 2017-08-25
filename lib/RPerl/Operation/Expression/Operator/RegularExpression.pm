@@ -299,7 +299,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
             # DEV NOTE: $cpp_source_group->{CPP} already contains the generated subexpression to be used as the subject of the regex
             # DEV NOTE: Perl vs JPCRE2 inconsistency, must explicitly assign return value of changed string back into original variable, then use (max_size() * 0) to convert string to discardable integer, then return substitution count
             # EXAMPLE C++ CODE:  (((foo = jp::Regex("FIND", "MODS_COMP").replace(foo, "REPLACE", "MODS_SUBST")).max_size() * 0) + jp::Regex::getLastReplaceCount())
-            $cpp_source_group->{CPP} = '(((' . $cpp_source_group->{CPP} . ' = jp::Regex("' . $pattern_find . '"' . $modifiers_compile_CPP . ').replace(' . $cpp_source_group->{CPP} . ', "' . $pattern_replace . '"' . $modifiers_substitute_CPP . ')).max_size() * 0) + jp::Regex::getLastReplaceCount())';
+            # EXAMPLE C++ CODE:  (((foo = regex("FIND", "MODS_COMP").replace(foo, "REPLACE_WITH", "MODS_SUBST", (regexsize*) &bax)).max_size() * 0) + bax)
+#            $cpp_source_group->{CPP} = '(((' . $cpp_source_group->{CPP} . ' = jp::Regex("' . $pattern_find . '"' . $modifiers_compile_CPP . ').replace(' . $cpp_source_group->{CPP} . ', "' . $pattern_replace . '"' . $modifiers_substitute_CPP . ')).max_size() * 0) + jp::Regex::getLastReplaceCount())';
+            $cpp_source_group->{CPP} = '(' . $cpp_source_group->{CPP} . ' = jp::Regex("' . $pattern_find . '"' . $modifiers_compile_CPP . ').replace(' . $cpp_source_group->{CPP} . ', "' . $pattern_replace . '"' . $modifiers_substitute_CPP . ').getLastReplaceCount())';
         }
         else {
             die q{ERROR ECOGEASCP80: Unrecognized regular expression type '} . $match_or_substitute . q{' found, must be 'm' for match or 's' for substitute, dying};
