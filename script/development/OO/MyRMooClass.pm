@@ -6,17 +6,18 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-#extends 'MyRMooClassParent';
+use Moo;
+#extends '';  # NONE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ INCLUDES ]]]
-use Moo;
+# NONE
 
 # [[[ OO PROPERTIES ]]]
-sub integer { return sub { shift =~/\A-?[0-9]+\z/ }; }  # NEED REMOVE, SHOULD BE IN DataTypes/Integer.pm
+sub integer { return sub { shift =~ /\A-?[0-9]+\z/ or die; }; }  # NEED REMOVE, SHOULD BE IN DataTypes/Integer.pm
 has 'bar' => (is => 'ro', required => 1, isa => integer);
 
 # [[[ SUBROUTINES & OO METHODS ]]]
@@ -31,5 +32,41 @@ sub double_bar_return {
     return my integer $retval = $self->{bar} * 2;
 }
 
-1;    # end of class
+1;  # end of class
 
+
+# [[[ HEADER ]]]
+use RPerl;
+package MyRMooSubclass;
+use strict;
+use warnings;
+our $VERSION = 0.001_000;
+
+# [[[ OO INHERITANCE ]]]
+use Moo;
+extends 'MyRMooClass';
+
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+# [[[ INCLUDES ]]]
+# NONE
+
+# [[[ OO PROPERTIES ]]]
+sub integer { return sub { shift =~ /\A-?[0-9]+\z/ or die; }; }  # NEED REMOVE, SHOULD BE IN DataTypes/Integer.pm
+has 'bax' => (is => 'ro', required => 1, isa => integer);
+
+# [[[ SUBROUTINES & OO METHODS ]]]
+
+sub triple_bax_save {
+    ( my MyRMooSubclass $self ) = @ARG;
+    $self->{bax} = $self->{bax} * 3;
+}
+
+sub triple_bax_return {
+    ( my MyRMooSubclass $self ) = @ARG;
+    return my integer $retval = $self->{bax} * 3;
+}
+
+1;  # end of subclass
