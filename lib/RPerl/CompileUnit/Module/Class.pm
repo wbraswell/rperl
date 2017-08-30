@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get @ARG, Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.042_000;
+our $VERSION = 0.043_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -20,6 +20,7 @@ our $VERSION = 0.042_000;
 # [[[ INCLUDES ]]]
 use File::Basename;
 use File::Spec;  # for splitpath() to test if @INC file entries are absolute or relative
+use Scalar::Util 'reftype';  # to test for HASH ref when given initialization values for new() method
 
 # [[[ OO PROPERTIES ]]]
 # BASE CLASS HAS NO PROPERTIES
@@ -32,11 +33,37 @@ sub new {
     if ( not defined ${ $_[0] . '::properties' } ) {
         croak 'ERROR ECOOOCO00, SOURCE CODE, OO OBJECT CONSTRUCTOR: Undefined hashref $properties for class ' . $_[0] . ', croaking' . "\n";
     }
-#    return bless { %{ ${ $_[0] . '::properties' } } }, $_[0];  # DOES NOT INHERIT DATA MEMBERS FROM PARENT CLASSES
-#    return bless { %{ ${ $_[0] . '::properties' } }, %{ properties_inherited($_[0]) } }, $_[0];
-    return bless { %{ properties_inherited($_[0]) } }, $_[0];
+#    return bless { %{ ${ $_[0] . '::properties' } } }, $_[0];  # DOES NOT INHERIT PROPERTIES FROM PARENT CLASSES
+#    return bless { %{ ${ $_[0] . '::properties' } }, %{ properties_inherited($_[0]) } }, $_[0];  # WHAT DOES THIS DO???
+#    return bless { %{ properties_inherited($_[0]) } }, $_[0];  # WORKS PROPERLY, BUT DOES NOT INITIALIZE PROPERTIES
+    return bless { %{ properties_inherited_initialized($_[0], $_[1]) } }, $_[0];
 }
 
+
+# allow properties to be initialized by passing them as hashref arg to new() method
+sub properties_inherited_initialized {
+#    print {*STDERR} 'in Class::properties_inherited_initialized(), top of subroutine, received $ARG[0] = ', $ARG[0], "\n";
+#    print {*STDERR} 'in Class::properties_inherited_initialized(), top of subroutine, received $ARG[1] = ', $ARG[1], "\n";
+
+    my $properties_inherited = properties_inherited($_[0]);
+
+    if (defined $_[1]) {
+        if ((not defined reftype($_[1])) or (reftype($_[1]) ne 'HASH')) {
+            croak 'ERROR ECOOOCO01, SOURCE CODE, OO OBJECT CONSTRUCTOR: Initialization values for new() method must be key-value pairs inside a hash reference, croaking';
+        }
+        foreach my $property_name (sort keys %{$_[1]}) {
+            if (not exists $properties_inherited->{$property_name}) {
+                croak 'ERROR ECOOOCO02, SOURCE CODE, OO OBJECT CONSTRUCTOR: Attempted initialization of invalid property ' . q{'} . $property_name . q{'} . ', croaking';
+            }
+            $properties_inherited->{$property_name} = $_[1]->{$property_name};
+        }
+    }
+
+    return $properties_inherited;
+}
+
+
+# inherit properties from parent and grandparnt classes
 sub properties_inherited {
 #    print {*STDERR} 'in Class::properties_inherited(), top of subroutine, received $ARG[0] = ', $ARG[0], "\n";
     no strict;
@@ -65,6 +92,7 @@ sub properties_inherited {
     }
     return $properties;
 }
+
 
 sub parent_and_grandparent_package_names {
 #    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), top of subroutine, received $ARG[0] = ', $ARG[0], "\n";
@@ -100,9 +128,11 @@ sub parent_and_grandparent_package_names {
     return $package_names;
 }
 
+
 # RPerl object destructor
 # NEED ADDRESS: do we ever need to actually deconstruct anything to free resources?
 sub DESTROY { }
+
 
 # [[[ SUBROUTINES ]]]
 
@@ -111,6 +141,7 @@ local $SIG{__WARN__} = sub {
     return if $_[0] =~ /^Use of inherited AUTOLOAD for non-method /xms;
     carp @ARG;
 };
+
 
 BEGIN {
     #RPerl::diag('in Class.pm BEGIN block, about to use data types...' . "\n");
@@ -142,10 +173,12 @@ BEGIN {
     #RPerl::diag('in Class.pm BEGIN block, done' . "\n");
 }
 
+
 # after compiling but before runtime: create symtab entries for all RPerl functions/methods, and accessors/mutators for all RPerl class properties
 INIT {
     create_symtab_entries_and_accessors_mutators(\%INC);
 };
+
 
 sub create_symtab_entries_and_accessors_mutators {
     (my $INC_ref) = @ARG;
@@ -744,6 +777,7 @@ sub create_symtab_entries_and_accessors_mutators {
     }
 }
 
+
 # fake getting and setting values of *_raw subclass of user-defined type (AKA class),
 # achieved by treating normal Perl object reference (C++ std::unique_ptr<Foo> AKA Foo_ptr) as Perl object raw reference (C++ Foo* AKA Foo_rawptr)
 sub get_raw {
@@ -751,10 +785,12 @@ sub get_raw {
     return $self;
 }
 
+
 sub set_raw {
     ( my $self, my $self_new ) = @ARG;
     %{$self} = %{$self_new};
 }
+
 
 sub save_object_properties_types {
     ( my $package_name, my $object_properties_string, my $object_properties_types ) = @ARG;
@@ -814,6 +850,7 @@ sub save_object_properties_types {
     }
     return $object_properties_types;
 }
+
 
 # create Perl symbol table entries for RPerl subroutines and methods
 sub activate_subroutine {
@@ -923,6 +960,7 @@ sub activate_subroutine {
 
 __END__
 
+
 # RPerl function/method autoloader, LONG FORM; allows syntax for typed functions/methods and automates get/set accessors/mutators for object properties;
 # creates real subroutines to avoid AUTOLOADing any function/method more than once, performs operation inside AUTOLOAD that one time
 # now fully deprecated in favor of INIT block above
@@ -980,8 +1018,9 @@ sub AUTOLOAD
 	return $retval;
 }
 
+
 # RPerl object constructor, LONG FORM
-# DEPRECATED still uses %properties hash instead of $properties hashref
+# DEPRECATED still uses %properties hash instead of $properties hashref, does not support property initialization values
 #sub new($class_name_const_str)
 sub new_LONG FORM
 {

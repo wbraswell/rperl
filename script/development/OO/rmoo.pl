@@ -21,7 +21,7 @@ print 'have $my_rmoo_object->bar() = ', $my_rmoo_object->bar(), "\n";
 
 # subclass example
 
-my MyRMooSubclassNew $my_rmoo_object_subclass = MyRMooSubclassNew->new({bar => 33});
+my MyRMooSubclass $my_rmoo_object_subclass = MyRMooSubclass->new({bar => 33});
 
 print 'have $my_rmoo_object_subclass->bar() = ', $my_rmoo_object_subclass->bar(), "\n";
 print 'have $my_rmoo_object_subclass->bax() = ', $my_rmoo_object_subclass->bax(), "\n";
