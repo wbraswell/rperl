@@ -13,12 +13,10 @@ use Moo;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
-# [[[ INCLUDES ]]]
-# NONE
-
 # [[[ OO PROPERTIES ]]]
 sub integer { return sub { shift =~ /\A-?[0-9]+\z/ or die; }; }  # NEED REMOVE, SHOULD BE IN DataTypes/Integer.pm
 has 'bar' => (is => 'ro', required => 1, isa => integer);
+
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
@@ -50,12 +48,10 @@ extends 'MyRMooClass';
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
-# [[[ INCLUDES ]]]
-# NONE
-
 # [[[ OO PROPERTIES ]]]
 sub integer { return sub { shift =~ /\A-?[0-9]+\z/ or die; }; }  # NEED REMOVE, SHOULD BE IN DataTypes/Integer.pm
 has 'bax' => (is => 'ro', required => 1, isa => integer);
+
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 

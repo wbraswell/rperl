@@ -6,14 +6,17 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
+use Moo;
 #extends 'MyMooClassParent';
 
-# [[[ INCLUDES ]]]
-use Moo;
+
+
+
 
 # [[[ OO PROPERTIES ]]]
 sub integer { return sub { shift =~ /\A-?[0-9]+\z/ or die; }; }  # NEED REMOVE, SHOULD BE PROVIDED BY 'use Types;'???
 has 'bar' => (is => 'ro', required => 1, isa => integer);
+
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
@@ -45,12 +48,10 @@ extends 'MyMooClass';
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
-# [[[ INCLUDES ]]]
-# NONE
-
 # [[[ OO PROPERTIES ]]]
 sub integer { return sub { shift =~ /\A-?[0-9]+\z/ or die; }; }  # NEED REMOVE, SHOULD BE IN DataTypes/Integer.pm
 has 'bax' => (is => 'ro', required => 1, isa => integer);
+
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 

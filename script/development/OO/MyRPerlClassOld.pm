@@ -48,16 +48,9 @@ use MyRPerlClassOld;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
-# [[[ INCLUDES ]]]
-# NONE
-
-# NEED FIX: bax should be readonly, need to change into a constant???
-# NEED FIX: bax should be readonly, need to change into a constant???
-# NEED FIX: bax should be readonly, need to change into a constant???
-
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {
-    bax => my integer $TYPED_bax = 123,
+    bax => my integer $TYPED_bax = 123,  # NEED FIX: bax should be readonly, need to change into a constant???
 };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
