@@ -14,23 +14,24 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = {
-    bar => my integer $TYPED_bar = 23,
-};
+
+our hashref $properties = { bar => my integer $TYPED_bar = 23, };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 sub double_bar_save {
+    { my void::method $RETURN_TYPE };
     ( my MyRPerlClassNew $self ) = @ARG;
     $self->{bar} = $self->{bar} * 2;
 }
 
 sub double_bar_return {
+    { my integer::method $RETURN_TYPE };
     ( my MyRPerlClassNew $self ) = @ARG;
-    return my integer $retval = $self->{bar} * 2;
+    return $self->{bar} * 2;
 }
 
-1;  # end of class
+1;    # end of class
 
 
 # [[[ HEADER ]]]
@@ -49,20 +50,31 @@ use MyRPerlClassNew;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = {
-    bax => my integer $TYPED_bax = 123,  # NEED FIX: bax should be readonly, need to change into a constant???
-};
+
+our hashref $properties = { bax => my integer $TYPED_bax = 123, };  # NEED FIX: bax should be readonly, need to change into a constant???
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 sub triple_bax_save {
+    { my void::method $RETURN_TYPE };
     ( my MyRPerlSubclassNew $self ) = @ARG;
     $self->{bax} = $self->{bax} * 3;
 }
 
 sub triple_bax_return {
+    { my integer::method $RETURN_TYPE };
     ( my MyRPerlSubclassNew $self ) = @ARG;
-    return my integer $retval = $self->{bax} * 3;
+    return $self->{bax} * 3;
 }
 
-1;  # end of subclass
+sub multiply_bax_return {
+    { my integer::method $RETURN_TYPE };
+    ( my MyRPerlSubclassNew $self, my integer $multiplier ) = @ARG;
+
+    if ( $multiplier < 10 ) {
+        return $self->{bax} * $multiplier;
+    }
+    return $self->{bax} * 3;
+}
+
+1;    # end of subclass

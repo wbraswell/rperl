@@ -31,3 +31,7 @@ print 'have $my_rperl_object_subclass->get_bax() = ', $my_rperl_object_subclass-
 
 print 'have $my_rperl_object_subclass->triple_bax_return() = ', $my_rperl_object_subclass->triple_bax_return(), "\n";
 print 'have $my_rperl_object_subclass->get_bax() = ', $my_rperl_object_subclass->get_bax(), "\n";
+
+# START HERE: add calls to multiply_bax_return() here & other drivers, then finish C++ code for named params as constructor init values, then finish C++ gen
+# START HERE: add calls to multiply_bax_return() here & other drivers, then finish C++ code for named params as constructor init values, then finish C++ gen
+# START HERE: add calls to multiply_bax_return() here & other drivers, then finish C++ code for named params as constructor init values, then finish C++ gen

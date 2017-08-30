@@ -90,9 +90,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         # must have ArrayDereference as only argument
         my object $subexpression       = $operator_named->{children}->[1];
         my string $subexpression_class = ref $subexpression;
-        if (    ( $subexpression_class ne 'SubExpression_140' )
-            and ( $subexpression_class ne 'ArrayDereference_200' )
-            and ( $subexpression_class ne 'ArrayDereference_201' ) )
+        if (    ( $subexpression_class ne 'SubExpression_142' )
+            and ( $subexpression_class ne 'ArrayDereference_202' )
+            and ( $subexpression_class ne 'ArrayDereference_203' ) )
         {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP70, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator '
                 . q{'} . $operator_named->{children}->[0] . q{'}
@@ -102,18 +102,18 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
                 . "\n";
         }
 
-        # unwrap ArrayDereference_200 and ArrayDereference_201 from SubExpression_140
-        if ( $subexpression_class eq 'SubExpression_140' ) {    # SubExpression -> ArrayDereference
+        # unwrap ArrayDereference_202 and ArrayDereference_203 from SubExpression_142
+        if ( $subexpression_class eq 'SubExpression_142' ) {    # SubExpression -> ArrayDereference
             $subexpression = $subexpression->{children}->[0];
         }
 
         $subexpression_class = ref $subexpression;
         my string_hashref $cpp_source_subgroup;
-        if ( $subexpression_class eq 'ArrayDereference_200' ) {    # ArrayDereference -> '@{' Variable '}'
+        if ( $subexpression_class eq 'ArrayDereference_202' ) {    # ArrayDereference -> '@{' Variable '}'
             $cpp_source_subgroup = $subexpression->{children}->[1]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         }
-        elsif ( $subexpression_class eq 'ArrayDereference_201' ) {    # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
+        elsif ( $subexpression_class eq 'ArrayDereference_203' ) {    # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
             my object $type_inner_optional = $subexpression->{children}->[1];
             my object $array_reference     = $subexpression->{children}->[2];
 
@@ -140,7 +140,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         else {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                     . $subexpression_class
-                    . ' found where ArrayDereference_200 or ArrayDereference_201 expected, dying' )
+                    . ' found where ArrayDereference_202 or ArrayDereference_203 expected, dying' )
                 . "\n";
         }
 

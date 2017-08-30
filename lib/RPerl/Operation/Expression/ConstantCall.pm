@@ -24,20 +24,20 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
 #    RPerl::diag( 'in ConstantCall->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) eq 'Expression_130' ) { # Expression -> WORD_UPPERCASE LPAREN ')'
+    if ( ( ref $self ) eq 'Expression_132' ) { # Expression -> WORD_UPPERCASE LPAREN ')'
         my string $name        = $self->{children}->[0];
         my string $left_paren  = $self->{children}->[1];
         my string $right_paren = $self->{children}->[2];
 
         $rperl_source_group->{PMC} .= $name . $left_paren . $right_paren;
     }
-    elsif ( ( ref $self ) eq 'Expression_131' ) { # Expression -> CONSTANT_CALL_SCOPED
+    elsif ( ( ref $self ) eq 'Expression_133' ) { # Expression -> CONSTANT_CALL_SCOPED
         $rperl_source_group->{PMC} .= $self->{children}->[0];
     }
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
-                . ' found where Expression_130 or Expression_131 expected, dying' )
+                . ' found where Expression_132 or Expression_133 expected, dying' )
             . "\n";
     }
 
@@ -56,14 +56,14 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     ( my object $self, my string_hashref $modes) = @_;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
-#    RPerl::diag( 'in ConstantCall->ast_to_cpp__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in ConstantCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) eq 'Expression_130' ) {
+    if ( ( ref $self ) eq 'Expression_132' ) {
         # Expression -> WORD_UPPERCASE LPAREN ')'
         my string $name        = $self->{children}->[0];
         $cpp_source_group->{CPP} .= $name;
     }
-    elsif ( ( ref $self ) eq 'Expression_131' ) {
+    elsif ( ( ref $self ) eq 'Expression_133' ) {
         # Expression -> Expression -> CONSTANT_CALL_SCOPED
         my string $call        = $self->{children}->[0];
         substr $call, -2, 2, q{};  # strip trailing parenthesis
@@ -74,7 +74,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ( ref $self )
-                . ' found where Expression_130 or Expression_131 expected, dying' )
+                . ' found where Expression_132 or Expression_133 expected, dying' )
             . "\n";
     }
 

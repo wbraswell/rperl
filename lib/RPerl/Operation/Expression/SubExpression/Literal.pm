@@ -22,9 +22,9 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     my string $self_class = ref $self;
 
-    if (( $self_class eq 'SubExpression_137' )    # SubExpression -> Literal
-        or ( $self_class eq 'VariableOrLiteral_228' ) # VariableOrLiteral -> Literal
-        or ( $self_class eq 'VarOrLitOrOpStrOrWord_230' ) # VarOrLitOrOpStrOrWord -> Literal
+    if (( $self_class eq 'SubExpression_139' )    # SubExpression -> Literal
+        or ( $self_class eq 'VariableOrLiteral_230' ) # VariableOrLiteral -> Literal
+        or ( $self_class eq 'VarOrLitOrOpStrOrWord_232' ) # VarOrLitOrOpStrOrWord -> Literal
         )
     {
         my object $number_or_string = $self->{children}->[0];
@@ -34,7 +34,7 @@ our string_hashref::method $ast_to_rperl__generate = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where SubExpression_137, VariableOrLiteral_228, or VarOrLitOrOpStrOrWord_230 expected, dying'
+                . ' found where SubExpression_139, VariableOrLiteral_230, or VarOrLitOrOpStrOrWord_232 expected, dying'
         ) . "\n"; 
     }
 
@@ -60,9 +60,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
 
     my string $self_class = ref $self;
 
-    if (( $self_class eq 'SubExpression_137' )    # SubExpression -> Literal
-        or ( $self_class eq 'VariableOrLiteral_228' ) # VariableOrLiteral -> Literal
-        or ( $self_class eq 'VarOrLitOrOpStrOrWord_230' ) # VarOrLitOrOpStrOrWord -> Literal
+    if (( $self_class eq 'SubExpression_139' )    # SubExpression -> Literal
+        or ( $self_class eq 'VariableOrLiteral_230' ) # VariableOrLiteral -> Literal
+        or ( $self_class eq 'VarOrLitOrOpStrOrWord_232' ) # VarOrLitOrOpStrOrWord -> Literal
         )
     {
         my object $number_or_string = $self->{children}->[0];
@@ -72,7 +72,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where SubExpression_137, VariableOrLiteral_228, or VarOrLitOrOpStrOrWord_230 expected, dying'
+                . ' found where SubExpression_139, VariableOrLiteral_230, or VarOrLitOrOpStrOrWord_232 expected, dying'
         ) . "\n"; 
     }
 
