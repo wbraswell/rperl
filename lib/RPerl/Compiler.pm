@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.026_000;
+our $VERSION = 0.027_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -248,6 +248,10 @@ our string_arrayref $find_dependencies = sub {
                 )
             {
                 # safely ignore these possibly-valid but not-subdependency uses
+                next;
+            }
+            elsif ((defined $top_level_package_name) and ( $file_line =~ /use\s+$top_level_package_name\s*;/ )) {
+                # DEV NOTE, CORRELATION #rp042: do not recursively load the same .pm file from within itself
                 next;
             }
             elsif ( $file_line =~ /use\s+rperlsse\s*;/ ) {
@@ -728,11 +732,11 @@ our hashref_arrayref $generate_output_file_names = sub {
 our void $save_source_files = sub {
     ( my string_hashref $source_group, my string_hashref $file_name_group, my string_hashref $modes ) = @_;
 
-    #    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =} . "\n" . Dumper($source_group) . "\n" );
-    #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
-    #    RPerl::diag( 'in Compiler::save_source_files(), received $modes =' . "\n" . Dumper($modes) . "\n" );
-    #    RPerl::diag( 'in Compiler::save_source_files(), received $modes->{_symbol_table} =' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
-    #    RPerl::diag( "\n" . 'in Compiler::save_source_files(), received $modes->{subcompile} =' . "\n" . Dumper($modes->{subcompile}) . "\n" );
+#    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =} . "\n" . Dumper($source_group) . "\n" );
+#    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
+#    RPerl::diag( 'in Compiler::save_source_files(), received $modes =' . "\n" . Dumper($modes) . "\n" );
+#    RPerl::diag( 'in Compiler::save_source_files(), received $modes->{_symbol_table} =' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
+#    RPerl::diag( "\n" . 'in Compiler::save_source_files(), received $modes->{subcompile} =' . "\n" . Dumper($modes->{subcompile}) . "\n" );
 
     foreach my string $suffix_key ( sort keys %{$source_group} ) {
         if ( ( substr $suffix_key, 0, 1 ) eq '_' ) { next; }

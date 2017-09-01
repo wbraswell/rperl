@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -426,14 +426,21 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     if ( $modes->{label} eq 'ON' ) {
         $cpp_source_group->{H_INCLUDES} .= '// [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]' . "\n";
         $cpp_source_group->{CPP}        .= '// [[[ INCLUDES ]]]' . "\n";
-        $cpp_source_group->{H_INCLUDES} .= <<EOL;
+
+        # DEV NOTE, CORRELATION #rp043: no need to include RPerl.cpp multiple times in one file
+        if (not ((exists $modes->{current_package_count}) and (defined $modes->{current_package_count}) and ($modes->{current_package_count} >= 1))) {
+            $cpp_source_group->{H_INCLUDES} .= <<EOL;
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
 EOL
+        }
     }
     else {
-        $cpp_source_group->{H_INCLUDES} .= <<EOL;
+        # DEV NOTE, CORRELATION #rp043: no need to include RPerl.cpp multiple times in one file
+        if (not ((exists $modes->{current_package_count}) and (defined $modes->{current_package_count}) and ($modes->{current_package_count} >= 1))) {
+            $cpp_source_group->{H_INCLUDES} .= <<EOL;
 #include <RPerl.cpp>
 EOL
+        }
     }
 
     #    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
@@ -475,8 +482,16 @@ EOL
         #        RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), skipping system config file $parent_name = ' . $parent_name . "\n");
     }
     elsif ( ( ( substr $parent_name_path, 0, 5 ) ne 'RPerl' ) and ( ( substr $parent_name_path, 0, 5 ) ne 'rperl' ) ) {
-        # non-RPerl user module, wrapped in double-quotes " " to denote user nature
-        $cpp_source_group->{H_INCLUDES} .= '#include "' . $parent_name_path . '"' . "\n";
+#        RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have user-defined module to possibly be #include $parent_name = ' . $parent_name . "\n");
+#        RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes = ' . Dumper($modes) . "\n");
+
+        # DEV NOTE, CORRELATION #rp042: do not recursively load the same .cpp/.h file from within itself
+        # it is incorrect for a subclass inside a multi-class file to include its parent class' .cpp file name, which is the .cpp version of it's own .h file name 
+        my $parent_name_length = (length $parent_name) + 3;
+        if (($parent_name . '.pm') ne (substr $modes->{_input_file_name_current}, ($parent_name_length * -1), $parent_name_length)) {
+            # non-RPerl user-defined module, wrapped in double-quotes " " to denote user nature
+            $cpp_source_group->{H_INCLUDES} .= '#include "' . $parent_name_path . '"' . "\n";
+        }
     }
     else {
         # RPerl system module, wrapped in angle-brackets < > to denote system nature
@@ -487,6 +502,7 @@ EOL
     my string_hashref $cpp_source_subgroup;
 
     foreach my object $include ( @{ $include_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
+#        RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $package_name_underscores = ' . $package_name_underscores . "\n");
         $cpp_source_subgroup = $include->ast_to_cpp__generate__CPPOPS_CPPTYPES( $package_name_underscores, $modes );
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }

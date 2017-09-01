@@ -12,6 +12,7 @@ use Moo;
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(ProhibitMultiplePackages ProhibitReusedNames ProhibitPackageVars)  # USER DEFAULT 8: allow additional packages
 
 # [[[ OO PROPERTIES ]]]
 sub integer { return sub { shift =~ /\A-?[0-9]+\z/ or die; }; }    # NEED REMOVE, SHOULD BE IN DataTypes/Integer.pm
@@ -48,6 +49,7 @@ extends 'MyRMooClass';
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(ProhibitMultiplePackages ProhibitReusedNames ProhibitPackageVars)  # USER DEFAULT 8: allow additional packages
 
 # [[[ OO PROPERTIES ]]]
 sub integer { return sub { shift =~ /\A-?[0-9]+\z/ or die; }; }    # NEED REMOVE, SHOULD BE IN DataTypes/Integer.pm

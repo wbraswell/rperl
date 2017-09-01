@@ -12,10 +12,11 @@ use RPerl::CompileUnit::Module::Class;
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(ProhibitMultiplePackages ProhibitReusedNames ProhibitPackageVars)  # USER DEFAULT 8: allow additional packages
 
 # [[[ OO PROPERTIES ]]]
 
-our hashref $properties = { bar => my integer $TYPED_bar = 23, };
+our hashref $properties = { bar => my integer $TYPED_bar = 23 };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
@@ -48,10 +49,11 @@ use MyRPerlClassNew;
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(ProhibitMultiplePackages ProhibitReusedNames ProhibitPackageVars)  # USER DEFAULT 8: allow additional packages
 
 # [[[ OO PROPERTIES ]]]
 
-our hashref $properties = { bax => my integer $TYPED_bax = 123, };  # NEED FIX: bax should be readonly, need to change into a constant???
+our hashref $properties = { bax => my integer $TYPED_bax = 123 };  # NEED FIX: bax should be readonly, need to change into a constant???
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 

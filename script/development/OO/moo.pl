@@ -1,11 +1,20 @@
 #!/usr/bin/perl
 
+# [[[ HEADER ]]]
 
 use strict;
 use warnings;
 
 
+
+
+
+
+
+# [[[ INCLUDES ]]]
 use MyMooClass;
+
+# [[[ OPERATIONS ]]]
 
 # class example
 
@@ -30,4 +39,10 @@ $my_moo_object_subclass->triple_bax_save();
 print 'have $my_moo_object_subclass->bax() = ', $my_moo_object_subclass->bax(), "\n";
 
 print 'have $my_moo_object_subclass->triple_bax_return() = ', $my_moo_object_subclass->triple_bax_return(), "\n";
+print 'have $my_moo_object_subclass->bax() = ', $my_moo_object_subclass->bax(), "\n";
+
+print 'have $my_moo_object_subclass->multiply_bax_return(2) = ', $my_moo_object_subclass->multiply_bax_return(2), "\n";
+print 'have $my_moo_object_subclass->bax() = ', $my_moo_object_subclass->bax(), "\n";
+
+print 'have $my_moo_object_subclass->multiply_bax_return(20) = ', $my_moo_object_subclass->multiply_bax_return(20), "\n";
 print 'have $my_moo_object_subclass->bax() = ', $my_moo_object_subclass->bax(), "\n";

@@ -22,7 +22,9 @@ DOING
         Always
             better subroutine/method return types; GRAMMAR
             new() accept properties init values; GRAMMAR
+            subroutine arguments received via 'shift' instead of @ARG only; GRAMMAR
             package 'integer' exports sub 'integer()' to check type, and friends
+            accessors & mutators available (only?) w/out using 'get_' & 'set_' prefixes; Class.pm PERLOPS_PERLTYPES, Properties.pm? CPPOPS_CPPTYPES
         When Moo(se) is enabled
             'use parent' should not exist, replaced by 'extends'; GRAMMAR
             $properties should not exist, replaced by 'has'; GRAMMAR

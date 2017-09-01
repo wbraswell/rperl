@@ -744,6 +744,8 @@ sub depends_parse_generate_save_subcompile_execute {
         # program files (*.pl) need to know their own input file name to create the proper C++ #ifdef version preprocessor directives;
         # RPerl::Compiler needs to know if it should perform program or module post-processing
         $modes->{_input_file_name} = $input_file_name;
+        # DEV NOTE, CORRELATION #rp042: do not recursively load the same .cpp/.h file from within itself
+        $modes->{_input_file_name_current} = $input_file_name;
 
         # clear symtab before each input file, use automatic dependencies mode (enabled by default) to compile multiple files within a single symtab
 #        $modes->{_symbol_table} = {};  # NEED REMOVE, DEPRECATED
@@ -817,9 +819,13 @@ sub depends_parse_generate_save_subcompile_execute {
             my string $input_file_name_dep                = $input_file_name_deps->[$j];
             my string_hashref $output_file_name_dep_group = $output_file_name_dep_groups->[$j];
 
+            # DEV NOTE, CORRELATION #rp042: do not recursively load the same .cpp/.h file from within itself
+            $modes->{_input_file_name_current} = $input_file_name_dep;
+
             if ( $input_file_deps_count > 0 ) {
                 if ( $j < $input_file_deps_count ) {
                     RPerl::verbose( "\n" . 'Dep Input File:     ' . $input_file_name_dep . "\n" );
+
                 }
                 else {
                     RPerl::verbose( "\n" . 'Input File:         ' . $input_file_name_dep . "\n" );

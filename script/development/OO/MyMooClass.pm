@@ -13,6 +13,7 @@ use Moo;
 
 
 
+
 # [[[ OO PROPERTIES ]]]
 sub integer { return sub { shift =~ /\A-?[0-9]+\z/ or die; }; }  # NEED REMOVE, SHOULD BE PROVIDED BY 'use Types;'???
 has 'bar' => (is => 'ro', required => 1, isa => integer);
@@ -44,6 +45,7 @@ our $VERSION = 0.001_000;
 # [[[ OO INHERITANCE ]]]
 use Moo;
 extends 'MyMooClass';
+
 
 
 
