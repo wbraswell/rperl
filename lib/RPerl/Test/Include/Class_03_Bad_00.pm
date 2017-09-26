@@ -22,8 +22,6 @@ our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
-sub empty_method { { my integer::method $RETURN_TYPE };
-    return RPerl::Test::Foo::quince();
-}
+sub empty_method { { my integer::method $RETURN_TYPE }; return RPerl::Test::Foo::quince(); }
 
 1;                  # end of class

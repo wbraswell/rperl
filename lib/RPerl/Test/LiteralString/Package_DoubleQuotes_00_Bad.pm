@@ -11,8 +11,6 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
-sub empty_sub { { my string $RETURN_TYPE };
-    return "";
-}
+sub empty_sub { { my string $RETURN_TYPE }; return ""; }
 
 1;    # end of package

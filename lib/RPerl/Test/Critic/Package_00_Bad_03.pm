@@ -13,8 +13,6 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls
 
 # [[[ SUBROUTINES ]]]
-sub empty_sub { { my void $RETURN_TYPE };
-    return 2;
-}
+sub empty_sub { { my void $RETURN_TYPE }; return 2; }
 
 1;                  # end of package

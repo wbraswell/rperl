@@ -15,9 +15,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ SUBROUTINES ]]]
-sub foo { { my integer_arrayref $RETURN_TYPE };
-    return(2, 3);
-}
+sub foo { { my integer_arrayref $RETURN_TYPE }; return(2, 3); }
 
 # [[[ OPERATIONS ]]]
 foo();

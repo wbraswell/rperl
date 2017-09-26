@@ -14,8 +14,6 @@ our $VERSION = 0.001_000;
 use RPerl::Test::Bar;
 
 # [[[ SUBROUTINES ]]]
-sub empty_sub { { my integer $RETURN_TYPE };
-    return 2;
-}
+sub empty_sub { { my integer $RETURN_TYPE }; return 2; }
 
 1;                  # end of package

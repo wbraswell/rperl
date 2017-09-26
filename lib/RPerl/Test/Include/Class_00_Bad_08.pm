@@ -23,8 +23,6 @@ our hashref $properties
 use RPerl::Test::Bar;
 
 # [[[ SUBROUTINES & OO METHODS ]]]
-sub empty_method { { my integer::method $RETURN_TYPE };
-    return 2;
-}
+sub empty_method { { my integer::method $RETURN_TYPE }; return 2; }
 
 1;                  # end of class

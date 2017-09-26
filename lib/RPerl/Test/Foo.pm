@@ -40,7 +40,8 @@ sub quux {
     $self->{plugh} = -($self->{plugh});
     $self->{plugh}++;
     $self->{plugh}--;
-};
+    return;
+}
 
 sub quince {
     { my integer::method $RETURN_TYPE };
@@ -76,9 +77,11 @@ sub qaft {
 sub tnurg {
     { my void $RETURN_TYPE };
     print 'PIE() = ' . PIE() . "\n";
+    return;
 }
 
-our number $tluarg = sub {
+sub tluarg {
+    { my number $RETURN_TYPE };
     ( my integer $tluarg_input ) = @ARG;
     $tluarg_input++;
     $tluarg_input--;

@@ -152,7 +152,6 @@ sub check_number_hashrefs {
 #    RPerl::diag("in check_number_hashrefs(), received \$input_1\n" . Dumper($input_1) . "\n");
 #    RPerl::diag("in check_number_hashrefs(), received \$input_2\n" . Dumper($input_2) . "\n");
 #    RPerl::diag("in check_number_hashrefs(), received \$input_3\n" . Dumper($input_3) . "\n");
-
     return;
 }
 
@@ -173,7 +172,6 @@ sub check__mixed_00 {
 #    RPerl::diag("in check__mixed_00(), received \$input_1\n" . Dumper($input_1) . "\n");
 #    RPerl::diag("in check__mixed_00(), received \$input_2\n" . Dumper($input_2) . "\n");
 #    RPerl::diag("in check__mixed_00(), received \$input_3\n" . Dumper($input_3) . "\n");
-
     return;
 }
 
@@ -189,7 +187,6 @@ sub check__mixed_01 {
 #    RPerl::diag("in check__mixed_01(), received \$input_2\n" . Dumper($input_2) . "\n");
 #    RPerl::diag("in check__mixed_01(), received \$input_3\n" . Dumper($input_3) . "\n");
 #    RPerl::diag("in check__mixed_01(), received \$input_4\n" . Dumper($input_4) . "\n");
-
     return;
 }
 
@@ -205,7 +202,6 @@ sub check__mixed_02 {
 #    RPerl::diag("in check__mixed_02(), received \$input_2\n" . Dumper($input_2) . "\n");
 #    RPerl::diag("in check__mixed_02(), received \$input_3\n" . Dumper($input_3) . "\n");
 #    RPerl::diag("in check__mixed_02(), received \$input_4\n" . Dumper($input_4) . "\n");
-
     return;
 }
 
@@ -235,7 +231,6 @@ sub check__mixed_03 {
 #    RPerl::diag("in check__mixed_03(), received \$input_9\n" . Dumper($input_9) . "\n");
 #    RPerl::diag("in check__mixed_03(), received \$input_10\n" . Dumper($input_10) . "\n");
 #    RPerl::diag("in check__mixed_03(), received \$input_11\n" . Dumper($input_11) . "\n");
-
     return;
 }
 

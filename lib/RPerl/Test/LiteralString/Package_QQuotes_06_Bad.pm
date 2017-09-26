@@ -10,8 +10,6 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
-sub empty_sub { { my string $RETURN_TYPE };
-    return q{`~!@#$%^&*()-_=+[]\|;:'",<.>/?};
-}
+sub empty_sub { { my string $RETURN_TYPE }; return q{`~!@#$%^&*()-_=+[]\|;:'",<.>/?}; }
 
 1;    # end of package
