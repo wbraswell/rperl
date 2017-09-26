@@ -1,6 +1,6 @@
 # [[[ HEADER ]]]
 use RPerl;
-package MyRPerlClassOld;
+package MyClass01LowRPerlOld;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
@@ -22,13 +22,13 @@ our hashref $properties = { bar => my integer $TYPED_bar = 23 };
 
 our void::method $double_bar_save = sub {
 
-    ( my MyRPerlClassOld $self ) = @ARG;
+    ( my MyClass01LowRPerlOld $self ) = @ARG;
     $self->{bar} = $self->{bar} * 2;
 };
 
 our integer::method $double_bar_return = sub {
 
-    ( my MyRPerlClassOld $self ) = @ARG;
+    ( my MyClass01LowRPerlOld $self ) = @ARG;
     return $self->{bar} * 2;
 };
 
@@ -37,14 +37,14 @@ our integer::method $double_bar_return = sub {
 
 # [[[ HEADER ]]]
 use RPerl;
-package MyRPerlSubclassOld;
+package MySubclass01LowRPerlOld;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(MyRPerlClassOld);
-use MyRPerlClassOld;
+use parent qw(MyClass01LowRPerlOld);
+use MyClass01LowRPerlOld;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -58,19 +58,19 @@ our hashref $properties = { bax => my integer $TYPED_bax = 123 };  # NEED FIX: b
 
 our void::method $triple_bax_save = sub {
 
-    ( my MyRPerlSubclassOld $self ) = @ARG;
+    ( my MySubclass01LowRPerlOld $self ) = @ARG;
     $self->{bax} = $self->{bax} * 3;
 };
 
 our integer::method $triple_bax_return = sub {
 
-    ( my MyRPerlSubclassOld $self ) = @ARG;
+    ( my MySubclass01LowRPerlOld $self ) = @ARG;
     return $self->{bax} * 3;
 };
 
 our integer::method $multiply_bax_return = sub {
 
-    ( my MyRPerlSubclassOld $self, my integer $multiplier ) = @ARG;
+    ( my MySubclass01LowRPerlOld $self, my integer $multiplier ) = @ARG;
 
     if ( $multiplier < 10 ) {
         return $self->{bax} * $multiplier;

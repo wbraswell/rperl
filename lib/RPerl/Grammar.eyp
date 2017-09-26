@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.008_000;
+    our $VERSION = 0.009_000;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -29,11 +29,17 @@
 
 # [[[ LEXICON TOKENS, TYPES & RESERVED WORDS ]]]
 
+# NEED ANSWER: what is the correct method of requiring trailing whitespace for a token?
+# below we see (use\s+) and (sub)\s+ and (open)\s etc.
+# also, how do we know when the trailing whitespace is required?  is it always required, 
+# but we've only triggered it in a few tokens by coincidental tests which use variables overlapping with keywords?
+
 %token SHEBANG               = /(^#!\/(?:\w+\/)*perl)/                   # begin line, hash (octothorpe), bang, *NIX path to Perl; ex. '#!/usr/bin/perl'
 %token USE_RPERL             = /(\s*use\s+RPerl\s*;\s*)/                 # 'use RPerl;'
 %token USE_RPERL_AFTER       = /(\s*use\s+RPerl::AfterSubclass\s*;\s*)/  # 'use RPerl::AfterSubclass;'
 %token USE                   = /(use\s+)/                                # 'use '
 %token VERSION_NUMBER_ASSIGN = /\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/    # DEV NOTE, CORRELATION #rp014: $VERSION assign v-number, only capture v-number, not a normal number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
+%token SUB                   = /(sub)\s+/                                # 'sub' followed by whitespace
 %token MY                    = /(my)/                                    # 'my'
 %token LITERAL_NUMBER        = /([+-]?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?(e[+-]?\d+)?)/   # number w/ underscores, optional scientific notation; ex. '12_345_678.910_1'
 %token LITERAL_STRING        = /(('([^'\\]+|(?:\\\\)+)+')|("((\\n)|(\\t)|[^"\@\$\\])*((\\n)|(\\t))+((\\n)|(\\t)|[^"\@\$\\])*")|(q\{([^}\\]+|(?:\\\\)+)*\}))/  # single quotes non-empty w/out odd backslashes; double quotes non-empty w/out sigils or extra backslashes & w/ newline or tab; or single q-braces w/out odd backslashes; ex. 'howdy $foo!' or "howdy foo!\n" or q{howdy $foo!} 
@@ -182,12 +188,22 @@ Constant:                'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeIn
 #Constant:               'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
 #ConstantValue:          Literal | LBRACKET TypeInnerConstant? Literal (OP21_LIST_COMMA TypeInnerConstant? Literal)* ']' | 
 #                        LBRACE WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal (OP21_LIST_COMMA WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal)* '}' ;
-Subroutine:              'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation* '}' ';' ;
+
+
+#Subroutine:              'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation* '}' ';' ;  # DEPRECATED, CORRELATION #rp120: subroutine header 'our integer $foo = sub { ... };'
+Subroutine:              SUB WORD LBRACE LBRACE MY Type '$RETURN_TYPE' '}' ';' SubroutineArguments? Operation* '}' ;
+
+
 SubroutineArguments:     LPAREN_MY Type VARIABLE_SYMBOL (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
 Class:                   'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties SubroutineOrMethod* LITERAL_NUMBER ';' ;
 Properties:              'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryProperties (OP21_LIST_COMMA HashEntryProperties)* '}' ';' |
                          'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';';
-Method:                  'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation* '}' ';' ;
+
+
+#Method:                  'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation* '}' ';' ;
+Method:                  SUB WORD LBRACE LBRACE MY TYPE_METHOD '$RETURN_TYPE' '}' ';' MethodArguments? Operation* '}' ;
+
+
 MethodArguments:         LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
 SubroutineOrMethod:      Subroutine | Method ;
 

@@ -1,13 +1,13 @@
 # [[[ HEADER ]]]
 
-package MyMooClass;
+package MyClass05MediumMoo;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use Moo;
-#extends 'MyMooClassParent';
+#extends 'MyClass05MediumMooParent';
 
 
 
@@ -37,14 +37,14 @@ sub double_bar_return {
 
 # [[[ HEADER ]]]
 
-package MyMooSubclass;
+package MySubclass05MediumMoo;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use Moo;
-extends 'MyMooClass';
+extends 'MyClass05MediumMoo';
 
 
 

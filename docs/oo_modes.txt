@@ -1,0 +1,14 @@
+Perl Modes
+Object-Oriented Programming Frameworks
+
+#  0  Perl 5      low    magic (blessed hash only)
+#  1 RPerl        low    magic old
+#  2 RPerl        low    magic new
+#  3 RPerl        medium magic
+#  4 RPerl & Moo  medium magic (AKA RMoo AKA Skinny Moo(se))
+#  5         Moo  medium magic (no  MOP)
+#  6         Moo    high magic (yes MOP)
+#  7         Mouse  high magic (yes MOP)
+#  8         Moose  high magic (yes MOP)
+#  9         MooseX deep magic (yes MOP)  (also Damian Conway's Dios???  Stevan Little's UNIVERSAL::Object & MOP & Moxie???)
+# 10  Perl 6        dark magic (yes MOP)

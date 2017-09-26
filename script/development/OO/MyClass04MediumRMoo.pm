@@ -1,13 +1,13 @@
 # [[[ HEADER ]]]
 use RPerl;
-package MyRPerlClassNew;
+package MyClass04MediumRMoo;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(RPerl::CompileUnit::Module::Class);
-use RPerl::CompileUnit::Module::Class;
+use Moo;
+
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -15,21 +15,21 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitMultiplePackages ProhibitReusedNames ProhibitPackageVars)  # USER DEFAULT 8: allow additional packages
 
 # [[[ OO PROPERTIES ]]]
-
-our hashref $properties = { bar => my integer $TYPED_bar = 23 };
+sub integer { return sub { shift =~ /\A-?[0-9]+\z/ or die; }; }    # NEED REMOVE, SHOULD BE IN DataTypes/Integer.pm
+has 'bar' => ( is => 'ro', required => 1, isa => integer );
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 sub double_bar_save {
     { my void::method $RETURN_TYPE };
-    ( my MyRPerlClassNew $self ) = @ARG;
+    ( my MyClass04MediumRMoo $self ) = @ARG;
     $self->{bar} = $self->{bar} * 2;
 }
 
 sub double_bar_return {
     { my integer::method $RETURN_TYPE };
-    ( my MyRPerlClassNew $self ) = @ARG;
-    return $self->{bar} * 2;
+    ( my MyClass04MediumRMoo $self ) = @ARG;
+    return my integer $retval = $self->{bar} * 2;
 }
 
 1;    # end of class
@@ -37,14 +37,14 @@ sub double_bar_return {
 
 # [[[ HEADER ]]]
 use RPerl;
-package MyRPerlSubclassNew;
+package MySubclass04MediumRMoo;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(MyRPerlClassNew);
-use MyRPerlClassNew;
+use Moo;
+extends 'MyClass04MediumRMoo';
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -52,26 +52,26 @@ use MyRPerlClassNew;
 ## no critic qw(ProhibitMultiplePackages ProhibitReusedNames ProhibitPackageVars)  # USER DEFAULT 8: allow additional packages
 
 # [[[ OO PROPERTIES ]]]
-
-our hashref $properties = { bax => my integer $TYPED_bax = 123 };  # NEED FIX: bax should be readonly, need to change into a constant???
+sub integer { return sub { shift =~ /\A-?[0-9]+\z/ or die; }; }    # NEED REMOVE, SHOULD BE IN DataTypes/Integer.pm
+has 'bax' => ( is => 'ro', required => 1, isa => integer );
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 sub triple_bax_save {
     { my void::method $RETURN_TYPE };
-    ( my MyRPerlSubclassNew $self ) = @ARG;
+    ( my MySubclass04MediumRMoo $self ) = @ARG;
     $self->{bax} = $self->{bax} * 3;
 }
 
 sub triple_bax_return {
     { my integer::method $RETURN_TYPE };
-    ( my MyRPerlSubclassNew $self ) = @ARG;
+    ( my MySubclass04MediumRMoo $self ) = @ARG;
     return $self->{bax} * 3;
 }
 
 sub multiply_bax_return {
     { my integer::method $RETURN_TYPE };
-    ( my MyRPerlSubclassNew $self, my integer $multiplier ) = @ARG;
+    ( my MySubclass04MediumRMoo $self, my integer $multiplier ) = @ARG;
 
     if ( $multiplier < 10 ) {
         return $self->{bax} * $multiplier;

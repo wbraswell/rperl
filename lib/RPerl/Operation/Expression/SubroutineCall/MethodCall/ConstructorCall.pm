@@ -96,9 +96,9 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup from $property_0 = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
         die 'TMP DEBUG';
 
-        # START HERE: generate C++ for property 0, add foreach loop to handle remaining properties
-        # START HERE: generate C++ for property 0, add foreach loop to handle remaining properties
-        # START HERE: generate C++ for property 0, add foreach loop to handle remaining properties
+        # START HERE: generate C++ for property 0, add foreach loop to handle remaining properties, copy CPPOPS_CPPTYPES property init semantics to PERLOPS_PERLTYPES mode above, create passing & failing tests
+        # START HERE: generate C++ for property 0, add foreach loop to handle remaining properties, copy CPPOPS_CPPTYPES property init semantics to PERLOPS_PERLTYPES mode above, create passing & failing tests
+        # START HERE: generate C++ for property 0, add foreach loop to handle remaining properties, copy CPPOPS_CPPTYPES property init semantics to PERLOPS_PERLTYPES mode above, create passing & failing tests
     }
 
     return $cpp_source_group;
