@@ -23,23 +23,26 @@ our hashref $properties = { preschool => my string $TYPED_preschool = 'Busy Beav
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
-our RPerl::Test::Subclass::MySubclasserA_Bad_01::method $building_blocks = sub {
+sub building_blocks {
+    { my RPerl::Test::Subclass::MySubclasserA_Bad_01::method $RETURN_TYPE };
     ( my RPerl::Test::Subclass::MySubclasserA_Bad_01 $self ) = @ARG;
     $self->{preschool} .= '; ABCDEFG';
     my RPerl::Test::Subclass::MySubclasserA_Bad_01 $chum = RPerl::Test::Subclass::MySubclasserA_Bad_01->new();
     return $chum;
-};
+}
 
-our RPerl::Test::Subclass::MySubclasserA_Bad_01_arrayref::methodd $finger_paints = sub {
+sub finger_paints {
+    { my RPerl::Test::Subclass::MySubclasserA_Bad_01_arrayref::methodd $RETURN_TYPE };
     ( my RPerl::Test::Subclass::MySubclasserA_Bad_01 $self ) = @ARG;
     $self->{preschool} .= '; orange yellow red';
     my RPerl::Test::Subclass::MySubclasserA_Bad_01_arrayref $friends
         = [ RPerl::Test::Subclass::MySubclasserA_Bad_01->new(), RPerl::Test::Subclass::MySubclasserA_Bad_01->new(),
         RPerl::Test::Subclass::MySubclasserA_Bad_01->new() ];
     return $friends;
-};
+}
 
-our RPerl::Test::Subclass::MySubclasserA_Bad_01_hashref::method $sand_box = sub {
+sub sand_box {
+    { my RPerl::Test::Subclass::MySubclasserA_Bad_01_hashref::method $RETURN_TYPE };
     ( my RPerl::Test::Subclass::MySubclasserA_Bad_01 $self ) = @ARG;
     $self->{preschool} .= '; castle';
     my RPerl::Test::Subclass::MySubclasserA_Bad_01_hashref $classmates = {
@@ -48,20 +51,22 @@ our RPerl::Test::Subclass::MySubclasserA_Bad_01_hashref::method $sand_box = sub 
         'theodore' => RPerl::Test::Subclass::MySubclasserA_Bad_01->new()
     };
     return $classmates;
-};
+}
 
-our RPerl::Test::Subclass::MySubclasserA_Bad_01_arrayref $swings = sub {
+sub swings {
+    { my RPerl::Test::Subclass::MySubclasserA_Bad_01_arrayref $RETURN_TYPE };
     my RPerl::Test::Subclass::MySubclasserA_Bad_01_arrayref $others
         = [ RPerl::Test::Subclass::MySubclasserA_Bad_01->new(), RPerl::Test::Subclass::MySubclasserA_Bad_01->new() ];
     return $others;
-};
+}
 
-our RPerl::Test::Subclass::MySubclasserA_Bad_01_hashref $tinker_toys = sub {
+sub tinker_toys {
+    { my RPerl::Test::Subclass::MySubclasserA_Bad_01_hashref $RETURN_TYPE };
     my RPerl::Test::Subclass::MySubclasserA_Bad_01_hashref $peers = {
         'chip' => RPerl::Test::Subclass::MySubclasserA_Bad_01->new(),
         'dale' => RPerl::Test::Subclass::MySubclasserA_Bad_01->new()
     };
     return $peers;
-};
+}
 
 1;                     # end of class

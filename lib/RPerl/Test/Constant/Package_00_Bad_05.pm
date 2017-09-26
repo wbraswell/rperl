@@ -15,8 +15,8 @@ our $VERSION = 0.001_000;
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
 # [[[ SUBROUTINES ]]]
-our void $empty_sub = sub {
+sub empty_sub { { my void $RETURN_TYPE };
     return 2;
-};
+}
 
 1;                  # end of package

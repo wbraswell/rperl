@@ -10,6 +10,6 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
-our integer $empty_sub = sub { return _2; };
+sub empty_sub { { my integer $RETURN_TYPE }; return _2; }
 
 1;                  # end of package

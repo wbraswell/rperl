@@ -11,8 +11,8 @@ use RPerl
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
-our void $empty_sub = sub {
+sub empty_sub { { my void $RETURN_TYPE };
     return 2;
-};
+}
 
 1;                  # end of package

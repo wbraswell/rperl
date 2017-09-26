@@ -11,8 +11,8 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
-our string $empty_sub = sub {
+sub empty_sub { { my string $RETURN_TYPE };
     return "";
-};
+}
 
 1;    # end of package

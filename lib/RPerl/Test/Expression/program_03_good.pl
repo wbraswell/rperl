@@ -11,5 +11,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-our integer $foo = sub { ( my string $bar, my integer $bat, my integer $baz ) = @ARG; print $bar, "\n"; return $bat + $baz; };
+sub foo { { my integer $RETURN_TYPE }; ( my string $bar, my integer $bat, my integer $baz ) = @ARG; print $bar, "\n"; return $bat + $baz; }
 foo('howdy!', 23, 42);

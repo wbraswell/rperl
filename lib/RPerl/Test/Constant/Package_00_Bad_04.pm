@@ -14,9 +14,9 @@ our $VERSION = 0.001_000;
 use constant PI  => my number $TYPED_PI  = 3.141_59;
 
 # [[[ SUBROUTINES ]]]
-our void $empty_sub = sub {
+sub empty_sub { { my void $RETURN_TYPE };
     return 2;
-};
+}
 
 use constant PIE => my string $TYPED_PIE = 'pecan';
 

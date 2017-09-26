@@ -21,11 +21,13 @@ use feature 'state';  ## no critic qw(Capitalization ProhibitMultiplePackages Pr
 
 # [[[ SUBROUTINES ]]]
 #print 'before defining quux(), have $local_persistent = ', $local_persistent, "\n";  # YES ERROR
-our void $quux = sub {
+sub quux {
+    { my void $RETURN_TYPE };
     state integer $local_persistent = 23;
     print 'inside quux(), have $local_persistent = ', $local_persistent, "\n";        # NO  ERROR
     $local_persistent++;
-};
+    return;
+}
 #print 'after  defining quux(), have $local_persistent = ', $local_persistent, "\n";  # YES ERROR
 
 # [[[ OPERATIONS ]]]

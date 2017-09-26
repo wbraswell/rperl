@@ -14,7 +14,8 @@ our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
-our void::method $empty_method = sub {
+sub empty_method {
+    { my void::method $RETURN_TYPE };
     (   my object $self,
         my number $foo,
         my string $bar,
@@ -22,6 +23,6 @@ our void::method $empty_method = sub {
         my integer_hashref $bat
     ) = @ARG;
     return 2;
-};
+}
 
 1;    # end of class

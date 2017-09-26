@@ -18,11 +18,13 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 print 'before defining quux(), have $autovivified = ', $autovivified, "\n";  # NO ERROR
-our void $quux = sub {
+sub quux {
+    { my void $RETURN_TYPE };
     $autovivified = 23;
     print 'inside          quux(), have $autovivified = ', $autovivified, "\n";       # NO ERROR
     $autovivified++;
-};
+    return;
+}
 print 'after  defining quux(), have $autovivified = ', $autovivified, "\n";  # NO ERROR
 
 # [[[ OPERATIONS ]]]

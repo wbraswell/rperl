@@ -203,6 +203,10 @@ Properties:              'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE H
 #Method:                  'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation* '}' ';' ;
 Method:                  SUB WORD LBRACE LBRACE MY TYPE_METHOD '$RETURN_TYPE' '}' ';' MethodArguments? Operation* '}' ;
 
+# START HERE: complete steps of grammar update below, update subroutine & method header code generation, re-enable t/13, delete old Sub & Method productions above, update Learning RPerl, disable Class.pm subroutine scanning code, GSL support
+# START HERE: complete steps of grammar update below, update subroutine & method header code generation, re-enable t/13, delete old Sub & Method productions above, update Learning RPerl, disable Class.pm subroutine scanning code, GSL support
+# START HERE: complete steps of grammar update below, update subroutine & method header code generation, re-enable t/13, delete old Sub & Method productions above, update Learning RPerl, disable Class.pm subroutine scanning code, GSL support
+
 
 MethodArguments:         LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
 SubroutineOrMethod:      Subroutine | Method ;

@@ -18,7 +18,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ SUBROUTINES ]]]
-our integer_arrayref $foo_multi = sub { return [21, 22, 23]; };
+sub foo_multi { { my integer_arrayref $RETURN_TYPE }; return [21, 22, 23]; }
 
 # [[[ OPERATIONS ]]]
 my integer_arrayref $retvals = foo_multi();

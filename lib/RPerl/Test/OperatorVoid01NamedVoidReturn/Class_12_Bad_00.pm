@@ -21,6 +21,6 @@ use RPerl::Test;
 our hashref $properties = {};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
-our void::method $foo = sub { return 2, 3, 5, 7; };
+sub foo { { my void::method $RETURN_TYPE }; return 2, 3, 5, 7; }
 
 1;    # end of class

@@ -16,8 +16,10 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-our void $foo = sub {
+sub foo {
+    { my void $RETURN_TYPE };
     ( my string $bar ) = @ARG;
     print $bar, "\n";
-};
+    return;
+}
 foo('howdy!')

@@ -10,6 +10,6 @@ use RPerl::Test::Foo;
 use RPerl::Test::Bar;
 
 # [[[ SUBROUTINES ]]]
-our integer $empty_sub = sub { return 2; };
+sub empty_sub { { my integer $RETURN_TYPE }; return 2; }
 
 1;                  # end of package

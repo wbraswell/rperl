@@ -18,8 +18,8 @@ our hashref $properties
     = { some_integer => my integer $TYPED_some_integer = 23 };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
-our string::method $properties_stnv = sub {
+sub properties_stnv { { my string::method $RETURN_TYPE };
     return main::scope_type_name_value($properties);
-};
+}
 
 1;    # end of class

@@ -15,9 +15,9 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ SUBROUTINES ]]]
-our boolean $foo = sub {
+sub foo { { my boolean $RETURN_TYPE };
     return & 1;
-};
+}
 
 # [[[ OPERATIONS ]]]
 foo();

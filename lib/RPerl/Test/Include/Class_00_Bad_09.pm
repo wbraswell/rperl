@@ -21,9 +21,9 @@ our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
-our integer::method $empty_method = sub {
+sub empty_method { { my integer::method $RETURN_TYPE };
     return 2;
-};
+}
 
 use RPerl::Test::Bar;
 

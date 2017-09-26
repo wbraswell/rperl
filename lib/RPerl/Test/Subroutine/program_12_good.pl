@@ -25,13 +25,14 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ SUBROUTINES ]]]
-our integer $foo = sub {
+sub foo {
+    { my integer $RETURN_TYPE };
     ( my integer $pseudo_state_in_foo ) = @ARG;
     print 'inside foo(), received $pseudo_state_in_foo = ', $pseudo_state_in_foo, "\n";
     $pseudo_state_in_foo++;
     print 'inside foo(), have modified $pseudo_state_in_foo = ', $pseudo_state_in_foo, "\n";
     return $pseudo_state_in_foo;
-};
+}
 
 # [[[ OPERATIONS ]]]
 my integer $pseudo_state = 0;

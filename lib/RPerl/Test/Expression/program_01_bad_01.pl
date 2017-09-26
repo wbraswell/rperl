@@ -16,7 +16,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-our integer $foo = sub {
+sub foo { { my integer $RETURN_TYPE };
     return 23;
-};
+}
 foo()

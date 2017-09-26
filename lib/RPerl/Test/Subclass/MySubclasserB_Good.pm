@@ -19,24 +19,27 @@ our hashref $properties = { kindergarten => my string $TYPED_kindergarten = 'Eag
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
-our RPerl::Test::Subclass::MySubclasserB_Good::method $alphabet = sub {
+sub alphabet {
+    { my RPerl::Test::Subclass::MySubclasserB_Good::method $RETURN_TYPE };
     ( my RPerl::Test::Subclass::MySubclasserB_Good $self ) = @ARG;
     $self->{kindergarten} .= '; ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     my RPerl::Test::Subclass::MySubclasserA_Good $buddy = RPerl::Test::Subclass::MySubclasserA_Good->new();
     my RPerl::Test::Subclass::MySubclasserB_Good $chum  = RPerl::Test::Subclass::MySubclasserB_Good->new();
     return $chum;
-};
+}
 
-our RPerl::Test::Subclass::MySubclasserB_Good_arrayref::method $brush_paints = sub {
+sub brush_paints {
+    { my RPerl::Test::Subclass::MySubclasserB_Good_arrayref::method $RETURN_TYPE };
     ( my RPerl::Test::Subclass::MySubclasserB_Good $self ) = @ARG;
     $self->{kindergarten} .= '; green blue purple';
     my RPerl::Test::Subclass::MySubclasserB_Good_arrayref $friends
         = [ RPerl::Test::Subclass::MySubclasserB_Good->new(), RPerl::Test::Subclass::MySubclasserB_Good->new(),
         RPerl::Test::Subclass::MySubclasserB_Good->new() ];
     return $friends;
-};
+}
 
-our RPerl::Test::Subclass::MySubclasserB_Good_hashref::method $clay = sub {
+sub clay {
+    { my RPerl::Test::Subclass::MySubclasserB_Good_hashref::method $RETURN_TYPE };
     ( my RPerl::Test::Subclass::MySubclasserB_Good $self ) = @ARG;
     $self->{kindergarten} .= '; bust';
     my RPerl::Test::Subclass::MySubclasserB_Good_hashref $classmates = {
@@ -45,21 +48,23 @@ our RPerl::Test::Subclass::MySubclasserB_Good_hashref::method $clay = sub {
         'louie' => RPerl::Test::Subclass::MySubclasserB_Good->new()
     };
     return $classmates;
-};
+}
 
-our RPerl::Test::Subclass::MySubclasserB_Good_arrayref $seesaw = sub {
+sub seesaw {
+    { my RPerl::Test::Subclass::MySubclasserB_Good_arrayref $RETURN_TYPE };
     my RPerl::Test::Subclass::MySubclasserA_Good_arrayref $strangers
         = [ RPerl::Test::Subclass::MySubclasserA_Good->new(), RPerl::Test::Subclass::MySubclasserA_Good->new() ];
     my RPerl::Test::Subclass::MySubclasserB_Good_arrayref $others
         = [ RPerl::Test::Subclass::MySubclasserB_Good->new(), RPerl::Test::Subclass::MySubclasserB_Good->new() ];
     return $others;
-};
+}
 
-our RPerl::Test::Subclass::MySubclasserB_Good_hashref $erector_set = sub {
+sub erector_set {
+    { my RPerl::Test::Subclass::MySubclasserB_Good_hashref $RETURN_TYPE };
     my RPerl::Test::Subclass::MySubclasserA_Good_hashref $teachers
         = { 'launchpad' => RPerl::Test::Subclass::MySubclasserA_Good->new(), 'donald' => RPerl::Test::Subclass::MySubclasserA_Good->new() };
     my RPerl::Test::Subclass::MySubclasserB_Good_hashref $peers = { 'webbigail' => RPerl::Test::Subclass::MySubclasserB_Good->new() };
     return $peers;
-};
+}
 
 1;    # end of class

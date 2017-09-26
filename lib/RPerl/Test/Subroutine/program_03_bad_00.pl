@@ -17,7 +17,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ SUBROUTINES ]]]
-our integer $jedi = sub { print q{"You love him, don't you?"}, "\n"; 6; };
+sub jedi { { my integer $RETURN_TYPE }; print q{"You love him, don't you?"}, "\n"; 6; return; }
 
 # [[[ OPERATIONS ]]]
 

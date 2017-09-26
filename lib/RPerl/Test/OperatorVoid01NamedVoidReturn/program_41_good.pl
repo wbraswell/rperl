@@ -10,7 +10,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ SUBROUTINES ]]]
-our integer_hashref $foo = sub { return { a => 2 }; };
+sub foo { { my integer_hashref $RETURN_TYPE }; return { a => 2 }; }
 
 # [[[ OPERATIONS ]]]
 foo();

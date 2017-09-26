@@ -14,8 +14,8 @@ use RPerl::Test::Foo;
 use RPerl::Test::Bar
 
 # [[[ SUBROUTINES ]]]
-our integer $empty_sub = sub {
+sub empty_sub { { my integer $RETURN_TYPE };
     return 2;
-};
+}
 
 1;                  # end of package

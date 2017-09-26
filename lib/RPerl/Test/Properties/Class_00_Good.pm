@@ -14,10 +14,11 @@ our hashref $properties
     = { test_property => my integer $TYPED_test_property = 2 };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
-our void::method $test_method = sub {
+sub test_method {
+    { my void::method $RETURN_TYPE };
     ( my object $self, my integer $input_integer ) = @ARG;
     $self->{test_property} *= $input_integer;
     return $self->{test_property};
-};
+}
 
 1;    # end of class

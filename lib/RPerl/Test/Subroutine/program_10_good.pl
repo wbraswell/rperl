@@ -32,7 +32,8 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our void $baz_variadic_static = sub {
+sub baz_variadic_static {
+    { my void $RETURN_TYPE };
     # PERLTIDY BUG, failure to put a space between $arg3 and closing )
 #    (my integer $num_args, my string_arrayref $args) = @ARG;
     ( my integer $num_args, my string_arrayref $args ) = @ARG;
@@ -47,7 +48,7 @@ our void $baz_variadic_static = sub {
     print 'have $args3 = ', $arg3, "\n";
     print 'have $args4 = ', $arg4, "\n\n";
     return;
-};
+}
 
 # [[[ OPERATIONS ]]]
 baz_variadic_static(1, []);

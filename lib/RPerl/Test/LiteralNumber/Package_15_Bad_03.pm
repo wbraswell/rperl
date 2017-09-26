@@ -13,8 +13,8 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
 # [[[ SUBROUTINES ]]]
-our integer $empty_sub = sub {
+sub empty_sub { { my integer $RETURN_TYPE };
     return -23__456_789;
-};
+}
 
 1;    # end of package

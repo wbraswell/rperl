@@ -18,15 +18,17 @@ our $VERSION = 0.001_000;
 # [[[ SUBROUTINES ]]]
 
 # NEED UPGRADE, CORRELATION #rp035: allow multi-line subroutines & other code blocks, where they would be less than 160 chars if on a single line
-#our void $foo_arg  = sub {
+#sub foo_arg {
+#    { my void $RETURN_TYPE };
 #    (my integer $arg1) = @ARG;
 #    print 'inside foo_arg(), have $arg1 = ', integer_to_string($arg1), "\n";
-#};
+#    return;
+#}
 
 # PERLTIDY BUG, failure to put a space between $arg3 and closing )
-#our void $foo_arg  = sub { (my integer $arg1) = @ARG; print 'inside foo_arg(), have $arg1 = ', integer_to_string($arg1), "\n"; };
-#our void $foo_arg  = sub { (my integer $arg1) = @ARG; print 'inside foo_arg(), have $arg1 = ', integer_to_string($arg1), "\n"; };  # this comment is a test of script/development/find_replace_old_subroutine_headers.sh
-our void $foo_arg  = sub { ( my integer $arg1 ) = @ARG; print 'inside foo_arg(), have $arg1 = ', integer_to_string($arg1), "\n"; };
+#sub foo_arg { { my void $RETURN_TYPE }; (my integer $arg1) = @ARG; print 'inside foo_arg(), have $arg1 = ', integer_to_string($arg1), "\n"; return; }
+#sub foo_arg { { my void $RETURN_TYPE }; (my integer $arg1) = @ARG; print 'inside foo_arg(), have $arg1 = ', integer_to_string($arg1), "\n"; return; }  # this comment is a test of script/development/find_replace_old_subroutine_headers.sh
+sub foo_arg { { my void $RETURN_TYPE }; ( my integer $arg1 ) = @ARG; print 'inside foo_arg(), have $arg1 = ', integer_to_string($arg1), "\n"; return; }
 
 # [[[ OPERATIONS ]]]
 foo_arg(1_701);

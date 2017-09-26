@@ -11,8 +11,8 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
-our void $EMPTY_SUB = sub {
+sub EMPTY_SUB { { my void $RETURN_TYPE };
     return 2;
-};
+}
 
 1;                  # end of package

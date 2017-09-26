@@ -45,7 +45,8 @@ our hashref $properties = {
 # START HERE: flesh out all Operator::Named (cos/sin/push etc) tests below (or in another file) and then implement
 # START HERE: flesh out all Operator::Named (cos/sin/push etc) tests below (or in another file) and then implement
 
-our unknown $quux_croak = sub {
+sub quux_croak {
+    { my unknown $RETURN_TYPE };
     #    croak;        # GOOD OperatorVoid_119; program_00*
     #    croak();      # GOOD OperatorVoid_120, parens as args; program_01_good.pl
     #    croak ();     # BAD  OperatorVoid_121, parser, empty parens as subexpression; program_01_bad_01.pl
@@ -93,9 +94,11 @@ our unknown $quux_croak = sub {
     #    croak((%{{a => 2, b => 3, c => 5, d => 7}}));  # GOOD OperatorVoid_120, outer parens as args, inner parens as subexpression; program_49_good.pl
     #    croak %{{a => 2, b => 3, c => 5, d => 7}};     # GOOD OperatorVoid_121; program_50_good.pl
     #    croak (%{{a => 2, b => 3, c => 5, d => 7}});   # GOOD OperatorVoid_121, parens as subexpression; program_51_good.pl
-};
+    return;
+}
 
-our unknown $quux_die = sub {
+sub quux_die {
+    { my unknown $RETURN_TYPE };
     #    die "\n";      # GOOD OperatorVoid_119; program_00*
     #    die("\n");     # BAD  OperatorVoid_120, parser, parens as args; program_01_bad_00.pl
     #    die ("\n");    # BAD  OperatorVoid_121, parser, empty parens as subexpression; program_01_bad_01.pl
@@ -143,9 +146,11 @@ our unknown $quux_die = sub {
     #    die((%{{a => 2, b => 3, c => 5, d => 7}}), "\n");  # BAD  OperatorVoid_120, parser; program_49_good.pl
     #    die %{{a => 2, b => 3, c => 5, d => 7}}, "\n";     # GOOD OperatorVoid_121; program_50*
     #    die (%{{a => 2, b => 3, c => 5, d => 7}}, "\n");   # BAD  OperatorVoid_121, parser, parens as Perl::Critic args; program_51*
-};
+    return;
+}
 
-our unknown $quux_exit = sub {
+sub quux_exit {
+    { my unknown $RETURN_TYPE };
     #    exit;      # GOOD OperatorVoid_119; program_00*
     #    exit();    # BAD  OperatorVoid_120, parser, parens as args; program_01_bad_00.pl
     #    exit ();   # BAD  OperatorVoid_121, parser, empty parens as subexpression; program_01_bad_01.pl
@@ -193,9 +198,11 @@ our unknown $quux_exit = sub {
     #    exit((%{{a => 2, b => 3, c => 5, d => 7}}));  # BAD  OperatorVoid_120, parser; program_49_good.pl
     #    exit %{{a => 2, b => 3, c => 5, d => 7}};     # GOOD OperatorVoid_121; program_50*
     #    exit (%{{a => 2, b => 3, c => 5, d => 7}});   # BAD  OperatorVoid_121, parser, parens as Perl::Critic args; program_51*
-};
+    return;
+}
 
-our unknown $quux_return = sub {
+sub quux_return {
+    { my unknown $RETURN_TYPE };
     #    return;        # GOOD OperatorVoid_119; program_00* Class_00*
     #    return();      # GOOD OperatorVoid_120, parens as args; program_01_good.pl
     #    return ();     # BAD  OperatorVoid_121, parser, empty parens as subexpression; program_01_bad_01.pl
@@ -243,6 +250,7 @@ our unknown $quux_return = sub {
     #    return (%{{a => 2}});                      # BAD  OperatorVoid_121, generator, parens as subexpression; program_47_bad_00.pl
     #    return ((%{{a => 2}}));                    # BAD  OperatorVoid_121, generator, parens as subexpressions; program_47_bad_01.pl
     #    return (((%{{a => 2}})));                  # BAD  OperatorVoid_121, generator, parens as subexpressions; program_47_bad_02.pl
-};
+    return;
+}
 
 1;    # end of class

@@ -17,21 +17,23 @@ our $VERSION = 0.001_000;
 use RPerl::Test::Subclass::MySubclasserA_Good;
 
 # [[[ SUBROUTINES ]]]
-our RPerl::Test::Subclass::MySubclasserA_Good_arrayref $tardies = sub {
+sub tardies {
+    { my RPerl::Test::Subclass::MySubclasserA_Good_arrayref $RETURN_TYPE };
     my RPerl::Test::Subclass::MySubclasserA_Good_arrayref $retval
         = [ RPerl::Test::Subclass::MySubclasserA_Good->new(), RPerl::Test::Subclass::MySubclasserA_Good->new() ];
     $retval->[0]->{preschool} = 'Howdy Preschool';
     $retval->[1]->{preschool} = 'Doody Preschool';
     return $retval;
-};
+}
 
-our RPerl::Test::Subclass::MySubclasserA_Good_hashrefd $earlies = sub {
+sub earlies {
+    { my RPerl::Test::Subclass::MySubclasserA_Good_hashrefd $RETURN_TYPE };
     my RPerl::Test::Subclass::MySubclasserA_Good_hashref $retval = {
         'susie'  => RPerl::Test::Subclass::MySubclasserA_Good->new(),
         'calvin' => RPerl::Test::Subclass::MySubclasserA_Good->new()
     };
     return $retval;
-};
+}
 
 # [[[ OPERATIONS ]]]
 my RPerl::Test::Subclass::MySubclasserA_Good_arrayref $some_kids = tardies();
