@@ -29,6 +29,10 @@ our $VERSION = 0.002_000;
 use parent qw(RPerl::Test);
 use RPerl::Test;
 
+# [[[ EXPORTS ]]]
+use RPerl::Exporter qw(import);
+our @EXPORT = qw(check_integer check_number check_string check_arrayref check_integer_arrayref check_number_arrayref check_number_arrayrefs check_string_arrayref check_hashref check_integer_hashref check_number_hashref check_number_hashrefs check_string_hashref check__mixed_00 check__mixed_01 check__mixed_02 check__mixed_03);
+
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -70,7 +74,7 @@ sub check_arrayref {
     { my void $RETURN_TYPE };
     ( my arrayref $input_1) = @ARG;
 
-#    RPerl::diag("in check_arrayref(), received \$input_1\n" . Dumper($input_1) . "\n");
+    RPerl::diag("in check_arrayref(), received \$input_1\n" . Dumper($input_1) . "\n");
     return;
 }
 

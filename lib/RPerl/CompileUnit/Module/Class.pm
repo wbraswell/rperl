@@ -206,6 +206,7 @@ sub create_symtab_entries_and_accessors_mutators {
     my $subroutine_name;                # string
     my $CHECK;                          # string
     my $inside_subroutine;              # boolean
+    my $inside_subroutine_header;       # boolean
     my $inside_subroutine_arguments;    # boolean
     my $subroutine_arguments_line;      # string
 
@@ -255,6 +256,7 @@ sub create_symtab_entries_and_accessors_mutators {
         $object_properties_types     = {};
         $inside_object_properties    = 0;
         $inside_subroutine           = 0;
+        $inside_subroutine_header    = 0;
         $inside_subroutine_arguments = 0;
         $subroutine_arguments_line   = q{};
 
@@ -348,18 +350,19 @@ sub create_symtab_entries_and_accessors_mutators {
                     last;
                 }
 
-#				RPerl::diag("in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n");
+#                if ($module_file_line =~ m/sub\s*/xms) {
+#    				RPerl::diag("in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n");
+#                }
 
                 # create ops/types reporting subroutine & accessor/mutator object methods for each RPerl package
 
                 # user-style RPerl header, anything that starts with 'use RPerl;'
                 if ( $module_file_line =~ /^\s*(use\s+RPerl\s*;)/xms ) {
-
-                    #    				RPerl::diag(q{in Class.pm INIT block, found '} . $1 . q{' in $module_filename_short = } . $module_filename_short . "\n");
+#    				RPerl::diag(q{in Class.pm INIT block, found '} . $1 . q{' in $module_filename_short = } . $module_filename_short . "\n");
                     $use_rperl = 1;
                     next;
                 }
-
+ 
                 # package declaration
                 if ( $module_file_line =~ /^\s*package\s+/xms ) {
 
@@ -452,33 +455,63 @@ sub create_symtab_entries_and_accessors_mutators {
                 }
 
                 # create symbol table entries for methods and plain-old non-method subroutines
-                if ( $module_file_line =~ /^\s*our\s+([\w:]+)\s+\$(\w+)\s+\=\s+sub\s+\{/xms ) {
+                # DEPRECATED, CORRELATION #rp120: subroutine header 'our integer $foo = sub { ... };'
+#                if ( $module_file_line =~ /^\s*our\s+([\w:]+)\s+\$(\w+)\s+\=\s+sub\s+\{/xms ) {
+#                if ( $module_file_line =~ /^\s*sub\s+(\w+)\s*\{[\s\n\r]*\{\s*my\s+([\w:]+)\s+\$RETURN_TYPE\s*\};/xms ) {  # can't match multi-line content against single-line input
+
+                # first half of subroutine header (name)
+                if ( $module_file_line =~ /^\s*sub\s+(\w+)\s*\{/xms ) {
+                    RPerl::diag(q{in Class.pm INIT block, found first half of subroutine header for } . $1 . q{() in $module_filename_short = } . $module_filename_short . "\n");
+                    if ($inside_subroutine_header) {
+                        RPerl::diag(q{in Class.pm INIT block, found first half of subroutine header for } . $1 . q{() when already marked as $inside_subroutine_header for } . $subroutine_name . q{(), skipping activation of non-RPerl subroutine } . $subroutine_name . q{() in $module_filename_short = } . $module_filename_short . "\n");
+                        $inside_subroutine_header = 0;
+                    }
+                    else {
+                        $inside_subroutine_header = 1;
+                    }
                     $inside_object_properties = 0;
+                    $inside_subroutine = 0;
                     if ( not $use_rperl ) {
-#                        RPerl::diag(q{in Class.pm INIT block, do NOT have $use_rperl, skipping subroutine in $module_filename_short = } . $module_filename_short . "\n");
+                        RPerl::diag(q{in Class.pm INIT block, do NOT have $use_rperl, skipping subroutine } . $1 . q{() in $module_filename_short = } . $module_filename_short . "\n");
+                        $subroutine_name = q{};
                         next;
                     }
-#                    else { RPerl::diag(q{in Class.pm INIT block, have $use_rperl, enabling subroutine in $module_filename_short = } . $module_filename_short . "\n"); }
+                    else { RPerl::diag(q{in Class.pm INIT block, have $use_rperl, looking for second half of header for subroutine } . $1 . q{() in $module_filename_short = } . $module_filename_short . "\n"); }
 
+                    # NEED ANSWER: should this be a croak() or die() statement instead of just an abort?
                     if ($inside_subroutine_arguments) {
-#                        RPerl::diag( q{in Class.pm INIT block, have $subroutine_type = } . $1 . q{, and $subroutine_name = } . $2 . '() while inside arguments of subroutine ' . $subroutine_name . '(), aborting RPerl activation of entire file' . "\n" );
+                        RPerl::diag( q{in Class.pm INIT block, have $subroutine_name = } . $1 . '() while inside arguments of subroutine ' . $subroutine_name . '(), aborting RPerl activation of entire file' . "\n" );
+                        $subroutine_name = q{};
                         last;    # last line of file
                     }
 
                     # activate previous subroutine, no arguments
                     if ($inside_subroutine) {
-#                        RPerl::diag( q{in Class.pm INIT block, have $inside_subroutine = } . $inside_subroutine . q{, about to call activate_subroutine() while inside subroutine } . $subroutine_name . '()' . "\n" );
+                        RPerl::diag( q{in Class.pm INIT block, have $inside_subroutine = } . $inside_subroutine . q{, about to call activate_subroutine() while inside subroutine } . $subroutine_name . '()' . "\n" );
                         activate_subroutine( $package_name, $subroutine_name, $subroutine_type, q{}, $module_filename_long );
                     }
 
-                    $subroutine_type = $1;
-                    $subroutine_name = $2;
+                    $subroutine_name = $1;
+                    next;
+                }
 
-#                    RPerl::diag( q{in Class.pm INIT block, have $subroutine_type = } . $subroutine_type . q{, and $subroutine_name = } . $subroutine_name . "()\n" );
-#                    RPerl::diag( q{in Class.pm INIT block, have $CHECK = '} . $CHECK . "'\n" );
+                # second half of subroutine header (return type)
+                if ( $module_file_line =~ /^\s*\{\s*my\s+([\w:]+)\s+\$RETURN_TYPE\s*\}\s*;/xms ) {
+                    RPerl::diag(q{in Class.pm INIT block, found second half of subroutine header for } . $subroutine_name . q{() in $module_filename_short = } . $module_filename_short . "\n");
+                    if ($inside_subroutine_header) {
+                        $inside_subroutine_header = 0;
+                    }
+                    else {
+                        RPerl::diag(q{in Class.pm INIT block, found second half of subroutine header with $RETURN_TYPE } . $1 . q{ when not already marked as $inside_subroutine_header for } . $subroutine_name . q{(), skipping activation of unknown subroutine in $module_filename_short = } . $module_filename_short . "\n");
+                        next;
+                    }
+                    $subroutine_type = $1;
+
+                    RPerl::diag( q{in Class.pm INIT block, have $subroutine_type = } . $subroutine_type . q{, and $subroutine_name = } . $subroutine_name . "()\n" );
+                    RPerl::diag( q{in Class.pm INIT block, have $CHECK = '} . $CHECK . "'\n" );
 
                     if ( $CHECK eq 'OFF' ) {
-#                        RPerl::diag( q{in Class.pm INIT block, CHECK IS OFF, about to call activate_subroutine()...} . "\n" );
+                        RPerl::diag( q{in Class.pm INIT block, CHECK IS OFF, about to call activate_subroutine()...} . "\n" );
                         activate_subroutine( $package_name, $subroutine_name, $subroutine_type, q{}, $module_filename_long );
                     }
                     elsif ( ( $CHECK ne 'ON' ) and ( $CHECK ne 'TRACE' ) ) {
@@ -498,9 +531,10 @@ sub create_symtab_entries_and_accessors_mutators {
                 }
 
                 # skip non-RPerl-enabled subroutine/method, using normal Perl 'sub foo {}' syntax instead of RPerl 'our type $foo = sub {};' syntax
-                if ( $module_file_line =~ /^\s*sub\s+[\w:]+\s+\{/xms ) {
-                    $inside_object_properties = 0;
-                }
+                # DEPRECATED, CORRELATION #rp120: subroutine header 'our integer $foo = sub { ... };'
+#                if ( $module_file_line =~ /^\s*sub\s+[\w:]+\s+\{/xms ) {
+#                    $inside_object_properties = 0;
+#                }
 
                 # skip end-of-module line
                 if ( $module_file_line =~ /^\s*1\;\s+\#\ end\ of/xms ) {
@@ -559,7 +593,7 @@ sub create_symtab_entries_and_accessors_mutators {
                                     $i++;
                                 }
 
-#                                RPerl::diag( 'in Class.pm INIT block, CHECK IS ON, about to call activate_subroutine()...' . "\n" );
+                                RPerl::diag( 'in Class.pm INIT block, CHECK IS ON, about to call activate_subroutine()...' . "\n" );
                                 activate_subroutine( $package_name, $subroutine_name, $subroutine_type, $subroutine_arguments_check_code,
                                     $module_filename_long );
                                 $inside_subroutine         = 0;
@@ -573,7 +607,7 @@ sub create_symtab_entries_and_accessors_mutators {
                                         .= q{    } . $subroutine_argument->[0] . '_CHECKTRACE( $_[' . $i . q{], '$} . $subroutine_argument->[1] . q{', '} . $subroutine_name . q{()' );} . "\n";
                                     $i++;
                                 }
-#                                RPerl::diag( 'in Class.pm INIT block, CHECK IS TRACE, about to call activate_subroutine()...' . "\n" );
+                                RPerl::diag( 'in Class.pm INIT block, CHECK IS TRACE, about to call activate_subroutine()...' . "\n" );
                                 activate_subroutine( $package_name, $subroutine_name, $subroutine_type, $subroutine_arguments_check_code,
                                     $module_filename_long );
                                 $inside_subroutine         = 0;
@@ -856,15 +890,103 @@ sub save_object_properties_types {
 sub activate_subroutine {
     ( my $package_name, my $subroutine_name, my $subroutine_type, my $subroutine_arguments_check_code, my $module_filename_long ) = @ARG;
 
-#    RPerl::diag('in Class::activate_subroutine(), received $package_name = ' . $package_name . "\n");
-#    RPerl::diag('in Class::activate_subroutine(), received $subroutine_name = ' . $subroutine_name . "\n");
-#    RPerl::diag('in Class::activate_subroutine(), received $subroutine_type = ' . $subroutine_type . "\n");
+    RPerl::diag('in Class::activate_subroutine(), received $package_name = ' . $package_name . "\n");
+    RPerl::diag('in Class::activate_subroutine(), received $subroutine_name = ' . $subroutine_name . "\n");
+    RPerl::diag('in Class::activate_subroutine(), received $subroutine_type = ' . $subroutine_type . "\n");
 #    RPerl::diag('in Class::activate_subroutine(), received $subroutine_arguments_check_code = ' . $subroutine_arguments_check_code . "\n");
 #    RPerl::diag('in Class::activate_subroutine(), received $module_filename_long = ' . $module_filename_long . "\n");
  
     my $package_name_tmp;              # string
     my $subroutine_definition_code;    # string
     my $subroutine_definition_diag_code = q{};    # string
+
+    if ( $subroutine_type =~ /\::method$/xms ) {
+#        RPerl::diag("in Class::activate_subroutine(), $subroutine_name is a method\n");
+        if ( $package_name eq q{} ) {
+            croak( 'ERROR ECOPR01, Pre-Processor: Received no package name for method ', $subroutine_name, ' in file ' . $module_filename_long . ' ... croaking' );
+        }
+    }
+    else {
+#        RPerl::diag("in Class::activate_subroutine(), $subroutine_name is not a method\n");
+        # non-method subroutines which are not inside any package are actually in the 'main' package namespace
+        if ( $package_name eq q{} ) { $package_name = 'main'; }
+    }
+
+    $subroutine_definition_diag_code = "\n" . q{RPerl::diag("IN POST-INIT, direct call MODE } . $package_name . '::' . $subroutine_name . q{\n"); } . "\n";
+
+=DEPRECATED 
+    # set symbol table entry for subroutine to new anonymous subroutine containing dereferenced call to real anonymous subroutine, old header style
+    $subroutine_definition_code
+        = '*{'
+        . $package_name . '::'
+        . $subroutine_name
+        . '} = sub { '
+        . $subroutine_definition_diag_code
+        . $subroutine_arguments_check_code
+        . 'return &${'
+        . $package_name . '::'
+        . $subroutine_name
+        . '(@ARG); };';
+=cut
+
+    # define real subroutine to include call to real subroutine, plus type checking code; new header style
+    $subroutine_definition_code
+        = '*' . $package_name . '::' . $subroutine_name .
+        ' = sub { ' .
+        $subroutine_definition_diag_code .
+        $subroutine_arguments_check_code .
+        'return ' . $package_name . '::' . $subroutine_name . '(@ARG); };';
+
+
+
+
+
+# START HERE: MOVE TO RPerl::Exporter
+# START HERE: MOVE TO RPerl::Exporter
+# START HERE: MOVE TO RPerl::Exporter
+=DISABLED_NEED_MOVE
+    # same as above, but exported into caller's namespace
+    
+    # NEED FIX: HARD-CODED CALLER NAMESPACE OF 'main'!!!
+    # NEED FIX: HARD-CODED CALLER NAMESPACE OF 'main'!!!
+    # NEED FIX: HARD-CODED CALLER NAMESPACE OF 'main'!!!
+    my $caller_package_name = 'main';
+
+    my $subroutine_export_code = "\n" .
+        '*' .
+        $caller_package_name . '::' .
+        $subroutine_name .
+        ' = sub { ' .
+        $subroutine_definition_diag_code .
+        $subroutine_arguments_check_code .
+        'return ' .
+        $package_name . '::' .
+        $subroutine_name .
+        '(@ARG); };';
+    $subroutine_definition_code .= $subroutine_export_code;
+=cut
+
+
+    if ($subroutine_arguments_check_code ne q{}) { RPerl::diag('in Class::activate_subroutine(), have method $subroutine_definition_code =' . "\n" . $subroutine_definition_code . "\n"); }
+
+
+
+
+    # NEED ANSWER: how to handle eval error on following line???
+    # NEED ANSWER: how to handle eval error on following line???
+    # NEED ANSWER: how to handle eval error on following line???
+
+#    eval($subroutine_definition_code) or (croak 'ERROR ECOPR02, Pre-Processor: Failed to enable type checking for subroutine ' . $package_name . '::' . $subroutine_name . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking at');
+    eval($subroutine_definition_code) or (RPerl::diag('ERROR ECOPR02, Pre-Processor: Possible failure to enable type checking for subroutine ' . $package_name . '::' . $subroutine_name . '(),' . "\n" . $EVAL_ERROR . "\n" . 'not croaking at'));
+    if ($EVAL_ERROR) { croak 'ERROR ECOPR03, Pre-Processor: Failed to enable type checking for subroutine ' . $package_name . '::' . $subroutine_name . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking at'; }
+
+
+
+
+
+# DEPRECATED, CORRELATION #rp120: subroutine header 'our integer $foo = sub { ... };'
+# do not automatically export non-method subroutines because that is non-standard behavior, only provide standard Perl behavior
+=DEPRECATED
     if ( $subroutine_type =~ /\::method$/xms ) {
         if ( $package_name eq '' ) {
             croak( 'Received no package name for method ', $subroutine_name, ' in file ' . $module_filename_long . ' ... croaking' );
@@ -891,17 +1013,6 @@ sub activate_subroutine {
         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
     }
     else {
-
-
-
-
-# START HERE: why is sun() getting redefined and trigger ECOPR00 below???
-# START HERE: why is sun() getting redefined and trigger ECOPR00 below???
-# START HERE: why is sun() getting redefined and trigger ECOPR00 below???
-
-
-
-
         #        RPerl::diag( "in Class::activate_subroutine(), $subroutine_name is a non-method subroutine\n" );
         if ( eval( 'defined(&main::' . $subroutine_name . ')' ) ) {
             croak
@@ -954,6 +1065,7 @@ sub activate_subroutine {
             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
         }
     }
+=cut
 }
 
 1;    # end of class

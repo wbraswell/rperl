@@ -19,3 +19,6 @@ use RPerl::Test::TypeCheckingTrace::AllTypes;
 
 # [[[ OPERATIONS ]]]
 check_arrayref(0);
+#check_arrayref_foo(0);
+#RPerl::Test::TypeCheckingTrace::AllTypes::check_arrayref(0);
+#RPerl::Test::TypeCheckingTrace::AllTypes::check_arrayref_foo(0);

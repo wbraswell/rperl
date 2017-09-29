@@ -22,6 +22,12 @@ our $VERSION = 0.001_000;
 use parent qw(RPerl::CompileUnit::Module::Class);
 use RPerl::CompileUnit::Module::Class;
 
+# [[[ EXPORTS ]]]
+# <<< CHANGE_ME: delete for no exports, or replace with real names of subroutines (not methods) to be exported >>>
+use RPerl::Exporter qw(import);
+our @EXPORT    = qw(pies_are_round pi_r_squared);
+our @EXPORT_OK = qw(garply gorce);
+
 # [[[ CRITICS ]]]
 # <<< CHANGE_ME: delete unused directives >>>
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -64,7 +70,7 @@ use RPerl::CompileUnit::Module::Class;
 
 # [[[ INCLUDES ]]]
 # <<< CHANGE_ME: delete for no includes, or replace with real include package name(s) >>>
-use RPerl::Test::Foo;
+use RPerl::Test::Foo qw(ylprag ecrog);
 use RPerl::Test::Bar;
 
 # [[[ CONSTANTS ]]]
@@ -101,12 +107,12 @@ our hashref $properties = {
 
 # <<< CHANGE_ME: delete for no subroutines/methods, or replace with real subroutine(s)/method(s) >>>
 sub pies_are_round {
-    { my void $RETURN_VALUE };
+    { my void $RETURN_TYPE };
     print 'in subroutine pies_are_round(), having PIE() = ', PIE(), "\n";
 }
 
 sub pi_r_squared {
-    { my number $RETURN_VALUE };
+    { my number $RETURN_TYPE };
     ( my number $r ) = @ARG;
     my number $area = PI() * $r ** 2;
     print 'in subroutine pi_r_squared(), have $area = PI() * $r ** 2 = ', $area, "\n";
@@ -114,7 +120,7 @@ sub pi_r_squared {
 }
 
 sub garply {
-    { my number_arrayref $RETURN_VALUE };        
+    { my number_arrayref $RETURN_TYPE };        
     ( my integer $garply_input, my number_arrayref $garply_array ) = @ARG;
     my integer $garply_input_size = scalar @{$garply_array};
     my integer $ungarply_size_typed = scalar @{my integer_arrayref $TYPED_ungarply = [4, 6, 8, 10]};
@@ -128,7 +134,7 @@ sub garply {
 }
 
 sub gorce {
-    { my string_hashref $RETURN_VALUE };
+    { my string_hashref $RETURN_TYPE };
     ( my integer $al, my number $be, my string $ga, my string_hashref $de) = @ARG;
     return {
         alpha => integer_to_string($al),
@@ -139,13 +145,13 @@ sub gorce {
 }
 
 sub quux {
-    { my void::method $RETURN_VALUE };
+    { my void::method $RETURN_TYPE };
     ( my object $self) = @ARG;
     $self->{plugh} = $self->{plugh} * 2;
 }
 
 sub quince {
-    { my integer::method $RETURN_VALUE };
+    { my integer::method $RETURN_TYPE };
     my string $quince_def
         = '...Cydonia vulgaris ... Cydonia, a city in Crete ... [1913 Webster]';
     print $quince_def;
@@ -153,7 +159,7 @@ sub quince {
 };
 
 sub qorge {
-    { my string_hashref::method $RETURN_VALUE };
+    { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my integer $qorge_input ) = @ARG;
     return {
         a => $self->{xyzzy} x $qorge_input,
@@ -163,7 +169,7 @@ sub qorge {
 }
 
 sub qaft {
-    { my RPerl::CompileUnit::Module::Class::Template_arrayref::method $RETURN_VALUE };
+    { my RPerl::CompileUnit::Module::Class::Template_arrayref::method $RETURN_TYPE };
     ( my object $self, my integer $foo, my number $bar, my string $bat, my string_hashref $baz ) = @ARG;
     my RPerl::CompileUnit::Module::Class::Template_arrayref $retval = [];
     $retval->[0] = RPerl::CompileUnit::Module::Class::Template->new();
