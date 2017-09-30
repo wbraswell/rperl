@@ -2,6 +2,9 @@ DONE
     disable 'long long' & 'double long' for GMP compatibility
 
 DOING
+    new subroutine headers
+    Quick-Start Guide
+        
     Alien::PCRE2
         ensure tests pass on both share & system installs
         replace mirrored DEV version (Windows bug fix) w/ new official version when released

@@ -108,14 +108,15 @@ our hashref $properties = {
 # <<< CHANGE_ME: delete for no subroutines/methods, or replace with real subroutine(s)/method(s) >>>
 sub pies_are_round {
     { my void $RETURN_TYPE };
-    print 'in subroutine pies_are_round(), having PIE() = ', PIE(), "\n";
+    print 'in pies_are_round(), having PIE() = ', PIE(), "\n";
+    return;
 }
 
 sub pi_r_squared {
     { my number $RETURN_TYPE };
     ( my number $r ) = @ARG;
     my number $area = PI() * $r ** 2;
-    print 'in subroutine pi_r_squared(), have $area = PI() * $r ** 2 = ', $area, "\n";
+    print 'in pi_r_squared(), have $area = PI() * $r ** 2 = ', $area, "\n";
     return $area;
 }
 
@@ -148,6 +149,7 @@ sub quux {
     { my void::method $RETURN_TYPE };
     ( my object $self) = @ARG;
     $self->{plugh} = $self->{plugh} * 2;
+    return;
 }
 
 sub quince {

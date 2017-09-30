@@ -76,9 +76,18 @@ sub import {
         }
         # USAGE OPTIONS A & B REQUIRED, C & D OPTIONAL: receive requests for subroutines to be exported
         else {
+
+
+
+
             # START HERE: add type checking code from Class.pm, remove unneeded type checking code from Class.pm, fix eval error and/or redefined errors in Class.pm, ensure AllTypes.pm tests pass
             # START HERE: add type checking code from Class.pm, remove unneeded type checking code from Class.pm, fix eval error and/or redefined errors in Class.pm, ensure AllTypes.pm tests pass
             # START HERE: add type checking code from Class.pm, remove unneeded type checking code from Class.pm, fix eval error and/or redefined errors in Class.pm, ensure AllTypes.pm tests pass
+
+            # THERE HERE: need add type checking code to all created subroutines?!?
+            # THERE HERE: need add type checking code to all created subroutines?!?
+            # THERE HERE: need add type checking code to all created subroutines?!?
+
 
             my $subroutines_export = {};
             my $subroutines_export_ok = {};

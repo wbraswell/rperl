@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.189_000;
+our $VERSION = 0.190_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -23,7 +23,7 @@ __END__
 
 =encoding utf8
 
-=for DEV NOTE: BEGIN INLINE CSS DIV
+=for comment DEV NOTE: BEGIN INLINE CSS DIV
 
 =begin html
 
@@ -623,7 +623,7 @@ Throughout this text, the following 14 typography conventions are utilized:
 
 =for html <u>
 
-=item * B<Book Title>
+=item * B<Book Or Document Title>
 
 =item * I<BEST PRACTICES>
 
@@ -1638,6 +1638,8 @@ X<br>
 Most programming languages include the basic principles of using named I<"variables"> to store data values such as numbers, text strings, and lists of multiple numbers or strings.  Multiple variables may be created, each with different names such as C<$foo> or C<$bar> or C<$quux>, and each potentially containing a different value.
 
 A single piece of data, such as one number or one string, is called a I<"scalar">.  Multiple pieces of data combined into a single aggregate structure may be either an I<"array"> or a I<"hash">, described in chapters 3 and 6, respectively.  (Although sharing the same terminology, the I<hash> data structure is not related to the I<hash> C<#> tic-tac-toe character.)  In normal Perl, only scalar variable names begin with the dollar-sign C<$> I<"sigil">, while aggregate data structures are stored in variables starting with different sigils like at-sign C<@> or percent-sign C<%>.  A sigil is simply a special character prefixed to a word, in order to help us quickly identify different source code components.  In RPerl, all variable names begin the C<$> sigil, both scalar types and aggregate structures alike.
+
+=for comment DEV NOTE, CORRELATION #rp400: all POD changes must be made in both RPerl.pm & RPerl/Learning.pm
 
 RPerl provides 7 scalar data types:
 
@@ -15798,6 +15800,8 @@ To reiterate, an array stored by reference is actually a scalar variable which c
 
 When an array is stored by value, the corresponding variable has an at-sign C<@> as its sigil, and the assigned data is enclosed within parentheses C<( )> characters.  When an array is stored by reference, the corresponding variable has a dollar-sign C<$> as its sigil, and the assigned data is enclosed within I<"square-bracket"> C<[ ]> characters, also known as just I<"brackets">.  If an array is stored by value and is then passed as input to an operation, it is said the array is I<"passed by value">.  On the other hand, if the array is instead stored by reference and then passed to an operation, it is said to be I<"passed by reference">.
 
+=for comment DEV NOTE, CORRELATION #rp401: all POD changes must be made in both RPerl.pm & RPerl/Learning.pm
+
 For arrays with more than just a few elements, it may be impractical or impossible to pass by value, because a full copy of each array element must be made in the process, which may fill up all your program's available memory or take a prohibitively long time to complete.  Also, Perl allows us to provide explicit data types only when an array is stored by reference, so we can not provide a data type for an array stored by value.  Because of these reasons, all RPerl arrays are stored by reference, and are declared with an explicit RPerl data type ending with C<_arrayref>.
 
     my                  @foo_by_value           = (2, 4, 6);  # fine in normal Perl, error in RPerl
@@ -25578,7 +25582,7 @@ B<William N. Braswell, Jr.>
 
 L<mailto:william.braswell@NOSPAM.autoparallel.com>
 
-=for DEV NOTE: END INLINE CSS DIV
+=for comment DEV NOTE: END INLINE CSS DIV
 
 =for html </div>
 

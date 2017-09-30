@@ -17,7 +17,8 @@ use Date::Format;
 
 # [[[ SUBROUTINES ]]]
 
-our string_arrayref $pod2cpanhtml_preprocess = sub {
+sub pod2cpanhtml_preprocess {
+    { my string_arrayref $RETURN_TYPE };
     ( my string_arrayref $command_line_arguments ) = @_;
 
     my string $input_file = $command_line_arguments->[0];
@@ -84,9 +85,10 @@ our string_arrayref $pod2cpanhtml_preprocess = sub {
 
     #    print 'in pod2cpanhtml_preprocess(), about to return $file_lines = ' . "\n" . (join q{}, @{$file_lines});
     return $file_lines;
-};
+}
 
-our string_arrayref $pod2cpanhtml_process = sub {
+sub pod2cpanhtml_process {
+    { my string_arrayref $RETURN_TYPE };
     ( my string_arrayref $file_lines ) = @_;
 
     my filehandleref $TEMP_FILE_HANDLE;
@@ -114,9 +116,10 @@ our string_arrayref $pod2cpanhtml_process = sub {
 
 #    print 'in pod2cpanhtml_process(), about to return $file_lines = ' . "\n" . ( join "\n", @{$file_lines} );
     return $file_lines;
-};
+}
 
-our string_arrayref $pod2cpanhtml_postprocess = sub {
+sub pod2cpanhtml_postprocess {
+    { my string_arrayref $RETURN_TYPE };
     ( my string_arrayref $file_lines ) = @_;
     my string_arrayref $file_lines_modified = [];
     my boolean $inside_edition = 0;  # no, not Bill O'Reilly
@@ -268,7 +271,7 @@ our string_arrayref $pod2cpanhtml_postprocess = sub {
         push @{$file_lines_modified}, $file_line;
     }
     return $file_lines_modified;
-};
+}
 
 # [[[ OPERATIONS ]]]
 

@@ -930,12 +930,28 @@ sub activate_subroutine {
 =cut
 
     # define real subroutine to include call to real subroutine, plus type checking code; new header style
+=BROKEN_DEEP_RECURSION
     $subroutine_definition_code
         = '*' . $package_name . '::' . $subroutine_name .
         ' = sub { ' .
         $subroutine_definition_diag_code .
         $subroutine_arguments_check_code .
         'return ' . $package_name . '::' . $subroutine_name . '(@ARG); };';
+=cut
+
+    {
+        no strict;
+        # create tmp subroutine and delete original subroutine entry in symbol table, then re-create new symbol table entry, to avoid deep recursion and crash
+        *{ $package_name . '::__RPERL_TMP_' . $subroutine_name } = \&{ $package_name . '::' . $subroutine_name };  # short form, symbol table direct, not strict
+        undef *{ $package_name . '::' . $subroutine_name };
+        $subroutine_definition_code
+            = '*' . $package_name . '::' . $subroutine_name .
+            ' = sub { ' .
+            $subroutine_definition_diag_code .
+            $subroutine_arguments_check_code .
+            'return ' . $package_name . '::__RPERL_TMP_' . $subroutine_name . '(@ARG); };';
+    }
+
 
 
 
