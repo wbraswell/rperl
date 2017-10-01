@@ -36,9 +36,9 @@ our RPerl::DataStructure::Graph::Tree::BinaryReference $new_from_nested_arrayref
 };
 
 # much happens in the Node class, provide wrapper methods
-our unknown $traverse_breadthfirst_queue = sub {(my RPerl::DataStructure::Graph::Tree::BinaryReference $self, my RPerl::CodeReference $callback) = @_; return $self->{root}->traverse_breadthfirst_queue($callback) if defined($self->{root}); };
-our unknown $traverse_depthfirst_preorder = sub {(my RPerl::DataStructure::Graph::Tree::BinaryReference $self, my RPerl::CodeReference $callback) = @_; return $self->{root}->traverse_depthfirst_preorder($callback) if defined($self->{root}); };
-our arrayref $to_nested_arrayrefs = sub {(my RPerl::DataStructure::Graph::Tree::BinaryReference $data) = @_; return $data->{root}->to_nested_arrayrefs(); };
+sub traverse_breadthfirst_queue { { my unknown $RETURN_TYPE };(my RPerl::DataStructure::Graph::Tree::BinaryReference $self, my RPerl::CodeReference $callback) = @_; return $self->{root}->traverse_breadthfirst_queue($callback) if defined($self->{root}); }
+sub traverse_depthfirst_preorder { { my unknown $RETURN_TYPE };(my RPerl::DataStructure::Graph::Tree::BinaryReference $self, my RPerl::CodeReference $callback) = @_; return $self->{root}->traverse_depthfirst_preorder($callback) if defined($self->{root}); }
+sub to_nested_arrayrefs { { my arrayref $RETURN_TYPE };(my RPerl::DataStructure::Graph::Tree::BinaryReference $data) = @_; return $data->{root}->to_nested_arrayrefs(); }
 
 
 # [[[ BINARY TREES ]]]

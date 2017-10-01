@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataStructure);
@@ -35,7 +35,7 @@ use RPerl::DataStructure::Hash;
 
 # [[[ EXPORTS ]]]
 # DEV NOTE: avoid "Undefined subroutine &main::integer_to_string called"
-use Exporter 'import';
+use RPerl::Exporter 'import';
 our @EXPORT = ( @RPerl::DataType::Void::EXPORT, 
                 @RPerl::DataType::Boolean::EXPORT, 
                 @RPerl::DataType::UnsignedInteger::EXPORT, 

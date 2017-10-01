@@ -38,22 +38,24 @@ use strict;
 use warnings;
 use parent qw(RPerl::DataStructure::SSENumberPair);
 
-our sse_number_pair::method $new_from_singleton_duplicate = sub {
+sub new_from_singleton_duplicate {
+    { my sse_number_pair::method $RETURN_TYPE };
     ( my number $single ) = @_;
     my sse_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('sse_number_pair');
     $retval->[0] = $single;
     $retval->[1] = $single;
     return $retval;
-};
+}
 
 # NEED TEST
-our sse_number_pair::method $new_from_pair = sub {
+sub new_from_pair {
+    { my sse_number_pair::method $RETURN_TYPE };
     ( my number $pair_0, my number $pair_1 ) = @_;
     my sse_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('sse_number_pair');
     $retval->[0] = $pair_0;
     $retval->[1] = $pair_1;
     return $retval;
-};
+}
 
 package    # hide from PAUSE indexing
     constant_sse_number_pair;
@@ -61,22 +63,24 @@ use strict;
 use warnings;
 use parent qw(RPerl::DataStructure::SSENumberPair);
 
-our constant_sse_number_pair::method $new_from_singleton_duplicate = sub {
+sub new_from_singleton_duplicate {
+    { my constant_sse_number_pair::method $RETURN_TYPE };
     ( my number $single ) = @_;
     my constant_sse_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('constant_sse_number_pair');
     $retval->[0] = $single;
     $retval->[1] = $single;
     return $retval;
-};
+}
 
 # NEED TEST
-our constant_sse_number_pair::method $new_from_pair = sub {
+sub new_from_pair {
+    { my constant_sse_number_pair::method $RETURN_TYPE };
     ( my number $pair_0, my number $pair_1 ) = @_;
     my constant_sse_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('constant_sse_number_pair');
     $retval->[0] = $pair_0;
     $retval->[1] = $pair_1;
     return $retval;
-};
+}
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
 package RPerl::DataStructure::SSENumberPair;
@@ -163,10 +167,11 @@ sub sse_div {
 }
 
 # DEV NOTE: using blessed arrayref as object instead of blessed hashref, not valid RPerl
-our RPerl::DataStructure::SSENumberPair::method $new = sub {
+sub new {
+    { my RPerl::DataStructure::SSENumberPair::method $RETURN_TYPE };
     ( my string $class ) = @_;
     my RPerl::DataStructure::SSENumberPair $retval = bless [], $class;
     return $retval;
-};
+}
 
 1;    # end of class

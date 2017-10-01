@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use rperlnamespaces;
-our $VERSION = 0.008_000;
+our $VERSION = 0.009_000;
 
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 
@@ -145,6 +145,7 @@ my $namespaces_rperl_deps = {
     'Sub::'       => 1,
     'Term::'         => 1,
     'Test::'         => 1,
+    'Test2::'         => 1,
     'Text::'         => 1,
     'Tie::'          => 1,
     'Time::'         => 1,

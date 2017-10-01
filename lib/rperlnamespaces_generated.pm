@@ -115,6 +115,7 @@ $rperlnamespaces_generated::RPERL_DEPS = {
     'Symbol::'       => 1,
     'Syntax::'       => 1,
     'Term::'         => 1,
+    'Test2::'        => 1,
     'Test::'         => 1,
     'Text::'         => 1,
     'Tie::'          => 1,

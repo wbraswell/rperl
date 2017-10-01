@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -12,8 +12,8 @@ our $VERSION = 0.010_000;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ EXPORTS ]]]
-use Exporter 'import';
-our @EXPORT = qw(hashref_CHECK hashref_CHECKTRACE integer_hashref_CHECK integer_hashref_CHECKTRACE number_hashref_CHECK number_hashref_CHECKTRACE string_hashref_CHECK string_hashref_CHECKTRACE);
+use RPerl::Exporter 'import';
+our @EXPORT = qw(hashref_CHECK hashref_CHECKTRACE integer_hashref_CHECK integer_hashref_CHECKTRACE number_hashref_CHECK number_hashref_CHECKTRACE string_hashref_CHECK string_hashref_CHECKTRACE integer_hashref_to_string number_hashref_to_string string_hashref_to_string);
 
 # [[[ INCLUDES ]]]
 use RPerl::DataType::Integer;  # integer_CHECKTRACE
@@ -184,7 +184,8 @@ sub integer_hashref_CHECKTRACE {
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
-our string $integer_hashref_to_string = sub {
+sub integer_hashref_to_string {
+    { my string $RETURN_TYPE };
     ( my $input_hv_ref ) = @_;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_hashref_to_string(), top of subroutine\n");
@@ -228,13 +229,13 @@ our string $integer_hashref_to_string = sub {
 
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_hashref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n");
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_hashref_to_string(), bottom of subroutine\n");
-
     return ($output_sv);
-};
+}
 
 # [[[ TYPE TESTING ]]]
 
-our string $integer_hashref__typetest0 = sub {
+sub integer_hashref__typetest0 {
+    { my string $RETURN_TYPE };
     ( my integer_hashref $lucky_integers) = @_;
 
     #    integer_hashref_CHECK($lucky_integers);
@@ -249,12 +250,12 @@ our string $integer_hashref__typetest0 = sub {
 #        RPerl::diag("in PERLOPS_PERLTYPES integer_hashref__typetest0(), have lucky integer '$key' => " . $lucky_integer . ", BARSTOOL\n");
 #    }
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_hashref__typetest0(), bottom of subroutine\n");
-
     return (
         integer_hashref_to_string($lucky_integers) . 'PERLOPS_PERLTYPES' );
-};
+}
 
-our integer_hashref $integer_hashref__typetest1 = sub {
+sub integer_hashref__typetest1 {
+    { my integer_hashref $RETURN_TYPE };
     ( my integer $my_size) = @_;
 
     #    integer_CHECK($my_size);
@@ -269,7 +270,7 @@ our integer_hashref $integer_hashref__typetest1 = sub {
 #        RPerl::diag("in PERLOPS_PERLTYPES integer_hashref__typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n");
     }
     return ($new_hash);
-};
+}
 
 # [[[ NUMBER HASH REF ]]]
 # [[[ NUMBER HASH REF ]]]
@@ -379,7 +380,8 @@ sub number_hashref_CHECKTRACE {
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
-our string $number_hashref_to_string = sub {
+sub number_hashref_to_string {
+    { my string $RETURN_TYPE };
     ( my $input_hv_ref ) = @_;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES number_hashref_to_string(), top of subroutine\n");
@@ -418,13 +420,13 @@ our string $number_hashref_to_string = sub {
 
 #    RPerl::diag("in PERLOPS_PERLTYPES number_hashref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n");
 #    RPerl::diag("in PERLOPS_PERLTYPES number_hashref_to_string(), bottom of subroutine\n");
-
     return ($output_sv);
-};
+}
 
 # [[[ TYPE TESTING ]]]
 
-our string $number_hashref__typetest0 = sub {
+sub number_hashref__typetest0 {
+    { my string $RETURN_TYPE };
     ( my number_hashref $lucky_numbers) = @_;
 
     #    number_hashref_CHECK($lucky_numbers);
@@ -437,12 +439,12 @@ our string $number_hashref__typetest0 = sub {
 #        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 #        RPerl::diag("in PERLOPS_PERLTYPES number_hashref__typetest0(), have lucky number '$key' => " . $lucky_number . ", BARSTOOL\n");
 #    }
-
     return (
         number_hashref_to_string($lucky_numbers) . 'PERLOPS_PERLTYPES' );
-};
+}
 
-our number_hashref $number_hashref__typetest1 = sub {
+sub number_hashref__typetest1 {
+    { my number_hashref $RETURN_TYPE };
     ( my integer $my_size) = @_;
 
     #    integer_CHECK($my_size);
@@ -457,7 +459,7 @@ our number_hashref $number_hashref__typetest1 = sub {
 #        RPerl::diag("in PERLOPS_PERLTYPES number_hashref__typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n");
     }
     return ($new_hash);
-};
+}
 
 # [[[ CHARACTER HASHE REF ]]]
 # [[[ CHARACTER HASHE REF ]]]
@@ -572,7 +574,8 @@ sub string_hashref_CHECKTRACE {
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
-our string $string_hashref_to_string = sub {
+sub string_hashref_to_string {
+    { my string $RETURN_TYPE };
     ( my $input_hv_ref ) = @_;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string_hashref_to_string(), top of subroutine\n");
@@ -612,13 +615,13 @@ our string $string_hashref_to_string = sub {
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string_hashref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n");
 #    RPerl::diag("in PERLOPS_PERLTYPES string_hashref_to_string(), bottom of subroutine\n");
-
     return ($output_sv);
-};
+}
 
 # [[[ TYPE TESTING ]]]
 
-our string $string_hashref__typetest0 = sub {
+sub string_hashref__typetest0 {
+    { my string $RETURN_TYPE };
     ( my string_hashref $people) = @_;
 
     #    string_hashref_CHECK($lucky_numbers);
@@ -631,11 +634,11 @@ our string $string_hashref__typetest0 = sub {
 #        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 #        RPerl::diag("in PERLOPS_PERLTYPES string_hashref__typetest0(), have person '$key' => '" . $person . "', STARBOOL\n");
 #    }
-
     return ( string_hashref_to_string($people) . 'PERLOPS_PERLTYPES' );
-};
+}
 
-our string_hashref $string_hashref__typetest1 = sub {
+sub string_hashref__typetest1 {
+    { my string_hashref $RETURN_TYPE };
     ( my integer $my_size) = @_;
 
     #    integer_CHECK($my_size);
@@ -649,7 +652,7 @@ our string_hashref $string_hashref__typetest1 = sub {
 #        RPerl::diag("in PERLOPS_PERLTYPES string_hashref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy!\n");
     }
     return ($people);
-};
+}
 
 # [[[ SCALAR HASHES ]]]
 

@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -12,8 +12,8 @@ our $VERSION = 0.010_000;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ EXPORTS ]]]
-use Exporter 'import';
-our @EXPORT = qw(arrayref_CHECK arrayref_CHECKTRACE integer_arrayref_CHECK integer_arrayref_CHECKTRACE number_arrayref_CHECK number_arrayref_CHECKTRACE string_arrayref_CHECK string_arrayref_CHECKTRACE);
+use RPerl::Exporter 'import';
+our @EXPORT = qw(arrayref_CHECK arrayref_CHECKTRACE integer_arrayref_CHECK integer_arrayref_CHECKTRACE number_arrayref_CHECK number_arrayref_CHECKTRACE string_arrayref_CHECK string_arrayref_CHECKTRACE integer_arrayref_to_string number_arrayref_to_string string_arrayref_to_string);
 
 # [[[ INCLUDES ]]]
 use RPerl::DataType::Integer;  # integer_CHECKTRACE
@@ -190,7 +190,8 @@ sub integer_arrayref_CHECKTRACE {
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
 # stringify an integer_arrayref
-our string $integer_arrayref_to_string = sub {
+sub integer_arrayref_to_string {
+    { my string $RETURN_TYPE };
     # require exactly one integer_arrayref as input, store in variable $input_avref
     ( my integer_arrayref $input_avref ) = @_;
 
@@ -243,11 +244,12 @@ our string $integer_arrayref_to_string = sub {
 
     # return output string, containing stringified input array
     return $output_sv;
-};
+}
 
 # [[[ TYPE TESTING ]]]
 
-our string $integer_arrayref__typetest0 = sub {
+sub integer_arrayref__typetest0 {
+    { my string $RETURN_TYPE };
     ( my integer_arrayref $lucky_integers) = @_;
 
     #    integer_arrayref_CHECK($lucky_integers);
@@ -262,9 +264,10 @@ our string $integer_arrayref__typetest0 = sub {
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref__typetest0(), bottom of subroutine\n");
     return (
         integer_arrayref_to_string($lucky_integers) . 'PERLOPS_PERLTYPES' );
-};
+}
 
-our integer_arrayref $integer_arrayref__typetest1 = sub {
+sub integer_arrayref__typetest1 {
+    { my integer_arrayref $RETURN_TYPE };
     ( my integer $my_size) = @_;
 
     #    integer_CHECK($my_size);
@@ -277,7 +280,7 @@ our integer_arrayref $integer_arrayref__typetest1 = sub {
 #        RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref__typetest1(), setting element $i/" . ( $my_size - 1 ) . ' = ' . $new_array->[$i] . ", BARBAT\n");
     }
     return ($new_array);
-};
+}
 
 # [[[ NUMBER ARRAY REF ]]]
 # [[[ NUMBER ARRAY REF ]]]
@@ -372,7 +375,8 @@ sub number_arrayref_CHECKTRACE {
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
-our string $number_arrayref_to_string = sub {
+sub number_arrayref_to_string {
+    { my string $RETURN_TYPE };
     ( my $input_avref ) = @_;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), top of subroutine\n");
@@ -407,13 +411,13 @@ our string $number_arrayref_to_string = sub {
 
 #    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n");
 #    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), bottom of subroutine\n");
-
     return ($output_sv);
-};
+}
 
 # [[[ TYPE TESTING ]]]
 
-our string $number_arrayref__typetest0 = sub {
+sub number_arrayref__typetest0 {
+    { my string $RETURN_TYPE };
     ( my number_arrayref $lucky_numbers) = @_;
 
     #    number_arrayref_CHECK($lucky_numbers);
@@ -428,9 +432,10 @@ our string $number_arrayref__typetest0 = sub {
 #    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref__typetest0(), bottom of subroutine\n");
     return (
         number_arrayref_to_string($lucky_numbers) . 'PERLOPS_PERLTYPES' );
-};
+}
 
-our number_arrayref $number_arrayref__typetest1 = sub {
+sub number_arrayref__typetest1 {
+    { my number_arrayref $RETURN_TYPE };
     ( my integer $my_size) = @_;
 
     #    integer_CHECK($my_size);
@@ -443,7 +448,7 @@ our number_arrayref $number_arrayref__typetest1 = sub {
 #        RPerl::diag("in PERLOPS_PERLTYPES number_arrayref__typetest1(), setting element $i/" . ( $my_size - 1 ) . ' = ' . $new_array->[$i] . ", BARBAZ\n");
     }
     return ($new_array);
-};
+}
 
 # [[[ CHARACTER ARRAY REF ]]]
 # [[[ CHARACTER ARRAY REF ]]]
@@ -543,7 +548,8 @@ sub string_arrayref_CHECKTRACE {
 # [[[ STRINGIFY ]]]
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
-our string $string_arrayref_to_string = sub {
+sub string_arrayref_to_string {
+    { my string $RETURN_TYPE };
     ( my $input_avref ) = @_;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), top of subroutine\n");
@@ -580,13 +586,13 @@ our string $string_arrayref_to_string = sub {
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n");
 #    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), bottom of subroutine\n");
-
     return ($output_sv);
-};
+}
 
 # [[[ TYPE TESTING ]]]
 
-our string $string_arrayref__typetest0 = sub {
+sub string_arrayref__typetest0 {
+    { my string $RETURN_TYPE };
     ( my string_arrayref $people) = @_;
 
     #    string_arrayref_CHECK($people);
@@ -600,9 +606,10 @@ our string $string_arrayref__typetest0 = sub {
 #    }
 #    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref__typetest0(), bottom of subroutine\n");
     return ( string_arrayref_to_string($people) . 'PERLOPS_PERLTYPES' );
-};
+}
 
-our string_arrayref $string_arrayref__typetest1 = sub {
+sub string_arrayref__typetest1 {
+    { my string_arrayref $RETURN_TYPE };
     ( my integer $my_size) = @_;
 
     #    integer_CHECK($my_size);
@@ -616,7 +623,7 @@ our string_arrayref $string_arrayref__typetest1 = sub {
 #        RPerl::diag("in PERLOPS_PERLTYPES string_arrayref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy, BARBAR\n");
     }
     return ($new_array);
-};
+}
 
 =block_comment
 THIS IS AN EXAMPLE BLOCK COMMENT
@@ -659,7 +666,8 @@ use warnings;
 use parent -norequire, qw(arrayref_arrayref);
 
 # emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
-our integer_arrayref_arrayref::method $new = sub {
+sub new {
+    { my integer_arrayref_arrayref::method $RETURN_TYPE };
     ( my integer $row_count, my integer $column_count ) = @_;  # row-major form (RMF)
     my integer_arrayref_arrayref $retval = [];
     for my integer $j (0 .. ($row_count - 1)) {
@@ -670,7 +678,7 @@ our integer_arrayref_arrayref::method $new = sub {
         $retval->[$j] = $retval_row;
     }
     return $retval;
-};
+}
 
 # method returning (ref to array) of (refs to (arrays of numbers))
 package  # hide from PAUSE indexing
@@ -687,7 +695,8 @@ use warnings;
 use parent -norequire, qw(arrayref_arrayref);
 
 # emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
-our number_arrayref_arrayref::method $new = sub {
+sub new {
+    { my number_arrayref_arrayref::method $RETURN_TYPE };
     ( my integer $row_count, my integer $column_count ) = @_;  # row-major form (RMF)
     my number_arrayref_arrayref $retval = [];
     for my integer $j (0 .. ($row_count - 1)) {
@@ -698,7 +707,7 @@ our number_arrayref_arrayref::method $new = sub {
         $retval->[$j] = $retval_row;
     }
     return $retval;
-};
+}
 
 # method returning (ref to array) of (refs to (arrays of strings))
 package  # hide from PAUSE indexing
@@ -715,7 +724,8 @@ use warnings;
 use parent -norequire, qw(arrayref_arrayref);
 
 # emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
-our string_arrayref_arrayref::method $new = sub {
+sub new {
+    { my string_arrayref_arrayref::method $RETURN_TYPE };
     ( my integer $row_count, my integer $column_count ) = @_;  # row-major form (RMF)
     my string_arrayref_arrayref $retval = [];
     for my integer $j (0 .. ($row_count - 1)) {
@@ -726,7 +736,7 @@ our string_arrayref_arrayref::method $new = sub {
         $retval->[$j] = $retval_row;
     }
     return $retval;
-};
+}
 
 # method returning (ref to array) of (refs to (arrays of scalartypes))
 package  # hide from PAUSE indexing
@@ -743,7 +753,8 @@ use warnings;
 use parent -norequire, qw(arrayref_arrayref);
 
 # emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
-our scalartype_arrayref_arrayref::method $new = sub {
+sub new {
+    { my scalartype_arrayref_arrayref::method $RETURN_TYPE };
     ( my integer $row_count, my integer $column_count ) = @_;  # row-major form (RMF)
     my scalartype_arrayref_arrayref $retval = [];
     for my integer $j (0 .. ($row_count - 1)) {
@@ -754,7 +765,7 @@ our scalartype_arrayref_arrayref::method $new = sub {
         $retval->[$j] = $retval_row;
     }
     return $retval;
-};
+}
 
 # [[[ ARRAY ARRAY ARRAYS (3-dimensional) ]]]
 

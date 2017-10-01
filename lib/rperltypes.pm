@@ -24,10 +24,23 @@ use File::Copy qw(copy);
 use Scalar::Util qw(blessed);
 use Config;
 
+
+
+
+=NEED_DELETE
 # DEV NOTE, CORRELATION #rp008: can't use Exporter here
 # [[[ EXPORTS ]]]
-#use Exporter 'import';
-#our @EXPORT = qw(type types ETC);
+use RPerl::Exporter 'import';
+our @EXPORT = qw(
+boolean_CHECK boolean_CHECKTRACE boolean_to_unsigned_integer boolean_to_integer boolean_to_number boolean_to_character boolean_to_string
+unsigned_integer_CHECK unsigned_integer_CHECKTRACE unsigned_integer_to_boolean unsigned_integer_to_integer unsigned_integer_to_number unsigned_integer_to_character unsigned_integer_to_string
+integer_CHECK integer_CHECKTRACE integer_to_boolean integer_to_unsigned_integer integer_to_number integer_to_character integer_to_string
+number_CHECK number_CHECKTRACE number_to_boolean number_to_unsigned_integer number_to_integer number_to_character number_to_string
+character_CHECK character_CHECKTRACE character_to_boolean character_to_unsigned_integer character_to_integer character_to_number character_to_string
+string_CHECK string_CHECKTRACE string_to_boolean string_to_unsigned_integer string_to_integer string_to_number string_to_character string_to_string
+);
+=cut
+
 
 # all following type lists lowest-to-highest level
 
@@ -61,6 +74,24 @@ use RPerl::DataStructure::Hash::Reference;
 #use RPerl::DataStructure::Graph::Tree;
 #use RPerl::DataStructure::Graph::Tree::Binary;
 #use RPerl::DataStructure::Graph::Tree::Binary::Node;
+
+
+# [[[ EXPORTS ]]]
+use RPerl::Exporter 'import';
+our @EXPORT = ( 
+    @RPerl::DataType::Void::EXPORT,
+    @RPerl::DataType::Boolean::EXPORT,
+    @RPerl::DataType::UnsignedInteger::EXPORT,
+    @RPerl::DataType::Integer::EXPORT,
+    @RPerl::DataType::Number::EXPORT,
+    @RPerl::DataType::Character::EXPORT,
+    @RPerl::DataType::String::EXPORT,
+    @RPerl::DataType::Scalar::EXPORT,
+    @RPerl::DataType::Unknown::EXPORT,
+    @RPerl::DataStructure::Array::SubTypes::EXPORT,
+    @RPerl::DataStructure::Hash::SubTypes::EXPORT
+);
+
 
 # [[[ OBJECT-ORIENTED ]]]
 use RPerl::Object;

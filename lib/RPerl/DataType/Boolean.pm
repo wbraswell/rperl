@@ -3,7 +3,7 @@ package RPerl::DataType::Boolean;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.007_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -40,7 +40,7 @@ use strict;
 use warnings;
 
 # [[[ EXPORTS ]]]
-use Exporter 'import';
+use RPerl::Exporter 'import';
 our @EXPORT = qw(boolean_CHECK boolean_CHECKTRACE boolean_to_unsigned_integer boolean_to_integer boolean_to_number boolean_to_character boolean_to_string);
 
 # [[[ TYPE-CHECKING ]]]
@@ -104,15 +104,17 @@ sub boolean_to_string {
 }
 
 # [[[ TYPE TESTING ]]]
-our boolean $boolean__typetest0 = sub {
+sub boolean__typetest0 {
+    { my boolean $RETURN_TYPE };
     # DEV NOTE: maintain independence from Integer data type, re-implement integer_to_boolean() here
 #    my boolean $retval = integer_to_boolean(main::RPerl__DataType__Boolean__MODE_ID());
     my boolean $retval = 1;
     if (main::RPerl__DataType__Boolean__MODE_ID() == 0) { $retval = 0; }
 #    RPerl::diag("in PERLOPS_PERLTYPES boolean__typetest0(), have \$retval = $retval\n");
     return $retval;
-};
-our boolean $boolean__typetest1 = sub {
+}
+sub boolean__typetest1 {
+    { my boolean $RETURN_TYPE };
     ( my boolean $lucky_boolean ) = @_;
 #    boolean_CHECK($lucky_boolean);
     boolean_CHECKTRACE( $lucky_boolean, '$lucky_boolean', 'boolean__typetest1()' );
@@ -123,6 +125,6 @@ our boolean $boolean__typetest1 = sub {
 #    RPerl::diag("in PERLOPS_PERLTYPES boolean__typetest1(), have \$retval = $retval\n");
     return $retval;
 #    return integer_to_boolean( $lucky_boolean + main::RPerl__DataType__Boolean__MODE_ID() );
-};
+}
 
 1;  # end of class

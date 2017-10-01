@@ -30,7 +30,8 @@ find_replace_recurse.sh ';\ \ return' ';\ return' $1 $2 NO_HELP
 echo; echo;
 
 echo "[[[ MULTI-LINE SUBROUTINES ]]]"
-find_replace_recurse.sh '\nour\s+([\w:]+)\s+\$(\w+)\s+\=\s+sub\s+\{\n((?:.|\n)*?)(?:\s+return(\s*.*?);\s*)?\n\};' '\nsub $2 {\n    { my $1 \$RETURN_TYPE };\n$3\n    return$4;\n}' $1 $2 NO_HELP
+#find_replace_recurse.sh '\nour\s+([\w:]+)\s+\$(\w+)\s+\=\s+sub\s+\{\n((?:.|\n)*?)(?:\s+return(\s*.*?);\s*)?\n\};' '\nsub $2 {\n    { my $1 \$RETURN_TYPE };\n$3\n    return$4;\n}' $1 $2 NO_HELP
+find_replace_recurse.sh '\nour\s+([\w:]+)\s+\$(\w+)\s+\=\s+sub\s+\{\n((?:.|\n)*?)(?:\n\s+return(\s*.*?);\s*)?\n\};' '\nsub $2 {\n    { my $1 \$RETURN_TYPE };\n$3\n    return$4;\n}' $1 $2 NO_HELP
 echo; echo;
 
 echo "[[[ MULTI-LINE SUBROUTINES, DISABLED BY COMMENTS ]]]"

@@ -3,7 +3,7 @@ package RPerl::DataType::Character;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::String);
@@ -35,7 +35,7 @@ use strict;
 use warnings;
 
 # [[[ EXPORTS ]]]
-use Exporter 'import';
+use RPerl::Exporter 'import';
 our @EXPORT = qw(character_CHECK character_CHECKTRACE character_to_boolean character_to_unsigned_integer character_to_integer character_to_number character_to_string);
 
 # [[[ TYPE-CHECKING ]]]
@@ -99,14 +99,13 @@ sub character_to_string {
 }
 
 # [[[ TYPE TESTING ]]]
-our character $character__typetest0 = sub {
-	return chr(main::RPerl__DataType__Character__MODE_ID() + (ord '0'));
-};
-our character $character__typetest1 = sub {
+sub character__typetest0 { { my character $RETURN_TYPE }; return chr(main::RPerl__DataType__Character__MODE_ID() + (ord '0')); }
+sub character__typetest1 {
+    { my character $RETURN_TYPE };
     (my character $lucky_character) = @_;
 #    character_CHECK($lucky_character);
     character_CHECKTRACE( $lucky_character, '$lucky_character', 'character__typetest1()' );
     return chr((ord $lucky_character) + main::RPerl__DataType__Character__MODE_ID());
-};
+}
 
 1;  # end of class

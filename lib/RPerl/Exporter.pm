@@ -80,14 +80,9 @@ sub import {
 
 
 
-            # START HERE: add type checking code from Class.pm, remove unneeded type checking code from Class.pm, fix eval error and/or redefined errors in Class.pm, ensure AllTypes.pm tests pass
-            # START HERE: add type checking code from Class.pm, remove unneeded type checking code from Class.pm, fix eval error and/or redefined errors in Class.pm, ensure AllTypes.pm tests pass
-            # START HERE: add type checking code from Class.pm, remove unneeded type checking code from Class.pm, fix eval error and/or redefined errors in Class.pm, ensure AllTypes.pm tests pass
-
-            # THERE HERE: need add type checking code to all created subroutines?!?
-            # THERE HERE: need add type checking code to all created subroutines?!?
-            # THERE HERE: need add type checking code to all created subroutines?!?
-
+            # START HERE: create tests for requested export plus type checking, add type checking code from Class.pm, remove unneeded type checking code from Class.pm, fix eval error in Class.pm, ensure AllTypes.pm tests pass
+            # START HERE: create tests for requested export plus type checking, add type checking code from Class.pm, remove unneeded type checking code from Class.pm, fix eval error in Class.pm, ensure AllTypes.pm tests pass
+            # START HERE: create tests for requested export plus type checking, add type checking code from Class.pm, remove unneeded type checking code from Class.pm, fix eval error in Class.pm, ensure AllTypes.pm tests pass
 
             my $subroutines_export = {};
             my $subroutines_export_ok = {};
@@ -114,7 +109,32 @@ sub import {
                 }
                 # requested subroutine is in @EXPORT_OK, export it
                 elsif (exists $subroutines_export_ok->{$subroutine}) {
-                    *{ $package_importer . '::' . $subroutine } = \&{ $package_exporter . '::' . $subroutine };  # short form, symbol table direct, not strict
+#                    *{ $package_importer . '::' . $subroutine } = \&{ $package_exporter . '::' . $subroutine };  # short form, symbol table direct, not strict, no type checking
+
+                    # form arguments check code name & call for repeated use
+                    my $subroutine_arguments_check_code_name = $package_exporter . '::__CHECK_CODE_' . $subroutine;
+#                    my $subroutine_arguments_check_code_call = 'eval "$' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '";';  # DOES NOT WORK
+#                    my $subroutine_arguments_check_code_call = 'eval qq{$' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '};';  # DOES NOT WORK
+#                    my $subroutine_arguments_check_code_call = '&{ ' . $subroutine_arguments_check_code_name . ' };';  # DOES NOT WORK
+                    my $subroutine_arguments_check_code_call = $subroutine_arguments_check_code_name . '();';
+
+                    # define actual exported subroutine
+                    my $subroutine_definition_code
+                        = '*' . $package_importer . '::' . $subroutine . ' = sub {' . "\n" . 
+                        '    print q{in subroutine Exported by request!}, "\n";' . "\n" .
+                        '    ' . $subroutine_arguments_check_code_call . "\n" . 
+                        '    return ' . $package_exporter . '::__UNCHECKED_' . $subroutine . '(@ARG);' . "\n" . ' };';
+
+                    # pass on each exported subroutine's associated __UNCHECKED & __CHECK_CODE & __CHECKED subroutine to the importing package 
+#                    $subroutine_definition_code .= "\n" . '*' . $package_importer . '::__CHECK_CODE_' . $subroutine . q{ = \\} . $subroutine_arguments_check_code_call;  # DOES NOT WORK
+#                    $subroutine_definition_code .= "\n" . '*' . $package_importer . '::__CHECK_CODE_' . $subroutine . ' = sub { return ' . $subroutine_arguments_check_code_name . '(); };';  # DOES NOT WORK
+                    $subroutine_definition_code .= "\n" . 'sub ' . $package_importer . '::__CHECK_CODE_' . $subroutine . ' { return ' . $subroutine_arguments_check_code_name . '(); }';
+                    $subroutine_definition_code .= "\n" . 'sub ' . $package_importer . '::__UNCHECKED_' . $subroutine . ' { return ' . $package_exporter . '::__UNCHECKED_' . $subroutine . '(@ARG); }';
+                    $subroutine_definition_code .= "\n" . 'sub ' . $package_importer . '::__CHECKED_' . $subroutine . ' { return ' . $package_exporter . '::__CHECKED_' . $subroutine . '(@ARG); }';
+
+                    RPerl::diag('in Exporter::import(), about to call eval() on requested $subroutine_definition_code = ' . "\n" . $subroutine_definition_code . "\n");
+                    eval($subroutine_definition_code) or (RPerl::diag('ERROR ESUXPxx, Subroutine Exporter: Possible failure to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'not croaking'));
+                    if ($EVAL_ERROR) { croak 'ERROR ESUXPxx, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking at'; }
                 }
                 # requested subroutine is not in @EXPORT or @EXPORT_OK, error
                 else {
@@ -127,7 +147,32 @@ sub import {
     # USAGE OPTIONS C & D: force export of all subroutines in @EXPORT
     if (not scalar @{$package_exporter . '::EXPORT'}) { return; }
     foreach my $subroutine (@{$package_exporter . '::EXPORT'}) {
-        *{ $package_importer . '::' . $subroutine } = \&{ $package_exporter . '::' . $subroutine };  # short form, symbol table direct, not strict
+#        *{ $package_importer . '::' . $subroutine } = \&{ $package_exporter . '::' . $subroutine };  # short form, symbol table direct, not strict, no type checking
+
+            # form arguments check code name & call for repeated use
+            my $subroutine_arguments_check_code_name = $package_exporter . '::__CHECK_CODE_' . $subroutine;
+#            my $subroutine_arguments_check_code_call = 'eval "$' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '";';  # DOES NOT WORK
+#            my $subroutine_arguments_check_code_call = 'eval qq{$' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '};';  # DOES NOT WORK
+#            my $subroutine_arguments_check_code_call = '&{ ' . $package_exporter . '::__CHECK_CODE_' . $subroutine . ' };';  # DOES NOT WORK
+            my $subroutine_arguments_check_code_call = $subroutine_arguments_check_code_name . '();';
+
+            # define actual exported subroutine
+            my $subroutine_definition_code = 
+                '*' . $package_importer . '::' . $subroutine . ' = sub {' . "\n" .
+                '    print q{in subroutine Exported by force!}, "\n";' . "\n" .  # DEBUG USE ONLY!
+                '    ' . $subroutine_arguments_check_code_call . "\n" .
+                '    return ' . $package_exporter . '::__CHECKED_' . $subroutine . '(@ARG);' . "\n" . ' };';
+
+            # pass on each exported subroutine's associated __UNCHECKED & __CHECK_CODE & __CHECKED subroutine to the importing package 
+#            $subroutine_definition_code .= "\n" . '*' . $package_importer . '::__CHECK_CODE_' . $subroutine . q{ = \\} . $subroutine_arguments_check_code_call;
+#            $subroutine_definition_code .= "\n" . '*' . $package_importer . '::__CHECK_CODE_' . $subroutine . ' = sub { return ' . $subroutine_arguments_check_code_name . '(); };';
+            $subroutine_definition_code .= "\n" . 'sub ' . $package_importer . '::__CHECK_CODE_' . $subroutine . ' { return ' . $subroutine_arguments_check_code_name . '(); }';
+            $subroutine_definition_code .= "\n" . 'sub ' . $package_importer . '::__UNCHECKED_' . $subroutine . ' { return ' . $package_exporter . '::__UNCHECKED_' . $subroutine . '(@ARG); }';
+            $subroutine_definition_code .= "\n" . 'sub ' . $package_importer . '::__CHECKED_' . $subroutine . ' { return ' . $package_exporter . '::__CHECKED_' . $subroutine . '(@ARG); }';
+
+            RPerl::diag('in Exporter::import(), about to call eval() on forced $subroutine_definition_code = ' . "\n" . $subroutine_definition_code . "\n");
+            eval($subroutine_definition_code) or (RPerl::diag('ERROR ESUXPxx, Subroutine Exporter: Possible failure to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'not croaking'));
+            if ($EVAL_ERROR) { croak 'ERROR ESUXPxx, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking at'; }
     }
 
 =DISABLED_LONG_FORM_EVAL_ANON_SUB_STRICT

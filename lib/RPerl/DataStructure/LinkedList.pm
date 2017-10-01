@@ -38,7 +38,7 @@ our void $linkedlist_unshift = sub {(my RPerl::DataStructure::LinkedListReferenc
 	$list->{head} = $new_node;
 };
 
-our string::method $DUMPER = sub {(my RPerl::DataStructure::LinkedListReference $data) = @_; return $data->{head}->DUMPER(); };
+sub DUMPER { { my string::method $RETURN_TYPE };(my RPerl::DataStructure::LinkedListReference $data) = @_; return $data->{head}->DUMPER(); }
 
 
 # [[[ LINKED LISTS ]]]

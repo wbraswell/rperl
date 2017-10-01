@@ -12,7 +12,8 @@ our $VERSION = 0.002_000;
 use RPerl::Inline;
 
 # [[[ SUBROUTINES ]]]
-our void::method $cpp_load = sub {
+sub cpp_load {
+    { my void::method $RETURN_TYPE };
     my $need_load_cpp = 0;
     if (    ( exists $main::{'RPerl__DataType__GMPInteger__MODE_ID'} )
         and ( defined &{ $main::{'RPerl__DataType__GMPInteger__MODE_ID'} } ) )
@@ -55,6 +56,7 @@ EOF
     }
 
 #    else { RPerl::diag("in GMPInteger_cpp::cpp_load(), CPP already loaded, DOING NOTHING\n"); }
-};
+    return;
+}
 
 1;  # end of package

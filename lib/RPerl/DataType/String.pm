@@ -3,7 +3,7 @@ package RPerl::DataType::String;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -51,7 +51,7 @@ use POSIX qw(floor);
 #}
 
 # [[[ EXPORTS ]]]
-use Exporter 'import';
+use RPerl::Exporter 'import';
 our @EXPORT = qw(string_CHECK string_CHECKTRACE string_to_boolean string_to_unsigned_integer string_to_integer string_to_number string_to_character string_to_string);
 
 # [[[ TYPE CHECKING ]]]
@@ -161,13 +161,15 @@ sub string_to_string {
 }
 
 # [[[ TYPE TESTING ]]]
-our string $string__typetest0 = sub {
+sub string__typetest0 {
+    { my string $RETURN_TYPE };
     my string $retval = 'Spice PERLOPS_PERLTYPES';
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string__typetest0(), have \$retval = '$retval'\n");
     return ($retval);
-};
-our string $string__typetest1 = sub {
+}
+sub string__typetest1 {
+    { my string $RETURN_TYPE };
     ( my string $lucky_string ) = @_;
 #    string_CHECK($lucky_string);
     string_CHECKTRACE( $lucky_string, '$lucky_string',
@@ -175,6 +177,6 @@ our string $string__typetest1 = sub {
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string__typetest1(), received \$lucky_string = '$lucky_string'\n");
     return ( string_to_string($lucky_string) . ' PERLOPS_PERLTYPES' );
-};
+}
 
 1;  # end of class

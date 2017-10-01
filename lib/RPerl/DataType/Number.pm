@@ -3,7 +3,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.009_000;
+our $VERSION = 0.010_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -54,7 +54,7 @@ use warnings;
 use POSIX qw(floor);
 
 # [[[ EXPORTS ]]]
-use Exporter 'import';
+use RPerl::Exporter 'import';
 our @EXPORT = qw(number_CHECK number_CHECKTRACE number_to_boolean number_to_unsigned_integer number_to_integer number_to_character number_to_string);
 
 # [[[ TYPE-CHECKING ]]]
@@ -103,6 +103,16 @@ sub number_to_boolean {
     else { return 1; }
 }
 
+
+
+
+
+# START HERE: upgrade find_replace script to handle these halfway subroutines as seen below
+# START HERE: upgrade find_replace script to handle these halfway subroutines as seen below
+# START HERE: upgrade find_replace script to handle these halfway subroutines as seen below
+
+
+
 # [[[ UNSIGNED INTEGERIFY ]]]
 #our unsigned_integer $number_to_unsigned_integer = sub {
 sub number_to_unsigned_integer {
@@ -135,7 +145,8 @@ sub number_to_character {
 # [[[ STRINGIFY ]]]
 #our string $number_to_string = sub {
 sub number_to_string {
-    ( my $input_number ) = @_;
+    { my string $RETURN_TYPE };
+    ( my number $input_number ) = @_;
 #    number_CHECK($input_number);
     number_CHECKTRACE( $input_number, '$input_number', 'number_to_string()' );
 
@@ -179,14 +190,16 @@ sub number_to_string {
 }
 
 # [[[ TYPE TESTING ]]]
-our number $number__typetest0 = sub {
+sub number__typetest0 {
+    { my number $RETURN_TYPE };
     my number $retval
         = ( 22 / 7 ) + main::RPerl__DataType__Number__MODE_ID(); # return floating-point number value
 
 #    RPerl::diag("in PERLOPS_PERLTYPES number__typetest0(), have \$retval = $retval\n");
     return ($retval);
-};
-our number $number__typetest1 = sub {
+}
+sub number__typetest1 {
+    { my number $RETURN_TYPE };
     ( my number $lucky_number ) = @_;
 #    number_CHECK($lucky_number);
     number_CHECKTRACE( $lucky_number, '$lucky_number',
@@ -195,6 +208,6 @@ our number $number__typetest1 = sub {
 #    RPerl::diag('in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number_to_string($lucky_number) . "\n");
     return (
         ( $lucky_number * 2 ) + main::RPerl__DataType__Number__MODE_ID() );
-};
+}
 
 1;  # end of class

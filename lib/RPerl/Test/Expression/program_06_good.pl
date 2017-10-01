@@ -16,7 +16,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ INCLUDES ]]]
-use RPerl::Test::Foo;
+use RPerl::Test::Foo qw(ylprag);
 
 # [[[ OPERATIONS ]]]
 print Dumper( ylprag( 7, [ 23.1, 42.2, 73.8 ] ) );
