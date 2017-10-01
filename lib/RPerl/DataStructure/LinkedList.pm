@@ -19,7 +19,9 @@ our hashref $properties =
 	head => my RPerl::DataStructure::LinkedList::NodeReference $TYPED_head = undef,  # start with head = undef so we can test for empty list
 };
 
-our RPerl::DataStructure::LinkedListReference $new_from_arrayref = sub {(my string $class, my arrayref $input) = @_;
+sub new_from_arrayref {
+    { my RPerl::DataStructure::LinkedListReference $RETURN_TYPE };
+    (my string $class, my arrayref $input) = @ARG;
 #	RPerl::diag("in new_from_arrayref(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n");
 	my unknown $output = $class->new();
 	my integer $i;
@@ -27,18 +29,21 @@ our RPerl::DataStructure::LinkedListReference $new_from_arrayref = sub {(my stri
 	{
 		linkedlist_unshift($output, $input->[$i]);
 	}
-	return $output;
-};
+    return $output;
+}
 
 # do not name just "unshift" to avoid confusion with Perl builtin
-our void $linkedlist_unshift = sub {(my RPerl::DataStructure::LinkedListReference $list, my unknown $element) = @_; 
+sub linkedlist_unshift {
+    { my void $RETURN_TYPE };
+    (my RPerl::DataStructure::LinkedListReference $list, my unknown $element) = @ARG; 
 	my RPerl::DataStructure::LinkedList::NodeReference $new_node = RPerl::DataStructure::LinkedList::NodeReference->new();
 	$new_node->{data} = $element;
 	$new_node->{next} = $list->{head};
 	$list->{head} = $new_node;
-};
+    return;
+}
 
-sub DUMPER { { my string::method $RETURN_TYPE };(my RPerl::DataStructure::LinkedListReference $data) = @_; return $data->{head}->DUMPER(); }
+sub DUMPER { { my string::method $RETURN_TYPE };(my RPerl::DataStructure::LinkedListReference $data) = @ARG; return $data->{head}->DUMPER(); }
 
 
 # [[[ LINKED LISTS ]]]

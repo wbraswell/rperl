@@ -39,60 +39,63 @@ use RPerl::Exporter 'import';
 our @EXPORT = qw(character_CHECK character_CHECKTRACE character_to_boolean character_to_unsigned_integer character_to_integer character_to_number character_to_string);
 
 # [[[ TYPE-CHECKING ]]]
-#our void $character_CHECK = sub {
 sub character_CHECK {
-    ( my $possible_character ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_character ) = @ARG;
     if ( not( defined $possible_character ) ) { croak( "\nERROR ETV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but undefined/null value found,\ncroaking" ); }
     if ( not( main::RPerl_SvCOKp($possible_character) ) ) { croak( "\nERROR ETV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but non-character value found,\ncroaking" ); }
+    return;
 }
-#our void $character_CHECKTRACE = sub {
 sub character_CHECKTRACE {
-    ( my $possible_character, my $variable_name, my $subroutine_name ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_character, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_character ) ) { croak( "\nERROR ETV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
     if ( not( main::RPerl_SvCOKp($possible_character) ) ) { croak( "\nERROR ETV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but non-character value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
+    return;
 }
 
 # [[[ BOOLEANIFY ]]]
-#our boolean $character_to_boolean = sub {
 sub character_to_boolean {
-    (my character $input_character) = @_;
+    { my boolean $RETURN_TYPE };
+    (my character $input_character) = @ARG;
 #    character_CHECK($lucky_character);
     character_CHECKTRACE( $input_character, '$input_character', 'character_to_boolean()' );
     if (($input_character * 1) == 0) { return 0; }
     else { return 1; }
+    return;
 }
 
 # [[[ UNSIGNED INTEGERIFY ]]]
-#our unsigned_integer $character_to_unsigned_integer = sub {
 sub character_to_unsigned_integer {
-    (my character $input_character) = @_;
+    { my unsigned_integer $RETURN_TYPE };
+    (my character $input_character) = @ARG;
 #    character_CHECK($lucky_character);
     character_CHECKTRACE( $input_character, '$input_character', 'character_to_unsigned_integer()' );
     return floor abs ($input_character * 1);
 }
 
 # [[[ INTEGERIFY ]]]
-#our integer $character_to_integer = sub {
 sub character_to_integer {
-    (my character $input_character) = @_;
+    { my integer $RETURN_TYPE };
+    (my character $input_character) = @ARG;
 #    character_CHECK($lucky_character);
     character_CHECKTRACE( $input_character, '$input_character', 'character_to_integer()' );
     return floor ($input_character * 1);
 }
 
 # [[[ NUMBERIFY ]]]
-#our number $character_to_number = sub {
 sub character_to_number {
-    (my character $input_character) = @_;
+    { my number $RETURN_TYPE };
+    (my character $input_character) = @ARG;
 #    character_CHECK($lucky_character);
     character_CHECKTRACE( $input_character, '$input_character', 'character_to_number()' );
     return $input_character * 1.0;
 }
 
 # [[[ STRINGIFY ]]]
-#our string $character_to_string = sub {
 sub character_to_string {
-    (my character $input_character) = @_;
+    { my string $RETURN_TYPE };
+    (my character $input_character) = @ARG;
 #    character_CHECK($lucky_character);
     character_CHECKTRACE( $input_character, '$input_character', 'character_to_string()' );
     return $input_character;
@@ -102,7 +105,7 @@ sub character_to_string {
 sub character__typetest0 { { my character $RETURN_TYPE }; return chr(main::RPerl__DataType__Character__MODE_ID() + (ord '0')); }
 sub character__typetest1 {
     { my character $RETURN_TYPE };
-    (my character $lucky_character) = @_;
+    (my character $lucky_character) = @ARG;
 #    character_CHECK($lucky_character);
     character_CHECKTRACE( $lucky_character, '$lucky_character', 'character__typetest1()' );
     return chr((ord $lucky_character) + main::RPerl__DataType__Character__MODE_ID());

@@ -26,19 +26,20 @@ our hashref $properties =
 	root => my RPerl::DataStructure::Graph::Tree::Binary::NodeReference $TYPED_root = undef,  # start with root = undef so we can test for empty tree
 };
 
-our RPerl::DataStructure::Graph::Tree::BinaryReference $new_from_nested_arrayrefs = sub {(my string $class, my arrayref $input) = @_;
+sub new_from_nested_arrayrefs {
+    { my RPerl::DataStructure::Graph::Tree::BinaryReference $RETURN_TYPE };
+    (my string $class, my arrayref $input) = @ARG;
 #	RPerl::diag("in ...Tree::BinaryReference::new_from_nested_arrayrefs(), received \$class = '$class', and \$input =\n" . RPerl::DUMPER($input) . "\n");
 	my unknown $output = $class->new();
 
 	$output->{root} = binarytreenoderef->new_from_nested_arrayrefs($input);
-
-	return $output;
-};
+    return $output;
+}
 
 # much happens in the Node class, provide wrapper methods
-sub traverse_breadthfirst_queue { { my unknown $RETURN_TYPE };(my RPerl::DataStructure::Graph::Tree::BinaryReference $self, my RPerl::CodeReference $callback) = @_; return $self->{root}->traverse_breadthfirst_queue($callback) if defined($self->{root}); }
-sub traverse_depthfirst_preorder { { my unknown $RETURN_TYPE };(my RPerl::DataStructure::Graph::Tree::BinaryReference $self, my RPerl::CodeReference $callback) = @_; return $self->{root}->traverse_depthfirst_preorder($callback) if defined($self->{root}); }
-sub to_nested_arrayrefs { { my arrayref $RETURN_TYPE };(my RPerl::DataStructure::Graph::Tree::BinaryReference $data) = @_; return $data->{root}->to_nested_arrayrefs(); }
+sub traverse_breadthfirst_queue { { my unknown $RETURN_TYPE };(my RPerl::DataStructure::Graph::Tree::BinaryReference $self, my RPerl::CodeReference $callback) = @ARG; return $self->{root}->traverse_breadthfirst_queue($callback) if defined($self->{root}); }
+sub traverse_depthfirst_preorder { { my unknown $RETURN_TYPE };(my RPerl::DataStructure::Graph::Tree::BinaryReference $self, my RPerl::CodeReference $callback) = @ARG; return $self->{root}->traverse_depthfirst_preorder($callback) if defined($self->{root}); }
+sub to_nested_arrayrefs { { my arrayref $RETURN_TYPE };(my RPerl::DataStructure::Graph::Tree::BinaryReference $data) = @ARG; return $data->{root}->to_nested_arrayrefs(); }
 
 
 # [[[ BINARY TREES ]]]

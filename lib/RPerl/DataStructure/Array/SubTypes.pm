@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.011_000;
+our $VERSION = 0.012_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -63,9 +63,9 @@ use warnings;
 
 # [[[ TYPE-CHECKING ]]]
 
-#our void $arrayref_CHECK = sub {
 sub arrayref_CHECK {
-    ( my $possible_arrayref ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_arrayref ) = @ARG;
     if ( not( defined $possible_arrayref ) ) {
         croak(
             "\nERROR EAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\narrayref value expected but undefined/null value found,\ncroaking"
@@ -78,12 +78,13 @@ sub arrayref_CHECK {
             "\nERROR EAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\narrayref value expected but non-arrayref value found,\ncroaking"
         );
     }
+    return;
 }
 
 
-#our void $arrayref_CHECKTRACE = sub {
 sub arrayref_CHECKTRACE {
-    ( my $possible_arrayref, my $variable_name, my $subroutine_name ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_arrayref, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_arrayref ) ) {
         croak(
             "\nERROR EAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\narrayref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
@@ -94,6 +95,7 @@ sub arrayref_CHECKTRACE {
             "\nERROR EAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\narrayref value expected but non-arrayref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
+    return;
 }
 
 # [[[ INTEGER ARRAY REF ]]]
@@ -115,9 +117,9 @@ use warnings;
 
 # [[[ TYPE-CHECKING ]]]
 
-#our void $integer_arrayref_CHECK = sub {
 sub integer_arrayref_CHECK {
-    ( my $possible_integer_arrayref ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_integer_arrayref ) = @ARG;
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the arrayref_CHECK() subroutine, but with integer-specific error codes
     if ( not( defined $possible_integer_arrayref ) ) {
@@ -150,13 +152,14 @@ sub integer_arrayref_CHECK {
             );
         }
     }
+    return;
 };
 
 
-#our void $integer_arrayref_CHECKTRACE = sub {
 sub integer_arrayref_CHECKTRACE {
+    { my void $RETURN_TYPE };
     ( my $possible_integer_arrayref, my $variable_name, my $subroutine_name )
-        = @_;
+        = @ARG;
     if ( not( defined $possible_integer_arrayref ) ) {
         croak(
             "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
@@ -184,6 +187,7 @@ sub integer_arrayref_CHECKTRACE {
             );
         }
     }
+    return;
 }
 
 # [[[ STRINGIFY ]]]
@@ -193,7 +197,7 @@ sub integer_arrayref_CHECKTRACE {
 sub integer_arrayref_to_string {
     { my string $RETURN_TYPE };
     # require exactly one integer_arrayref as input, store in variable $input_avref
-    ( my integer_arrayref $input_avref ) = @_;
+    ( my integer_arrayref $input_avref ) = @ARG;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), top of subroutine\n");
 
@@ -250,7 +254,7 @@ sub integer_arrayref_to_string {
 
 sub integer_arrayref__typetest0 {
     { my string $RETURN_TYPE };
-    ( my integer_arrayref $lucky_integers) = @_;
+    ( my integer_arrayref $lucky_integers) = @ARG;
 
     #    integer_arrayref_CHECK($lucky_integers);
     integer_arrayref_CHECKTRACE( $lucky_integers, '$lucky_integers',
@@ -268,7 +272,7 @@ sub integer_arrayref__typetest0 {
 
 sub integer_arrayref__typetest1 {
     { my integer_arrayref $RETURN_TYPE };
-    ( my integer $my_size) = @_;
+    ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
     integer_CHECKTRACE( $my_size, '$my_size',
@@ -301,9 +305,9 @@ use warnings;
 
 # [[[ TYPE-CHECKING ]]]
 
-#our void $number_arrayref_CHECK = sub {
 sub number_arrayref_CHECK {
-    ( my $possible_number_arrayref ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_number_arrayref ) = @ARG;
     if ( not( defined $possible_number_arrayref ) ) {
         croak(
             "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref value expected but undefined/null value found,\ncroaking"
@@ -334,13 +338,14 @@ sub number_arrayref_CHECK {
             );
         }
     }
+    return;
 }
 
 
-#our void $number_arrayref_CHECKTRACE = sub {
 sub number_arrayref_CHECKTRACE {
+    { my void $RETURN_TYPE };
     ( my $possible_number_arrayref, my $variable_name, my $subroutine_name )
-        = @_;
+        = @ARG;
     if ( not( defined $possible_number_arrayref ) ) {
         croak(
             "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
@@ -370,6 +375,7 @@ sub number_arrayref_CHECKTRACE {
             );
         }
     }
+    return;
 }
 
 # [[[ STRINGIFY ]]]
@@ -377,7 +383,7 @@ sub number_arrayref_CHECKTRACE {
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
 sub number_arrayref_to_string {
     { my string $RETURN_TYPE };
-    ( my $input_avref ) = @_;
+    ( my $input_avref ) = @ARG;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), top of subroutine\n");
 
@@ -418,7 +424,7 @@ sub number_arrayref_to_string {
 
 sub number_arrayref__typetest0 {
     { my string $RETURN_TYPE };
-    ( my number_arrayref $lucky_numbers) = @_;
+    ( my number_arrayref $lucky_numbers) = @ARG;
 
     #    number_arrayref_CHECK($lucky_numbers);
     number_arrayref_CHECKTRACE( $lucky_numbers, '$lucky_numbers',
@@ -436,7 +442,7 @@ sub number_arrayref__typetest0 {
 
 sub number_arrayref__typetest1 {
     { my number_arrayref $RETURN_TYPE };
-    ( my integer $my_size) = @_;
+    ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
     integer_CHECKTRACE( $my_size, '$my_size',
@@ -480,9 +486,9 @@ use warnings;
 
 # [[[ TYPE-CHECKING ]]]
 
-#our void $string_arrayref_CHECK = sub {
 sub string_arrayref_CHECK {
-    ( my $possible_string_arrayref ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_string_arrayref ) = @ARG;
     if ( not( defined $possible_string_arrayref ) ) {
         croak(
             "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref value expected but undefined/null value found,\ncroaking"
@@ -510,13 +516,14 @@ sub string_arrayref_CHECK {
             );
         }
     }
+    return;
 }
 
 
-#our void $string_arrayref_CHECKTRACE = sub {
 sub string_arrayref_CHECKTRACE {
+    { my void $RETURN_TYPE };
     ( my $possible_string_arrayref, my $variable_name, my $subroutine_name )
-        = @_;
+        = @ARG;
     if ( not( defined $possible_string_arrayref ) ) {
         croak(
             "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
@@ -543,6 +550,7 @@ sub string_arrayref_CHECKTRACE {
             );
         }
     }
+    return;
 }
 
 # [[[ STRINGIFY ]]]
@@ -550,7 +558,7 @@ sub string_arrayref_CHECKTRACE {
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
 sub string_arrayref_to_string {
     { my string $RETURN_TYPE };
-    ( my $input_avref ) = @_;
+    ( my $input_avref ) = @ARG;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), top of subroutine\n");
 
@@ -593,7 +601,7 @@ sub string_arrayref_to_string {
 
 sub string_arrayref__typetest0 {
     { my string $RETURN_TYPE };
-    ( my string_arrayref $people) = @_;
+    ( my string_arrayref $people) = @ARG;
 
     #    string_arrayref_CHECK($people);
     string_arrayref_CHECKTRACE( $people, '$people',
@@ -610,7 +618,7 @@ sub string_arrayref__typetest0 {
 
 sub string_arrayref__typetest1 {
     { my string_arrayref $RETURN_TYPE };
-    ( my integer $my_size) = @_;
+    ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
     integer_CHECKTRACE( $my_size, '$my_size',
@@ -665,10 +673,12 @@ use strict;
 use warnings;
 use parent -norequire, qw(arrayref_arrayref);
 
+use RPerl::Config;  # for 'use English;' etc.
+
 # emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
 sub new {
     { my integer_arrayref_arrayref::method $RETURN_TYPE };
-    ( my integer $row_count, my integer $column_count ) = @_;  # row-major form (RMF)
+    ( my integer $row_count, my integer $column_count ) = @ARG;  # row-major form (RMF)
     my integer_arrayref_arrayref $retval = [];
     for my integer $j (0 .. ($row_count - 1)) {
         my integer_arrayref $retval_row = [];
@@ -694,10 +704,12 @@ use strict;
 use warnings;
 use parent -norequire, qw(arrayref_arrayref);
 
+use RPerl::Config;  # for 'use English;' etc.
+
 # emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
 sub new {
     { my number_arrayref_arrayref::method $RETURN_TYPE };
-    ( my integer $row_count, my integer $column_count ) = @_;  # row-major form (RMF)
+    ( my integer $row_count, my integer $column_count ) = @ARG;  # row-major form (RMF)
     my number_arrayref_arrayref $retval = [];
     for my integer $j (0 .. ($row_count - 1)) {
         my number_arrayref $retval_row = [];
@@ -723,10 +735,12 @@ use strict;
 use warnings;
 use parent -norequire, qw(arrayref_arrayref);
 
+use RPerl::Config;  # for 'use English;' etc.
+
 # emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
 sub new {
     { my string_arrayref_arrayref::method $RETURN_TYPE };
-    ( my integer $row_count, my integer $column_count ) = @_;  # row-major form (RMF)
+    ( my integer $row_count, my integer $column_count ) = @ARG;  # row-major form (RMF)
     my string_arrayref_arrayref $retval = [];
     for my integer $j (0 .. ($row_count - 1)) {
         my string_arrayref $retval_row = [];
@@ -752,10 +766,12 @@ use strict;
 use warnings;
 use parent -norequire, qw(arrayref_arrayref);
 
+use RPerl::Config;  # for 'use English;' etc.
+
 # emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
 sub new {
     { my scalartype_arrayref_arrayref::method $RETURN_TYPE };
-    ( my integer $row_count, my integer $column_count ) = @_;  # row-major form (RMF)
+    ( my integer $row_count, my integer $column_count ) = @ARG;  # row-major form (RMF)
     my scalartype_arrayref_arrayref $retval = [];
     for my integer $j (0 .. ($row_count - 1)) {
         my scalartype_arrayref $retval_row = [];

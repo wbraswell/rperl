@@ -35,9 +35,9 @@ use RPerl::DataType;
 # NEED FIX: is a filehandleref really an integer?!?
 
 # [[[ TYPE-CHECKING ]]]
-#our void $filehandleref_CHECK = sub {
 sub filehandleref_CHECK {
-    ( my $possible_filehandleref ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_filehandleref ) = @ARG;
     if ( not( defined $possible_filehandleref ) ) {
         croak(
             "\nERROR EFH00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but undefined/null value found,\ncroaking"
@@ -48,12 +48,13 @@ sub filehandleref_CHECK {
             "\nERROR EFH01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but non-filehandleref value found,\ncroaking"
         );
     }
+    return;
 }
 
-#our void $filehandleref_CHECKTRACE = sub {
 sub filehandleref_CHECKTRACE {
+    { my void $RETURN_TYPE };
     ( my $possible_filehandleref, my $variable_name, my $subroutine_name )
-        = @_;
+        = @ARG;
     if ( not( defined $possible_filehandleref ) ) {
         croak(
             "\nERROR EFH00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
@@ -64,6 +65,7 @@ sub filehandleref_CHECKTRACE {
             "\nERROR EFH01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but non-filehandleref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
+    return;
 }
 
 1;                                            # end of class

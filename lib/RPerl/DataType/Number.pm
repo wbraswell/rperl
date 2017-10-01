@@ -3,7 +3,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -58,9 +58,9 @@ use RPerl::Exporter 'import';
 our @EXPORT = qw(number_CHECK number_CHECKTRACE number_to_boolean number_to_unsigned_integer number_to_integer number_to_character number_to_string);
 
 # [[[ TYPE-CHECKING ]]]
-#our void $number_CHECK = sub {
 sub number_CHECK {
-    ( my $possible_number ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_number ) = @ARG;
     if ( not( defined $possible_number ) ) {
         croak(
             "\nERROR ENV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found,\ncroaking"
@@ -74,10 +74,11 @@ sub number_CHECK {
             "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\ncroaking"
         );
     }
+    return;
 }
-#our void $number_CHECKTRACE = sub {
 sub number_CHECKTRACE {
-    ( my $possible_number, my $variable_name, my $subroutine_name ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_number, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_number ) ) {
         croak(
             "\nERROR ENV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
@@ -91,50 +92,42 @@ sub number_CHECKTRACE {
             "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
+    return;
 }
 
 # [[[ BOOLEANIFY ]]]
-#our boolean $number_to_boolean = sub {
 sub number_to_boolean {
-    (my number $input_number) = @_;
+    { my boolean $RETURN_TYPE };
+    (my number $input_number) = @ARG;
 #    number_CHECK($input_number);
     number_CHECKTRACE( $input_number, '$input_number', 'number_to_boolean()' );
     if ($input_number == 0) { return 0; }
     else { return 1; }
+    return;
 }
 
-
-
-
-
-# START HERE: upgrade find_replace script to handle these halfway subroutines as seen below
-# START HERE: upgrade find_replace script to handle these halfway subroutines as seen below
-# START HERE: upgrade find_replace script to handle these halfway subroutines as seen below
-
-
-
 # [[[ UNSIGNED INTEGERIFY ]]]
-#our unsigned_integer $number_to_unsigned_integer = sub {
 sub number_to_unsigned_integer {
-    (my number $input_number) = @_;
+    { my unsigned_integer $RETURN_TYPE };
+    (my number $input_number) = @ARG;
 #    number_CHECK($input_number);
     number_CHECKTRACE( $input_number, '$input_number', 'number_to_unsigned_integer()' );
     return floor abs $input_number;
 }
 
 # [[[ INTEGERIFY ]]]
-#our integer $number_to_integer = sub {
 sub number_to_integer {
-    (my number $input_number) = @_;
+    { my integer $RETURN_TYPE };
+    (my number $input_number) = @ARG;
 #    number_CHECK($input_number);
     number_CHECKTRACE( $input_number, '$input_number', 'number_to_integer()' );
     return floor $input_number;
 }
 
 # [[[ CHARACTERIFY ]]]
-#our character $number_to_character = sub {
 sub number_to_character {
-    (my number $input_number) = @_;
+    { my character $RETURN_TYPE };
+    (my number $input_number) = @ARG;
 #    number_CHECK($input_number);
     number_CHECKTRACE( $input_number, '$input_number', 'number_to_character()' );
     my string $tmp_string = number_to_string($input_number);
@@ -143,10 +136,10 @@ sub number_to_character {
 }
 
 # [[[ STRINGIFY ]]]
-#our string $number_to_string = sub {
 sub number_to_string {
     { my string $RETURN_TYPE };
-    ( my number $input_number ) = @_;
+    { my string $RETURN_TYPE };
+    ( my number $input_number ) = @ARG;
 #    number_CHECK($input_number);
     number_CHECKTRACE( $input_number, '$input_number', 'number_to_string()' );
 
@@ -200,14 +193,13 @@ sub number__typetest0 {
 }
 sub number__typetest1 {
     { my number $RETURN_TYPE };
-    ( my number $lucky_number ) = @_;
+    ( my number $lucky_number ) = @ARG;
 #    number_CHECK($lucky_number);
     number_CHECKTRACE( $lucky_number, '$lucky_number',
         'number__typetest1()' );
 
 #    RPerl::diag('in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number_to_string($lucky_number) . "\n");
-    return (
-        ( $lucky_number * 2 ) + main::RPerl__DataType__Number__MODE_ID() );
+    return ( ( $lucky_number * 2 ) + main::RPerl__DataType__Number__MODE_ID() );
 }
 
 1;  # end of class

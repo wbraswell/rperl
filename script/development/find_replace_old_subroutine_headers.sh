@@ -34,7 +34,15 @@ echo "[[[ MULTI-LINE SUBROUTINES ]]]"
 find_replace_recurse.sh '\nour\s+([\w:]+)\s+\$(\w+)\s+\=\s+sub\s+\{\n((?:.|\n)*?)(?:\n\s+return(\s*.*?);\s*)?\n\};' '\nsub $2 {\n    { my $1 \$RETURN_TYPE };\n$3\n    return$4;\n}' $1 $2 NO_HELP
 echo; echo;
 
+echo "[[[ MULTI-LINE SUBROUTINES, FIRST LINE DISABLED BY COMMENT & SECOND LINE NORMAL SUB & FINAL LINE NO SEMICOLON ]]]"
+find_replace_recurse.sh '\n\#our\s+(\w+)\s+\$(\w+)\s+\=\s+sub\s+\{\n\s*sub\s+\w+\s+\{\n((?:.|\n)*?)(?:\n\s+return(\s*.*?);\s*)?\n\}' '\nsub $2 {\n    { my $1 \$RETURN_TYPE };\n$3\n    return$4;\n}' $1 $2 NO_HELP
+echo; echo;
+
 echo "[[[ MULTI-LINE SUBROUTINES, DISABLED BY COMMENTS ]]]"
 find_replace_recurse.sh '\n\#our\s+(\w+)\s+\$(\w+)\s+\=\s+sub\s+\{\n((?:.|\n)*?)(?:\#\s*return(\s*.*?);\s*)?\n\#\};' '\n#sub $2 {\n#    { my $1 \$RETURN_TYPE };\n$3\n#    return$4;\n#}' $1 $2 NO_HELP
+echo; echo;
+
+echo "[[[ OLD USAGE OF @_ INSTEAD OF @ARG ]]]"
+find_replace_recurse.sh '=\s*\@_;' '= \@ARG;' $1 $2 NO_HELP
 echo; echo;
 

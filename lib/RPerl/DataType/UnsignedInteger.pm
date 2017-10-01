@@ -50,19 +50,20 @@ use RPerl::Exporter 'import';
 our @EXPORT = qw(unsigned_integer_CHECK unsigned_integer_CHECKTRACE unsigned_integer_to_boolean unsigned_integer_to_integer unsigned_integer_to_number unsigned_integer_to_character unsigned_integer_to_string);
 
 # [[[ TYPE-CHECKING ]]]
-#our void $unsigned_integer_CHECK = sub {
 sub unsigned_integer_CHECK {
-    ( my $possible_unsigned_integer ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_unsigned_integer ) = @ARG;
     if ( not( defined $possible_unsigned_integer ) ) {
         croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but undefined/null value found,\ncroaking");
     }
     if ( not( main::RPerl_SvUIOKp($possible_unsigned_integer) ) ) {
         croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but non-unsigned_integer value found,\ncroaking");
     }
+    return;
 }
-#our void $unsigned_integer_CHECKTRACE = sub {
 sub unsigned_integer_CHECKTRACE {
-    ( my $possible_unsigned_integer, my $variable_name, my $subroutine_name ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_unsigned_integer, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_unsigned_integer ) ) {
         croak(
             "\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
@@ -73,51 +74,54 @@ sub unsigned_integer_CHECKTRACE {
             "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but non-unsigned_integer value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
+    return;
 }
 
 # [[[ BOOLEANIFY ]]]
-#our boolean $unsigned_integer_to_boolean = sub {
 sub unsigned_integer_to_boolean {
-    ( my unsigned_integer $input_unsigned_integer ) = @_;
+    { my boolean $RETURN_TYPE };
+    ( my unsigned_integer $input_unsigned_integer ) = @ARG;
 #    unsigned_integer_CHECK($input_unsigned_integer);
     unsigned_integer_CHECKTRACE( $input_unsigned_integer, '$input_unsigned_integer', 'unsigned_integer_to_boolean()' );
     if   ( $input_unsigned_integer == 0 ) { return 0; }
     else                                  { return 1; }
+    return;
 }
 
 # [[[ INTEGERIFY ]]]
-#our integer $unsigned_integer_to_integer = sub {
 sub unsigned_integer_to_integer {
-    ( my unsigned_integer $input_unsigned_integer ) = @_;
+    { my integer $RETURN_TYPE };
+    ( my unsigned_integer $input_unsigned_integer ) = @ARG;
 #    unsigned_integer_CHECK($input_unsigned_integer);
     unsigned_integer_CHECKTRACE( $input_unsigned_integer, '$input_unsigned_integer', 'unsigned_integer_to_integer()' );
     return $input_unsigned_integer;
 }
 
 # [[[ NUMBERIFY ]]]
-#our number $unsigned_integer_to_number = sub {
 sub unsigned_integer_to_number {
-    ( my unsigned_integer $input_unsigned_integer ) = @_;
+    { my number $RETURN_TYPE };
+    ( my unsigned_integer $input_unsigned_integer ) = @ARG;
 #    unsigned_integer_CHECK($input_unsigned_integer);
     unsigned_integer_CHECKTRACE( $input_unsigned_integer, '$input_unsigned_integer', 'unsigned_integer_to_number()' );
     return $input_unsigned_integer * 1.0;
 }
 
 # [[[ CHARACTERIFY ]]]
-#our character $unsigned_integer_to_character = sub {
 sub unsigned_integer_to_character {
-    ( my unsigned_integer $input_unsigned_integer ) = @_;
+    { my character $RETURN_TYPE };
+    ( my unsigned_integer $input_unsigned_integer ) = @ARG;
 #    unsigned_integer_CHECK($input_unsigned_integer);
     unsigned_integer_CHECKTRACE( $input_unsigned_integer, '$input_unsigned_integer', 'unsigned_integer_to_character()' );
     my string $tmp_string = unsigned_integer_to_string($input_unsigned_integer);
     if   ( $tmp_string eq q{} ) { return q{}; }
     else                        { return substr $tmp_string, 0, 1; }
+    return;
 }
 
 # [[[ STRINGIFY ]]]
-#our string $unsigned_integer_to_string = sub {
 sub unsigned_integer_to_string {
-    ( my unsigned_integer $input_unsigned_integer ) = @_;
+    { my string $RETURN_TYPE };
+    ( my unsigned_integer $input_unsigned_integer ) = @ARG;
 #    unsigned_integer_CHECK($input_unsigned_integer);
     unsigned_integer_CHECKTRACE( $input_unsigned_integer, '$input_unsigned_integer', 'unsigned_integer_to_string()' );
 
@@ -137,17 +141,17 @@ sub unsigned_integer_to_string {
 }
 
 # [[[ TYPE TESTING ]]]
-#our unsigned_integer $unsigned_integer__typetest0 = sub {
 sub unsigned_integer__typetest0 {
+    { my unsigned_integer $RETURN_TYPE };
     my unsigned_integer $retval = ( 21 / 7 ) + main::RPerl__DataType__UnsignedInteger__MODE_ID(); # return unsigned_integer (not number) value, don't do (22 / 7) etc.
 
     #    RPerl::diag("in PERLOPS_PERLTYPES unsigned_integer__typetest0(), have \$retval = $retval\n");
     return ($retval);
 }
 
-#our unsigned_integer $unsigned_integer__typetest1 = sub {
 sub unsigned_integer__typetest1 {
-    ( my unsigned_integer $lucky_unsigned_integer ) = @_;
+    { my unsigned_integer $RETURN_TYPE };
+    ( my unsigned_integer $lucky_unsigned_integer ) = @ARG;
 #    unsigned_integer_CHECK($lucky_unsigned_integer);
     unsigned_integer_CHECKTRACE( $lucky_unsigned_integer, '$lucky_unsigned_integer', 'unsigned_integer__typetest1()' );
 

@@ -55,9 +55,9 @@ use RPerl::Exporter 'import';
 our @EXPORT = qw(string_CHECK string_CHECKTRACE string_to_boolean string_to_unsigned_integer string_to_integer string_to_number string_to_character string_to_string);
 
 # [[[ TYPE CHECKING ]]]
-#our void $string_CHECK = sub {
 sub string_CHECK {
-    ( my $possible_string ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_string ) = @ARG;
     if ( not( defined $possible_string ) ) {
         croak(
             "\nERROR EPV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but undefined/null value found,\ncroaking"
@@ -68,13 +68,14 @@ sub string_CHECK {
             "\nERROR EPV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found,\ncroaking"
         );
     }
+    return;
 }
 
 # DEV NOTE: avoid error for those packages which do NOT 'use RPerl', but instead do 'use RPerl::AfterSubclass' and 'use RPerl::Config' and 'use rperltypesconv' etc.
 # "Undefined subroutine &RPerl::DataType::String::string_CHECKTRACE called at lib/RPerl/DataType/String.pm line XYZ   [ in string_to_integer() below ]
-#our void $string_CHECKTRACE = sub {
 sub string_CHECKTRACE {
-    ( my $possible_string, my $variable_name, my $subroutine_name ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_string, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_string ) ) {
         croak(
             "\nERROR EPV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
@@ -85,23 +86,25 @@ sub string_CHECKTRACE {
             "\nERROR EPV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
+    return;
 }
 
 # [[[ BOOLEANIFY ]]]
-#our boolean $string_to_boolean = sub {
 sub string_to_boolean {
-    (my string $input_string) = @_;
+    { my boolean $RETURN_TYPE };
+    (my string $input_string) = @ARG;
 #    string_CHECK($input_string);
     string_CHECKTRACE( $input_string, '$input_string', 'string_to_boolean()' );
     $input_string =~ s/_//gxms;  # remove underscores to allow them in $input_string, fixes "Argument isn't numeric in multiplication (*)"
     if (($input_string * 1) == 0) { return 0; }
     else { return 1; }
+    return;
 }
 
 # [[[ UNSIGNED INTEGERIFY ]]]
-#our integer $string_to_unsigned_integer = sub {
 sub string_to_unsigned_integer {
-    (my string $input_string) = @_;
+    { my integer $RETURN_TYPE };
+    (my string $input_string) = @ARG;
 #    string_CHECK($input_string);
     string_CHECKTRACE( $input_string, '$input_string', 'string_to_unsigned_integer()' );
     $input_string =~ s/_//gxms;  # remove underscores to allow them in $input_string, fixes "Argument isn't numeric in multiplication (*)"
@@ -109,9 +112,9 @@ sub string_to_unsigned_integer {
 }
 
 # [[[ INTEGERIFY ]]]
-#our integer $string_to_integer = sub {
 sub string_to_integer {
-    (my string $input_string) = @_;
+    { my integer $RETURN_TYPE };
+    (my string $input_string) = @ARG;
 #    string_CHECK($input_string);
     string_CHECKTRACE( $input_string, '$input_string', 'string_to_integer()' );
     # DEV NOTE: must use double-casting via '* 1' below to avoid following errors
@@ -124,9 +127,9 @@ sub string_to_integer {
 }
 
 # [[[ NUMBERIFY ]]]
-#our number $string_to_number = sub {
 sub string_to_number {
-    (my string $input_string) = @_;
+    { my number $RETURN_TYPE };
+    (my string $input_string) = @ARG;
 #    string_CHECK($input_string);
     string_CHECKTRACE( $input_string, '$input_string', 'string_to_number()' );
     $input_string =~ s/_//gxms;  # remove underscores to allow them in $input_string, fixes "Argument isn't numeric in multiplication (*)"
@@ -134,19 +137,20 @@ sub string_to_number {
 }
 
 # [[[ CHARACTERIFY ]]]
-#our character $string_to_character = sub {
 sub string_to_character {
-    (my string $input_string) = @_;
+    { my character $RETURN_TYPE };
+    (my string $input_string) = @ARG;
 #    string_CHECK($input_string);
     string_CHECKTRACE( $input_string, '$input_string', 'string_to_character()' );
     if ($input_string eq q{}) { return q{}; }
     else { return substr $input_string, 0, 1; }
+    return;
 }
 
 # [[[ STRINGIFY ]]]
-#our string $string_to_string = sub {
 sub string_to_string {
-    ( my string $input_string ) = @_;
+    { my string $RETURN_TYPE };
+    ( my string $input_string ) = @ARG;
 #    string_CHECK($input_string);
     string_CHECKTRACE( $input_string, '$input_string', 'string_to_string()' );
 
@@ -156,7 +160,6 @@ sub string_to_string {
     $input_string = "'$input_string'";
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string_to_string(), bottom of subroutine, returning possibly-modified \$input_string =\n$input_string\n\n");
-
     return ($input_string);
 }
 
@@ -170,7 +173,7 @@ sub string__typetest0 {
 }
 sub string__typetest1 {
     { my string $RETURN_TYPE };
-    ( my string $lucky_string ) = @_;
+    ( my string $lucky_string ) = @ARG;
 #    string_CHECK($lucky_string);
     string_CHECKTRACE( $lucky_string, '$lucky_string',
         'string__typetest1()' );

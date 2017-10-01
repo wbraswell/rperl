@@ -22,7 +22,9 @@ our hashref $properties =
 	next => my RPerl::DataStructure::LinkedList::NodeReference $TYPED_next = undef
 };
 
-our string::method $DUMPER = sub {(my RPerl::DataStructure::LinkedList::NodeReference $node) = @_;
+sub DUMPER {
+    { my string::method $RETURN_TYPE };
+    (my RPerl::DataStructure::LinkedList::NodeReference $node) = @ARG;
 	my string $dumped = '[';
 	my integer $is_first = 1;
 	
@@ -36,8 +38,8 @@ our string::method $DUMPER = sub {(my RPerl::DataStructure::LinkedList::NodeRefe
 	}
 	
 	$dumped .= ']';
-	return $dumped;
-};
+    return $dumped;
+}
 
 # ref to (linked list node)
 # DEV NOTE: for naming conventions, see DEV NOTE in same code section of LinkedList.pm

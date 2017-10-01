@@ -79,10 +79,12 @@ sub import {
 
 
 
+            # START HERE: create tests for requested export plus type checking
+            # START HERE: create tests for requested export plus type checking
+            # START HERE: create tests for requested export plus type checking
 
-            # START HERE: create tests for requested export plus type checking, add type checking code from Class.pm, remove unneeded type checking code from Class.pm, fix eval error in Class.pm, ensure AllTypes.pm tests pass
-            # START HERE: create tests for requested export plus type checking, add type checking code from Class.pm, remove unneeded type checking code from Class.pm, fix eval error in Class.pm, ensure AllTypes.pm tests pass
-            # START HERE: create tests for requested export plus type checking, add type checking code from Class.pm, remove unneeded type checking code from Class.pm, fix eval error in Class.pm, ensure AllTypes.pm tests pass
+
+
 
             my $subroutines_export = {};
             my $subroutines_export_ok = {};

@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.011_000;
+our $VERSION = 0.012_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -47,11 +47,13 @@ package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
 
+use RPerl::Config;  # for 'use English;' etc.
+
 # [[[ TYPE-CHECKING ]]]
 
-#our void $hashref_CHECK = sub {
 sub hashref_CHECK {
-    ( my $possible_hashref ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_hashref ) = @ARG;
     if ( not( defined $possible_hashref ) ) {
         croak(
             "\nERROR EHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhashref value expected but undefined/null value found,\ncroaking"
@@ -64,12 +66,13 @@ sub hashref_CHECK {
             "\nERROR EHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhashref value expected but non-hashref value found,\ncroaking"
         );
     }
+    return;
 }
 
 
-#our void $hashref_CHECKTRACE = sub {
 sub hashref_CHECKTRACE {
-    ( my $possible_hashref, my $variable_name, my $subroutine_name ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_hashref, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_hashref ) ) {
         croak(
             "\nERROR EHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhashref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
@@ -80,6 +83,7 @@ sub hashref_CHECKTRACE {
             "\nERROR EHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nhashref value expected but non-hashref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
+    return;
 }
 
 # [[[ INTEGER HASH REF ]]]
@@ -101,9 +105,9 @@ use warnings;
 
 # [[[ TYPE-CHECKING ]]]
 
-#our void $integer_hashref_CHECK = sub {
 sub integer_hashref_CHECK {
-    ( my $possible_integer_hashref ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_integer_hashref ) = @ARG;
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with integer-specific error codes
     if ( not( defined $possible_integer_hashref ) ) {
@@ -138,13 +142,14 @@ sub integer_hashref_CHECK {
             );
         }
     }
+    return;
 }
 
 
-#our void $integer_hashref_CHECKTRACE = sub {
 sub integer_hashref_CHECKTRACE {
+    { my void $RETURN_TYPE };
     ( my $possible_integer_hashref, my $variable_name, my $subroutine_name )
-        = @_;
+        = @ARG;
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECKTRACE() subroutine, but with integer-specific error codes
     if ( not( defined $possible_integer_hashref ) ) {
@@ -179,6 +184,7 @@ sub integer_hashref_CHECKTRACE {
             );
         }
     }
+    return;
 }
 
 # [[[ STRINGIFY ]]]
@@ -186,7 +192,7 @@ sub integer_hashref_CHECKTRACE {
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
 sub integer_hashref_to_string {
     { my string $RETURN_TYPE };
-    ( my $input_hv_ref ) = @_;
+    ( my $input_hv_ref ) = @ARG;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_hashref_to_string(), top of subroutine\n");
 
@@ -236,7 +242,7 @@ sub integer_hashref_to_string {
 
 sub integer_hashref__typetest0 {
     { my string $RETURN_TYPE };
-    ( my integer_hashref $lucky_integers) = @_;
+    ( my integer_hashref $lucky_integers) = @ARG;
 
     #    integer_hashref_CHECK($lucky_integers);
     integer_hashref_CHECKTRACE( $lucky_integers, '$lucky_integers',
@@ -256,7 +262,7 @@ sub integer_hashref__typetest0 {
 
 sub integer_hashref__typetest1 {
     { my integer_hashref $RETURN_TYPE };
-    ( my integer $my_size) = @_;
+    ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
     integer_CHECKTRACE( $my_size, '$my_size',
@@ -291,9 +297,9 @@ use warnings;
 
 # [[[ TYPE-CHECKING ]]]
 
-#our void $number_hashref_CHECK = sub {
 sub number_hashref_CHECK {
-    ( my $possible_number_hashref ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_number_hashref ) = @ARG;
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with number-specific error codes
     if ( not( defined $possible_number_hashref ) ) {
@@ -331,13 +337,14 @@ sub number_hashref_CHECK {
             );
         }
     }
+    return;
 }
 
 
-#our void $number_hashref_CHECKTRACE = sub {
 sub number_hashref_CHECKTRACE {
+    { my void $RETURN_TYPE };
     ( my $possible_number_hashref, my $variable_name, my $subroutine_name )
-        = @_;
+        = @ARG;
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECKTRACE() subroutine, but with number-specific error codes
     if ( not( defined $possible_number_hashref ) ) {
@@ -375,6 +382,7 @@ sub number_hashref_CHECKTRACE {
             );
         }
     }
+    return;
 }
 
 # [[[ STRINGIFY ]]]
@@ -382,7 +390,7 @@ sub number_hashref_CHECKTRACE {
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
 sub number_hashref_to_string {
     { my string $RETURN_TYPE };
-    ( my $input_hv_ref ) = @_;
+    ( my $input_hv_ref ) = @ARG;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES number_hashref_to_string(), top of subroutine\n");
 
@@ -427,7 +435,7 @@ sub number_hashref_to_string {
 
 sub number_hashref__typetest0 {
     { my string $RETURN_TYPE };
-    ( my number_hashref $lucky_numbers) = @_;
+    ( my number_hashref $lucky_numbers) = @ARG;
 
     #    number_hashref_CHECK($lucky_numbers);
     number_hashref_CHECKTRACE( $lucky_numbers, '$lucky_numbers',
@@ -445,7 +453,7 @@ sub number_hashref__typetest0 {
 
 sub number_hashref__typetest1 {
     { my number_hashref $RETURN_TYPE };
-    ( my integer $my_size) = @_;
+    ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
     integer_CHECKTRACE( $my_size, '$my_size',
@@ -491,9 +499,9 @@ use warnings;
 
 # [[[ TYPE-CHECKING ]]]
 
-#our void $string_hashref_CHECK = sub {
 sub string_hashref_CHECK {
-    ( my $possible_string_hashref ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_string_hashref ) = @ARG;
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with string-specific error codes
     if ( not( defined $possible_string_hashref ) ) {
@@ -528,13 +536,14 @@ sub string_hashref_CHECK {
             );
         }
     }
+    return;
 }
 
 
-#our void $string_hashref_CHECKTRACE = sub {
 sub string_hashref_CHECKTRACE {
+    { my void $RETURN_TYPE };
     ( my $possible_string_hashref, my $variable_name, my $subroutine_name )
-        = @_;
+        = @ARG;
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECKTRACE() subroutine, but with string-specific error codes
     if ( not( defined $possible_string_hashref ) ) {
@@ -569,6 +578,7 @@ sub string_hashref_CHECKTRACE {
             );
         }
     }
+    return;
 }
 
 # [[[ STRINGIFY ]]]
@@ -576,7 +586,7 @@ sub string_hashref_CHECKTRACE {
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
 sub string_hashref_to_string {
     { my string $RETURN_TYPE };
-    ( my $input_hv_ref ) = @_;
+    ( my $input_hv_ref ) = @ARG;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string_hashref_to_string(), top of subroutine\n");
 
@@ -622,7 +632,7 @@ sub string_hashref_to_string {
 
 sub string_hashref__typetest0 {
     { my string $RETURN_TYPE };
-    ( my string_hashref $people) = @_;
+    ( my string_hashref $people) = @ARG;
 
     #    string_hashref_CHECK($lucky_numbers);
     string_hashref_CHECKTRACE( $people, '$people',
@@ -639,7 +649,7 @@ sub string_hashref__typetest0 {
 
 sub string_hashref__typetest1 {
     { my string_hashref $RETURN_TYPE };
-    ( my integer $my_size) = @_;
+    ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
     integer_CHECKTRACE( $my_size, '$my_size',

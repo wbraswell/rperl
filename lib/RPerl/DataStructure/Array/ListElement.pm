@@ -20,7 +20,7 @@ our hashref $properties = {};
 
 sub ast_to_rperl__generate {
     { my string_hashref::method $RETURN_TYPE };
-    ( my object $self, my string_hashref $modes) = @_;
+    ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
 #    RPerl::diag( 'in Array::ListElement->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
@@ -57,7 +57,7 @@ sub ast_to_rperl__generate {
 
 sub ast_to_cpp__generate__CPPOPS_PERLTYPES {
     { my string_hashref::method $RETURN_TYPE };
-    ( my object $self, my string_hashref $modes) = @_;
+    ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group = { CPP => q{// <<< RP::DS::A::LE __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n" };
 
     #...
@@ -66,7 +66,7 @@ sub ast_to_cpp__generate__CPPOPS_PERLTYPES {
 
 sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     { my string_hashref::method $RETURN_TYPE };
-    ( my object $self, my string_hashref $modes) = @_;
+    ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group = { CPP => q{// <<< RP::DS::A::LE __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
 
     #...

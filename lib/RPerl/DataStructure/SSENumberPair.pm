@@ -40,7 +40,7 @@ use parent qw(RPerl::DataStructure::SSENumberPair);
 
 sub new_from_singleton_duplicate {
     { my sse_number_pair::method $RETURN_TYPE };
-    ( my number $single ) = @_;
+    ( my number $single ) = @ARG;
     my sse_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('sse_number_pair');
     $retval->[0] = $single;
     $retval->[1] = $single;
@@ -50,7 +50,7 @@ sub new_from_singleton_duplicate {
 # NEED TEST
 sub new_from_pair {
     { my sse_number_pair::method $RETURN_TYPE };
-    ( my number $pair_0, my number $pair_1 ) = @_;
+    ( my number $pair_0, my number $pair_1 ) = @ARG;
     my sse_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('sse_number_pair');
     $retval->[0] = $pair_0;
     $retval->[1] = $pair_1;
@@ -65,7 +65,7 @@ use parent qw(RPerl::DataStructure::SSENumberPair);
 
 sub new_from_singleton_duplicate {
     { my constant_sse_number_pair::method $RETURN_TYPE };
-    ( my number $single ) = @_;
+    ( my number $single ) = @ARG;
     my constant_sse_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('constant_sse_number_pair');
     $retval->[0] = $single;
     $retval->[1] = $single;
@@ -75,7 +75,7 @@ sub new_from_singleton_duplicate {
 # NEED TEST
 sub new_from_pair {
     { my constant_sse_number_pair::method $RETURN_TYPE };
-    ( my number $pair_0, my number $pair_1 ) = @_;
+    ( my number $pair_0, my number $pair_1 ) = @ARG;
     my constant_sse_number_pair $retval = RPerl::DataStructure::SSENumberPair::new('constant_sse_number_pair');
     $retval->[0] = $pair_0;
     $retval->[1] = $pair_1;
@@ -99,7 +99,7 @@ use overload
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 sub sse_add {
-    ( my $argument_left, my $argument_right, my $arguments_swap ) = @_;
+    ( my $argument_left, my $argument_right, my $arguments_swap ) = @ARG;
     if (not(ref $argument_left) or not($argument_left->isa('RPerl::DataStructure::SSENumberPair'))) {
         croak 'Attempt to perform SSE addition on non-SSE data ' . q{'} . $argument_left . q{'} . ', croaking';
     }
@@ -113,7 +113,7 @@ sub sse_add {
 }
 
 sub sse_sub {
-    ( my $argument_left, my $argument_right, my $arguments_swap ) = @_;
+    ( my $argument_left, my $argument_right, my $arguments_swap ) = @ARG;
     if (not(ref $argument_left) or not($argument_left->isa('RPerl::DataStructure::SSENumberPair'))) {
         croak 'Attempt to perform SSE subtraction on non-SSE data ' . q{'} . $argument_left . q{'} . ', croaking';
     }
@@ -133,7 +133,7 @@ sub sse_sub {
 }
 
 sub sse_mul {
-    ( my $argument_left, my $argument_right, my $arguments_swap ) = @_;
+    ( my $argument_left, my $argument_right, my $arguments_swap ) = @ARG;
     if (not(ref $argument_left) or not($argument_left->isa('RPerl::DataStructure::SSENumberPair'))) {
         croak 'Attempt to perform SSE multiplication on non-SSE data ' . q{'} . $argument_left . q{'} . ', croaking';
     }
@@ -147,7 +147,7 @@ sub sse_mul {
 }
 
 sub sse_div {
-    ( my $argument_left, my $argument_right, my $arguments_swap ) = @_;
+    ( my $argument_left, my $argument_right, my $arguments_swap ) = @ARG;
     if (not(ref $argument_left) or not($argument_left->isa('RPerl::DataStructure::SSENumberPair'))) {
         croak 'Attempt to perform SSE division on non-SSE data ' . q{'} . $argument_left . q{'} . ', croaking';
     }
@@ -169,7 +169,7 @@ sub sse_div {
 # DEV NOTE: using blessed arrayref as object instead of blessed hashref, not valid RPerl
 sub new {
     { my RPerl::DataStructure::SSENumberPair::method $RETURN_TYPE };
-    ( my string $class ) = @_;
+    ( my string $class ) = @ARG;
     my RPerl::DataStructure::SSENumberPair $retval = bless [], $class;
     return $retval;
 }

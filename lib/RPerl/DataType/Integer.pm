@@ -50,8 +50,8 @@ use RPerl::Exporter 'import';
 our @EXPORT = qw(integer_CHECK integer_CHECKTRACE integer_to_boolean integer_to_unsigned_integer integer_to_number integer_to_character integer_to_string);
 
 # [[[ TYPE-CHECKING ]]]
-#our void $integer_CHECK = sub {
 sub integer_CHECK {
+    { my void $RETURN_TYPE };
     ( my $possible_integer ) = @ARG;
     if ( not( defined $possible_integer ) ) {
         croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but undefined/null value found,\ncroaking");
@@ -59,11 +59,12 @@ sub integer_CHECK {
     if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
         croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found,\ncroaking");
     }
+    return;
 }
 
 
-#our void $integer_CHECKTRACE = sub {
 sub integer_CHECKTRACE {
+    { my void $RETURN_TYPE };
     ( my $possible_integer, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_integer ) ) {
         croak(
@@ -75,21 +76,23 @@ sub integer_CHECKTRACE {
             "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
         );
     }
+    return;
 }
 
 # [[[ BOOLEANIFY ]]]
-#our boolean $integer_to_boolean = sub {
 sub integer_to_boolean {
+    { my boolean $RETURN_TYPE };
     ( my integer $input_integer ) = @ARG;
 #    integer_CHECK($input_integer);
     integer_CHECKTRACE( $input_integer, '$input_integer', 'integer_to_boolean()' );
     if   ( $input_integer == 0 ) { return 0; }
     else                         { return 1; }
+    return;
 }
 
 # [[[ UNSIGNED INTEGERIFY ]]]
-#our unsigned_integer $integer_to_unsigned_integer = sub {
 sub integer_to_unsigned_integer {
+    { my unsigned_integer $RETURN_TYPE };
     ( my integer $input_integer ) = @ARG;
 #    integer_CHECK($input_integer);
     integer_CHECKTRACE( $input_integer, '$input_integer', 'integer_to_unsigned_integer()' );
@@ -97,8 +100,8 @@ sub integer_to_unsigned_integer {
 }
 
 # [[[ NUMBERIFY ]]]
-#our number $integer_to_number = sub {
 sub integer_to_number {
+    { my number $RETURN_TYPE };
     ( my integer $input_integer ) = @ARG;
 #    integer_CHECK($input_integer);
     integer_CHECKTRACE( $input_integer, '$input_integer', 'integer_to_number()' );
@@ -106,19 +109,20 @@ sub integer_to_number {
 }
 
 # [[[ CHARACTERIFY ]]]
-#our character $integer_to_character = sub {
 sub integer_to_character {
+    { my character $RETURN_TYPE };
     ( my integer $input_integer ) = @ARG;
 #    integer_CHECK($input_integer);
     integer_CHECKTRACE( $input_integer, '$input_integer', 'integer_to_character()' );
     my string $tmp_string = integer_to_string($input_integer);
     if   ( $tmp_string eq q{} ) { return q{}; }
     else                        { return substr $tmp_string, 0, 1; }
+    return;
 }
 
 # [[[ STRINGIFY ]]]
-#our string $integer_to_string = sub {
 sub integer_to_string {
+    { my string $RETURN_TYPE };
     { my string $RETURN_TYPE };
     ( my integer $input_integer ) = @ARG;
 #    integer_CHECK($input_integer);

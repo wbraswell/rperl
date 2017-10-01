@@ -44,50 +44,52 @@ use RPerl::Exporter 'import';
 our @EXPORT = qw(boolean_CHECK boolean_CHECKTRACE boolean_to_unsigned_integer boolean_to_integer boolean_to_number boolean_to_character boolean_to_string);
 
 # [[[ TYPE-CHECKING ]]]
-#our void $boolean_CHECK = sub {
 sub boolean_CHECK {
-    ( my $possible_boolean ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_boolean ) = @ARG;
     if ( not( defined $possible_boolean ) ) { croak( "\nERROR EBV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but undefined/null value found,\ncroaking" ); }
     if ( not( main::RPerl_SvBOKp($possible_boolean) ) ) { croak( "\nERROR EBV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but non-boolean value found,\ncroaking" ); }
+    return;
 }
-#our void $boolean_CHECKTRACE = sub {
 sub boolean_CHECKTRACE {
-    ( my $possible_boolean, my $variable_name, my $subroutine_name ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $possible_boolean, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_boolean ) ) { croak( "\nERROR EBV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
     if ( not( main::RPerl_SvBOKp($possible_boolean) ) ) { croak( "\nERROR EBV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but non-boolean value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
+    return;
 }
 
 # [[[ UNSIGNED INTEGERIFY ]]]
-#our unsigned_integer $boolean_to_unsigned_integer = sub {
 sub boolean_to_unsigned_integer {
-    (my boolean $input_boolean) = @_;
+    { my unsigned_integer $RETURN_TYPE };
+    (my boolean $input_boolean) = @ARG;
 #    boolean_CHECK($input_boolean);
     boolean_CHECKTRACE( $input_boolean, '$input_boolean', 'boolean_to_unsigned_integer()' );
     return $input_boolean;
 }
 
 # [[[ INTEGERIFY ]]]
-#our integer $boolean_to_integer = sub {
 sub boolean_to_integer {
-    (my boolean $input_boolean) = @_;
+    { my integer $RETURN_TYPE };
+    (my boolean $input_boolean) = @ARG;
 #    boolean_CHECK($input_boolean);
     boolean_CHECKTRACE( $input_boolean, '$input_boolean', 'boolean_to_integer()' );
     return $input_boolean;
 }
 
 # [[[ NUMBERIFY ]]]
-#our number $boolean_to_number = sub {
 sub boolean_to_number {
-    (my boolean $input_boolean) = @_;
+    { my number $RETURN_TYPE };
+    (my boolean $input_boolean) = @ARG;
 #    boolean_CHECK($input_boolean);
     boolean_CHECKTRACE( $input_boolean, '$input_boolean', 'boolean_to_number()' );
     return $input_boolean * 1.0;
 }
 
 # [[[ CHARACTERIFY ]]]
-#our character $boolean_to_character = sub {
 sub boolean_to_character {
-    (my boolean $input_boolean) = @_;
+    { my character $RETURN_TYPE };
+    (my boolean $input_boolean) = @ARG;
 #    boolean_CHECK($input_boolean);
     boolean_CHECKTRACE( $input_boolean, '$input_boolean', 'boolean_to_character()' );
     my string $tmp_string = boolean_to_string($input_boolean);
@@ -95,9 +97,9 @@ sub boolean_to_character {
 }
 
 # [[[ STRINGIFY ]]]
-#our string $boolean_to_string = sub {
 sub boolean_to_string {
-    ( my $input_boolean ) = @_;
+    { my string $RETURN_TYPE };
+    ( my $input_boolean ) = @ARG;
 #    boolean_CHECK($input_boolean);
     boolean_CHECKTRACE( $input_boolean, '$input_boolean', 'boolean_to_string()' );
     return "$input_boolean";
@@ -115,7 +117,7 @@ sub boolean__typetest0 {
 }
 sub boolean__typetest1 {
     { my boolean $RETURN_TYPE };
-    ( my boolean $lucky_boolean ) = @_;
+    ( my boolean $lucky_boolean ) = @ARG;
 #    boolean_CHECK($lucky_boolean);
     boolean_CHECKTRACE( $lucky_boolean, '$lucky_boolean', 'boolean__typetest1()' );
 #    RPerl::diag('in PERLOPS_PERLTYPES boolean__typetest1(), received $lucky_boolean = ' . boolean_to_string($lucky_boolean) . "\n");
