@@ -4,7 +4,7 @@ package  # hide from PAUSE indexing
     rperltypesconv;
 use strict;
 use warnings;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # DEV NOTE, CORRELATION #rp012: type system includes, hard-copies in rperltypes.pm & rperltypesconv.pm & Class.pm
 
@@ -28,10 +28,11 @@ use RPerl::DataStructure::Hash;
 use RPerl::DataStructure::Hash::SubTypes;
 use RPerl::DataStructure::Hash::Reference;
 
-# DEV NOTE, CORRELATION #rp008: use Exporter here instead of rperltypes.pm
+# DEV NOTE, CORRELATION #rp008: use Exporter in rperltypes.pm instead of here
 
+=DISABLED_REPLACED_IN_RPERLTYPES
 # [[[ EXPORTS ]]]
-use Exporter 'import';
+use RPerl::Exporter 'import';
 
 # DEV NOTE: don't include generic type conversion subroutines such as to_number() & to_string() in @EXPORT below, causes error:
 # Subroutine main::to_number redefined at /usr/share/perl/5.18/Exporter.pm
@@ -45,3 +46,6 @@ our @EXPORT = qw(
     arrayref_CHECK arrayref_CHECKTRACE integer_arrayref_CHECK integer_arrayref_CHECKTRACE number_arrayref_CHECK number_arrayref_CHECKTRACE string_arrayref_CHECK string_arrayref_CHECKTRACE
     hashref_CHECK hashref_CHECKTRACE integer_hashref_CHECK integer_hashref_CHECKTRACE number_hashref_CHECK number_hashref_CHECKTRACE string_hashref_CHECK string_hashref_CHECKTRACE
 );
+=cut
+
+1;  # end of package

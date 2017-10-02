@@ -3,7 +3,7 @@ package RPerl::DataType::String;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.011_000;
+our $VERSION = 0.012_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -59,14 +59,12 @@ sub string_CHECK {
     { my void $RETURN_TYPE };
     ( my $possible_string ) = @ARG;
     if ( not( defined $possible_string ) ) {
-        croak(
-            "\nERROR EPV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but undefined/null value found,\ncroaking"
-        );
+#        croak( "\nERROR EPV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but undefined/null value found,\ncroaking" );
+        die( "\nERROR EPV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but undefined/null value found,\ndying\n" );
     }
     if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
-        croak(
-            "\nERROR EPV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found,\ncroaking"
-        );
+#        croak( "\nERROR EPV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found,\ncroaking" );
+        die( "\nERROR EPV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found,\ndying\n" );
     }
     return;
 }
@@ -77,14 +75,12 @@ sub string_CHECKTRACE {
     { my void $RETURN_TYPE };
     ( my $possible_string, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_string ) ) {
-        croak(
-            "\nERROR EPV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+#        croak( "\nERROR EPV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+        die( "\nERROR EPV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ndying\n" );
     }
     if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
-        croak(
-            "\nERROR EPV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+#        croak( "\nERROR EPV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+        die( "\nERROR EPV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found,\nin variable $variable_name from subroutine $subroutine_name,\ndying\n" );
     }
     return;
 }

@@ -3,7 +3,7 @@ package RPerl::DataType::Character;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.009_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::String);
@@ -42,15 +42,27 @@ our @EXPORT = qw(character_CHECK character_CHECKTRACE character_to_boolean chara
 sub character_CHECK {
     { my void $RETURN_TYPE };
     ( my $possible_character ) = @ARG;
-    if ( not( defined $possible_character ) ) { croak( "\nERROR ETV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but undefined/null value found,\ncroaking" ); }
-    if ( not( main::RPerl_SvCOKp($possible_character) ) ) { croak( "\nERROR ETV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but non-character value found,\ncroaking" ); }
+    if ( not( defined $possible_character ) ) {
+#        croak( "\nERROR ETV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but undefined/null value found,\ncroaking" );
+        die( "\nERROR ETV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but undefined/null value found,\ndying\n" );
+    }
+    if ( not( main::RPerl_SvCOKp($possible_character) ) ) {
+#        croak( "\nERROR ETV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but non-character value found,\ncroaking" );
+        die( "\nERROR ETV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but non-character value found,\ndying\n" );
+    }
     return;
 }
 sub character_CHECKTRACE {
     { my void $RETURN_TYPE };
     ( my $possible_character, my $variable_name, my $subroutine_name ) = @ARG;
-    if ( not( defined $possible_character ) ) { croak( "\nERROR ETV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
-    if ( not( main::RPerl_SvCOKp($possible_character) ) ) { croak( "\nERROR ETV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but non-character value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
+    if ( not( defined $possible_character ) ) {
+#        croak( "\nERROR ETV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" );
+        die( "\nERROR ETV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
+    }
+    if ( not( main::RPerl_SvCOKp($possible_character) ) ) {
+#        croak( "\nERROR ETV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but non-character value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" );
+        die( "\nERROR ETV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ncharacter value expected but non-character value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
+    }
     return;
 }
 

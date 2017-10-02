@@ -21,6 +21,7 @@ our $VERSION = 0.043_000;
 use File::Basename;
 use File::Spec;  # for splitpath() to test if @INC file entries are absolute or relative
 use Scalar::Util 'reftype';  # to test for HASH ref when given initialization values for new() method
+use rperltypes;  # required for all automatically-generated type-checking subroutine calls
 
 # [[[ OO PROPERTIES ]]]
 # BASE CLASS HAS NO PROPERTIES
@@ -589,13 +590,14 @@ sub create_symtab_entries_and_accessors_mutators {
                                 RPerl::diag( 'in Class.pm INIT block, CHECK IS ON' . "\n" );
                                 my $i = 0;                                                # integer
                                 foreach my $subroutine_argument ( @{$subroutine_arguments} ) {
-                                    $subroutine_arguments_check_code .= q{    } . $subroutine_argument->[0] . '_CHECK( $_[' . $i . '] );' . "\n";
+#                                    $subroutine_arguments_check_code .= q{    } . $subroutine_argument->[0] . '_CHECK( $_[' . $i . '] );' . "\n";  # DOES NOT WORK, fails to find RPerl::Exporter::integer_CHECKTRACE() etc.
+#                                    $subroutine_arguments_check_code .= q{    ::} . $subroutine_argument->[0] . '_CHECK( $_[' . $i . '] );' . "\n";  # DOES NOT WORK, we no longer export all the type-checking subroutines to the main '::' namespace
+                                    $subroutine_arguments_check_code .= q{    rperltypes::} . $subroutine_argument->[0] . '_CHECK( $_[' . $i . '] );' . "\n";  # does work, hard-code all automatically-generated type-checking code to 'rperltypes::' namespace
                                     $i++;
                                 }
 
                                 RPerl::diag( 'in Class.pm INIT block, CHECK IS ON, about to call activate_subroutine()...' . "\n" );
-                                activate_subroutine( $package_name, $subroutine_name, $subroutine_type, $subroutine_arguments_check_code,
-                                    $module_filename_long );
+                                activate_subroutine( $package_name, $subroutine_name, $subroutine_type, $subroutine_arguments_check_code, $module_filename_long );
                                 $inside_subroutine         = 0;
                                 $subroutine_arguments_line = q{};
                             }
@@ -603,13 +605,13 @@ sub create_symtab_entries_and_accessors_mutators {
                                 RPerl::diag( 'in Class.pm INIT block, CHECK IS TRACE' . "\n" );
                                 my $i = 0;    # integer
                                 foreach my $subroutine_argument ( @{$subroutine_arguments} ) {
-                                    $subroutine_arguments_check_code
-                                        .= q{    } . $subroutine_argument->[0] . '_CHECKTRACE( $_[' . $i . q{], '$} . $subroutine_argument->[1] . q{', '} . $subroutine_name . q{()' );} . "\n";
+#                                    $subroutine_arguments_check_code .= q{    } . $subroutine_argument->[0] . '_CHECKTRACE( $_[' . $i . q{], '$} . $subroutine_argument->[1] . q{', '} . $subroutine_name . q{()' );} . "\n";  # DOES NOT WORK
+#                                    $subroutine_arguments_check_code .= q{    ::} . $subroutine_argument->[0] . '_CHECKTRACE( $_[' . $i . q{], '$} . $subroutine_argument->[1] . q{', '} . $subroutine_name . q{()' );} . "\n";  # DOES NOT WORK
+                                    $subroutine_arguments_check_code .= q{    rperltypes::} . $subroutine_argument->[0] . '_CHECKTRACE( $_[' . $i . q{], '$} . $subroutine_argument->[1] . q{', '} . $subroutine_name . q{()' );} . "\n";
                                     $i++;
                                 }
                                 RPerl::diag( 'in Class.pm INIT block, CHECK IS TRACE, about to call activate_subroutine()...' . "\n" );
-                                activate_subroutine( $package_name, $subroutine_name, $subroutine_type, $subroutine_arguments_check_code,
-                                    $module_filename_long );
+                                activate_subroutine( $package_name, $subroutine_name, $subroutine_type, $subroutine_arguments_check_code, $module_filename_long );
                                 $inside_subroutine         = 0;
                                 $subroutine_arguments_line = q{};
                             }
@@ -895,7 +897,7 @@ sub activate_subroutine {
     RPerl::diag('in Class::activate_subroutine(), received $subroutine_type = ' . $subroutine_type . "\n");
     RPerl::diag('in Class::activate_subroutine(), received $subroutine_arguments_check_code = ' . $subroutine_arguments_check_code . "\n");
 #    RPerl::diag('in Class::activate_subroutine(), received $module_filename_long = ' . $module_filename_long . "\n");
- 
+
     my $package_name_tmp;              # string
     my $subroutine_definition_code = q{};    # string
     my $subroutine_definition_diag_code = q{};    # string
@@ -961,9 +963,9 @@ sub activate_subroutine {
 #        RPerl::diag('in Class::activate_subroutine(), have method $subroutine_definition_code =' . "\n" . $subroutine_definition_code . "\n");
 #    }
 
-#    eval($subroutine_definition_code) or (croak 'ERROR ECOPR02, Pre-Processor: Failed to enable type checking for subroutine ' . $package_name . '::' . $subroutine_name . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking at');  # TRIGGERS FALSE ALARMS ON OUTPUT FROM RPerl::diag()
+#    eval($subroutine_definition_code) or (croak 'ERROR ECOPR02, Pre-Processor: Failed to enable type checking for subroutine ' . $package_name . '::' . $subroutine_name . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking');  # TRIGGERS FALSE ALARMS ON OUTPUT FROM RPerl::diag()
     eval($subroutine_definition_code) or (RPerl::diag('ERROR ECOPR02, Pre-Processor: Possible failure to enable type checking for subroutine ' . $package_name . '::' . $subroutine_name . '(),' . "\n" . $EVAL_ERROR . "\n" . 'not croaking'));
-    if ($EVAL_ERROR) { croak 'ERROR ECOPR03, Pre-Processor: Failed to enable type checking for subroutine ' . $package_name . '::' . $subroutine_name . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking at'; }
+    if ($EVAL_ERROR) { croak 'ERROR ECOPR03, Pre-Processor: Failed to enable type checking for subroutine ' . $package_name . '::' . $subroutine_name . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking'; }
 
     do
     {

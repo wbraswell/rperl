@@ -3,7 +3,7 @@ package RPerl::DataType::UnsignedInteger;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -54,10 +54,12 @@ sub unsigned_integer_CHECK {
     { my void $RETURN_TYPE };
     ( my $possible_unsigned_integer ) = @ARG;
     if ( not( defined $possible_unsigned_integer ) ) {
-        croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but undefined/null value found,\ncroaking");
+#        croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but undefined/null value found,\ncroaking");
+        die("\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but undefined/null value found,\ndying\n");
     }
     if ( not( main::RPerl_SvUIOKp($possible_unsigned_integer) ) ) {
-        croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but non-unsigned_integer value found,\ncroaking");
+#        croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but non-unsigned_integer value found,\ncroaking");
+        dying("\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but non-unsigned_integer value found,\ndying\n");
     }
     return;
 }
@@ -65,14 +67,12 @@ sub unsigned_integer_CHECKTRACE {
     { my void $RETURN_TYPE };
     ( my $possible_unsigned_integer, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_unsigned_integer ) ) {
-        croak(
-            "\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+#        croak( "\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+        dying( "\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ndying\n" );
     }
     if ( not( main::RPerl_SvUIOKp($possible_unsigned_integer) ) ) {
-        croak(
-            "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but non-unsigned_integer value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+#        croak( "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but non-unsigned_integer value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+        dying( "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nunsigned_integer value expected but non-unsigned_integer value found,\nin variable $variable_name from subroutine $subroutine_name,\ndying\n" );
     }
     return;
 }

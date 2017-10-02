@@ -14,7 +14,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ INCLUDES ]]]
-use RPerl::Test::TypeCheckingTrace::AllTypes;
+use RPerl::Test::TypeCheckingTrace::AllTypes qw(check_integer);
 
 # [[[ OPERATIONS ]]]
 
@@ -24,7 +24,9 @@ check_integer(555_555);
 check_integer(-1);
 check_integer(-555_555);
 
+print 'in all_types_good.pl, before check_number(0)', "\n";
 check_number(0);
+print 'in all_types_good.pl, after check_number(0)', "\n";
 check_number(1);
 check_number(555_555);
 check_number(-1);

@@ -3,7 +3,7 @@ package RPerl::DataType::Integer;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -54,10 +54,12 @@ sub integer_CHECK {
     { my void $RETURN_TYPE };
     ( my $possible_integer ) = @ARG;
     if ( not( defined $possible_integer ) ) {
-        croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but undefined/null value found,\ncroaking");
+#        croak("\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but undefined/null value found,\ncroaking");
+        die("\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but undefined/null value found,\ndying\n");
     }
     if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
-        croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found,\ncroaking");
+#        croak("\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found,\ncroaking");
+        die("\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found,\ndying\n");
     }
     return;
 }
@@ -66,15 +68,19 @@ sub integer_CHECK {
 sub integer_CHECKTRACE {
     { my void $RETURN_TYPE };
     ( my $possible_integer, my $variable_name, my $subroutine_name ) = @ARG;
+#    RPerl::diag('in RPerl::DataType::Integer::integer_CHECKTRACE(), received $possible_integer = ' . $possible_integer . "\n");
+#    RPerl::diag('in RPerl::DataType::Integer::integer_CHECKTRACE(), received $variable_name = ' . $variable_name . "\n");
+#    RPerl::diag('in RPerl::DataType::Integer::integer_CHECKTRACE(), received $subroutine_name = ' . $subroutine_name . "\n");
+
     if ( not( defined $possible_integer ) ) {
-        croak(
-            "\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+#        RPerl::diag('in RPerl::DataType::Integer::integer_CHECKTRACE(), about to croak due to undefined input' . "\n");
+#        croak( "\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+        die( "\nERROR EIV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ndying\n" );
     }
     if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
-        croak(
-            "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+#        RPerl::diag('in RPerl::DataType::Integer::integer_CHECKTRACE(), about to croak due to non-integer input' . "\n");
+#        croak( "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+        die( "\nERROR EIV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found,\nin variable $variable_name from subroutine $subroutine_name,\ndying\n" );
     }
     return;
 }

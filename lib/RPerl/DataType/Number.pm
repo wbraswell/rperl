@@ -3,7 +3,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.011_000;
+our $VERSION = 0.012_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -62,17 +62,14 @@ sub number_CHECK {
     { my void $RETURN_TYPE };
     ( my $possible_number ) = @ARG;
     if ( not( defined $possible_number ) ) {
-        croak(
-            "\nERROR ENV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found,\ncroaking"
-        );
+#        croak( "\nERROR ENV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found,\ncroaking" );
+        die( "\nERROR ENV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found,\ndying\n" );
     }
     if (not(   main::RPerl_SvNOKp($possible_number)
-            || main::RPerl_SvIOKp($possible_number) )
-        )
+            || main::RPerl_SvIOKp($possible_number) ) )
     {
-        croak(
-            "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\ncroaking"
-        );
+#        croak( "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\ncroaking" );
+        die( "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\ndying\n" );
     }
     return;
 }
@@ -80,17 +77,15 @@ sub number_CHECKTRACE {
     { my void $RETURN_TYPE };
     ( my $possible_number, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_number ) ) {
-        croak(
-            "\nERROR ENV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+#        croak( "\nERROR ENV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+        die( "\nERROR ENV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ndying\n" );
     }
     if (not(   main::RPerl_SvNOKp($possible_number)
             || main::RPerl_SvIOKp($possible_number) )
         )
     {
-        croak(
-            "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+#        croak( "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+        die( "\nERROR ENV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found,\nin variable $variable_name from subroutine $subroutine_name,\ndying\n" );
     }
     return;
 }

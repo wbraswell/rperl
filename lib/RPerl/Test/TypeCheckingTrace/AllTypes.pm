@@ -31,7 +31,8 @@ use RPerl::Test;
 
 # [[[ EXPORTS ]]]
 use RPerl::Exporter qw(import);
-our @EXPORT = qw(check_integer check_number check_string check_arrayref check_integer_arrayref check_number_arrayref check_number_arrayrefs check_string_arrayref check_hashref check_integer_hashref check_number_hashref check_number_hashrefs check_string_hashref check__mixed_00 check__mixed_01 check__mixed_02 check__mixed_03);
+our @EXPORT_OK = qw(check_integer);
+our @EXPORT = qw(check_number check_string check_arrayref check_integer_arrayref check_number_arrayref check_number_arrayrefs check_string_arrayref check_hashref check_integer_hashref check_number_hashref check_number_hashrefs check_string_hashref check__mixed_00 check__mixed_01 check__mixed_02 check__mixed_03);
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator

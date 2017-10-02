@@ -17,6 +17,9 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
+# [[[ INCLUDES ]]]
+use rperltypes;
+
 # [[[ OO PROPERTIES ]]]
 #our hashref $properties = {};
 
@@ -76,16 +79,6 @@ sub import {
         }
         # USAGE OPTIONS A & B REQUIRED, C & D OPTIONAL: receive requests for subroutines to be exported
         else {
-
-
-
-            # START HERE: create tests for requested export plus type checking
-            # START HERE: create tests for requested export plus type checking
-            # START HERE: create tests for requested export plus type checking
-
-
-
-
             my $subroutines_export = {};
             my $subroutines_export_ok = {};
             
@@ -118,7 +111,20 @@ sub import {
 #                    my $subroutine_arguments_check_code_call = 'eval "$' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '";';  # DOES NOT WORK
 #                    my $subroutine_arguments_check_code_call = 'eval qq{$' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '};';  # DOES NOT WORK
 #                    my $subroutine_arguments_check_code_call = '&{ ' . $subroutine_arguments_check_code_name . ' };';  # DOES NOT WORK
-                    my $subroutine_arguments_check_code_call = $subroutine_arguments_check_code_name . '();';
+#                    my $subroutine_arguments_check_code_call = $subroutine_arguments_check_code_name . '();';  # DOES NOT WORK
+#                    my $subroutine_arguments_check_code_call = 'eval ' . $subroutine_arguments_check_code_name . '();';  # DOES NOT WORK
+#                    my $subroutine_arguments_check_code_call = 'eval ' . $subroutine_arguments_check_code_name . '() or die($EVAL_ERROR);';  # DOES NOT WORK, gives false die() on debug output
+#                    my $subroutine_arguments_check_code_call = 'eval ' . $subroutine_arguments_check_code_name . '() or croak($EVAL_ERROR);';  # DOES NOT WORK, gives false die() on debug output, gives unnecessary eval() traces
+                    my $subroutine_arguments_check_code_call = 'eval ' . $subroutine_arguments_check_code_name . '(); if ($EVAL_ERROR) { die($EVAL_ERROR); }';  # does work!
+#                    my $subroutine_arguments_check_code_call = 'eval q{eval ' . $subroutine_arguments_check_code_name . '();};';  # DOES NOT WORK
+
+                    # DEBUG OUTPUT
+#                    $subroutine_arguments_check_code_call .= 'print ' . $subroutine_arguments_check_code_name . '(), "\n\n";';
+#                    $subroutine_arguments_check_code_call .= 'print eval ' . $subroutine_arguments_check_code_name . '(), "\n\n";';
+#                    $subroutine_arguments_check_code_call .= q{::integer_CHECKTRACE( $_[0], '$hard_coded', 'hard_coded()' );};
+#                    $subroutine_arguments_check_code_call .= q{::integer_CHECKTRACE( 21, '$hard_coded', 'hard_coded()' );};
+                    $subroutine_arguments_check_code_call = 'print qq{BEFORE ARGS CHECK CODE EVAL1\n};' . $subroutine_arguments_check_code_call;
+                    $subroutine_arguments_check_code_call .= 'print qq{AFTER ARGS CHECK CODE EVAL1\n};';
 
                     # define actual exported subroutine
                     my $subroutine_definition_code
@@ -135,8 +141,9 @@ sub import {
                     $subroutine_definition_code .= "\n" . 'sub ' . $package_importer . '::__CHECKED_' . $subroutine . ' { return ' . $package_exporter . '::__CHECKED_' . $subroutine . '(@ARG); }';
 
                     RPerl::diag('in Exporter::import(), about to call eval() on requested $subroutine_definition_code = ' . "\n" . $subroutine_definition_code . "\n");
-                    eval($subroutine_definition_code) or (RPerl::diag('ERROR ESUXPxx, Subroutine Exporter: Possible failure to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'not croaking'));
-                    if ($EVAL_ERROR) { croak 'ERROR ESUXPxx, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking at'; }
+                    eval($subroutine_definition_code) or (RPerl::diag('WARNING WSUXPxx, Subroutine Exporter: Possible failure to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'not croaking'));
+#                    if ($EVAL_ERROR) { croak 'ERROR ESUXPxx, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking'; }  # does work, gives unnecessary eval() traces 
+                    if ($EVAL_ERROR) { die 'ERROR ESUXPxx, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'dying' . "\n"; }
                 }
                 # requested subroutine is not in @EXPORT or @EXPORT_OK, error
                 else {
@@ -153,10 +160,17 @@ sub import {
 
             # form arguments check code name & call for repeated use
             my $subroutine_arguments_check_code_name = $package_exporter . '::__CHECK_CODE_' . $subroutine;
+
+            my $subroutine_arguments_check_code_name = $package_exporter . '::__CHECK_CODE_' . $subroutine;
+
+
 #            my $subroutine_arguments_check_code_call = 'eval "$' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '";';  # DOES NOT WORK
 #            my $subroutine_arguments_check_code_call = 'eval qq{$' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '};';  # DOES NOT WORK
 #            my $subroutine_arguments_check_code_call = '&{ ' . $package_exporter . '::__CHECK_CODE_' . $subroutine . ' };';  # DOES NOT WORK
-            my $subroutine_arguments_check_code_call = $subroutine_arguments_check_code_name . '();';
+#            my $subroutine_arguments_check_code_call = $subroutine_arguments_check_code_name . '();';
+#            my $subroutine_arguments_check_code_call = 'eval ' . $subroutine_arguments_check_code_name . '();';
+#            $subroutine_arguments_check_code_call .= 'print qq{AFTER ARGS CHECK CODE EVAL2\n};';
+            my $subroutine_arguments_check_code_call = 'eval ' . $subroutine_arguments_check_code_name . '(); if ($EVAL_ERROR) { die($EVAL_ERROR); }';  # does work!
 
             # define actual exported subroutine
             my $subroutine_definition_code = 
@@ -173,8 +187,9 @@ sub import {
             $subroutine_definition_code .= "\n" . 'sub ' . $package_importer . '::__CHECKED_' . $subroutine . ' { return ' . $package_exporter . '::__CHECKED_' . $subroutine . '(@ARG); }';
 
             RPerl::diag('in Exporter::import(), about to call eval() on forced $subroutine_definition_code = ' . "\n" . $subroutine_definition_code . "\n");
-            eval($subroutine_definition_code) or (RPerl::diag('ERROR ESUXPxx, Subroutine Exporter: Possible failure to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'not croaking'));
-            if ($EVAL_ERROR) { croak 'ERROR ESUXPxx, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking at'; }
+            eval($subroutine_definition_code) or (RPerl::diag('WARNING WSUXPxx, Subroutine Exporter: Possible failure to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'not croaking'));
+#            if ($EVAL_ERROR) { croak 'ERROR ESUXPxx, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking'; }  # does work, gives unnecessary eval() traces 
+            if ($EVAL_ERROR) { die 'ERROR ESUXPxx, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'dying' . "\n"; }
     }
 
 =DISABLED_LONG_FORM_EVAL_ANON_SUB_STRICT

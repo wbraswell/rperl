@@ -3,7 +3,7 @@ package RPerl::DataType::GMPInteger;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_100;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 #use parent qw(Math::BigInt RPerl::DataType::Scalar);  # NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
@@ -76,48 +76,41 @@ sub gmp_integer_CHECK {
 
     #    RPerl::diag("in PERLOPS_PERLTYPES gmp_integer(), top of subroutine\n");
     if ( not( defined $possible_gmp_integer ) ) {
-        croak(
-            "\nERROR EMV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\ncroaking"
-        );
+#        croak( "\nERROR EMV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\ncroaking" );
+        die( "\nERROR EMV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\ndying\n" );
     }
     if ( not( main::RPerl_SvHROKp($possible_gmp_integer) ) ) {
-        croak("\nERROR EMV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\ncroaking");
+#        croak("\nERROR EMV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\ncroaking");
+        die("\nERROR EMV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\ndying\n");
     }
     my string $classname = main::class($possible_gmp_integer);
     if ( not defined $classname ) {
-        croak(
-            "\nERROR EMV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\ncroaking"
-        );
+#        croak( "\nERROR EMV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\ncroaking" );
+        die( "\nERROR EMV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\ndying\n" );
     }
     if ( not( UNIVERSAL::isa( $possible_gmp_integer, 'Math::BigInt' ) ) ) {
-        croak(
-            "\nERROR EMV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\ncroaking"
-        );
+#        croak( "\nERROR EMV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\ncroaking" );
+        die( "\nERROR EMV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\ndying\n" );
     }
     if ( $classname ne 'gmp_integer' ) {
-        croak(
-            "\nERROR EMV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\ncroaking"
-        );
+#        croak( "\nERROR EMV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\ncroaking" );
+        die( "\nERROR EMV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\ndying" );
     }
     if ( not exists $possible_gmp_integer->{value} ) {
-        croak(
-            "\nERROR EMV05, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\ncroaking"
-        );
+#        croak( "\nERROR EMV05, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\ncroaking" );
+        die( "\nERROR EMV05, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\ndying\n" );
     }
     if ( not defined $possible_gmp_integer->{value} ) {
-        croak(
-            "\nERROR EMV06, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry defined;\nOR\nERROR EMV07, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\ncroaking"
-        );
+#        croak( "\nERROR EMV06, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry defined;\nOR\nERROR EMV07, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\ncroaking" );
+        die( "\nERROR EMV06, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry defined;\nOR\nERROR EMV07, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\ndying\n" );
     }
     if ( not defined main::class( $possible_gmp_integer->{value} ) ) {
-        croak(
-            "\nERROR EMV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\ncroaking"
-        );
+#        croak( "\nERROR EMV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\ncroaking" );
+        die( "\nERROR EMV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\ndying\n" );
     }
     if ( not( UNIVERSAL::isa( $possible_gmp_integer->{value}, 'Math::BigInt::GMP' ) ) ) {
-        croak(
-            "\nERROR EMV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\ncroaking"
-        );
+#        croak( "\nERROR EMV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\ncroaking" );
+        die( "\nERROR EMV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\ndying\n" );
     }
 
     #    RPerl::diag("in PERLOPS_PERLTYPES gmp_integer(), bottom of subroutine\n");
@@ -130,77 +123,41 @@ sub gmp_integer_CHECKTRACE {
 
     #    RPerl::diag("in PERLOPS_PERLTYPES gmp_integer_CHECKTRACE(), top of subroutine\n");
     if ( not( defined $possible_gmp_integer ) ) {
-        croak(
-            "\nERROR EMV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\nin variable "
-                . $variable_name
-                . " from subroutine "
-                . $subroutine_name
-                . ",\ncroaking" );
+#        croak( "\nERROR EMV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" );
+        die( "\nERROR EMV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
     }
     if ( not( main::RPerl_SvHROKp($possible_gmp_integer) ) ) {
-        croak(
-            "\nERROR EMV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\nin variable "
-                . $variable_name
-                . " from subroutine "
-                . $subroutine_name
-                . ",\ncroaking" );
+#        croak( "\nERROR EMV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" );
+        die( "\nERROR EMV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-hashref value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
     }
     my string $classname = main::class($possible_gmp_integer);
     if ( not defined $classname ) {
-        croak(
-            "\nERROR EMV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\nin variable "
-                . $variable_name
-                . " from subroutine "
-                . $subroutine_name
-                . ",\ncroaking" );
+#        croak( "\nERROR EMV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" );
+        die( "\nERROR EMV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-object (blessed hashref) value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
     }
     if ( not( UNIVERSAL::isa( $possible_gmp_integer, 'Math::BigInt' ) ) ) {
-        croak(
-            "\nERROR EMV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\nin variable "
-                . $variable_name
-                . " from subroutine "
-                . $subroutine_name
-                . ",\ncroaking" );
+#        croak( "\nERROR EMV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" );
+        die( "\nERROR EMV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-Math::BigInt-derived object value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
     }
     if ( $classname ne 'gmp_integer' ) {
-        croak(
-            "\nERROR EMV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\nin variable "
-                . $variable_name
-                . " from subroutine "
-                . $subroutine_name
-                . ",\ncroaking" );
+#        croak( "\nERROR EMV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" );
+        die( "\nERROR EMV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but non-gmp_integer object value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
     }
     if ( not exists $possible_gmp_integer->{value} ) {
-        croak(
-            "\nERROR EMV05, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\nin variable "
-                . $variable_name
-                . " from subroutine "
-                . $subroutine_name
-                . ",\ncroaking" );
+#        croak( "\nERROR EMV05, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" );
+        die( "\nERROR EMV05, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
     }
     if ( not defined $possible_gmp_integer->{value} ) {
-        croak(
-            "\nERROR EMV06, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry defined;\nOR\nERROR EMV07, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\nin variable "
-                . $variable_name
-                . " from subroutine "
-                . $subroutine_name
-                . ",\ncroaking" );
+#        croak( "\nERROR EMV06, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry defined;\nOR\nERROR EMV07, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" );
+        die( "\nERROR EMV06, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped object in hash entry expected at key 'value' but no hash entry defined;\nOR\nERROR EMV07, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
     }
     if ( not defined main::class( $possible_gmp_integer->{value} ) ) {
-        croak(
-            "\nERROR EMV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\nin variable "
-                . $variable_name
-                . " from subroutine "
-                . $subroutine_name
-                . ",\ncroaking" );
+#        croak( "\nERROR EMV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" );
+        die( "\nERROR EMV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-object (blessed hashref) value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
     }
     if ( not( UNIVERSAL::isa( $possible_gmp_integer->{value}, 'Math::BigInt::GMP' ) ) ) {
-        croak(
-            "\nERROR EMV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\nin variable "
-                . $variable_name
-                . " from subroutine "
-                . $subroutine_name
-                . ",\ncroaking" );
+#        croak( "\nERROR EMV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" );
+        die( "\nERROR EMV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
     }
 
     #    RPerl::diag("in PERLOPS_PERLTYPES gmp_integer_CHECKTRACE(), bottom of subroutine\n");

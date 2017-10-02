@@ -3,7 +3,7 @@ package RPerl::DataType::FileHandle;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -39,33 +39,28 @@ sub filehandleref_CHECK {
     { my void $RETURN_TYPE };
     ( my $possible_filehandleref ) = @ARG;
     if ( not( defined $possible_filehandleref ) ) {
-        croak(
-            "\nERROR EFH00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but undefined/null value found,\ncroaking"
-        );
+#        croak( "\nERROR EFH00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but undefined/null value found,\ncroaking" );
+        die( "\nERROR EFH00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but undefined/null value found,\ndying\n" );
     }
     if ( not( main::RPerl_SvIOKp($possible_filehandleref) ) ) {
-        croak(
-            "\nERROR EFH01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but non-filehandleref value found,\ncroaking"
-        );
+#        croak( "\nERROR EFH01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but non-filehandleref value found,\ncroaking" );
+        die( "\nERROR EFH01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but non-filehandleref value found,\ndying\n" );
     }
     return;
 }
 
 sub filehandleref_CHECKTRACE {
     { my void $RETURN_TYPE };
-    ( my $possible_filehandleref, my $variable_name, my $subroutine_name )
-        = @ARG;
+    ( my $possible_filehandleref, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_filehandleref ) ) {
-        croak(
-            "\nERROR EFH00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+#        croak( "\nERROR EFH00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+        die( "\nERROR EFH00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ndying\n" );
     }
     if ( not( main::RPerl_SvIOKp($possible_filehandleref) ) ) {
-        croak(
-            "\nERROR EFH01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but non-filehandleref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+#        croak( "\nERROR EFH01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but non-filehandleref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+        die( "\nERROR EFH01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nfilehandleref value expected but non-filehandleref value found,\nin variable $variable_name from subroutine $subroutine_name,\ndying\n" );
     }
     return;
 }
 
-1;                                            # end of class
+1;  # end of class

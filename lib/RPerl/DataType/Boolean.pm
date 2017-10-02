@@ -3,7 +3,7 @@ package RPerl::DataType::Boolean;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -23,6 +23,8 @@ use warnings;
 use parent qw(RPerl::DataType::Boolean);
 
 # [[[ PRE-DECLARED TYPES ]]]
+package    # hide from PAUSE indexing
+    void;
 package    # hide from PAUSE indexing
     unsigned_integer;
 package     # hide from PAUSE indexing
@@ -47,15 +49,27 @@ our @EXPORT = qw(boolean_CHECK boolean_CHECKTRACE boolean_to_unsigned_integer bo
 sub boolean_CHECK {
     { my void $RETURN_TYPE };
     ( my $possible_boolean ) = @ARG;
-    if ( not( defined $possible_boolean ) ) { croak( "\nERROR EBV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but undefined/null value found,\ncroaking" ); }
-    if ( not( main::RPerl_SvBOKp($possible_boolean) ) ) { croak( "\nERROR EBV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but non-boolean value found,\ncroaking" ); }
+    if ( not( defined $possible_boolean ) ) {
+#        croak( "\nERROR EBV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but undefined/null value found,\ncroaking" );
+        die( "\nERROR EBV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but undefined/null value found,\ndying\n" );
+    }
+    if ( not( main::RPerl_SvBOKp($possible_boolean) ) ) {
+#        croak( "\nERROR EBV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but non-boolean value found,\ncroaking" );
+        die( "\nERROR EBV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but non-boolean value found,\ndying\n" );
+    }
     return;
 }
 sub boolean_CHECKTRACE {
     { my void $RETURN_TYPE };
     ( my $possible_boolean, my $variable_name, my $subroutine_name ) = @ARG;
-    if ( not( defined $possible_boolean ) ) { croak( "\nERROR EBV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
-    if ( not( main::RPerl_SvBOKp($possible_boolean) ) ) { croak( "\nERROR EBV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but non-boolean value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" ); }
+    if ( not( defined $possible_boolean ) ) {
+#        croak( "\nERROR EBV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" );
+        die( "\nERROR EBV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
+    }
+    if ( not( main::RPerl_SvBOKp($possible_boolean) ) ) {
+#        croak( "\nERROR EBV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but non-boolean value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ncroaking" );
+        die( "\nERROR EBV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nboolean value expected but non-boolean value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
+    }
     return;
 }
 

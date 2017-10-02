@@ -57,6 +57,8 @@ use RPerl::DataStructure::Hash::Reference;
 #use RPerl::DataStructure::Graph::Tree::Binary;
 #use RPerl::DataStructure::Graph::Tree::Binary::Node;
 
+# DEV NOTE, CORRELATION #rp008: use Exporter here instead of rperltypesconv.pm
+
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = ( 
