@@ -456,7 +456,7 @@ sub create_symtab_entries_and_accessors_mutators {
                 }
 
                 # create symbol table entries for methods and plain-old non-method subroutines
-                # DEPRECATED, CORRELATION #rp120: subroutine header 'our integer $foo = sub { ... };'
+                # DEPRECATED, CORRELATION #rp120: old subroutine header
 #                if ( $module_file_line =~ /^\s*our\s+([\w:]+)\s+\$(\w+)\s+\=\s+sub\s+\{/xms ) {
 #                if ( $module_file_line =~ /^\s*sub\s+(\w+)\s*\{[\s\n\r]*\{\s*my\s+([\w:]+)\s+\$RETURN_TYPE\s*\};/xms ) {  # can't match multi-line content against single-line input
 
@@ -531,8 +531,8 @@ sub create_symtab_entries_and_accessors_mutators {
                     $inside_object_properties = 0;
                 }
 
-                # skip non-RPerl-enabled subroutine/method, using normal Perl 'sub foo {}' syntax instead of RPerl 'our type $foo = sub {};' syntax
-                # DEPRECATED, CORRELATION #rp120: subroutine header 'our integer $foo = sub { ... };'
+                # skip non-RPerl-enabled subroutine/method, using normal Perl 'sub foo {}' syntax instead of RPerl syntax
+                # DEPRECATED, CORRELATION #rp120: old subroutine header
 #                if ( $module_file_line =~ /^\s*sub\s+[\w:]+\s+\{/xms ) {
 #                    $inside_object_properties = 0;
 #                }
@@ -667,17 +667,17 @@ sub create_symtab_entries_and_accessors_mutators {
                     if (    ( $property_type =~ /_arrayref$/ )
                         and ( not eval( 'defined &' . $package_name . '::get_' . $property_name . '_element' ) ) )
                     {
-          # hard-coded example
-          #our int::method $get_foo_size = sub { ( my Foo::Bar $self ) = @ARG; return (scalar @{$self->{foo}}); };
-          #our Foo::Quux::method $get_foo_element = sub { ( my Foo::Bar $self, my integer $i ) = @ARG; return $self->{foo}->[$i]; };
-          #our void::method $set_foo_element = sub { ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @ARG; $self->{foo}->[$i] = $foo_element; };
+        # hard-coded examples
+        # sub get_foo_size { { my integer::method $RETURN_TYPE }; ( my Foo::Bar $self ) = @ARG; return (scalar @{$self->{foo}}); }
+        # sub get_foo_element { { my Foo::Quux::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i ) = @ARG; return $self->{foo}->[$i]; }
+        # sub set_foo_element { { my void::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @ARG; $self->{foo}->[$i] = $foo_element; }
                         my $property_element_type = substr $property_type, 0, ( ( length $property_type ) - 9 );    # strip trailing '_arrayref'
                         if ( exists $rperlnamespaces_generated::RPERL->{ $property_element_type . '::' } ) {
                             $return_whole = 1;
                         }
                         else {
                             $eval_string
-                                = '*{'
+                                = 'sub'
                                 . $package_name
                                 . '::get_'
                                 . $property_name . '_size'
@@ -724,10 +724,10 @@ sub create_symtab_entries_and_accessors_mutators {
                     elsif ( ( $property_type =~ /_hashref$/ )
                         and ( not eval( 'defined &' . $package_name . '::get_' . $property_name . '_element' ) ) )
                     {
-          # hard-coded example
-          #our string_arrayref::method $get_foo_keys = sub { ( my Foo::Bar $self ) = @ARG; return [sort keys %{$self->{foo}}]; };
-          #our Foo::Quux::method $get_foo_element = sub { ( my Foo::Bar $self, my integer $i ) = @ARG; return $self->{foo}->{$i}; };
-          #our void::method $set_foo_element = sub { ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @ARG; $self->{foo}->{$i} = $foo_element; };
+            # hard-coded example
+            # sub get_foo_keys { { my string_arrayref::method $RETURN_TYPE }; ( my Foo::Bar $self ) = @ARG; return [sort keys %{$self->{foo}}]; }
+            # sub get_foo_element { { my Foo::Quux::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i ) = @ARG; return $self->{foo}->{$i}; }
+            # sub set_foo_element { { my void::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @ARG; $self->{foo}->{$i} = $foo_element; }
                         my $property_value_type = substr $property_type, 0, ( ( length $property_type ) - 8 );    # strip trailing '_hashref'
                         if ( exists $rperlnamespaces_generated::RPERL->{ $property_value_type . '::' } ) {
                             $return_whole = 1;
@@ -973,7 +973,7 @@ sub activate_subroutine {
         RPerl::diag('in Class::activate_subroutine(), have ' . $check_code_subroutine_name . '() = ' . "\n" . '[BEGIN_CHECK_CODE]' . "\n" . &{ $check_code_subroutine_name } . "\n" . ' [END_CHECK_CODE]' . "\n");
     };
 
-# DEPRECATED, CORRELATION #rp120: subroutine header 'our integer $foo = sub { ... };'
+# DEPRECATED, CORRELATION #rp120: old subroutine header
 # do not automatically export non-method subroutines because that is non-standard behavior, only provide standard Perl behavior
 =DEPRECATED
     if ( $subroutine_type =~ /\::method$/xms ) {

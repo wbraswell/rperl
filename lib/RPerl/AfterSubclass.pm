@@ -43,7 +43,7 @@ use constant TEST_CONSTANT => 'Hello, World!';
 # [[[ SUBROUTINES ]]]
 
 sub package_to_namespace_root {
-    ( my $package ) = @_;
+    ( my $package ) = @ARG;
 #    print {*STDERR} 'in RPerl::package_to_namespace_root(), received $package = ' . $package . "\n";
 
     my $namespace_root = q{};
@@ -57,7 +57,7 @@ sub package_to_namespace_root {
 }
 
 sub filename_short_to_namespace_root_guess {
-    ( my $filename_short ) = @_;
+    ( my $filename_short ) = @ARG;
 #    print {*STDERR} 'in RPerl::filename_short_to_namespace_root_guess(), received $filename_short = ' . $filename_short . "\n";
     # # DEV NOTE, CORRELATION #rp021: remove hard-coded fake 'rperl::' namespace?
     if ($filename_short eq 'rperl') { return 'rperl::'; }
@@ -91,7 +91,7 @@ sub filename_short_to_namespace_root_guess {
 }
 
 sub filename_short_to_package_guess {
-    ( my $filename_short ) = @_;
+    ( my $filename_short ) = @ARG;
 #    print {*STDERR} 'in RPerl::filename_short_to_package_guess(), received $filename_short = ' . $filename_short . "\n";
     my $package = q{};
     ( my $filename_prefix, my $filename_path, my $filename_suffix ) = fileparse( $filename_short, qr/[.][^.]*/xms );

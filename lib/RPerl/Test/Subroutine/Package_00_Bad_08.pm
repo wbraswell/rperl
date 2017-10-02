@@ -4,14 +4,15 @@
 
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Subroutine::Package_00_Bad_09;
+package RPerl::Test::Subroutine::Package_00_Bad_08;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
-our void $empty_sub = sub {
+sub empty_sub {
+    { my void $RETURN_TYPE };
     return 2;
-}
+};
 
 1;                  # end of package

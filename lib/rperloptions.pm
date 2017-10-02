@@ -134,8 +134,8 @@ our $rperl_options = my hashref $TYPED_rperl_options = {
     '<>'            => \&store_unlabeled_arguments  # DEV NOTE: amazingly, this coderef works correctly and calls to the subroutine stored in the file script/rperl
 };
 
-use Exporter 'import';
-our @ISA = qw(Exporter);
+use RPerl::Exporter 'import';
+#our @ISA = qw(RPerl::Exporter);
 our @EXPORT
     = qw( $input_file_names_unlabeled $help_flag $version_flag $vversions_flag $dependencies_flag $magic_low_flag $magic_medium_flag $magic_high_flag $uncompile_flag $uncompile_source_flag $uncompile_source_binary_flag $uncompile_source_binary_inline_flag $compile_flag $subcompile_assemble_flag $subcompile_archive_flag $subcompile_shared_flag $subcompile_static_flag $subcompile_CXX $parallel_flag $num_cores $execute_flag $test_flag $input_file_names $output_file_name_prefixes $output_file_name_groups $modes $modes_default $modes_supported $rperl_options );
 

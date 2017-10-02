@@ -19,8 +19,8 @@ undef &RPerl::Algorithm::Inefficient::uninherited__Inefficient;
 *RPerl::Algorithm::Inefficient::uninherited__Inefficient = sub { return main::RPerl__Algorithm__Inefficient__uninherited__Inefficient(@ARG); };
 
 # <<< C++ LOADER >>>
-#our void::method $cpp_load = sub {
 sub cpp_load {
+    { my void::method $RETURN_TYPE };
     my $need_load_cpp = 0;
     if (    ( exists $main::{'RPerl__Algorithm__Inefficient__MODE_ID'} )
         and ( defined &{ $main::{'RPerl__Algorithm__Inefficient__MODE_ID'} } ) )

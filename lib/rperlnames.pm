@@ -19,8 +19,8 @@ use rperlnamespaces;
 use PadWalker qw(peek_my peek_our);
 
 # NEED UPGRADE: somehow reduce duplicate code of name() and scope_type_name_value(), not easy due to PadWalker magic!
-#my string $name = sub {
 sub name {
+    { my string $RETURN_TYPE };
     my unknown $input_variable_ref = \$_[0];
     my hashref $pad                = peek_my 1;    # pad my
     for my string $name ( keys %{$pad} ) {
@@ -60,8 +60,8 @@ sub name {
     return '$__NO_VARIABLE_NAME_FOUND';
 }
 
-#my string $scope_type_name_value = sub {
 sub scope_type_name_value {
+    { my string $RETURN_TYPE };
     my unknown $input_variable_ref = \$_[0];
 
     my string $type  = type( ${$input_variable_ref} );

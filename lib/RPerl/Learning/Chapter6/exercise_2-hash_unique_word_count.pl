@@ -15,7 +15,8 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our void $unique_word_count = sub {
+sub unique_word_count {
+    { my void $RETURN_TYPE };
     my integer_hashref $word_counts = {};
 
     print 'Please input zero or more words, separated by <ENTER>, ended by <CTRL-D>:', "\n";
@@ -34,7 +35,8 @@ our void $unique_word_count = sub {
     foreach my string $unique_word (sort keys %{$word_counts}) {
         print $unique_word, ' appeared ', to_string($word_counts->{$unique_word}), ' time(s)', "\n";
     }
-};
+    return;
+}
 
 # [[[ OPERATIONS ]]]
 

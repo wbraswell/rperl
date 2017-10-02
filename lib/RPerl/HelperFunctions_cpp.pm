@@ -15,8 +15,8 @@ use RPerl::Inline;
 use rperltypessizes;  # get type_integer_native_ccflag() & type_number_native_ccflag() w/out loading the entire RPerl type system via 'use rperltypes;'
 
 # [[[ SUBROUTINES ]]]
-#our void::method $cpp_load = sub {  # DEV NOTE: remove dependency on RPerl
 sub cpp_load {
+#    { my void::method $RETURN_TYPE };
     my $need_load_cpp = 0;
 
     if (    ( exists $main::{'RPerl__HelperFunctions__MODE_ID'} )

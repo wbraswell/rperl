@@ -51,8 +51,9 @@ our hashref_hashref $filename_suffixes_supported = {
 
 # [[[ SUBROUTINES ]]]
 
-our string_arrayref $find_parents = sub {
-    ( my string $file_name, my boolean $find_grandparents_recurse, my string_hashref $modes ) = @_;
+sub find_parents {
+    { my string_arrayref $RETURN_TYPE };
+    ( my string $file_name, my boolean $find_grandparents_recurse, my string_hashref $modes ) = @ARG;
 #    RPerl::diag( 'in Compiler::find_parents(), received $file_name = ' . $file_name . "\n" );
 
     # trim unnecessary (and possibly problematic) absolute paths from input file name
@@ -180,10 +181,11 @@ our string_arrayref $find_parents = sub {
 #    RPerl::diag('in Compiler::find_parents(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
 #    RPerl::diag('in Compiler::find_parents(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
     return $parents;
-};
+}
 
-our string_arrayref $find_dependencies = sub {
-    ( my string $file_name, my boolean $find_subdependencies_recurse, my string_hashref $modes ) = @_;
+sub find_dependencies {
+    { my string_arrayref $RETURN_TYPE };
+    ( my string $file_name, my boolean $find_subdependencies_recurse, my string_hashref $modes ) = @ARG;
 #    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
 
     # trim unnecessary (and possibly problematic) absolute paths from input file name
@@ -376,12 +378,13 @@ our string_arrayref $find_dependencies = sub {
 #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
 #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
     return $dependencies;
-};
+}
 
 =DISABLE_DYNAMIC_DEPS_ANALYSIS
 # temporarily disable a package's PMC file, if it exists
-our string $pmc_disable = sub {
-    ( my string $package_name ) = @_;
+sub pmc_disable {
+    { my string $RETURN_TYPE };
+    ( my string $package_name ) = @ARG;
 #    RPerl::diag( 'in Compiler::pmc_disable(), received $package_name = ' . $package_name . "\n" );
 
     my string $pmc_file_path_absolute;
@@ -407,11 +410,12 @@ our string $pmc_disable = sub {
         }
     }
     return $pmc_file_path_absolute_disabled;
-};
+}
 
 # re-enable a package's temporarily-disabled PMC file, if it exists
-our boolean $pmc_reenable = sub {
-    ( my string $file_name ) = @_;
+sub pmc_reenable {
+    { my boolean $RETURN_TYPE };
+    ( my string $file_name ) = @ARG;
 #    RPerl::diag( 'in Compiler::pmc_reenable(), received $file_name = ' . $file_name . "\n" );
     if ((defined $file_name) and ($file_name ne q{})) {
         if ((substr $file_name, -13, 13) ne '.PMC_DISABLED') {
@@ -434,12 +438,15 @@ our boolean $pmc_reenable = sub {
         }
         return 1;
     }
-    else { return 0; }
-};
+    else {
+        return 0;
+    }
+}
 
 # call RPerl::eval_use() to perform a runtime use on a package, with dependencies-specific warning message
-our integer $eval_use_dependencies = sub {
-    ( my string $package_name ) = @_;
+sub eval_use_dependencies {
+    { my integer $RETURN_TYPE };
+    ( my string $package_name ) = @ARG;
 #    RPerl::diag( 'in Compiler::eval_use(), received $package_name = ' . $package_name . "\n" );
 
     my integer $eval_retval = RPerl::eval_use($package_name, 0);
@@ -454,17 +461,17 @@ our integer $eval_use_dependencies = sub {
         RPerl::warning("\n");
     }
 #    RPerl::diag( 'in Compiler::pmc_disable(), EVAL USED $package_name = ' . $package_name . "\n" );
-
     return $eval_retval;
-};
+}
 =cut
 
 # [[[ COMPILE RPERL TO RPERL, TEST MODE ]]]
 # [[[ COMPILE RPERL TO RPERL, TEST MODE ]]]
 # [[[ COMPILE RPERL TO RPERL, TEST MODE ]]]
 
-our string_hashref $rperl_to_rperl__parse_generate = sub {
-    ( my string $rperl_input_file_name, my string_hashref $rperl_output_file_name_group, my string_hashref $rperl_source_group, my string_hashref $modes ) = @_;
+sub rperl_to_rperl__parse_generate {
+    { my string_hashref $RETURN_TYPE };
+    ( my string $rperl_input_file_name, my string_hashref $rperl_output_file_name_group, my string_hashref $rperl_source_group, my string_hashref $modes ) = @ARG;
     my object $rperl_ast;
 
 #    RPerl::diag( 'in Compiler->rperl_to_rperl__parse_generate(), received $rperl_input_file_name = ' . $rperl_input_file_name . "\n" );
@@ -500,14 +507,15 @@ our string_hashref $rperl_to_rperl__parse_generate = sub {
     # always return $rperl_source_group to maintain consistent return type,
     # only utilized for GENERATE compile mode during dependencies
     return $rperl_source_group;
-};
+}
 
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 # [[[ COMPILE RPERL TO XS & BINARY ]]]
 
-our string_hashref $rperl_to_xsbinary__parse_generate_compile = sub {
-    ( my string $rperl_input_file_name, my string_hashref $cpp_output_file_name_group, my string_hashref $cpp_source_group, my string_hashref $modes ) = @_;
+sub rperl_to_xsbinary__parse_generate_compile {
+    { my string_hashref $RETURN_TYPE };
+    ( my string $rperl_input_file_name, my string_hashref $cpp_output_file_name_group, my string_hashref $cpp_source_group, my string_hashref $modes ) = @ARG;
     my object $rperl_ast;
 
 #    RPerl::diag( 'in Compiler->rperl_to_xsbinary__parse_generate_compile(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
@@ -558,12 +566,12 @@ our string_hashref $rperl_to_xsbinary__parse_generate_compile = sub {
     # always return $cpp_source_group to maintain consistent return type,
     # only utilized for GENERATE compile mode during dependencies
     return $cpp_source_group;
-};
+}
 
 # generate output file name group(s) based on input file name(s)
-#sub generate_output_file_names {
-our hashref_arrayref $generate_output_file_names = sub {
-    ( my string_arrayref $input_file_names, my string_arrayref $output_file_name_prefixes, my integer $input_files_count, my string_hashref $modes ) = @_;
+sub generate_output_file_names {
+    { my hashref_arrayref $RETURN_TYPE };
+    ( my string_arrayref $input_file_names, my string_arrayref $output_file_name_prefixes, my integer $input_files_count, my string_hashref $modes ) = @ARG;
 
     #    RPerl::diag('in Compiler::generate_output_file_names(), received $input_file_names = ' . "\n" . Dumper($input_file_names) . "\n");
     #    RPerl::diag('in Compiler::generate_output_file_names(), received $output_file_name_prefixes = ' . "\n" . Dumper($output_file_name_prefixes) . "\n");
@@ -724,13 +732,13 @@ our hashref_arrayref $generate_output_file_names = sub {
 
 #        RPerl::diag('in Compiler::generate_output_file_names(), bottom of loop ' . $i . ' of ' . ($input_files_count - 1) . ", have \$output_file_name_groups->[$i] = \n" . Dumper( $output_file_name_groups->[$i] ) . "\n");
     }
-
     return $output_file_name_groups;
-};
+}
 
 # Write Source Code Files To File System
-our void $save_source_files = sub {
-    ( my string_hashref $source_group, my string_hashref $file_name_group, my string_hashref $modes ) = @_;
+sub save_source_files {
+    { my void $RETURN_TYPE };
+    ( my string_hashref $source_group, my string_hashref $file_name_group, my string_hashref $modes ) = @ARG;
 
 #    RPerl::diag( q{in Compiler::save_source_files(), received $source_group =} . "\n" . Dumper($source_group) . "\n" );
 #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
@@ -848,11 +856,13 @@ our void $save_source_files = sub {
     }
 
     RPerl::verbose( ' done.' . "\n" );
-};
+    return;
+}
 
 # replace __NEED_HEADER_PATH or __NEED_CPP_PATH with proper C++ header path
-our string $post_processor_cpp__header_or_cpp_path = sub {
-    ( my string $source_CPP, my string $file_path ) = @_;
+sub post_processor_cpp__header_or_cpp_path {
+    { my string $RETURN_TYPE };
+    ( my string $source_CPP, my string $file_path ) = @ARG;
 
     # remove leading '.\' or './' if present
     if ( $OSNAME eq 'MSWin32' ) {
@@ -872,11 +882,12 @@ our string $post_processor_cpp__header_or_cpp_path = sub {
     $source_CPP =~ s/__NEED_HEADER_PATH/$file_path/gxms;
     $source_CPP =~ s/__NEED_CPP_PATH/$file_path/gxms;
     return $source_CPP;
-};
+}
 
 # remove leading library path if present, because it should already be enabled in RPerl/Inline.pm via -Ifoo subcompiler argument
-our string $post_processor_cpp__lib_path_delete = sub {
-    ( my string $path ) = @_;
+sub post_processor_cpp__lib_path_delete {
+    { my string $RETURN_TYPE };
+    ( my string $path ) = @ARG;
 
     # DEV NOTE: sometimes MS Windows OS has forward slashes in the 'blib/lib/' part of the path, so we do not differentiate by OS
     if ( ( substr $path, 0, 4 ) eq 'lib\\' ) {
@@ -915,13 +926,13 @@ our string $post_processor_cpp__lib_path_delete = sub {
     elsif ( ( substr $path, 0, 11 ) eq './blib/lib/' ) {
         substr $path, 0, 11, q{};
     }
-
     return $path;
-};
+}
 
 # replace hard-coded PERLOPS_PERLTYPES with CPPOPS_*TYPES
-our string_hashref $post_processor_cpp__types_change = sub {
-    ( my string_hashref $source_group, my string_hashref $modes ) = @_;
+sub post_processor_cpp__types_change {
+    { my string_hashref $RETURN_TYPE };
+    ( my string_hashref $source_group, my string_hashref $modes ) = @ARG;
     my string $mode_tagline = $modes->{ops} . 'OPS_' . $modes->{types} . 'TYPES';
     if ( exists $source_group->{H} ) {
         $source_group->{H} =~ s/PERLOPS_PERLTYPES/$mode_tagline/gxms;
@@ -930,11 +941,12 @@ our string_hashref $post_processor_cpp__types_change = sub {
         $source_group->{CPP} =~ s/PERLOPS_PERLTYPES/$mode_tagline/gxms;
     }
     return $source_group;
-};
+}
 
 # remove Perl comments
-our string $post_processor_perl__comments_whitespace_delete = sub {
-    ( my string $input_source_code ) = @_;
+sub post_processor_perl__comments_whitespace_delete {
+    { my string $RETURN_TYPE };
+    ( my string $input_source_code ) = @ARG;
 
     my string_arrayref $input_source_code_split = [ ( split /\n/xms, $input_source_code ) ];
     my string_arrayref $input_source_code_split_tmp = [];
@@ -1038,12 +1050,13 @@ our string $post_processor_perl__comments_whitespace_delete = sub {
         push @{$input_source_code_split_tmp}, $input_source_code_line;
     }
     return join "\n", @{$input_source_code_split_tmp};
-};
+}
 
 # remove C++ comments
 # NEED TEST: create full tests for this subroutine
-our string $post_processor_cpp__comments_whitespace_delete = sub {
-    ( my string $input_source_code ) = @_;
+sub post_processor_cpp__comments_whitespace_delete {
+    { my string $RETURN_TYPE };
+    ( my string $input_source_code ) = @ARG;
 
     my string_arrayref $input_source_code_split = [ ( split /\n/xms, $input_source_code ) ];
     my string_arrayref $input_source_code_split_tmp = [];
@@ -1139,12 +1152,12 @@ our string $post_processor_cpp__comments_whitespace_delete = sub {
         push @{$input_source_code_split_tmp}, $input_source_code_line;
     }
     return join "\n", @{$input_source_code_split_tmp};
-};
+}
 
 # remove unnecessary absolute paths
-#our string $post_processor__absolute_path_delete = sub {  # DEV NOTE: must have non-typed sub header to be called from BEGIN block in t/10_precompiled_oo_inherit.t
 sub post_processor__absolute_path_delete {
-    ( my string $input_path ) = @_;
+    { my string $RETURN_TYPE };
+    ( my string $input_path ) = @ARG;
 
 #    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), received $input_path = ' . $input_path . "\n" );
 
@@ -1160,14 +1173,13 @@ sub post_processor__absolute_path_delete {
     if ( ( substr $input_path, 0, ( length $current_working_directory ) ) eq $current_working_directory ) {
         return substr $input_path, ( ( length $current_working_directory ) + 1 );
     }
-    else {
-        return $input_path;
-    }
+    return $input_path;  # this comment is a test of find_replace_old_subroutine_headers.sh
 }
 
 # generate PMC file
-our string $post_processor_cpp__pmc_generate = sub {
-    ( my string_hashref $source_group, my string_hashref $file_name_group, my string_hashref $modes ) = @_;
+sub post_processor_cpp__pmc_generate {
+    { my void $RETURN_TYPE };
+    ( my string_hashref $source_group, my string_hashref $file_name_group, my string_hashref $modes ) = @ARG;
 
     # NEED FIX WIN32: handle back-slash for Win32 instead of forward-slash only for *NIX
     my string $cpp_file_path = $file_name_group->{CPP};
@@ -1338,11 +1350,13 @@ our string $post_processor_cpp__pmc_generate = sub {
             $i++;
         }
     }
-};
+    return;
+}
 
 # Auto-Parallelize from Serial C++ File to Parallel C++ File via Pluto PolyCC & OpenMP
-our void $cpp_to_openmp_cpp = sub {
-    ( my string_hashref $cpp_output_file_name_group, my string_hashref $modes ) = @_;
+sub cpp_to_openmp_cpp {
+    { my void $RETURN_TYPE };
+    ( my string_hashref $cpp_output_file_name_group, my string_hashref $modes ) = @ARG;
 
     RPerl::diag( q{in Compiler::cpp_to_openmp_cpp(), received $cpp_output_file_name_group =} . "\n" . Dumper($cpp_output_file_name_group) . "\n" );
 
@@ -1456,11 +1470,13 @@ our void $cpp_to_openmp_cpp = sub {
 
     close $FILE_HANDLE_POLYCC
         or die 'ERROR Exxxxx, COMPILER, PARALLELIZATION: Cannot close file ' . q{'} . $cpp_output_file_name_group->{OPENMP_CPP} . q{'} . ' after writing, ' . $OS_ERROR . ', dying' . "\n";
-};
+    return;
+}
 
 # Sub-Compile from C++-Parsable String to Perl-Linkable XS & Machine-Readable Binary
-our void $cpp_to_xsbinary__subcompile = sub {
-    ( my string_hashref $cpp_output_file_name_group, my string_hashref $modes ) = @_;
+sub cpp_to_xsbinary__subcompile {
+    { my void $RETURN_TYPE };
+    ( my string_hashref $cpp_output_file_name_group, my string_hashref $modes ) = @ARG;
 
   #    RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $cpp_output_file_name_group =} . "\n" . Dumper($cpp_output_file_name_group) . "\n" );
   #    RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), received $modes =} . "\n" . Dumper($modes) . "\n" );
@@ -1742,6 +1758,7 @@ our void $cpp_to_xsbinary__subcompile = sub {
 
         RPerl::verbose( '     deferred.' . "\n" );
     }
-};
+    return;
+}
 
 1;    # end of class

@@ -18,9 +18,11 @@ our hashref $properties = {};
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 # OO INHERITANCE TESTING
-our void::method $empty_method = sub {
+sub empty_method {
+    { my void::method $RETURN_TYPE };
     ( my object $self ) = @ARG;
     print 'Hello, World!' . "\n";
-};
+    return;
+}
 
 1;                  # end of class

@@ -18,8 +18,8 @@ use RPerl::Inline;
 # <<< OO PROPERTIES, ACCESSORS & MUTATORS, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>
 # <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>  # <<< CHANGE_ME: add real shims after this line or delete it >>>
 # <<< C++ LOADER >>>
-#our void::method $cpp_load = sub {
 sub cpp_load {
+    { my void::method $RETURN_TYPE };
     my $need_load_cpp = 0;
     if (    ( exists $main::{'RPerl__CompileUnit__Module__MODE_ID'} )
         and ( defined &{ $main::{'RPerl__CompileUnit__Module__MODE_ID'} } ) )

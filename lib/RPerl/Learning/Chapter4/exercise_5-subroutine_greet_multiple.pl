@@ -14,7 +14,8 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our string_arrayref $greet = sub {
+sub greet {
+    { my string_arrayref $RETURN_TYPE };
     ( my string $name, my string_arrayref $previous_names ) = @ARG;
     print 'Hi ', $name, '!  ';
     if ((scalar @{$previous_names}) == 0) {
@@ -25,7 +26,7 @@ our string_arrayref $greet = sub {
     }
     push @{$previous_names}, $name;
     return $previous_names;
-};
+}
 
 # [[[ OPERATIONS ]]]
 

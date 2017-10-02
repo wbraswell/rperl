@@ -16,14 +16,15 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our number $total = sub {
+sub total {
+    { my number $RETURN_TYPE };
     (my number_arrayref $input_numbers) = @ARG;
     my number $retval = 0;
     foreach my number $input_number (@{$input_numbers}) {
         $retval += $input_number;
     }
     return $retval;
-};
+}
 
 # [[[ OPERATIONS ]]]
 

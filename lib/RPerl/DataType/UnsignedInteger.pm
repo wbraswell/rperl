@@ -3,7 +3,7 @@ package RPerl::DataType::UnsignedInteger;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.007_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -48,6 +48,7 @@ use warnings;
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(unsigned_integer_CHECK unsigned_integer_CHECKTRACE unsigned_integer_to_boolean unsigned_integer_to_integer unsigned_integer_to_number unsigned_integer_to_character unsigned_integer_to_string);
+our @EXPORT_OK = qw(unsigned_integer__typetest0 unsigned_integer__typetest1);
 
 # [[[ TYPE-CHECKING ]]]
 sub unsigned_integer_CHECK {

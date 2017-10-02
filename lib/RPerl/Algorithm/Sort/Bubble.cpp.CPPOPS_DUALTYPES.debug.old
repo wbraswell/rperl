@@ -16,7 +16,7 @@ using std::cout;  using std::cerr;  using std::endl;
 ////# [[[ SUBROUTINES & OO METHODS ]]]
 
 ////# call out to sort integer_data, return nothing
-////our void::method $integer_sort = sub {(my object $self) = @_;
+////sub integer_sort { { my void::method $RETURN_TYPE }; (my object $self) = @ARG;
 void RPerl__Algorithm__Sort__Bubble::integer_sort()
 ////;
 {
@@ -29,7 +29,7 @@ void RPerl__Algorithm__Sort__Bubble::integer_sort()
     SvREFCNT_dec(this->integer_data);
     if (RPERL_DEBUG2) { fprintf(stderr, "in integer_sort(), bottom of subroutine, have post-SvREFCNT_dec pre-DUMPER SV_REFERENCE_COUNT(this->integer_data) = %u\n", SV_REFERENCE_COUNT(this->integer_data));  fprintf(stderr, "in integer_sort(), bottom of subroutine, have post-SvREFCNT_dec this->integer_data = %s", RPerl__DUMPER(this->integer_data));  fprintf(stderr, "in integer_sort(), bottom of subroutine, have post-SvREFCNT_dec post-DUMPER SV_REFERENCE_COUNT(this->integer_data) = %u\n\n", SV_REFERENCE_COUNT(this->integer_data));  }
     if (RPERL_DEBUG2) { fprintf(stderr, "in integer_sort(), bottom of subroutine, have pre-DUMPER SV_REFERENCE_COUNT(this->integer_data) = %u\n", SV_REFERENCE_COUNT(this->integer_data));  fprintf(stderr, "in integer_sort(), bottom of subroutine, have this->integer_data = %s", RPerl__DUMPER(this->integer_data));  fprintf(stderr, "in integer_sort(), bottom of subroutine, post-DUMPER SV_REFERENCE_COUNT(this->integer_data) = %u\n\n", SV_REFERENCE_COUNT(this->integer_data));  }
-////};
+////}
 }
 
 void RPerl__Algorithm__Sort__Bubble::number_sort()
@@ -42,13 +42,13 @@ void RPerl__Algorithm__Sort__Bubble::number_sort()
 
 
 
-////our void::method $inherited__Bubble = sub { ( my object $self, my string $person ) = @_;
+////sub inherited__Bubble { { my void::method $RETURN_TYPE }; ( my object $self, my string $person ) = @ARG;
 ////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n"); };
 void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV* person) {
     cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FRIED\n";
 }
 
-////our void::method $inherited = sub { ( my object $self, my string $person ) = @_;
+////sub inherited { { my void::method $RETURN_TYPE }; ( my object $self, my string $person ) = @ARG;
 ////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', ILLOGICAL' . "\n"); };
 void RPerl__Algorithm__Sort__Bubble::inherited(SV* person) {
     cout << "in CPPOPS_PERLTYPES Bubble->inherited(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", ILLOGICAL\n";
@@ -57,7 +57,7 @@ void RPerl__Algorithm__Sort__Bubble::inherited(SV* person) {
 
 ////# original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 ////# sort data, return sorted data
-////our integer_arrayref $integer_bubblesort = sub {(my integer_arrayref $data) = @_;
+////sub integer_bubblesort { { my integer_arrayref $RETURN_TYPE }; (my integer_arrayref $data) = @ARG;
 SV* integer_bubblesort(SV* integer_data)  // DEV NOTE: properly creates local-to-function SV* integer_data here, does not get confused with this->integer_data object property, even though they share a name
 //void integer_bubblesort(SV* integer_data)  // TEMPORARY DEBUGGING
 ////;
@@ -178,7 +178,7 @@ SV* integer_bubblesort(SV* integer_data)  // DEV NOTE: properly creates local-to
 //  PUTBACK;
 //  PUTBACK;  FREETMPS;  LEAVE;
     return integer_data;
-////};
+////}
 }
 
 SV* number_bubblesort(SV* number_data)
@@ -221,11 +221,11 @@ SV* number_bubblesort(SV* number_data)
 
 // OO INHERITANCE TESTING, CONTINUED
 
-////our string $uninherited__Bubble = sub { ( my string $person) = @_; RPerl::diag("in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received \$person = '$person', MITOCHONDRIAL\n"); return ('Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES'); };
+////sub uninherited__Bubble { { my string $RETURN_TYPE }; ( my string $person) = @ARG; RPerl::diag("in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received \$person = '$person', MITOCHONDRIAL\n"); return ('Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES'); }
 SV* uninherited__Bubble(SV* person) { cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n"; return(newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0)); }
 
 // DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
-////our string $uninherited = sub { ( my string $person) = @_; RPerl::diag("in PERLOPS_PERLTYPES Bubble::uninherited(), received \$person = '$person', TETRAHEDRON\n"); return ('Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES'); };
+////sub uninherited { { my string $RETURN_TYPE }; ( my string $person) = @ARG; RPerl::diag("in PERLOPS_PERLTYPES Bubble::uninherited(), received \$person = '$person', TETRAHEDRON\n"); return ('Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES'); }
 SV* uninherited(SV* person) { cout << "in CPPOPS_PERLTYPES Bubble::uninherited(), received person = '" << SvPV_nolen(person) << "', TETRAHEDRON\n"; return(newSVpv("Bubble::uninherited() ROCKS! CPPOPS_PERLTYPES", 0)); }
 
 // TYPE TESTING
@@ -284,7 +284,7 @@ SV* number_bubblesort__typetest0(SV* lucky_numbers)
 ////# [[[ SUBROUTINES & OO METHODS ]]]
 
 ////# call out to sort integer_data, return nothing
-////our void::method $integer_sort = sub {(my object $self) = @_;
+////sub integer_sort { { my void::method $RETURN_TYPE }; (my object $self) = @ARG;
 void RPerl__Algorithm__Sort__Bubble::integer_sort()
 ////;
 {
@@ -294,7 +294,7 @@ void RPerl__Algorithm__Sort__Bubble::integer_sort()
     this->integer_data = integer_bubblesort(this->integer_data);
 
     if (RPERL_DEBUG2) { fprintf(stderr, "in integer_sort(), bottom of subroutine, have this->integer_data = %s\n", integer_arrayref_to_string(this->integer_data).c_str()); }
-////};
+////}
 }
 
 void RPerl__Algorithm__Sort__Bubble::number_sort()
@@ -306,14 +306,14 @@ void RPerl__Algorithm__Sort__Bubble::number_sort()
 
 
 
-////our void::method $inherited__Bubble = sub { ( my object $self, my string $person ) = @_; 
-////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n"); };
+////sub inherited__Bubble { { my void::method $RETURN_TYPE }; ( my object $self, my string $person ) = @ARG; 
+////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n"); }
 void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(string person) {
     RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited__Bubble(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FRIED" + (const string) "\n");
 }
 
-////our void::method $inherited = sub { ( my object $self, my string $person ) = @_; 
-////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', ILLOGICAL' . "\n"); };
+////sub inherited { { my void::method $RETURN_TYPE }; ( my object $self, my string $person ) = @ARG; 
+////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', ILLOGICAL' . "\n"); }
 void RPerl__Algorithm__Sort__Bubble::inherited(string person) {
     RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", ILLOGICAL" + (const string) "\n");
 }
@@ -322,7 +322,7 @@ void RPerl__Algorithm__Sort__Bubble::inherited(string person) {
 
 ////# original algorithm: comparison-based and stable [O(n**2) average time, O(1) worst-case extra space]
 ////# sort integer_data, return sorted integer_data
-////our integer_arrayref $integer_bubblesort = sub {(my integer_arrayref $integer_data) = @_;
+////sub integer_bubblesort { { my integer_arrayref $RETURN_TYPE }; (my integer_arrayref $integer_data) = @ARG;
 integer_arrayref integer_bubblesort(integer_arrayref integer_data)  // DEV NOTE: properly creates local-to-function integer_arrayref integer_data here, does not get confused with this->integer_data object property, even though they share a name
 ////;
 {
@@ -418,7 +418,7 @@ integer_arrayref integer_bubblesort(integer_arrayref integer_data)  // DEV NOTE:
 ////    # integer_data is now sorted via top-level nested iteration [O(n**2) total time, O(1) total extra space]
 ////    return $integer_data;
     return integer_data;
-////};
+////}
 }
 
 number_arrayref number_bubblesort(number_arrayref number_data)
@@ -450,18 +450,18 @@ number_arrayref number_bubblesort(number_arrayref number_data)
 
 // OO INHERITANCE TESTING, CONTINUED
 
-////our string $uninherited__Bubble = sub { ( my string $person ) = @_;
+////sub uninherited__Bubble { { my string $RETURN_VALUE }; ( my string $person ) = @ARG;
 ////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n");
-////    return 'Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES'; };
+////    return 'Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES'; }
 string uninherited__Bubble(string person) {
     RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble::uninherited__Bubble(), received $person = " + person + (const string) ", MITOCHONDRIAL" + (const string) "\n");
     return (const string) "Bubble::uninherited__Bubble() RULES! CPPOPS_CPPTYPES";
 }
 
 // DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
-////our string $uninherited = sub { ( my string $person ) = @_;
+////sub uninherited { { my string $RETURN_TYPE }; ( my string $person ) = @ARG;
 ////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited(), received $person = ' . $person . ', TETRAHEDRON' . "\n");
-////    return 'Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES'; };
+////    return 'Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES'; }
 string uninherited(string person) {
     RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble::uninherited(), received person = " + person + (const string) ", TETRAHEDRON" + (const string) "\n");
     return (const string) "Bubble::uninherited() ROCKS! CPPOPS_CPPTYPES";

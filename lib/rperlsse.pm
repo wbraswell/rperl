@@ -10,7 +10,7 @@ use RPerl::DataStructure::SSENumberPair;
 use RPerl::Operation::Expression::Operator::SSEIntrinsics;
 
 # [[[ EXPORTS ]]]
-use Exporter 'import';
+use RPerl::Exporter 'import';
 our @EXPORT = qw(sse_recip_sqrt_32bit_on_64bit);
 
 1;  # end of package

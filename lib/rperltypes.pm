@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.009_000;
+our $VERSION = 0.010_000;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -57,7 +57,7 @@ use RPerl::DataStructure::Hash::Reference;
 #use RPerl::DataStructure::Graph::Tree::Binary;
 #use RPerl::DataStructure::Graph::Tree::Binary::Node;
 
-# DEV NOTE, CORRELATION #rp008: use Exporter here instead of rperltypesconv.pm
+# DEV NOTE, CORRELATION #rp008: use RPerl::Exporter here instead of rperltypesconv.pm
 
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
@@ -73,6 +73,19 @@ our @EXPORT = (
     @RPerl::DataType::Unknown::EXPORT,
     @RPerl::DataStructure::Array::SubTypes::EXPORT,
     @RPerl::DataStructure::Hash::SubTypes::EXPORT
+);
+our @EXPORT_OK = ( 
+    @RPerl::DataType::Void::EXPORT_OK,
+    @RPerl::DataType::Boolean::EXPORT_OK,
+    @RPerl::DataType::UnsignedInteger::EXPORT_OK,
+    @RPerl::DataType::Integer::EXPORT_OK,
+    @RPerl::DataType::Number::EXPORT_OK,
+    @RPerl::DataType::Character::EXPORT_OK,
+    @RPerl::DataType::String::EXPORT_OK,
+    @RPerl::DataType::Scalar::EXPORT_OK,
+    @RPerl::DataType::Unknown::EXPORT_OK,
+    @RPerl::DataStructure::Array::SubTypes::EXPORT_OK,
+    @RPerl::DataStructure::Hash::SubTypes::EXPORT_OK
 );
 
 # [[[ OBJECT-ORIENTED ]]]
@@ -114,9 +127,9 @@ INIT {
 # [[[ GENERIC OVERLOADED TYPE CONVERSION ]]]
 # [[[ GENERIC OVERLOADED TYPE CONVERSION ]]]
 
-#my number $to_number = sub {
 sub to_number {
-    ( my unknown $variable) = @_;
+    { my number $RETURN_TYPE };
+    ( my unknown $variable) = @ARG;
     if ( not defined $variable ) { return 0; }
     my string $type = type($variable);
     if    ( $type eq 'unknown' ) { return ($variable + 0); }
@@ -130,13 +143,14 @@ sub to_number {
     else {
         croak q{ERROR ERPTY01: Invalid data type '} . $type . q{' specified, croaking};
     }
+    return;
 }
 
 # NEED UPGRADE: don't fall back to Perl qq{} string interpolation or Dumper() for stringification;
 # Dumper will fail to call *_to_string() until stringification overloading is implemented
-#my string $to_string = sub {
 sub to_string {
-    ( my unknown $variable) = @_;
+    { my string $RETURN_TYPE };
+    ( my unknown $variable) = @ARG;
 #    RPerl::diag('in rperltypes::to_string(), received $variable = ' . $variable . "\n");
     if ( not defined $variable ) { return 'undef'; }
     my string $type = type($variable);
@@ -157,20 +171,21 @@ sub to_string {
         chop $retval;
         return $retval;
     }
+    return;
 }
 
 # DEV NOTE: class() is a wrapper around blessed() from Scalar::Util, class() is preferred for readability, 
 # blessed() and class() both generate as classname() in C++ to avoid conflict with 'class' C++ reserved word
-#my string $class = sub {
 sub class {
-    ( my unknown $object ) = @_;
+    { my string $RETURN_TYPE };
+    ( my unknown $object ) = @ARG;
     return blessed($object);
 }
 
 # DEV NOTE: type() and types() are more powerful replacements for ref(), and ref() is not supported in RPerl
-#my string $type = sub {
 sub type {
-    ( my unknown $variable, my integer $recurse_level ) = @_;
+    { my string $RETURN_TYPE };
+    ( my unknown $variable, my integer $recurse_level ) = @ARG;
     if ( not defined $variable ) { return 'unknown'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
@@ -186,11 +201,12 @@ sub type {
         my arrayref $types = types_recurse( $variable, $recurse_level, $is_type );
         return $types->[0];    # only return flat type string, discard nested type hashref
     }
+    return;
 }
 
-#my string_hashref $types = sub {
 sub types {
-    ( my unknown $variable, my integer $recurse_level ) = @_;
+    { my string_hashref $RETURN_TYPE };
+    ( my unknown $variable, my integer $recurse_level ) = @ARG;
     if ( not defined $variable ) { return 'unknown'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
@@ -203,11 +219,12 @@ sub types {
         my arrayref $types = types_recurse( $variable, $recurse_level, $is_type );
         return $types->[1];    # only return nested type hashref, discard flat type string
     }
+    return;
 }
 
-#my integer_hashref build_is_type = sub {
 sub build_is_type {
-    ( my unknown $variable ) = @_;
+    { my integer_hashref $RETURN_TYPE };
+    ( my unknown $variable ) = @ARG;
 
     my integer_hashref $is_type = {
         boolean   => main::RPerl_SvBOKp($variable),
@@ -229,13 +246,12 @@ sub build_is_type {
     if ( defined $is_type->{class} ) { $is_type->{blessed} = 1; }
 
     #    RPerl::diag('in rperltypes::build_is_type(), have $is_type =' . "\n" . Dumper($is_type) . "\n");
-
     return $is_type;
 }
 
-#my string_hashref $types_recurse = sub {
 sub types_recurse {
-    ( my unknown $variable, my integer $recurse_level, my integer_hashref $is_type ) = @_;
+    { my string_hashref $RETURN_TYPE };
+    ( my unknown $variable, my integer $recurse_level, my integer_hashref $is_type ) = @ARG;
 
     #    RPerl::diag('in rperltypes::types_recurse(), received $variable =' . "\n" . Dumper($variable) . "\n");
 
@@ -521,6 +537,7 @@ sub types_recurse {
         }
         return [ $type, $types ];
     }
+    return;
 }
 1;
 
@@ -535,9 +552,9 @@ if ( not defined $RPerl::INCLUDE_PATH ) {
 package  # hide from PAUSE indexing
     rperltypes;
 
-#our void $types_input_enable = sub { (my $types_input) = @_;  # NEED FIX: RPerl typed functions not working in types.pm, must call as normal Perl function
 sub types_enable {
-    ( my $types_input ) = @_;
+    { my void $RETURN_TYPE };
+    ( my $types_input ) = @ARG;
 
 #	RPerl::diag('in rperltypes::types_enable(), received $types_input = ' . $types_input . "\n");
 
@@ -548,7 +565,6 @@ sub types_enable {
     $RPerl::TYPES_CCFLAG = ' -D__' . $types_input . '__TYPES';
 
 #	RPerl::diag('in rperltypes::types_enable(), set $RPerl::TYPES_CCFLAG = ' . $RPerl::TYPES_CCFLAG . "\n");
-
     return;
 }
 

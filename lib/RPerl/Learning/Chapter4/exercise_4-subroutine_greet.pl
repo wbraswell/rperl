@@ -14,7 +14,8 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our string $greet = sub {
+sub greet {
+    { my string $RETURN_TYPE };
     ( my string $name, my string $previous_name ) = @ARG;
     print 'Hi ', $name, '!  ';
     if ($previous_name eq q{}) {
@@ -24,7 +25,7 @@ our string $greet = sub {
         print $previous_name, ' is also here!', "\n";
     }
     return $name;
-};
+}
 
 # [[[ OPERATIONS ]]]
 

@@ -15,7 +15,8 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our void $tac = sub {
+sub tac {
+    { my void $RETURN_TYPE };
     ( my string_arrayref $command_line_arguments ) = @ARG;
     $command_line_arguments = [ reverse @{$command_line_arguments} ];
     foreach my string $file_name ( @{$command_line_arguments} ) {
@@ -53,7 +54,8 @@ our void $tac = sub {
             croak 'ERROR: Failed to close file ', $file_name, ' after reading, croaking';
         }
     }
-};
+    return;
+}
 
 # [[[ OPERATIONS ]]]
 

@@ -190,7 +190,7 @@ Constant:                'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeIn
 #                        LBRACE WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal (OP21_LIST_COMMA WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal)* '}' ;
 
 
-#Subroutine:              'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation* '}' ';' ;  # DEPRECATED, CORRELATION #rp120: subroutine header 'our integer $foo = sub { ... };'
+#Subroutine:              'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation* '}' ';' ;  # DEPRECATED, CORRELATION #rp120: old subroutine header
 Subroutine:              SUB WORD LBRACE LBRACE MY Type '$RETURN_TYPE' '}' ';' SubroutineArguments? Operation* '}' ;
 
 

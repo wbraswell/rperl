@@ -28,17 +28,22 @@ our hashref $properties = {
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
-our void::method $integer_sort = sub {
+sub integer_sort {
+    { my void::method $RETURN_TYPE };
     ( my RPerl::Algorithm::Sort::Bubble $self ) = @ARG;
     $self->{integer_data} = RPerl::Algorithm::Sort::Bubble::integer_bubblesort( $self->{integer_data} );
-};
+    return;
+}
 
-our void::method $number_sort = sub {
+sub number_sort {
+    { my void::method $RETURN_TYPE };
     ( my RPerl::Algorithm::Sort::Bubble $self ) = @ARG;
     $self->{number_data} = RPerl::Algorithm::Sort::Bubble::number_bubblesort( $self->{number_data} );
-};
+    return;
+}
 
-our integer_arrayref $integer_bubblesort = sub {
+sub integer_bubblesort {
+    { my integer_arrayref $RETURN_TYPE };
     ( my integer_arrayref $integer_data ) = @ARG;
     ::integer_arrayref_CHECKTRACE( $integer_data, '$integer_data', 'integer_bubblesort()' );
     my integer $is_sorted           = 0;
@@ -61,9 +66,10 @@ our integer_arrayref $integer_bubblesort = sub {
         }
     }
     return $integer_data;
-};
+}
 
-our number_arrayref $number_bubblesort = sub {
+sub number_bubblesort {
+    { my number_arrayref $RETURN_TYPE };
     ( my number_arrayref $number_data ) = @ARG;
     ::number_arrayref_CHECKTRACE( $number_data, '$number_data', 'number_bubblesort()' );
     my integer $is_sorted          = 0;
@@ -86,64 +92,76 @@ our number_arrayref $number_bubblesort = sub {
         }
     }
     return $number_data;
-};
+}
 
 # [ INHERITANCE TESTING ]
 
-our void::method $inherited__Bubble = sub {
+sub inherited__Bubble {
+    { my void::method $RETURN_TYPE };
     ( my RPerl::Algorithm::Sort::Bubble $self, my string $person ) = @ARG;
     RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n" );
-};
+    return;
+}
 
 # NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
-#our void::method $inherited__Bubble_bar_set = sub {
+#sub inherited__Bubble_bar_set {
+#   { my void::method $RETURN_TYPE };
 #    ( my RPerl::Algorithm::Sort::Bubble $self, my string $bar_new ) = @ARG;
 #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble_bar_set(), have ::class($self) = ' . ::class($self) . ' and $bar_new = ' . $bar_new . ', FRIED' . "\n" );
 #    $self->{bar} = $bar_new;
-#};
+#}
 
-our string::method $inherited__Bubble_foo_get = sub {
+sub inherited__Bubble_foo_get {
+    { my string::method $RETURN_TYPE };
     ( my RPerl::Algorithm::Sort::Bubble $self ) = @ARG;
     RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble_foo_get(), have ::class($self) = ' . ::class($self) . ', FRIED' . "\n" );
     return $self->{foo};
-};
+}
 
-our void::method $inherited__Bubble_foo_set = sub {
+sub inherited__Bubble_foo_set {
+    { my void::method $RETURN_TYPE };
     ( my RPerl::Algorithm::Sort::Bubble $self, my string $foo_new ) = @ARG;
     RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble_foo_set(), have ::class($self) = ' . ::class($self) . ' and $foo_new = ' . $foo_new . ', FRIED' . "\n" );
     $self->{foo} = $foo_new;
-};
+    return;
+}
 
-our void::method $inherited = sub {
+sub inherited {
+    { my void::method $RETURN_TYPE };
     ( my RPerl::Algorithm::Sort::Bubble $self, my string $person ) = @ARG;
     RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', ILLOGICAL' . "\n" );
-};
+    return;
+}
 
-our string $uninherited__Bubble = sub {
+sub uninherited__Bubble {
+    { my string $RETURN_TYPE };
     ( my string $person ) = @ARG;
     RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n" );
     return 'Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES';
-};
+}
 
 # DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
-our string $uninherited = sub {
+sub uninherited {
+    { my string $RETURN_TYPE };
     ( my string $person ) = @ARG;
     RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited(), received $person = ' . $person . ', TETRAHEDRON' . "\n" );
     return 'Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES';
-};
+}
 
 # [ TYPE TESTING ]
 
-our string $integer_bubblesort__typetest0 = sub {
+sub integer_bubblesort__typetest0 {
+    { my string $RETURN_TYPE };
     ( my integer_arrayref $lucky_integers ) = @ARG;
     ::integer_arrayref_CHECKTRACE( $lucky_integers, '$lucky_integers', 'integer_bubblesort__typetest0()' );
     return ( ::integer_arrayref_to_string( RPerl::Algorithm::Sort::Bubble::integer_bubblesort($lucky_integers) ) . 'PERLOPS_PERLTYPES' );
-};
+}
 
-our string $number_bubblesort__typetest0 = sub {
+sub number_bubblesort__typetest0 {
+    { my string $RETURN_TYPE };
     ( my number_arrayref $lucky_numbers ) = @ARG;
     ::number_arrayref_CHECKTRACE( $lucky_numbers, '$lucky_numbers', 'number_bubblesort__typetest0()' );
     return ( ::number_arrayref_to_string( RPerl::Algorithm::Sort::Bubble::number_bubblesort($lucky_numbers) ) . 'PERLOPS_PERLTYPES' );
-};
+}
 
 1;    # end of class

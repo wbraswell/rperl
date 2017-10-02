@@ -40,7 +40,8 @@ our hashref $properties = {};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
-our string_hashref::method $ast_to_rperl__generate = sub {
+sub ast_to_rperl__generate {
+    { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $rperl_source_group = { PMC => q{} };
     my string_hashref $rperl_source_subgroup;
@@ -95,17 +96,19 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     $rperl_source_group->{PMC} .= $right_brace . $semicolon . "\n\n";
     return $rperl_source_group;
-};
+}
 
-our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
+sub ast_to_cpp__generate__CPPOPS_PERLTYPES {
+    { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group = { CPP => q{// <<< RP::CB::S __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n" };
 
     #...
     return $cpp_source_group;
-};
+}
 
-our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = sub {
+sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
+    { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my string_hashref $modes) = @ARG;
 #    RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
  
@@ -157,9 +160,10 @@ our string_hashref::method $ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES = 
 
     $cpp_source_group->{H} .= ');';
     return $cpp_source_group;
-};
+}
 
-our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
+sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
+    { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
@@ -228,11 +232,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
     $cpp_source_group->{CPP} = $CPP_saved;
 
     $cpp_source_group->{CPP} .= '}';
-
     return $cpp_source_group;
-};
+}
 
-our string_hashref::method $ast_to_cpp__generate_shims__CPPOPS_CPPTYPES = sub {
+sub ast_to_cpp__generate_shims__CPPOPS_CPPTYPES {
+    { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my string_hashref $modes) = @ARG;
 #    RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shims__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
  
@@ -326,8 +330,7 @@ our string_hashref::method $ast_to_cpp__generate_shims__CPPOPS_CPPTYPES = sub {
     }
 
     $cpp_source_group->{CPP} .= $typeless_arguments_joined . ') ' . $namespace_underscores . $name . '(' . $typeless_arguments_joined . ')';
-
     return $cpp_source_group;
-};
+}
 
 1;    # end of class

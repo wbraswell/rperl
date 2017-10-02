@@ -10,7 +10,7 @@ use parent qw(RPerl::Operation::Expression::Operator);
 use RPerl::Operation::Expression::Operator;
 
 # [[[ INCLUDES ]]]
-use Exporter 'import';
+use RPerl::Exporter 'import';
 our @EXPORT = qw(sse_recip_sqrt_32bit_on_64bit);
 
 # [[[ CRITICS ]]]
@@ -22,9 +22,9 @@ our hashref $properties = {};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
-#our sse_number_pair $sse_recip_sqrt_32bit_on_64bit = sub {
 sub sse_recip_sqrt_32bit_on_64bit {
-    ( my sse_number_pair $argument ) = @_;
+    { my sse_number_pair $RETURN_TYPE };
+    ( my sse_number_pair $argument ) = @ARG;
     my sse_number_pair $retval = sse_number_pair->new();
     my number $argument_0_number = $argument->[0];
     my number $argument_1_number = $argument->[1];

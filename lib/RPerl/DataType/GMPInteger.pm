@@ -54,11 +54,12 @@ RPerl::HelperFunctions_cpp::cpp_load();
 use RPerl::Operation::Expression::Operator::GMPFunctions;
 
 # [[[ EXPORTS ]]]
-use Exporter 'import';
+use RPerl::Exporter 'import';
 our @EXPORT = qw(
     gmp_integer_to_boolean gmp_integer_to_unsigned_integer gmp_integer_to_integer gmp_integer_to_number gmp_integer_to_character gmp_integer_to_string
     boolean_to_gmp_integer integer_to_gmp_integer unsigned_integer_to_gmp_integer number_to_gmp_integer character_to_gmp_integer string_to_gmp_integer
 );
+our @EXPORT_OK = qw(gmp_integer__typetest0 gmp_integer__typetest1);
 
 # DEV NOTE: never call Math::BigInt->new() without arg, to avoid 'Use of uninitialized value in new' introduced in M::BI v1.999712
 sub new {

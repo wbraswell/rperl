@@ -48,8 +48,9 @@ our hashref $properties = {};
 # [[[ PROCEDURAL SUBROUTINES ]]]
 
 # convert array max index to array size (difference of 1)
-our object $arrayref_convert_index_max_to_size = sub {
-    ( my object $subexpression ) = @_;
+sub arrayref_convert_index_max_to_size {
+    { my object $RETURN_TYPE };
+    ( my object $subexpression ) = @ARG;
 
 #    RPerl::diag( 'in Generator->arrayref_convert_index_max_to_size(), received $subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($subexpression) . "\n" );
 
@@ -116,11 +117,12 @@ our object $arrayref_convert_index_max_to_size = sub {
         }
     }
     return $subexpression;
-};
+}
 
 # convert RPerl types to C++ types
-our string $type_convert_perl_to_cpp = sub {
-    ( my string $return_type, my boolean $pointerify_classes ) = @_;
+sub type_convert_perl_to_cpp {
+    { my string $RETURN_TYPE };
+    ( my string $return_type, my boolean $pointerify_classes ) = @ARG;
 
     #    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $return_type = ' . $return_type . "\n");
     #    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $pointerify_classes = ' . $pointerify_classes . "\n");
@@ -142,23 +144,25 @@ our string $type_convert_perl_to_cpp = sub {
         }
     }
     return $return_type;                                                          # much meta
-};
+}
 
 # search for dummy source code
-our boolean $dummy_source_code_find = sub {
-    ( my string_hashref $source_group ) = @_;
+sub dummy_source_code_find {
+    { my boolean $RETURN_TYPE };
+    ( my string_hashref $source_group ) = @ARG;
     foreach my string $suffix_key ( sort keys %{$source_group} ) {
         if ( $source_group->{$suffix_key} =~ /__DUMMY_SOURCE_CODE/xms ) {
             return 1;
         }
     }
     return 0;
-};
+}
 
 # line-by-line comparison of file contents vs string contents;
 # returns -1 __DUMMY_SOURCE_CODE found, 0 no difference, >0 line number of first difference
-our hashref $diff_check_file_vs_string = sub {
-    ( my string $file_name_reference, my string_hashref $source_group, my string $suffix_key, my string_hashref $file_name_group, my string_hashref $modes ) = @_;
+sub diff_check_file_vs_string {
+    { my hashref $RETURN_TYPE };
+    ( my string $file_name_reference, my string_hashref $source_group, my string $suffix_key, my string_hashref $file_name_group, my string_hashref $modes ) = @ARG;
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), TOP OF SUBROUTINE ' . "\n");
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), received $file_name_reference = ' . $file_name_reference . "\n");
 #    RPerl::diag('in Generator->diff_check_file_vs_string(), contents of file = ' . "\n");
@@ -389,11 +393,12 @@ our hashref $diff_check_file_vs_string = sub {
 
 #    RPerl::diag( 'in Generator->diff_check_file_vs_string(), about to return $return_value =' . "\n" . $return_value . "\n" );
     return $return_value;
-};
+}
 
 # Generate from RPerl AST back to RPerl Source Code
-our string_hashref $ast_to_rperl__generate = sub {
-    ( my object $node, my string_hashref $modes) = @_;
+sub ast_to_rperl__generate {
+    { my string_hashref $RETURN_TYPE };
+    ( my object $node, my string_hashref $modes) = @ARG;
 
     #    RPerl::diag("in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n");
     #    RPerl::diag("in Generator::ast_to_rperl__generate(), received \$modes =\n" . Dumper($modes) . "\n");
@@ -414,11 +419,12 @@ our string_hashref $ast_to_rperl__generate = sub {
 
     RPerl::verbose( ' done.' . "\n" );
     return $rperl_source_group;
-};
+}
 
 # Generate from RPerl AST to C++ Source Code
-our string_hashref $ast_to_cpp__generate = sub {
-    ( my object $node, my string_hashref $modes) = @_;
+sub ast_to_cpp__generate {
+    { my string_hashref $RETURN_TYPE };
+    ( my object $node, my string_hashref $modes) = @ARG;
 
     #    RPerl::diag("in Generator::ast_to_cpp__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n");
     #    RPerl::diag("in Generator::ast_to_cpp__generate(), received \$modes =\n" . Dumper($modes) . "\n");
@@ -447,12 +453,12 @@ our string_hashref $ast_to_cpp__generate = sub {
 
     RPerl::verbose( ' done.' . "\n" );
     return $cpp_source_group;
-};
+}
 
 # Append All Source Code Entries From Group 2 Onto The Respective Entries In Group 1
-#our string_hashref $source_group_append = sub {
-our void $source_group_append = sub {
-    ( my string_hashref $rperl_source_group_1, my string_hashref $rperl_source_group_2) = @_;
+sub source_group_append {
+    { my void $RETURN_TYPE };
+    ( my string_hashref $rperl_source_group_1, my string_hashref $rperl_source_group_2) = @ARG;
 
 #    RPerl::diag('in Generator::source_group_append(), received $rperl_source_group_1 =' . "\n" . Dumper($rperl_source_group_1) . "\n");
 #    RPerl::diag('in Generator::source_group_append(), received $rperl_source_group_2 =' . "\n" . Dumper($rperl_source_group_2) . "\n");
@@ -505,9 +511,11 @@ our void $source_group_append = sub {
             }
         }
     }
-};
+    return;
+}
 
-our void $grammar_rules__map = sub {
+sub grammar_rules__map {
+    { my void $RETURN_TYPE };
 
     # do not attempt to re-map grammar rules if already mapped
     if (    ( exists &CompileUnit_5::ast_to_rperl__generate )
@@ -557,6 +565,7 @@ our void $grammar_rules__map = sub {
             die 'ERROR ECOGE02, GENERATOR: Grammar rules map, failed copy subroutines into mapped namespace, dying' . "\n" . $EVAL_ERROR . "\n";
         }
     }
-};
+    return;
+}
 
 1;    # end of class

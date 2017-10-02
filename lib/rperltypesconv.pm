@@ -28,7 +28,7 @@ use RPerl::DataStructure::Hash;
 use RPerl::DataStructure::Hash::SubTypes;
 use RPerl::DataStructure::Hash::Reference;
 
-# DEV NOTE, CORRELATION #rp008: use Exporter in rperltypes.pm instead of here
+# DEV NOTE, CORRELATION #rp008: use RPerl::Exporter in rperltypes.pm instead of here
 
 =DISABLED_REPLACED_IN_RPERLTYPES
 # [[[ EXPORTS ]]]

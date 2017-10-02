@@ -19,7 +19,9 @@ our hashref $properties =
 # [[[ SUBROUTINES & OO METHODS ]]]
 
 # call out to sort data, return nothing
-our void::method $sort = sub {(my object $self) = @_;
+sub sort {
+    { my void::method $RETURN_TYPE };
+    (my object $self) = @ARG;
 	if ((ref($self->{data}) eq 'ARRAY') or ($self->{data}->isa('arrayref')))
 	{
 		if ($self->{variant} eq 'original') { $self->{data} = quicksort($self->{data}); }
@@ -27,11 +29,14 @@ our void::method $sort = sub {(my object $self) = @_;
 		else { die("Unsupported variant '" . $self->{variant} . "' detected for arrayref data type (original or inplace supported), dying"); }
 	}
 	else { die("Unsupported data structure '" . ref($self->{data}) . "' detected (only arrayref supported), dying"); }
-};
+    return;
+}
 
 # original algorithm: comparison-based and stable [O(n log n) average total time, O(n) worst-case total extra space]
 # sort data, return sorted data
-our scalartype_arrayref $quicksort = sub {(my scalartype_arrayref $data) = @_;
+sub quicksort {
+    { my scalartype_arrayref $RETURN_TYPE };
+    (my scalartype_arrayref $data) = @ARG;
 	my integer $data_length = scalar(@{$data});  # CONSTANT
 	
 #	RPerl::diag("in quicksort(), have \$data = \n" . RPerl::DUMPER($data) . "\n");
@@ -74,19 +79,22 @@ our scalartype_arrayref $quicksort = sub {(my scalartype_arrayref $data) = @_;
 	
 	# data is now sorted [O(n log n) total time, O(n) total extra space] 
 	# via iteration during partitioning [O(n) time, O(n) extra space] and top-level recursion [O(log n) time, O(1) extra space?]
-	return $data;
-};
+    return $data;
+}
 
 # in-place algorithm: comparison-based and not stable [O(n log n) average total time, O(log n) worst-case total extra space]
 # call out to sort data, return sorted data
-our scalartype_arrayref $quicksort_inplace = sub {(my scalartype_arrayref $data) = @_;
+sub quicksort_inplace {
+    { my scalartype_arrayref $RETURN_TYPE };
+    (my scalartype_arrayref $data) = @ARG;
 	return quicksort_inplace_left_right($data, 0, (scalar @{$data}) - 1);
-};
+}
 
 # in-place algorithm; sort data, return sorted data [O(n log n) total time, O(log n) total extra space] 
-our scalartype_arrayref $quicksort_inplace_left_right = sub { (my scalartype_arrayref $data, my int $i_left, my int $i_right) = @_;  # CONSTANTS $i_left, $i_right
+sub quicksort_inplace_left_right {
+    { my scalartype_arrayref $RETURN_TYPE };
+    (my scalartype_arrayref $data, my int $i_left, my int $i_right) = @ARG;  # CONSTANTS $i_left, $i_right
 #	RPerl::diag("in quicksort_inplace_left_right(), have \$data = \n" . RPerl::DUMPER($data) . "\n");
-	
 	my int $i_pivot;
 	
 	if ($i_left < $i_right)
@@ -102,11 +110,13 @@ our scalartype_arrayref $quicksort_inplace_left_right = sub { (my scalartype_arr
 	
 	# data is now sorted [O(n log n) total time, O(log n) total extra space] 
 	# via iteration during partitioning [O(n) time, O(1) extra space] and top-level recursion [O(log n) time, O(log n) extra space]
-	return $data;
-};
+    return $data;
+}
 
 # in-place algorithm; partition data, return store index [O(n) time, O(1) extra space]
-our int $partition_inplace = sub {(my scalartype_arrayref $data, my int $i_left, my int $i_right, my int $i_pivot) = @_;  # CONSTANTS $i_left, $i_right, $i_pivot
+sub partition_inplace {
+    { my int $RETURN_TYPE };
+    (my scalartype_arrayref $data, my int $i_left, my int $i_right, my int $i_pivot) = @ARG;  # CONSTANTS $i_left, $i_right, $i_pivot
 	my scalartype $swap;
 	my int $i_store;
 	my int $i;
@@ -137,8 +147,7 @@ our int $partition_inplace = sub {(my scalartype_arrayref $data, my int $i_left,
 	$swap = $data->[$i_store];
 	$data->[$i_store] = $data->[$i_right];
 	$data->[$i_right] = $swap;
-	
-	return $i_store;
-};
+    return $i_store;
+}
 
 1;  # end of class

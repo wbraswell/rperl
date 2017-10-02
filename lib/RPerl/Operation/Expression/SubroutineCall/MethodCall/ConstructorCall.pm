@@ -18,8 +18,9 @@ our hashref $properties = {};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
-our string_hashref::method $ast_to_rperl__generate = sub {
-    ( my object $self, my string_hashref $modes) = @_;
+sub ast_to_rperl__generate {
+    { my string_hashref::method $RETURN_TYPE };
+    ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $rperl_source_group = { PMC => q{} };
     my string_hashref $rperl_source_subgroup;
 
@@ -48,10 +49,11 @@ our string_hashref::method $ast_to_rperl__generate = sub {
 
     $rperl_source_group->{PMC} .= $right_paren;
     return $rperl_source_group;
-};
+}
 
-our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
+sub ast_to_cpp__generate__CPPOPS_PERLTYPES {
+    { my string_hashref::method $RETURN_TYPE };
+    ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group
         = { CPP =>
             q{// <<< RP::O::E::SC::MC::CC __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
@@ -59,10 +61,11 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_PERLTYPES = sub {
 
     #...
     return $cpp_source_group;
-};
+}
 
-our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
-    ( my object $self, my string_hashref $modes) = @_;
+sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
+    { my string_hashref::method $RETURN_TYPE };
+    ( my object $self, my string_hashref $modes) = @ARG;
 #    RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
     
     my string_hashref $cpp_source_group = { CPP => q{} };
@@ -100,13 +103,13 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES = sub {
         # START HERE: generate C++ for property 0, add foreach loop to handle remaining properties, copy CPPOPS_CPPTYPES property init semantics to PERLOPS_PERLTYPES mode above, create passing & failing tests
         # START HERE: generate C++ for property 0, add foreach loop to handle remaining properties, copy CPPOPS_CPPTYPES property init semantics to PERLOPS_PERLTYPES mode above, create passing & failing tests
     }
-
     return $cpp_source_group;
-};
+}
 
 
-our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES__property_init = sub {
-    ( my object $self, my string_hashref $modes, my object $property ) = @_;
+sub ast_to_cpp__generate__CPPOPS_CPPTYPES__property_init {
+    { my string_hashref::method $RETURN_TYPE };
+    ( my object $self, my string_hashref $modes, my object $property ) = @ARG;
 #    RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES__property_init(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES__property_init(), received $property = ' . "\n" . RPerl::Parser::rperl_ast__dump($property) . "\n" );
     
@@ -139,8 +142,7 @@ our string_hashref::method $ast_to_cpp__generate__CPPOPS_CPPTYPES__property_init
 
     $cpp_source_subgroup = $property_value->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
     $cpp_source_group->{CPP_value} = $cpp_source_subgroup->{CPP};
-
     return $cpp_source_group;
-};
+}
 
 1;    # end of class

@@ -15,7 +15,8 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our void $right_justify_variable = sub {
+sub right_justify_variable {
+    { my void $RETURN_TYPE };
     my string_arrayref $input_strings = [];
     print 'Please input integer column width, then press <ENTER>:', "\n";
     my string $column_width_string = <STDIN>;
@@ -40,7 +41,8 @@ our void $right_justify_variable = sub {
         print q{ } x ( $column_width - ( length $input_string ) );
         print $input_string, "\n";
     }
-};
+    return;
+}
 
 # [[[ OPERATIONS ]]]
 

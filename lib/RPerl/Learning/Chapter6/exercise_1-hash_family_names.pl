@@ -15,7 +15,8 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our void $given_to_family_name = sub {
+sub given_to_family_name {
+    { my void $RETURN_TYPE };
     my string_hashref $names = {
         fred => 'flintstone',
         barney => 'rubble',
@@ -31,7 +32,8 @@ our void $given_to_family_name = sub {
     }
 
     print 'The family (last) name of ', $given_name, ' is ', $names->{$given_name}, q{.}, "\n";
-};
+    return;
+}
 
 # [[[ OPERATIONS ]]]
 

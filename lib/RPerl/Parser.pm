@@ -26,8 +26,9 @@ use constant MAX_SINGLE_ERROR_LINE_LENGTH  => my integer $TYPED_MAX_SINGLE_ERROR
 # [[[ SUBROUTINES ]]]
 
 # Parse from Human-Readable RPerl Source Code File to Eyapp-Parsed RPerl AST Object
-our object $rperl_to_ast__parse = sub {
-    ( my string $rperl_source__file_name) = @_;
+sub rperl_to_ast__parse {
+    { my object $RETURN_TYPE };
+    ( my string $rperl_source__file_name) = @ARG;
 
     # [[[ PARSE PHASE 0: CHECK PERL SYNTAX ]]]
     # [[[ PARSE PHASE 0: CHECK PERL SYNTAX ]]]
@@ -46,11 +47,12 @@ our object $rperl_to_ast__parse = sub {
     # [[[ PARSE PHASE 2: PARSE RPERL SYNTAX ]]]
 
     return ( rperl_source__parse($rperl_source__file_name) );
-};
+}
 
 # Check Perl Syntax Using Perl Interpreter
-our void $rperl_source__check_syntax = sub {
-    ( my string $rperl_source__file_name) = @_;
+sub rperl_source__check_syntax {
+    { my void $RETURN_TYPE };
+    ( my string $rperl_source__file_name) = @ARG;
 
     RPerl::verbose('PARSE PHASE 0:      Check     Perl syntax...       ');
 
@@ -147,11 +149,12 @@ our void $rperl_source__check_syntax = sub {
     }
 
     RPerl::verbose(' done.' . "\n");
-};
+}
 
 # Criticize Perl Syntax Using Perl::Critic
-our void $rperl_source__criticize = sub {
-    ( my string $rperl_source__file_name) = @_;
+sub rperl_source__criticize {
+    { my void $RETURN_TYPE };
+    ( my string $rperl_source__file_name) = @ARG;
 
     RPerl::verbose('PARSE PHASE 1:      Criticize Perl syntax...       ');
 
@@ -233,11 +236,12 @@ our void $rperl_source__criticize = sub {
     else {
         RPerl::verbose(' done.' . "\n");
     }
-};
+}
 
 # Die On RPerl Grammar Error
-our void $rperl_grammar_error = sub {
-    ( my array $argument ) = @_;
+sub rperl_grammar_error {
+    { my void $RETURN_TYPE };
+    ( my array $argument ) = @ARG;
 
     my string $value = $argument->YYCurval;
     if ( not( defined $value ) ) {
@@ -283,11 +287,12 @@ our void $rperl_grammar_error = sub {
         . '    Unexpected Token:  ' . $value . "\n"
         . '    Expected Token(s): ' . $expected_tokens
         . $helpful_hint . "\n";
-};
+}
 
 # Parse RPerl Syntax Using Eyapp Grammar
-our void $rperl_source__parse = sub {
-    ( my string $rperl_source__file_name) = @_;
+sub rperl_source__parse {
+    { my void $RETURN_TYPE };
+    ( my string $rperl_source__file_name) = @ARG;
 
     RPerl::verbose('PARSE PHASE 2:      Parse    RPerl syntax...       ');
 
@@ -298,7 +303,7 @@ our void $rperl_source__parse = sub {
         yydebug => 0x00,    # disable eyapp DBG DEBUGGING
 
 #        yydebug => 0xFF,  # full eyapp DBG DEBUGGING, USE FOR DEBUGGING GRAMMAR
-        yyerror => $rperl_grammar_error
+        yyerror => \&rperl_grammar_error
     );
 
     RPerl::verbose(' done.' . "\n");
@@ -308,11 +313,12 @@ our void $rperl_source__parse = sub {
 #    die 'TMP DEBUG';
 
     return ($rperl_ast);
-};
+}
 
 # condense AST dump, replace all instances of RPerl rule(s) with more meaningful RPerl class(es)
-our string $rperl_ast__dump = sub {
-    ( my object $rperl_ast) = @_;
+sub rperl_ast__dump {
+    { my string $RETURN_TYPE };
+    ( my object $rperl_ast) = @ARG;
     $Data::Dumper::Indent = 1; # do not attempt to align hash values based on hash key length
     my string $rperl_ast_dumped = Dumper($rperl_ast);
     $Data::Dumper::Indent = 2;    # restore default
@@ -328,11 +334,12 @@ our string $rperl_ast__dump = sub {
         $rperl_ast_dumped =~ s/$replacee/$replacer/gxms;
     }
     return $rperl_ast_dumped;
-};
+}
 
 # replace all instances of RPerl rule(s) with more meaningful RPerl class(es)
-our string $rperl_rule__replace = sub {
-    ( my string $rperl_rule_string) = @_;
+sub rperl_rule__replace {
+    { my string $RETURN_TYPE };
+    ( my string $rperl_rule_string) = @ARG;
     my string $replacer;
     foreach my string $rule ( sort keys %{$RPerl::Grammar::RULES} ) {
         if ( $RPerl::Grammar::RULES->{$rule} ne 'RPerl::NonGenerator' ) {
@@ -345,6 +352,6 @@ our string $rperl_rule__replace = sub {
         }
     }
     return $rperl_rule_string;
-};
+}
 
 1;    # end of class

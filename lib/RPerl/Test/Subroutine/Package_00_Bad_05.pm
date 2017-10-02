@@ -10,6 +10,6 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
-our void $empty_sub = sub  2; };
+sub empty_sub { my void $RETURN_TYPE}; 2; };
 
 1;                  # end of package

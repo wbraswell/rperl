@@ -14,7 +14,8 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our void $sort_env_vars = sub {
+sub sort_env_vars {
+    { my void $RETURN_TYPE };
     my string_hashref $env_vars = {%ENV};
 
     my integer $env_var_length;
@@ -35,7 +36,8 @@ our void $sort_env_vars = sub {
         print q{ } x ( $left_column_width - ( length $env_var ) );
         print $env_vars->{$env_var}, "\n";
     }
-};
+    return;
+}
 
 # [[[ OPERATIONS ]]]
 

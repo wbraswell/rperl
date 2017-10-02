@@ -10,7 +10,7 @@ use RPerl::DataType::GMPInteger;
 use RPerl::Operation::Expression::Operator::GMPFunctions;
 
 # [[[ EXPORTS ]]]
-use Exporter 'import';
+use RPerl::Exporter 'import';
 our @EXPORT = qw(
     gmp_integer_to_boolean gmp_integer_to_unsigned_integer gmp_integer_to_integer gmp_integer_to_number gmp_integer_to_character gmp_integer_to_string
     boolean_to_gmp_integer integer_to_gmp_integer unsigned_integer_to_gmp_integer number_to_gmp_integer character_to_gmp_integer string_to_gmp_integer

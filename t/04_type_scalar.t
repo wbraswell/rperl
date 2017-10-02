@@ -6,7 +6,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
@@ -15,7 +15,11 @@ our $VERSION = 0.007_000;
 ## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 4: allow eval() test code blocks
 
 use RPerl::Test;
+use RPerl::DataType::Integer qw(integer__typetest0 integer__typetest1);
+use RPerl::DataType::Number qw(number__typetest0 number__typetest1);
+use RPerl::DataType::String qw(string__typetest0 string__typetest1);
 use rperltypesconv;
+use rperltypes;  # types_enable()
 use Test::More tests => 310;
 use Test::Exception;
 use Test::Number::Delta;

@@ -15,21 +15,24 @@ our $VERSION = 0.001_000;
 
 # [[[ SUBROUTINES ]]]
 
-our number $total = sub {
+sub total {
+    { my number $RETURN_TYPE };
     ( my number_arrayref $input_numbers ) = @ARG;
     my number $retval = 0;
     foreach my number $input_number ( @{$input_numbers} ) {
         $retval += $input_number;
     }
     return $retval;
-};
+}
 
-our number $average = sub {
+sub average {
+    { my number $RETURN_TYPE };
     ( my number_arrayref $input_numbers ) = @ARG;
     return (total($input_numbers) / (scalar @{$input_numbers}));
-};
+}
 
-our number_arrayref $above_average = sub {
+sub above_average {
+    { my number_arrayref $RETURN_TYPE };
     ( my number_arrayref $input_numbers ) = @ARG;
     my number $average = average($input_numbers);
     my number_arrayref $retval = [];
@@ -39,7 +42,7 @@ our number_arrayref $above_average = sub {
         }
     }
     return $retval;
-};
+}
 
 # [[[ OPERATIONS ]]]
 

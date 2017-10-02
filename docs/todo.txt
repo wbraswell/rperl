@@ -3,6 +3,8 @@ DONE
 
 DOING
     new subroutine headers
+    RPerl::Exporter
+        enable qw(:all)
     Quick-Start Guide
         
     Alien::PCRE2

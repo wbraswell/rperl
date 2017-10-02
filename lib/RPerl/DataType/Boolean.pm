@@ -3,7 +3,7 @@ package RPerl::DataType::Boolean;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.009_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -44,6 +44,7 @@ use warnings;
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(boolean_CHECK boolean_CHECKTRACE boolean_to_unsigned_integer boolean_to_integer boolean_to_number boolean_to_character boolean_to_string);
+our @EXPORT_OK = qw(boolean__typetest0 boolean__typetest1);
 
 # [[[ TYPE-CHECKING ]]]
 sub boolean_CHECK {

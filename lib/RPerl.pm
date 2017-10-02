@@ -48,7 +48,7 @@ use Module::ScanDeps;
 our $INC_SCANNED = {};    # global variable to avoid repeated calls to scan_deps()
 
 sub filter {
-    ( my $input ) = @_;
+    ( my $input ) = @ARG;
 
     my $output = q{};
     my $namespace_root;
