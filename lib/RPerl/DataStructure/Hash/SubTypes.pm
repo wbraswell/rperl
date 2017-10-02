@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.012_000;
+our $VERSION = 0.013_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -14,6 +14,7 @@ our $VERSION = 0.012_000;
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(hashref_CHECK hashref_CHECKTRACE integer_hashref_CHECK integer_hashref_CHECKTRACE number_hashref_CHECK number_hashref_CHECKTRACE string_hashref_CHECK string_hashref_CHECKTRACE integer_hashref_to_string number_hashref_to_string string_hashref_to_string);
+our @EXPORT_OK = qw(integer_hashref__typetest0 integer_hashref__typetest1 number_hashref__typetest0 number_hashref__typetest1 string_hashref__typetest0 string_hashref__typetest1);
 
 # [[[ INCLUDES ]]]
 use RPerl::DataType::Integer;  # integer_CHECKTRACE

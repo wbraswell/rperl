@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 #use RPerl::AfterSubclass;  # NEED FIX: moved by bulk88 to below BEGIN block to optimize for skip speed on Windows OS, should be 'use RPerlish;' ?
-our $VERSION = 0.002_400;
+our $VERSION = 0.003_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -33,6 +33,7 @@ use RPerl::Test::Foo;
 use rperltypesconv;
 use Test::Exception;
 use Test::Number::Delta;
+use RPerl::DataType::GMPInteger qw(gmp_integer__typetest0 gmp_integer__typetest1);
 
 # [[[ OPERATIONS ]]]
 

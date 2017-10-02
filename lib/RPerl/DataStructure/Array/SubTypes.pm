@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.012_000;
+our $VERSION = 0.013_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -14,6 +14,7 @@ our $VERSION = 0.012_000;
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(arrayref_CHECK arrayref_CHECKTRACE integer_arrayref_CHECK integer_arrayref_CHECKTRACE number_arrayref_CHECK number_arrayref_CHECKTRACE string_arrayref_CHECK string_arrayref_CHECKTRACE integer_arrayref_to_string number_arrayref_to_string string_arrayref_to_string);
+our @EXPORT_OK = qw(integer_arrayref__typetest0 integer_arrayref__typetest1 number_arrayref__typetest0 number_arrayref__typetest1 string_arrayref__typetest0 string_arrayref__typetest1);
 
 # [[[ INCLUDES ]]]
 use RPerl::DataType::Integer;  # integer_CHECKTRACE

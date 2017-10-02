@@ -3,9 +3,14 @@ DONE
 
 DOING
     new subroutine headers
+        all RPerl converted & tests pass
+        Learning RPerl
+        PhysicsPerl
+        MathPerl
     RPerl::Exporter
         enable qw(:all)
     Quick-Start Guide
+    GSL support
         
     Alien::PCRE2
         ensure tests pass on both share & system installs

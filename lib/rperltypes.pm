@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)

@@ -312,6 +312,11 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     can_ok( 'RPerl::Algorithm::Sort::Bubble', 'uninherited__Bubble' );
     lives_and(    # TOOIN05
         sub {
+
+# START HERE: why are all the uninherited__*() subs registering via can_ok() but the fail to be located when actually running in is() below via CPPOPS_*TYPES???
+# START HERE: why are all the uninherited__*() subs registering via can_ok() but the fail to be located when actually running in is() below via CPPOPS_*TYPES???
+# START HERE: why are all the uninherited__*() subs registering via can_ok() but the fail to be located when actually running in is() below via CPPOPS_*TYPES???
+
             is( RPerl::Algorithm::Sort::Bubble::uninherited__Bubble('Claws'),
                 'Bubble::uninherited__Bubble() RULES! ' . $mode_tagline,
                 q{TOOIN05 uninherited__Bubble('Claws') returns correct value}

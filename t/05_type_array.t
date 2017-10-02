@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.007_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -20,6 +20,7 @@ use RPerl::Test;
 use Test::More tests => 232;
 use Test::Exception;
 use Test::Number::Delta;
+use RPerl::DataStructure::Array::SubTypes qw(integer_arrayref__typetest0 integer_arrayref__typetest1 number_arrayref__typetest0 number_arrayref__typetest1 string_arrayref__typetest0 string_arrayref__typetest1);
 
 # [[[ OPERATIONS ]]]
 
