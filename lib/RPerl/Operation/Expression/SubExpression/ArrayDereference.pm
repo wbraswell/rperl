@@ -27,13 +27,13 @@ sub ast_to_rperl__generate {
 #    RPerl::diag( 'in ArrayDereference->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    # unwrap ArrayDereference_202 and ArrayDereference_203 from SubExpression_142
-    if ( $self_class eq 'SubExpression_142' ) {  # SubExpression -> ArrayDereference
+    # unwrap ArrayDereference_214 and ArrayDereference_215 from SubExpression_154
+    if ( $self_class eq 'SubExpression_154' ) {  # SubExpression -> ArrayDereference
         $self = $self->{children}->[0];
     }
 
     $self_class = ref $self;
-    if ( $self_class eq 'ArrayDereference_202' ) {  # ArrayDereference -> '@{' Variable '}'
+    if ( $self_class eq 'ArrayDereference_214' ) {  # ArrayDereference -> '@{' Variable '}'
         my string $at_left_brace = $self->{children}->[0];
         my object $variable = $self->{children}->[1];
         my string $right_brace = $self->{children}->[2];
@@ -43,7 +43,7 @@ sub ast_to_rperl__generate {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_brace;
     }
-    elsif ( $self_class eq 'ArrayDereference_203' ) {  # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
+    elsif ( $self_class eq 'ArrayDereference_215' ) {  # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
         my string $at_left_brace = $self->{children}->[0];
         my object $type_inner_optional = $self->{children}->[1];
         my object $array_reference = $self->{children}->[2];
@@ -63,7 +63,7 @@ sub ast_to_rperl__generate {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where ArrayDereference_202 or ArrayDereference_203 expected, dying'
+                . ' found where ArrayDereference_214 or ArrayDereference_215 expected, dying'
         ) . "\n";
     }
     return $rperl_source_group;

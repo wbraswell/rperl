@@ -36,18 +36,18 @@ sub ast_to_rperl__generate {
 #    RPerl::diag( 'in Operator::NamedUnary::Exists->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
 
     my string $operator_named_class = ref $operator_named;
-    if ( $operator_named_class eq 'Operation_80' ) {    # Operation -> OP10_NAMED_UNARY_SCOLON
+    if ( $operator_named_class eq 'Operation_91' ) {    # Operation -> OP10_NAMED_UNARY_SCOLON
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly one argument, dying' )
             . "\n";
     }
-    elsif ( $operator_named_class eq 'Operator_99' ) {    # Operator -> OP10_NAMED_UNARY SubExpression
+    elsif ( $operator_named_class eq 'Operator_110' ) {    # Operator -> OP10_NAMED_UNARY SubExpression
         $rperl_source_group->{PMC} .= $operator_named->{children}->[0] . q{ };
         my string_hashref $rperl_source_subgroup = $operator_named->{children}->[1]->ast_to_rperl__generate( $modes, $self );
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
-    elsif ( $operator_named_class eq 'Operator_100' ) {    # Operator -> OP10_NAMED_UNARY
+    elsif ( $operator_named_class eq 'Operator_111' ) {    # Operator -> OP10_NAMED_UNARY
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly one argument, dying' )
@@ -56,7 +56,7 @@ sub ast_to_rperl__generate {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($operator_named_class)
-                . ' found where Operation_80, Operator_99, or Operator_100 expected, dying' )
+                . ' found where Operation_91, Operator_110, or Operator_111 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;

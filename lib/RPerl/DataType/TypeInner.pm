@@ -26,7 +26,7 @@ sub ast_to_rperl__generate {
 #    RPerl::diag( 'in TypeInner->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'TypeInner_225' ) {  # TypeInner -> MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN
+    if ( $self_class eq 'TypeInner_237' ) {  # TypeInner -> MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN
         my string $my = $self->{children}->[0];
         my string $type = $self->{children}->[1]->{children}->[0];
         my string $TYPED = $self->{children}->[2];
@@ -48,7 +48,7 @@ sub ast_to_rperl__generate {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where TypeInner_225 expected, dying'
+                . ' found where TypeInner_237 expected, dying'
         ) . "\n";
     }
     return $rperl_source_group;
@@ -73,7 +73,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #    RPerl::diag( 'in TypeInner->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'TypeInner_225' ) {  # TypeInner -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
+    if ( $self_class eq 'TypeInner_237' ) {  # TypeInner -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN
         my string $type = $self->{children}->[1]->{children}->[0];
         my string $name  = $self->{children}->[3]->{children}->[0];
         $name =~ s/^(\w+)\s*$/$1/gxms;  # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
@@ -89,7 +89,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
-                . ' found where TypeInner_225 expected, dying'
+                . ' found where TypeInner_237 expected, dying'
         ) . "\n";
     }
     return $cpp_source_group;

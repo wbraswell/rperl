@@ -26,11 +26,11 @@ sub ast_to_rperl__generate {
 
 #    RPerl::diag( 'in SubroutineCall->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'Expression_134' ) {
+    if ( ( ref $self ) ne 'Expression_146' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
-                . ' found where Expression_134 expected, dying' )
+                . ' found where Expression_146 expected, dying' )
             . "\n";
     }
 
@@ -74,11 +74,11 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
 #    RPerl::diag( 'in SubroutineCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'Expression_134' ) {
+    if ( ( ref $self ) ne 'Expression_146' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ( ref $self )
-                . ' found where Expression_134 expected, dying' )
+                . ' found where Expression_146 expected, dying' )
             . "\n";
     }
 

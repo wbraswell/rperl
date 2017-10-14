@@ -28,7 +28,7 @@ sub ast_to_rperl__generate {
 
     my string $self_class = ref $self;
 
-    if ( $self_class eq 'CodeBlock_176' ) {    # CodeBlock -> LBRACE PLUS-41 '}'
+    if ( $self_class eq 'CodeBlock_188' ) {    # CodeBlock -> LBRACE PLUS-41 '}'
         my string $left_brace     = $self->{children}->[0];
         my object $operation_plus = $self->{children}->[1];
         my string $right_brace    = $self->{children}->[2];
@@ -46,7 +46,7 @@ sub ast_to_rperl__generate {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . $self_class . ' found where CodeBlock_176 expected, dying' )
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . $self_class . ' found where CodeBlock_188 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -73,7 +73,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     
     my string $self_class = ref $self;
 
-    if ( $self_class eq 'CodeBlock_176' ) {    # CodeBlock -> LBRACE PLUS-41 '}'
+    if ( $self_class eq 'CodeBlock_188' ) {    # CodeBlock -> LBRACE PLUS-41 '}'
         my string $left_brace     = $self->{children}->[0];
         my object $operation_plus = $self->{children}->[1];
         my string $right_brace    = $self->{children}->[2];
@@ -112,7 +112,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . $self_class . ' found where CodeBlock_176 expected, dying' )
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . $self_class . ' found where CodeBlock_188 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;

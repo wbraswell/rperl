@@ -25,14 +25,14 @@ sub ast_to_rperl__generate {
 
 #    RPerl::diag( 'in FilehandleIn->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
     
-    if ( ( ref $self ) eq 'SubExpressionOrInput_147') {  # SubExpressionOrInput -> FHREF_SYMBOL_IN
+    if ( ( ref $self ) eq 'SubExpressionOrInput_159') {  # SubExpressionOrInput -> FHREF_SYMBOL_IN
         $rperl_source_group->{PMC} .= $self->{children}->[0];
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
-                . ' found where SubExpressionOrInput_147 expected, dying'
+                . ' found where SubExpressionOrInput_159 expected, dying'
         ) . "\n"; 
     }
     return $rperl_source_group;

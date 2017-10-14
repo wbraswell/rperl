@@ -51,9 +51,9 @@ sub ast_to_rperl__generate {
 
     #    RPerl::diag( 'in Array::ListElements->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'ListElements_192' ) {
+    if ( ( ref $self ) ne 'ListElements_204' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ( ref $self ) . ' found where ListElements_192 expected, dying' )
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ( ref $self ) . ' found where ListElements_204 expected, dying' )
             . "\n";
     }
 
@@ -104,9 +104,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #    RPerl::diag( 'in Array::ListElements->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag( 'in Array::ListElements->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_inside_print_operator} = ' . $modes->{_inside_print_operator} . "\n" );
 
-    if ( ( ref $self ) ne 'ListElements_192' ) {
+    if ( ( ref $self ) ne 'ListElements_204' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where ListElements_192 expected, dying' )
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where ListElements_204 expected, dying' )
             . "\n";
     }
 

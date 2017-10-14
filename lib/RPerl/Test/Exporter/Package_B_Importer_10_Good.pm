@@ -14,7 +14,7 @@ use           RPerl::CompileUnit::Module::Class;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ EXPORTS ]]]
-use RPerl::Exporter;
+use RPerl::Exporter qw(import);
 our @EXPORT_OK = qw(exported_ok);
 
 # [[[ INCLUDES ]]]

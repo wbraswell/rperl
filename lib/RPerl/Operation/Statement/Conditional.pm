@@ -26,8 +26,8 @@ sub ast_to_rperl__generate {
 
     my string $self_class = ref $self;
 
-    # unwrap Conditional_165 from Statement_154
-    if ( $self_class eq 'Statement_154' ) {    # Statement -> Conditional
+    # unwrap Conditional_177 from Statement_166
+    if ( $self_class eq 'Statement_166' ) {    # Statement -> Conditional
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
@@ -35,7 +35,7 @@ sub ast_to_rperl__generate {
 #    RPerl::diag( 'in Conditional->ast_to_rperl__generate(), have possibly-unwrapped $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
   # Conditional -> 'if' LPAREN SubExpression ')' CodeBlock STAR-38 OPTIONAL-40
-    if ( $self_class eq 'Conditional_165' ) {
+    if ( $self_class eq 'Conditional_177' ) {
         my string $if            = $self->{children}->[0];
         my string $left_paren    = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -112,7 +112,7 @@ sub ast_to_rperl__generate {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Conditional_165 expected, dying' )
+                . ' found where Conditional_177 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -140,8 +140,8 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     my string $self_class = ref $self;
 
-    # unwrap Conditional_165 from Statement_154
-    if ( $self_class eq 'Statement_154' ) {    # Statement -> Conditional
+    # unwrap Conditional_177 from Statement_166
+    if ( $self_class eq 'Statement_166' ) {    # Statement -> Conditional
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
@@ -149,7 +149,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #    RPerl::diag( 'in Conditional->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have possibly-unwrapped $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
   # Conditional -> 'if' LPAREN SubExpression ')' CodeBlock STAR-38 OPTIONAL-40
-    if ( $self_class eq 'Conditional_165' ) {
+    if ( $self_class eq 'Conditional_177' ) {
         my string $if            = $self->{children}->[0];
         my string $left_paren    = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -226,7 +226,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
-                . ' found where Conditional_165 expected, dying' )
+                . ' found where Conditional_177 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;

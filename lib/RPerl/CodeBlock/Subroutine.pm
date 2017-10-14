@@ -48,12 +48,12 @@ sub ast_to_rperl__generate {
 
     #    RPerl::diag( 'in Subroutine->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap Subroutine_48 from SubroutineOrMethod_76, only if needed
-    if ((ref $self) eq 'SubroutineOrMethod_76') { $self = $self->{children}->[0]; }
+    # unwrap Subroutine_57 from SubroutineOrMethod_87, only if needed
+    if ((ref $self) eq 'SubroutineOrMethod_87') { $self = $self->{children}->[0]; }
 
-    if ( ( ref $self ) ne 'Subroutine_48' ) {
+    if ( ( ref $self ) ne 'Subroutine_57' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ( ref $self ) . ' found where Subroutine_48 expected, dying' )
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ( ref $self ) . ' found where Subroutine_57 expected, dying' )
             . "\n";
     }
 
@@ -114,8 +114,8 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
  
     my string_hashref $cpp_source_group = { H => q{} };
 
-    # unwrap Subroutine_48 from SubroutineOrMethod_76, only if needed
-    if ((ref $self) eq 'SubroutineOrMethod_76') { $self = $self->{children}->[0]; }
+    # unwrap Subroutine_57 from SubroutineOrMethod_87, only if needed
+    if ((ref $self) eq 'SubroutineOrMethod_87') { $self = $self->{children}->[0]; }
 
     my string $return_type = $self->{children}->[1]->{children}->[0];
     my string $name        = $self->{children}->[2];
@@ -167,8 +167,8 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
-    # unwrap Subroutine_48 from SubroutineOrMethod_76, only if needed
-    if ((ref $self) eq 'SubroutineOrMethod_76') { $self = $self->{children}->[0]; }
+    # unwrap Subroutine_57 from SubroutineOrMethod_87, only if needed
+    if ((ref $self) eq 'SubroutineOrMethod_87') { $self = $self->{children}->[0]; }
 
     my string $return_type = $self->{children}->[1]->{children}->[0];
     my string $name        = $self->{children}->[2];
@@ -243,8 +243,8 @@ sub ast_to_cpp__generate_shims__CPPOPS_CPPTYPES {
     my string_hashref $cpp_source_group = { CPP => q{} };
     my object $cpp_source_subgroup = undef;
 
-    # unwrap Subroutine_48 from SubroutineOrMethod_76, only if needed
-    if ((ref $self) eq 'SubroutineOrMethod_76') { $self = $self->{children}->[0]; }
+    # unwrap Subroutine_57 from SubroutineOrMethod_87, only if needed
+    if ((ref $self) eq 'SubroutineOrMethod_87') { $self = $self->{children}->[0]; }
 
 #    my string $return_type = $self->{children}->[1]->{children}->[0];  # SHIM SUBS DEPRECATED IN FAVOR OF MACROS
     my string $name        = $self->{children}->[2];

@@ -48,22 +48,22 @@ sub ast_to_rperl__generate {
 
     my string $self_class = ref $self;
     my string $operator_name;
-    if ( $self_class eq 'Operation_79' ) {    # Statement -> OP01_NAMED_SCOLON
+    if ( $self_class eq 'Operation_90' ) {    # Statement -> OP01_NAMED_SCOLON
         $operator_name = substr $self->{children}->[0], 0, -1;
     }
-    elsif (( $self_class eq 'Operator_83' )    # Operator -> OP01_NAMED SubExpression
-        or ( $self_class eq 'OperatorVoid_122' )
+    elsif (( $self_class eq 'Operator_94' )    # Operator -> OP01_NAMED SubExpression
+        or ( $self_class eq 'OperatorVoid_134' )
         )                                   # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
     {
         $operator_name = $self->{children}->[0];
     }
-    elsif ( $self_class eq 'Operator_84' ) {    # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+    elsif ( $self_class eq 'Operator_95' ) {    # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         $operator_name = $self->{children}->[1];
     }
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_122 expected, dying' )
+                . ' found where Operation_90, Operator_94, Operator_95, or OperatorVoid_134 expected, dying' )
             . "\n";
     }
  
@@ -106,22 +106,22 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     my string $self_class = ref $self;
     my string $operator_name;
-    if ( $self_class eq 'Operation_79' ) {    # Statement -> OP01_NAMED_SCOLON
+    if ( $self_class eq 'Operation_90' ) {    # Statement -> OP01_NAMED_SCOLON
         $operator_name = substr $self->{children}->[0], 0, -1;
     }
-    elsif (( $self_class eq 'Operator_83' )    # Operator -> OP01_NAMED SubExpression
-        or ( $self_class eq 'OperatorVoid_122' )
+    elsif (( $self_class eq 'Operator_94' )    # Operator -> OP01_NAMED SubExpression
+        or ( $self_class eq 'OperatorVoid_134' )
         )                                   # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
     {
         $operator_name = $self->{children}->[0];
     }
-    elsif ( $self_class eq 'Operator_84' ) {    # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+    elsif ( $self_class eq 'Operator_95' ) {    # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         $operator_name = $self->{children}->[1];
     }
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_122 expected, dying' )
+                . ' found where Operation_90, Operator_94, Operator_95, or OperatorVoid_134 expected, dying' )
             . "\n";
     }
  

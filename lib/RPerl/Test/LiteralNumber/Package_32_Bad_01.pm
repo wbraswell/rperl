@@ -4,7 +4,7 @@
 
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::LiteralNumber::Package_34_Bad_01;
+package RPerl::Test::LiteralNumber::Package_36_Bad_01;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;

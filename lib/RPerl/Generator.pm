@@ -59,7 +59,7 @@ sub arrayref_convert_index_max_to_size {
     my integer $nested_parenthesis = 0;
     
     # look inside nested parenthesis-as-subexpressions, always length 1 so no need to check length
-    while ((ref $subexpression) eq 'SubExpression_145') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
+    while ((ref $subexpression) eq 'SubExpression_157') {  # RPerl::Operation::Expression::SubExpression::Parenthesis
         $subexpression = $subexpression->{children}->[1];
         $nested_parenthesis++;
     }
@@ -103,7 +103,7 @@ sub arrayref_convert_index_max_to_size {
     if ($is_modified) {
         if ($nested_parenthesis) {
             # create new-but-equivalent object to alert caller of modification
-            my object $subexpression_modified = RPerl::CompileUnit::Module::Class::new('SubExpression_145');
+            my object $subexpression_modified = RPerl::CompileUnit::Module::Class::new('SubExpression_157');
             $subexpression_modified->{children}->[0] = '(';
             $subexpression_modified->{children}->[1] = $subexpression;
             $subexpression_modified->{children}->[2] = ')';

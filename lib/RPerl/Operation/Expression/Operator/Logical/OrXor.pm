@@ -26,8 +26,8 @@ sub ast_to_rperl__generate {
     #    RPerl::diag( 'in Operator::Logical::OrXor->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if (( $self_class eq 'Operator_106' )       # Operator -> SubExpression OP16_LOGICAL_OR SubExpression
-        or ( $self_class eq 'Operator_111' )    # Operator -> SubExpression OP24_LOGICAL_OR_XOR SubExpression
+    if (( $self_class eq 'Operator_117' )       # Operator -> SubExpression OP16_LOGICAL_OR SubExpression
+        or ( $self_class eq 'Operator_123' )    # Operator -> SubExpression OP24_LOGICAL_OR_XOR SubExpression
         )
     {
         my string_hashref $rperl_source_subgroup
@@ -41,7 +41,7 @@ sub ast_to_rperl__generate {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Operator_106 or Operator_111 expected, dying' )
+                . ' found where Operator_117 or Operator_123 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -68,8 +68,8 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     # in order to replicate the precedence behavior?
 
     my string $self_class = ref $self;
-    if (( $self_class eq 'Operator_106' )       # Operator -> SubExpression OP16_LOGICAL_OR SubExpression
-        or ( $self_class eq 'Operator_111' )    # Operator -> SubExpression OP24_LOGICAL_OR_XOR SubExpression
+    if (( $self_class eq 'Operator_117' )       # Operator -> SubExpression OP16_LOGICAL_OR SubExpression
+        or ( $self_class eq 'Operator_123' )    # Operator -> SubExpression OP24_LOGICAL_OR_XOR SubExpression
         )
     {
         my string_hashref $cpp_source_subgroup = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
@@ -81,7 +81,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
-                . ' found where Operator_106 or Operator_111 expected, dying' )
+                . ' found where Operator_117 or Operator_123 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;

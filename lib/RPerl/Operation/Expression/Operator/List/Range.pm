@@ -26,7 +26,7 @@ sub ast_to_rperl__generate {
 #    RPerl::diag( 'in Operator::List::Range->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'Operator_107' ) {  # Operator -> SubExpression OP17_LIST_RANGE SubExpression
+    if ( $self_class eq 'Operator_118' ) {  # Operator -> SubExpression OP17_LIST_RANGE SubExpression
         my string_hashref $rperl_source_subgroup
             = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
@@ -41,7 +41,7 @@ sub ast_to_rperl__generate {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Operator_107 expected, dying' )
+                . ' found where Operator_118 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;

@@ -27,14 +27,14 @@ sub ast_to_rperl__generate {
 
     my string $self_class = ref $self;
 
-    # unwrap LoopForEach_171 from Loop_167
-    if ( $self_class eq 'Loop_167' ) {    # Loop -> LoopForEach
+    # unwrap LoopForEach_183 from Loop_179
+    if ( $self_class eq 'Loop_179' ) {    # Loop -> LoopForEach
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
     # LoopForEach -> 'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock
-    if ( $self_class eq 'LoopForEach_171' ) {
+    if ( $self_class eq 'LoopForEach_183' ) {
         my string $foreach         = $self->{children}->[0];
         my string $my              = $self->{children}->[1];
         my string $type            = $self->{children}->[2]->{children}->[0];
@@ -62,7 +62,7 @@ sub ast_to_rperl__generate {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . $self_class . ' found where LoopForEach_171 expected, dying' )
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . $self_class . ' found where LoopForEach_183 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;

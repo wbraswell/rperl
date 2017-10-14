@@ -38,24 +38,24 @@ sub ast_to_rperl__generate {
 #    RPerl::diag( 'in Operator::Named::Wait->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
 
     my string $operator_named_class = ref $operator_named;
-    if ( $operator_named_class eq 'Operation_79' ) { # Operation -> OP01_NAMED_SCOLON
+    if ( $operator_named_class eq 'Operation_90' ) { # Operation -> OP01_NAMED_SCOLON
         $rperl_source_group->{PMC} .= $operator_named->{children}->[0];
     }
-    elsif ( $operator_named_class eq 'Operator_83' ) { # Operator -> OP01_NAMED SubExpression
+    elsif ( $operator_named_class eq 'Operator_94' ) { # Operator -> OP01_NAMED SubExpression
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' does not accept arguments, dying' )
             . "\n";
     }
-    elsif ( $operator_named_class eq 'Operator_84' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+    elsif ( $operator_named_class eq 'Operator_95' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[1]
                 . ' does not accept arguments, dying' )
             . "\n";
     }
-    elsif ( $operator_named_class eq 'OperatorVoid_122' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+    elsif ( $operator_named_class eq 'OperatorVoid_134' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
@@ -66,7 +66,7 @@ sub ast_to_rperl__generate {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($operator_named_class)
-                . ' found where Operation_79, Operator_83, Operator_84, or OperatorVoid_122 expected, dying'
+                . ' found where Operation_90, Operator_94, Operator_95, or OperatorVoid_134 expected, dying'
         ) . "\n";
     }
     return $rperl_source_group;

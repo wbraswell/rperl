@@ -31,17 +31,17 @@ sub ast_to_rperl__generate {
 
     my string $self_class = ref $self;
 
-    # unwrap Package_34 from Module_24
+    # unwrap Package_36 from Module_24
     if ( ($self_class) eq 'Module_24' ) {
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( ($self_class) ne 'Package_34' ) {
+    if ( ($self_class) ne 'Package_36' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($self_class)
-                . ' found where Module_24 or Package_34 expected, dying' )
+                . ' found where Module_24 or Package_36 expected, dying' )
             . "\n";
     }
 

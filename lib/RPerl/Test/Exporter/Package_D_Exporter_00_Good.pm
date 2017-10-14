@@ -15,7 +15,7 @@ use           RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 14: allow global exports from Config.pm & elsewhere
 
 # [[[ EXPORTS ]]]
-use RPerl::Exporter;
+use RPerl::Exporter qw(import);
 our @EXPORT = qw(exported);
 
 # [[[ OO PROPERTIES ]]]
