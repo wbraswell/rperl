@@ -7,11 +7,15 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.027_000;
+our $VERSION = 0.029_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
 use RPerl::CompileUnit::Module::Class;
+
+# [[[ EXPORTS ]]]
+use RPerl::Exporter qw(import);
+our @EXPORT = qw(rperl_to_xsbinary__parse_generate_compile);
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -228,7 +232,8 @@ sub find_dependencies {
 =cut
         }
 
-        # NEED FIX: remove hard-coded list of not-subdependency uses
+        # DEV NOTE, CORRELATION #rp050: hard-coded list of RPerl files/packages/namespaces
+        # these instances of the 'use' keyword are NOT subdependencies of the current file, do not try to compile them 
         if ( $file_line =~ /^\s*use\s+[\w:]+/xms ) {
 #            RPerl::diag('in Compiler::find_dependencies(), found use line, have $file_line = ' . $file_line . "\n");
             if (( $file_line =~ /use\s+RPerl\s*;/ ) or 
@@ -241,6 +246,7 @@ sub find_dependencies {
                 or ( $file_line =~ /use\s+RPerl::CompileUnit::Module::Class\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::Class\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::Config\s*;/ )
+                or ( $file_line =~ /use\s+RPerl::Exporter.*;/ )
                 or ( $file_line =~ /use\s+\w+Perl::Config\s*;/ )    # DEV NOTE, CORRELATION #rp027: MathPerl::Config, PhysicsPerl::Config, etc
                 or ( $file_line =~ /use\s+parent/ )
                 or ( $file_line =~ /use\s+constant/ )

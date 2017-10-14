@@ -9,6 +9,12 @@ our $VERSION = 0.010_000;
 use parent qw(RPerl::Algorithm::Sort);
 use RPerl::Algorithm::Sort;
 
+# [[[ EXPORTS ]]]
+# <<< CHANGE_ME: delete for no exports, or replace with real names of subroutines (not methods) to be exported >>>
+use RPerl::Exporter qw(import);
+our @EXPORT = qw(integer_sort number_sort integer_bubblesort number_bubblesort uninherited__Bubble uninherited integer_bubblesort__typetest0 number_bubblesort__typetest0);
+#our @EXPORT_OK = qw(integer_sort number_sort integer_bubblesort number_bubblesort uninherited__Bubble uninherited integer_bubblesort__typetest0 number_bubblesort__typetest0);
+
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils

@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.012_000;
+our $VERSION = 0.013_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -32,9 +32,13 @@ use File::Spec;
 use constant PATH_TESTS => my string $TYPED_PATH_TESTS = $RPerl::INCLUDE_PATH . '/RPerl/Test';
 
 # [[[ OPERATIONS ]]]
+our $verbose_newline = q{};
+if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) {
+    $verbose_newline = "\n";
+}
 
 BEGIN {
-    if ( $ENV{RPERL_VERBOSE} ) {
+    if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) {
         Test::More::diag("[[[ Beginning Parser Pre-Test Loading, RPerl Compilation System ]]]");
     }
     # DEV NOTE: can't do use_ok() or require_ok() because it will place them before all other BEGIN blocks,
@@ -158,6 +162,7 @@ for my $test_file ( sort keys %{$test_files} ) {
         }
     }
     else {                                                            # Perl eval return code undefined or false, error
+        print $verbose_newline;
 
 #        RPerl::diag( "\n\n\n" . 'in 12_parse.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n\n\n" );
         if ( ( $test_file =~ m/Bad/ms ) or ( $test_file =~ m/bad/ms ) ) {

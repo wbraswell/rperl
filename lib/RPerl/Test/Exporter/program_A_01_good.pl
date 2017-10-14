@@ -30,3 +30,4 @@ sub not_exported {
 
 my integer $exported_ok_retval = RPerl::Test::Exporter::Package_A_Importer_00_Good::exported_ok(17);
 print 'after RPerl::Test::Exporter::Package_A_Importer_00_Good::exported_ok(17), received $exported_ok_retval = ', $exported_ok_retval, "\n";
+

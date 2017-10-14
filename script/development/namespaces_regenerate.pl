@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use rperlnamespaces;
-our $VERSION = 0.009_000;
+our $VERSION = 0.011_000;
 
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 
@@ -27,7 +27,7 @@ package main;
 my $namespaces_core = rperlnamespaces::hash();
 #print 'in namespaces_regenerate.pl main::, ret from rperlnamespaces::hash(), have $namespaces_core = ', Dumper($namespaces_core), "\n";
 
-# NEED FIX: remove hard-coded list of packages
+# DEV NOTE, CORRELATION #rp050: hard-coded list of RPerl files/packages/namespaces
 # DEV NOTE, CORRELATION #rp003: some RPerl packages are missed due to BEGIN{} or INIT{} blocks, etc.
 my $namespaces_rperl_missed = { 
     # DEV NOTE, CORRELATION #rp021: remove hard-coded fake 'rperl::' namespace?
@@ -45,7 +45,7 @@ my $namespaces_rperl_missed = {
     'rperlgmp::' => 1,
 };
 
-# NEED FIX: remove hard-coded list of packages
+# DEV NOTE, CORRELATION #rp050: hard-coded list of RPerl files/packages/namespaces
 my $filenames_rperl = {
     # forward slash
     'RPerl/CompileUnit/Module/Class.pm' => 1,
@@ -53,6 +53,7 @@ my $filenames_rperl = {
     'RPerl/Config.pm' => 1,
     'RPerl/HelperFunctions_cpp.pm' => 1,
     'RPerl/Inline.pm' => 1,
+    'RPerl/Exporter.pm' => 1,
 
     # backslash
     'RPerl\CompileUnit\Module\Class.pm' => 1,
@@ -60,6 +61,7 @@ my $filenames_rperl = {
     'RPerl\Config.pm' => 1,
     'RPerl\HelperFunctions_cpp.pm' => 1,
     'RPerl\Inline.pm' => 1,
+    'RPerl\Exporter.pm' => 1,
 
     # no slash
     'RPerl.pm' => 1,
@@ -76,7 +78,7 @@ my $filenames_rperl = {
     'rperlgmp.pm' => 1,
 };
 
-# NEED FIX: remove hard-coded list of packages
+# DEV NOTE, CORRELATION #rp050: hard-coded list of RPerl files/packages/namespaces
 # NEED UPDATE: some of these should be in core
 my $namespaces_rperl_deps = {
     'Alien::'    => 1,

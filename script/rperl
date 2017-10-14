@@ -625,7 +625,7 @@ sub depends_delete {
         my hashref_arrayref $output_file_name_dep_groups = [$output_file_name_group];
 
         if ( $modes->{dependencies} eq 'ON' ) {
-            $input_file_name_deps = find_dependencies( $input_file_name, 1, $modes );  # second argument set to 1 for true value of $find_subdependencies_recurse
+            $input_file_name_deps = RPerl::Compiler::find_dependencies( $input_file_name, 1, $modes );  # second argument set to 1 for true value of $find_subdependencies_recurse
             RPerl::verbose('DEPENDENCIES:       Follow & find all deps... ');
             if ( exists $input_file_name_deps->[0] ) {
                 $input_file_name_deps = accept_and_verify_input_files( $input_file_name_deps, [], $modes );    # verify deps input files
@@ -635,7 +635,7 @@ sub depends_delete {
             $input_file_and_deps_count = scalar @{$input_file_name_deps};
             $input_file_deps_count     = $input_file_and_deps_count - 1;
             $output_file_name_dep_groups
-                = generate_output_file_names( $input_file_name_deps, $output_file_name_prefixes, $input_file_and_deps_count, $modes ); # generate deps output file names
+                = RPerl::Compiler::generate_output_file_names( $input_file_name_deps, $output_file_name_prefixes, $input_file_and_deps_count, $modes ); # generate deps output file names
             RPerl::verbose( sprintf( "%4d", $input_file_deps_count ) . ' found.' . "\n" );
             diag_multi_file_settings( $input_file_name_deps, $output_file_name_dep_groups, $input_file_and_deps_count, $filename_suffixes_supported, $modes );
         }
@@ -794,7 +794,7 @@ sub depends_parse_generate_save_subcompile_execute {
         my hashref_arrayref $source_dep_groups           = [];
 
         if ( $modes->{dependencies} eq 'ON' ) {
-            $input_file_name_deps = find_dependencies( $input_file_name, 1, $modes );  # second argument set to 1 for true value of $find_subdependencies_recurse
+            $input_file_name_deps = RPerl::Compiler::find_dependencies( $input_file_name, 1, $modes );  # second argument set to 1 for true value of $find_subdependencies_recurse
             RPerl::verbose('DEPENDENCIES:       Follow & find all deps... ');
             if ( exists $input_file_name_deps->[0] ) {
                 $input_file_name_deps = accept_and_verify_input_files( $input_file_name_deps, [], $modes );    # verify deps input files
@@ -804,7 +804,7 @@ sub depends_parse_generate_save_subcompile_execute {
             $input_file_and_deps_count = scalar @{$input_file_name_deps};
             $input_file_deps_count     = $input_file_and_deps_count - 1;
             $output_file_name_dep_groups
-                = generate_output_file_names( $input_file_name_deps, $output_file_name_prefixes, $input_file_and_deps_count, $modes ); # generate deps output file names
+                = RPerl::Compiler::generate_output_file_names( $input_file_name_deps, $output_file_name_prefixes, $input_file_and_deps_count, $modes ); # generate deps output file names
             RPerl::verbose( sprintf( "%4d", $input_file_deps_count ) . ' found.' . "\n" );
             diag_multi_file_settings( $input_file_name_deps, $output_file_name_dep_groups, $input_file_and_deps_count, $filename_suffixes_supported, $modes );
         }
@@ -1014,7 +1014,7 @@ $::modes             = verify_and_default_modes(
     $::subcompile_assemble_flag,   $::subcompile_archive_flag,      $::subcompile_shared_flag,
     $::subcompile_static_flag, $::subcompile_CXX, $::parallel_flag, $::num_cores, $::execute_flag,  $::test_flag, $::input_file_names
 );
-$::output_file_name_groups = generate_output_file_names( $::input_file_names, $::output_file_name_prefixes, $input_files_count, $::modes );
+$::output_file_name_groups = RPerl::Compiler::generate_output_file_names( $::input_file_names, $::output_file_name_prefixes, $input_files_count, $::modes );
 verbose_multi_file_settings( $::input_file_names, $::output_file_name_groups, $input_files_count, $filename_suffixes_supported, $::modes );
 if ( $::modes->{uncompile} ne 'OFF' ) { depends_delete( $::input_file_names, $::output_file_name_groups, $::output_file_name_prefixes, $input_files_count, $filename_suffixes_supported, $::modes ); }
 else { depends_parse_generate_save_subcompile_execute( $::input_file_names, $::output_file_name_groups, $::output_file_name_prefixes, $input_files_count, $filename_suffixes_supported, $::modes ); }

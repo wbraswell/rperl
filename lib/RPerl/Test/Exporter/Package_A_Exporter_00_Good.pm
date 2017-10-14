@@ -9,13 +9,13 @@ our $VERSION = 0.001_000;
 use parent qw(RPerl::CompileUnit::Module::Class);
 use RPerl::CompileUnit::Module::Class;
 
-# [[[ EXPORTS ]]]
-use RPerl::Exporter qw(import);
-our @EXPORT_OK = qw(exported_ok);
-
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+# [[[ EXPORTS ]]]
+use RPerl::Exporter qw(import);
+our @EXPORT_OK = qw(exported_ok);
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -37,3 +37,4 @@ sub exported_ok {
 }
 
 1;    # end of class
+

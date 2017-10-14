@@ -37,7 +37,10 @@
 %token SHEBANG               = /(^#!\/(?:\w+\/)*perl)/                   # begin line, hash (octothorpe), bang, *NIX path to Perl; ex. '#!/usr/bin/perl'
 %token USE_RPERL             = /(\s*use\s+RPerl\s*;\s*)/                 # 'use RPerl;'
 %token USE_RPERL_AFTER       = /(\s*use\s+RPerl::AfterSubclass\s*;\s*)/  # 'use RPerl::AfterSubclass;'
+%token USE_EXPORTER          = /(\s*use\s+RPerl::Exporter\s+qw\(\s*import\s*\)\s*;\s*)/  # 'use RPerl::Exporter qw(import);'
 %token USE                   = /(use\s+)/                                # 'use '
+%token OUR_EXPORT            = /(\s*our\s+\@EXPORT\s+\=\s*)/             # 'our @EXPORT ='
+%token OUR_EXPORT_OK         = /(\s*our\s+\@EXPORT_OK\s+\=\s*)/          # 'our @EXPORT_OK ='
 %token VERSION_NUMBER_ASSIGN = /\$VERSION\ =\ (\d\d?\.\d{3}\_\d{3});/    # DEV NOTE, CORRELATION #rp014: $VERSION assign v-number, only capture v-number, not a normal number; ex. '$VERSION = 12.345_678;' returns '12.345_678'
 %token SUB                   = /(sub)\s+/                                # 'sub' followed by whitespace
 %token MY                    = /(my)/                                    # 'my'
@@ -68,7 +71,7 @@
 # must be explicitly made to match the trailing whitespace in the regular expressions below, in order to avoid incorrectly matching substrings of user-defined words
 %token OP24_LOGICAL_OR_XOR       = /(or|xor)\s/                  # precedence 24 infix: logical 'or' and 'xor', equivalent to '||' except for precedence
 %token OP23_LOGICAL_AND          = /(and)\s/                     # precedence 23 infix: logical 'and', equivalent to '&&' except for precedence
-%token OP22_LOGICAL_NEG          = /(not)/                       # precedence 22 prefix: logical negation 'not', equivalent to '!' except for precedence
+%token OP22_LOGICAL_NEG          = /(not)\s/                     # precedence 22 prefix: logical negation 'not', equivalent to '!' except for precedence
 %token OP21_LIST_COMMA           = /(,)/                         # precedence 21 infix: "list operators (rightward)" [1] AKA comma ','
 %token OP20_HASH_FATARROW        = /(=>)/                        # precedence 20 infix: hash entry fat arrow AKA fat comma '=>'
 %token OP19_LOOP_CONTROL_SCOLON  = /(next;|last;)/               # precedence 19 prefix void: loop control 'next;', 'last;'
@@ -180,36 +183,31 @@ CompileUnit:             Program | (ModuleHeader Module)+ ;
 Program:                 SHEBANG Critic? USE_RPERL Header Critic* Include* Constant* Subroutine* Operation+ ;
 ModuleHeader:            Critic? USE_RPERL? 'package' WordScoped ';' Header ;
 Module:                  Package | Class ;
-Package:                 Critic* Include* Constant* Subroutine+ LITERAL_NUMBER ';' ;
-Header:                  'use strict;' 'use warnings;' USE_RPERL_AFTER? 'our' VERSION_NUMBER_ASSIGN;
-Critic:                  '## no critic qw(' WORD+ ')';
+Package:                 Critic* Exports? Include* Constant* Subroutine+ LITERAL_NUMBER ';' ;
+Header:                  'use strict;' 'use warnings;' USE_RPERL_AFTER? 'our' VERSION_NUMBER_ASSIGN ;
+Critic:                  '## no critic qw(' WORD+ ')' ;
+Exports:                 USE_EXPORTER (OUR_EXPORT OP01_QW ';')? (OUR_EXPORT_OK OP01_QW ';')? ;
 Include:                 USE WordScoped ';' | USE WordScoped OP01_QW ';' ;
 Constant:                'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';' ;
 #Constant:               'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
 #ConstantValue:          Literal | LBRACKET TypeInnerConstant? Literal (OP21_LIST_COMMA TypeInnerConstant? Literal)* ']' | 
 #                        LBRACE WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal (OP21_LIST_COMMA WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal)* '}' ;
-
-
-#Subroutine:              'our' Type VARIABLE_SYMBOL '= sub {' SubroutineArguments? Operation* '}' ';' ;  # DEPRECATED, CORRELATION #rp120: old subroutine header
 Subroutine:              SUB WORD LBRACE LBRACE MY Type '$RETURN_TYPE' '}' ';' SubroutineArguments? Operation* '}' ;
-
-
 SubroutineArguments:     LPAREN_MY Type VARIABLE_SYMBOL (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
-Class:                   'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties SubroutineOrMethod* LITERAL_NUMBER ';' ;
+Class:                   'use parent qw(' WordScoped ')' ';' Include Critic* Exports? Include* Constant* Properties SubroutineOrMethod* LITERAL_NUMBER ';' ;
 Properties:              'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryProperties (OP21_LIST_COMMA HashEntryProperties)* '}' ';' |
                          'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';';
-
-
-#Method:                  'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' MethodArguments? Operation* '}' ';' ;
 Method:                  SUB WORD LBRACE LBRACE MY TYPE_METHOD '$RETURN_TYPE' '}' ';' MethodArguments? Operation* '}' ;
-
-# START HERE: complete steps of grammar update below, update subroutine & method header code generation, re-enable t/13, delete old Sub & Method productions above, update Learning RPerl, disable Class.pm subroutine scanning code, GSL support
-# START HERE: complete steps of grammar update below, update subroutine & method header code generation, re-enable t/13, delete old Sub & Method productions above, update Learning RPerl, disable Class.pm subroutine scanning code, GSL support
-# START HERE: complete steps of grammar update below, update subroutine & method header code generation, re-enable t/13, delete old Sub & Method productions above, update Learning RPerl, disable Class.pm subroutine scanning code, GSL support
-
-
 MethodArguments:         LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
 SubroutineOrMethod:      Subroutine | Method ;
+
+
+
+# START HERE: add not_ & EXPORTS here, grammar update steps, update subroutine & method header code generation, stub EXPORTS code generation, re-enable t/13, update Learning RPerl, GSL support
+# START HERE: add not_ & EXPORTS here, grammar update steps, update subroutine & method header code generation, stub EXPORTS code generation, re-enable t/13, update Learning RPerl, GSL support
+# START HERE: add not_ & EXPORTS here, grammar update steps, update subroutine & method header code generation, stub EXPORTS code generation, re-enable t/13, update Learning RPerl, GSL support
+
+
 
 # [[[ SYNTAX PRODUCTION RULES, OPERATIONS ]]]
 
@@ -233,8 +231,8 @@ OperatorVoid:            OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRI
 Expression:              Operator | WORD_UPPERCASE LPAREN ')' | CONSTANT_CALL_SCOPED | WordScoped LPAREN ListElements? ')' |
                          Variable OP02_METHOD_THINARROW LPAREN ListElements? ')' | WordScoped OP02_METHOD_THINARROW_NEW HashReference? ')' ;
 SubExpression:           Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereference | HashReference | HashDereference | LPAREN SubExpression ')' ;
-SubExpressionOrInput:    SubExpression | FHREF_SYMBOL_IN | STDIN;
-SubExpressionOrVarMod:   SubExpression | VariableModification;
+SubExpressionOrInput:    SubExpression | FHREF_SYMBOL_IN | STDIN ;
+SubExpressionOrVarMod:   SubExpression | VariableModification ;
 Statement:               Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ';' ;
 Conditional:             'if' LPAREN SubExpression ')' CodeBlock ('elsif' LPAREN SubExpression ')' CodeBlock)* ('else' CodeBlock)? ;
 Loop:                    LoopFor | LoopForEach | LoopWhile ;
@@ -252,7 +250,7 @@ VariableDeclaration:     MY Type VARIABLE_SYMBOL ';' | MY Type VARIABLE_SYMBOL O
                          MY Type VARIABLE_SYMBOL OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ';' | MY TYPE_FHREF FHREF_SYMBOL ';' ;
 VariableModification:    Variable OP19_VARIABLE_ASSIGN SubExpressionOrInput | Variable OP19_VARIABLE_ASSIGN_BY SubExpression ;
 ListElements:            ListElement (OP21_LIST_COMMA ListElement)* ;
-ListElement:             SubExpression | TypeInner SubExpression | OP01_QW | ARGV;
+ListElement:             SubExpression | TypeInner SubExpression | OP01_QW | ARGV ;
 ArrayReference:          LBRACKET ListElements? ']' ;
 ArrayDereference:        '@{' Variable '}' | '@{' TypeInner? ArrayReference '}' ;
 HashEntry:               VarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | HashDereference | ENV ;
@@ -307,12 +305,12 @@ Critic_40 => 'RPerl::CompileUnit::Critic',                                  # Cr
 Include_41 => 'RPerl::CompileUnit::Include',                                # Include -> USE WordScoped ';'
 Include_42 => 'RPerl::CompileUnit::Include',                                # Include -> USE WordScoped OP01_QW ';'
 Constant_43 => 'RPerl::CompileUnit::Constant',                              # Constant -> 'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';'
-Subroutine_48 => 'RPerl::CodeBlock::Subroutine',                            # Subroutine -> 'our' Type VARIABLE_SYMBOL '= sub {' OPTIONAL-16 STAR-17 '}' ';'
+Subroutine_48 => 'RPerl::CodeBlock::Subroutine',                            # Subroutine -> SUB WORD LBRACE LBRACE MY Type '$RETURN_TYPE' '}' ';' OPTIONAL-17 STAR-18 '}'
 SubroutineArguments_52 => 'RPerl::CodeBlock::Subroutine::Arguments',        # SubroutineArguments -> LPAREN_MY Type VARIABLE_SYMBOL STAR-19 ')' OP19_VARIABLE_ASSIGN '@ARG;'
 Class_61 => 'RPerl::CompileUnit::Module::Class::Generator',                 # Class -> 'use parent qw(' WordScoped ')' ';' Include STAR-20 STAR-21 STAR-22 Properties STAR-23 LITERAL_NUMBER ';'
 Properties_65 => 'RPerl::NonGenerator',                                     # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryProperties STAR-27 '}' ';'
 Properties_66 => 'RPerl::NonGenerator',                                     # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';'
-Method_71 => 'RPerl::CodeBlock::Subroutine::Method',                        # Method -> 'our' TYPE_METHOD VARIABLE_SYMBOL '= sub {' OPTIONAL-26 STAR-27 '}' ';'
+Method_71 => 'RPerl::CodeBlock::Subroutine::Method',                        # Method -> SUB WORD LBRACE LBRACE MY TYPE_METHOD '$RETURN_TYPE' '}' ';' OPTIONAL-27 STAR-28 '}'
 MethodArguments_75 => 'RPerl::CodeBlock::Subroutine::Method::Arguments',    # MethodArguments -> LPAREN_MY TYPE_SELF STAR-29 ')' OP19_VARIABLE_ASSIGN '@ARG;'
 SubroutineOrMethod_76 => 'RPerl::CodeBlock::Subroutine',                    # SubroutineOrMethod -> Subroutine
 SubroutineOrMethod_77 => 'RPerl::CodeBlock::Subroutine::Method',            # SubroutineOrMethod -> Method
@@ -338,7 +336,7 @@ Operator_96 => 'RPerl::Operation::Expression::Operator::Arithmetic::AddSubtract'
 Operator_97 => 'RPerl::Operation::Expression::Operator::String::Concatenate',               # Operator -> SubExpression OP08_STRING_CAT SubExpression
 Operator_98 => 'RPerl::Operation::Expression::Operator::Bitwise::Shift',                    # Operator -> SubExpression OP09_BITWISE_SHIFT SubExpression
 Operator_99 => 'RPerl::Operation::Expression::Operator::NamedUnary',                        # Operator -> OP10_NAMED_UNARY SubExpression
-Operator_100 => 'RPerl::Operation::Expression::Operator::NamedUnary',                        # Operator -> OP10_NAMED_UNARY
+Operator_100 => 'RPerl::Operation::Expression::Operator::NamedUnary',                       # Operator -> OP10_NAMED_UNARY
 Operator_101 => 'RPerl::Operation::Expression::Operator::Compare::LessThanGreaterThan',     # Operator -> SubExpression OP11_COMPARE_LT_GT SubExpression
 Operator_102 => 'RPerl::Operation::Expression::Operator::Compare::EqualNotEqual',           # Operator -> SubExpression OP12_COMPARE_EQ_NE SubExpression
 Operator_103 => 'RPerl::Operation::Expression::Operator::Bitwise::And',                     # Operator -> SubExpression OP13_BITWISE_AND SubExpression

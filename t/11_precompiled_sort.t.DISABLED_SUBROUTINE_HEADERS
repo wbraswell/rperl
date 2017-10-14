@@ -23,6 +23,7 @@ use Test::Number::Delta;
 use RPerl::Test;
 use File::Copy;
 use Module::Refresh;
+use RPerl::Algorithm::Sort::Bubble;  # initial 'use' to call RPerl::Algorithm::Sort::Bubble::import() before subsequent calls to 'require' only
 
 # [[[ OPERATIONS ]]]
 

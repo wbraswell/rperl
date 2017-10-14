@@ -30,3 +30,4 @@ sub exported_ok {
 
 my integer $exported_ok_retval = exported_ok(17);
 print 'after exported_ok(17), received $exported_ok_retval = ', $exported_ok_retval, "\n";
+

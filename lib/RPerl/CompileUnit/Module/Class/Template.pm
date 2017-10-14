@@ -22,12 +22,6 @@ our $VERSION = 0.001_000;
 use parent qw(RPerl::CompileUnit::Module::Class);
 use RPerl::CompileUnit::Module::Class;
 
-# [[[ EXPORTS ]]]
-# <<< CHANGE_ME: delete for no exports, or replace with real names of subroutines (not methods) to be exported >>>
-use RPerl::Exporter qw(import);
-our @EXPORT    = qw(pies_are_round pi_r_squared);
-our @EXPORT_OK = qw(garply gorce);
-
 # [[[ CRITICS ]]]
 # <<< CHANGE_ME: delete unused directives >>>
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -63,10 +57,16 @@ our @EXPORT_OK = qw(garply gorce);
 ## no critic qw(ProhibitBacktickOperators)  # SYSTEM SPECIAL 11: allow system command execution
 ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 12: allow complex conditional logic
 ## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
-## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 14: allow global exports from Config.pm
+## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 14: allow global exports from Config.pm & elsewhere
 
 # COMBO CRITICS
 ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
+
+# [[[ EXPORTS ]]]
+# <<< CHANGE_ME: delete for no exports, or replace with real names of subroutines (not methods) to be exported >>>
+use RPerl::Exporter qw(import);
+our @EXPORT    = qw(pies_are_round pi_r_squared);
+our @EXPORT_OK = qw(garply gorce);
 
 # [[[ INCLUDES ]]]
 # <<< CHANGE_ME: delete for no includes, or replace with real include package name(s) >>>

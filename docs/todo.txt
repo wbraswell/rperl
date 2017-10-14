@@ -8,6 +8,8 @@ DOING
         PhysicsPerl
         MathPerl
     RPerl::Exporter
+        PERLOPS_PERLTYPES
+        CPPOPS_CPPTYPES
         enable qw(:all)
     Quick-Start Guide
     GSL support

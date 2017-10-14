@@ -30,3 +30,4 @@ sub exported {
 
 my integer $exported_retval = exported(17);
 print 'after exported(17), received $exported_retval = ', $exported_retval, "\n";
+

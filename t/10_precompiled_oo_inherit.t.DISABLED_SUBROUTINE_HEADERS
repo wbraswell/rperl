@@ -26,6 +26,7 @@ use Test::Exception;
 use RPerl::Test;
 use File::Copy;
 use Module::Refresh;
+use Sub::Delete;
 
 # [[[ OPERATIONS ]]]
 
@@ -309,7 +310,48 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TOOIN04 inherited('Logan') lives}
     );
 
+
+
+
+#    $refresher->refresh_module($bubble_pm_filename);
+#    print '[[[ in t/10 before eval()... ]]]', "\n";
+#    print eval 'use RPerl::Algorithm::Sort::Bubble;';
+#    print eval 'require q{RPerl/Algorithm/Sort/Bubble.pmc};';
+#    if ($EVAL_ERROR) { die 'in t/10' . "\n" . $EVAL_ERROR . ', dying'; }
+#    print '[[[ in t/10 after eval()... ]]]', "\n";
+
+#undef &RPerl::Algorithm::Sort::Bubble::uninherited__Bubble;
+#delete_sub 'RPerl::Algorithm::Sort::Bubble::uninherited__Bubble';
+
+=DISABLED_NEED_DELETE
+
+#undef &RPerl::Algorithm::Sort::Bubble::integer_bubblesort;
+#*RPerl::Algorithm::Sort::Bubble::integer_bubblesort = sub { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@ARG); };
+*RPerl::Algorithm::Sort::Bubble::integer_bubblesort = sub { print '[[[ in t/10 SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::integer_bubblesort() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@ARG); };
+#undef &RPerl::Algorithm::Sort::Bubble::number_bubblesort;
+#*RPerl::Algorithm::Sort::Bubble::number_bubblesort = sub { return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort(@ARG); };
+*RPerl::Algorithm::Sort::Bubble::number_bubblesort = sub { print '[[[ in t/10 SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::number_bubblesort() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort(@ARG); };
+#undef &RPerl::Algorithm::Sort::Bubble::uninherited__Bubble;
+#*RPerl::Algorithm::Sort::Bubble::uninherited__Bubble = sub { return main::RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(@ARG); };
+*RPerl::Algorithm::Sort::Bubble::uninherited__Bubble = sub { print '[[[ in t/10 SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::uninherited__Bubble() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(@ARG); };
+#undef &RPerl::Algorithm::Sort::Bubble::uninherited;
+#*RPerl::Algorithm::Sort::Bubble::uninherited = sub { return main::RPerl__Algorithm__Sort__Bubble__uninherited(@ARG); };
+*RPerl::Algorithm::Sort::Bubble::uninherited = sub { print '[[[ in t/10 SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::uninherited() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__uninherited(@ARG); };
+#undef &RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0;
+#*RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0 = sub { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(@ARG); };
+*RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0 = sub { print '[[[ in t/10 SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(@ARG); };
+#undef &RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0;
+#*RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0 = sub { return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(@ARG); };
+*RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0 = sub { print '[[[ in t/10 SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(@ARG); };
+
+=cut
+
+
+
+
+
     can_ok( 'RPerl::Algorithm::Sort::Bubble', 'uninherited__Bubble' );
+#    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'uninherited__Bubbbbbbble' );
     lives_and(    # TOOIN05
         sub {
 
@@ -318,12 +360,18 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 # START HERE: why are all the uninherited__*() subs registering via can_ok() but the fail to be located when actually running in is() below via CPPOPS_*TYPES???
 
             is( RPerl::Algorithm::Sort::Bubble::uninherited__Bubble('Claws'),
+#            is( main::RPerl__Algorithm__Sort__Bubble__uninherited__Bubble('Claws'),
                 'Bubble::uninherited__Bubble() RULES! ' . $mode_tagline,
                 q{TOOIN05 uninherited__Bubble('Claws') returns correct value}
             );
         },
         q{TOOIN05 uninherited__Bubble('Claws') lives}
     );
+
+
+
+
+
 
     can_ok( 'RPerl::Algorithm::Sort::Bubble', 'uninherited' );
     lives_and(    # TOOIN06
