@@ -8,8 +8,8 @@ DOING
         PhysicsPerl
         MathPerl
     RPerl::Exporter
-        PERLOPS_PERLTYPES
-        CPPOPS_CPPTYPES
+        re-enable t/10 & t/11
+        Class::Generator & Package: PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
         enable qw(:all)
     Quick-Start Guide
     GSL support

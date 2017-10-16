@@ -250,7 +250,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
 #    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_group = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_group) . "\n");
-    $cpp_source_group->{CPP} .= '#include "__NEED_HEADER_PATH"' . "\n";    # defer setting header include path until files are saved in Compiler
+    $cpp_source_group->{CPP} .= '#include "__NEED_HEADER_PATH"' . "\n";  # DEV NOTE, CORRELATION #rp033: defer setting header include path until files are saved in Compiler
 
     if ( exists $constant_star->{children}->[0] ) {
         if ( $modes->{label} eq 'ON' ) {

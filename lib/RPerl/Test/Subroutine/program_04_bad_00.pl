@@ -3,6 +3,7 @@
 # Learning RPerl, Section 4.3.1: C<return> Operator
 
 # [[[ PREPROCESSOR ]]]
+# <<< COMPILE_ERROR: "error: cannot convert ‘std::__cxx11::basic_string<char>’ to ‘integer {aka long int}’ in return" >>>
 # <<< COMPILE_ERROR: 'ERROR ECOCOSU04' >>>
 
 # [[[ HEADER ]]]

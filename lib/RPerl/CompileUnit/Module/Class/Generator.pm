@@ -38,6 +38,9 @@ sub ast_to_rperl__generate {
         $self_class = ref $self;
     }
 
+#    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), have possibly-unwrapped $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    die 'TMP DEBUG';
+
     if ( ($self_class) ne 'Class_72' ) {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($self_class)
@@ -46,19 +49,23 @@ sub ast_to_rperl__generate {
     }
 
     # Class:   'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties MethodOrSubroutine* LITERAL_NUMBER ';' ;
-    # Class -> 'use parent qw(' WordScoped ')' ';' Include STAR-20 STAR-21  STAR-22   Properties STAR-23             LITERAL_NUMBER ';'
+    # Class:   'use parent qw(' WordScoped ')' ';' Include Critic* Exports? Include* Constant* Properties SubroutineOrMethod* LITERAL_NUMBER ';' ;
     my string $use_parent_qw_keyword     = $self->{children}->[0];
     my string $parent_name               = $self->{children}->[1]->{children}->[0];
     my string $right_parenthesis         = $self->{children}->[2];
     my string $use_parent_semicolon      = $self->{children}->[3];
     my object $parent_include            = $self->{children}->[4];
     my object $critic_star               = $self->{children}->[5];
-    my object $include_star              = $self->{children}->[6];
-    my object $constant_star             = $self->{children}->[7];
-    my object $properties                = $self->{children}->[8];
-    my object $method_or_subroutine_star = $self->{children}->[9];
-    my string $retval_literal_number     = $self->{children}->[10];
-    my string $retval_semicolon          = $self->{children}->[11];
+    my object $exports_optional          = $self->{children}->[6];
+    my object $include_star              = $self->{children}->[7];
+    my object $constant_star             = $self->{children}->[8];
+    my object $properties                = $self->{children}->[9];
+    my object $method_or_subroutine_star = $self->{children}->[10];
+    my string $retval_literal_number     = $self->{children}->[11];
+    my string $retval_semicolon          = $self->{children}->[12];
+
+#    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), have $exports_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($exports_optional) . "\n" );
+#    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), have $exports_optional->{children}->[0] = ' . "\n" . RPerl::Parser::rperl_ast__dump($exports_optional->{children}->[0]) . "\n" );
 
     $rperl_source_group->{PMC} = q{};
     if ( $modes->{label} eq 'ON' ) {
@@ -79,6 +86,26 @@ sub ast_to_rperl__generate {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
 
+    if ( exists $exports_optional->{children}->[0] ) {
+#        RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), have YES EXPORTS ' . "\n" );
+        if ( $modes->{label} eq 'ON' ) {
+            $rperl_source_group->{PMC} .= "\n" . '# [[[ EXPORTS ]]]' . "\n";
+        }
+        my object $exports = $exports_optional->{children}->[0];
+        my string $use_exporter = $exports->{children}->[0];
+        my string $export = $exports->{children}->[1];
+        my string $export_ok = $exports->{children}->[2];
+
+        $rperl_source_group->{PMC} .= $use_exporter;  # already has a newline
+        if ( exists $export->{children}->[0] ) {
+            $rperl_source_group->{PMC} .= $export->{children}->[0]->{attr} . $export->{children}->[1]->{attr} . ';' . "\n";  # DEV NOTE: does not capture semicolon in AST for some reason, must hard-code here
+        }
+        if ( exists $export_ok->{children}->[0] ) {
+            $rperl_source_group->{PMC} .= $export_ok->{children}->[0]->{attr} . $export_ok->{children}->[1]->{attr} . ';' . "\n";  # DEV NOTE: does not capture semicolon in AST for some reason, must hard-code here
+        }
+#        RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), AFTER EXPORTS, have $rperl_source_group->{PMC} = ' . "\n" . RPerl::Parser::rperl_ast__dump($rperl_source_group->{PMC}) . "\n" );
+    }
+    
     if ( exists $include_star->{children}->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
             $rperl_source_group->{PMC} .= "\n" . '# [[[ INCLUDES ]]]' . "\n";
@@ -416,14 +443,14 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             . "\n";
     }
 
-    # Class:   'use parent qw(' WordScoped ')' ';' Include Critic* Include* Constant* Properties MethodOrSubroutine* LITERAL_NUMBER ';' ;
-    # Class -> 'use parent qw(' WordScoped ')' ';' Include STAR-20 STAR-21  STAR-22   Properties STAR-23             LITERAL_NUMBER ';'
+    # Class:   'use parent qw(' WordScoped ')' ';' Include Critic* Exports? Include* Constant* Properties SubroutineOrMethod* LITERAL_NUMBER ';' ;
     my string $parent_name               = $self->{children}->[1]->{children}->[0];
     my string $use_keyword               = $self->{children}->[4]->{children}->[0];
-    my object $include_star              = $self->{children}->[6];
-    my object $constant_star             = $self->{children}->[7];
-    my object $properties                = $self->{children}->[8];
-    my object $method_or_subroutine_star = $self->{children}->[9];
+    my object $exports_optional          = $self->{children}->[6];
+    my object $include_star              = $self->{children}->[7];
+    my object $constant_star             = $self->{children}->[8];
+    my object $properties                = $self->{children}->[9];
+    my object $method_or_subroutine_star = $self->{children}->[10];
 
     if ( $modes->{label} eq 'ON' ) {
         $cpp_source_group->{H_INCLUDES} .= '// [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]' . "\n";
@@ -499,9 +526,41 @@ EOL
         # RPerl system module, wrapped in angle-brackets < > to denote system nature
         $cpp_source_group->{H_INCLUDES} .= '#include <' . $parent_name_path . '>' . "\n";
     }
-    $cpp_source_group->{CPP} .= '#include "__NEED_HEADER_PATH"' . "\n";    # defer setting header include path until files are saved in Compiler
+    $cpp_source_group->{CPP} .= '#include "__NEED_HEADER_PATH"' . "\n";  # DEV NOTE, CORRELATION #rp033: defer setting header include path until files are saved in Compiler
 
     my string_hashref $cpp_source_subgroup;
+
+
+
+
+# START HERE: convert the Exports code below from RPerl output to C++ output
+# START HERE: convert the Exports code below from RPerl output to C++ output
+# START HERE: convert the Exports code below from RPerl output to C++ output
+
+=DISABLED_NEED_CONVERT_FROM_RPERL_TO_CPP_OUTPUT
+    if ( exists $exports_optional->{children}->[0] ) {
+#        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have YES EXPORTS ' . "\n" );
+        if ( $modes->{label} eq 'ON' ) {
+            $rperl_source_group->{H} .= "\n" . '# [[[ EXPORTS ]]]' . "\n";
+        }
+        my object $exports = $exports_optional->{children}->[0];
+        my string $use_exporter = $exports->{children}->[0];
+        my string $export = $exports->{children}->[1];
+        my string $export_ok = $exports->{children}->[2];
+
+        $rperl_source_group->{H} .= $use_exporter;  # already has a newline
+        if ( exists $export->{children}->[0] ) {
+            $rperl_source_group->{H} .= $export->{children}->[0]->{attr} . $export->{children}->[1]->{attr} . ';' . "\n";  # DEV NOTE: does not capture semicolon in AST for some reason, must hard-code here
+        }
+        if ( exists $export_ok->{children}->[0] ) {
+            $rperl_source_group->{H} .= $export_ok->{children}->[0]->{attr} . $export_ok->{children}->[1]->{attr} . ';' . "\n";  # DEV NOTE: does not capture semicolon in AST for some reason, must hard-code here
+        }
+#        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), AFTER EXPORTS, have $rperl_source_group->{H} = ' . "\n" . RPerl::Parser::rperl_ast__dump($rperl_source_group->{H}) . "\n" );
+    }
+=cut
+
+
+
 
     foreach my object $include ( @{ $include_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
 #        RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $package_name_underscores = ' . $package_name_underscores . "\n");

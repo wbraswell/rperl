@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.012_000;
+our $VERSION = 0.020_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -57,17 +57,21 @@ sub ast_to_rperl__generate {
             . "\n";
     }
 
-    #    RPerl::diag( 'in Subroutine->ast_to_rperl__generate(), have possibly-unwrapped $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Subroutine->ast_to_rperl__generate(), have possibly-unwrapped $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    my string $our                = $self->{children}->[0];
-    my string $return_type        = $self->{children}->[1];
-    my string $name               = $self->{children}->[2];
-    my string $equal_sub          = $self->{children}->[3];
-    my object $arguments_optional = $self->{children}->[4];
-    my object $operations_star    = $self->{children}->[5];
-    my string $right_brace        = $self->{children}->[6];
-    my string $semicolon          = $self->{children}->[7];
- 
+    my string $sub                     = $self->{children}->[0];
+    my string $name                    = $self->{children}->[1];
+    my string $left_brace              = $self->{children}->[2];
+    my string $return_type_left_brace  = $self->{children}->[3];
+    my string $return_type_my          = $self->{children}->[4];
+    my string $return_type             = $self->{children}->[5]->{children}->[0];
+    my string $return_type_var         = $self->{children}->[6];
+    my string $return_type_right_brace = $self->{children}->[7];
+    my string $return_type_semicolon   = $self->{children}->[8];
+    my object $arguments_optional      = $self->{children}->[9];
+    my object $operations_star         = $self->{children}->[10];
+    my string $right_brace             = $self->{children}->[11];
+
     if ((substr $name, 1, 1) eq '_') {
         die 'ERROR ECOGEASRP08, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
@@ -80,7 +84,10 @@ sub ast_to_rperl__generate {
     # NEED UPGRADE, CORRELATION #rp035: allow multi-line subroutines & other code blocks, where they would be less than 160 chars if on a single line
     # DEV NOTE: no newline appended in the next line, all newlines removed from subroutine body via regex replacement after foreach loop below,
     # thus allowing for single-line subroutines as well as multi-line subroutines, at the control of Perl::Tidy
-    $rperl_source_group->{PMC} .= $our . q{ } . $return_type->{children}->[0] . q{ } . $name . q{ } . $equal_sub;
+    $rperl_source_group->{PMC} .= 
+        $sub . q{ } . $name . q{ } . $left_brace . q{ } . 
+        $return_type_left_brace . q{ } . $return_type_my . q{ } . $return_type . q{ } . $return_type_var . q{ } . 
+        $return_type_right_brace . q{ } . $return_type_semicolon;
 
     if ( exists $arguments_optional->{children}->[0] ) {
         $rperl_source_subgroup = $arguments_optional->{children}->[0]->ast_to_rperl__generate($modes);
@@ -94,7 +101,7 @@ sub ast_to_rperl__generate {
 
     $rperl_source_group->{PMC} =~ s/\n/\ /gxms;
 
-    $rperl_source_group->{PMC} .= $right_brace . $semicolon . "\n\n";
+    $rperl_source_group->{PMC} .= $right_brace . "\n\n";
     return $rperl_source_group;
 }
 
@@ -117,14 +124,13 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
     # unwrap Subroutine_57 from SubroutineOrMethod_87, only if needed
     if ((ref $self) eq 'SubroutineOrMethod_87') { $self = $self->{children}->[0]; }
 
-    my string $return_type = $self->{children}->[1]->{children}->[0];
-    my string $name        = $self->{children}->[2];
-    my object $arguments_optional = $self->{children}->[4];
+    my string $name                    = $self->{children}->[1];
+    my string $return_type             = $self->{children}->[5]->{children}->[0];
+    my object $arguments_optional      = $self->{children}->[9];
 
 #RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
 #RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $return_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($return_type) . "\n" );
 
-    substr $name, 0, 1, q{};            # remove leading $ sigil
     my string_arrayref $arguments = [];
 
     if ((substr $name, 0, 1) eq '_') {
@@ -170,12 +176,11 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     # unwrap Subroutine_57 from SubroutineOrMethod_87, only if needed
     if ((ref $self) eq 'SubroutineOrMethod_87') { $self = $self->{children}->[0]; }
 
-    my string $return_type = $self->{children}->[1]->{children}->[0];
-    my string $name        = $self->{children}->[2];
-    my object $arguments_optional = $self->{children}->[4];
-    my object $operations_star    = $self->{children}->[5];
+    my string $name                    = $self->{children}->[1];
+    my string $return_type             = $self->{children}->[5]->{children}->[0];
+    my object $arguments_optional      = $self->{children}->[9];
+    my object $operations_star         = $self->{children}->[10];
 
-    substr $name, 0, 1, q{};            # remove leading $ sigil
     my string_arrayref $arguments = [];
     my object $cpp_source_subgroup;
  
@@ -246,14 +251,12 @@ sub ast_to_cpp__generate_shims__CPPOPS_CPPTYPES {
     # unwrap Subroutine_57 from SubroutineOrMethod_87, only if needed
     if ((ref $self) eq 'SubroutineOrMethod_87') { $self = $self->{children}->[0]; }
 
-#    my string $return_type = $self->{children}->[1]->{children}->[0];  # SHIM SUBS DEPRECATED IN FAVOR OF MACROS
-    my string $name        = $self->{children}->[2];
-    my object $arguments_optional = $self->{children}->[4];
+    my string $name                    = $self->{children}->[1];
+#    my string $return_type             = $self->{children}->[5]->{children}->[0];    # SHIM SUBS DEPRECATED IN FAVOR OF MACROS
+    my object $arguments_optional      = $self->{children}->[9];
 
 #RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shims__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
 #RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shims__CPPOPS_CPPTYPES(), have $return_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($return_type) . "\n" );
-
-    substr $name, 0, 1, q{};            # remove leading $ sigil
  
     if ((substr $name, 0, 1) eq '_') {
         die 'ERROR ECOGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . ($name)

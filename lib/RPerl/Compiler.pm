@@ -766,13 +766,12 @@ sub save_source_files {
     if ( $modes->{ops} eq 'CPP' ) {
         RPerl::verbose('SAVE  PHASE 0:      Final file modifications...    ');
 
+        $source_group->{CPP} = post_processor_cpp__header_unneeded( $source_group );
         $source_group->{CPP} = post_processor_cpp__header_or_cpp_path( $source_group->{CPP}, $file_name_group->{H} );
 
         # MODULE POST-PROCESSING
         if ( $modes->{_input_file_name} =~ /[.]pm$/xms ) {
-
             $source_group = post_processor_cpp__types_change( $source_group, $modes );
-
             post_processor_cpp__pmc_generate( $source_group, $file_name_group, $modes );
         }
         RPerl::verbose( ' done.' . "\n" );
@@ -780,9 +779,9 @@ sub save_source_files {
 
     RPerl::verbose('SAVE  PHASE 1:      Format & write files to disk...');
 
-    #    RPerl::diag( 'in Compiler::save_source_files(), have [sort keys %{$source_group}] = ' . Dumper([sort keys %{$source_group}]) . "\n" );
-    #    RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{H} = ' . Dumper($source_group->{H}) . "\n" );
-    #    RPerl::diag( 'in Compiler::save_source_files(), have $source_group = ' . Dumper($source_group) . "\n" );
+#    RPerl::diag( 'in Compiler::save_source_files(), have [sort keys %{$source_group}] = ' . Dumper([sort keys %{$source_group}]) . "\n" );
+#    RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{H} = ' . Dumper($source_group->{H}) . "\n" );
+#    RPerl::diag( 'in Compiler::save_source_files(), have $source_group = ' . Dumper($source_group) . "\n" );
 
 #    foreach my string $suffix_key ( sort keys %{$file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
     foreach my string $suffix_key ( sort keys %{$source_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
@@ -863,6 +862,23 @@ sub save_source_files {
 
     RPerl::verbose( ' done.' . "\n" );
     return;
+}
+
+# remove unneeded __NEED_HEADER_PATH line
+sub post_processor_cpp__header_unneeded {
+    { my string $RETURN_TYPE };
+    ( my string $source_group ) = @ARG;
+
+    # DEV NOTE, CORRELATION #rp033: defer setting header include path until files are saved in Compiler
+    my string $source_group_CPP_no_header = q{};
+    if ((not exists $source_group->{H}) or (not defined $source_group->{H})) {
+#        RPerl::diag( 'in Compiler::post_processor_cpp__header_unneeded(), removing unneeded __NEED_HEADER_PATH line' . "\n" );
+        foreach my string $source_group_CPP_line (split /\n/, $source_group->{CPP}) {
+            if ($source_group_CPP_line =~ m/__NEED_HEADER_PATH/) { next; }
+            $source_group_CPP_no_header .= $source_group_CPP_line . "\n";
+        }
+    }
+    return $source_group_CPP_no_header;
 }
 
 # replace __NEED_HEADER_PATH or __NEED_CPP_PATH with proper C++ header path
