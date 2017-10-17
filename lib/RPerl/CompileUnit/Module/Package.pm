@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Package;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_100;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module);
@@ -69,12 +69,6 @@ sub ast_to_rperl__generate {
             $rperl_source_subgroup );
     }
 
-
-
-# START HERE: test code below
-# START HERE: test code below
-# START HERE: test code below
-
     if ( exists $exports_optional->{children}->[0] ) {
 #        RPerl::diag( 'in Package->ast_to_rperl__generate(), have YES EXPORTS ' . "\n" );
         if ( $modes->{label} eq 'ON' ) {
@@ -94,10 +88,6 @@ sub ast_to_rperl__generate {
         }
 #        RPerl::diag( 'in Package->ast_to_rperl__generate(), AFTER EXPORTS, have $rperl_source_group->{PMC} = ' . "\n" . RPerl::Parser::rperl_ast__dump($rperl_source_group->{PMC}) . "\n" );
     }
-
-
-
-
 
     if ( exists $include_star->{children}->[0] ) {
         if ( $modes->{label} eq 'ON' ) {

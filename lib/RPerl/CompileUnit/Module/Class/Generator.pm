@@ -533,9 +533,9 @@ EOL
 
 
 
-# START HERE: convert the Exports code below from RPerl output to C++ output
-# START HERE: convert the Exports code below from RPerl output to C++ output
-# START HERE: convert the Exports code below from RPerl output to C++ output
+# START HERE: figure out how to do Exports in C++, convert the Exports code below from RPerl output to C++ output
+# START HERE: figure out how to do Exports in C++, convert the Exports code below from RPerl output to C++ output
+# START HERE: figure out how to do Exports in C++, convert the Exports code below from RPerl output to C++ output
 
 =DISABLED_NEED_CONVERT_FROM_RPERL_TO_CPP_OUTPUT
     if ( exists $exports_optional->{children}->[0] ) {

@@ -1,17 +1,24 @@
 DONE
     disable 'long long' & 'double long' for GMP compatibility
+    new subroutine headers
+        all RPerl converted & most tests pass (not t/10 or t/11)
+    RPerl::Exporter
+        Class::Generator & Package: PERLOPS_PERLTYPES
+    Quick-Start Guide
+        started
 
 DOING
     new subroutine headers
-        all RPerl converted & tests pass
         Learning RPerl
         PhysicsPerl
         MathPerl
     RPerl::Exporter
         re-enable t/10 & t/11
-        Class::Generator & Package: PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
+        Class::Generator & Package: CPPOPS_CPPTYPES
         enable qw(:all)
+        Learning RPerl
     Quick-Start Guide
+        finish
     GSL support
         
     Alien::PCRE2

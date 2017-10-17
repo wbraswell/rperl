@@ -209,9 +209,7 @@ SubroutineOrMethod:      Subroutine | Method ;
 
 
 
-# START HERE: update subroutine & method header code generation, stub EXPORTS package & class code generation, re-enable t/13, update Learning RPerl, GSL support
-# START HERE: update subroutine & method header code generation, stub EXPORTS package & class code generation, re-enable t/13, update Learning RPerl, GSL support
-# START HERE: update subroutine & method header code generation, stub EXPORTS package & class code generation, re-enable t/13, update Learning RPerl, GSL support
+# START HERE: update Learning RPerl, GSL support
 
 
 
@@ -309,7 +307,7 @@ Module_25 => 'RPerl::CompileUnit::Module::Class::Generator',                # Mo
 Package_36 => 'RPerl::CompileUnit::Module::Package',                        # Package -> STAR-11 OPTIONAL-12 STAR-13 STAR-14 PLUS-15 LITERAL_NUMBER ';'
 Header_39 => 'RPerl::NonGenerator',                                         # Header -> 'use strict;' 'use warnings;' OPTIONAL-16 'our' VERSION_NUMBER_ASSIGN
 Critic_42 => 'RPerl::CompileUnit::Critic',                                  # Critic -> '## no critic qw(' PLUS-17 ')'
-Exports_49 => 'RPerl::CompileUnit::Exports',                                # Exports -> USE_EXPORTER OPTIONAL-19 OPTIONAL-21
+Exports_49 => 'RPerl::NonGenerator',                                        # Exports -> USE_EXPORTER OPTIONAL-19 OPTIONAL-21
 Include_50 => 'RPerl::CompileUnit::Include',                                # Include -> USE WordScoped ';'
 Include_51 => 'RPerl::CompileUnit::Include',                                # Include -> USE WordScoped OP01_QW ';'
 Constant_52 => 'RPerl::CompileUnit::Constant',                              # Constant -> 'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';'
