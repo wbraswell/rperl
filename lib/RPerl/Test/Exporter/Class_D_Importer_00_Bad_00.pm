@@ -4,10 +4,14 @@
 
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Exporter::Package_B_Importer_00_Bad_00;
+package RPerl::Test::Exporter::Class_D_Importer_00_Bad_00;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
+
+# [[[ OO INHERITANCE ]]]
+use parent qw(RPerl::CompileUnit::Module::Class RPerl::Exporter);
+use           RPerl::CompileUnit::Module::Class;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -15,25 +19,28 @@ our $VERSION = 0.001_000;
 
 # [[[ EXPORTS ]]]
 use RPerl::Exporter qw(import);
-our @EXPORT_OK = qw(exported_ok);
+our @EXPORT = qw(exported);
 
 # [[[ INCLUDES ]]]
-use RPerl::Test::Exporter::Package_B_Exporter_00_Good qw(exported_ok);
+use RPerl::Test::Exporter::Class_D_Exporter_00_Good;
 
-# [[[ SUBROUTINES ]]]
+# [[[ OO PROPERTIES ]]]
+our hashref $properties = {};
 
-sub not_exported {
+# [[[ SUBROUTINES & OO METHODS ]]]
+
+sub exported {
     { my integer $RETURN_TYPE };
     ( my integer $arg ) = @ARG;
-    print 'in Package_B_Importer_00_Bad_00::not_exported(), received $arg = ', $arg, "\n";
-    return ($arg * -21);
+    print 'in Class_D_Importer_00_Bad_00::exported(), received $arg = ', $arg, "\n";
+    return ($arg * -210);
 }
 
-sub exported_ok {
+sub not_exported_ok {
     { my integer $RETURN_TYPE };
     ( my integer $arg ) = @ARG;
-    print 'in Package_B_Importer_00_Bad_00::exported_ok(), received $arg = ', $arg, "\n";
-    return ($arg * -24);
+    print 'in Class_D_Importer_00_Bad_00::not_exported_ok(), received $arg = ', $arg, "\n";
+    return ($arg * -240);
 }
 
 1;    # end of class

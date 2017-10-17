@@ -1,39 +1,42 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'Subroutine exported_ok redefined' >>>
+# <<< PARSE_ERROR: 'Subroutine exported redefined' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Exporter::Package_D_Importer_00_Bad_00;
+package RPerl::Test::Exporter::Class_C_Importer_00_Bad_00;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
+
+# [[[ OO INHERITANCE ]]]
+use parent qw(RPerl::CompileUnit::Module::Class);
+use RPerl::CompileUnit::Module::Class;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
-# [[[ EXPORTS ]]]
-use RPerl::Exporter qw(import);
-our @EXPORT = qw(exported);
-
 # [[[ INCLUDES ]]]
-use RPerl::Test::Exporter::Package_D_Exporter_00_Good;
+use RPerl::Test::Exporter::Class_C_Exporter_00_Good;
 
-# [[[ SUBROUTINES ]]]
+# [[[ OO PROPERTIES ]]]
+our hashref $properties = {};
+
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 sub exported {
     { my integer $RETURN_TYPE };
     ( my integer $arg ) = @ARG;
-    print 'in Package_D_Importer_00_Bad_00::exported(), received $arg = ', $arg, "\n";
-    return ($arg * -210);
+    print 'in Class_C_Importer_00_Bad_00::exported(), received $arg = ', $arg, "\n";
+    return ($arg * -120);
 }
 
 sub not_exported_ok {
     { my integer $RETURN_TYPE };
     ( my integer $arg ) = @ARG;
-    print 'in Package_D_Importer_00_Bad_00::not_exported_ok(), received $arg = ', $arg, "\n";
-    return ($arg * -240);
+    print 'in Class_C_Importer_00_Bad_00::not_exported_ok(), received $arg = ', $arg, "\n";
+    return ($arg * -420);
 }
 
 1;    # end of class

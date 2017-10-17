@@ -1,9 +1,13 @@
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Exporter::Package_B_Exporter_00_Good;
+package RPerl::Test::Exporter::Class_B_Exporter_00_Good;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
+
+# [[[ OO INHERITANCE ]]]
+use parent qw(RPerl::CompileUnit::Module::Class);
+use           RPerl::CompileUnit::Module::Class;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -13,19 +17,22 @@ our $VERSION = 0.001_000;
 use RPerl::Exporter qw(import);
 our @EXPORT_OK = qw(exported_ok);
 
-# [[[ SUBROUTINES ]]]
+# [[[ OO PROPERTIES ]]]
+our hashref $properties = {};
+
+# [[[ SUBROUTINES & OO METHODS ]]]
 
 sub not_exported {
     { my integer $RETURN_TYPE };
     ( my integer $arg ) = @ARG;
-    print 'in Package_B_Exporter_00_Good::not_exported(), received $arg = ', $arg, "\n";
+    print 'in Class_B_Exporter_00_Good::not_exported(), received $arg = ', $arg, "\n";
     return ($arg * 21);
 }
 
 sub exported_ok {
     { my integer $RETURN_TYPE };
     ( my integer $arg ) = @ARG;
-    print 'in Package_B_Exporter_00_Good::exported_ok(), received $arg = ', $arg, "\n";
+    print 'in Class_B_Exporter_00_Good::exported_ok(), received $arg = ', $arg, "\n";
     return ($arg * 24);
 }
 

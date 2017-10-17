@@ -1,9 +1,13 @@
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Exporter::Package_C_Exporter_00_Good;
+package RPerl::Test::Exporter::Class_C_Importer_10_Good;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
+
+# [[[ OO INHERITANCE ]]]
+use parent qw(RPerl::CompileUnit::Module::Class);
+use RPerl::CompileUnit::Module::Class;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -14,20 +18,26 @@ our $VERSION = 0.001_000;
 use RPerl::Exporter qw(import);
 our @EXPORT = qw(exported);
 
-# [[[ SUBROUTINES ]]]
+# [[[ INCLUDES ]]]
+use RPerl::Test::Exporter::Class_C_Exporter_00_Good;
 
-sub exported {
+# [[[ OO PROPERTIES ]]]
+our hashref $properties = {};
+
+# [[[ SUBROUTINES & OO METHODS ]]]
+
+sub not_exported {
     { my integer $RETURN_TYPE };
     ( my integer $arg ) = @ARG;
-    print 'in Package_C_Exporter_00_Good::exported(), received $arg = ', $arg, "\n";
-    return ($arg * 120);
+    print 'in Class_C_Importer_10_Good::not_exported(), received $arg = ', $arg, "\n";
+    return ($arg * -120);
 }
 
 sub not_exported_ok {
     { my integer $RETURN_TYPE };
     ( my integer $arg ) = @ARG;
-    print 'in Package_C_Exporter_00_Good::not_exported_ok(), received $arg = ', $arg, "\n";
-    return ($arg * 420);
+    print 'in Class_C_Importer_10_Good::not_exported_ok(), received $arg = ', $arg, "\n";
+    return ($arg * -420);
 }
 
 1;    # end of class

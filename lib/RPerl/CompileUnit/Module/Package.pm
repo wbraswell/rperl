@@ -54,8 +54,7 @@ sub ast_to_rperl__generate {
     my string $retval_literal_number = $self->{children}->[5];
     my string $retval_semicolon      = $self->{children}->[6];
 
-    RPerl::diag( 'in Package->ast_to_rperl__generate(), have $exports_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($exports_optional) . "\n" );
-    die 'TMP DEBUG';
+#    RPerl::diag( 'in Package->ast_to_rperl__generate(), have $exports_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($exports_optional) . "\n" );
 
     my string_hashref $rperl_source_subgroup;
 
@@ -72,9 +71,9 @@ sub ast_to_rperl__generate {
 
 
 
-# START HERE: rename Test/Exporter/Package* to Test/Exporter/Class* where appropriate, include some Packages for testing code below, test code below
-# START HERE: rename Test/Exporter/Package* to Test/Exporter/Class* where appropriate, include some Packages for testing code below, test code below
-# START HERE: rename Test/Exporter/Package* to Test/Exporter/Class* where appropriate, include some Packages for testing code below, test code below
+# START HERE: test code below
+# START HERE: test code below
+# START HERE: test code below
 
     if ( exists $exports_optional->{children}->[0] ) {
 #        RPerl::diag( 'in Package->ast_to_rperl__generate(), have YES EXPORTS ' . "\n" );

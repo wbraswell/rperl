@@ -1,6 +1,11 @@
+#!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
+# <<< PARSE_ERROR: 'WARNING WSUXP00: Redundant request to export subroutine exported()' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Exporter::Package_A_Importer_00_Good;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
@@ -10,23 +15,19 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ INCLUDES ]]]
-use RPerl::Test::Exporter::Package_A_Exporter_00_Good qw(exported_ok);
+use RPerl::Test::Exporter::Class_C_Exporter_00_Good qw(exported);
 
 # [[[ SUBROUTINES ]]]
 
 sub not_exported {
     { my integer $RETURN_TYPE };
     ( my integer $arg ) = @ARG;
-    print 'in Package_A_Importer_00_Good::not_exported(), received $arg = ', $arg, "\n";
-    return ($arg * -12);
+    print 'in main::not_exported(), received $arg = ', $arg, "\n";
+    return ($arg * 430);
 }
 
-sub not_exported_ok {
-    { my integer $RETURN_TYPE };
-    ( my integer $arg ) = @ARG;
-    print 'in Package_A_Importer_00_Good::not_exported_ok(), received $arg = ', $arg, "\n";
-    return ($arg * -42);
-}
+# [[[ OPERATIONS ]]]
 
-1;    # end of class
+my integer $exported_retval = exported(17);
+print 'after exported(17), received $exported_retval = ', $exported_retval, "\n";
 
