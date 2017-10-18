@@ -230,22 +230,30 @@ sub create_symtab_entries_and_accessors_mutators {
         my $module_is_absolute = 0;
         if (defined $module_filename_long) {
             (my $module_volume, my $module_directories, my $module_file) = File::Spec->splitpath( $module_filename_long );
-            if (($module_volume ne q{}) or ($module_directories ne q{})) {
+#            RPerl::diag( 'in Class.pm INIT block, have $module_volume = ' . q{'} . $module_volume . q{'} . "\n" );
+#            RPerl::diag( 'in Class.pm INIT block, have $module_directories = ' . q{'} . $module_directories . q{'} . "\n" );
+#            RPerl::diag( 'in Class.pm INIT block, have $module_file = ' . q{'} . $module_file . q{'} . "\n" );
+#            if (($module_volume ne q{}) or ($module_directories ne q{})) {  # DEV NOTE: this isn't right, if the volume is empty then it can't be absolute regardless of directories
+            if ($module_volume ne q{}) {
                 if ( $module_filename_long eq $module_filename_short ) {
-                    # absolute module names include volume or directories, and must match both short & long filenames
+                    # absolute module names include volume, and must match both short & long filenames
                     $module_is_absolute = 1;
                 }
             }
         }
+
+#        RPerl::diag( 'in Class.pm INIT block, have $module_is_absolute = ' . $module_is_absolute . "\n" );
         
         # skip absolute file names (such as Komodo's perl5db.pl) which came from a runtime `require $scalar` or `require 'foo.pm'`,
         # because we can not determine the correct package from the absolute path name, and we don't know how to figure out which part was in @INC from the absolute path;
         if ((not defined $module_filename_long) or $module_is_absolute) {
+#            RPerl::diag( 'in Class.pm INIT block, skipping due to undefined or absolute momdule filename' . "\n" );
             next;
         }
         
         # skip already-compiled files with PMC counterparts
         if (-e ($module_filename_long . 'c')) {
+#            RPerl::diag( 'in Class.pm INIT block, skipping due to already-compiled PMC file' . "\n" );
             next;
         }
 
@@ -655,7 +663,7 @@ sub create_symtab_entries_and_accessors_mutators {
 
                 foreach my $property_name ( sort keys %{$object_properties} ) {
 
-#                    RPerl::diag("in Class.pm INIT block, about to create accessors/mutators, have \$property_name = '$property_name'\n");
+ #                   RPerl::diag("in Class.pm INIT block, about to create accessors/mutators, have \$property_name = '$property_name'\n");
                     # DEV NOTE, CORRELATION #rp003: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
                     # because it has a special BEGIN{} block with multiple package names including it's own package name
 
@@ -663,16 +671,20 @@ sub create_symtab_entries_and_accessors_mutators {
                     my $eval_string;
                     my $return_whole = 0;
 
+#                    RPerl::diag("in Class.pm INIT block, about to create accessors/mutators, have \$property_type = '$property_type'\n");
+
                     # array element accessor/mutator
                     if (    ( $property_type =~ /_arrayref$/ )
                         and ( not eval( 'defined &' . $package_name . '::get_' . $property_name . '_element' ) ) )
                     {
+#                        RPerl::diag('in Class.pm INIT block, about to create accessors/mutators, have arrayref type' . "\n");
         # hard-coded examples
         # sub get_foo_size { { my integer::method $RETURN_TYPE }; ( my Foo::Bar $self ) = @ARG; return (scalar @{$self->{foo}}); }
         # sub get_foo_element { { my Foo::Quux::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i ) = @ARG; return $self->{foo}->[$i]; }
         # sub set_foo_element { { my void::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @ARG; $self->{foo}->[$i] = $foo_element; }
                         my $property_element_type = substr $property_type, 0, ( ( length $property_type ) - 9 );    # strip trailing '_arrayref'
                         if ( exists $rperlnamespaces_generated::RPERL->{ $property_element_type . '::' } ) {
+#                            RPerl::diag('in Class.pm INIT block, about to create accessors/mutators, have RPerl arrayref type, setting $return_whole flag' . "\n");
                             $return_whole = 1;
                         }
                         else {
@@ -786,6 +798,7 @@ sub create_symtab_entries_and_accessors_mutators {
                     if ($return_whole) {
                         if ( not eval( 'defined &' . $package_name . '::get_' . $property_name ) ) {
                             $eval_string = '*{' . $package_name . '::get_' . $property_name . '} = sub { return $_[0]->{' . $property_name . '}; };';
+#                            RPerl::diag( 'in Class::INIT() block, have $return_whole accessor $eval_string = ' . "\n" . $eval_string . "\n" );
                             eval($eval_string) or croak($EVAL_ERROR);
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
                         }
@@ -800,15 +813,14 @@ sub create_symtab_entries_and_accessors_mutators {
                                 . $property_name
                                 . '} = $_[1]; return $_[0]->{'
                                 . $property_name . '}; };';
-                            eval($eval_string)
-                                or croak($EVAL_ERROR);
+#                            RPerl::diag( 'in Class::INIT() block, have $return_whole mutator $eval_string = ' . "\n" . $eval_string . "\n" );
+                            eval($eval_string) or croak($EVAL_ERROR);
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
                         }
                     }
                 }
             }
         }
-
 #        else { RPerl::diag('in Class.pm INIT block, found existing $rperlnamespaces_generated::CORE->{' . $namespace_root . '}, aborting RPerl activation of entire file' . "\n"); }
     }
 }

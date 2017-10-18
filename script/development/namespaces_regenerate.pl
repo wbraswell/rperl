@@ -43,6 +43,7 @@ my $namespaces_rperl_missed = {
     'rperlrules::' => 1,
     'rperlsse::' => 1,
     'rperlgmp::' => 1,
+    'perlapinames_generated::' => 1,
 };
 
 # DEV NOTE, CORRELATION #rp050: hard-coded list of RPerl files/packages/namespaces
@@ -76,6 +77,7 @@ my $filenames_rperl = {
     'rperlrules.pm' => 1,
     'rperlsse.pm' => 1,
     'rperlgmp.pm' => 1,
+    'perlapinames_generated.pm' => 1,
 };
 
 # DEV NOTE, CORRELATION #rp050: hard-coded list of RPerl files/packages/namespaces
@@ -179,6 +181,7 @@ my $namespaces_rperl_deps = {
 eval 'use RPerl::AfterSubclass';
 eval 'use rperlsse';
 eval 'use rperlgmp';
+eval 'use perlapinames_generated';
 
 #print 'in namespaces_regenerate.pl main::, after evals, about to call rperlnamespaces::hash()...', "\n";
 my $namespaces_rperl = rperlnamespaces::hash();

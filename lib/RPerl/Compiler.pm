@@ -248,6 +248,7 @@ sub find_dependencies {
                 or ( $file_line =~ /use\s+RPerl::Config\s*;/ )
                 or ( $file_line =~ /use\s+RPerl::Exporter.*;/ )
                 or ( $file_line =~ /use\s+\w+Perl::Config\s*;/ )    # DEV NOTE, CORRELATION #rp027: MathPerl::Config, PhysicsPerl::Config, etc
+                or ( $file_line =~ /use\s+perlapinames_generated/ )
                 or ( $file_line =~ /use\s+parent/ )
                 or ( $file_line =~ /use\s+constant/ )
                 or ( $file_line =~ /use\s+overload/ )
