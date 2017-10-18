@@ -870,15 +870,19 @@ sub post_processor_cpp__header_unneeded {
     ( my string $source_group ) = @ARG;
 
     # DEV NOTE, CORRELATION #rp033: defer setting header include path until files are saved in Compiler
-    my string $source_group_CPP_no_header = q{};
     if ((not exists $source_group->{H}) or (not defined $source_group->{H})) {
 #        RPerl::diag( 'in Compiler::post_processor_cpp__header_unneeded(), removing unneeded __NEED_HEADER_PATH line' . "\n" );
+        my string $source_group_CPP_no_header = q{};
         foreach my string $source_group_CPP_line (split /\n/, $source_group->{CPP}) {
+            RPerl::diag( 'in Compiler::post_processor_cpp__header_unneeded(), have $source_group_CPP_line = ' . "\n" . $source_group_CPP_line . "\n" );
             if ($source_group_CPP_line =~ m/__NEED_HEADER_PATH/) { next; }
             $source_group_CPP_no_header .= $source_group_CPP_line . "\n";
         }
+        return $source_group_CPP_no_header;
     }
-    return $source_group_CPP_no_header;
+    else {
+        return $source_group->{CPP};
+    }
 }
 
 # replace __NEED_HEADER_PATH or __NEED_CPP_PATH with proper C++ header path

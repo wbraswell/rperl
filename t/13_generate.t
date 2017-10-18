@@ -410,7 +410,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
 #                RPerl::diag( 'in 13_generate.t, have $test_file NOT named *Good* or *good*' . "\n" );
 
                 # skip test if dummy source code found
-                if ( not dummy_source_code_find($source_group) ) {
+                if ( not RPerl::Generator::dummy_source_code_find($source_group) ) {
                     ok( 0, 'Program or module generates with errors:' . (q{ } x 21) . $test_file );
 #                    $number_of_tests_run++;
                 }
@@ -500,7 +500,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
 #                    RPerl::diag( 'in 13_generate.t, do NOT need to perform diff check(s)' . "\n" );
 
                     # skip test if dummy source code found
-                    if ( not dummy_source_code_find($source_group) ) {
+                    if ( not RPerl::Generator::dummy_source_code_find($source_group) ) {
                         ok( 1, 'Program or module generates without errors, no diff check:' . (q{ } x 3) . $test_file );
 #                        $number_of_tests_run++;
                     }
@@ -528,6 +528,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
                         }
                     }
                 }
+                print $verbose_newline;
                 ok( ( ( scalar @{$missing_errors} ) == 0 ), 'Program or module generates with expected error(s):' . (q{ } x 10) . $test_file );
                 if (( scalar @{$missing_errors} ) != 0) {
                     diag((join "\n", @{$missing_errors}) . "\n");

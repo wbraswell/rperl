@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.011_000;
+our $VERSION = 0.012_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -17,6 +17,7 @@ use RPerl::CompileUnit::Module::Class;
 use RPerl::Parser;
 use RPerl::Generator;
 use Storable qw(dclone);
+use perlapinames_generated;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -186,6 +187,18 @@ sub ast_to_rperl__generate {
                 . ', dying' . "\n";
         }
 
+#        RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), have $property_name = ' . $property_name . "\n" );
+#        RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), have $perlapinames_generated::FUNCTIONS_DOCUMENTED = ' . Dumper($perlapinames_generated::FUNCTIONS_DOCUMENTED) . "\n" );
+
+        if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$property_name}) or
+            (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$property_name}) or
+            (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$property_name}) or
+            (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$property_name})) {
+            die 'ERROR ECOGEASRP41, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, OO property name ' . q{'}
+                . $property_name . q{'}
+                . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
+        }
+
         # TypeInnerProperties -> MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression
         if ( ref $property_type_inner eq 'TypeInnerProperties_238' ) {
             $property_my            = $property_type_inner->{children}->[0];
@@ -289,6 +302,14 @@ sub ast_to_rperl__generate {
                         . ' does not equal OO properties key ' . q{'}
                         . $property_key . q{'}
                         . ', dying' . "\n";
+                }
+                if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$property_name}) or
+                    (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$property_name}) or
+                    (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$property_name}) or
+                    (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$property_name})) {
+                    die 'ERROR ECOGEASRP41, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, OO property name ' . q{'}
+                        . $property_name . q{'}
+                        . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
                 }
 
                 # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
@@ -662,6 +683,14 @@ EOL
                 . $property_key . q{'}
                 . ', dying' . "\n";
         }
+        if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$property_name}) or
+            (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$property_name}) or
+            (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$property_name}) or
+            (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$property_name})) {
+            die 'ERROR ECOGEASCP41, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, OO property name ' . q{'}
+                . $property_name . q{'}
+                . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
+        }
 
         # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
         if ( ref $property_type_inner eq 'TypeInnerProperties_238' ) {
@@ -775,6 +804,14 @@ EOL
                     . ' does not equal OO properties key ' . q{'}
                     . $property_key . q{'}
                     . ', dying' . "\n";
+            }
+            if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$property_name}) or
+                (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$property_name}) or
+                (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$property_name}) or
+                (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$property_name})) {
+                die 'ERROR ECOGEASCP41, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, OO property name ' . q{'}
+                    . $property_name . q{'}
+                    . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
             }
 
             # TypeInnerProperties -> MY Type '$TYPED_' WORD OP19_VARIABLE_ASSIGN SubExpression
@@ -1063,6 +1100,9 @@ EOL
     }
     $cpp_source_group->{H} = $H_INCLUDES_UNIQUE . $cpp_source_group->{H};
     delete $cpp_source_group->{H_INCLUDES};
+
+#    RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate__CPPOPS_CPPTYPES(), returning $cpp_source_group = ' . "\n" . Dumper($cpp_source_group) . "\n" );
+
     return $cpp_source_group;
 }
 

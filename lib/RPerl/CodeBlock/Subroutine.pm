@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.020_000;
+our $VERSION = 0.021_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -34,6 +34,9 @@ BEGIN {
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock);
 use RPerl::CodeBlock;
+
+# [[[ INCLUDES ]]]
+use perlapinames_generated;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -72,9 +75,18 @@ sub ast_to_rperl__generate {
     my object $operations_star         = $self->{children}->[10];
     my string $right_brace             = $self->{children}->[11];
 
-    if ((substr $name, 1, 1) eq '_') {
+    if ((substr $name, 0, 1) eq '_') {
         die 'ERROR ECOGEASRP08, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
+    }
+
+    if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$name})) {
+        die 'ERROR ECOGEASRP44, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, subroutine name ' . q{'}
+            . $name . q{'}
+            . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
     }
 
     # CREATE SYMBOL TABLE ENTRY
@@ -138,6 +150,15 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
                 . ' must not start with underscore, dying' . "\n";
     }
 
+    if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$name})) {
+        die 'ERROR ECOGEASCP44, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, subroutine name ' . q{'}
+            . $name . q{'}
+            . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
+    }
+
     # CREATE SYMBOL TABLE ENTRY
     $modes->{_symbol_table}->{_subroutine} = $name;  # set current subroutine/method
     $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{_global}->{$name} = {isa => 'RPerl::CodeBlock::Subroutine', type => $return_type};  # create individual symtab entry
@@ -180,6 +201,15 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my string $return_type             = $self->{children}->[5]->{children}->[0];
     my object $arguments_optional      = $self->{children}->[9];
     my object $operations_star         = $self->{children}->[10];
+
+    if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$name})) {
+        die 'ERROR ECOGEASCP44, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, subroutine name ' . q{'}
+            . $name . q{'}
+            . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
+    }
 
     my string_arrayref $arguments = [];
     my object $cpp_source_subgroup;

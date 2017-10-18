@@ -207,12 +207,6 @@ Method:                  SUB WORD LBRACE LBRACE MY TYPE_METHOD '$RETURN_TYPE' '}
 MethodArguments:         LPAREN_MY Type SELF (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
 SubroutineOrMethod:      Subroutine | Method ;
 
-
-
-# START HERE: update Learning RPerl, GSL support
-
-
-
 # [[[ SYNTAX PRODUCTION RULES, OPERATIONS ]]]
 
 Operation:               Expression ';' | OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | Statement ;

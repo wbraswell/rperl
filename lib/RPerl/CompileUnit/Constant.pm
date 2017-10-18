@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Constant;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit);
@@ -12,6 +12,9 @@ use RPerl::CompileUnit;
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+
+# [[[ INCLUDES ]]]
+use perlapinames_generated;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -37,6 +40,15 @@ sub ast_to_rperl__generate {
     my string $type_inner_constant_equal = $type_inner_constant->{children}->[4];
     my object $subexpression             = $self->{children}->[4];
     my string $semicolon                 = $self->{children}->[5];
+
+    if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$name})) {
+        die 'ERROR ECOGEASRP42, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, constant name ' . q{'}
+            . $name . q{'}
+            . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
+    }
 
     # CREATE SYMBOL TABLE ENTRY
     if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_global}->{$name} ) {
@@ -87,6 +99,15 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my string $name                     = $self->{children}->[1];
     my string $type_inner_constant_type = $self->{children}->[3]->{children}->[1]->{children}->[0];
     my object $subexpression            = $self->{children}->[4];
+
+    if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$name})) {
+        die 'ERROR ECOGEASCP42, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, constant name ' . q{'}
+            . $name . q{'}
+            . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
+    }
 
     # CREATE SYMBOL TABLE ENTRY
     if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_global}->{$name} ) {

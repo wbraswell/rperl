@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.009_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -14,6 +14,7 @@ use parent qw(RPerl::Operation::Statement);
 
 # [[[ INCLUDES ]]]
 use Scalar::Util 'blessed';
+use perlapinames_generated;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -41,6 +42,17 @@ sub ast_to_rperl__generate {
         my string $type      = $self->{children}->[1]->{children}->[0];
         my string $symbol    = $self->{children}->[2];
         my string $semicolon = $self->{children}->[3];
+
+        my string $symbol_no_sigil = substr $symbol, 1;
+        if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$symbol_no_sigil})) {
+            die 'ERROR ECOGEASRP43, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, variable name ' . q{'}
+                . $symbol_no_sigil . q{'}
+                . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
+        }
+
         $rperl_source_group->{PMC} .= $my . q{ } . $type . q{ } . $symbol . $semicolon . "\n";
 
 #        RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
@@ -66,6 +78,16 @@ sub ast_to_rperl__generate {
         my string $symbol                            = $self->{children}->[2];
         my string $assign                            = $self->{children}->[3];
         my object $opnamed_or_subexp_or_input_scolon = $self->{children}->[4];
+
+        my string $symbol_no_sigil = substr $symbol, 1;
+        if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$symbol_no_sigil})) {
+            die 'ERROR ECOGEASRP43, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, variable name ' . q{'}
+                . $symbol_no_sigil . q{'}
+                . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
+        }
 
 #        RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), have $opnamed_or_subexp_or_input_scolon = ' . "\n" . RPerl::Parser::rperl_ast__dump($opnamed_or_subexp_or_input_scolon) . "\n" );
 
@@ -195,6 +217,16 @@ sub ast_to_rperl__generate {
         my string $undef              = $self->{children}->[7];
         my string $semicolon          = $self->{children}->[8];
 
+        my string $symbol_no_sigil = substr $symbol, 1;
+        if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$symbol_no_sigil})) {
+            die 'ERROR ECOGEASRP43, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, variable name ' . q{'}
+                . $symbol_no_sigil . q{'}
+                . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
+        }
+
         # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
             die 'ERROR ECOGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
@@ -218,6 +250,16 @@ sub ast_to_rperl__generate {
         my string $type_fhref   = $self->{children}->[1];
         my string $symbol_fhref = $self->{children}->[2];
         my string $semicolon    = $self->{children}->[3];
+
+        my string $symbol_no_sigil = substr $symbol_fhref, 1;
+        if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$symbol_no_sigil})) {
+            die 'ERROR ECOGEASRP43, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, variable name ' . q{'}
+                . $symbol_no_sigil . q{'}
+                . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
+        }
 
         # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref} ) {
@@ -270,6 +312,17 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     if ( $self_class eq 'VariableDeclaration_195' ) {    # VariableDeclaration -> MY Type VARIABLE_SYMBOL ';'
         my string $type   = $self->{children}->[1]->{children}->[0];
         my string $symbol = $self->{children}->[2];
+
+        my string $symbol_no_sigil = substr $symbol, 1;
+        if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$symbol_no_sigil})) {
+            die 'ERROR ECOGEASCP43, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, variable name ' . q{'}
+                . $symbol_no_sigil . q{'}
+                . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
+        }
+
         substr $symbol, 0, 1, q{};                       # remove leading $ sigil
 
         # CREATE SYMBOL TABLE ENTRY
@@ -295,6 +348,16 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         my string $symbol                            = $self->{children}->[2];
         my string $assign                            = $self->{children}->[3];
         my object $opnamed_or_subexp_or_input_scolon = $self->{children}->[4];
+
+        my string $symbol_no_sigil = substr $symbol, 1;
+        if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$symbol_no_sigil})) {
+            die 'ERROR ECOGEASCP43, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, variable name ' . q{'}
+                . $symbol_no_sigil . q{'}
+                . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
+        }
 
 #        RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $opnamed_or_subexp_or_input_scolon = ' . "\n" . RPerl::Parser::rperl_ast__dump($opnamed_or_subexp_or_input_scolon) . "\n" );
 
@@ -508,6 +571,16 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         my object $subexpression = $self->{children}->[4];
         my string $semicolon     = $self->{children}->[8];
 
+        my string $symbol_no_sigil = substr $symbol, 1;
+        if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$symbol_no_sigil})) {
+            die 'ERROR ECOGEASCP43, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, variable name ' . q{'}
+                . $symbol_no_sigil . q{'}
+                . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
+        }
+
         substr $symbol, 0, 1, q{};                       # remove leading $ sigil
 
 #        RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subexpression = ' . RPerl::Parser::rperl_ast__dump($subexpression) . "\n" );
@@ -546,6 +619,17 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     elsif ( $self_class eq 'VariableDeclaration_198' ) {       # VariableDeclaration -> MY TYPE_FHREF FHREF_SYMBOL ';'
         my string $type_fhref   = $self->{children}->[1];
         my string $symbol_fhref = $self->{children}->[2];
+
+        my string $symbol_no_sigil = substr $symbol_fhref, 1;
+        if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$symbol_no_sigil}) or
+            (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$symbol_no_sigil})) {
+            die 'ERROR ECOGEASCP43, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, variable name ' . q{'}
+                . $symbol_no_sigil . q{'}
+                . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
+        }
+
         substr $symbol_fhref, 0, 1, q{};                       # remove leading $ sigil
 
         # CREATE SYMBOL TABLE ENTRY

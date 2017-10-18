@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine);
@@ -15,6 +15,7 @@ use RPerl::CodeBlock::Subroutine;
 
 # [[[ INCLUDES ]]]
 use Storable qw(dclone);
+use perlapinames_generated;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -55,9 +56,18 @@ sub ast_to_rperl__generate {
     my object $operations_star         = $self->{children}->[10];
     my string $right_brace             = $self->{children}->[11];
 
-    if ((substr $name, 1, 1) eq '_') {
+    if ((substr $name, 0, 1) eq '_') {
         die 'ERROR ECOGEASRP09, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: method name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
+    }
+
+    if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$name})) {
+        die 'ERROR ECOGEASRP45, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, method name ' . q{'}
+            . $name . q{'}
+            . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
     }
 
     # CREATE SYMBOL TABLE ENTRY
@@ -126,6 +136,15 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
     if ((substr $name, 0, 1) eq '_') {
         die 'ERROR ECOGEASCP09, CODE GENERATOR, ABSTRACT SYNTAX TO C++: method name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
+    }
+
+    if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$name}) or
+        (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$name})) {
+        die 'ERROR ECOGEASCP45, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, method name ' . q{'}
+            . $name . q{'}
+            . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
     }
 
     # CREATE SYMBOL TABLE ENTRY

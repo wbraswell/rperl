@@ -6,6 +6,7 @@ DONE
         Class::Generator & Package: PERLOPS_PERLTYPES
     Quick-Start Guide
         started
+    protect Perl API function & variable names
 
 DOING
     new subroutine headers
