@@ -14,13 +14,16 @@ DOING
         PhysicsPerl
         MathPerl
     RPerl::Exporter
+        do not enable checking for *_CHECK() & *_CHECKTRACE() subs
         re-enable t/10 & t/11
         Class::Generator & Package: CPPOPS_CPPTYPES
+        fix *_CHECK*() exporting in rperlgmp.pm & rperlsse.pm and rperlgsl.pm
         enable qw(:all)
         Learning RPerl
     Quick-Start Guide
         finish
     GSL support
+        non-OO gsl_matrix_rows() & gsl_matrix_cols() in updated Math::GSL::Matrix
         
     Alien::PCRE2
         ensure tests pass on both share & system installs
@@ -397,6 +400,7 @@ ERROR CODES
     RPerl::CompileUnit::Module::Class (global base class) needs error codes added for all croak() or die() statements
 
 GRAMMAR
+    allow comments with 3 or more chained octothorpe characters ### like this comment
     undef values, either remove from all possible locations in grammar for C++ compatibility, OR enable in C++ by special strings, numeric values, etc.
     fix 'x' string repeat operator vs 'x' string or bareword hash key, already fixed???
     decide if we will allow '#!/usr/bin/env perl' as a SHEBANG, or only allow '#!/usr/bin/perl' style and allow EU::MM to mangle shebang on install?

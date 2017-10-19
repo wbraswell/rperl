@@ -56,6 +56,7 @@ use RPerl::Operation::Expression::Operator::GMPFunctions;
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(
+    gmp_integer_CHECK gmp_integer_CHECKTRACE
     gmp_integer_to_boolean gmp_integer_to_unsigned_integer gmp_integer_to_integer gmp_integer_to_number gmp_integer_to_character gmp_integer_to_string
     boolean_to_gmp_integer integer_to_gmp_integer unsigned_integer_to_gmp_integer number_to_gmp_integer character_to_gmp_integer string_to_gmp_integer
 );
@@ -75,7 +76,7 @@ sub gmp_integer_CHECK {
     { my void $RETURN_TYPE };
     ( my $possible_gmp_integer ) = @ARG;
 
-    #    RPerl::diag("in PERLOPS_PERLTYPES gmp_integer(), top of subroutine\n");
+    #    RPerl::diag("in PERLOPS_PERLTYPES gmp_integer_CHECK(), top of subroutine\n");
     if ( not( defined $possible_gmp_integer ) ) {
 #        croak( "\nERROR EMV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\ncroaking" );
         die( "\nERROR EMV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer external wrapper value expected but undefined/null value found,\ndying\n" );
@@ -114,7 +115,7 @@ sub gmp_integer_CHECK {
         die( "\nERROR EMV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngmp_integer internal wrapped value expected but non-Math::BigInt::GMP object value found,\ndying\n" );
     }
 
-    #    RPerl::diag("in PERLOPS_PERLTYPES gmp_integer(), bottom of subroutine\n");
+    #    RPerl::diag("in PERLOPS_PERLTYPES gmp_integer_CHECK(), bottom of subroutine\n");
     return;
 }
 

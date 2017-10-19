@@ -61,7 +61,7 @@ use RPerl::DataStructure::Hash::Reference;
 
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
-our @EXPORT = ( 
+our @EXPORT = (
     @RPerl::DataType::Void::EXPORT,
     @RPerl::DataType::Boolean::EXPORT,
     @RPerl::DataType::UnsignedInteger::EXPORT,
@@ -74,7 +74,7 @@ our @EXPORT = (
     @RPerl::DataStructure::Array::SubTypes::EXPORT,
     @RPerl::DataStructure::Hash::SubTypes::EXPORT
 );
-our @EXPORT_OK = ( 
+our @EXPORT_OK = (
     @RPerl::DataType::Void::EXPORT_OK,
     @RPerl::DataType::Boolean::EXPORT_OK,
     @RPerl::DataType::UnsignedInteger::EXPORT_OK,
@@ -93,8 +93,8 @@ use RPerl::Object;
 use RPerl::CodeBlock::Subroutine::Method;    # Method is the only item that is both a Data Type & a Grammar Rule???
 
 # these types are currently implemented for the 2 primary RPerl modes: PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
-# NEED REMOVE: hard-coded list
-# MISSING: boolean, unsigned_integer, char, *_arrayref, *_hashref
+# MISSING: boolean, unsigned_integer, character, *_arrayref, *_hashref
+# DEV NOTE, CORRELATION #rp051: hard-coded list of RPerl data types and data structures
 our string_arrayref $SUPPORTED = [
     qw(
         void
@@ -107,6 +107,13 @@ our string_arrayref $SUPPORTED = [
         integer_hashref
         number_hashref
         string_hashref
+        )
+];
+our string_arrayref $SUPPORTED_SPECIAL = [
+    qw(
+        sse_number_pair
+        gmp_integer
+        gsl_matrix
         )
 ];
 

@@ -70,7 +70,7 @@ find(
         if (defined $ARGV[0]) {
             # restore saved path, because File::Find changes directories while searching for files
             my $file_full_path = File::Spec->catpath( $volume, $directories, $file );
-            RPerl::diag('in 09_interpret_execute.t, have $file_full_path = ' . $file_full_path . "\n");
+            RPerl::diag('in 12_parse.t, have $file_full_path = ' . $file_full_path . "\n");
             $file = $file_full_path;
         }
 
@@ -128,7 +128,7 @@ for my $test_file ( sort keys %{$test_files} ) {
 
     # NEED UPGRADE: enable file dependencies as in script/rperl depends_parse_generate_save_subcompile_execute()
     my $eval_return_value = eval {
-        rperl_to_xsbinary__parse_generate_compile(
+        RPerl::Compiler::rperl_to_xsbinary__parse_generate_compile(
             $test_file,
             undef,    # empty $cpp_output_file_name_group, no files will be saved in PARSE mode
             {},       # empty $cpp_source_group, starting compile process from scratch, not continued

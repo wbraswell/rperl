@@ -3,7 +3,7 @@ package RPerl::Exporter;
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.001_000;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 #use parent qw(RPerl::CompileUnit::Module::Class);
@@ -22,6 +22,36 @@ use rperltypes;
 
 # [[[ OO PROPERTIES ]]]
 #our hashref $properties = {};
+
+# DEV NOTE, CORRELATION #rp051: hard-coded list of RPerl data types and data structures
+# NOT MISSING: boolean, unsigned_integer, character
+# MISSING: *_arrayref, *_hashref
+#our string_arrayref $SUPPORTED = [
+our $SUPPORTED_ALL = [
+    qw(
+        void
+        boolean
+        unsigned_integer
+        integer
+        number
+        character
+        string
+        integer_arrayref
+        number_arrayref
+        string_arrayref
+        integer_hashref
+        number_hashref
+        string_hashref
+        )
+];
+#our string_arrayref $SUPPORTED_SPECIAL = [
+our $SUPPORTED_SPECIAL = [
+    qw(
+        sse_number_pair
+        gmp_integer
+        gsl_matrix
+        )
+];
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
@@ -92,7 +122,7 @@ sub import {
 
             # process all requested subroutines
             foreach my $subroutine (@ARG) {
-#                print 'in import(), received requested $subroutine = ', $subroutine, '()', "\n";  # DEV NOTE: causes false errors in t/12_parse.t
+#                RPerl::diag('in Exporter::import(), received requested $subroutine = ', $subroutine, '()', "\n");   # DEV NOTE: causes false errors in t/12_parse.t???
 
                 if (not defined *{ $package_exporter . '::' . $subroutine }) {
                     croak 'ERROR ESUXP01, Subroutine Exporter: Failed to export requested subroutine ' . $subroutine . '() from package ' . q{'} . $package_exporter . q{' into requesting package '} . $package_importer . q{', subroutine does not exist, croaking};
@@ -104,7 +134,51 @@ sub import {
                 }
                 # requested subroutine is in @EXPORT_OK, export it
                 elsif (exists $subroutines_export_ok->{$subroutine}) {
-#                    *{ $package_importer . '::' . $subroutine } = \&{ $package_exporter . '::' . $subroutine };  # short form, symbol table direct, not strict, no type checking
+                    # enable args type checking except for non-RPerl or type-checking or type-conversion subs below
+                    my $args_type_checking = 1;
+            
+                    # non-RPerl subs
+                    # DEV NOTE, CORRELATION #rp051: hard-coded list of non-RPerl subroutines
+                    # DEV NOTE, CORRELATION #rp052: gsl_matrix_to_*() and gsl_matrix_rows() and gsl_matrix_cols() are RPerl subroutines
+                    if (($subroutine =~ m/^gsl_/) and
+                        ($subroutine !~ m/^gsl_matrix_to/) and
+                        ($subroutine ne 'gsl_matrix_rows') and
+                        ($subroutine ne 'gsl_matrix_cols')) {
+                        $args_type_checking = 0;
+                    }
+                    # type checking subs
+                    elsif (($subroutine =~ m/_CHECK$/) or
+                        ($subroutine =~ m/_CHECKTRACE$/)) {
+                        $args_type_checking = 0;
+                    }
+                    # subs with no args (and thus no arg type checking)
+                    # DEV NOTE, CORRELATION #rp053: since the upgrade to normal Perl subroutine headers, do NOT activate args type checking when no args found or explicitly disabled with CHECK OFF
+                    elsif (not defined *{ $package_exporter . '::__CHECK_CODE_' . $subroutine }) {
+#                        RPerl::diag('in Exporter::import(), NO CHECKING for no args for subroutine ' . $package_exporter . '::' . $subroutine . '(), found undefined subroutine ' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '()' . "\n");
+                        $args_type_checking = 0;
+                    }
+                    
+            #        RPerl::diag('in Exporter::import(), have $SUPPORTED_ALL etc = ' . Dumper([@{$SUPPORTED_ALL}, @{$SUPPORTED_SPECIAL}]) . "\n");
+            
+                    # type conversion subs
+                    foreach my $rperl_type (sort @{[@{$SUPPORTED_ALL}, @{$SUPPORTED_SPECIAL}]}) {
+                        my $subroutine_start = $rperl_type . '_to_';
+                        my $subroutine_start_length = length $subroutine_start;
+                        if ((substr $subroutine, 0, $subroutine_start_length) eq $subroutine_start) {
+                            $args_type_checking = 0;
+                        }
+                    }
+             
+                    # do NOT enable argument type-checking for these subs
+                    if (not $args_type_checking) {
+#                        RPerl::diag('in Exporter::import(), NO CHECKING for non-RPerl or no-args or type-checking or type-conversion subroutine ' . $subroutine . '()' . "\n");
+            
+                        # define actual exported subroutine
+                        no strict;
+                        *{ $package_importer . '::' . $subroutine } = \&{ $package_exporter . '::' . $subroutine };  # short form, symbol table direct, not strict, no type checking
+                        next;
+                    }
+#                    else { RPerl::diag('in Exporter::import(), YES CHECKING for RPerl subroutine ' . $subroutine . '()' . "\n"); }
 
                     # form arguments check code name & call for repeated use
                     my $subroutine_arguments_check_code_name = $package_exporter . '::__CHECK_CODE_' . $subroutine;
@@ -166,49 +240,91 @@ sub import {
     # USAGE OPTIONS C & D: force export of all subroutines in @EXPORT
     if (not scalar @{$package_exporter . '::EXPORT'}) { return; }
     foreach my $subroutine (@{$package_exporter . '::EXPORT'}) {
-#        *{ $package_importer . '::' . $subroutine } = \&{ $package_exporter . '::' . $subroutine };  # short form, symbol table direct, not strict, no type checking
+        # enable args type checking except for non-RPerl or type-checking or type-conversion subs below
+        my $args_type_checking = 1;
 
-            # form arguments check code name & call for repeated use
-            my $subroutine_arguments_check_code_name = $package_exporter . '::__CHECK_CODE_' . $subroutine;
+        # non-RPerl subs
+        # DEV NOTE, CORRELATION #rp051: hard-coded list of non-RPerl subroutines
+        # DEV NOTE, CORRELATION #rp052: gsl_matrix_to_*() and gsl_matrix_rows() and gsl_matrix_cols() are RPerl subroutines
+        if (($subroutine =~ m/^gsl_/) and
+            ($subroutine !~ m/^gsl_matrix_to/) and
+            ($subroutine ne 'gsl_matrix_rows') and
+            ($subroutine ne 'gsl_matrix_cols')) {
+            $args_type_checking = 0;
+        }
+        # type checking subs
+        elsif (($subroutine =~ m/_CHECK$/) or
+            ($subroutine =~ m/_CHECKTRACE$/)) {
+            $args_type_checking = 0;
+        }
+        # subs with no args (and thus no arg type checking)
+        # DEV NOTE, CORRELATION #rp053: since the upgrade to normal Perl subroutine headers, do NOT activate args type checking when no args found or explicitly disabled with CHECK OFF
+        elsif (not defined *{ $package_exporter . '::__CHECK_CODE_' . $subroutine }) {
+#            RPerl::diag('in Exporter::import(), NO CHECKING for no args for subroutine ' . $package_exporter . '::' . $subroutine . '(), found undefined subroutine ' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '()' . "\n");
+            $args_type_checking = 0;
+        }
+        
+#        RPerl::diag('in Exporter::import(), have $SUPPORTED_ALL etc = ' . Dumper([@{$SUPPORTED_ALL}, @{$SUPPORTED_SPECIAL}]). "\n");
 
-
-#            my $subroutine_arguments_check_code_call = 'eval "$' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '";';  # DOES NOT WORK
-#            my $subroutine_arguments_check_code_call = 'eval qq{$' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '};';  # DOES NOT WORK
-#            my $subroutine_arguments_check_code_call = '&{ ' . $package_exporter . '::__CHECK_CODE_' . $subroutine . ' };';  # DOES NOT WORK
-#            my $subroutine_arguments_check_code_call = $subroutine_arguments_check_code_name . '();';
-#            my $subroutine_arguments_check_code_call = 'eval ' . $subroutine_arguments_check_code_name . '();';
-#            $subroutine_arguments_check_code_call .= 'print qq{AFTER ARGS CHECK CODE EVAL2\n};';
-            my $subroutine_arguments_check_code_call = 'eval ' . $subroutine_arguments_check_code_name . '(); if ($EVAL_ERROR) { die($EVAL_ERROR); }';  # does work!
+        # type conversion subs
+        foreach my $rperl_type (sort @{[@{$SUPPORTED_ALL}, @{$SUPPORTED_SPECIAL}]}) {
+            my $subroutine_start = $rperl_type . '_to_';
+            my $subroutine_start_length = length $subroutine_start;
+            if ((substr $subroutine, 0, $subroutine_start_length) eq $subroutine_start) {
+                $args_type_checking = 0;
+            }
+        }
+ 
+        # do NOT enable argument type-checking for these subs
+        if (not $args_type_checking) {
+#            RPerl::diag('in Exporter::import(), NO CHECKING for non-RPerl or no-args or type-checking or type-conversion subroutine ' . $subroutine . '()' . "\n");
 
             # define actual exported subroutine
-            my $subroutine_definition_code = q{};
-            if (not defined &{$package_importer . '::' . $subroutine}) {
-                $subroutine_definition_code .= 
-                    '*' . $package_importer . '::' . $subroutine . ' = sub {' . "\n" .
-                    '    print q{in subroutine ' . $package_exporter . '::__CHECKED_' . $subroutine . '() Exported by force!}, "\n";' . "\n" .  # DEBUG USE ONLY!
-                    '    ' . $subroutine_arguments_check_code_call . "\n" .
-                    '    return ' . $package_exporter . '::__CHECKED_' . $subroutine . '(@ARG);' . "\n" . ' };';
-            }
+            no strict;
+            *{ $package_importer . '::' . $subroutine } = \&{ $package_exporter . '::' . $subroutine };  # short form, symbol table direct, not strict, no type checking
+            next;
+        }
+#        else { RPerl::diag('in Exporter::import(), YES CHECKING for RPerl subroutine ' . $subroutine . '()' . "\n"); }
 
-            # pass on each exported subroutine's associated __UNCHECKED & __CHECK_CODE & __CHECKED subroutine to the importing package 
-#            $subroutine_definition_code .= "\n" . '*' . $package_importer . '::__CHECK_CODE_' . $subroutine . q{ = \\} . $subroutine_arguments_check_code_call;
-#            $subroutine_definition_code .= "\n" . '*' . $package_importer . '::__CHECK_CODE_' . $subroutine . ' = sub { return ' . $subroutine_arguments_check_code_name . '(); };';
-            if (not defined &{$package_importer . '::__CHECK_CODE_' . $subroutine}) {
-                $subroutine_definition_code .= "\n" . 'sub ' . $package_importer . '::__CHECK_CODE_' . $subroutine . ' { return ' . $subroutine_arguments_check_code_name . '(); }';
-            }
-            if (not defined &{$package_importer . '::__UNCHECKED_' . $subroutine}) {
-                $subroutine_definition_code .= "\n" . 'sub ' . $package_importer . '::__UNCHECKED_' . $subroutine . ' { return ' . $package_exporter . '::__UNCHECKED_' . $subroutine . '(@ARG); }';
-            }
-            if (not defined &{$package_importer . '::__CHECKED_' . $subroutine}) {
-                $subroutine_definition_code .= "\n" . 'sub ' . $package_importer . '::__CHECKED_' . $subroutine . ' { return ' . $package_exporter . '::__CHECKED_' . $subroutine . '(@ARG); }';
-            }
+        # form arguments check code name & call for repeated use
+        my $subroutine_arguments_check_code_name = $package_exporter . '::__CHECK_CODE_' . $subroutine;
 
+#        my $subroutine_arguments_check_code_call = 'eval "$' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '";';  # DOES NOT WORK
+#        my $subroutine_arguments_check_code_call = 'eval qq{$' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '};';  # DOES NOT WORK
+#        my $subroutine_arguments_check_code_call = '&{ ' . $package_exporter . '::__CHECK_CODE_' . $subroutine . ' };';  # DOES NOT WORK
+#        my $subroutine_arguments_check_code_call = $subroutine_arguments_check_code_name . '();';
+#        my $subroutine_arguments_check_code_call = 'eval ' . $subroutine_arguments_check_code_name . '();';
+#        $subroutine_arguments_check_code_call .= 'print qq{AFTER ARGS CHECK CODE EVAL2\n};';
+        my $subroutine_arguments_check_code_call = 'eval ' . $subroutine_arguments_check_code_name . '(); if ($EVAL_ERROR) { die($EVAL_ERROR); }';  # does work!
 
-#            RPerl::diag('in Exporter::import(), about to call eval() on forced $subroutine_definition_code = ' . "\n" . $subroutine_definition_code . "\n");
-#            eval($subroutine_definition_code) or (RPerl::diag('WARNING WSUXPxx, Subroutine Exporter: Possible failure to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'not croaking'));
-            eval($subroutine_definition_code);
-#            if ($EVAL_ERROR) { croak 'ERROR ESUXPxx, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking'; }  # does work, gives unnecessary eval() traces 
-            if ($EVAL_ERROR) { die 'ERROR ESUXPxx, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'dying' . "\n"; }
+        # define actual exported subroutine
+        my $subroutine_definition_code = q{};
+        if (not defined &{$package_importer . '::' . $subroutine}) {
+            $subroutine_definition_code .= 
+                '*' . $package_importer . '::' . $subroutine . ' = sub {' . "\n" .
+                '    print q{in subroutine ' . $package_exporter . '::__CHECKED_' . $subroutine . '() Exported by force!}, "\n";' . "\n" .  # DEBUG USE ONLY!
+                '    ' . $subroutine_arguments_check_code_call . "\n" .
+                '    return ' . $package_exporter . '::__CHECKED_' . $subroutine . '(@ARG);' . "\n" . ' };';
+        }
+
+        # pass on each exported subroutine's associated __UNCHECKED & __CHECK_CODE & __CHECKED subroutine to the importing package 
+#        $subroutine_definition_code .= "\n" . '*' . $package_importer . '::__CHECK_CODE_' . $subroutine . q{ = \\} . $subroutine_arguments_check_code_call;
+#        $subroutine_definition_code .= "\n" . '*' . $package_importer . '::__CHECK_CODE_' . $subroutine . ' = sub { return ' . $subroutine_arguments_check_code_name . '(); };';
+        if (not defined &{$package_importer . '::__CHECK_CODE_' . $subroutine}) {
+            $subroutine_definition_code .= "\n" . 'sub ' . $package_importer . '::__CHECK_CODE_' . $subroutine . ' { return ' . $subroutine_arguments_check_code_name . '(); }';
+        }
+        if (not defined &{$package_importer . '::__UNCHECKED_' . $subroutine}) {
+            $subroutine_definition_code .= "\n" . 'sub ' . $package_importer . '::__UNCHECKED_' . $subroutine . ' { return ' . $package_exporter . '::__UNCHECKED_' . $subroutine . '(@ARG); }';
+        }
+        if (not defined &{$package_importer . '::__CHECKED_' . $subroutine}) {
+           $subroutine_definition_code .= "\n" . 'sub ' . $package_importer . '::__CHECKED_' . $subroutine . ' { return ' . $package_exporter . '::__CHECKED_' . $subroutine . '(@ARG); }';
+        }
+
+#        RPerl::diag('in Exporter::import(), about to call eval() on forced $subroutine_definition_code = ' . "\n" . $subroutine_definition_code . "\n");
+#        eval($subroutine_definition_code) or (RPerl::diag('WARNING WSUXPxx, Subroutine Exporter: Possible failure to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'not croaking'));
+        eval($subroutine_definition_code);
+#        if ($EVAL_ERROR) { croak 'ERROR ESUXPxx, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking'; }  # does work, gives unnecessary eval() traces 
+        if ($EVAL_ERROR) { die 'ERROR ESUXPxx, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'dying' . "\n"; }
     }
 
 =DISABLED_LONG_FORM_EVAL_ANON_SUB_STRICT

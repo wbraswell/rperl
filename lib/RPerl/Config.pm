@@ -4,7 +4,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -436,7 +436,12 @@ sub set_system_paths {
             Carp::croak 'ERROR EINRP00: Failed to find ' . $target_file_name_pm . ' module, croaking';
         }
         foreach my $target_pm_found_single ( @{$target_pms_found} ) {
-            if ( $target_pm_found_single eq $target_pm_wanted ) {
+            # strip leading './' and '.\', for matching purposes only, do not actually save stripped filename
+            my $target_pm_found_single_stripped = $target_pm_found_single;
+            if (((substr $target_pm_found_single, 0, 2) eq './') or ((substr $target_pm_found_single, 0, 2) eq '.\\')) {
+                substr $target_pm_found_single_stripped, 0, 2, q{};
+            }
+            if ( $target_pm_found_single_stripped eq $target_pm_wanted ) {
                 $target_pm_found = $target_pm_found_single;
             }
         }
@@ -491,14 +496,12 @@ sub set_system_paths {
     if ( $MY_BASE_PATH eq q{} ) {
         $MY_INCLUDE_PATH = File::Spec->catpath( $volume_loaded, File::Spec->catdir(@directories_target_pm_split),     '' );
         $MY_SCRIPT_PATH  = File::Spec->catpath( $volume_loaded, File::Spec->catdir(@directories_target_script_split), '' );
-
-        #    print {*STDERR} 'in ' . $target_package_name_config . ', have $MY_BASE_PATH eq q{} = ', $MY_BASE_PATH, "\n";
+        #print {*STDERR} 'in ' . $target_package_name_config . ', have $MY_BASE_PATH eq q{} = ', $MY_BASE_PATH, "\n";
     }
     else {
         $MY_INCLUDE_PATH = File::Spec->catdir( $MY_BASE_PATH, @directories_target_pm_split );
         $MY_SCRIPT_PATH  = File::Spec->catdir( $MY_BASE_PATH, @directories_target_script_split );
-
-        #    print {*STDERR} 'in ' . $target_package_name_config . ', have $MY_BASE_PATH ne q{} ', $MY_BASE_PATH, "\n";
+        #print {*STDERR} 'in ' . $target_package_name_config . ', have $MY_BASE_PATH ne q{} ', $MY_BASE_PATH, "\n";
     }
 
     foreach my $inc_path (@INC) {
