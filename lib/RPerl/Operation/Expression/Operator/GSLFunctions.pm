@@ -1,5 +1,5 @@
 # [[[ PREPROCESSOR ]]]
-# <<< TYPE_CHECKING: TRACE >>>  # must explicitly enable type-checking because we have implemented our own gsl_matrix_rows() and gsl_matrix_cols() below
+# <<< TYPE_CHECKING_DISABLED: TRACE >>>  # must explicitly enable type-checking because we have implemented our own gsl_matrix_rows() and gsl_matrix_cols() below; DISABLED DUE TO DOUBLE-CHECKING
 
 # [[[ HEADER ]]]
 package RPerl::Operation::Expression::Operator::GSLFunctions;
@@ -36,6 +36,7 @@ our @EXPORT = qw(
 
 # [[[ INCLUDES ]]]
 use Math::GSL::Matrix qw(:all);
+use RPerl::DataStructure::GSLMatrix;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -45,14 +46,28 @@ our hashref $properties = {};
 # DEV NOTE, CORRELATION #rp052: gsl_matrix_to_*() and gsl_matrix_rows() and gsl_matrix_cols() are RPerl subroutines
 sub gsl_matrix_rows {
     { my integer $RETURN_TYPE };
-    ( my gsl_matrix $m ) = @ARG;
-    return Math::GSL::Matrix->new($m)->rows();
+    ( my gsl_matrix $input_gsl_matrix ) = @ARG;
+
+    # NEED FIX: hard-coded calls to type-checking subroutines because automatically-enabled via TYPE_CHECKING pre-processor causes double-checking
+    # NEED FIX: Exporter not properly importing the type-checking subs from RPerl::DataStructure::GSLMatrix
+#    gsl_matrix_CHECK($input_gsl_matrix);
+#    gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_rows()' );
+    RPerl::DataStructure::GSLMatrix::gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_rows()' );
+
+    return Math::GSL::Matrix->new($input_gsl_matrix)->rows();
 }
 
 sub gsl_matrix_cols {
     { my integer $RETURN_TYPE };
-    ( my gsl_matrix $m ) = @ARG;
-    return Math::GSL::Matrix->new($m)->cols();
+    ( my gsl_matrix $input_gsl_matrix ) = @ARG;
+
+    # NEED FIX: hard-coded calls to type-checking subroutines because automatically-enabled via TYPE_CHECKING pre-processor causes double-checking
+    # NEED FIX: Exporter not properly importing the type-checking subs from RPerl::DataStructure::GSLMatrix
+#    gsl_matrix_CHECK($input_gsl_matrix);
+#    gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_cols()' );
+    RPerl::DataStructure::GSLMatrix::gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_cols()' );
+
+    return Math::GSL::Matrix->new($input_gsl_matrix)->cols();
 }
 
 1;    # end of class
