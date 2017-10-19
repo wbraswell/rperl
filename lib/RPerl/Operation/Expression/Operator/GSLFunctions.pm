@@ -31,13 +31,13 @@ our hashref $properties = {};
 
 # DEV NOTE, CORRELATION #rp052: gsl_matrix_to_*() and gsl_matrix_rows() and gsl_matrix_cols() are RPerl subroutines
 sub gsl_matrix_rows {
-    { my integer $RETURN_VALUE };
+    { my integer $RETURN_TYPE };
     ( my Math::GSL::Matrix::gsl_matrix $m ) = @ARG;
     return Math::GSL::Matrix->new($m)->rows();
 }
 
 sub gsl_matrix_cols {
-    { my integer $RETURN_VALUE };
+    { my integer $RETURN_TYPE };
     ( my Math::GSL::Matrix::gsl_matrix $m ) = @ARG;
     return Math::GSL::Matrix->new($m)->cols();
 }

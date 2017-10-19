@@ -7,6 +7,7 @@ DONE
     Quick-Start Guide
         started
     protect Perl API function & variable names
+    catch '$RETURN_VALUE' typo, instead of '$RETURN_TYPE'
 
 DOING
     new subroutine headers
@@ -23,7 +24,8 @@ DOING
     Quick-Start Guide
         finish
     GSL support
-        non-OO gsl_matrix_rows() & gsl_matrix_cols() in updated Math::GSL::Matrix
+        gsl_matrix_CHECK*() CPPOPS_CPPTYPES
+        t/XXgsl_matrix.t
         
     Alien::PCRE2
         ensure tests pass on both share & system installs
@@ -208,7 +210,8 @@ UNSIGNED INTEGER FIX
     full unsigned_integer support via UnsignedInteger.cpp/h, rperltypes.pm, SvUIOKp(), etc.
     CPPOPS_CPPTYPES conversion routines
 
-TESTS
+TESTS 
+    create EXECUTE_WARNING & PARSE_WARNING & GENERATE_WARNING for t/*, begin by testing for WCOPR00 & WCOPR01 in RPerl/Test/SubroutineArguments/*_10_*
     split author (developer) tests from normal user tests
     TypeConversion, all 42 normal conversions plus to_string()
     add EXECUTE_SUCCESS to *good*.pl

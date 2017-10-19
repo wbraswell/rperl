@@ -30,6 +30,9 @@ our @EXPORT = qw(
     number_arrayref_to_gsl_matrix
 );
 
+# [[[ INCLUDES ]]]
+use RPerl::Operation::Expression::Operator::GSLFunctions;
+
 # [[[ SUB-TYPES ]]]
 
 # non-OO (procedural) data structure
@@ -148,7 +151,7 @@ sub gsl_matrix_to_string {
 # so that loading will all be controlled by the 'use rperlgsl;' directive
 
 sub number_arrayref_to_gsl_matrix {
-    { my gsl_matrix $RETURN_VALUE };
+    { my gsl_matrix $RETURN_TYPE };
     ( my number_arrayref $input_number_arrayref, my integer $rows, my integer $cols ) = @ARG;
 
 #    ::number_arrayref_CHECK($input_number_arrayref);

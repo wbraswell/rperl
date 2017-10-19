@@ -450,7 +450,7 @@ number_arrayref number_bubblesort(number_arrayref number_data)
 
 // OO INHERITANCE TESTING, CONTINUED
 
-////sub uninherited__Bubble { { my string $RETURN_VALUE }; ( my string $person ) = @ARG;
+////sub uninherited__Bubble { { my string $RETURN_TYPE }; ( my string $person ) = @ARG;
 ////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n");
 ////    return 'Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES'; }
 string uninherited__Bubble(string person) {
