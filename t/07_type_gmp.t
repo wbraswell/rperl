@@ -131,67 +131,67 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
 
     throws_ok(    # TGIV000
         sub { gmp_integer_to_boolean() },
-        "/(EMV00.*$mode_tagline)|(Usage.*gmp_integer_to_boolean)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EMPV00.*$mode_tagline)|(Usage.*gmp_integer_to_boolean)/",    # DEV NOTE: 2 different error messages, RPerl & C
         q{TGIV000 gmp_integer_to_boolean() throws correct exception}
     );
 
     throws_ok(    # TGIV001
         sub { gmp_integer_to_boolean(undef) },
-        "/(EMV00.*$mode_tagline)/",
+        "/(EMPV00.*$mode_tagline)/",
         q{TGIV001 gmp_integer_to_boolean(undef) throws correct exception}
     );
 
     throws_ok(    # TGIV002
         sub { gmp_integer_to_boolean(0) },
-        "/(EMV01.*$mode_tagline)/",
+        "/(EMPV01.*$mode_tagline)/",
         q{TGIV002 gmp_integer_to_boolean(0) throws correct exception}
     );
 
     throws_ok(    # TGIV003
         sub { gmp_integer_to_boolean(-23.42) },
-        "/(EMV01.*$mode_tagline)/",
+        "/(EMPV01.*$mode_tagline)/",
         q{TGIV003 gmp_integer_to_boolean(-23.42) throws correct exception}
     );
 
     throws_ok(    # TGIV004
         sub { gmp_integer_to_boolean('howdy') },
-        "/(EMV01.*$mode_tagline)/",
+        "/(EMPV01.*$mode_tagline)/",
         q{TGIV004 gmp_integer_to_boolean('howdy') throws correct exception}
     );
 
     throws_ok(    # TGIV005
         sub { gmp_integer_to_boolean([]) },
-        "/(EMV01.*$mode_tagline)/",
+        "/(EMPV01.*$mode_tagline)/",
         q{TGIV005 gmp_integer_to_boolean([]) throws correct exception}
     );
 
     throws_ok(    # TGIV006
         sub { gmp_integer_to_boolean([21, 12, 23]) },
-        "/(EMV01.*$mode_tagline)/",
+        "/(EMPV01.*$mode_tagline)/",
         q{TGIV006 gmp_integer_to_boolean([21, 12, 23]) throws correct exception}
     );
 
     throws_ok(    # TGIV007
         sub { gmp_integer_to_boolean({}) },
-        "/(EMV02.*$mode_tagline)/",
+        "/(EMPV02.*$mode_tagline)/",
         q{TGIV007 gmp_integer_to_boolean({}) throws correct exception}
     );
 
     throws_ok(    # TGIV008
         sub { gmp_integer_to_boolean({carter => 'chris', duchovny => 'david', anderson => 'gillian'}) },
-        "/(EMV02.*$mode_tagline)/",
+        "/(EMPV02.*$mode_tagline)/",
         q{TGIV008 gmp_integer_to_boolean({carter => 'chris', duchovny => 'david', anderson => 'gillian'}) throws correct exception}
     );
 
     throws_ok(    # TGIV009
         sub { gmp_integer_to_boolean(RPerl::Test::Foo->new()) },
-        "/(EMV03.*$mode_tagline)/",
+        "/(EMPV03.*$mode_tagline)/",
         q{TGIV009 gmp_integer_to_boolean(RPerl::Test::Foo->new()) throws correct exception}
     );
 
     throws_ok(    # TGIV010
         sub { gmp_integer_to_boolean(Math::BigInt->new(0)) },
-        "/(EMV04.*$mode_tagline)/",
+        "/(EMPV04.*$mode_tagline)/",
         q{TGIV010 gmp_integer_to_boolean(Math::BigInt->new()) throws correct exception}
     );
 
@@ -201,11 +201,11 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
             delete $gmp_integer_no_value->{value};
             gmp_integer_to_boolean($gmp_integer_no_value);
         },
-        "/(EMV05.*$mode_tagline)/",
+        "/(EMPV05.*$mode_tagline)/",
         q{TGIV011 gmp_integer_to_boolean($gmp_integer_no_value) throws correct exception}
     );
     
-    # NEED ADDRESS: is there no way to trigger CPPOPS EMV06?
+    # NEED ADDRESS: is there no way to trigger CPPOPS EMPV06?
 
     throws_ok(    # TGIV012
         sub { 
@@ -213,7 +213,7 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
             $gmp_integer_undef_value->{value} = undef;
             gmp_integer_to_boolean($gmp_integer_undef_value);
         },
-        "/(EMV07.*$mode_tagline)/",
+        "/(EMPV07.*$mode_tagline)/",
         q{TGIV012 gmp_integer_to_boolean($gmp_integer_undef_value) throws correct exception}
     );
 
@@ -223,7 +223,7 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
             $gmp_integer_nonobject_value->{value} = 0;
             gmp_integer_to_boolean($gmp_integer_nonobject_value);
         },
-        "/(EMV08.*$mode_tagline)/",
+        "/(EMPV08.*$mode_tagline)/",
         q{TGIV013 gmp_integer_to_boolean($gmp_integer_nonobject_value->{value} = 0) throws correct exception}
     );
 
@@ -233,7 +233,7 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
             $gmp_integer_nonobject_value->{value} = 'the truth is out there';
             gmp_integer_to_boolean($gmp_integer_nonobject_value);
         },
-        "/(EMV08.*$mode_tagline)/",
+        "/(EMPV08.*$mode_tagline)/",
         q{TGIV014 gmp_integer_to_boolean($gmp_integer_nonobject_value->{value} = 'the truth is out there') throws correct exception}
     );
 
@@ -243,7 +243,7 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
             $gmp_integer_nonobject_value->{value} = [];
             gmp_integer_to_boolean($gmp_integer_nonobject_value);
         },
-        "/(EMV08.*$mode_tagline)/",
+        "/(EMPV08.*$mode_tagline)/",
         q{TGIV015 gmp_integer_to_boolean($gmp_integer_nonobject_value->{value} = []) throws correct exception}
     );
 
@@ -253,7 +253,7 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
             $gmp_integer_nonobject_value->{value} = {};
             gmp_integer_to_boolean($gmp_integer_nonobject_value);
         },
-        "/(EMV08.*$mode_tagline)/",
+        "/(EMPV08.*$mode_tagline)/",
         q{TGIV016 gmp_integer_to_boolean($gmp_integer_nonobject_value->{value} = {}) throws correct exception}
     );
 
@@ -263,7 +263,7 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
             $gmp_integer_object_value->{value} = RPerl::Test::Foo->new();
             gmp_integer_to_boolean($gmp_integer_object_value);
         },
-        "/(EMV09.*$mode_tagline)/",
+        "/(EMPV09.*$mode_tagline)/",
         q{TGIV017 gmp_integer_to_boolean($gmp_integer_object_value) throws correct exception}
     );
 
@@ -354,7 +354,7 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
 =DISABLE
     throws_ok(    # TGIV210
         sub { gmp_integer_to_unsigned_integer(undef) },
-        "/(EMV00.*$mode_tagline)/",
+        "/(EMPV00.*$mode_tagline)/",
         q{TGIV210 gmp_integer_to_unsigned_integer(undef) throws correct exception}
     );
 =cut
@@ -401,13 +401,13 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
 =DISABLE
     throws_ok(    # TGIV500
         sub { gmp_integer_to_string() },
-        "/(EMV00.*$mode_tagline)|(Usage.*gmp_integer_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        "/(EMPV00.*$mode_tagline)|(Usage.*gmp_integer_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
         q{TGIV500 gmp_integer_to_string() throws correct exception}
     );
 
     throws_ok(                                                    # TGIV501
         sub { gmp_integer_to_string(undef) },
-        "/EMV00.*$mode_tagline/",
+        "/EMPV00.*$mode_tagline/",
         q{TGIV501 gmp_integer_to_string(undef) throws correct exception}
     );
     lives_and(                                                    # TGIV502
@@ -436,22 +436,22 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
     );
     throws_ok(                                                    # TGIV506
         sub { gmp_integer_to_string(-17.3) },
-        "/EMV01.*$mode_tagline/",
+        "/EMPV01.*$mode_tagline/",
         q{TGIV506 gmp_integer_to_string(-17.3) throws correct exception}
     );
     throws_ok(                                                    # TGIV507
         sub { gmp_integer_to_string('-17.3') },
-        "/EMV01.*$mode_tagline/",
+        "/EMPV01.*$mode_tagline/",
         q{TGIV507 gmp_integer_to_string('-17.3') throws correct exception}
     );
     throws_ok(                                                    # TGIV508
         sub { gmp_integer_to_string( [3] ) },
-        "/EMV01.*$mode_tagline/",
+        "/EMPV01.*$mode_tagline/",
         q{TGIV508 gmp_integer_to_string([3]) throws correct exception}
     );
     throws_ok(                                                    # TGIV509
         sub { gmp_integer_to_string( { a_key => 3 } ) },
-        "/EMV01.*$mode_tagline/",
+        "/EMPV01.*$mode_tagline/",
         q{TGIV509 gmp_integer_to_string({a_key => 3}) throws correct exception}
     );
     lives_and(                                                    # TGIV510
@@ -494,7 +494,7 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
         sub {
             gmp_integer_to_string(-1_234_567_890_000_000_000_000_000_000_000_000);
         },
-        "/EMV01.*$mode_tagline/",
+        "/EMPV01.*$mode_tagline/",
         q{TGIV516 gmp_integer_to_string(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
 
@@ -537,13 +537,13 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
 =DISABLE
     throws_ok(                                                    # TGIV610
         sub { gmp_integer__typetest1() },
-        "/(EMV00.*$mode_tagline)|(Usage.*gmp_integer__typetest1)/"
+        "/(EMPV00.*$mode_tagline)|(Usage.*gmp_integer__typetest1)/"
         ,                                                         # DEV NOTE: 2 different error messages, RPerl & C
         q{TGIV610 gmp_integer__typetest1() throws correct exception}
     );
     throws_ok(                                                    # TGIV611
         sub { gmp_integer__typetest1(undef) },
-        "/EMV00.*$mode_tagline/",
+        "/EMPV00.*$mode_tagline/",
         q{TGIV611 gmp_integer__typetest1(undef) throws correct exception}
     );
     lives_and(                                                    # TGIV612
@@ -560,22 +560,22 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
     );
     throws_ok(                                                    # TGIV614
         sub { gmp_integer__typetest1(-17.3) },
-        "/EMV01.*$mode_tagline/",
+        "/EMPV01.*$mode_tagline/",
         q{TGIV614 gmp_integer__typetest1(-17.3) throws correct exception}
     );
     throws_ok(                                                    # TGIV615
         sub { gmp_integer__typetest1('-17.3') },
-        "/EMV01.*$mode_tagline/",
+        "/EMPV01.*$mode_tagline/",
         q{TGIV615 gmp_integer__typetest1('-17.3') throws correct exception}
     );
     throws_ok(                                                    # TGIV616
         sub { gmp_integer__typetest1( [3] ) },
-        "/EMV01.*$mode_tagline/",
+        "/EMPV01.*$mode_tagline/",
         q{TGIV616 gmp_integer__typetest1([3]) throws correct exception}
     );
     throws_ok(                                                    # TGIV617
         sub { gmp_integer__typetest1( { a_key => 3 } ) },
-        "/EMV01.*$mode_tagline/",
+        "/EMPV01.*$mode_tagline/",
         q{TGIV617 gmp_integer__typetest1({a_key => 3}) throws correct exception}
     );
     lives_and(                                                    # TGIV618
@@ -588,7 +588,7 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
         sub {
             gmp_integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000);
         },
-        "/EMV01.*$mode_tagline/",
+        "/EMPV01.*$mode_tagline/",
         q{TGIV619 gmp_integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
 =cut
