@@ -3,7 +3,7 @@ package RPerl::Exporter;
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 #use parent qw(RPerl::CompileUnit::Module::Class);
@@ -146,21 +146,23 @@ sub import {
                         ($subroutine ne 'gsl_matrix_cols')) {
                         $args_type_checking = 0;
                     }
-                    # type checking subs
+                    # type-checking subs
                     elsif (($subroutine =~ m/_CHECK$/) or
                         ($subroutine =~ m/_CHECKTRACE$/)) {
                         $args_type_checking = 0;
                     }
+
+=DISABLED_NO_ARGS
+                    # DEV NOTE, CORRELATION #rp053: even with the upgrade to normal Perl subroutine headers, we must still activate subroutines w/out args or when type-checking is explicitly disabled with CHECK OFF, in order for RPerl::Exporter to work properly, presumably because Exporter.pm runs before Class.pm and thus we can not test for the existence of __CHECKED_*() subroutines in RPerl::Exporter::import()
                     # subs with no args (and thus no arg type checking)
-                    # DEV NOTE, CORRELATION #rp053: since the upgrade to normal Perl subroutine headers, do NOT activate args type checking when no args found or explicitly disabled with CHECK OFF
                     elsif (not defined *{ $package_exporter . '::__CHECK_CODE_' . $subroutine }) {
-#                        RPerl::diag('in Exporter::import(), NO CHECKING for no args for subroutine ' . $package_exporter . '::' . $subroutine . '(), found undefined subroutine ' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '()' . "\n");
                         $args_type_checking = 0;
                     }
+=cut
                     
             #        RPerl::diag('in Exporter::import(), have $SUPPORTED_ALL etc = ' . Dumper([@{$SUPPORTED_ALL}, @{$SUPPORTED_SPECIAL}]) . "\n");
             
-                    # type conversion subs
+                    # type-conversion subs
                     foreach my $rperl_type (sort @{[@{$SUPPORTED_ALL}, @{$SUPPORTED_SPECIAL}]}) {
                         my $subroutine_start = $rperl_type . '_to_';
                         my $subroutine_start_length = length $subroutine_start;
@@ -171,7 +173,7 @@ sub import {
              
                     # do NOT enable argument type-checking for these subs
                     if (not $args_type_checking) {
-#                        RPerl::diag('in Exporter::import(), NO CHECKING for non-RPerl or no-args or type-checking or type-conversion subroutine ' . $subroutine . '()' . "\n");
+                        RPerl::diag('in Exporter::import(), @EXPORT_OK, NO CHECKING for non-RPerl or no-args or type-checking or type-conversion subroutine ' . $package_exporter . '::' . $subroutine . '()' . "\n");
             
                         # define actual exported subroutine
                         no strict;
@@ -250,34 +252,51 @@ sub import {
             ($subroutine !~ m/^gsl_matrix_to/) and
             ($subroutine ne 'gsl_matrix_rows') and
             ($subroutine ne 'gsl_matrix_cols')) {
+            RPerl::diag('in Exporter::import(), @EXPORT, NO CHECKING for non-RPerl subroutine ' . $package_exporter . '::' . $subroutine . '()' . "\n");
             $args_type_checking = 0;
         }
-        # type checking subs
+        # type-checking subs
         elsif (($subroutine =~ m/_CHECK$/) or
             ($subroutine =~ m/_CHECKTRACE$/)) {
+            RPerl::diag('in Exporter::import(), @EXPORT, NO CHECKING for type-checking subroutine ' . $package_exporter . '::' . $subroutine . '()' . "\n");
             $args_type_checking = 0;
         }
+
+=DISABLED_NO_ARGS
+        # DEV NOTE, CORRELATION #rp053: even with the upgrade to normal Perl subroutine headers, we must still activate subroutines w/out args or when type-checking is explicitly disabled with CHECK OFF, in order for RPerl::Exporter to work properly, presumably because Exporter.pm runs before Class.pm and thus we can not test for the existence of __CHECKED_*() subroutines in RPerl::Exporter::import()
         # subs with no args (and thus no arg type checking)
-        # DEV NOTE, CORRELATION #rp053: since the upgrade to normal Perl subroutine headers, do NOT activate args type checking when no args found or explicitly disabled with CHECK OFF
-        elsif (not defined *{ $package_exporter . '::__CHECK_CODE_' . $subroutine }) {
-#            RPerl::diag('in Exporter::import(), NO CHECKING for no args for subroutine ' . $package_exporter . '::' . $subroutine . '(), found undefined subroutine ' . $package_exporter . '::__CHECK_CODE_' . $subroutine . '()' . "\n");
+        # none of the below tests work, presumably because Exporter.pm is called before Class.pm
+#        elsif (not defined *{ $package_exporter . '::__CHECK_CODE_' . $subroutine }) {
+#        elsif (not defined &{ $package_exporter . '::__CHECK_CODE_' . $subroutine }) {
+#        elsif (not defined &{ $package_exporter . '::__CHECKED_' . $subroutine }) {
+#        elsif (not exists *{ $package_exporter . '::__CHECKED_' . $subroutine }) {
+#        elsif (not exists &{ $package_exporter . '::__CHECKED_' . $subroutine }) {
+        elsif (0) {
+            RPerl::diag('in Exporter::import(), @EXPORT, NO CHECKING for no-args subroutine ' . $package_exporter . '::' . $subroutine . '()' . "\n");
             $args_type_checking = 0;
         }
+ 
+        if ($package_exporter eq 'RPerl::Test::TypeCheckingOn::AllTypes') {
+            &{ $package_exporter . '::__CHECKED_' . $subroutine }(0);
+            die 'TMP DEBUG';
+        }
+=cut
         
 #        RPerl::diag('in Exporter::import(), have $SUPPORTED_ALL etc = ' . Dumper([@{$SUPPORTED_ALL}, @{$SUPPORTED_SPECIAL}]). "\n");
 
-        # type conversion subs
+        # type-conversion subs
         foreach my $rperl_type (sort @{[@{$SUPPORTED_ALL}, @{$SUPPORTED_SPECIAL}]}) {
             my $subroutine_start = $rperl_type . '_to_';
             my $subroutine_start_length = length $subroutine_start;
             if ((substr $subroutine, 0, $subroutine_start_length) eq $subroutine_start) {
+                RPerl::diag('in Exporter::import(), @EXPORT, NO CHECKING for type-conversion subroutine ' . $package_exporter . '::' . $subroutine . '()' . "\n");
                 $args_type_checking = 0;
             }
         }
  
         # do NOT enable argument type-checking for these subs
         if (not $args_type_checking) {
-#            RPerl::diag('in Exporter::import(), NO CHECKING for non-RPerl or no-args or type-checking or type-conversion subroutine ' . $subroutine . '()' . "\n");
+#            RPerl::diag('in Exporter::import(), @EXPORT, NO CHECKING for non-RPerl or no-args or type-checking or type-conversion subroutine ' . $package_exporter . '::' . $subroutine . '()' . "\n");
 
             # define actual exported subroutine
             no strict;
