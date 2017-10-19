@@ -24,4 +24,8 @@ our @EXPORT_OK = (
     @Math::GSL::Matrix::EXPORT_OK,
 );
 
+# DEV NOTE: must hard-code type-checking here because RPerl::Exporter doesn't handle this type of thing just yet
+*rperltypes::gsl_matrix_CHECK = \&RPerl::DataStructure::GSLMatrix::gsl_matrix_CHECK;
+*rperltypes::gsl_matrix_CHECKTRACE = \&RPerl::DataStructure::GSLMatrix::gsl_matrix_CHECKTRACE;
+
 1;  # end of package

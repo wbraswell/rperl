@@ -53,7 +53,7 @@ sub gsl_matrix_CHECK {
     { my void $RETURN_TYPE };
     ( my $possible_gsl_matrix ) = @ARG;
 
-#    RPerl::diag("in PERLOPS_PERLTYPES gsl_matrix_CHECK(), top of subroutine\n");
+    RPerl::diag("in PERLOPS_PERLTYPES gsl_matrix_CHECK(), top of subroutine\n");
 
     if ( not( defined $possible_gsl_matrix ) ) {
         die( "\nERROR EMAV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngsl_matrix external wrapper value expected but undefined/null value found,\ndying\n" );
@@ -80,7 +80,7 @@ sub gsl_matrix_CHECKTRACE {
     { my void $RETURN_TYPE };
     ( my $possible_gsl_matrix, my $variable_name, my $subroutine_name ) = @ARG;
 
-#    RPerl::diag("in PERLOPS_PERLTYPES gsl_matrix_CHECKTRACE(), top of subroutine\n");
+    RPerl::diag("in PERLOPS_PERLTYPES gsl_matrix_CHECKTRACE(), top of subroutine\n");
 
     if ( not( defined $possible_gsl_matrix ) ) {
         die( "\nERROR EMAV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngsl_matrix external wrapper value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );

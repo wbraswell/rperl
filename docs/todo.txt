@@ -18,7 +18,7 @@ DOING
         do not enable checking for *_CHECK() & *_CHECKTRACE() subs
         re-enable t/10 & t/11
         Class::Generator & Package: CPPOPS_CPPTYPES
-        fix *_CHECK*() exporting in rperlgmp.pm & rperlsse.pm and rperlgsl.pm
+        fix & test *_CHECK*() exporting in rperlgmp.pm & rperlsse.pm, as hard-coded in rperlgsl.pm
         enable qw(:all)
         Learning RPerl
     Quick-Start Guide

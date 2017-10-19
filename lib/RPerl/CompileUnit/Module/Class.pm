@@ -499,7 +499,7 @@ sub create_symtab_entries_and_accessors_mutators {
                     # DEV NOTE, CORRELATION #rp053: even with the upgrade to normal Perl subroutine headers, we must still activate subroutines w/out args or when type-checking is explicitly disabled with CHECK OFF, in order for RPerl::Exporter to work properly, presumably because Exporter.pm runs before Class.pm and thus we can not test for the existence of __CHECKED_*() subroutines in RPerl::Exporter::import()
                     # activate previous subroutine, no arguments
                     if ($inside_subroutine) {
-#                        RPerl::diag( q{in Class.pm INIT block, have $inside_subroutine = } . $inside_subroutine . q{, about to call activate_subroutine_args_checking() while inside subroutine } . $subroutine_name . '(), no arguments assumed' . "\n" );
+                        RPerl::diag( q{in Class.pm INIT block, have $inside_subroutine = } . $inside_subroutine . q{, about to call activate_subroutine_args_checking() while inside subroutine } . $subroutine_name . '(), no arguments assumed' . "\n" );
                         activate_subroutine_args_checking( $package_name, $subroutine_name, $subroutine_type, q{}, $module_filename_long );
                     }
 
@@ -536,7 +536,7 @@ sub create_symtab_entries_and_accessors_mutators {
 
                     # DEV NOTE, CORRELATION #rp053: even with the upgrade to normal Perl subroutine headers, we must still activate subroutines w/out args or when type-checking is explicitly disabled with CHECK OFF, in order for RPerl::Exporter to work properly, presumably because Exporter.pm runs before Class.pm and thus we can not test for the existence of __CHECKED_*() subroutines in RPerl::Exporter::import()
                     if ( $CHECK eq 'OFF' ) {
-#                        RPerl::diag( q{in Class.pm INIT block, CHECK IS OFF, about to call activate_subroutine_args_checking()...} . "\n" );
+                        RPerl::diag( q{in Class.pm INIT block, CHECK IS OFF, about to call activate_subroutine_args_checking()...} . "\n" );
                         activate_subroutine_args_checking( $package_name, $subroutine_name, $subroutine_type, q{}, $module_filename_long );
                     }
                     elsif ( ( $CHECK ne 'ON' ) and ( $CHECK ne 'TRACE' ) ) {
@@ -627,7 +627,7 @@ sub create_symtab_entries_and_accessors_mutators {
                                     $i++;
                                 }
 
-#                                RPerl::diag( 'in Class.pm INIT block, CHECK IS ON, about to call activate_subroutine_args_checking()...' . "\n" );
+                                RPerl::diag( 'in Class.pm INIT block, CHECK IS ON, about to call activate_subroutine_args_checking()...' . "\n" );
                                 activate_subroutine_args_checking( $package_name, $subroutine_name, $subroutine_type, $subroutine_arguments_check_code, $module_filename_long );
                                 $inside_subroutine         = 0;
                                 $subroutine_arguments_line = q{};
@@ -641,7 +641,7 @@ sub create_symtab_entries_and_accessors_mutators {
                                     $subroutine_arguments_check_code .= q{    rperltypes::} . $subroutine_argument->[0] . '_CHECKTRACE( $_[' . $i . q{], '$} . $subroutine_argument->[1] . q{', '} . $subroutine_name . q{()' );} . "\n";
                                     $i++;
                                 }
-#                                RPerl::diag( 'in Class.pm INIT block, CHECK IS TRACE, about to call activate_subroutine_args_checking()...' . "\n" );
+                                RPerl::diag( 'in Class.pm INIT block, CHECK IS TRACE, about to call activate_subroutine_args_checking()...' . "\n" );
                                 activate_subroutine_args_checking( $package_name, $subroutine_name, $subroutine_type, $subroutine_arguments_check_code, $module_filename_long );
                                 $inside_subroutine         = 0;
                                 $subroutine_arguments_line = q{};
@@ -670,7 +670,7 @@ sub create_symtab_entries_and_accessors_mutators {
                 }
 
                 # DEV NOTE, CORRELATION #rp053: even with the upgrade to normal Perl subroutine headers, we must still activate subroutines w/out args or when type-checking is explicitly disabled with CHECK OFF, in order for RPerl::Exporter to work properly, presumably because Exporter.pm runs before Class.pm and thus we can not test for the existence of __CHECKED_*() subroutines in RPerl::Exporter::import()
-#                RPerl::diag( 'in Class.pm INIT block, activating final subroutine in file, no subroutine arguments found' . "\n" );
+                RPerl::diag( 'in Class.pm INIT block, activating final subroutine in file, no subroutine arguments found' . "\n" );
                 activate_subroutine_args_checking( $package_name, $subroutine_name, $subroutine_type, q{}, $module_filename_long );
                 $inside_subroutine = 0;
             }
@@ -933,6 +933,15 @@ sub activate_subroutine_args_checking {
 #    RPerl::diag('in Class::activate_subroutine_args_checking(), received $subroutine_type = ' . $subroutine_type . "\n");
 #    RPerl::diag('in Class::activate_subroutine_args_checking(), received $subroutine_arguments_check_code = ' . $subroutine_arguments_check_code . "\n");
 #    RPerl::diag('in Class::activate_subroutine_args_checking(), received $module_filename_long = ' . $module_filename_long . "\n");
+
+    if ($subroutine_name eq 'gsl_matrix_rows') {
+        RPerl::diag('in Class::activate_subroutine_args_checking(), received $package_name = ' . $package_name . "\n");
+        RPerl::diag('in Class::activate_subroutine_args_checking(), received $subroutine_name = ' . $subroutine_name . "\n");
+        RPerl::diag('in Class::activate_subroutine_args_checking(), received $subroutine_type = ' . $subroutine_type . "\n");
+        RPerl::diag('in Class::activate_subroutine_args_checking(), received $subroutine_arguments_check_code = ' . $subroutine_arguments_check_code . "\n");
+#        die 'TMP DEBUG';
+    }
+    
 
     my $package_name_tmp;              # string
     my $subroutine_definition_code = q{};    # string
