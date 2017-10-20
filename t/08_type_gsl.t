@@ -1,0 +1,311 @@
+#!/usr/bin/perl
+
+# [[[ PRE-HEADER ]]]
+# suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s)
+BEGIN { $ENV{RPERL_WARNINGS} = 0; }
+
+# [[[ HEADER ]]]
+use strict;
+use warnings;
+#use RPerl::AfterSubclass;  # NEED FIX: moved by bulk88 to below BEGIN block to optimize for skip speed on Windows OS, should be 'use RPerlish;' ?
+our $VERSION = 0.001_000;
+
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
+## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 4: allow eval() test code blocks
+
+# [[[ INCLUDES ]]]
+
+use Test::More;
+
+=DISABLED_NEED_TEST_WINDOWS
+BEGIN {
+    use English;
+    if ( $OSNAME eq 'MSWin32' ) {
+        plan skip_all => "[[[ MS Windows OS Detected, GNU Multi-Precision Library Temporarily Disabled, Skipping GSL Type Tests, RPerl Type System ]]]";
+    }
+}
+=cut
+
+use RPerl::AfterSubclass;  # NEED FIX: should not be here, see NEED FIX in HEADER above
+use RPerl::Test;
+use RPerl::Test::Foo;
+use rperltypesconv;
+use Test::Exception;
+use Test::Number::Delta;
+#use RPerl::DataStructure::GSLMatrix;  # IS THIS NEEDED?
+
+# [[[ OPERATIONS ]]]
+
+BEGIN {
+    plan tests => 43;
+    if ( $ENV{RPERL_VERBOSE} ) {
+        Test::More::diag("[[[ Beginning GSL Type Pre-Test Loading, RPerl Type System ]]]");
+    }
+    lives_and( sub { use_ok('RPerl::AfterSubclass'); },            q{use_ok('RPerl::AfterSubclass') lives} );
+    lives_and( sub { use_ok('rperlgsl'); }, q{use_ok('rperlgsl') lives} );
+#    lives_and( sub { use_ok('RPerl::DataType::GSLMatrix_cpp'); }, q{use_ok('RPerl::DataType::GSLMatrix_cpp') lives} );  # NEED UPGRADE: create CPP code
+}
+
+my integer $number_of_tests_run = 2;  # initialize to 2 for use_ok() calls in BEGIN block above
+
+# use Data::Dumper() to stringify a string
+sub string_dumperify {
+    ( my string $input_string ) = @_;
+
+    #    RPerl::diag("in 08_type_gsl.t string_dumperify(), received have \$input_string =\n$input_string\n\n");
+    $input_string = Dumper( [$input_string] );
+    $input_string =~ s/^\s+|\s+$//xmsg;    # strip leading whitespace
+    my @input_string_split = split "\n", $input_string;
+    $input_string = $input_string_split[1];    # only select the data line
+    return $input_string;
+}
+
+# [[[ PRIMARY RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
+# [[[ PRIMARY RUNLOOP ]]]
+
+# loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
+#foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
+#for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES only currently supported
+for my $mode_id ( 0 ) {    # DEV NOTE: PERLOPS_PERLTYPES only currently supported
+#for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
+
+    # [[[ MODE SETUP ]]]
+    #    RPerl::diag("in 08_type_gsl.t, top of for() loop, have \$mode_id = $mode_id\n");
+    my scalartype_hashref $mode = $RPerl::MODES->{$mode_id};
+    my string $ops              = $mode->{ops};
+    my string $types            = $mode->{types};
+    my string $mode_tagline     = $ops . 'OPS_' . $types . 'TYPES';
+    if ( $ENV{RPERL_VERBOSE} ) {
+        Test::More::diag( '[[[ Beginning RPerl GSL Type Tests, ' . $ops . ' Operations & ' . $types . ' Data Types' . ' ]]]' );
+    }
+
+    #    $RPerl::DEBUG = 1;
+    #    RPerl::diag('have $ops = ' . $ops . "\n");
+    #    RPerl::diag('have $types = ' . $types . "\n");
+    #    RPerl::diag('have $mode_tagline = ' . $mode_tagline . "\n");
+
+    lives_ok( sub { rperltypes::types_enable($types) }, q{mode '} . $ops . ' Operations & ' . $types . ' Data Types' . q{' enabled} );
+    $number_of_tests_run++;
+
+    if ( $ops eq 'CPP' ) {
+
+        # force reload
+        delete $main::{'RPerl__DataStructure__GSLMatrix__MODE_ID'};
+
+        my $package = 'RPerl::DataType::GSLMatrix_cpp';
+        lives_and( sub { require_ok($package); }, 'require_ok(' . $package . ') lives' );
+        $number_of_tests_run++;
+  
+        #            lives_and( sub { use_ok($package); }, 'use_ok(' . $package . ') lives' );
+
+        lives_ok( sub { eval( $package . '::cpp_load();' ) }, $package . '::cpp_load() lives' );
+        $number_of_tests_run++;
+    }
+
+    lives_ok( sub { main->can('RPerl__DataStructure__GSLMatrix__MODE_ID') }, 'main::RPerl__DataStructure__GSLMatrix__MODE_ID() exists' );
+    $number_of_tests_run++;
+
+#RPerl::diag('in 08_type_gsl.t, top of for() loop, have $RPerl::MODES = ' . "\n" . Dumper($RPerl::MODES) . "\n");
+#RPerl::diag('in 08_type_gsl.t, top of for() loop, have RPerl__DataType__ . $type . __MODE_ID = RPerl__DataStructure__GSLMatrix__MODE_ID' . "\n");
+#RPerl::diag('in 08_type_gsl.t, top of for() loop, have main::RPerl__DataStructure__GSLMatrix__MODE_ID() = ' . main::RPerl__DataStructure__GSLMatrix__MODE_ID() . "\n");
+#RPerl::diag('in 08_type_gsl.t, top of for() loop, have eval(main::RPerl__DataStructure__GSLMatrix__MODE_ID()) = ' . eval('main::RPerl__DataStructure__GSLMatrix__MODE_ID()') . "\n");
+#RPerl::diag('in 08_type_gsl.t, top of for() loop, have main->can(...) = ' . main->can( 'RPerl__DataStructure__GSLMatrix__MODE_ID' ) . "\n");
+#RPerl::diag('in 08_type_gsl.t, top of for() loop, have main->can(...)->() = ' . main->can( 'RPerl__DataStructure__GSLMatrix__MODE_ID' )->() . "\n");
+#die 'TMP DEBUG';
+
+    lives_and(
+        sub {
+            is( $RPerl::MODES->{ main->can('RPerl__DataStructure__GSLMatrix__MODE_ID')->() }->{types},
+                $types, 'main::RPerl__DataStructure__GSLMatrix__MODE_ID() types returns ' . $types );
+        },
+        'main::RPerl__DataStructure__GSLMatrix__MODE_ID() lives'
+    );
+    $number_of_tests_run++;
+ 
+    # [[[ TYPE CHECKING TESTS ]]]
+    # [[[ TYPE CHECKING TESTS ]]]
+    # [[[ TYPE CHECKING TESTS ]]]
+
+    throws_ok(    # TGIV000
+        sub { gsl_matrix_to_string() },
+        "/(EMAV00.*$mode_tagline)|(Usage.*gsl_matrix_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        q{TGIV000 gsl_matrix_to_string() throws correct exception}
+    );
+
+    throws_ok(    # TGIV001
+        sub { gsl_matrix_to_string(undef) },
+        "/(EMAV00.*$mode_tagline)/",
+        q{TGIV001 gsl_matrix_to_string(undef) throws correct exception}
+    );
+
+    throws_ok(    # TGIV002
+        sub { gsl_matrix_to_string(0) },
+        "/(EMAV01.*$mode_tagline)/",
+        q{TGIV002 gsl_matrix_to_string(0) throws correct exception}
+    );
+
+    throws_ok(    # TGIV003
+        sub { gsl_matrix_to_string(-23.42) },
+        "/(EMAV01.*$mode_tagline)/",
+        q{TGIV003 gsl_matrix_to_string(-23.42) throws correct exception}
+    );
+
+    throws_ok(    # TGIV004
+        sub { gsl_matrix_to_string('howdy') },
+        "/(EMAV01.*$mode_tagline)/",
+        q{TGIV004 gsl_matrix_to_string('howdy') throws correct exception}
+    );
+
+    throws_ok(    # TGIV005
+        sub { gsl_matrix_to_string([]) },
+        "/(EMAV01.*$mode_tagline)/",
+        q{TGIV005 gsl_matrix_to_string([]) throws correct exception}
+    );
+
+    throws_ok(    # TGIV006
+        sub { gsl_matrix_to_string([21, 12, 23]) },
+        "/(EMAV01.*$mode_tagline)/",
+        q{TGIV006 gsl_matrix_to_string([21, 12, 23]) throws correct exception}
+    );
+
+    throws_ok(    # TGIV007
+        sub { gsl_matrix_to_string({}) },
+        "/(EMAV02.*$mode_tagline)/",
+        q{TGIV007 gsl_matrix_to_string({}) throws correct exception}
+    );
+
+    throws_ok(    # TGIV008
+        sub { gsl_matrix_to_string({carter => 'chris', duchovny => 'david', anderson => 'gillian'}) },
+        "/(EMAV02.*$mode_tagline)/",
+        q{TGIV008 gsl_matrix_to_string({carter => 'chris', duchovny => 'david', anderson => 'gillian'}) throws correct exception}
+    );
+
+    throws_ok(    # TGIV009
+        sub { gsl_matrix_to_string(RPerl::Test::Foo->new()) },
+        "/(EMAV03.*$mode_tagline)/",
+        q{TGIV009 gsl_matrix_to_string(RPerl::Test::Foo->new()) throws correct exception}
+    );
+
+    # NEED ANSWER: how to actually trigger EMAV04???
+#    throws_ok(    # TGIV010
+#        sub { gsl_matrix_to_string(Math::GSL::Matrix->new(1, 1)) },
+#        "/(EMAV04.*$mode_tagline)/",
+#        q{TGIV010 gsl_matrix_to_string(Math::GSL::Matrix->new(1, 1)) throws correct exception}
+#    );
+
+    $number_of_tests_run += 10;
+
+    # [[[ STRINGIFY TESTS ]]]
+    # [[[ STRINGIFY TESTS ]]]
+    # [[[ STRINGIFY TESTS ]]]
+
+    throws_ok(    # TGIV500
+        sub { gsl_matrix_to_string() },
+        "/(EMAV00.*$mode_tagline)|(Usage.*gsl_matrix_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        q{TGIV500 gsl_matrix_to_string() throws correct exception}
+    );
+
+    throws_ok(                                                    # TGIV501
+        sub { gsl_matrix_to_string(undef) },
+        "/EMAV00.*$mode_tagline/",
+        q{TGIV501 gsl_matrix_to_string(undef) throws correct exception}
+    );
+
+    throws_ok(                                                    # TGIV508
+        sub { gsl_matrix_to_string( [3] ) },
+        "/EMAV01.*$mode_tagline/",
+        q{TGIV508 gsl_matrix_to_string([3]) throws correct exception}
+    );
+    throws_ok(                                                    # TGIV509
+        sub { gsl_matrix_to_string( { a_key => 3 } ) },
+        "/EMAV02.*$mode_tagline/",
+        q{TGIV509 gsl_matrix_to_string({a_key => 3}) throws correct exception}
+    );
+
+    lives_and(                                                    # TGIV510
+        sub {
+            is( gsl_matrix_to_string(number_arrayref_to_gsl_matrix([0, 1, 2, 3], 2, 2)), '34_567_890', q{TGIV510 gsl_matrix_to_string(number_arrayref_to_gsl_matrix([0, 1, 2, 3], 2, 2)) returns correct value} );
+        },
+        q{TGIV510 gsl_matrix_to_string(number_arrayref_to_gsl_matrix([0, 1, 2, 3], 2, 2)) lives}
+    );
+
+
+    $number_of_tests_run += 17;
+
+    # [[[ TYPE TESTING TESTS ]]]
+    # [[[ TYPE TESTING TESTS ]]]
+    # [[[ TYPE TESTING TESTS ]]]
+ 
+    lives_and(                                                    # TGIV700
+        sub {
+            is( gsl_matrix__typetest0(), ( 3 + $mode_id ), q{TGIV700 gsl_matrix__typetest0() returns correct value} );
+        },
+        q{TGIV700 gsl_matrix__typetest0() lives}
+    );
+
+    $number_of_tests_run += 1;
+
+    throws_ok(                                                    # TGIV610
+        sub { gsl_matrix__typetest1() },
+        "/(EMAV00.*$mode_tagline)|(Usage.*gsl_matrix__typetest1)/"
+        ,                                                         # DEV NOTE: 2 different error messages, RPerl & C
+        q{TGIV610 gsl_matrix__typetest1() throws correct exception}
+    );
+    throws_ok(                                                    # TGIV611
+        sub { gsl_matrix__typetest1(undef) },
+        "/EMAV00.*$mode_tagline/",
+        q{TGIV611 gsl_matrix__typetest1(undef) throws correct exception}
+    );
+    lives_and(                                                    # TGIV612
+        sub {
+            is( gsl_matrix__typetest1(3), ( ( 3 * 2 ) + $mode_id ), q{TGIV612 gsl_matrix__typetest1(3) returns correct value} );
+        },
+        q{TGIV612 gsl_matrix__typetest1(3) lives}
+    );
+    lives_and(                                                    # TGIV613
+        sub {
+            is( gsl_matrix__typetest1(-17), ( ( -17 * 2 ) + $mode_id ), q{TGIV613 gsl_matrix__typetest1(-17) returns correct value} );
+        },
+        q{TGIV613 gsl_matrix__typetest1(-17) lives}
+    );
+    throws_ok(                                                    # TGIV614
+        sub { gsl_matrix__typetest1(-17.3) },
+        "/EMAV01.*$mode_tagline/",
+        q{TGIV614 gsl_matrix__typetest1(-17.3) throws correct exception}
+    );
+    throws_ok(                                                    # TGIV615
+        sub { gsl_matrix__typetest1('-17.3') },
+        "/EMAV01.*$mode_tagline/",
+        q{TGIV615 gsl_matrix__typetest1('-17.3') throws correct exception}
+    );
+    throws_ok(                                                    # TGIV616
+        sub { gsl_matrix__typetest1( [3] ) },
+        "/EMAV01.*$mode_tagline/",
+        q{TGIV616 gsl_matrix__typetest1([3]) throws correct exception}
+    );
+    throws_ok(                                                    # TGIV617
+        sub { gsl_matrix__typetest1( { a_key => 3 } ) },
+        "/EMAV01.*$mode_tagline/",
+        q{TGIV617 gsl_matrix__typetest1({a_key => 3}) throws correct exception}
+    );
+    lives_and(                                                    # TGIV618
+        sub {
+            is( gsl_matrix__typetest1(-234_567_890), ( ( -234_567_890 * 2 ) + $mode_id ), q{TGIV618 gsl_matrix__typetest1(-234_567_890) returns correct value} );
+        },
+        q{TGIV618 gsl_matrix__typetest1(-234_567_890) lives}
+    );
+    throws_ok(                                                    # TGIV619
+        sub {
+            gsl_matrix__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000);
+        },
+        "/EMAV01.*$mode_tagline/",
+        q{TGIV619 gsl_matrix__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
+    );
+}
+
+done_testing($number_of_tests_run);

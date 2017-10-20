@@ -54,7 +54,12 @@ sub gsl_matrix_rows {
 #    gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_rows()' );
     RPerl::DataStructure::GSLMatrix::gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_rows()' );
 
-    return Math::GSL::Matrix->new($input_gsl_matrix)->rows();
+
+    my $tmp_matrix = gsl_matrix_alloc_from_matrix($input_gsl_matrix, 0, 0, 2, 2);
+    my $m = Math::GSL::Matrix->new($tmp_matrix); my integer $retval = $m->rows(); return $retval;
+
+
+#    return Math::GSL::Matrix->new($input_gsl_matrix)->rows();  # SEGFAULT!
 }
 
 sub gsl_matrix_cols {
