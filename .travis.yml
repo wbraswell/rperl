@@ -1,5 +1,5 @@
 language: perl
-# v0.023_100
+# v0.024_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -61,6 +61,7 @@ install:
     - sudo apt-get install gcc-5 g++-5
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 90 --slave /usr/bin/g++ g++ /usr/bin/g++-5
     - sudo apt-get install libgmp-dev
+    - sudo apt-get install libgsl-dev
     # begin Pluto PolyCC
     - sudo apt-get install texinfo
     #- wget https://github.com/wbraswell/pluto-mirror/raw/master/backup/pluto-0.11.4.tar.gz  # prefer official repo below
@@ -85,9 +86,9 @@ before_script:
     # NEED REMOVE FOLLOWING 1 LINE when bug is fixed   https://github.com/daoswald/Inline-CPP/issues/38
     - cpanm --verbose --force ExtUtils::CppGuess
 # MODIFY FOLLOWING LINE TO ENABLE TEST_VERBOSE STDOUT DURING `make test`
-    - export RPERL_VERBOSE=1
+    - export RPERL_VERBOSE=0
 # UNCOMMENT FOLLOWING LINE TO ENABLE NOISY BUILD DURING `make test`; REQUIRES RPERL_VERBOSE=1 ABOVE
-    - export RPERL_DEBUG=1
+#    - export RPERL_DEBUG=1
 # UNCOMMENT FOLLOWING LINE FOR DEV VERSIONS OF MODULES, which travis can't get from Makefile.PL
 #    - cpanm -n INGY/Inline-C-0.62_03.tar.gz
 # DEV NOTE: Alien::base v0.036 requires Test2::Suite which seems to be causing RPerl builds to error
