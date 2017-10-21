@@ -24,6 +24,9 @@ string_hashref	    T_PACKED
 # GMP TYPES
 gmp_integer_retval  T_PACKED
 
+# GSL TYPES
+gsl_matrix*       T_PACKED
+
 # CORRELATION #pp04: attempt to manually define pack/unpack for object return type
 # USER TYPES
 #PhysicsPerl__Astro__Body T_PACKED

@@ -27,12 +27,16 @@ package RPerl::Operation::Expression::Operator::GSLFunctions;
 use strict;
 use warnings;
 
+=DISABLED_USE_CPP_INSTEAD
+
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(
     gsl_matrix_rows
     gsl_matrix_cols
 );
+
+=cut
 
 # [[[ INCLUDES ]]]
 use Math::GSL::Matrix qw(:all);
@@ -42,6 +46,8 @@ use RPerl::DataStructure::GSLMatrix;
 our hashref $properties = {};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
+
+=DISABLED_USE_CPP_INSTEAD
 
 # DEV NOTE, CORRELATION #rp052: gsl_matrix_to_*() and gsl_matrix_rows() and gsl_matrix_cols() are RPerl subroutines
 sub gsl_matrix_rows {
@@ -74,5 +80,7 @@ sub gsl_matrix_cols {
 
     return Math::GSL::Matrix->new($input_gsl_matrix)->cols();
 }
+
+=cut
 
 1;    # end of class

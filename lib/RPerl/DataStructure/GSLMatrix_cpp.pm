@@ -5,6 +5,9 @@ use warnings;
 use RPerl::AfterSubclass;
 our $VERSION = 0.002_000;
 
+# NEED REMOVE HARD-CODED VALUE!  implement Alien::GSL and use Alien::GSL->dist_dir() as w/ PCRE2 in RPerl/Inline.pm
+my $gsl_include_dir = '/usr/include/gsl';
+
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 
@@ -36,15 +39,16 @@ sub cpp_load {
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
-BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataStructure/GSLMatrix.cpp' ]]]\n" x 0); }
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/DataStructure/GSLMatrix.cpp' ]]]\n" x 1); }
 use Inline (CPP => '$RPerl::INCLUDE_PATH' . '/RPerl/DataStructure/GSLMatrix.cpp', \%RPerl::Inline::ARGS);
-RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/DataStructure/GSLMatrix.cpp' ]]]\n" x 0);
+RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/DataStructure/GSLMatrix.cpp' ]]]\n" x 1);
 1;
 EOF
 
         $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypessizes::type_number_native_ccflag();
         $RPerl::Inline::ARGS{cppflags} = $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypessizes::type_number_native_ccflag();
-        $RPerl::Inline::ARGS{libs}         = '-lgsl';                                                                                  # enable GSL support
+        $RPerl::Inline::ARGS{libs}         = '-lgsl';                                                                   # enable GSL support
+        $RPerl::Inline::ARGS{inc}         .= ' -I' . $gsl_include_dir;                                                  # enable GSL support
         $RPerl::Inline::ARGS{auto_include} = [ @{ $RPerl::Inline::ARGS{auto_include} }, '#include <gsl_matrix.h>' ];    # enable GSL support
         
 #        RPerl::diag("in GSLMatrix_cpp::cpp_load(), CPP not yet loaded, about to call eval() on \$eval_string =\n<<< BEGIN EVAL STRING>>>\n" . $eval_string . "<<< END EVAL STRING >>>\n");

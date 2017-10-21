@@ -29,6 +29,11 @@ our @EXPORT = qw(
     gsl_matrix_to_string
     number_arrayref_to_gsl_matrix
 );
+our @EXPORT_OK = qw(
+    gsl_matrix__typetest0
+    gsl_matrix__typetest1
+    gsl_matrix__typetest99
+);
 
 # [[[ INCLUDES ]]]
 use RPerl::Operation::Expression::Operator::GSLFunctions;
@@ -56,20 +61,33 @@ sub gsl_matrix_CHECK {
     RPerl::diag("in PERLOPS_PERLTYPES gsl_matrix_CHECK(), top of subroutine\n");
 
     if ( not( defined $possible_gsl_matrix ) ) {
-        die( "\nERROR EMAV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngsl_matrix external wrapper value expected but undefined/null value found,\ndying\n" );
+        die( "\nERROR EMAV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but undefined/null value found,\ndying\n" );
     }
     if ( not( main::RPerl_SvHROKp($possible_gsl_matrix) ) ) {
-        die("\nERROR EMAV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngsl_matrix external wrapper value expected but non-hashref value found,\ndying\n");
+        die("\nERROR EMAV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but non-hashref value found,\ndying\n");
     }
     my string $classname = main::class($possible_gsl_matrix);
     if ( not defined $classname ) {
-        die( "\nERROR EMAV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngsl_matrix external wrapper value expected but non-object (blessed hashref) value found,\ndying\n" );
+        die( "\nERROR EMAV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but non-object (blessed hashref) value found,\ndying\n" );
     }
     if ( not( UNIVERSAL::isa( $possible_gsl_matrix, 'Math::GSL::Matrix::gsl_matrix' ) ) ) {
-        die( "\nERROR EMAV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngsl_matrix external wrapper value expected but non-Math::GSL::Matrix::gsl_matrix-derived object value found,\ndying\n" );
+        die( "\nERROR EMAV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but non-Math::GSL::Matrix::gsl_matrix-derived object value found,\ndying\n" );
     }
     if ( $classname ne 'Math::GSL::Matrix::gsl_matrix' ) {
-        die( "\nERROR EMAV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngsl_matrix external wrapper value expected but non-Math::GSL::Matrix::gsl_matrix object value found,\ndying" );
+        die( "\nERROR EMAV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but non-Math::GSL::Matrix::gsl_matrix object value found,\ndying" );
+    }
+
+#    if ( not exists $possible_gsl_matrix->{data} ) {
+#        die( "\nERROR EMAV05, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\ndying\n" );
+#    }
+    if ( not defined $possible_gsl_matrix->{data} ) {
+        die( "\nERROR EMAV06, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix internal wrapped object in hash entry expected at key 'value' but no hash entry defined;\nOR\nERROR EMAV07, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix internal wrapped value expected but undefined/null value found,\ndying\n" );
+    }
+    if ( not defined main::class( $possible_gsl_matrix->{data} ) ) {
+        die( "\nERROR EMAV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix internal wrapped value expected but non-object (blessed hashref) value found,\ndying\n" );
+    }
+    if ( not( UNIVERSAL::isa( $possible_gsl_matrix->{data}, '_p_double' ) ) ) {
+        die( "\nERROR EMAV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix _p_double internal wrapped value expected but non-_p_double object value found,\ndying\n" );
     }
 
 #    RPerl::diag("in PERLOPS_PERLTYPES gsl_matrix_CHECK(), bottom of subroutine\n");
@@ -85,20 +103,36 @@ sub gsl_matrix_CHECKTRACE {
     RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_CHECKTRACE(), received $subroutine_name = ' . $subroutine_name . "\n");
 
     if ( not( defined $possible_gsl_matrix ) ) {
-        die( "\nERROR EMAV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngsl_matrix external wrapper value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
+        die( "\nERROR EMAV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
     }
     if ( not( main::RPerl_SvHROKp($possible_gsl_matrix) ) ) {
-        die("\nERROR EMAV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngsl_matrix external wrapper value expected but non-hashref value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
+        die("\nERROR EMAV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but non-hashref value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
     }
     my string $classname = main::class($possible_gsl_matrix);
     if ( not defined $classname ) {
-        die( "\nERROR EMAV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngsl_matrix external wrapper value expected but non-object (blessed hashref) value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
+        die( "\nERROR EMAV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but non-object (blessed hashref) value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
     }
     if ( not( UNIVERSAL::isa( $possible_gsl_matrix, 'Math::GSL::Matrix::gsl_matrix' ) ) ) {
-        die( "\nERROR EMAV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngsl_matrix external wrapper value expected but non-Math::GSL::Matrix::gsl_matrix-derived object value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
+        die( "\nERROR EMAV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but non-Math::GSL::Matrix::gsl_matrix-derived object value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
     }
     if ( $classname ne 'Math::GSL::Matrix::gsl_matrix' ) {
-        die( "\nERROR EMAV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ngsl_matrix external wrapper value expected but non-Math::GSL::Matrix::gsl_matrix object value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
+        die( "\nERROR EMAV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but non-Math::GSL::Matrix::gsl_matrix object value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
+    }
+
+    # Math::GSL::Matrix::gsl_matrix is a tied object, not a real hash, so $my_gsl_matrix->{data} is not actually a Perl hash value retrieval;
+    # Math::GSL::Matrix::gsl_matrix does not currently have an exists() method, so we will get the following error by calling hv_exists():
+    # Can't locate object method "EXISTS" via package "Math::GSL::Matrix::gsl_matrix"
+#    if ( not exists $possible_gsl_matrix->{data} ) {
+#        die( "\nERROR EMAV05, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix internal wrapped object in hash entry expected at key 'value' but no hash entry exists,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
+#    }
+    if ( not defined $possible_gsl_matrix->{data} ) {
+        die( "\nERROR EMAV06, MISSING HASH ENTRY, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix internal wrapped object in hash entry expected at key 'value' but no hash entry defined;\nOR\nERROR EMAV07, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix internal wrapped value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
+    }
+    if ( not defined main::class( $possible_gsl_matrix->{data} ) ) {
+        die( "\nERROR EMAV08, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix internal wrapped value expected but non-object (blessed hashref) value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
+    }
+    if ( not( UNIVERSAL::isa( $possible_gsl_matrix->{data}, '_p_double' ) ) ) {
+        die( "\nERROR EMAV09, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix _p_double internal wrapped value expected but non-_p_double object value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
     }
 
 #    RPerl::diag("in PERLOPS_PERLTYPES gsl_matrix_CHECKTRACE(), bottom of subroutine\n");
@@ -215,7 +249,7 @@ sub number_arrayref_to_gsl_matrix2 {
 sub gsl_matrix__typetest0 {
     { my gsl_matrix $RETURN_TYPE };
     my gsl_matrix $retval = gsl_matrix_alloc(1, 1);
-    gsl_matrix_set($retval, 0, 0, main::RPerl__DataType__Integer__MODE_ID());
+    gsl_matrix_set($retval, 0, 0, (main::RPerl__DataType__Integer__MODE_ID() + 23));
 
     RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix__typetest0(), have $retval = ' . Dumper($retval) . "\n");
     return ($retval);
@@ -230,6 +264,11 @@ sub gsl_matrix__typetest1 {
 
     RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix__typetest1(), received $lucky_gsl_matrix = ' . gsl_matrix_to_string($lucky_gsl_matrix) . "\n");
     return gsl_matrix_add_constant($lucky_gsl_matrix, main::RPerl__DataType__Integer__MODE_ID());
+}
+
+sub gsl_matrix__typetest99 {
+    { my integer $RETURN_TYPE };
+    return 23;
 }
 
 1;    # end of class
