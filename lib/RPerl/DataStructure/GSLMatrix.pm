@@ -37,6 +37,7 @@ our @EXPORT_OK = qw(
 
 # [[[ INCLUDES ]]]
 use RPerl::Operation::Expression::Operator::GSLFunctions;
+use RPerl::DataType::Number;
 
 # [[[ SUB-TYPES ]]]
 
@@ -58,7 +59,7 @@ sub gsl_matrix_CHECK {
     { my void $RETURN_TYPE };
     ( my $possible_gsl_matrix ) = @ARG;
 
-    RPerl::diag("in PERLOPS_PERLTYPES gsl_matrix_CHECK(), top of subroutine\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES gsl_matrix_CHECK(), top of subroutine\n");
 
     if ( not( defined $possible_gsl_matrix ) ) {
         die( "\nERROR EMAV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but undefined/null value found,\ndying\n" );
@@ -98,9 +99,9 @@ sub gsl_matrix_CHECKTRACE {
     { my void $RETURN_TYPE };
     ( my $possible_gsl_matrix, my $variable_name, my $subroutine_name ) = @ARG;
 
-    RPerl::diag("in PERLOPS_PERLTYPES gsl_matrix_CHECKTRACE(), top of subroutine\n");
-    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_CHECKTRACE(), received $variable_name = ' . $variable_name . "\n");
-    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_CHECKTRACE(), received $subroutine_name = ' . $subroutine_name . "\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES gsl_matrix_CHECKTRACE(), top of subroutine\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_CHECKTRACE(), received $variable_name = ' . $variable_name . "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_CHECKTRACE(), received $subroutine_name = ' . $subroutine_name . "\n");
 
     if ( not( defined $possible_gsl_matrix ) ) {
         die( "\nERROR EMAV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but undefined/null value found,\nin variable " . $variable_name . " from subroutine " . $subroutine_name . ",\ndying\n" );
@@ -149,7 +150,16 @@ sub gsl_matrix_to_number_arrayref {
 #    gsl_matrix_CHECK($input_gsl_matrix);
     gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_to_number_arrayref()' );
 
-    die 'DUMMY CODE STUB, NEED REAL CODE!' . "\n" . 'dying';
+    my number_arrayref $retval = [];
+
+    # NEED UPGRADE: use gsl_matrix_get_col() or something else faster than loops
+    foreach my integer $i (0 .. (gsl_matrix_rows($input_gsl_matrix) - 1)) {
+        foreach my integer $j (0 .. (gsl_matrix_cols($input_gsl_matrix) - 1)) {
+            push @{$retval}, gsl_matrix_get($input_gsl_matrix, $i, $j);
+        }
+    }
+
+    return $retval;
 }
 
 sub gsl_matrix_to_number_arrayref_arrayref {
@@ -158,6 +168,8 @@ sub gsl_matrix_to_number_arrayref_arrayref {
 
 #    gsl_matrix_CHECK($input_gsl_matrix);
     gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_to_number_arrayref_arrayref()' );
+
+    # NEED ADD CODE EVENTUALLY
 
     die 'DUMMY CODE STUB, NEED REAL CODE!' . "\n" . 'dying';
 }
@@ -172,8 +184,8 @@ sub gsl_matrix_to_string {
 #    gsl_matrix_CHECK($input_gsl_matrix);
     gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_to_string()' );
 
-    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have $input_gsl_matrix = ', Dumper($input_gsl_matrix), "\n");
-    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have gsl_matrix_get($input_gsl_matrix, 0, 0) = ', gsl_matrix_get($input_gsl_matrix, 0, 0), "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have $input_gsl_matrix = ', Dumper($input_gsl_matrix), "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have gsl_matrix_get($input_gsl_matrix, 0, 0) = ', gsl_matrix_get($input_gsl_matrix, 0, 0), "\n");
 #    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have gsl_matrix_get($input_gsl_matrix, 0, 1) = ', gsl_matrix_get($input_gsl_matrix, 0, 1), "\n");
 #    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have gsl_matrix_get($input_gsl_matrix, 1, 0) = ', gsl_matrix_get($input_gsl_matrix, 1, 0), "\n");
 #    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have gsl_matrix_get($input_gsl_matrix, 1, 1) = ', gsl_matrix_get($input_gsl_matrix, 1, 1), "\n");
@@ -184,15 +196,13 @@ sub gsl_matrix_to_string {
 
 #    my integer $i_max = 1;
 #    my integer $j_max = 1;
-    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have $i_max = ', $i_max, ', $j_max = ', $j_max, "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have $i_max = ', $i_max, ', $j_max = ', $j_max, "\n");
 
     for my integer $i (0 .. $i_max) { 
-        RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have $i = ', $i, "\n");
+#        RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have $i = ', $i, "\n");
         for my integer $j (0 .. $j_max) {
-            RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have $j = ', $j, "\n");
-            # NEED UPDGRADE TO UNDERSCORE NUMBERS!!!
-            $retval .= gsl_matrix_get($input_gsl_matrix, $i, $j) . "\t";
-#            $retval .= gsl_matrix_get($input_gsl_matrix, 1, 1) . "\t";
+#            RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have $j = ', $j, "\n");
+            $retval .= number_to_string(gsl_matrix_get($input_gsl_matrix, $i, $j)) . "\t";
         } 
         $retval .= "\n";
     }
@@ -224,29 +234,6 @@ sub number_arrayref_to_gsl_matrix {
     RPerl::diag('in PERLOPS_PERLTYPES number_arrayref_to_gsl_matrix(), bottom of subroutine', "\n");
     return $retval;
 }
-
-=DISABLED_NEED_DELETE
-sub number_arrayref_to_gsl_matrix2 {
-    { my gsl_matrix $RETURN_TYPE };
-#    { my void $RETURN_TYPE };
-    ( my gsl_matrix $input_matrix, my number_arrayref $input_number_arrayref, my integer $rows, my integer $cols ) = @ARG;
-
-#    ::number_arrayref_CHECK($input_number_arrayref);
-    ::number_arrayref_CHECKTRACE( $input_number_arrayref, '$input_number_arrayref', 'number_arrayref_to_gsl_matrix()' );
-
-#    print 'in number_arrayref_to_gsl_matrix(), received $rows = ', $rows, ', $cols = ', $cols, "\n";
-
-#    my gsl_matrix $retval = gsl_matrix_alloc($rows, $cols);
-
-    for my integer $i (0 .. ($rows - 1)) {
-        for my integer $j (0 .. ($cols - 1)) {
-#            gsl_matrix_set($retval, $i, $j, $input_number_arrayref->[($i * $cols) + $j]);
-            gsl_matrix_set($input_matrix, $i, $j, $input_number_arrayref->[($i * $cols) + $j]);
-        }
-    }
-    return $input_matrix;
-}
-=cut
 
 # [[[ TYPE TESTING ]]]
 

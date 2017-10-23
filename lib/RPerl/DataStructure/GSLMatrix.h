@@ -149,6 +149,15 @@ gsl_matrix_rawptr XS_unpack_gsl_matrixPtr(SV* input_sv);
 void XS_pack_gsl_matrixPtr(SV* output_sv, gsl_matrix_rawptr input_gsl_matrix);
 # endif
 
+// [[[ ARRAYIFY ]]]
+# ifdef __PERL__TYPES
+SV* gsl_matrix_to_number_arrayref(SV* input_gsl_matrix);
+SV* gsl_matrix_to_number_arrayref_arrayref(SV* input_gsl_matrix);
+# elif defined __CPP__TYPES
+number_arrayref gsl_matrix_to_number_arrayref(gsl_matrix_rawptr input_gsl_matrix);
+number_arrayref_arrayref gsl_matrix_to_number_arrayref_arrayref(gsl_matrix_rawptr input_gsl_matrix);
+# endif
+
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
 SV* gsl_matrix_to_string(SV* input_gsl_matrix);

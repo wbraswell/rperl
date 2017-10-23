@@ -263,6 +263,39 @@ void XS_pack_gsl_matrixPtr(SV* output_sv_ref, gsl_matrix_rawptr input_gsl_matrix
 
 # endif
 
+// [[[ ARRAYIFY ]]]
+// [[[ ARRAYIFY ]]]
+// [[[ ARRAYIFY ]]]
+
+# ifdef __PERL__TYPES
+SV* gsl_matrix_to_number_arrayref(SV* input_gsl_matrix) {
+//  gsl_matrix_CHECK(input_gsl_matrix);
+    gsl_matrix_CHECKTRACE(input_gsl_matrix, "input_gsl_matrix", "gsl_matrix_to_number_arrayref()");
+    // NEED ADD CODE EVENTUALLY
+}
+SV* gsl_matrix_to_number_arrayref_arrayref(SV* input_gsl_matrix) {
+//  gsl_matrix_CHECK(input_gsl_matrix);
+    gsl_matrix_CHECKTRACE(input_gsl_matrix, "input_gsl_matrix", "gsl_matrix_to_number_arrayref_arrayref()");
+    // NEED ADD CODE EVENTUALLY
+}
+# elif defined __CPP__TYPES
+number_arrayref gsl_matrix_to_number_arrayref(gsl_matrix_rawptr input_gsl_matrix) {
+    number_arrayref retval = ();
+
+    // NEED UPGRADE: use gsl_matrix_get_col() or something else faster than loops
+    for (integer i = 0; i < gsl_matrix_rows(input_gsl_matrix); i++) {
+        for (integer j = 0; j < gsl_matrix_cols(input_gsl_matrix); j++) {
+            retval.push_back(gsl_matrix_get(input_gsl_matrix, i, j));
+        }
+    }
+
+    return retval;
+}
+number_arrayref_arrayref gsl_matrix_to_number_arrayref_arrayref(gsl_matrix_rawptr input_gsl_matrix) {
+    // NEED ADD CODE EVENTUALLY
+}
+# endif
+
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]

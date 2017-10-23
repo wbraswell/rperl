@@ -207,7 +207,7 @@ sub import {
                     if (not defined &{$package_importer . '::' . $subroutine}) {
                         $subroutine_definition_code .=
                             '*' . $package_importer . '::' . $subroutine . ' = sub {' . "\n" . 
-                            '    print q{in subroutine Exported by request!}, "\n";' . "\n" .
+#                            '    print q{in subroutine Exported by request!}, "\n";' . "\n" .
                             '    ' . $subroutine_arguments_check_code_call . "\n" . 
                             '    return ' . $package_exporter . '::__UNCHECKED_' . $subroutine . '(@ARG);' . "\n" . ' };';
                     }
@@ -321,7 +321,7 @@ sub import {
         if (not defined &{$package_importer . '::' . $subroutine}) {
             $subroutine_definition_code .= 
                 '*' . $package_importer . '::' . $subroutine . ' = sub {' . "\n" .
-                '    print q{in subroutine ' . $package_exporter . '::__CHECKED_' . $subroutine . '() Exported by force!}, "\n";' . "\n" .  # DEBUG USE ONLY!
+#                '    print q{in subroutine ' . $package_exporter . '::__CHECKED_' . $subroutine . '() Exported by force!}, "\n";' . "\n" .  # DEBUG USE ONLY!
                 '    ' . $subroutine_arguments_check_code_call . "\n" .
                 '    return ' . $package_exporter . '::__CHECKED_' . $subroutine . '(@ARG);' . "\n" . ' };';
         }
