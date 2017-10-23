@@ -167,7 +167,7 @@ sub gsl_matrix_to_number_arrayref_arrayref {
 sub gsl_matrix_to_string {
     { my string $RETURN_TYPE };
     ( my gsl_matrix $input_gsl_matrix ) = @ARG;
-    
+ 
 #    gsl_matrix_CHECK($input_gsl_matrix);
     gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_to_string()' );
 
@@ -179,18 +179,17 @@ sub gsl_matrix_to_string {
 
     my string $retval = q{};
     my integer $i_max = gsl_matrix_rows($input_gsl_matrix) - 1;
-#    my integer $j_max = gsl_matrix_cols($input_gsl_matrix) - 1;
+    my integer $j_max = gsl_matrix_cols($input_gsl_matrix) - 1;
 
 #    my integer $i_max = 1;
-    my integer $j_max = 1;
+#    my integer $j_max = 1;
     RPerl::diag('in gsl_matrix_to_string(), have $i_max = ', $i_max, ', $j_max = ', $j_max, "\n");
 
-
- 
     for my integer $i (0 .. $i_max) { 
         RPerl::diag('in gsl_matrix_to_string(), have $i = ', $i, "\n");
         for my integer $j (0 .. $j_max) {
             RPerl::diag('in gsl_matrix_to_string(), have $j = ', $j, "\n");
+            # NEED UPDGRADE TO UNDERSCORE NUMBERS!!!
             $retval .= gsl_matrix_get($input_gsl_matrix, $i, $j) . "\t";
 #            $retval .= gsl_matrix_get($input_gsl_matrix, 1, 1) . "\t";
         } 
@@ -248,22 +247,27 @@ sub number_arrayref_to_gsl_matrix2 {
 
 sub gsl_matrix__typetest0 {
     { my gsl_matrix $RETURN_TYPE };
-    my gsl_matrix $retval = gsl_matrix_alloc(1, 1);
-    gsl_matrix_set($retval, 0, 0, (main::RPerl__DataType__Integer__MODE_ID() + 23));
+    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix__typetest0(), top of subroutine' . "\n");
 
-    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix__typetest0(), have $retval = ' . Dumper($retval) . "\n");
+    my gsl_matrix $retval = gsl_matrix_alloc(21, 12);
+    gsl_matrix_set($retval, 0, 0, (main::RPerl__DataType__Integer__MODE_ID() + 23));
     return ($retval);
 }
 
 sub gsl_matrix__typetest1 {
     { my gsl_matrix $RETURN_TYPE };
     ( my gsl_matrix $lucky_gsl_matrix ) = @ARG;
+    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix__typetest1(), top of subroutine' . "\n");
 
 #    ::gsl_matrix_CHECK($lucky_gsl_matrix);
     ::gsl_matrix_CHECKTRACE( $lucky_gsl_matrix, '$lucky_gsl_matrix', 'gsl_matrix__typetest1()' );
 
-    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix__typetest1(), received $lucky_gsl_matrix = ' . gsl_matrix_to_string($lucky_gsl_matrix) . "\n");
-    return gsl_matrix_add_constant($lucky_gsl_matrix, main::RPerl__DataType__Integer__MODE_ID());
+    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix__typetest1(), received $lucky_gsl_matrix = ', "\n", gsl_matrix_to_string($lucky_gsl_matrix), "\n");
+
+    gsl_matrix_add_constant($lucky_gsl_matrix, main::RPerl__DataType__Integer__MODE_ID());
+
+    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix__typetest1(), about to return $lucky_gsl_matrix = ', "\n", gsl_matrix_to_string($lucky_gsl_matrix), "\n");
+    return $lucky_gsl_matrix;
 }
 
 sub gsl_matrix__typetest99 {

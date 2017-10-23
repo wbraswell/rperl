@@ -27,16 +27,12 @@ package RPerl::Operation::Expression::Operator::GSLFunctions;
 use strict;
 use warnings;
 
-=DISABLED_USE_CPP_INSTEAD
-
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(
     gsl_matrix_rows
     gsl_matrix_cols
 );
-
-=cut
 
 # [[[ INCLUDES ]]]
 use Math::GSL::Matrix qw(:all);
@@ -46,8 +42,6 @@ use RPerl::DataStructure::GSLMatrix;
 our hashref $properties = {};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
-
-=DISABLED_USE_CPP_INSTEAD
 
 # DEV NOTE, CORRELATION #rp052: gsl_matrix_to_*() and gsl_matrix_rows() and gsl_matrix_cols() are RPerl subroutines
 sub gsl_matrix_rows {
@@ -60,12 +54,7 @@ sub gsl_matrix_rows {
 #    gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_rows()' );
     RPerl::DataStructure::GSLMatrix::gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_rows()' );
 
-    # NO SEGFAULT, BUT WILL NOT WORK, MUST ALREADY KNOW MATRIX DIMENSIONS
-#    my $tmp_matrix = gsl_matrix_alloc_from_matrix($input_gsl_matrix, 0, 0, 2, 2);
-#    my $m = Math::GSL::Matrix->new($tmp_matrix); my integer $retval = $m->rows(); return $retval;
-
-    # SEGFAULT!
-#    return Math::GSL::Matrix->new($input_gsl_matrix)->rows();
+    return $input_gsl_matrix->{size1};
 }
 
 sub gsl_matrix_cols {
@@ -78,9 +67,7 @@ sub gsl_matrix_cols {
 #    gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_cols()' );
     RPerl::DataStructure::GSLMatrix::gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_cols()' );
 
-    return Math::GSL::Matrix->new($input_gsl_matrix)->cols();
+    return $input_gsl_matrix->{size2};
 }
-
-=cut
 
 1;    # end of class

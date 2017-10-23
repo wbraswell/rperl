@@ -17,6 +17,8 @@ SV* gsl_matrix_cols(SV* input_gsl_matrix) {
 
 # elif defined __CPP__TYPES
 
+// use compile-time macros instead of run-time functions
+/*
 integer gsl_matrix_rows(gsl_matrix_rawptr input_gsl_matrix) {
     return input_gsl_matrix->size1;
 }
@@ -24,6 +26,7 @@ integer gsl_matrix_rows(gsl_matrix_rawptr input_gsl_matrix) {
 integer gsl_matrix_cols(gsl_matrix_rawptr input_gsl_matrix) {
     return input_gsl_matrix->size2;
 }
+*/
 
 # endif
 
