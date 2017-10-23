@@ -167,15 +167,16 @@ sub gsl_matrix_to_number_arrayref_arrayref {
 sub gsl_matrix_to_string {
     { my string $RETURN_TYPE };
     ( my gsl_matrix $input_gsl_matrix ) = @ARG;
+    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), top of subroutine', "\n");
  
 #    gsl_matrix_CHECK($input_gsl_matrix);
     gsl_matrix_CHECKTRACE( $input_gsl_matrix, '$input_gsl_matrix', 'gsl_matrix_to_string()' );
 
-    RPerl::diag('in gsl_matrix_to_string(), have $input_gsl_matrix = ', Dumper($input_gsl_matrix), "\n");
-    RPerl::diag('in gsl_matrix_to_string(), have gsl_matrix_get($input_gsl_matrix, 0, 0) = ', gsl_matrix_get($input_gsl_matrix, 0, 0), "\n");
-#    RPerl::diag('in gsl_matrix_to_string(), have gsl_matrix_get($input_gsl_matrix, 0, 1) = ', gsl_matrix_get($input_gsl_matrix, 0, 1), "\n");
-#    RPerl::diag('in gsl_matrix_to_string(), have gsl_matrix_get($input_gsl_matrix, 1, 0) = ', gsl_matrix_get($input_gsl_matrix, 1, 0), "\n");
-#    RPerl::diag('in gsl_matrix_to_string(), have gsl_matrix_get($input_gsl_matrix, 1, 1) = ', gsl_matrix_get($input_gsl_matrix, 1, 1), "\n");
+    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have $input_gsl_matrix = ', Dumper($input_gsl_matrix), "\n");
+    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have gsl_matrix_get($input_gsl_matrix, 0, 0) = ', gsl_matrix_get($input_gsl_matrix, 0, 0), "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have gsl_matrix_get($input_gsl_matrix, 0, 1) = ', gsl_matrix_get($input_gsl_matrix, 0, 1), "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have gsl_matrix_get($input_gsl_matrix, 1, 0) = ', gsl_matrix_get($input_gsl_matrix, 1, 0), "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have gsl_matrix_get($input_gsl_matrix, 1, 1) = ', gsl_matrix_get($input_gsl_matrix, 1, 1), "\n");
 
     my string $retval = q{};
     my integer $i_max = gsl_matrix_rows($input_gsl_matrix) - 1;
@@ -183,12 +184,12 @@ sub gsl_matrix_to_string {
 
 #    my integer $i_max = 1;
 #    my integer $j_max = 1;
-    RPerl::diag('in gsl_matrix_to_string(), have $i_max = ', $i_max, ', $j_max = ', $j_max, "\n");
+    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have $i_max = ', $i_max, ', $j_max = ', $j_max, "\n");
 
     for my integer $i (0 .. $i_max) { 
-        RPerl::diag('in gsl_matrix_to_string(), have $i = ', $i, "\n");
+        RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have $i = ', $i, "\n");
         for my integer $j (0 .. $j_max) {
-            RPerl::diag('in gsl_matrix_to_string(), have $j = ', $j, "\n");
+            RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_to_string(), have $j = ', $j, "\n");
             # NEED UPDGRADE TO UNDERSCORE NUMBERS!!!
             $retval .= gsl_matrix_get($input_gsl_matrix, $i, $j) . "\t";
 #            $retval .= gsl_matrix_get($input_gsl_matrix, 1, 1) . "\t";
@@ -206,11 +207,12 @@ sub gsl_matrix_to_string {
 sub number_arrayref_to_gsl_matrix {
     { my gsl_matrix $RETURN_TYPE };
     ( my number_arrayref $input_number_arrayref, my integer $rows, my integer $cols ) = @ARG;
+    RPerl::diag('in PERLOPS_PERLTYPES number_arrayref_to_gsl_matrix(), top of subroutine', "\n");
 
 #    ::number_arrayref_CHECK($input_number_arrayref);
     ::number_arrayref_CHECKTRACE( $input_number_arrayref, '$input_number_arrayref', 'number_arrayref_to_gsl_matrix()' );
 
-#    RPerl::diag('in number_arrayref_to_gsl_matrix(), received $rows = ', $rows, ', $cols = ', $cols, "\n");
+    RPerl::diag('in PERLOPS_PERLTYPES number_arrayref_to_gsl_matrix(), received $rows = ', $rows, ', $cols = ', $cols, "\n");
 
     my gsl_matrix $retval = gsl_matrix_alloc($rows, $cols);
 
@@ -219,9 +221,11 @@ sub number_arrayref_to_gsl_matrix {
             gsl_matrix_set($retval, $i, $j, $input_number_arrayref->[($i * $cols) + $j]);
         }
     }
+    RPerl::diag('in PERLOPS_PERLTYPES number_arrayref_to_gsl_matrix(), bottom of subroutine', "\n");
     return $retval;
 }
 
+=DISABLED_NEED_DELETE
 sub number_arrayref_to_gsl_matrix2 {
     { my gsl_matrix $RETURN_TYPE };
 #    { my void $RETURN_TYPE };
@@ -242,6 +246,7 @@ sub number_arrayref_to_gsl_matrix2 {
     }
     return $input_matrix;
 }
+=cut
 
 # [[[ TYPE TESTING ]]]
 

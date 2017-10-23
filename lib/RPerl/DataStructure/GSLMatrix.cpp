@@ -122,9 +122,9 @@ gsl_matrix_rawptr XS_unpack_gsl_matrixPtr(SV* input_sv_ref) {
 void XS_pack_gsl_matrixPtr(SV* output_sv_ref, gsl_matrix_rawptr input_gsl_matrix) {
     cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), top of subroutine, received output_sv_ref = " << output_sv_ref << endl;
     cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have input_gsl_matrix = " << input_gsl_matrix << endl;
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have input_gsl_matrix->size1 = " << input_gsl_matrix->size1 << endl;
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have input_gsl_matrix->size2 = " << input_gsl_matrix->size2 << endl;
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have gsl_matrix_get(input_gsl_matrix, 0, 0) = " << gsl_matrix_get(input_gsl_matrix, 0, 0) << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have input_gsl_matrix->size1 = " << input_gsl_matrix->size1 << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have input_gsl_matrix->size2 = " << input_gsl_matrix->size2 << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have gsl_matrix_get(input_gsl_matrix, 0, 0) = " << gsl_matrix_get(input_gsl_matrix, 0, 0) << endl;
 
     dSP;
     ENTER;
@@ -139,7 +139,7 @@ void XS_pack_gsl_matrixPtr(SV* output_sv_ref, gsl_matrix_rawptr input_gsl_matrix
     PUTBACK;
 
     integer callback_retval_count = call_pv("gsl_matrix_alloc", G_SCALAR);  // actual callback
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have callback_retval_count = " << callback_retval_count << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have callback_retval_count = " << callback_retval_count << endl;
 
     SPAGAIN;
 
@@ -148,8 +148,8 @@ void XS_pack_gsl_matrixPtr(SV* output_sv_ref, gsl_matrix_rawptr input_gsl_matrix
     }
 
     SV* new_gsl_matrix_sv_ref = POPs;
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have new_gsl_matrix_sv_ref = " << new_gsl_matrix_sv_ref << endl;
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have class(new_gsl_matrix_sv_ref) = " << class(new_gsl_matrix_sv_ref) << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have new_gsl_matrix_sv_ref = " << new_gsl_matrix_sv_ref << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have class(new_gsl_matrix_sv_ref) = " << class(new_gsl_matrix_sv_ref) << endl;
 
 //    gsl_matrix_CHECK(new_gsl_matrix_sv_ref);
     gsl_matrix_CHECKTRACE(new_gsl_matrix_sv_ref, "new_gsl_matrix_sv_ref", "XS_pack_gsl_matrixPtr()");
@@ -290,7 +290,7 @@ string gsl_matrix_to_string(gsl_matrix_rawptr input_gsl_matrix) {
 string gsl_matrix_to_string_CPPTYPES(gsl_matrix_rawptr input_gsl_matrix)
 {
 //    fprintf(stderr, "in CPPOPS_CPPTYPES gsl_matrix_to_string_CPPTYPES(), top of subroutine, received unformatted input_gsl_matrix = %"INTEGER"\n", input_gsl_matrix);
-    fprintf(stderr, "in CPPOPS_CPPTYPES gsl_matrix_to_string_CPPTYPES()...\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES gsl_matrix_to_string_CPPTYPES(), top of subroutine\n");
 
     string retval = "";
     integer rows = gsl_matrix_rows(input_gsl_matrix);
@@ -305,6 +305,7 @@ string gsl_matrix_to_string_CPPTYPES(gsl_matrix_rawptr input_gsl_matrix)
         retval += (const string) "\n";
     }
     retval += (const string) "\n";
+    fprintf(stderr, "in CPPOPS_CPPTYPES gsl_matrix_to_string_CPPTYPES(), bottom of subroutine\n");
     return retval;
 }
 
@@ -314,7 +315,7 @@ string gsl_matrix_to_string_CPPTYPES(gsl_matrix_rawptr input_gsl_matrix)
 
 # ifdef __PERL__TYPES
 
-SV* number_arrayref_to_gsl_matrix(SV* input_number_arrayref) {
+SV* number_arrayref_to_gsl_matrix(SV* input_number_arrayref, SV* rows, SV* cols) {
 //    number_arrayref_CHECK(input_number_arrayref);
     number_arrayref_CHECKTRACE(input_number_arrayref, "input_number_arrayref", "number_arrayref_to_gsl_matrix()");
     // NEED ADD CODE EVENTUALLY
@@ -322,8 +323,19 @@ SV* number_arrayref_to_gsl_matrix(SV* input_number_arrayref) {
 
 # elif defined __CPP__TYPES
 
-gsl_matrix_rawptr number_arrayref_to_gsl_matrix(number_arrayref input_number_arrayref) {
-    // NEED ADD CODE!!!
+gsl_matrix_rawptr number_arrayref_to_gsl_matrix(number_arrayref input_number_arrayref, integer rows, integer cols) {
+    cerr << "in CPPOPS_CPPTYPES number_arrayref_to_gsl_matrix(), top of subroutine" << endl;
+    cerr << "in CPPOPS_CPPTYPES number_arrayref_to_gsl_matrix(), received rows = " << rows << ", cols = " << cols << endl;
+
+    gsl_matrix_rawptr retval = gsl_matrix_alloc(rows, cols);
+
+    for (integer i = 0; i < rows; i++) {
+        for (integer j = 0; j < cols; j++) {
+            gsl_matrix_set(retval, i, j, input_number_arrayref[(i * cols) + j]);
+        }
+    }
+    cerr << "in CPPOPS_CPPTYPES number_arrayref_to_gsl_matrix(), bottom of subroutine" << endl;
+    return retval;
 }
 
 # endif

@@ -157,11 +157,11 @@ string gsl_matrix_to_string(gsl_matrix_rawptr input_gsl_matrix);
 # endif
 string gsl_matrix_to_string_CPPTYPES(gsl_matrix_rawptr input_gsl_matrix);
 
-// [[[ GMP INTEGERIFY ]]]
+// [[[ GSL MATRIXIFY ]]]
 # ifdef __PERL__TYPES
-SV* number_arrayref_to_gsl_matrix(SV* input_number_arrayref);
+SV* number_arrayref_to_gsl_matrix(SV* input_number_arrayref, SV* rows, SV* cols);
 # elif defined __CPP__TYPES
-gsl_matrix_rawptr number_arrayref_to_gsl_matrix(number_arrayref input_number_arrayref);
+gsl_matrix_rawptr number_arrayref_to_gsl_matrix(number_arrayref input_number_arrayref, integer rows, integer cols);
 # endif
 
 // [[[ TYPE TESTING ]]]
