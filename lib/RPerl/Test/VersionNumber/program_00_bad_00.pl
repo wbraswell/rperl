@@ -12,3 +12,4 @@ our $ERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 my integer $i = 2 + 2;
+

@@ -35,3 +35,5 @@ quux();
 #print 'after   calling quux(), have $local_persistent = ', $local_persistent, "\n";  # YES ERROR
 quux();
 #print 'after   calling quux(), have $local_persistent = ', $local_persistent, "\n";  # YES ERROR
+
+

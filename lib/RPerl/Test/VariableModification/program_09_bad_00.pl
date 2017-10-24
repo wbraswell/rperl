@@ -18,3 +18,4 @@ our $VERSION = 0.001_000;
 
 my string $s = 'howdy';
 $s .= ' doody'
+

@@ -17,3 +17,4 @@ use constant  my string $TYPED_PIE = 'pecan';
 
 # [[[ OPERATIONS ]]]
 my integer $i = 2 + 2;
+

@@ -23,3 +23,4 @@ sub foo {
 
 # [[[ OPERATIONS ]]]
 foo();
+

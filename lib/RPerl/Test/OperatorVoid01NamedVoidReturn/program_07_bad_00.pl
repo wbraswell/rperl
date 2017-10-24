@@ -19,3 +19,4 @@ sub foo { { my string $RETURN_TYPE }; return - 'ahoy'; }
 
 # [[[ OPERATIONS ]]]
 foo();
+

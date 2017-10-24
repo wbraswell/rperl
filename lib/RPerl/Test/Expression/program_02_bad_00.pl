@@ -23,3 +23,5 @@ sub foo {
     ( my string $bar ) = @ARG;
     print $bar, "\n";
 }
+
+

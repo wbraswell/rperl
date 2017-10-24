@@ -19,3 +19,4 @@ use RPerl::Test::Foo;
 
 # [[[ OPERATIONS ]]]
 RPerl::Test::Foo::grault(23)
+

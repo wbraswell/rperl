@@ -24,3 +24,5 @@ sub $empty_method {
 };
 
 1;                  # end of class
+
+

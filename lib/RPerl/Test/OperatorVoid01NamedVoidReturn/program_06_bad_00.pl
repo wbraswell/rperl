@@ -19,3 +19,4 @@ sub foo { { my number $RETURN_TYPE }; return - 234_567.890_12; }
 
 # [[[ OPERATIONS ]]]
 foo();
+

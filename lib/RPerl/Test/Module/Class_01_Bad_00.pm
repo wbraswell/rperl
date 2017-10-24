@@ -44,3 +44,5 @@ our hashref $properties = $RPerl::Test::Module::Class_01_Bad_00::VERSION;
 
 1;    # end of class
 
+
+

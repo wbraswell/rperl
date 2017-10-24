@@ -18,3 +18,4 @@ our $VERSION = 0.001_000;
 
 my integer $foo = chdir, chdir;
 my integer $bar = chdir 'INVALID__DIRECTORY__NAME';
+

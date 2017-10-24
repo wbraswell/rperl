@@ -18,3 +18,4 @@ our $VERSION = 0.001_000;
 
 # DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'die(...' not 'die (...'
 die( ( @{ [2] }, "\n" ) );
+

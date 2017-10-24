@@ -17,3 +17,4 @@ use RPerl::Test::Bar;
 
 # [[[ OPERATIONS ]]]
 my integer $i = 2 + 2;
+

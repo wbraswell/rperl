@@ -12,3 +12,4 @@ our $VERSION = 0.001_00;
 
 # [[[ OPERATIONS ]]]
 my integer $i = 2 + 2;
+

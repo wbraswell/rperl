@@ -32,3 +32,5 @@ quux();
 print 'after   calling quux(), have $global_persistent = ', $global_persistent, "\n";  # NO ERROR
 quux();
 print 'after   calling quux(), have $global_persistent = ', $global_persistent, "\n";  # NO ERROR
+
+

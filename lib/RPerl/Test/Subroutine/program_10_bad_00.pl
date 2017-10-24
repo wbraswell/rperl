@@ -37,3 +37,5 @@ baz_variadic_dynamic(1);
 baz_variadic_dynamic(2, 'howdy');
 baz_variadic_dynamic(3, 'howdy', 'doody');
 baz_variadic_dynamic(4, 'howdy', 'doody', 'time');
+
+

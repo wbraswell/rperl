@@ -24,3 +24,5 @@ sub foo_multi { return 21, 22, 23; }
 print 'have $retval0 = ', $retval0, "\n";
 print 'have $retval1 = ', $retval1, "\n";
 print 'have $retval2 = ', $retval2, "\n";
+
+

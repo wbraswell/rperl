@@ -18,3 +18,4 @@ our $VERSION = 0.001_000;
 my integer_arrayref $frob = [];
 push @{$frob}, * 21, 12, 23;    # OperatorVoid, no parentheses required for builtin w/ multiple arguments in void context
 print 'have $frob = ', "\n", integer_arrayref_to_string($frob), "\n";
+

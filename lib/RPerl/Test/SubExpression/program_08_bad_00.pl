@@ -17,3 +17,4 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my number $foo = (-23.211_242)
+

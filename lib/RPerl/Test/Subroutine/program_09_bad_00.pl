@@ -33,3 +33,5 @@ sub bar_args_dynamic {
 # [[[ OPERATIONS ]]]
 bar_args_dynamic('integer', 4);
 bar_args_dynamic('string', 'repeat');
+
+

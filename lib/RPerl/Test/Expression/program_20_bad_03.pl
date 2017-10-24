@@ -24,3 +24,4 @@ print $my_foo->{plugh}, "\n";
 $my_foo->{plugh} = 42;
 $my_foo->quux();
 print $my_foo->{plugh}, "\n"
+

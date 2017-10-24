@@ -22,3 +22,4 @@ my RPerl::Test::Foo $my_foo = RPerl::Test::Foo->new();
 print $my_foo->qorge(), "\n";
 $my_foo->{xyzzy} = 'guffaw';
 print $my_foo->qorge(), "\n"
+

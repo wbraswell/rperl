@@ -19,3 +19,4 @@ sub foo { { my boolean $RETURN_TYPE }; return & 1; }
 
 # [[[ OPERATIONS ]]]
 foo();
+
