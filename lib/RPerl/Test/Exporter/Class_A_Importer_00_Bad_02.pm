@@ -1,7 +1,5 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE ERROR: 'ERROR ESUXP02' >>>
-# <<< PARSE_ERROR: 'Failed to export requested subroutine not_exported()' >>>
-# <<< PARSE_ERROR: 'subroutine not found in exporting package's @EXPORT or @EXPORT_OK' >>>
+# <<< PARSE_ERROR: "ERROR ESUXP02, Subroutine Exporter: Failed to export requested subroutine 'not_exported()' from package 'RPerl::Test::Exporter::Class_A_Exporter_00_Good' into requesting package 'RPerl::Test::Exporter::Class_A_Importer_00_Bad_02', subroutine not found in exporting package's @EXPORT or @EXPORT_OK" >>>
 
 # [[[ HEADER ]]]
 use RPerl;

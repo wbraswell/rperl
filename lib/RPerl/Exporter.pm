@@ -3,7 +3,7 @@ package RPerl::Exporter;
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 #use parent qw(RPerl::CompileUnit::Module::Class);
@@ -94,9 +94,13 @@ sub import {
     #   use Foo;  # importer may optionally request howdy(), or other subroutines
     #   howdy();
 
+#    RPerl::diag(q{in Exporter::import(), have $package_exporter = '}, $package_exporter, q{'}, "\n");
+#    RPerl::diag(q{in Exporter::import(), have @{$package_exporter . '::EXPORT'} = }, Dumper(\@{$package_exporter . '::EXPORT'}), "\n");
+
     # there are still arguments remaining to be received
     if (scalar @ARG) {
         # USAGE OPTIONS A & C ONLY: give non-inherited access to import()
+#        RPerl::diag(q{in Exporter::import(), have @ARG = }, Dumper(\@ARG), "\n");
         if ($package_exporter eq 'RPerl::Exporter') {
             if ($ARG[0] eq 'import') {
                 # this is RPerl::Exporter::import() explicitly exporting itself into the importing package's namespace as import()
@@ -126,16 +130,17 @@ sub import {
                 else {
                     if ($possible_sigil eq '&') {
                         # drop unnecessary ampersand sigils
-                        substr $subroutine_or_variable_export_ok, 0, 1, q{};
+                        substr $subroutine_or_variable_export, 0, 1, q{};
                     }
                     elsif ($possible_sigil !~ /\w/) {
-                        croak q{ERROR ESYXP00, Subroutine & Variable Exporter: Failed to process @EXPORT symbol '} . $subroutine_or_variable_export_ok . q{' from package '} . $package_exporter . q{', symbol begins with unrecognized character '}, $possible_sigil, q{', croaking};
+                        croak q{ERROR ESYXP00, Subroutine & Variable Exporter: Failed to process @EXPORT symbol '} . $subroutine_or_variable_export . q{' from package '} . $package_exporter . q{', symbol begins with unrecognized character '}, $possible_sigil, q{', croaking};
                     }
                     $subroutines_export->{$subroutine_or_variable_export} = 1;
                 }
             }
             foreach my $subroutine_or_variable_export_ok (@{$package_exporter . '::EXPORT_OK'}) {
                 my $possible_sigil = substr $subroutine_or_variable_export_ok, 0, 1;
+#                RPerl::diag(q{in Exporter::import(), have $possible_sigil = '}, $possible_sigil, q{'}, "\n");
                 if (($possible_sigil eq '$') or
                     ($possible_sigil eq '@') or
                     ($possible_sigil eq '%') or
@@ -164,58 +169,56 @@ sub import {
                     ($possible_sigil eq '%') or
                     ($possible_sigil eq '*')) {
                     my $variable = $subroutine_or_variable;
+                    my $variable_no_sigil = substr $variable, 1;
 
-                    if (not defined *{ $package_exporter . '::' . $variable }) {
-                        croak 'ERROR EVAXP00, Variable Exporter: Failed to export requested variable ' . $variable . ' from package ' . q{'} . $package_exporter . q{' into requesting package '} . $package_importer . q{', variable does not exist, croaking};
+                    if (not defined *{ $package_exporter . '::' . $variable_no_sigil }) {
+                        croak q{ERROR EVAXP00, Variable Exporter: Failed to export requested variable '} . $variable . q{' from package '} . $package_exporter . q{' into requesting package '} . $package_importer . q{', variable does not exist, croaking};
                     }
                     # requested variable is already in @EXPORT, skip it
                     if (exists $variables_export->{$variable}) {
-                        RPerl::warning('WARNING WVAXP00, Variable Exporter: Redundant request to export variable ' . $variable . ' from package ' . q{'} . $package_exporter . q{' into requesting package '} . $package_importer . q{', variable already exists in exporting package's @EXPORT} . "\n");
+                        RPerl::warning(q{WARNING WVAXP00, Variable Exporter: Redundant request to export variable '} . $variable . q{' from package '} . $package_exporter . q{' into requesting package '} . $package_importer . q{', variable already exists in exporting package's @EXPORT} . "\n");
                         next;
                     }
                     # requested variable is in @EXPORT_OK, export it
                     elsif (exists $variables_export_ok->{$variable}) {
-                        # drop variable sigils for convenience
-                        substr $variable, 0, 1, q{};
-
                         no strict;
                         # define actual exported variable
                         # DEV NOTE: can not test for pre-existing variables because there is no valid defined(@array), etc.
                         if ($possible_sigil eq '$') {    # SCALAR
-                            *{ $package_importer . '::' . $variable } = \${ $package_exporter . '::' . $variable };
+                            *{ $package_importer . '::' . $variable_no_sigil } = \${ $package_exporter . '::' . $variable_no_sigil };
                         }
                         elsif ($possible_sigil eq '@') {  # ARRAY
-                            *{ $package_importer . '::' . $variable } = \@{ $package_exporter . '::' . $variable };
+                            *{ $package_importer . '::' . $variable_no_sigil } = \@{ $package_exporter . '::' . $variable_no_sigil };
                         }
                         elsif ($possible_sigil eq '%') {  # HASH
-                            *{ $package_importer . '::' . $variable } = \%{ $package_exporter . '::' . $variable };
+                            *{ $package_importer . '::' . $variable_no_sigil } = \%{ $package_exporter . '::' . $variable_no_sigil };
                         }
                         elsif ($possible_sigil eq '*') {  # TYPEGLOB
-                            *{ $package_importer . '::' . $variable } = *{ $package_exporter . '::' . $variable };
+                            *{ $package_importer . '::' . $variable_no_sigil } = *{ $package_exporter . '::' . $variable_no_sigil };
                         }
                     }
                     # requested variable is not in @EXPORT or @EXPORT_OK, error
                     else {
-                        croak 'ERROR EVAXP01, Variable Exporter: Failed to export requested variable ' . $variable . ' from package ' . q{'} . $package_exporter . q{' into requesting package '} . $package_importer . q{', variable not found in exporting package's @EXPORT or @EXPORT_OK, croaking};
+                        croak q{ERROR EVAXP01, Variable Exporter: Failed to export requested variable '} . $variable . q{' from package '} . $package_exporter . q{' into requesting package '} . $package_importer . q{', variable not found in exporting package's @EXPORT or @EXPORT_OK, croaking};
                     }
                 }
                 else {
+                    my $subroutine = $subroutine_or_variable;
+
                     if ($possible_sigil eq '&') {
                         # drop unnecessary ampersand sigils
-                        substr $subroutine_or_variable, 0, 1, q{};
+                        substr $subroutine, 0, 1, q{};
                     }
                     elsif ($possible_sigil !~ /\w/) {
                         croak q{ERROR ESYXP02, Subroutine & Variable Exporter: Failed to export symbol '} . $subroutine_or_variable . q{' from package '} . $package_exporter . q{' into requesting package '} . $package_importer . q{', symbol begins with unrecognized character '}, $possible_sigil, q{', croaking};
                     }
 
-                    my $subroutine = $subroutine_or_variable;
-
                     if (not defined *{ $package_exporter . '::' . $subroutine }) {
-                        croak 'ERROR ESUXP01, Subroutine Exporter: Failed to export requested subroutine ' . $subroutine . '() from package ' . q{'} . $package_exporter . q{' into requesting package '} . $package_importer . q{', subroutine does not exist, croaking};
+                        croak q{ERROR ESUXP01, Subroutine Exporter: Failed to export requested subroutine '} . $subroutine . q{()' from package '} . $package_exporter . q{' into requesting package '} . $package_importer . q{', subroutine does not exist, croaking};
                     }
                     # requested subroutine is already in @EXPORT, skip it
                     if (exists $subroutines_export->{$subroutine}) {
-                        RPerl::warning('WARNING WSUXP00, Subroutine Exporter: Redundant request to export subroutine ' . $subroutine . '() from package ' . q{'} . $package_exporter . q{' into requesting package '} . $package_importer . q{', subroutine already exists in exporting package's @EXPORT} . "\n");
+                        RPerl::warning(q{WARNING WSUXP00, Subroutine Exporter: Redundant request to export subroutine '} . $subroutine . q{()' from package '} . $package_exporter . q{' into requesting package '} . $package_importer . q{', subroutine already exists in exporting package's @EXPORT} . "\n");
                         next;
                     }
                     # requested subroutine is in @EXPORT_OK, export it
@@ -314,12 +317,12 @@ sub import {
 #                        RPerl::diag('in Exporter::import(), about to call eval() on requested $subroutine_definition_code = ' . "\n" . $subroutine_definition_code . "\n");
 #                        eval($subroutine_definition_code) or (RPerl::diag('WARNING WSUXP01, Subroutine Exporter: Possible failure to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'not croaking'));
                         eval($subroutine_definition_code);
-#                        if ($EVAL_ERROR) { croak 'ERROR ESUXP03, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking'; }  # does work, gives unnecessary eval() traces 
-                        if ($EVAL_ERROR) { die 'ERROR ESUXP03, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'dying' . "\n"; }
+#                        if ($EVAL_ERROR) { croak q{ERROR ESUXP03, Subroutine Exporter: Failed to export type-checking subroutine '} . $package_exporter . '::' . $subroutine . q{()',} . "\n" . $EVAL_ERROR . "\n" . 'croaking'; }  # does work, gives unnecessary eval() traces 
+                        if ($EVAL_ERROR) { die q{ERROR ESUXP03, Subroutine Exporter: Failed to export type-checking subroutine '} . $package_exporter . '::' . $subroutine . q{()',} . "\n" . $EVAL_ERROR . "\n" . 'dying' . "\n"; }
                     }
                     # requested subroutine is not in @EXPORT or @EXPORT_OK, error
                     else {
-                        croak 'ERROR ESUXP02, Subroutine Exporter: Failed to export requested subroutine ' . $subroutine . '() from package ' . q{'} . $package_exporter . q{' into requesting package '} . $package_importer . q{', subroutine not found in exporting package's @EXPORT or @EXPORT_OK, croaking};
+                        croak q{ERROR ESUXP02, Subroutine Exporter: Failed to export requested subroutine '} . $subroutine . q{()' from package '} . $package_exporter . q{' into requesting package '} . $package_importer . q{', subroutine not found in exporting package's @EXPORT or @EXPORT_OK, croaking};
                     }
                 }
             }
@@ -337,45 +340,43 @@ sub import {
             ($possible_sigil eq '%') or
             ($possible_sigil eq '*')) {
             my $variable = $subroutine_or_variable;
+            my $variable_no_sigil = substr $variable, 1;
 
-            # DEV NOTE: can not check for variable existence here, may not be initialized yet
-#            if (not defined *{ $package_exporter . '::' . $variable }) {
-#                croak 'ERROR EVAXP02, Variable Exporter: Failed to export forced variable ' . $variable . ' from package ' . q{'} . $package_exporter . q{' into requesting package '} . $package_importer . q{', variable does not exist, croaking};
-#            }
-#
-            RPerl::diag(q{in Exporter::import(), have $package_exporter = '}, $package_exporter, q{'}, "\n");   # DEV NOTE: causes false errors in t/12_parse.t???
+            # NEED ANSWER: can not check for variable existence here, may not be initialized yet???
+            if (not defined *{ $package_exporter . '::' . $variable_no_sigil }) {
+                croak q{ERROR EVAXP02, Variable Exporter: Failed to export forced variable '} . $variable . q{' from package '} . $package_exporter . q{' into requesting package '} . $package_importer . q{', variable does not exist, croaking};
+            }
+
+#            RPerl::diag(q{in Exporter::import(), have $package_exporter = '}, $package_exporter, q{'}, "\n");   # DEV NOTE: causes false errors in t/12_parse.t???
 #            RPerl::diag(q{in Exporter::import(), have forced $variable = '}, $variable, q{'}, "\n");   # DEV NOTE: causes false errors in t/12_parse.t???
 #            RPerl::diag(q{in Exporter::import(), have $possible_sigil = '}, $possible_sigil, q{'}, "\n");   # DEV NOTE: causes false errors in t/12_parse.t???
-
-            # drop variable sigils for convenience
-            substr $variable, 0, 1, q{};
 
             no strict;
             # define actual exported variable
             # DEV NOTE: can not test for pre-existing variables because there is no valid defined(@array), etc.
             if ($possible_sigil eq '$') {    # SCALAR
-                *{ $package_importer . '::' . $variable } = \${ $package_exporter . '::' . $variable };
+                *{ $package_importer . '::' . $variable_no_sigil } = \${ $package_exporter . '::' . $variable_no_sigil };
             }
             elsif ($possible_sigil eq '@') {  # ARRAY
-                *{ $package_importer . '::' . $variable } = \@{ $package_exporter . '::' . $variable };
+                *{ $package_importer . '::' . $variable_no_sigil } = \@{ $package_exporter . '::' . $variable_no_sigil };
             }
             elsif ($possible_sigil eq '%') {  # HASH
-                *{ $package_importer . '::' . $variable } = \%{ $package_exporter . '::' . $variable };
+                *{ $package_importer . '::' . $variable_no_sigil } = \%{ $package_exporter . '::' . $variable_no_sigil };
             }
             elsif ($possible_sigil eq '*') {  # TYPEGLOB
-                *{ $package_importer . '::' . $variable } = *{ $package_exporter . '::' . $variable };
+                *{ $package_importer . '::' . $variable_no_sigil } = *{ $package_exporter . '::' . $variable_no_sigil };
             }
         }
         else {
+            my $subroutine = $subroutine_or_variable;
+
             if ($possible_sigil eq '&') {
                 # drop unnecessary ampersand sigils
-                substr $subroutine_or_variable, 0, 1, q{};
+                substr $subroutine, 0, 1, q{};
             }
             elsif ($possible_sigil !~ /\w/) {
                 croak q{ERROR ESYXP03, Subroutine & Variable Exporter: Failed to export symbol '} . $subroutine_or_variable . q{' from package '} . $package_exporter . q{' into requesting package '} . $package_importer . q{', symbol begins with unrecognized character '}, $possible_sigil, q{', croaking};
             }
-
-            my $subroutine = $subroutine_or_variable;
 
             # enable args type-checking except for exempted subs below
             my $args_type_checking = 1;
@@ -477,20 +478,20 @@ sub import {
     #        RPerl::diag('in Exporter::import(), about to call eval() on forced $subroutine_definition_code = ' . "\n" . $subroutine_definition_code . "\n");
     #        eval($subroutine_definition_code) or (RPerl::diag('WARNING WSUXP02, Subroutine Exporter: Possible failure to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'not croaking'));
             eval($subroutine_definition_code);
-    #        if ($EVAL_ERROR) { croak 'ERROR ESUXP04, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'croaking'; }  # does work, gives unnecessary eval() traces 
-            if ($EVAL_ERROR) { die 'ERROR ESUXP04, Subroutine Exporter: Failed to export type-checking subroutine ' . $package_exporter . '::' . $subroutine . '(),' . "\n" . $EVAL_ERROR . "\n" . 'dying' . "\n"; }
+    #        if ($EVAL_ERROR) { croak q{ERROR ESUXP04, Subroutine Exporter: Failed to export type-checking subroutine '} . $package_exporter . '::' . $subroutine . q{()',} . "\n" . $EVAL_ERROR . "\n" . 'croaking'; }  # does work, gives unnecessary eval() traces 
+            if ($EVAL_ERROR) { die q{ERROR ESUXP04, Subroutine Exporter: Failed to export type-checking subroutine '} . $package_exporter . '::' . $subroutine . q{()',} . "\n" . $EVAL_ERROR . "\n" . 'dying' . "\n"; }
         }
     
 =DISABLED_LONG_FORM_EVAL_ANON_SUB_STRICT
     #    my @subroutines = (eval '@' . $package_exporter . '::EXPORT')
-    #        or (die 'ERROR ESUXPxx: Failed to read @EXPORT variable for package ' . q{'} . $package_exporter . q{', did you forget to define @} . $package_exporter . q{::EXPORT in your code?} . "\n" . $EVAL_ERROR . "\n" . 'dying');
+    #        or (die q{ERROR ESUXPxx: Failed to read @EXPORT variable for package '} . $package_exporter . q{', did you forget to define @} . $package_exporter . q{::EXPORT in your code?} . "\n" . $EVAL_ERROR . "\n" . 'dying');
     #    print 'in import(), have @subroutines = ' . Dumper(\@subroutines) . "\n";
     
     #    foreach my $subroutine (@subroutines) {
     #        my $eval_string = '*' . $package_importer . '::' . $subroutine . ' = sub { return ' . $package_exporter . '::' . $subroutine . '(@_); };'; 
     #        print 'have $eval_string = ' . "\n" . $eval_string . "\n";
     #        eval $eval_string
-    #            or (die q{ERROR ESUXPxx: Failed to export subroutine } . $subroutine . q{() from package '} . $package_exporter . q{' to package '} . $package_importer . q{'} . "\n" . $EVAL_ERROR . "\n" . 'dying');
+    #            or (die q{ERROR ESUXPxx: Failed to export subroutine '} . $subroutine . q{()' from package '} . $package_exporter . q{' to package '} . $package_importer . q{'} . "\n" . $EVAL_ERROR . "\n" . 'dying');
     #    }
 =cut
     }

@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.009_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -98,6 +98,11 @@ find(
                 }
                 elsif (m/^\#\s*\<\<\<\s*EXECUTE_SUCCESS_NUMBER_64\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
                     push @{ $test_files->{$file}->{successes_number_64} }, $1;
+                }
+                
+                if (m/^\#\s*\<\<\<\s*EXECUTE\s*\:\s*OFF\s*\>\>\>/xms) {
+                    delete $test_files->{$file};
+                    last;
                 }
             }
             close $FILE_HANDLE
@@ -309,6 +314,10 @@ sub preprocess_execute_error {
     open my filehandleref $FILE_HANDLE, '<', $file
         or croak 'ERROR, Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
     while (<$FILE_HANDLE>) {
+        if (m/^\#\s*\<\<\<\s*EXECUTE\s*\:\s*OFF\s*\>\>\>/xms) {
+            delete $test_files->{$file};
+            last;
+        }
         if (m/^\#\s*\<\<\<\s*EXECUTE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
             push @{ $test_files->{$file}->{errors} }, $1;
         }

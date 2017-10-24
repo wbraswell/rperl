@@ -1,5 +1,5 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE ERROR: 'ERROR ESUXP00' >>>
+# <<< PARSE_ERROR: 'ERROR ESUXP00' >>>
 # <<< PARSE_ERROR: 'Failed to give inheritance of subroutine foo()' >>>
 # <<< PARSE_ERROR: 'only the import() subroutine is available' >>>
 

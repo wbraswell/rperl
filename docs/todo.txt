@@ -4,6 +4,7 @@ DONE
         all RPerl converted & most tests pass (not t/10 or t/11)
     RPerl::Exporter
         Class::Generator & Package: PERLOPS_PERLTYPES
+        subroutines, scalars, arrays, hashes, typeglobs
     Quick-Start Guide
         started
     protect Perl API function & variable names
@@ -15,9 +16,6 @@ DOING
         PhysicsPerl
         MathPerl
     RPerl::Exporter
-        add variable export tests for $ @ % *, including 'ERROR ESYXP0x'
-        fix double-checking for gsl_matrix_rows() etc., start in Class::activate_subroutine_args_checking() & Exporter::import() & GSLFunctions
-        do not enable checking for *_CHECK() & *_CHECKTRACE() subs
         re-enable t/10 & t/11
         Class::Generator & Package: CPPOPS_CPPTYPES
         fix & test *_CHECK*() exporting in rperlgmp.pm & rperlsse.pm, as hard-coded in rperlgsl.pm
@@ -343,6 +341,7 @@ PARALLELAPPSTORE.COM
     content
 
 DATA TYPES & STRUCTURES
+    sort hash keys when generating string output in *hashref_to_string() CPPOPS Hash.cpp, as is done with 'sort keys' in PERLOPS Hash/Subtypes.pm
     determine if 'long long' or 'long double' can be used at all???
         DEV NOTE, CORRELATION #rp041: GMP does not support 'long long' or 'long double', will cause t/07_type_gmp.t to fail
     scalar, scalar_arrayref, scalar_hashref, scalar_*

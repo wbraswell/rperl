@@ -1,5 +1,5 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE ERROR: 'ERROR ECOPAPL02' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
 # <<< PARSE_ERROR: 'Subroutine exported_ok redefined' >>>
 
 # [[[ HEADER ]]]

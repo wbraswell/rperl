@@ -1,13 +1,19 @@
 # [[[ PREPROCESSOR ]]]
 # <<< CHANGE_ME: delete unused directives >>>
-# <<< TYPE_CHECKING: OFF >>>
-# <<< TYPE_CHECKING: ON >>>
-# <<< TYPE_CHECKING: TRACE >>>
+# <<< TYPE_CHECKING: OFF or ON or TRACE >>>
+# <<< PARSE: OFF or ON >>>
 # <<< PARSE_ERROR: 'FOO' >>>
+# <<< GENERATE: OFF or ON >>>
 # <<< GENERATE_ERROR: 'FOO' >>>
+# <<< COMPILE: OFF or ON >>>
 # <<< COMPILE_ERROR: 'FOO' >>>
+# <<< EXECUTE: OFF or ON >>>
 # <<< EXECUTE_ERROR: 'FOO' >>>
 # <<< EXECUTE_SUCCESS: 'FOO' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_32: 'FOO' >>>
+# <<< EXECUTE_SUCCESS_INTEGER_64: 'FOO' >>>
+# <<< EXECUTE_SUCCESS_NUMBER_32: 'FOO' >>>
+# <<< EXECUTE_SUCCESS_NUMBER_64: 'FOO' >>>
 
 # [[[ HEADER ]]]
 # <<< CHANGE_ME: replace with real class name >>>
@@ -58,6 +64,7 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM SPECIAL 12: allow complex conditional logic
 ## no critic qw(RequireCarping)  # SYSTEM SPECIAL 13: allow die instead of croak
 ## no critic qw(ProhibitAutomaticExportation)  # SYSTEM SPECIAL 14: allow global exports from Config.pm & elsewhere
+## no critic qw(ProhibitPackageVars)  # SYSTEM SPECIAL 15: allow package variables for exports tests
 
 # COMBO CRITICS
 ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1

@@ -3,8 +3,8 @@
 # Learning RPerl, Section 3.1: Lists vs Arrays
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE ERROR: 'ERROR ECOPAPC02' >>>
-# <<< PARSE ERROR: 'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::CodeLayout::ProhibitQuotedWordLists' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

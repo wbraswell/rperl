@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.027_000;
+our $VERSION = 0.030_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -89,14 +89,30 @@ find(
         if ( ( $file =~ m/Good/ms ) or ( $file =~ m/good/ms ) ) {
 #            RPerl::diag('in 13_generate.t, find0, have good $file = ' . $file . "\n");
             $test_files->{$file} = undef;
+
+            # NEED UPDATE: remove use of $_ magic variable
+            open my filehandleref $FILE_HANDLE, '<', $_
+                or croak 'ERROR, Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
+            while (<$FILE_HANDLE>) {
+                if (m/^\#\s*\<\<\<\s*GENERATE\s*\:\s*OFF\s*\>\>\>/xms) {
+                    delete $test_files->{$file};
+                    last;
+                }
+            }
+            close $FILE_HANDLE
+                or croak 'ERROR, Cannot close file ' . $file . ' after reading,' . $OS_ERROR . ', croaking';
         }
         elsif ( ( $file =~ m/Bad/ms ) or ( $file =~ m/bad/ms ) ) {
 #            RPerl::diag('in 13_generate.t, find0, have bad  $file = ' . $file . "\n");
 
-            # NEED FIX: remove use of $_ magic variable
+            # NEED UPDATE: remove use of $_ magic variable
             open my filehandleref $FILE_HANDLE, '<', $_
                 or croak 'ERROR ETE13GE00: Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
             while (<$FILE_HANDLE>) {
+                if (m/^\#\s*\<\<\<\s*GENERATE\s*\:\s*OFF\s*\>\>\>/xms) {
+                    delete $test_files->{$file};
+                    last;
+                }
                 if (m/^\#\s*\<\<\<\s*GENERATE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
                     push @{ $test_files->{$file}->{errors} }, $1;
                 }
@@ -162,6 +178,16 @@ find(
 );
 
 #=cut
+
+# trim unnecessary (and possibly problematic) absolute paths from input file names
+# must be done outside find() to properly utilize getcwd()
+foreach my string $test_file_key (sort keys %{$test_files}) {
+    my string $test_file_key_trimmed = RPerl::Compiler::post_processor__absolute_path_delete($test_file_key);
+    if ($test_file_key_trimmed ne $test_file_key) {
+        $test_files->{$test_file_key_trimmed} = $test_files->{$test_file_key};
+        delete $test_files->{$test_file_key};
+    }
+}
 
 my integer $number_of_test_files = scalar keys %{$test_files};
 
@@ -282,8 +308,6 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
         $output_file_name_groups_tmp = RPerl::Compiler::generate_output_file_names( [$test_file], [], 1, $modes );
         $output_file_name_group = $output_file_name_groups_tmp->[0];
 
-        # trim unnecessary (and possibly problematic) absolute paths from input & output file names
-        $test_file = RPerl::Compiler::post_processor__absolute_path_delete( $test_file );
         foreach my string $suffix_key (keys %{$output_file_name_group}) {
             if (defined $output_file_name_group->{$suffix_key}) {
                 $output_file_name_group->{$suffix_key} = RPerl::Compiler::post_processor__absolute_path_delete( $output_file_name_group->{$suffix_key} );
@@ -523,6 +547,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
                 if ((exists $test_files->{$test_file}) and (defined $test_files->{$test_file}) and 
                     (exists $test_files->{$test_file}->{errors}) and (defined $test_files->{$test_file}->{errors})) {
                     foreach my $error ( @{ $test_files->{$test_file}->{errors} } ) {
+#                    RPerl::diag( 'in 13_generate.t, have possible $error = ', $error, "\n" );
                         if ( $EVAL_ERROR !~ /\Q$error\E/xms ) {
                             push @{$missing_errors}, q{Error message '} . $error . q{' expected, but not found};
                         }

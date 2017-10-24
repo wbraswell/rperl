@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.013_000;
+our $VERSION = 0.014_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -124,7 +124,7 @@ sub integer_hashref_CHECK {
     }
 
     my integer $possible_integer;
-    foreach my string $key ( keys %{$possible_integer_hashref} ) {
+    foreach my string $key ( sort keys %{$possible_integer_hashref} ) {
         $possible_integer = $possible_integer_hashref->{$key};
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the integer_CHECK() subroutine, but with hash-specific error codes
@@ -166,7 +166,7 @@ sub integer_hashref_CHECKTRACE {
     }
 
     my integer $possible_integer;
-    foreach my string $key ( keys %{$possible_integer_hashref} ) {
+    foreach my string $key ( sort keys %{$possible_integer_hashref} ) {
         $possible_integer = $possible_integer_hashref->{$key};
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the integer_CHECKTRACE() subroutine, but with hash-specific error codes
@@ -215,7 +215,7 @@ sub integer_hashref_to_string {
 
     $output_sv = '{';
 
-    foreach my string $key ( keys %input_hv ) {
+    foreach my string $key ( sort keys %input_hv ) {
 
         $input_hv_entry_value = $input_hv{$key};
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
@@ -249,7 +249,7 @@ sub integer_hashref__typetest0 {
     integer_hashref_CHECKTRACE( $lucky_integers, '$lucky_integers',
         'integer_hashref__typetest0()' );
 
-#    foreach my string $key ( keys %{$lucky_integers} ) {
+#    foreach my string $key ( sort keys %{$lucky_integers} ) {
 #        my $lucky_integer = $lucky_integers->{$key};
 #        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
 #        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
@@ -316,7 +316,7 @@ sub number_hashref_CHECK {
     }
 
     my number $possible_number;
-    foreach my string $key ( keys %{$possible_number_hashref} ) {
+    foreach my string $key ( sort keys %{$possible_number_hashref} ) {
         $possible_number = $possible_number_hashref->{$key};
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the number_CHECK() subroutine, but with hash-specific error codes
@@ -361,7 +361,7 @@ sub number_hashref_CHECKTRACE {
     }
 
     my number $possible_number;
-    foreach my string $key ( keys %{$possible_number_hashref} ) {
+    foreach my string $key ( sort keys %{$possible_number_hashref} ) {
         $possible_number = $possible_number_hashref->{$key};
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the number_CHECKTRACE() subroutine, but with hash-specific error codes
@@ -413,7 +413,7 @@ sub number_hashref_to_string {
 
     $output_sv = '{';
 
-    foreach my string $key ( keys %input_hv ) {
+    foreach my string $key ( sort keys %input_hv ) {
 
         $input_hv_entry_value = $input_hv{$key};
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
@@ -442,7 +442,7 @@ sub number_hashref__typetest0 {
     number_hashref_CHECKTRACE( $lucky_numbers, '$lucky_numbers',
         'number_hashref__typetest0()' );
 
-#    foreach my string $key ( keys %{$lucky_numbers} ) {
+#    foreach my string $key ( sort keys %{$lucky_numbers} ) {
 #        my $lucky_number = $lucky_numbers->{$key};
 #        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
 #        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
@@ -518,7 +518,7 @@ sub string_hashref_CHECK {
     }
 
     my string $possible_string;
-    foreach my string $key ( keys %{$possible_string_hashref} ) {
+    foreach my string $key ( sort keys %{$possible_string_hashref} ) {
         $possible_string = $possible_string_hashref->{$key};
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the string_CHECK() subroutine, but with hash-specific error codes
@@ -560,7 +560,7 @@ sub string_hashref_CHECKTRACE {
     }
 
     my string $possible_string;
-    foreach my string $key ( keys %{$possible_string_hashref} ) {
+    foreach my string $key ( sort keys %{$possible_string_hashref} ) {
         $possible_string = $possible_string_hashref->{$key};
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the string_CHECKTRACE() subroutine, but with hash-specific error codes
@@ -609,7 +609,7 @@ sub string_hashref_to_string {
 
     $output_sv = '{';
 
-    foreach my string $key ( keys %input_hv ) {
+    foreach my string $key ( sort keys %input_hv ) {
 
         $input_hv_entry_value = $input_hv{$key};
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
@@ -639,7 +639,7 @@ sub string_hashref__typetest0 {
     string_hashref_CHECKTRACE( $people, '$people',
         'string_hashref__typetest0()' );
 
-#    foreach my string $key ( keys %{$people} ) {
+#    foreach my string $key ( sort keys %{$people} ) {
 #        my $person = $people->{$key};
 #        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
 #        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character

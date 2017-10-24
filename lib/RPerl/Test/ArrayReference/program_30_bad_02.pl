@@ -3,9 +3,9 @@
 # Learning RPerl, Section 3.1: Lists vs Arrays
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE ERROR: 'syntax error>>>
-# <<< PARSE ERROR: 'near "my ["' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
+# <<< PARSE_ERROR: 'syntax error>>>
+# <<< PARSE_ERROR: 'near "my ["' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

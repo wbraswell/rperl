@@ -3,8 +3,8 @@
 # Learning RPerl, Section 3.1: Lists vs Arrays
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE ERROR: 'Unexpected Token:  @foo' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  @foo' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
