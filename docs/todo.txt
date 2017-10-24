@@ -15,6 +15,7 @@ DOING
         PhysicsPerl
         MathPerl
     RPerl::Exporter
+        add variable export tests for $ @ % *, including 'ERROR ESYXP0x'
         fix double-checking for gsl_matrix_rows() etc., start in Class::activate_subroutine_args_checking() & Exporter::import() & GSLFunctions
         do not enable checking for *_CHECK() & *_CHECKTRACE() subs
         re-enable t/10 & t/11
