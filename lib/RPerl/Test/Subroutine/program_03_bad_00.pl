@@ -4,7 +4,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'Useless use of a constant (6) in void context' >>>
+# <<< PARSE_ERROR: 'Useless use of a constant' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

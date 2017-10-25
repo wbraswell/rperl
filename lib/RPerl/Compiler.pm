@@ -286,6 +286,16 @@ sub find_dependencies {
 #                RPerl::diag('in Compiler::find_dependencies(), after finding rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
                 next;
             }
+            elsif ( $file_line =~ /use\s+rperlgsl\s*;/ ) {
+                RPerl::diag('in Compiler::find_dependencies(), found rperlgsl line, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
+                if ( ( not exists $modes->{_enable_gsl} ) or ( not defined $modes->{_enable_gsl} ) ) {
+                    $modes->{_enable_gsl} = {};
+                }
+                $modes->{_enable_gsl}->{$file_name} = 1;
+
+                RPerl::diag('in Compiler::find_dependencies(), after finding rperlgsl line, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
+                next;
+            }
             elsif ( $file_line =~ /use\s+lib/ ) {
                 die
                     q{ERROR ECOCODE02, COMPILER, FIND DEPENDENCIES: 'use lib...' not currently supported, please set @INC using the PERL5LIB environment variable, file }
@@ -1358,6 +1368,23 @@ sub post_processor_cpp__pmc_generate {
                     }
                     else { $file_line = undef; }
                 }
+                elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional GSL support here >>>' . "\n" ) ) {
+                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n" );
+                    RPerl::diag( 'in Compiler::save_source_files(), have $pm_file_path = ' . $pm_file_path . "\n" );
+                    if (    ( exists $modes->{_enable_gsl} )
+                        and ( defined $modes->{_enable_gsl} )
+                        and ( exists $modes->{_enable_gsl}->{$pm_file_path} )
+                        and ( defined $modes->{_enable_gsl}->{$pm_file_path} )
+                        and $modes->{_enable_gsl}->{$pm_file_path} )
+                    {
+                        $file_line = q(        $RPerl::Inline::ARGS{libs}  = '-lgsl';  # enable GSL support) . "\n";
+                        $file_line
+                            .= q(        $RPerl::Inline::ARGS{auto_include} = [ @{ $RPerl::Inline::ARGS{auto_include} }, '#include <gsl_matrix.h>', '#include <gsl_blas.h>' ];    # enable GSL support)
+                            . "\n";
+                    }
+                    else { $file_line = undef; }
+                }
+
                 if ( defined $file_line ) { $source_group->{PMC} .= $file_line; }
             }
 

@@ -2,7 +2,6 @@
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
 # <<< PARSE_ERROR: 'near "use RPerl::Test::Bar' >>>
 # <<< PARSE_ERROR: 'sub empty_sub "' >>>
-# <<< PARSE_ERROR: 'near "; }"' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

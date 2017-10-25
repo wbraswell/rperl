@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use rperlnamespaces;
-our $VERSION = 0.011_000;
+our $VERSION = 0.012_000;
 
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 
@@ -43,6 +43,7 @@ my $namespaces_rperl_missed = {
     'rperlrules::' => 1,
     'rperlsse::' => 1,
     'rperlgmp::' => 1,
+    'rperlgsl::' => 1,
     'perlapinames_generated::' => 1,
 };
 
@@ -77,6 +78,7 @@ my $filenames_rperl = {
     'rperlrules.pm' => 1,
     'rperlsse.pm' => 1,
     'rperlgmp.pm' => 1,
+    'rperlgsl.pm' => 1,
     'perlapinames_generated.pm' => 1,
 };
 
@@ -181,6 +183,7 @@ my $namespaces_rperl_deps = {
 eval 'use RPerl::AfterSubclass';
 eval 'use rperlsse';
 eval 'use rperlgmp';
+eval 'use rperlgsl';
 eval 'use perlapinames_generated';
 
 #print 'in namespaces_regenerate.pl main::, after evals, about to call rperlnamespaces::hash()...', "\n";

@@ -4,7 +4,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'Global symbol "$autovivified" requires explicit package name (did you forget to declare "my $autovivified"?)' >>>
+# <<< PARSE_ERROR: 'Global symbol "$autovivified" requires explicit package name' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

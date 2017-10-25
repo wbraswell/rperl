@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'near "; 2"' >>>
+# <<< PARSE_ERROR: 'Number found where operator expected' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
