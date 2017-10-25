@@ -180,6 +180,7 @@ sub find_parents {
 #    RPerl::diag( 'in Compiler::find_parents(), returning $parents = ' . Dumper($parents) . "\n" );
 #    RPerl::diag('in Compiler::find_parents(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
 #    RPerl::diag('in Compiler::find_parents(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+    RPerl::diag('in Compiler::find_parents(), about to return, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
     return $parents;
 }
 
@@ -390,6 +391,7 @@ sub find_dependencies {
 #    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
 #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
 #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
     return $dependencies;
 }
 
@@ -1377,7 +1379,8 @@ sub post_processor_cpp__pmc_generate {
                         and ( defined $modes->{_enable_gsl}->{$pm_file_path} )
                         and $modes->{_enable_gsl}->{$pm_file_path} )
                     {
-                        $file_line = q(        $RPerl::Inline::ARGS{libs}  = '-lgsl';  # enable GSL support) . "\n";
+                        # DEV NOTE: linking instructions    https://www.gnu.org/software/gsl/doc/html/usage.html#linking-programs-with-the-library
+                        $file_line = q(        $RPerl::Inline::ARGS{libs}  = '-lgsl -lgslcblas -lm';  # enable GSL support) . "\n";
                         $file_line
                             .= q(        $RPerl::Inline::ARGS{auto_include} = [ @{ $RPerl::Inline::ARGS{auto_include} }, '#include <gsl_matrix.h>', '#include <gsl_blas.h>' ];    # enable GSL support)
                             . "\n";

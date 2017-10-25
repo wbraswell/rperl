@@ -52,6 +52,7 @@ EOF
         $RPerl::Inline::ARGS{cppflags}  = $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypessizes::type_number_native_ccflag();
         # <<< CHANGE_ME: enable optional SSE support here >>>
         # <<< CHANGE_ME: enable optional GMP support here >>>
+        # <<< CHANGE_ME: enable optional GSL support here >>>
 
 #RPerl::diag('in RPerl::CompileUnit::Module::cpp_load(), CPP not yet loaded, about to call eval() on $eval_string =' . "\n" . '<<< BEGIN EVAL STRING>>>' . "\n" . $eval_string . '<<< END EVAL STRING >>>' . "\n");
 

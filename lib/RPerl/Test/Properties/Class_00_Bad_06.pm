@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'Can't modify numeric gt (>) in scalar assignment' >>>
+# <<< PARSE_ERROR: 'Bareword "empty_property" not allowed while "strict subs" in use' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
