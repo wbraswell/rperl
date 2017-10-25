@@ -4,7 +4,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  baz_variadic_dynamic' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  my' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

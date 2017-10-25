@@ -36,13 +36,11 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(RPerl::Test::Module::Class_01_Good);
-require RPerl::Test::Module::Class_01_Good;
+use parent qw(RPerl::Test::Module::Class_00_Good);
+require RPerl::Test::Module::Class_00_Good;
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = $RPerl::Test::Module::Class_01_Good::properties;
+our hashref $properties = $RPerl::Test::Module::Class_00_Good::properties;
 
 1;    # end of class
-
-
 

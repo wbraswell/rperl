@@ -33,4 +33,3 @@ print 'after   calling quux(), have $autovivified = ', $autovivified, "\n";  # N
 quux();
 print 'after   calling quux(), have $autovivified = ', $autovivified, "\n";  # NO ERROR
 
-

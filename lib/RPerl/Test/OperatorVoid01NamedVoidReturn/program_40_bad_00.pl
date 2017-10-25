@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  }' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
+# <<< PARSE_ERROR: 'near "return"' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

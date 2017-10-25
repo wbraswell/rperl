@@ -27,6 +27,7 @@ DOING
         add 'apt-get install libgsl-dev' (or libgsl0-dev) & 'cpanm Math::GSL::Matrix' in RPerl & LAMP Installers, document in INSTALL?
         gsl_matrix_CHECK*() CPPOPS_CPPTYPES
         tests for all EMAV00 - EMAV09
+        enable gsl_linalg.h & other gsl friends
         
     Alien::PCRE2
         ensure tests pass on both share & system installs

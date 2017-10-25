@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  our' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  sub' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

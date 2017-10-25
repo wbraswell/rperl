@@ -3,8 +3,8 @@
 # Learning RPerl, Section 4.2.1: Parentheses Suffix & Ampersand Prefix
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'Bareword "hello_world" not allowed while "strict subs" in use' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::NamingConventions::Capitalization' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -27,5 +27,4 @@ sub HELLO_world { { my void $RETURN_TYPE }; print 'Hello, World, yet again!', "\
 hello_world;
 Hello_World();
 HELLO_world();
-
 

@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'Number found where operator expected' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPARP00 ' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  ;' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -16,5 +16,4 @@ sub empty_sub {
 };
 
 1;                  # end of package
-
 

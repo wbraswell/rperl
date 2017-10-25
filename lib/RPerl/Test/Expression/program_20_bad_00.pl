@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'Global symbol "$my_foo" requires explicit package name' >>>
+# <<< PARSE_ERROR: "ERROR ECOPAPL02" >>>
+# <<< PARSE_ERROR: "ERROR ESUXP01, Subroutine Exporter: Failed to export requested subroutine 'RPerl::Test::Foo=HASH(" >>>
 
 # [[[ HEADER ]]]
 use RPerl;

@@ -3,9 +3,8 @@
 # Learning RPerl, Section 4.5: Subroutine Variables, Variable Scope & Persistence
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOCODE03' >>>
-# <<< PARSE_ERROR: "Failed to find package file 'use feature 'state';" >>>
-
+# <<< PARSE_ERROR: "ERROR ECOPARP00" >>>
+# <<< PARSE_ERROR: "Unexpected Token:  'state'" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -35,5 +34,4 @@ quux();
 #print 'after   calling quux(), have $local_persistent = ', $local_persistent, "\n";  # YES ERROR
 quux();
 #print 'after   calling quux(), have $local_persistent = ', $local_persistent, "\n";  # YES ERROR
-
 

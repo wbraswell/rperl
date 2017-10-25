@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: "Unexpected Token:  'howdy'" >>>
+# <<< PARSE_ERROR: "Unexpected Token:  print" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -47,5 +47,4 @@ if (not( print 'howdy', 2.31, 'doody', 3.21, 'foobar', 4.23, "\n" ) )
 if ( not close $HOWDY ) {
     croak 'ERROR: Failed to close file /tmp/howdy after writing, croaking';
 }
-
 

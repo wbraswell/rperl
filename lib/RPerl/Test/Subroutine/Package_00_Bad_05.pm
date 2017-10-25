@@ -1,6 +1,7 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'Illegal declaration of anonymous subroutine' >>>
+# <<< PARSE_ERROR: 'Unmatched right curly bracket' >>>
+# <<< PARSE_ERROR: 'near "; }"' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -13,5 +14,4 @@ our $VERSION = 0.001_000;
 sub empty_sub { my void $RETURN_TYPE}; 2; };
 
 1;                  # end of package
-
 

@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  require' >>>
+# <<< PARSE_ERROR: 'ECOPAPL03' >>>
+# <<< PARSE_ERROR: 'Subroutine empty_method redefined' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -43,6 +43,4 @@ require RPerl::Test::Module::Class_01_Bad_00;
 our hashref $properties = $RPerl::Test::Module::Class_01_Bad_00::VERSION;
 
 1;    # end of class
-
-
 

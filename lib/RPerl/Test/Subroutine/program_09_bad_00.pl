@@ -4,7 +4,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  bar_args_dynamic' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  my' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -33,5 +33,4 @@ sub bar_args_dynamic {
 # [[[ OPERATIONS ]]]
 bar_args_dynamic('integer', 4);
 bar_args_dynamic('string', 'repeat');
-
 

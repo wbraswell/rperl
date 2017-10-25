@@ -1,5 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
+# <<< PARSE_ERROR: 'near "; 2"' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -12,5 +13,4 @@ our $VERSION = 0.001_000;
 ub empty_sub { { my void $RETURN_TYPE }; 2; }
 
 1;                  # end of package
-
 

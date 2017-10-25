@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'syntax error' >>>
+# <<< PARSE_ERROR: 'Illegal declaration of anonymous subroutine' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -24,5 +24,4 @@ sub $empty_method {
 };
 
 1;                  # end of class
-
 

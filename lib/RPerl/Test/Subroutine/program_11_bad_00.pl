@@ -4,7 +4,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  =' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  our' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -32,5 +32,4 @@ quux();
 print 'after   calling quux(), have $global_persistent = ', $global_persistent, "\n";  # NO ERROR
 quux();
 print 'after   calling quux(), have $global_persistent = ', $global_persistent, "\n";  # NO ERROR
-
 
