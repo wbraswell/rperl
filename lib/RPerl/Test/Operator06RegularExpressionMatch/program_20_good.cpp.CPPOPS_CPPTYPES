@@ -18,11 +18,11 @@ int main() {
 
 // [[[ OPERATIONS ]]]
     string foo = (const string) "howdy hello ahoy";
-    integer bar = (boolean) jp::Regex("owdy", "xms").match(foo, "g");
+    integer bar = (boolean) regex("owdy", "xms").match(foo, "g");
     print "have $foo = " << foo << endl;
     print "have $bar = " << bar << endl;
     foo = (const string) "howdy hello ahoy";
-    bar = (boolean) jp::Regex("h[\\w]+", "xms").match(foo, "g");
+    bar = (boolean) regex("h[\\w]+", "xms").match(foo, "g");
     print "have $foo = " << foo << endl;
     print "have $bar = " << bar << endl;
 

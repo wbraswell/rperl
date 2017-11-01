@@ -129,6 +129,7 @@ sub type_convert_perl_to_cpp {
 
     if ( exists $rperlnamespaces_generated::RPERL->{ $return_type . '::' } ) {    # RPerl types
         $return_type =~ s/^constant_/const\ /gxms;                                # 'constant_foo' becomes 'const foo'
+        $return_type =~ s/^gsl_matrix/gsl_matrix_rawptr/gxms;                     # 'gsl_matrix' becomes 'gsl_matrix_rawptr'  # NEED ANSWER: is this always correct?
     }
     else {                                                                        # user-defined types AKA classes
         $return_type =~ s/:/_/gxms;                                               # 'Foo::Bar::Baz' becomes 'Foo__Bar__Baz'

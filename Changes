@@ -1,5 +1,18 @@
 Revision history for Perl compiler RPerl.
 
+3.200000 2017-10-31 Codename Pleiades
+
+    - HOLIDAY EDITION: Happy Halloween!
+    - Normal Subroutine Header Support, No More Weird Anonymous Subroutines!
+        Catch '$RETURN_VALUE' Typo, Instead Of '$RETURN_TYPE'
+    - Medium Magic Regular Expressions, Substitute Return Value Support,
+        Requires Alien::JPCRE2 v0.009 & Alien::PCRE2 v0.014
+    - Quick-Start Guide, First Draft
+    - RPerl::Exporter, Class & Package Support For PERLOPS_PERLTYPES,
+        Can Export Subroutines, Scalars, Arrays, Hashes, Typeglobs
+    - Disable C Types 'long long' & 'double long' For GMP Compatibility
+    - Protect Perl API, Disallow Reuse Of C Function & Variable Names
+
 3.000000 2017-07-04 Codename Mercury
 
     - HOLIDAY EDITION: Happy Independence Day!

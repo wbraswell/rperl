@@ -25,6 +25,10 @@ my $pcre2_lib_dir = File::Spec->catpath(q{}, $pcre2_dir, q{lib});
 #print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $pcre2_include_dir = '}, $pcre2_include_dir, q{'}, "\n\n";
 #print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $jpcre2_include_dir = '}, $jpcre2_include_dir, q{'}, "\n\n";
 
+# NEED REMOVE HARD-CODED VALUE!  implement Alien::GSL and use Alien::GSL->dist_dir() as w/ PCRE2 in RPerl/Inline.pm
+# 'our' var below utilized from generated *.pmc files
+our $gsl_include_dir = '/usr/include/gsl';
+
 # long form
 #use Inline CPP => config => classes =>
 #sub {

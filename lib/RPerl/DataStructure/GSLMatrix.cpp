@@ -37,7 +37,7 @@ void gsl_matrix_CHECK(SV* possible_gsl_matrix) {
 }
 
 void gsl_matrix_CHECKTRACE(SV* possible_gsl_matrix, const char* variable_name, const char* subroutine_name) {
-    cerr << "in CPPOPS gsl_matrix_CHECKTRACE(), top of subroutine" << endl;
+//    cerr << "in CPPOPS gsl_matrix_CHECKTRACE(), top of subroutine" << endl;
     if (not (SvOK(possible_gsl_matrix))) { croak( "\nERROR EMAV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
     if (not (SvHROKp(possible_gsl_matrix))) { croak( "\nERROR EMAV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but non-hashref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
     if (not (sv_isobject(possible_gsl_matrix))) { croak( "\nERROR EMAV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but non-object (blessed hashref) value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
@@ -45,7 +45,7 @@ void gsl_matrix_CHECKTRACE(SV* possible_gsl_matrix, const char* variable_name, c
     if (not (sv_isa(possible_gsl_matrix, "Math::GSL::Matrix::gsl_matrix"))) { croak( "\nERROR EMAV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nMath::GSL::Matrix::gsl_matrix external wrapper value expected but non-Math::GSL::Matrix::gsl_matrix object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
 
     HV* possible_gsl_matrix_deref = (HV*) SvRV(possible_gsl_matrix);
-    cerr << "in gsl_matrix_CHECKTRACE(), have possible_gsl_matrix_deref = " << possible_gsl_matrix_deref << endl;
+//    cerr << "in gsl_matrix_CHECKTRACE(), have possible_gsl_matrix_deref = " << possible_gsl_matrix_deref << endl;
 
     // Math::GSL::Matrix::gsl_matrix is a tied object, not a real hash, so $my_gsl_matrix->{data} is not actually a Perl hash value retrieval;
     // Math::GSL::Matrix::gsl_matrix does not currently have an exists() method, so we will get the following error by calling hv_exists():
@@ -53,7 +53,7 @@ void gsl_matrix_CHECKTRACE(SV* possible_gsl_matrix, const char* variable_name, c
 //    if (not hv_exists(possible_gsl_matrix_deref, (const char*) "data", (U32) 4)) { croak( "\nERROR EMAV05, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nMath::GSL::Matrix::gsl_matrix internal wrapped object in hash entry expected at key 'data' but no hash entry exists,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
 
     SV** possible_gsl_matrix_data_ptr = hv_fetch(possible_gsl_matrix_deref, (const char*) "data", (U32) 4, (I32) 0);
-    cerr << "in gsl_matrix_CHECKTRACE(), have *possible_gsl_matrix_data_ptr = " << *possible_gsl_matrix_data_ptr << endl;
+//    cerr << "in gsl_matrix_CHECKTRACE(), have *possible_gsl_matrix_data_ptr = " << *possible_gsl_matrix_data_ptr << endl;
     if (possible_gsl_matrix_data_ptr == NULL) { croak( "\nERROR EMAV06, MISSING HASH ENTRY, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nMath::GSL::Matrix::gsl_matrix internal wrapped hash entry expected at key 'data' but no hash entry defined,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
 
     // NEED ANSWER: Math::GSL::Matrix::gsl_matrix->{data} does not pass the SvOK() test, why?
@@ -62,7 +62,7 @@ void gsl_matrix_CHECKTRACE(SV* possible_gsl_matrix, const char* variable_name, c
     if (not (sv_isobject(*possible_gsl_matrix_data_ptr))) { croak( "\nERROR EMAV08, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nMath::GSL::Matrix::gsl_matrix internal wrapped value expected but non-object (blessed hashref) value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
     if (not (sv_derived_from(*possible_gsl_matrix_data_ptr, "_p_double"))) { croak( "\nERROR EMAV09, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nMath::GSL::Matrix::gsl_matrix _p_double internal wrapped value expected but non-_p_double object value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name); }
 
-    cerr << "in CPPOPS gsl_matrix_CHECKTRACE(), bottom of subroutine" << endl;
+//    cerr << "in CPPOPS gsl_matrix_CHECKTRACE(), bottom of subroutine" << endl;
 }
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
@@ -73,7 +73,7 @@ void gsl_matrix_CHECKTRACE(SV* possible_gsl_matrix, const char* variable_name, c
 
 // convert from (Perl SV containing tied reference to C gsl_matrix) to (C gsl_matrix_rawptr)
 gsl_matrix_rawptr XS_unpack_gsl_matrixPtr(SV* input_sv_ref) {
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gsl_matrixPtr(), top of subroutine" << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gsl_matrixPtr(), top of subroutine" << endl;
 
 //    gsl_matrix_CHECK(input_sv_ref);
     gsl_matrix_CHECKTRACE(input_sv_ref, "input_sv_ref", "XS_unpack_gsl_matrixPtr()");
@@ -86,7 +86,7 @@ gsl_matrix_rawptr XS_unpack_gsl_matrixPtr(SV* input_sv_ref) {
     // LONG FORM
     MAGIC* input_sv_ref_magic = SvMAGIC(SvRV(input_sv_ref));
 
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gsl_matrixPtr(), have input_sv_ref_magic = " << input_sv_ref_magic << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gsl_matrixPtr(), have input_sv_ref_magic = " << input_sv_ref_magic << endl;
 
     // return direct pointer to underlying gsl_matrix C struct itself, no memcpy() here
     gsl_matrix_rawptr output_gsl_matrix = (gsl_matrix_rawptr) SvIV(SvRV(input_sv_ref_magic->mg_obj));
@@ -94,8 +94,8 @@ gsl_matrix_rawptr XS_unpack_gsl_matrixPtr(SV* input_sv_ref) {
 /**** DISABLED, UNNECESSARY memcpy()
     gsl_matrix_rawptr input_gsl_matrix = (gsl_matrix_rawptr) SvIV(SvRV(input_sv_ref_magic->mg_obj));
 
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gsl_matrixPtr(), have input_gsl_matrix->size1 = " << input_gsl_matrix->size1 << endl;
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gsl_matrixPtr(), have input_gsl_matrix->size2 = " << input_gsl_matrix->size2 << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gsl_matrixPtr(), have input_gsl_matrix->size1 = " << input_gsl_matrix->size1 << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gsl_matrixPtr(), have input_gsl_matrix->size2 = " << input_gsl_matrix->size2 << endl;
 
     gsl_matrix_rawptr output_gsl_matrix = gsl_matrix_alloc(input_gsl_matrix->size1, input_gsl_matrix->size2);
 //    gsl_matrix_rawptr output_gsl_matrix = gsl_matrix_alloc(15, 51);  // TMP DEBUG CONTROL
@@ -109,8 +109,8 @@ gsl_matrix_rawptr XS_unpack_gsl_matrixPtr(SV* input_sv_ref) {
     }
 ****/
 
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gsl_matrixPtr(), have output_gsl_matrix = " << output_gsl_matrix << endl;
-    cerr << "in CPPOPS_CPPTYPES XS_unpack_gsl_matrixPtr(), bottom of subroutine" << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gsl_matrixPtr(), have output_gsl_matrix = " << output_gsl_matrix << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gsl_matrixPtr(), bottom of subroutine" << endl;
 
     return output_gsl_matrix;
 
@@ -120,8 +120,8 @@ gsl_matrix_rawptr XS_unpack_gsl_matrixPtr(SV* input_sv_ref) {
 
 // convert from (C gsl_matrix_rawptr) to (Perl SV containing tied reference to C gsl_matrix)
 void XS_pack_gsl_matrixPtr(SV* output_sv_ref, gsl_matrix_rawptr input_gsl_matrix) {
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), top of subroutine, received output_sv_ref = " << output_sv_ref << endl;
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have input_gsl_matrix = " << input_gsl_matrix << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), top of subroutine, received output_sv_ref = " << output_sv_ref << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have input_gsl_matrix = " << input_gsl_matrix << endl;
 //    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have input_gsl_matrix->size1 = " << input_gsl_matrix->size1 << endl;
 //    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have input_gsl_matrix->size2 = " << input_gsl_matrix->size2 << endl;
 //    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have gsl_matrix_get(input_gsl_matrix, 0, 0) = " << gsl_matrix_get(input_gsl_matrix, 0, 0) << endl;
@@ -165,13 +165,13 @@ void XS_pack_gsl_matrixPtr(SV* output_sv_ref, gsl_matrix_rawptr input_gsl_matrix
 /* THIS IS WRONG, DON'T TRY TO ACCESS MAGIC OF {data} DIRECTLY
     SV* new_gsl_matrix_sv_ref_data_value = *hv_fetch((HV*)SvRV(new_gsl_matrix_sv_ref), (const char*) "data", (U32) 4, (I32) 0);
 
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have new_gsl_matrix_sv_ref_data_value = " << new_gsl_matrix_sv_ref_data_value << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have new_gsl_matrix_sv_ref_data_value = " << new_gsl_matrix_sv_ref_data_value << endl;
 //    MAGIC* new_gsl_matrix_sv_ref_data_value_magic = SvMAGIC(SvRV(new_gsl_matrix_sv_ref_data_value));
     MAGIC* new_gsl_matrix_sv_ref_data_value_magic = SvMAGIC(new_gsl_matrix_sv_ref_data_value);
 
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have new_gsl_matrix_sv_ref_data_value_magic = " << new_gsl_matrix_sv_ref_data_value_magic << endl;
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have pre-set (gsl_matrix_rawptr)new_gsl_matrix_sv_ref_data_value_magic->mg_ptr = " << (gsl_matrix_rawptr)new_gsl_matrix_sv_ref_data_value_magic->mg_ptr << endl;
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have pre-set gsl_matrix_get((gsl_matrix_rawptr)new_gsl_matrix_sv_ref_data_value_magic->mg_ptr, 0, 0) = " << gsl_matrix_get((gsl_matrix_rawptr)new_gsl_matrix_sv_ref_data_value_magic->mg_ptr, 0, 0) << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have new_gsl_matrix_sv_ref_data_value_magic = " << new_gsl_matrix_sv_ref_data_value_magic << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have pre-set (gsl_matrix_rawptr)new_gsl_matrix_sv_ref_data_value_magic->mg_ptr = " << (gsl_matrix_rawptr)new_gsl_matrix_sv_ref_data_value_magic->mg_ptr << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have pre-set gsl_matrix_get((gsl_matrix_rawptr)new_gsl_matrix_sv_ref_data_value_magic->mg_ptr, 0, 0) = " << gsl_matrix_get((gsl_matrix_rawptr)new_gsl_matrix_sv_ref_data_value_magic->mg_ptr, 0, 0) << endl;
 
     gsl_matrix_rawptr tmp_gsl_matrix = (gsl_matrix_rawptr) new_gsl_matrix_sv_ref_data_value_magic->mg_ptr;
 */
@@ -202,16 +202,16 @@ void XS_pack_gsl_matrixPtr(SV* output_sv_ref, gsl_matrix_rawptr input_gsl_matrix
 
 /*  PARTIALLY WORKS, CAN ONLY READ VIA INDIRECT SWIG ACCESSORS
     SV* new_gsl_matrix_sv_ref_size1 = *hv_fetch((HV*)SvRV(new_gsl_matrix_sv_ref), (const char*) "size1", (U32) 5, (I32) 0);
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have new_gsl_matrix_sv_ref_size1 = " << new_gsl_matrix_sv_ref_size1 << endl;
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have SvIV(new_gsl_matrix_sv_ref_size1) = " << SvIV(new_gsl_matrix_sv_ref_size1) << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have new_gsl_matrix_sv_ref_size1 = " << new_gsl_matrix_sv_ref_size1 << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have SvIV(new_gsl_matrix_sv_ref_size1) = " << SvIV(new_gsl_matrix_sv_ref_size1) << endl;
 
     SV* new_gsl_matrix_sv_ref_size2 = *hv_fetch((HV*)SvRV(new_gsl_matrix_sv_ref), (const char*) "size2", (U32) 5, (I32) 0);
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have new_gsl_matrix_sv_ref_size2 = " << new_gsl_matrix_sv_ref_size2 << endl;
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have SvIV(new_gsl_matrix_sv_ref_size2) = " << SvIV(new_gsl_matrix_sv_ref_size2) << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have new_gsl_matrix_sv_ref_size2 = " << new_gsl_matrix_sv_ref_size2 << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have SvIV(new_gsl_matrix_sv_ref_size2) = " << SvIV(new_gsl_matrix_sv_ref_size2) << endl;
 
     SV* new_gsl_matrix_sv_ref_data = *hv_fetch((HV*)SvRV(new_gsl_matrix_sv_ref), (const char*) "data", (U32) 4, (I32) 0);
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have new_gsl_matrix_sv_ref_data = " << new_gsl_matrix_sv_ref_data << endl;
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have  pre-change SvIV(new_gsl_matrix_sv_ref_data) = " << SvIV(new_gsl_matrix_sv_ref_data) << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have new_gsl_matrix_sv_ref_data = " << new_gsl_matrix_sv_ref_data << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), have  pre-change SvIV(new_gsl_matrix_sv_ref_data) = " << SvIV(new_gsl_matrix_sv_ref_data) << endl;
 */
 
     // WRONG: cannot convert ‘double*’ to ‘SV* {aka sv*}’
@@ -258,7 +258,7 @@ void XS_pack_gsl_matrixPtr(SV* output_sv_ref, gsl_matrix_rawptr input_gsl_matrix
     FREETMPS;
     LEAVE;
 
-    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), bottom of subroutine" << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gsl_matrixPtr(), bottom of subroutine" << endl;
 }
 
 # endif
@@ -280,7 +280,7 @@ SV* gsl_matrix_to_number_arrayref_arrayref(SV* input_gsl_matrix) {
 }
 # elif defined __CPP__TYPES
 number_arrayref gsl_matrix_to_number_arrayref(gsl_matrix_rawptr input_gsl_matrix) {
-    number_arrayref retval = ();
+    number_arrayref retval;
 
     // NEED UPGRADE: use gsl_matrix_get_col() or something else faster than loops
     for (integer i = 0; i < gsl_matrix_rows(input_gsl_matrix); i++) {
@@ -323,12 +323,12 @@ string gsl_matrix_to_string(gsl_matrix_rawptr input_gsl_matrix) {
 string gsl_matrix_to_string_CPPTYPES(gsl_matrix_rawptr input_gsl_matrix)
 {
 //    fprintf(stderr, "in CPPOPS_CPPTYPES gsl_matrix_to_string_CPPTYPES(), top of subroutine, received unformatted input_gsl_matrix = %"INTEGER"\n", input_gsl_matrix);
-    fprintf(stderr, "in CPPOPS_CPPTYPES gsl_matrix_to_string_CPPTYPES(), top of subroutine\n");
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix_to_string_CPPTYPES(), top of subroutine" << endl;
 
     string retval = "";
     integer rows = gsl_matrix_rows(input_gsl_matrix);
     integer cols = gsl_matrix_cols(input_gsl_matrix);
-    cerr << "in CPPOPS_CPPTYPES gsl_matrix_to_string(), have rows = " << rows << ", cols = " << cols << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix_to_string(), have rows = " << rows << ", cols = " << cols << endl;
 
     for (integer i = 0; i < rows; i++) {
         for (integer j = 0; j < cols; j++) {
@@ -338,7 +338,7 @@ string gsl_matrix_to_string_CPPTYPES(gsl_matrix_rawptr input_gsl_matrix)
         retval += (const string) "\n";
     }
     retval += (const string) "\n";
-    fprintf(stderr, "in CPPOPS_CPPTYPES gsl_matrix_to_string_CPPTYPES(), bottom of subroutine\n");
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix_to_string_CPPTYPES(), bottom of subroutine" << endl;
     return retval;
 }
 
@@ -357,8 +357,8 @@ SV* number_arrayref_to_gsl_matrix(SV* input_number_arrayref, SV* rows, SV* cols)
 # elif defined __CPP__TYPES
 
 gsl_matrix_rawptr number_arrayref_to_gsl_matrix(number_arrayref input_number_arrayref, integer rows, integer cols) {
-    cerr << "in CPPOPS_CPPTYPES number_arrayref_to_gsl_matrix(), top of subroutine" << endl;
-    cerr << "in CPPOPS_CPPTYPES number_arrayref_to_gsl_matrix(), received rows = " << rows << ", cols = " << cols << endl;
+//    cerr << "in CPPOPS_CPPTYPES number_arrayref_to_gsl_matrix(), top of subroutine" << endl;
+//    cerr << "in CPPOPS_CPPTYPES number_arrayref_to_gsl_matrix(), received rows = " << rows << ", cols = " << cols << endl;
 
     gsl_matrix_rawptr retval = gsl_matrix_alloc(rows, cols);
 
@@ -367,7 +367,7 @@ gsl_matrix_rawptr number_arrayref_to_gsl_matrix(number_arrayref input_number_arr
             gsl_matrix_set(retval, i, j, input_number_arrayref[(i * cols) + j]);
         }
     }
-    cerr << "in CPPOPS_CPPTYPES number_arrayref_to_gsl_matrix(), bottom of subroutine" << endl;
+//    cerr << "in CPPOPS_CPPTYPES number_arrayref_to_gsl_matrix(), bottom of subroutine" << endl;
     return retval;
 }
 
@@ -392,7 +392,7 @@ SV* gsl_matrix__typetest1(SV* lucky_gsl_matrix) {
 # elif defined __CPP__TYPES
 
 gsl_matrix_rawptr gsl_matrix__typetest0() {
-    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest0(), top of subroutine" << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest0(), top of subroutine" << endl;
 
     gsl_matrix_rawptr retval = gsl_matrix_alloc(21, 12);
     gsl_matrix_set(retval, 0, 0, (RPerl__DataStructure__GSLMatrix__MODE_ID() + 23));
@@ -400,21 +400,21 @@ gsl_matrix_rawptr gsl_matrix__typetest0() {
 }
 
 gsl_matrix_rawptr gsl_matrix__typetest1(gsl_matrix_rawptr lucky_gsl_matrix) {
-    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), top of subroutine" << endl;
-    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), received lucky_gsl_matrix = " << lucky_gsl_matrix << endl;
-    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have lucky_gsl_matrix->size1 = " << lucky_gsl_matrix->size1 << endl;
-    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have lucky_gsl_matrix->size2 = " << lucky_gsl_matrix->size2 << endl;
-    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have pre-add gsl_matrix_get(lucky_gsl_matrix, 0, 0) = " << gsl_matrix_get(lucky_gsl_matrix, 0, 0) << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), top of subroutine" << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), received lucky_gsl_matrix = " << lucky_gsl_matrix << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have lucky_gsl_matrix->size1 = " << lucky_gsl_matrix->size1 << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have lucky_gsl_matrix->size2 = " << lucky_gsl_matrix->size2 << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have pre-add gsl_matrix_get(lucky_gsl_matrix, 0, 0) = " << gsl_matrix_get(lucky_gsl_matrix, 0, 0) << endl;
 
     integer add_retval = gsl_matrix_add_constant(lucky_gsl_matrix, RPerl__DataType__Integer__MODE_ID());
 
-    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have add_retval = " << add_retval << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have add_retval = " << add_retval << endl;
 
     if (add_retval != 0) {
         croak("\nERROR EMAV20, GSL MATRIX TYPETEST, CPPOPS_CPPTYPES:\nExpected return value 0 (success) from gsl_matrix_add_constant() but %"INTEGER" return value found,\ncroaking", gsl_matrix_add_constant);
     }
 
-    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have post-add gsl_matrix_get(lucky_gsl_matrix, 0, 0) = " << gsl_matrix_get(lucky_gsl_matrix, 0, 0) << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have post-add gsl_matrix_get(lucky_gsl_matrix, 0, 0) = " << gsl_matrix_get(lucky_gsl_matrix, 0, 0) << endl;
     return lucky_gsl_matrix;
 
     // SHORT FORM

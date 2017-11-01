@@ -17,7 +17,7 @@ int main() {
 // [[[ OPERATIONS ]]]
     string foo = (const string) "howdy hello ahoy";
     print "have $foo = " << foo << endl;
-    (((foo = jp::Regex("ho", "ms").replace(foo, "HO", "g")).max_size() * 0) + jp::Regex::getLastReplaceCount());
+    regex("ho", "ms").preplace(&foo, "HO", "g");
     print "have changed $foo = " << foo << endl;
 
 

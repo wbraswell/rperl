@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method::Arguments;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine::Arguments);
@@ -103,17 +103,18 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         shift @{ $arguments_star_dclone->{children} };    # discard $comma
         shift @{ $arguments_star_dclone->{children} };    # discard $my
         my object $type = shift @{ $arguments_star_dclone->{children} };
+        $type = $type->{children}->[0];  # unwrap $type to allow type_convert_perl_to_cpp()
         my string $name = shift @{ $arguments_star_dclone->{children} };
         $name = $name->{attr};  # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
         substr $name, 0, 1, q{};        # remove leading $ sigil
 
         # CREATE SYMBOL TABLE ENTRY
+        $type = RPerl::Generator::type_convert_perl_to_cpp($type, 1);  # $pointerify_classes = 1
+        # add converted C++ type to symtab entry
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{ $name }
-            = { isa => 'RPerl::CodeBlock::Subroutine::Method::Arguments', type => $type->{children}->[0] };
+            = { isa => 'RPerl::CodeBlock::Subroutine::Method::Arguments', type => $type };
 
-        $type->{children}->[0] =~ s/^constant_/const\ /gxms;    # 'constant_foo' becomes 'const foo'
-        $type->{children}->[0] =~ s/::/__/gxms;                 # 'Class::Subclass' becomes 'Class__Subclass'
-        push @{$arguments}, ( $type->{children}->[0] . q{ } . $name );
+        push @{$arguments}, ( $type . q{ } . $name );
     }
     $cpp_source_group->{CPP} .= join ', ', @{$arguments};
     return $cpp_source_group;

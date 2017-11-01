@@ -56,8 +56,9 @@ sub find_parents {
     ( my string $file_name, my boolean $find_grandparents_recurse, my string_hashref $modes ) = @ARG;
 #    RPerl::diag( 'in Compiler::find_parents(), received $file_name = ' . $file_name . "\n" );
 
-    # trim unnecessary (and possibly problematic) absolute paths from input file name
+    # trim unnecessary (and possibly problematic) absolute or current-directory paths from input file name
     $file_name = post_processor__absolute_path_delete($file_name);
+    $file_name = post_processor__current_directory_path_delete($file_name);
 #    RPerl::diag( 'in Compiler::find_parents(), have possibly-trimmed $file_name = ' . $file_name . "\n" );
 
     my string_arrayref $parents = [];
@@ -153,6 +154,7 @@ sub find_parents {
 #            RPerl::diag( 'in Compiler::find_parents(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
 
             my string $package_file_name_included_relative = post_processor__absolute_path_delete( $package_file_name_included );
+            $package_file_name_included_relative = post_processor__current_directory_path_delete( $package_file_name_included_relative );
             push @{$parents}, $package_file_name_included_relative;
     
 #            RPerl::diag( 'in Compiler::find_parents(), have PRE-SUBDEPS $parents = ' . Dumper($parents) . "\n" );
@@ -180,7 +182,7 @@ sub find_parents {
 #    RPerl::diag( 'in Compiler::find_parents(), returning $parents = ' . Dumper($parents) . "\n" );
 #    RPerl::diag('in Compiler::find_parents(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
 #    RPerl::diag('in Compiler::find_parents(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
-    RPerl::diag('in Compiler::find_parents(), about to return, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
+#    RPerl::diag('in Compiler::find_parents(), about to return, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
     return $parents;
 }
 
@@ -189,8 +191,9 @@ sub find_dependencies {
     ( my string $file_name, my boolean $find_subdependencies_recurse, my string_hashref $modes ) = @ARG;
 #    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
 
-    # trim unnecessary (and possibly problematic) absolute paths from input file name
+    # trim unnecessary (and possibly problematic) absolute and current-directory paths from input file name
     $file_name = post_processor__absolute_path_delete($file_name);
+    $file_name = post_processor__current_directory_path_delete($file_name);
 #    RPerl::diag( 'in Compiler::find_dependencies(), have possibly-trimmed $file_name = ' . $file_name . "\n" );
 
     my string_arrayref $dependencies = [];
@@ -288,13 +291,13 @@ sub find_dependencies {
                 next;
             }
             elsif ( $file_line =~ /use\s+rperlgsl\s*;/ ) {
-                RPerl::diag('in Compiler::find_dependencies(), found rperlgsl line, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
+#                RPerl::diag('in Compiler::find_dependencies(), found rperlgsl line, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
                 if ( ( not exists $modes->{_enable_gsl} ) or ( not defined $modes->{_enable_gsl} ) ) {
                     $modes->{_enable_gsl} = {};
                 }
                 $modes->{_enable_gsl}->{$file_name} = 1;
 
-                RPerl::diag('in Compiler::find_dependencies(), after finding rperlgsl line, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
+#                RPerl::diag('in Compiler::find_dependencies(), after finding rperlgsl line, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
                 next;
             }
             elsif ( $file_line =~ /use\s+lib/ ) {
@@ -357,6 +360,7 @@ sub find_dependencies {
 #            RPerl::diag( 'in Compiler::find_dependencies(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
 
             my string $package_file_name_included_relative = post_processor__absolute_path_delete( $package_file_name_included );
+            $package_file_name_included_relative = post_processor__current_directory_path_delete( $package_file_name_included_relative );
             push @{$dependencies}, $package_file_name_included_relative;
     
 #            RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
@@ -391,7 +395,7 @@ sub find_dependencies {
 #    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
 #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
 #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
-    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
+#    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
     return $dependencies;
 }
 
@@ -883,7 +887,7 @@ sub post_processor_cpp__header_unneeded {
 #        RPerl::diag( 'in Compiler::post_processor_cpp__header_unneeded(), removing unneeded __NEED_HEADER_PATH line' . "\n" );
         my string $source_group_CPP_no_header = q{};
         foreach my string $source_group_CPP_line (split /\n/, $source_group->{CPP}) {
-            RPerl::diag( 'in Compiler::post_processor_cpp__header_unneeded(), have $source_group_CPP_line = ' . "\n" . $source_group_CPP_line . "\n" );
+#            RPerl::diag( 'in Compiler::post_processor_cpp__header_unneeded(), have $source_group_CPP_line = ' . "\n" . $source_group_CPP_line . "\n" );
             if ($source_group_CPP_line =~ m/__NEED_HEADER_PATH/) { next; }
             $source_group_CPP_no_header .= $source_group_CPP_line . "\n";
         }
@@ -1211,6 +1215,24 @@ sub post_processor__absolute_path_delete {
     return $input_path;  # this comment is a test of find_replace_old_subroutine_headers.sh
 }
 
+# remove unnecessary current-directory paths
+sub post_processor__current_directory_path_delete {
+    { my string $RETURN_TYPE };
+    ( my string $input_path ) = @ARG;
+
+#    RPerl::diag( 'in Compiler::post_processor__current_directory_path_delete(), received $input_path = ' . $input_path . "\n" );
+
+    if ( $OSNAME eq 'MSWin32' ) {
+        $input_path =~ s/\\/\//gxms;
+#        RPerl::diag( 'in Compiler::post_processor__current_directory_path_delete(), Windows OS detected, have possibly-reformatted $input_path = ' . $input_path . "\n" );
+    }
+
+    if ( ( substr $input_path, 0, 2 ) eq './' ) {
+        return substr $input_path, 2;
+    }
+    return $input_path;  # this comment is a test of find_replace_old_subroutine_headers.sh
+}
+
 # generate PMC file
 sub post_processor_cpp__pmc_generate {
     { my void $RETURN_TYPE };
@@ -1371,8 +1393,12 @@ sub post_processor_cpp__pmc_generate {
                     else { $file_line = undef; }
                 }
                 elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional GSL support here >>>' . "\n" ) ) {
-                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n" );
-                    RPerl::diag( 'in Compiler::save_source_files(), have $pm_file_path = ' . $pm_file_path . "\n" );
+#                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n" );
+#                    RPerl::diag( 'in Compiler::save_source_files(), have $pm_file_path = ' . $pm_file_path . "\n" );
+                    $pm_file_path = post_processor__absolute_path_delete($pm_file_path);
+                    $pm_file_path = post_processor__current_directory_path_delete($pm_file_path);
+#                    RPerl::diag( 'in Compiler::save_source_files(), have possibly-trimmed $pm_file_path = ' . $pm_file_path . "\n" );
+                    
                     if (    ( exists $modes->{_enable_gsl} )
                         and ( defined $modes->{_enable_gsl} )
                         and ( exists $modes->{_enable_gsl}->{$pm_file_path} )
@@ -1381,6 +1407,7 @@ sub post_processor_cpp__pmc_generate {
                     {
                         # DEV NOTE: linking instructions    https://www.gnu.org/software/gsl/doc/html/usage.html#linking-programs-with-the-library
                         $file_line = q(        $RPerl::Inline::ARGS{libs}  = '-lgsl -lgslcblas -lm';  # enable GSL support) . "\n";
+                        $file_line .= q(        $RPerl::Inline::ARGS{inc}  .= ' -I' . $RPerl::Inline::gsl_include_dir;  # enable GSL support) . "\n";
                         $file_line
                             .= q(        $RPerl::Inline::ARGS{auto_include} = [ @{ $RPerl::Inline::ARGS{auto_include} }, '#include <gsl_matrix.h>', '#include <gsl_blas.h>' ];    # enable GSL support)
                             . "\n";

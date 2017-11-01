@@ -3,7 +3,7 @@ package RPerl::DataType::TypeInner;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_200;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -83,6 +83,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                 . ' does not start with a lowercase letter a-z, dying' . "\n";
         }
 
+        $type = RPerl::Generator::type_convert_perl_to_cpp($type, 1);  # $pointerify_classes = 1
         $cpp_source_group->{CPP} = $type;
     }
     else {

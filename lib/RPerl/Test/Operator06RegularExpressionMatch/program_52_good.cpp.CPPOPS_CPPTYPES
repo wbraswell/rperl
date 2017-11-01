@@ -1,0 +1,46 @@
+//!/usr/bin/rperl
+
+
+
+
+
+
+// [[[ HEADER ]]]
+#include <rperlstandalone.h>
+#ifndef __CPP__INCLUDED__RPerl__Test__Operator06RegularExpressionMatch__program_52_good_cpp
+#define __CPP__INCLUDED__RPerl__Test__Operator06RegularExpressionMatch__program_52_good_cpp 0.001_000
+# ifdef __CPP__TYPES
+
+
+int main() {
+    // [[[ OPERATIONS HEADER ]]]
+
+// [[[ OPERATIONS ]]]
+    string foo = (const string) "howdy hello ahoy how";
+    print "have pre-regex  $foo = " << foo << endl;
+    integer bax = (regex("ho", "ms").preplace(&foo, "HO", "g"));
+    print "have post-regex $foo = " << foo << endl;
+    print "have $bax = " << bax << endl;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // [[[ OPERATIONS FOOTER ]]]
+    return 0;
+}
+
+// [[[ FOOTER ]]]
+# elif defined __PERL__TYPES
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+# endif
+#endif

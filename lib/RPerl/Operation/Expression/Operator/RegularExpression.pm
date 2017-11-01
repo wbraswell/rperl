@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::Operator::RegularExpression;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.011_000;
+our $VERSION = 0.013_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::Operator);
@@ -191,9 +191,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         if ($match_or_substitute eq 'm') {
             # EXAMPLE C++ CODE
             # // check if string matches the pattern, return true or false
-            # jp::Regex("(\\d)|(\\w)").match("I am the subject")
+            # regex("(\\d)|(\\w)").match("I am the subject")
             # // match all and get the match count using the action modifier 'g', return count
-            # jp::Regex("(\\d)|(\\w)","m").match("I am the subject","g")
+            # regex("(\\d)|(\\w)","m").match("I am the subject","g")
  
             RPerl::diag( q{in Operator::RegularExpression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have all valid match modifiers = '} . (join ', ', (sort keys %{{%{$modifiers_compile}, %{$modifiers_match}}})) . q{'} . "\n" );
 
@@ -228,17 +228,20 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
             # DEV NOTE: $cpp_source_group->{CPP} already contains the generated subexpression to be used as the subject of the regex
             # DEV NOTE: Perl vs JPCRE2 inconsistency, must explicitly cast return value change count as boolean true/false value
-            $cpp_source_group->{CPP} = '(boolean) jp::Regex("' . $pattern_bare . '"' . $modifiers_compile_CPP . ').match(' . $cpp_source_group->{CPP} . $modifiers_match_CPP . ')';
+            $cpp_source_group->{CPP} = '(boolean) regex("' . $pattern_bare . '"' . $modifiers_compile_CPP . ').match(' . $cpp_source_group->{CPP} . $modifiers_match_CPP . ')';
         }
         # substitute
         elsif ($match_or_substitute eq 's') {
             # EXAMPLE C++ CODE
             # // replace first occurrence of a digit with @
-            # jp::Regex("\\d").replace("I am the subject string 44", "@")
+            # string foo = (const string) "I am the subject string 44";
+            # regex("\\d").preplace(&foo, "@")
             # // replace all occurrences of a digit with @
-            # jp::Regex("\\d").replace("I am the subject string 44", "@", "g")
+            # string foo = (const string) "I am the subject string 44";
+            # regex("\\d").preplace(&foo, "@", "g")
             # // swap two parts of a string
-            # jp::Regex("^([^\t]+)\t([^\t]+)$").replace("I am the subject\tTo be swapped according to tab", "$2 $1")
+            # string foo = (const string) "I am the subject\tTo be swapped according to tab";
+            # regex("^([^\t]+)\t([^\t]+)$").preplace(&foo, "$2 $1")
 
             RPerl::diag( q{in Operator::RegularExpression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have all valid substitute modifiers = '} . (join ', ', (sort keys %{{%{$modifiers_compile}, %{$modifiers_substitute}}})) . q{'} . "\n" );
 
@@ -293,17 +296,14 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             # START HERE
             # START HERE
             # START HERE
-            # NEED UPDATE: new JPCRE2 code
             # NEED ADD ERROR CHECK OR GRAMMAR CHANGE: regex substitution's LHS subexpression can only be a variable, because we must return assign value back to variable to emulate PERLOPS_PERLTYPES behavior
             # NEED ADD SUPPORT: non-destructive regex substitution using Perl's /r modifier, and NOT setting the original variable to the return value in C++
             # NEED ADD LOGIC: bind not !~ instead of only bind =~, disable die on !~ above !!!
 
             # DEV NOTE: $cpp_source_group->{CPP} already contains the generated subexpression to be used as the subject of the regex
-            # DEV NOTE: Perl vs JPCRE2 inconsistency, must explicitly assign return value of changed string back into original variable, then use (max_size() * 0) to convert string to discardable integer, then return substitution count
-            # EXAMPLE C++ CODE:  (((foo = jp::Regex("FIND", "MODS_COMP").replace(foo, "REPLACE", "MODS_SUBST")).max_size() * 0) + jp::Regex::getLastReplaceCount())
-            # EXAMPLE C++ CODE:  (((foo = regex("FIND", "MODS_COMP").replace(foo, "REPLACE_WITH", "MODS_SUBST", (regexsize*) &bax)).max_size() * 0) + bax)
-#            $cpp_source_group->{CPP} = '(((' . $cpp_source_group->{CPP} . ' = jp::Regex("' . $pattern_find . '"' . $modifiers_compile_CPP . ').replace(' . $cpp_source_group->{CPP} . ', "' . $pattern_replace . '"' . $modifiers_substitute_CPP . ')).max_size() * 0) + jp::Regex::getLastReplaceCount())';
-            $cpp_source_group->{CPP} = '(' . $cpp_source_group->{CPP} . ' = jp::Regex("' . $pattern_find . '"' . $modifiers_compile_CPP . ').replace(' . $cpp_source_group->{CPP} . ', "' . $pattern_replace . '"' . $modifiers_substitute_CPP . ').getLastReplaceCount())';
+
+            # EXAMPLE C++ CODE:  regex("FIND", "MODS_COMP").preplace(&foo, "REPLACE_WITH", "MODS_SUBST")
+            $cpp_source_group->{CPP} = 'regex("' . $pattern_find . '"' . $modifiers_compile_CPP . ').preplace(&' . $cpp_source_group->{CPP} . ', "' . $pattern_replace . '"' . $modifiers_substitute_CPP . ')';
         }
         else {
             die q{ERROR ECOGEASCP80: Unrecognized regular expression type '} . $match_or_substitute . q{' found, must be 'm' for match or 's' for substitute, dying};

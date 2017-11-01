@@ -521,7 +521,7 @@ EOL
         }
     }
 
-    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
+#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
     if ( ( exists $modes->{_enable_gsl} ) and ( defined $modes->{_enable_gsl} ) ) {
         foreach my string $module_path_name ( keys %{ $modes->{_enable_gsl} } ) {
             if ( ( $module_path_name =~ /$module_file_name$/xms ) and ( $modes->{_enable_gsl}->{$module_path_name} ) ) {

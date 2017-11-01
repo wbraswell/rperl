@@ -1,14 +1,4 @@
 DONE
-    disable 'long long' & 'double long' for GMP compatibility
-    new subroutine headers
-        all RPerl converted & most tests pass (not t/10 or t/11)
-    RPerl::Exporter
-        Class::Generator & Package: PERLOPS_PERLTYPES
-        subroutines, scalars, arrays, hashes, typeglobs
-    Quick-Start Guide
-        started
-    protect Perl API function & variable names
-    catch '$RETURN_VALUE' typo, instead of '$RETURN_TYPE'
 
 DOING
     new subroutine headers
@@ -37,11 +27,9 @@ DOING
     Alien::JPCRE2
         update tests to Test::Alien
         fix AppVeyor Windows failures
-        new JPCRE2 build
         add XS test
         CPAN testers failures
     regex support
-        new JPCRE2 build, substitution count return value
         substitution LHS must be variable
         non-destructive regex /r
         !~ logic
@@ -78,6 +66,8 @@ DOING
 
     Alien::Pluto
     Alien::astyle upgrade to EU::MM
+    Alien::GSL
+    Alien::GMP
     Inline::RPerl
     update tests to emit more useful failure info, for CPAN testers debugging
     update CPPOPS_DUALTYPES reference files
@@ -342,6 +332,7 @@ PARALLELAPPSTORE.COM
     content
 
 DATA TYPES & STRUCTURES
+    disable use of 'constant_FOO' data types?  currently converted in RPerl::Generator::type_convert_perl_to_cpp(), possible 'const const' conflict in RPerl::CompileUnit::Constant
     sort hash keys when generating string output in *hashref_to_string() CPPOPS Hash.cpp, as is done with 'sort keys' in PERLOPS Hash/Subtypes.pm
     determine if 'long long' or 'long double' can be used at all???
         DEV NOTE, CORRELATION #rp041: GMP does not support 'long long' or 'long double', will cause t/07_type_gmp.t to fail

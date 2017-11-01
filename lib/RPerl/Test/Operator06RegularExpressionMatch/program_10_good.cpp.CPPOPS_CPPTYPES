@@ -16,7 +16,7 @@ int main() {
 
 // [[[ OPERATIONS ]]]
     string foo = (const string) "howdy dowdy hello ahoy";
-    integer bar = (boolean) jp::Regex("owdy", "xms").match(foo, "g");
+    integer bar = (boolean) regex("owdy", "xms").match(foo, "g");
     print "have $foo = " << foo << endl;
     print "have $bar = $foo =~ m/owdy/gxms = '" << bar << "'" << endl;
 

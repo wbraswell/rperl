@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Constant;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit);
@@ -119,6 +119,11 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             . q{'} . $modes->{_symbol_table}->{_subroutine} . q{()'}
             . ', dying' . "\n";
     }
+
+    # NEED FIX: possible 'const const' conflict?!?
+    $type_inner_constant_type = RPerl::Generator::type_convert_perl_to_cpp($type_inner_constant_type, 1);  # $pointerify_classes = 1
+
+    # add converted C++ type to symtab entry
     $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_global}->{$name}
         = { isa => 'RPerl::CompileUnit::Constant', type => $type_inner_constant_type };
 

@@ -217,12 +217,12 @@ sub gsl_matrix_to_string {
 sub number_arrayref_to_gsl_matrix {
     { my gsl_matrix $RETURN_TYPE };
     ( my number_arrayref $input_number_arrayref, my integer $rows, my integer $cols ) = @ARG;
-    RPerl::diag('in PERLOPS_PERLTYPES number_arrayref_to_gsl_matrix(), top of subroutine', "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES number_arrayref_to_gsl_matrix(), top of subroutine', "\n");
 
 #    ::number_arrayref_CHECK($input_number_arrayref);
     ::number_arrayref_CHECKTRACE( $input_number_arrayref, '$input_number_arrayref', 'number_arrayref_to_gsl_matrix()' );
 
-    RPerl::diag('in PERLOPS_PERLTYPES number_arrayref_to_gsl_matrix(), received $rows = ', $rows, ', $cols = ', $cols, "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES number_arrayref_to_gsl_matrix(), received $rows = ', $rows, ', $cols = ', $cols, "\n");
 
     my gsl_matrix $retval = gsl_matrix_alloc($rows, $cols);
 
@@ -231,7 +231,7 @@ sub number_arrayref_to_gsl_matrix {
             gsl_matrix_set($retval, $i, $j, $input_number_arrayref->[($i * $cols) + $j]);
         }
     }
-    RPerl::diag('in PERLOPS_PERLTYPES number_arrayref_to_gsl_matrix(), bottom of subroutine', "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES number_arrayref_to_gsl_matrix(), bottom of subroutine', "\n");
     return $retval;
 }
 
