@@ -1,4 +1,4 @@
-# v0.013_000
+# v0.014_000
 version: 1.0.{build}
 pull_requests:
   do_not_increment_build_number: false
@@ -47,7 +47,7 @@ install:
 
     set RPERL_VERBOSE=0
 
-    set PERL5LIB=blib;lib
+    set PERL5LIB=blib/lib
 
     set
 

@@ -260,6 +260,8 @@ $ cpanm --installdeps .; make disttest
 	# optionally install deps and test before creating tarball
 $ make dist
     # produces tarball output
+$ cp MYMETA.json META.json
+	# properly install configure-time dependencies, must have for Alien::* 
 
 # INSTALL & TEST DIST, LOCAL COPY
 $ cpanm ./RPerl-VERSION.tar.gz

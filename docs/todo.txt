@@ -18,7 +18,7 @@ DOING
         gsl_matrix_CHECK*() CPPOPS_CPPTYPES
         tests for all EMAV00 - EMAV09
         enable gsl_linalg.h & other gsl friends
-        
+
     Alien::PCRE2
         ensure tests pass on both share & system installs
         replace mirrored DEV version (Windows bug fix) w/ new official version when released
@@ -68,6 +68,7 @@ DOING
     Alien::astyle upgrade to EU::MM
     Alien::GSL
     Alien::GMP
+    Alien::???  what else?
     Inline::RPerl
     update tests to emit more useful failure info, for CPAN testers debugging
     update CPPOPS_DUALTYPES reference files
@@ -159,6 +160,7 @@ OPERATORS, CPPOPS_CPPTYPES MODE
         abs, sqrt, exp, log
 
 LEARNING RPERL
+    new subroutine headers!!!
     tables on metacpan, fix headers and borders CSS
     fix <noncode> on metacpan, elsewhere
     check X<break_code_blocks> everywhere other than pod2rperlhtml
