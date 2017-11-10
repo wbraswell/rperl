@@ -64,9 +64,9 @@ DOING
         subroutines, final operation must be return operator
         WHAT ELSE?!?
 
+    Alien::GSL
     Alien::Pluto
     Alien::astyle upgrade to EU::MM
-    Alien::GSL
     Alien::GMP
     Alien::???  what else?
     Inline::RPerl

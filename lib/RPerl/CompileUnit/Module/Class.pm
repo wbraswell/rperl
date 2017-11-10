@@ -194,6 +194,7 @@ sub create_symtab_entries_and_accessors_mutators {
 #    RPerl::diag('in Class.pm INIT block, have $rperlnamespaces_generated::CORE =' . "\n" . Dumper($rperlnamespaces_generated::CORE) . "\n");
 
     my $module_filename_long;           # string
+    my $module_filename_long_processed = {}; # boolean_hashref
     my $use_rperl;                      # boolean
     my $inside_package;                 # boolean
     my $package_name;                   # string
@@ -229,6 +230,13 @@ sub create_symtab_entries_and_accessors_mutators {
         # file names w/out any volume or directories are not absolute, allows 'use Foo;' where "Foo.pm" exists in current directory w/out any volume or directory
         my $module_is_absolute = 0;
         if (defined $module_filename_long) {
+            # skip already-processed modules, triggered by imaginary $module_filename_short created by Perl in %INC when one .pm file contains multiple packages 
+            if (exists $module_filename_long_processed->{$module_filename_long}) {
+                RPerl::diag( 'in Class.pm INIT block, skipping due to already-processed PM file, have $module_filename_long = ', q{'}, $module_filename_long, q{'}, ', $module_filename_short = ', q{'}, $module_filename_short, q{'}, "\n" );
+                next;
+            }
+            $module_filename_long_processed->{$module_filename_long} = 1;
+
             (my $module_volume, my $module_directories, my $module_file) = File::Spec->splitpath( $module_filename_long );
 #            RPerl::diag( 'in Class.pm INIT block, have $module_volume = ' . q{'} . $module_volume . q{'} . "\n" );
 #            RPerl::diag( 'in Class.pm INIT block, have $module_directories = ' . q{'} . $module_directories . q{'} . "\n" );
@@ -934,17 +942,42 @@ sub activate_subroutine_args_checking {
 #    RPerl::diag('in Class::activate_subroutine_args_checking(), received $subroutine_arguments_check_code = ' . $subroutine_arguments_check_code . "\n");
 #    RPerl::diag('in Class::activate_subroutine_args_checking(), received $module_filename_long = ' . $module_filename_long . "\n");
 
+
+
+
 =DISABLED_NEED_FIX_DOUBLE_CHECKING
 
     if ((exists &{$package_name . '::__UNCHECKED_' . $subroutine_name}) or
         (exists &{$package_name . '::__CHECKED_' . $subroutine_name}) or
         (exists &{$package_name . '::__CHECK_CODE_' . $subroutine_name})) {
         RPerl::diag('in Class::activate_subroutine_args_checking(), SKIPPING already-activated subroutine ' . $package_name . '::' . $subroutine_name . "\n");
+
+        use Devel::StackTrace;
+        my $trace = Devel::StackTrace->new;
+        RPerl::diag('in Class::activate_subroutine_args_checking(), have $trace->as_string() = ', "\n\n", ('=' x 90), "\n", $trace->as_string(), ('=' x 90), "\n\n");
+
+        use Carp qw(longmess);
+        RPerl::diag('in Class::activate_subroutine_args_checking(), have longmess() = ', "\n\n", ('*' x 90), "\n", longmess(), ('*' x 90), "\n\n");
+
+        die 'TMP DEBUG';
         return;
     }
-    else { RPerl::diag('in Class::activate_subroutine_args_checking(), NOT SKIPPING not-activated subroutine ' . $package_name . '::' . $subroutine_name . "\n"); }
+    else {
+        RPerl::diag('in Class::activate_subroutine_args_checking(), NOT SKIPPING not-activated subroutine ' . $package_name . '::' . $subroutine_name . "\n");
+        if ($subroutine_name eq 'double_bar_return') {
+            use Devel::StackTrace;
+            my $trace = Devel::StackTrace->new;
+            RPerl::diag('in Class::activate_subroutine_args_checking(), have $trace->as_string() = ', "\n\n", ('=' x 90), "\n", $trace->as_string(), ('=' x 90), "\n\n");
+
+            use Carp qw(longmess);
+            RPerl::diag('in Class::activate_subroutine_args_checking(), have longmess() = ', "\n\n", ('*' x 90), "\n", longmess(), ('*' x 90), "\n\n");
+        }
+    }
 
 =cut
+
+
+
 
     my $package_name_tmp;              # string
     my $subroutine_definition_code = q{};    # string
