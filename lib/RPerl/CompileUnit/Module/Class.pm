@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get @ARG, Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.044_000;
+our $VERSION = 0.045_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -232,7 +232,7 @@ sub create_symtab_entries_and_accessors_mutators {
         if (defined $module_filename_long) {
             # skip already-processed modules, triggered by imaginary $module_filename_short created by Perl in %INC when one .pm file contains multiple packages 
             if (exists $module_filename_long_processed->{$module_filename_long}) {
-                RPerl::diag( 'in Class.pm INIT block, skipping due to already-processed PM file, have $module_filename_long = ', q{'}, $module_filename_long, q{'}, ', $module_filename_short = ', q{'}, $module_filename_short, q{'}, "\n" );
+#                RPerl::diag( 'in Class.pm INIT block, skipping due to already-processed PM file, have $module_filename_long = ', q{'}, $module_filename_long, q{'}, ', $module_filename_short = ', q{'}, $module_filename_short, q{'}, "\n" );
                 next;
             }
             $module_filename_long_processed->{$module_filename_long} = 1;
@@ -941,43 +941,6 @@ sub activate_subroutine_args_checking {
 #    RPerl::diag('in Class::activate_subroutine_args_checking(), received $subroutine_type = ' . $subroutine_type . "\n");
 #    RPerl::diag('in Class::activate_subroutine_args_checking(), received $subroutine_arguments_check_code = ' . $subroutine_arguments_check_code . "\n");
 #    RPerl::diag('in Class::activate_subroutine_args_checking(), received $module_filename_long = ' . $module_filename_long . "\n");
-
-
-
-
-=DISABLED_NEED_FIX_DOUBLE_CHECKING
-
-    if ((exists &{$package_name . '::__UNCHECKED_' . $subroutine_name}) or
-        (exists &{$package_name . '::__CHECKED_' . $subroutine_name}) or
-        (exists &{$package_name . '::__CHECK_CODE_' . $subroutine_name})) {
-        RPerl::diag('in Class::activate_subroutine_args_checking(), SKIPPING already-activated subroutine ' . $package_name . '::' . $subroutine_name . "\n");
-
-        use Devel::StackTrace;
-        my $trace = Devel::StackTrace->new;
-        RPerl::diag('in Class::activate_subroutine_args_checking(), have $trace->as_string() = ', "\n\n", ('=' x 90), "\n", $trace->as_string(), ('=' x 90), "\n\n");
-
-        use Carp qw(longmess);
-        RPerl::diag('in Class::activate_subroutine_args_checking(), have longmess() = ', "\n\n", ('*' x 90), "\n", longmess(), ('*' x 90), "\n\n");
-
-        die 'TMP DEBUG';
-        return;
-    }
-    else {
-        RPerl::diag('in Class::activate_subroutine_args_checking(), NOT SKIPPING not-activated subroutine ' . $package_name . '::' . $subroutine_name . "\n");
-        if ($subroutine_name eq 'double_bar_return') {
-            use Devel::StackTrace;
-            my $trace = Devel::StackTrace->new;
-            RPerl::diag('in Class::activate_subroutine_args_checking(), have $trace->as_string() = ', "\n\n", ('=' x 90), "\n", $trace->as_string(), ('=' x 90), "\n\n");
-
-            use Carp qw(longmess);
-            RPerl::diag('in Class::activate_subroutine_args_checking(), have longmess() = ', "\n\n", ('*' x 90), "\n", longmess(), ('*' x 90), "\n\n");
-        }
-    }
-
-=cut
-
-
-
 
     my $package_name_tmp;              # string
     my $subroutine_definition_code = q{};    # string
