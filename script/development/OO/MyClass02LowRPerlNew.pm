@@ -43,8 +43,8 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(MyClass02LowRPerlNew);
-use MyClass02LowRPerlNew;
+use parent -norequire, qw(MyClass02LowRPerlNew);
+require MyClass02LowRPerlNew;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
