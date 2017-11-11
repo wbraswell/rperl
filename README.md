@@ -19,7 +19,11 @@ RPerl is Free & Open Source Software (FOSS), please see the LICENSE file for leg
 
 <a href="https://github.com/wbraswell/rperl/blob/master/LICENSE">https://github.com/wbraswell/rperl/blob/master/LICENSE</a>
 
-Please see "Learning RPerl" for usage information:
+Please see "Quick-Start Checklist & Guide" for usage information:
+
+<a href="https://metacpan.org/pod/RPerl">https://metacpan.org/pod/RPerl</a>
+
+Please see "Learning RPerl" for detailed usage information:
 
 <a href="http://rperl.org/learning_rperl.html">http://rperl.org/learning_rperl.html</a>
 
