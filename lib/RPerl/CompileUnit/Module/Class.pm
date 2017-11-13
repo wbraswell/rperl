@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get @ARG, Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.045_000;
+our $VERSION = 0.046_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -211,8 +211,14 @@ sub create_symtab_entries_and_accessors_mutators {
     my $inside_subroutine_header;       # boolean
     my $inside_subroutine_arguments;    # boolean
     my $subroutine_arguments_line;      # string
+    my $TYPES_SUPPORTED = {};           # string_hashref
 
 #    RPerl::diag(q{in Class.pm INIT block, have $PROGRAM_NAME = '} . $PROGRAM_NAME . "'\n");
+
+    foreach my $type (@{$rperltypes::SUPPORTED}, @{$rperltypes::SUPPORTED_SPECIAL}) {
+        $TYPES_SUPPORTED->{$type} = 1; 
+    }
+#    RPerl::diag(q{in Class.pm INIT block, have $TYPES_SUPPORTED = } . Dumper($TYPES_SUPPORTED) . "\n");
 
     foreach my $module_filename_short ( sort keys %{$INC_ref} ) {
 
@@ -232,7 +238,7 @@ sub create_symtab_entries_and_accessors_mutators {
         if (defined $module_filename_long) {
             # skip already-processed modules, triggered by imaginary $module_filename_short created by Perl in %INC when one .pm file contains multiple packages 
             if (exists $module_filename_long_processed->{$module_filename_long}) {
-#                RPerl::diag( 'in Class.pm INIT block, skipping due to already-processed PM file, have $module_filename_long = ', q{'}, $module_filename_long, q{'}, ', $module_filename_short = ', q{'}, $module_filename_short, q{'}, "\n" );
+                RPerl::diag( 'in Class.pm INIT block, skipping due to already-processed PM file, have $module_filename_long = ', q{'}, $module_filename_long, q{'}, ', $module_filename_short = ', q{'}, $module_filename_short, q{'}, "\n" );
                 next;
             }
             $module_filename_long_processed->{$module_filename_long} = 1;
@@ -279,7 +285,7 @@ sub create_symtab_entries_and_accessors_mutators {
 
         $namespace_root = RPerl::filename_short_to_namespace_root_guess($module_filename_short);
 
-#        RPerl::diag(q{in Class.pm INIT block, have $namespace_root = '} . $namespace_root . "'\n");
+#        RPerl::diag(q{in Class.pm INIT block, have $namespace_root = '} . $namespace_root . "'\n");  # repeated below, inside if() statement for concise debug output
 
         # DEV NOTE: avoid error...
         # Name "rperlnamespaces_generated::RPERL_DEPS" used only once: possible typo
@@ -291,6 +297,7 @@ sub create_symtab_entries_and_accessors_mutators {
                 ( not exists $rperlnamespaces_generated::RPERL_FILES->{$module_filename_short}) )
         {
 #            RPerl::diag( 'in Class.pm INIT block, not skipping due to CORE & RPERL_DEPS namespaces, $module_filename_long = ' . $module_filename_long . "\n" );
+#            RPerl::diag(q{in Class.pm INIT block, have $namespace_root = '} . $namespace_root . "'\n");
 
             open my $MODULE_FILE, '<', $module_filename_long or croak $OS_ERROR;
         MODULE_FILE_LINE_LOOP:
@@ -434,7 +441,6 @@ sub create_symtab_entries_and_accessors_mutators {
                             $module_file_line = <$MODULE_FILE>;
                             chomp $module_file_line;
                             if ( $module_file_line !~ /\Q$rperl_header_line/xms ) {
-
 #                                RPerl::diag(q{in Class.pm INIT block, failed to find RPerl header line '} . $rperl_header_line . q{' for $module_filename_short = } . $module_filename_short . ', aborting RPerl activation of entire file' . "\n");
                                 next MODULE_FILE_LINE_LOOP;
                             }
@@ -616,7 +622,8 @@ sub create_symtab_entries_and_accessors_mutators {
                             my $subroutine_arguments = [];                                # string_arrayref_arrayref
 
                             # loop once per subroutine argument
-                            while ( $subroutine_arguments_line =~ m/my\s+(\w+)\s+\$(\w+)/g ) {
+#                            while ( $subroutine_arguments_line =~ m/my\s+(\w+)\s+\$(\w+)/g ) {  # WRONG: does not match scoped Class names
+                            while ( $subroutine_arguments_line =~ m/my\s+([\w:]+)\s+\$(\w+)/g ) {
                                 push @{$subroutine_arguments}, [ $1, $2 ];
 #                                RPerl::diag( q{in Class.pm INIT block, have subroutine argument type = } . $1 . q{ and subroutine argument name = } . $2 . "\n" );
                             }
@@ -629,12 +636,17 @@ sub create_symtab_entries_and_accessors_mutators {
 #                                RPerl::diag( 'in Class.pm INIT block, CHECK IS ON' . "\n" );
                                 my $i = 0;                                                # integer
                                 foreach my $subroutine_argument ( @{$subroutine_arguments} ) {
-#                                    $subroutine_arguments_check_code .= q{    } . $subroutine_argument->[0] . '_CHECK( $_[' . $i . '] );' . "\n";  # DOES NOT WORK, fails to find RPerl::Exporter::integer_CHECKTRACE() etc.
-#                                    $subroutine_arguments_check_code .= q{    ::} . $subroutine_argument->[0] . '_CHECK( $_[' . $i . '] );' . "\n";  # DOES NOT WORK, we no longer export all the type-checking subroutines to the main '::' namespace
-                                    $subroutine_arguments_check_code .= q{    rperltypes::} . $subroutine_argument->[0] . '_CHECK( $_[' . $i . '] );' . "\n";  # does work, hard-code all automatically-generated type-checking code to 'rperltypes::' namespace
+                                    # only enable type-checking for arguments of supported type;
+                                    # NEED UPGRADE: enable checking of user-defined Class types & all other remaining RPerl types
+                                    if (exists $TYPES_SUPPORTED->{$subroutine_argument->[0]}) {
+#                                        $subroutine_arguments_check_code .= q{    } . $subroutine_argument->[0] . '_CHECK( $_[' . $i . '] );' . "\n";  # DOES NOT WORK, fails to find RPerl::Exporter::integer_CHECKTRACE() etc.
+#                                        $subroutine_arguments_check_code .= q{    ::} . $subroutine_argument->[0] . '_CHECK( $_[' . $i . '] );' . "\n";  # DOES NOT WORK, we no longer export all the type-checking subroutines to the main '::' namespace
+                                        $subroutine_arguments_check_code .= q{    rperltypes::} . $subroutine_argument->[0] . '_CHECK( $_[' . $i . '] );' . "\n";  # does work, hard-code all automatically-generated type-checking code to 'rperltypes::' namespace
+                                    }
                                     $i++;
                                 }
 
+#                                RPerl::diag( 'in Class.pm INIT block, CHECK IS ON, have $subroutine_arguments_check_code = ', "\n", $subroutine_arguments_check_code, "\n" );
 #                                RPerl::diag( 'in Class.pm INIT block, CHECK IS ON, about to call activate_subroutine_args_checking()...' . "\n" );
                                 activate_subroutine_args_checking( $package_name, $subroutine_name, $subroutine_type, $subroutine_arguments_check_code, $module_filename_long );
                                 $inside_subroutine         = 0;
@@ -644,9 +656,13 @@ sub create_symtab_entries_and_accessors_mutators {
 #                                RPerl::diag( 'in Class.pm INIT block, CHECK IS TRACE' . "\n" );
                                 my $i = 0;    # integer
                                 foreach my $subroutine_argument ( @{$subroutine_arguments} ) {
-#                                    $subroutine_arguments_check_code .= q{    } . $subroutine_argument->[0] . '_CHECKTRACE( $_[' . $i . q{], '$} . $subroutine_argument->[1] . q{', '} . $subroutine_name . q{()' );} . "\n";  # DOES NOT WORK
-#                                    $subroutine_arguments_check_code .= q{    ::} . $subroutine_argument->[0] . '_CHECKTRACE( $_[' . $i . q{], '$} . $subroutine_argument->[1] . q{', '} . $subroutine_name . q{()' );} . "\n";  # DOES NOT WORK
-                                    $subroutine_arguments_check_code .= q{    rperltypes::} . $subroutine_argument->[0] . '_CHECKTRACE( $_[' . $i . q{], '$} . $subroutine_argument->[1] . q{', '} . $subroutine_name . q{()' );} . "\n";
+                                    # only enable type-checking for arguments of supported type;
+                                    # NEED UPGRADE: enable checking of user-defined Class types & all other remaining RPerl types
+                                    if (exists $TYPES_SUPPORTED->{$subroutine_argument->[0]}) {
+#                                        $subroutine_arguments_check_code .= q{    } . $subroutine_argument->[0] . '_CHECKTRACE( $_[' . $i . q{], '$} . $subroutine_argument->[1] . q{', '} . $subroutine_name . q{()' );} . "\n";  # DOES NOT WORK
+#                                        $subroutine_arguments_check_code .= q{    ::} . $subroutine_argument->[0] . '_CHECKTRACE( $_[' . $i . q{], '$} . $subroutine_argument->[1] . q{', '} . $subroutine_name . q{()' );} . "\n";  # DOES NOT WORK
+                                        $subroutine_arguments_check_code .= q{    rperltypes::} . $subroutine_argument->[0] . '_CHECKTRACE( $_[' . $i . q{], '$} . $subroutine_argument->[1] . q{', '} . $subroutine_name . q{()' );} . "\n";
+                                    }
                                     $i++;
                                 }
 #                                RPerl::diag( 'in Class.pm INIT block, CHECK IS TRACE, about to call activate_subroutine_args_checking()...' . "\n" );

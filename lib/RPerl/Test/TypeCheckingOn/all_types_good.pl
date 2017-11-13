@@ -7,7 +7,7 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -17,6 +17,10 @@ our $VERSION = 0.001_000;
 use RPerl::Test::TypeCheckingOn::AllTypes;
 
 # [[[ OPERATIONS ]]]
+
+my RPerl::Test::TypeCheckingOn::AllTypes $alltypes_object = RPerl::Test::TypeCheckingOn::AllTypes->new(); 
+$alltypes_object->check_class();
+$alltypes_object->check_class_integer(23);
 
 check_integer(0);
 check_integer(1);

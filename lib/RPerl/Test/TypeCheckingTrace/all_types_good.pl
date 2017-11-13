@@ -7,16 +7,20 @@
 use RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ INCLUDES ]]]
-use RPerl::Test::TypeCheckingTrace::AllTypes qw(check_integer);
+use RPerl::Test::TypeCheckingTrace::AllTypes;
 
 # [[[ OPERATIONS ]]]
+
+my RPerl::Test::TypeCheckingTrace::AllTypes $alltypes_object = RPerl::Test::TypeCheckingTrace::AllTypes->new(); 
+$alltypes_object->check_class();
+$alltypes_object->check_class_integer(23);
 
 check_integer(0);
 check_integer(1);
@@ -24,9 +28,7 @@ check_integer(555_555);
 check_integer(-1);
 check_integer(-555_555);
 
-print 'in all_types_good.pl, before check_number(0)', "\n";
 check_number(0);
-print 'in all_types_good.pl, after check_number(0)', "\n";
 check_number(1);
 check_number(555_555);
 check_number(-1);

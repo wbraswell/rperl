@@ -23,7 +23,7 @@ use RPerl;
 package RPerl::Test::TypeCheckingOn::AllTypes;
 use strict;
 use warnings;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Test);
@@ -40,6 +40,25 @@ our @EXPORT = qw(check_integer check_number check_string check_arrayref check_in
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
+
+# [[[ OO METHODS ]]]
+
+sub check_class {
+    { my void::method $RETURN_TYPE };
+    ( my RPerl::Test::TypeCheckingOn::AllTypes $self ) = @ARG;
+    
+#    RPerl::diag('in check_class(), received $self =', "\n", Dumper($self), "\n");
+    return;
+}
+
+sub check_class_integer {
+    { my void::method $RETURN_TYPE };
+    ( my RPerl::Test::TypeCheckingOn::AllTypes $self, my integer $input_1 ) = @ARG;
+    
+#    RPerl::diag('in check_class_integer(), received $self =', "\n", Dumper($self), "\n");
+#    RPerl::diag('in check_class_integer(), received $input_1 = ', $input_1, "\n");
+    return;
+}
 
 # [[[ SUBROUTINES ]]]
 

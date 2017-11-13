@@ -251,7 +251,7 @@ sub import {
                         
 #                       RPerl::diag('in Exporter::import(), have $SUPPORTED_ALL etc = ' . Dumper([@{$SUPPORTED_ALL}, @{$SUPPORTED_SPECIAL}]) . "\n");
                 
-                        # type-conversion subs
+                        # do NOT enable argument type-checking for RPerl's internal type-conversion subs
                         foreach my $rperl_type (sort @{[@{$SUPPORTED_ALL}, @{$SUPPORTED_SPECIAL}]}) {
                             my $subroutine_start = $rperl_type . '_to_';
                             my $subroutine_start_length = length $subroutine_start;
@@ -260,7 +260,7 @@ sub import {
                             }
                         }
                  
-                        # do NOT enable argument type-checking for these subs
+                        # do NOT enable argument type-checking for marked subs
                         if (not $args_type_checking) {
 #                            RPerl::diag('in Exporter::import(), @EXPORT_OK, NO CHECKING for non-RPerl or no-args or type-checking or type-conversion subroutine ' . $package_exporter . '::' . $subroutine . '()' . "\n");
                 

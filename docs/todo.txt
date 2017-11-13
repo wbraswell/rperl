@@ -300,6 +300,7 @@ DEV NOTES
     perlall
 
 WINDOWS
+    Makefile.PL, replace pm_to_blib() with usage of File::Temp, do not modify files under lib/ or blib/lib or t/ etc.
     gmp in windows
     pass tests on vc2013
     pass tests on appveyor activperl
@@ -334,6 +335,7 @@ PARALLELAPPSTORE.COM
     content
 
 DATA TYPES & STRUCTURES
+    enable subroutine argument type-checking of user-defined Class types, see "NEED UPGRADE" in Class.pm create_symtab_entries_and_accessors_mutators()
     disable use of 'constant_FOO' data types?  currently converted in RPerl::Generator::type_convert_perl_to_cpp(), possible 'const const' conflict in RPerl::CompileUnit::Constant
     sort hash keys when generating string output in *hashref_to_string() CPPOPS Hash.cpp, as is done with 'sort keys' in PERLOPS Hash/Subtypes.pm
     determine if 'long long' or 'long double' can be used at all???

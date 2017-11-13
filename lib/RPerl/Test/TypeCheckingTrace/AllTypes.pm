@@ -23,7 +23,7 @@ use RPerl;
 package RPerl::Test::TypeCheckingTrace::AllTypes;
 use strict;
 use warnings;
-our $VERSION = 0.003_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Test);
@@ -36,11 +36,29 @@ use RPerl::Test;
 
 # [[[ EXPORTS ]]]
 use RPerl::Exporter qw(import);
-our @EXPORT_OK = qw(check_integer);
-our @EXPORT = qw(check_number check_string check_arrayref check_integer_arrayref check_number_arrayref check_number_arrayrefs check_string_arrayref check_hashref check_integer_hashref check_number_hashref check_number_hashrefs check_string_hashref check__mixed_00 check__mixed_01 check__mixed_02 check__mixed_03);
+our @EXPORT = qw(check_integer check_number check_string check_arrayref check_integer_arrayref check_number_arrayref check_number_arrayrefs check_string_arrayref check_hashref check_integer_hashref check_number_hashref check_number_hashrefs check_string_hashref check__mixed_00 check__mixed_01 check__mixed_02 check__mixed_03);
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
+
+# [[[ OO METHODS ]]]
+
+sub check_class {
+    { my void::method $RETURN_TYPE };
+    ( my RPerl::Test::TypeCheckingTrace::AllTypes $self ) = @ARG;
+    
+#    RPerl::diag('in check_class(), received $self =', "\n", Dumper($self), "\n");
+    return;
+}
+
+sub check_class_integer {
+    { my void::method $RETURN_TYPE };
+    ( my RPerl::Test::TypeCheckingTrace::AllTypes $self, my integer $input_1 ) = @ARG;
+    
+#    RPerl::diag('in check_class_integer(), received $self =', "\n", Dumper($self), "\n");
+#    RPerl::diag('in check_class_integer(), received $input_1 = ', $input_1, "\n");
+    return;
+}
 
 # [[[ SUBROUTINES ]]]
 
@@ -76,7 +94,7 @@ sub check_arrayref {
     { my void $RETURN_TYPE };
     ( my arrayref $input_1) = @ARG;
 
-    RPerl::diag("in check_arrayref(), received \$input_1\n" . Dumper($input_1) . "\n");
+#    RPerl::diag("in check_arrayref(), received \$input_1\n" . Dumper($input_1) . "\n");
     return;
 }
 

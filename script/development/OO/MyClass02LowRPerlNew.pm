@@ -1,3 +1,6 @@
+# [[[ PREPROCESSOR ]]]
+# <<< TYPE_CHECKING: ON >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 package MyClass02LowRPerlNew;
@@ -43,8 +46,11 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent -norequire, qw(MyClass02LowRPerlNew);
-require MyClass02LowRPerlNew;
+#use parent qw(MyClass02LowRPerlNew);  # WRONG: RELOADS THIS FILE "Subroutine FOO redefined"
+use parent -norequire, qw(MyClass02LowRPerlNew);  # CORRECT: EDITS @ISA ONLY
+#use MyClass02LowRPerlNew;      # WRONG: RELOADS THIS FILE "Subroutine FOO redefined"
+#require MyClass02LowRPerlNew;  # WRONG: DOES NOTHING???
+BEGIN { MyClass02LowRPerlNew->import(); }  # CORRECT: IMPORTS ONLY
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
