@@ -18,7 +18,7 @@ use RPerl::Test::TypeCheckingTrace::AllTypes;
 
 # [[[ OPERATIONS ]]]
 
-my RPerl::Test::TypeCheckingTrace::AllTypes $alltypes_object = RPerl::Test::TypeCheckingTrace::AllTypes->new(); 
+my RPerl::Test::TypeCheckingTrace::AllTypes $alltypes_object = RPerl::Test::TypeCheckingTrace::AllTypes->new();
 $alltypes_object->check_class();
 $alltypes_object->check_class_integer(23);
 

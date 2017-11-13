@@ -36,6 +36,7 @@ our $VERSION = 0.001_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ INCLUDES ]]]
 use RPerl::Test::Subclass::MySubclassersFG_Good;
@@ -106,11 +107,6 @@ print 'calling $my_g->multiply_bax_G(-2)...', "\n";
 $my_g->multiply_bax_G(-2);
 print 'have $my_g->get_bax() = ', $my_g->get_bax(), "\n";
 print 'have RPerl::Test::Subclass::MySubclasserG_Good::multiply_return_G(-11, 33) = ', RPerl::Test::Subclass::MySubclasserG_Good::multiply_return_G(-11, 33), "\n";
-
-
-# START HERE FIRST: do we ever need require???
-# START HERE FIRST: do we ever need require???
-# START HERE FIRST: do we ever need require???
 
 # START HERE: create Bad variants w/out -norequire to catch multi-check warning/error, also Bad variants to ensure normal type-checking works
 

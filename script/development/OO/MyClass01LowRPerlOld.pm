@@ -24,6 +24,7 @@ our void::method $double_bar_save = sub {
 
     ( my MyClass01LowRPerlOld $self ) = @ARG;
     $self->{bar} = $self->{bar} * 2;
+    return;
 };
 
 our integer::method $double_bar_return = sub {
@@ -43,8 +44,8 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(MyClass01LowRPerlOld);
-use MyClass01LowRPerlOld;
+use parent -norequire, qw(MyClass01LowRPerlOld);
+BEGIN { MyClass01LowRPerlOld->import(); }
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -60,6 +61,7 @@ our void::method $triple_bax_save = sub {
 
     ( my MySubclass01LowRPerlOld $self ) = @ARG;
     $self->{bax} = $self->{bax} * 3;
+    return;
 };
 
 our integer::method $triple_bax_return = sub {

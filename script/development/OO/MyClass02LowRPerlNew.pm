@@ -27,6 +27,7 @@ sub double_bar_save {
     { my void::method $RETURN_TYPE };
     ( my MyClass02LowRPerlNew $self ) = @ARG;
     $self->{bar} = $self->{bar} * 2;
+    return;
 }
 
 sub double_bar_return {
@@ -46,10 +47,7 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-#use parent qw(MyClass02LowRPerlNew);  # WRONG: RELOADS THIS FILE "Subroutine FOO redefined"
 use parent -norequire, qw(MyClass02LowRPerlNew);  # CORRECT: EDITS @ISA ONLY
-#use MyClass02LowRPerlNew;      # WRONG: RELOADS THIS FILE "Subroutine FOO redefined"
-#require MyClass02LowRPerlNew;  # WRONG: DOES NOTHING???
 BEGIN { MyClass02LowRPerlNew->import(); }  # CORRECT: IMPORTS ONLY
 
 # [[[ CRITICS ]]]
@@ -67,6 +65,7 @@ sub triple_bax_save {
     { my void::method $RETURN_TYPE };
     ( my MySubclass02LowRPerlNew $self ) = @ARG;
     $self->{bax} = $self->{bax} * 3;
+    return;
 }
 
 sub triple_bax_return {

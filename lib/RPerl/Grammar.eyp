@@ -198,8 +198,10 @@ Exports:                 USE_EXPORTER (OUR_EXPORT OP01_QW ';')? (OUR_EXPORT_OK O
 
 
 
+
 #Include:                 USE WordScoped ';' | USE WordScoped OP01_QW ';' ;
-Include:                 USE WordScoped OP01_QW? ';' | 'BEGIN {' WordScoped OP02_METHOD_THINARROW_IMP OP01_QW? ')' ';' '}' ;
+Include:                 USE WordScoped ';' | USE WordScoped OP01_QW ';' | 'BEGIN {' WordScoped OP02_METHOD_THINARROW_IMP OP01_QW? ')' ';' '}' ;
+
 
 
 
@@ -209,6 +211,7 @@ Constant:                'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeIn
 #                        LBRACE WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal (OP21_LIST_COMMA WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal)* '}' ;
 Subroutine:              SUB WORD LBRACE LBRACE MY Type '$RETURN_TYPE' '}' ';' SubroutineArguments? Operation* '}' ;
 SubroutineArguments:     LPAREN_MY Type VARIABLE_SYMBOL (OP21_LIST_COMMA MY Type VARIABLE_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
+
 
 
 
@@ -320,12 +323,28 @@ Package_36 => 'RPerl::CompileUnit::Module::Package',                        # Pa
 Header_39 => 'RPerl::NonGenerator',                                         # Header -> 'use strict;' 'use warnings;' OPTIONAL-16 'our' VERSION_NUMBER_ASSIGN
 Critic_42 => 'RPerl::CompileUnit::Critic',                                  # Critic -> '## no critic qw(' PLUS-17 ')'
 Exports_49 => 'RPerl::NonGenerator',                                        # Exports -> USE_EXPORTER OPTIONAL-19 OPTIONAL-21
+
+
+
 Include_50 => 'RPerl::CompileUnit::Include',                                # Include -> USE WordScoped ';'
 Include_51 => 'RPerl::CompileUnit::Include',                                # Include -> USE WordScoped OP01_QW ';'
+FOO_XX     => 'RPerl::CompileUnit::Include',                                # Include -> 'BEGIN {' WordScoped OP02_METHOD_THINARROW_IMP OPTIONAL-22 ')' ';' '}' 
+
+
+
+
 Constant_52 => 'RPerl::CompileUnit::Constant',                              # Constant -> 'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';'
 Subroutine_57 => 'RPerl::CodeBlock::Subroutine',                            # Subroutine -> SUB WORD LBRACE LBRACE MY Type '$RETURN_TYPE' '}' ';' OPTIONAL-22 STAR-23 '}'
 SubroutineArguments_61 => 'RPerl::CodeBlock::Subroutine::Arguments',        # SubroutineArguments -> LPAREN_MY Type VARIABLE_SYMBOL STAR-25 ')' OP19_VARIABLE_ASSIGN '@ARG;'
-Class_72 => 'RPerl::CompileUnit::Module::Class::Generator',                 # Class -> 'use parent qw(' WordScoped ')' ';' Include STAR-26 OPTIONAL-27 STAR-28 STAR-29 Properties STAR-30 LITERAL_NUMBER ';'
+
+
+
+Class_72 => 'RPerl::CompileUnit::Module::Class::Generator',                 # Class -> 
+
+
+
+UseParent_XXY => 'RPerl::NonGenerator',                                     # UseParent ->
+UseParent_XXY => 'RPerl::NonGenerator',                                     # UseParent ->
 Properties_76 => 'RPerl::NonGenerator',                                     # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE HashEntryProperties STAR-32 '}' ';'
 Properties_77 => 'RPerl::NonGenerator',                                     # Properties -> 'our hashref $properties' OP19_VARIABLE_ASSIGN LBRACE '}' ';'
 Method_82 => 'RPerl::CodeBlock::Subroutine::Method',                        # Method -> SUB WORD LBRACE LBRACE MY TYPE_METHOD '$RETURN_TYPE' '}' ';' OPTIONAL-33 STAR-34 '}'
