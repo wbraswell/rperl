@@ -1,6 +1,7 @@
 # [[[ PREPROCESSOR ]]]
 # <<< CHANGE_ME: delete unused directives >>>
 # <<< TYPE_CHECKING: OFF or ON or TRACE >>>
+# <<< PRECOMPILE_ERROR: 'FOO' >>>
 # <<< PARSE: OFF or ON >>>
 # <<< PARSE_ERROR: 'FOO' >>>
 # <<< GENERATE: OFF or ON >>>

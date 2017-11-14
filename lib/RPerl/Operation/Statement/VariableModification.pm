@@ -25,24 +25,24 @@ sub ast_to_rperl__generate {
     my string_hashref $rperl_source_subgroup;
     my string $self_class = ref $self;
 
-    #    RPerl::diag( 'in VariableModification->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in VariableModification->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # yes semicolon for Statement_170, no semicolon for SubExpressionOrVarMod_162, VariableModification_199, and VariableModification_200
+    # yes semicolon for Statement_176, no semicolon for SubExpressionOrVarMod_168, VariableModification_205, and VariableModification_206
     my string $semicolon = q{};
 
-    if ( $self_class eq 'SubExpressionOrVarMod_162' ) {    # SubExpressionOrVarMod -> VariableModification
-        # unwrap VariableModification_199 and VariableModification_200 from SubExpressionOrVarMod_162
+    if ( $self_class eq 'SubExpressionOrVarMod_168' ) {    # SubExpressionOrVarMod -> VariableModification
+        # unwrap VariableModification_205 and VariableModification_206 from SubExpressionOrVarMod_168
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
-    elsif ( $self_class eq 'Statement_170' ) {    # Statement -> VariableModification ';'
-        # unwrap VariableModification_199 and VariableModification_200 from Statement_170; grab semicolon
+    elsif ( $self_class eq 'Statement_176' ) {    # Statement -> VariableModification ';'
+        # unwrap VariableModification_205 and VariableModification_206 from Statement_176; grab semicolon
         $semicolon  = $self->{children}->[1];
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( $self_class eq 'VariableModification_199' ) {    # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrInput
+    if ( $self_class eq 'VariableModification_205' ) {    # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrInput
         my object $variable               = $self->{children}->[0];
         my string $assign                 = $self->{children}->[1];
         my object $subexpression_or_stdin = $self->{children}->[2];
@@ -53,7 +53,7 @@ sub ast_to_rperl__generate {
         $rperl_source_subgroup = $subexpression_or_stdin->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
-    elsif ( $self_class eq 'VariableModification_200' ) {    # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression
+    elsif ( $self_class eq 'VariableModification_206' ) {    # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression
         my object $variable      = $self->{children}->[0];
         my string $assign_by     = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -67,7 +67,7 @@ sub ast_to_rperl__generate {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where SubExpressionOrVarMod_162, Statement_170, VariableModification_199, or VariableModification_200 expected, dying' )
+                . ' found where SubExpressionOrVarMod_168, Statement_176, VariableModification_205, or VariableModification_206 expected, dying' )
             . "\n";
     }
 
@@ -95,22 +95,22 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
 #    RPerl::diag( 'in VariableModification->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # yes semicolon for Statement_170, no semicolon for SubExpressionOrVarMod_162, VariableModification_199, and VariableModification_200
+    # yes semicolon for Statement_176, no semicolon for SubExpressionOrVarMod_168, VariableModification_205, and VariableModification_206
     my string $semicolon = undef;
 
-    if ( $self_class eq 'SubExpressionOrVarMod_162' ) {    # SubExpressionOrVarMod -> VariableModification
-        # unwrap VariableModification_199 and VariableModification_200 from SubExpressionOrVarMod_162
+    if ( $self_class eq 'SubExpressionOrVarMod_168' ) {    # SubExpressionOrVarMod -> VariableModification
+        # unwrap VariableModification_205 and VariableModification_206 from SubExpressionOrVarMod_168
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
-    elsif ( $self_class eq 'Statement_170' ) {    # Statement -> VariableModification ';'
-        # unwrap VariableModification_199 and VariableModification_200 from Statement_170; grab semicolon
+    elsif ( $self_class eq 'Statement_176' ) {    # Statement -> VariableModification ';'
+        # unwrap VariableModification_205 and VariableModification_206 from Statement_176; grab semicolon
         $semicolon  = $self->{children}->[1];
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( $self_class eq 'VariableModification_199' ) {    # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrInput
+    if ( $self_class eq 'VariableModification_205' ) {    # VariableModification -> Variable OP19_VARIABLE_ASSIGN SubExpressionOrInput
         my object $variable               = $self->{children}->[0];
         my string $assign                 = $self->{children}->[1];
         my object $subexpression_or_stdin = $self->{children}->[2];
@@ -120,13 +120,13 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         # detect array resize semantics: Perl '$a->[$i - 1] = undef;' becomes C++ 'a.resize(i);'
         my boolean $rhs_is_undef = 0;
         my boolean $lhs_is_array_retrieval_minus_one = 0;
-        # SubExpression_150 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined AKA undef
+        # SubExpression_156 ISA RPerl::Operation::Expression::SubExpression::Literal::Undefined AKA undef
         if (
-            ((ref $subexpression_or_stdin) eq 'SubExpressionOrInput_158') and 
+            ((ref $subexpression_or_stdin) eq 'SubExpressionOrInput_164') and 
             (exists $subexpression_or_stdin->{children}) and
             (defined $subexpression_or_stdin->{children}) and
             (defined $subexpression_or_stdin->{children}->[0]) and
-            ((ref $subexpression_or_stdin->{children}->[0]) eq 'SubExpression_150')
+            ((ref $subexpression_or_stdin->{children}->[0]) eq 'SubExpression_156')
             ) {
            $rhs_is_undef = 1; 
 #            RPerl::diag( 'in VariableModification->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $rhs_is_undef = ' . $rhs_is_undef . "\n" );
@@ -134,7 +134,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         
         if (
             $rhs_is_undef and
-            ((ref    $variable) eq 'Variable_191') and  # Variable -> VariableSymbolOrSelf STAR-44
+            ((ref    $variable) eq 'Variable_197') and  # Variable -> VariableSymbolOrSelf STAR-44
             (exists  $variable->{children}) and
             (defined $variable->{children}) and
             (defined $variable->{children}->[1]) and
@@ -142,29 +142,29 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             (exists  $variable->{children}->[1]->{children}) and
             (defined $variable->{children}->[1]->{children}) and
             (defined $variable->{children}->[1]->{children}->[-1]) and
-            ((ref    $variable->{children}->[1]->{children}->[-1]) eq 'VariableRetrieval_192') and  # VariableRetrieval -> OP02_ARRAY_THINARROW SubExpression ']'
+            ((ref    $variable->{children}->[1]->{children}->[-1]) eq 'VariableRetrieval_198') and  # VariableRetrieval -> OP02_ARRAY_THINARROW SubExpression ']'
             (exists  $variable->{children}->[1]->{children}->[-1]->{children}) and
             (defined $variable->{children}->[1]->{children}->[-1]->{children}) and
             (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]) and
-            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]) eq 'SubExpression_149') and  # SubExpression -> Expression
+            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]) eq 'SubExpression_155') and  # SubExpression -> Expression
             (exists  $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}) and
             (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}) and
             (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]) and
-            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]) eq 'Expression_143') and  # Expression -> Operator
+            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]) eq 'Expression_149') and  # Expression -> Operator
             (exists  $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}) and
             (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}) and
             (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]) and
-            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]) eq 'Operator_107') and  # Operator -> SubExpression OP08_MATH_ADD_SUB SubExpression
+            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]) eq 'Operator_113') and  # Operator -> SubExpression OP08_MATH_ADD_SUB SubExpression
             (exists  $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}) and
             (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}) and
             (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[1]) and
             (        $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[1]  eq '- ') and  # subtraction
             (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]) and
-            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]) eq 'SubExpression_151') and  # SubExpression -> Literal
+            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]) eq 'SubExpression_157') and  # SubExpression -> Literal
             (exists  $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}) and
             (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}) and
             (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]) and
-            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]) eq 'Literal_248') and  # Literal -> LITERAL_NUMBER
+            ((ref    $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]) eq 'Literal_254') and  # Literal -> LITERAL_NUMBER
             (exists  $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}) and
             (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}) and
             (defined $variable->{children}->[1]->{children}->[-1]->{children}->[1]->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0]) and
@@ -196,7 +196,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         }
     }
-    elsif ( $self_class eq 'VariableModification_200' ) {    # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression
+    elsif ( $self_class eq 'VariableModification_206' ) {    # VariableModification -> Variable OP19_VARIABLE_ASSIGN_BY SubExpression
         my object $variable      = $self->{children}->[0];
         my string $assign_by     = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -210,7 +210,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where SubExpressionOrVarMod_162, Statement_170, VariableModification_199, or VariableModification_200 expected, dying' )
+                . ' found where SubExpressionOrVarMod_168, Statement_176, VariableModification_205, or VariableModification_206 expected, dying' )
             . "\n";
     }
 

@@ -28,15 +28,15 @@ sub ast_to_rperl__generate {
 
     my string $self_class = ref $self;
 
-    # unwrap HashDereference_229 and HashDereference_230 from SubExpression_156 and HashEntry_219
-    if (   ( $self_class eq 'SubExpression_156' )  # SubExpression -> HashDereference
-        or ( $self_class eq 'HashEntry_219' ) )  # HashEntry -> HashDereference
+    # unwrap HashDereference_235 and HashDereference_236 from SubExpression_162 and HashEntry_225
+    if (   ( $self_class eq 'SubExpression_162' )  # SubExpression -> HashDereference
+        or ( $self_class eq 'HashEntry_225' ) )  # HashEntry -> HashDereference
     {
         $self = $self->{children}->[0];
     }
 
     $self_class = ref $self;
-    if ( $self_class eq 'HashDereference_229' ) {  # HashDereference -> '%{' Variable '}'
+    if ( $self_class eq 'HashDereference_235' ) {  # HashDereference -> '%{' Variable '}'
         my string $percent_left_brace = $self->{children}->[0];
         my object $variable      = $self->{children}->[1];
         my string $right_brace   = $self->{children}->[2];
@@ -47,7 +47,7 @@ sub ast_to_rperl__generate {
             $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_brace;
     }
-    elsif ( $self_class eq 'HashDereference_230' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
+    elsif ( $self_class eq 'HashDereference_236' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
         my string $percent_left_brace       = $self->{children}->[0];
         my object $type_inner_optional = $self->{children}->[1];
         my object $hash_reference     = $self->{children}->[2];
@@ -71,7 +71,7 @@ sub ast_to_rperl__generate {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where HashDereference_229 or HashDereference_230 expected, dying'
+                . ' found where HashDereference_235 or HashDereference_236 expected, dying'
         ) . "\n";
     }
     return $rperl_source_group;

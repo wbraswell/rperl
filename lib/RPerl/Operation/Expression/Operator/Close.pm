@@ -32,7 +32,7 @@ sub ast_to_rperl__generate {
 #    RPerl::diag( 'in Operator::Close->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'Operator_97' ) { # Operator -> OP01_CLOSE FHREF_SYMBOL
+    if ( $self_class eq 'Operator_103' ) { # Operator -> OP01_CLOSE FHREF_SYMBOL
         my string $close_operator = $self->{children}->[0];
         my string $fhref_symbol   = $self->{children}->[1];
 
@@ -42,7 +42,7 @@ sub ast_to_rperl__generate {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Operator_97 expected, dying' )
+                . ' found where Operator_103 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;

@@ -25,14 +25,14 @@ sub ast_to_rperl__generate {
 
 #    RPerl::diag( 'in SubExpression->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if (   ( ref $self eq 'SubExpressionOrInput_158' )  # SubExpressionOrInput -> SubExpression
-        or ( ref $self eq 'SubExpressionOrVarMod_161' )  # SubExpressionOrVarMod -> SubExpression
-        or ( ref $self eq 'ListElement_205' ) )  # ListElement -> SubExpression
+    if (   ( ref $self eq 'SubExpressionOrInput_164' )  # SubExpressionOrInput -> SubExpression
+        or ( ref $self eq 'SubExpressionOrVarMod_167' )  # SubExpressionOrVarMod -> SubExpression
+        or ( ref $self eq 'ListElement_211' ) )  # ListElement -> SubExpression
     {
         my string_hashref $rperl_source_subgroup = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
-    elsif ( ref $self eq 'ListElement_206' ) {  # ListElement -> TypeInner SubExpression
+    elsif ( ref $self eq 'ListElement_212' ) {  # ListElement -> TypeInner SubExpression
         my object $type_inner    = $self->{children}->[0];
         my string_hashref $rperl_source_subgroup = $self->{children}->[0]->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
@@ -43,7 +43,7 @@ sub ast_to_rperl__generate {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
-                . ' found where SubExpressionOrInput_158, SubExpressionOrVarMod_161, ListElement_205, or ListElement_206 expected, dying'
+                . ' found where SubExpressionOrInput_164, SubExpressionOrVarMod_167, ListElement_211, or ListElement_212 expected, dying'
         ) . "\n";
     }
     return $rperl_source_group;
@@ -65,9 +65,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
 #    RPerl::diag( 'in SubExpression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if (   ( ref $self eq 'SubExpressionOrInput_158' )
-        or ( ref $self eq 'SubExpressionOrVarMod_161' )
-        or ( ref $self eq 'ListElement_205' ) )
+    if (   ( ref $self eq 'SubExpressionOrInput_164' )
+        or ( ref $self eq 'SubExpressionOrVarMod_167' )
+        or ( ref $self eq 'ListElement_211' ) )
     {
         my string_hashref $cpp_source_subgroup
             = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
@@ -75,7 +75,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         RPerl::Generator::source_group_append( $cpp_source_group,
             $cpp_source_subgroup );
     }
-    elsif ( ref $self eq 'ListElement_206' ) {
+    elsif ( ref $self eq 'ListElement_212' ) {
         $cpp_source_group = { CPP => q{// <<< RP::O::E::SE __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
 
 #        my object $type_inner    = $self->{children}->[0];
@@ -89,7 +89,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ( ref $self )
-                . ' found where SubExpressionOrInput_158, SubExpressionOrVarMod_161, ListElement_205, or ListElement_206 expected, dying'
+                . ' found where SubExpressionOrInput_164, SubExpressionOrVarMod_167, ListElement_211, or ListElement_212 expected, dying'
         ) . "\n";
     }
     return $cpp_source_group;

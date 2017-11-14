@@ -7,7 +7,7 @@ DOING
         MathPerl
     RPerl::Exporter
         re-enable t/10 & t/11
-        Class::Generator & Package: CPPOPS_CPPTYPES
+        Class/Generator.pm & Package.pm & Include.pm: CPPOPS_CPPTYPES
         fix & test *_CHECK*() exporting in rperlgmp.pm & rperlsse.pm, as hard-coded in rperlgsl.pm
         enable qw(:all)
         Learning RPerl

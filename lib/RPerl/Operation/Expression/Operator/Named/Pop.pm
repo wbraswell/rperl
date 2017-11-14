@@ -39,14 +39,14 @@ sub ast_to_rperl__generate {
 #    RPerl::diag( 'in Operator::Named::Pop->ast_to_rperl__generate(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );
 
     my string $operator_named_class = ref $operator_named;
-    if ( $operator_named_class eq 'Operation_90' ) { # Operation -> OP01_NAMED_SCOLON
+    if ( $operator_named_class eq 'Operation_96' ) { # Operation -> OP01_NAMED_SCOLON
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly one argument, dying' )
             . "\n";
     }
-    elsif ( $operator_named_class eq 'Operator_94' ) { # Operator -> OP01_NAMED SubExpression
+    elsif ( $operator_named_class eq 'Operator_100' ) { # Operator -> OP01_NAMED SubExpression
         $rperl_source_group->{PMC} .= $operator_named->{children}->[0] . q{ };
         my string_hashref $rperl_source_subgroup
             = $operator_named->{children}->[1]
@@ -54,14 +54,14 @@ sub ast_to_rperl__generate {
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
-    elsif ( $operator_named_class eq 'Operator_95' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+    elsif ( $operator_named_class eq 'Operator_101' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[1]
                 . ' does not accept multiple arguments, dying' )
             . "\n";
     }
-    elsif ( $operator_named_class eq 'OperatorVoid_134' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
+    elsif ( $operator_named_class eq 'OperatorVoid_140' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
@@ -72,7 +72,7 @@ sub ast_to_rperl__generate {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($operator_named_class)
-                . ' found where Operation_90, Operator_94, Operator_95, or OperatorVoid_134 expected, dying'
+                . ' found where Operation_96, Operator_100, Operator_101, or OperatorVoid_140 expected, dying'
         ) . "\n";
     }
     return $rperl_source_group;

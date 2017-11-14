@@ -11617,11 +11617,11 @@ X<ENABLE_LIST_SPACING>
 
     ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                     . ($self_class)
-                    . ' found where Module_25 or Class_72 expected, dying
+                    . ' found where Module_25 or Class_76 expected, dying
 
     ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                     . ( ref $self )
-                    . ' found where TypeInnerProperties_238 or TypeInnerProperties_239 expected, dying
+                    . ' found where TypeInnerProperties_244 or TypeInnerProperties_245 expected, dying
 
 =for rperl X</noncode>
 

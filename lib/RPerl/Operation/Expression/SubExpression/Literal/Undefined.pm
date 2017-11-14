@@ -21,11 +21,11 @@ sub ast_to_rperl__generate {
 
 #    RPerl::diag( 'in Literal::Undefined->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'SubExpression_150' ) {
+    if ( ( ref $self ) ne 'SubExpression_156' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
-                . ' found where SubExpression_150 expected, dying' )
+                . ' found where SubExpression_156 expected, dying' )
             . "\n";
     }
  

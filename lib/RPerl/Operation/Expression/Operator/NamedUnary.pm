@@ -50,11 +50,11 @@ sub ast_to_rperl__generate {
     #    RPerl::diag( 'in Operator::NamedUnary->ast_to_rperl__generate(), have $self_class = ' . $self_class . "\n");
 
     my string $operator_name;
-    if ( $self_class eq 'Operation_91' ) {    # Statement -> OP01_NAMED_UNARY_SCOLON
+    if ( $self_class eq 'Operation_97' ) {    # Statement -> OP01_NAMED_UNARY_SCOLON
         $operator_name = substr $self->{children}->[0], 0, -1;
     }
-    elsif (( $self_class eq 'Operator_110' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
-        ( $self_class eq 'Operator_111' )
+    elsif (( $self_class eq 'Operator_116' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
+        ( $self_class eq 'Operator_117' )
         )
     {                                          # Operator -> OP10_NAMED_UNARY
             # strip trailing whitespace, caused by the need to have the grammar match some tokens with a trailing whitespace, as with 'scalar ', etc.
@@ -65,7 +65,7 @@ sub ast_to_rperl__generate {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Operation_91, Operator_110, or Operator_111 expected, dying' )
+                . ' found where Operation_97, Operator_116, or Operator_117 expected, dying' )
             . "\n";
     }
 
@@ -105,11 +105,11 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     my string $self_class = ref $self;
     my string $operator_name;
-    if ( $self_class eq 'Operation_91' ) {    # Statement -> OP01_NAMED_UNARY_SCOLON
+    if ( $self_class eq 'Operation_97' ) {    # Statement -> OP01_NAMED_UNARY_SCOLON
         $operator_name = substr $self->{children}->[0], 0, -1;
     }
-    elsif (( $self_class eq 'Operator_110' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
-        ( $self_class eq 'Operator_111' )
+    elsif (( $self_class eq 'Operator_116' ) or    # Operator -> OP10_NAMED_UNARY SubExpression
+        ( $self_class eq 'Operator_117' )
         )
     {                                          # Operator -> OP10_NAMED_UNARY
             # strip trailing whitespace, caused by the need to have the grammar match some tokens with a trailing whitespace, as with 'scalar ', etc.
@@ -119,7 +119,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
-                . ' found where Operation_91, Operator_110 or Operator_111 expected, dying' )
+                . ' found where Operation_97, Operator_116 or Operator_117 expected, dying' )
             . "\n";
     }
 

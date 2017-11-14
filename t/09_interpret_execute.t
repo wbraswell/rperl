@@ -68,7 +68,7 @@ find(
         if (defined $ARGV[0]) {
             # restore saved path, because File::Find changes directories while searching for files
             my $file_full_path = File::Spec->catpath( $volume, $directories, $file );
-            RPerl::diag('in 09_interpret_execute.t, have $file_full_path = ' . $file_full_path . "\n");
+#            RPerl::diag('in 09_interpret_execute.t, have $file_full_path = ' . $file_full_path . "\n");
             $file = $file_full_path;
         }
 

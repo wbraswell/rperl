@@ -51,16 +51,16 @@ sub ast_to_rperl__generate {
 
     my string $self_class = ref $self;
 
-    # unwrap ArrayReference_211 from SubExpression_153
-    if ( $self_class eq 'SubExpression_153' ) {
+    # unwrap ArrayReference_217 from SubExpression_159
+    if ( $self_class eq 'SubExpression_159' ) {
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( ($self_class) ne 'ArrayReference_211' ) {
+    if ( ($self_class) ne 'ArrayReference_217' ) {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($self_class)
-                . ' found where ArrayReference_211 or SubExpression_153 expected, dying' )
+                . ' found where ArrayReference_217 or SubExpression_159 expected, dying' )
             . "\n";
     }
 
@@ -98,16 +98,16 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     my string $self_class = ref $self;
 
-    # unwrap ArrayReference_211 from SubExpression_153
-    if ( $self_class eq 'SubExpression_153' ) {
+    # unwrap ArrayReference_217 from SubExpression_159
+    if ( $self_class eq 'SubExpression_159' ) {
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( ($self_class) ne 'ArrayReference_211' ) {
+    if ( ($self_class) ne 'ArrayReference_217' ) {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ($self_class)
-                . ' found where ArrayReference_211 or SubExpression_153 expected, dying' )
+                . ' found where ArrayReference_217 or SubExpression_159 expected, dying' )
             . "\n";
     }
 

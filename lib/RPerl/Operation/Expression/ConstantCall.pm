@@ -25,20 +25,20 @@ sub ast_to_rperl__generate {
 
 #    RPerl::diag( 'in ConstantCall->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) eq 'Expression_144' ) { # Expression -> WORD_UPPERCASE LPAREN ')'
+    if ( ( ref $self ) eq 'Expression_150' ) { # Expression -> WORD_UPPERCASE LPAREN ')'
         my string $name        = $self->{children}->[0];
         my string $left_paren  = $self->{children}->[1];
         my string $right_paren = $self->{children}->[2];
 
         $rperl_source_group->{PMC} .= $name . $left_paren . $right_paren;
     }
-    elsif ( ( ref $self ) eq 'Expression_145' ) { # Expression -> CONSTANT_CALL_SCOPED
+    elsif ( ( ref $self ) eq 'Expression_151' ) { # Expression -> CONSTANT_CALL_SCOPED
         $rperl_source_group->{PMC} .= $self->{children}->[0];
     }
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
-                . ' found where Expression_144 or Expression_145 expected, dying' )
+                . ' found where Expression_150 or Expression_151 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -60,12 +60,12 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
 #    RPerl::diag( 'in ConstantCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) eq 'Expression_144' ) {
+    if ( ( ref $self ) eq 'Expression_150' ) {
         # Expression -> WORD_UPPERCASE LPAREN ')'
         my string $name        = $self->{children}->[0];
         $cpp_source_group->{CPP} .= $name;
     }
-    elsif ( ( ref $self ) eq 'Expression_145' ) {
+    elsif ( ( ref $self ) eq 'Expression_151' ) {
         # Expression -> Expression -> CONSTANT_CALL_SCOPED
         my string $call        = $self->{children}->[0];
         substr $call, -2, 2, q{};  # strip trailing parenthesis
@@ -76,7 +76,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ( ref $self )
-                . ' found where Expression_144 or Expression_145 expected, dying' )
+                . ' found where Expression_150 or Expression_151 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;

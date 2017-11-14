@@ -26,7 +26,7 @@ sub ast_to_rperl__generate {
 #    RPerl::diag( 'in Operator::Print->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'Operator_93' ) { # Operator -> LPAREN OP01_PRINT FHREF_SYMBOL_BRACES ListElements ')'
+    if ( $self_class eq 'Operator_99' ) { # Operator -> LPAREN OP01_PRINT FHREF_SYMBOL_BRACES ListElements ')'
         my string $left_paren          = $self->{children}->[0];
         my string $print               = $self->{children}->[1];
         my string $fhref_symbol_braces = $self->{children}->[2];
@@ -47,7 +47,7 @@ sub ast_to_rperl__generate {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Operator_93 expected, dying' )
+                . ' found where Operator_99 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;

@@ -30,16 +30,16 @@ sub ast_to_rperl__generate {
 
     #    RPerl::diag( 'in Method->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap Method_82 from SubroutineOrMethod_88
-    if ( ( ref $self ) eq 'SubroutineOrMethod_88' ) {
+    # unwrap Method_88 from SubroutineOrMethod_94
+    if ( ( ref $self ) eq 'SubroutineOrMethod_94' ) {
         $self = $self->{children}->[0];
     }
 
 #    RPerl::diag( 'in Method->ast_to_rperl__generate(), have possibly-unwrapped $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'Method_82' ) {
+    if ( ( ref $self ) ne 'Method_88' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ( ref $self ) . ' found where Method_82 expected, dying' )
+            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ( ref $self ) . ' found where Method_88 expected, dying' )
             . "\n";
     }
 
@@ -111,16 +111,16 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
 
 #    RPerl::diag( 'in Method->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap Method_82 from SubroutineOrMethod_88
-    if ( ( ref $self ) eq 'SubroutineOrMethod_88' ) {
+    # unwrap Method_88 from SubroutineOrMethod_94
+    if ( ( ref $self ) eq 'SubroutineOrMethod_94' ) {
         $self = $self->{children}->[0];
     }
 
 #    RPerl::diag( 'in Method->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have possibly-unwrapped $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'Method_82' ) {
+    if ( ( ref $self ) ne 'Method_88' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Method_82 expected, dying' )
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Method_88 expected, dying' )
             . "\n";
     }
 
@@ -174,16 +174,16 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     #    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    # unwrap Method_82 from SubroutineOrMethod_88
-    if ( ( ref $self ) eq 'SubroutineOrMethod_88' ) {
+    # unwrap Method_88 from SubroutineOrMethod_94
+    if ( ( ref $self ) eq 'SubroutineOrMethod_94' ) {
         $self = $self->{children}->[0];
     }
 
 #    RPerl::diag( 'in Method->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have possibly-unwrapped $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'Method_82' ) {
+    if ( ( ref $self ) ne 'Method_88' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Method_82 expected, dying' )
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Method_88 expected, dying' )
             . "\n";
     }
 

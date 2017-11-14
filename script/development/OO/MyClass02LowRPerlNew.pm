@@ -1,5 +1,5 @@
 # [[[ PREPROCESSOR ]]]
-# <<< TYPE_CHECKING: ON >>>
+# <<< TYPE_CHECKING: TRACE >>>
 
 # [[[ HEADER ]]]
 use RPerl;

@@ -21,7 +21,7 @@ our hashref $properties = {};
 sub empty_method {
     { my void::method $RETURN_TYPE };
     ( my object $self ) = @ARG;
-    print 'Hello, World!' . "\n";
+    print 'Hello, World!', "\n";
     return;
 }
 

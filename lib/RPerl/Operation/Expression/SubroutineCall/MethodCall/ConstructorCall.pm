@@ -26,11 +26,11 @@ sub ast_to_rperl__generate {
 
 #    RPerl::diag( 'in ConstructorCall->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'Expression_148' ) {
+    if ( ( ref $self ) ne 'Expression_154' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
-                . ' found where Expression_148 expected, dying' )
+                . ' found where Expression_154 expected, dying' )
             . "\n";
     }
 
@@ -71,9 +71,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my string_hashref $cpp_source_group = { CPP => q{} };
     my string_hashref $cpp_source_subgroup;
 
-    if ( ( ref $self ) ne 'Expression_148' ) {
+    if ( ( ref $self ) ne 'Expression_154' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Expression_148 expected, dying' ) . "\n";
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Expression_154 expected, dying' ) . "\n";
     }
 
     # Expression -> WordScoped OP02_METHOD_THINARROW_NEW OPTIONAL-36 ')'
@@ -90,9 +90,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         my object $property_0 = $properties_init_optional->{children}->[1];
 #        RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_0 = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_0) . "\n" );
 
-        if ( ( ref $property_0 ) ne 'HashEntry_218' ) {
+        if ( ( ref $property_0 ) ne 'HashEntry_224' ) {
             die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECOGEASCP36, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $property_0 ) . ' found where HashEntry_218 expected, object property value initialization hashref must contain normal key/value pairs only, dying' ) . "\n";
+                'ERROR ECOGEASCP36, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $property_0 ) . ' found where HashEntry_224 expected, object property value initialization hashref must contain normal key/value pairs only, dying' ) . "\n";
         }
 
         $cpp_source_subgroup = $self->ast_to_cpp__generate__CPPOPS_CPPTYPES__property_init($modes, $property_0);
@@ -120,18 +120,18 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES__property_init {
     my object $property_type_inner_optional = $property->{children}->[2];
     my object $property_value               = $property->{children}->[3];
 
-    if ( ( ref $property_name ) ne 'VarOrLitOrOpStrOrWord_245' ) {
+    if ( ( ref $property_name ) ne 'VarOrLitOrOpStrOrWord_251' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP36, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $property_name ) . ' found where VarOrLitOrOpStrOrWord_245 expected, object property value initialization hashref must contain normal key/value pairs only, dying' ) . "\n";
+            'ERROR ECOGEASCP36, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $property_name ) . ' found where VarOrLitOrOpStrOrWord_251 expected, object property value initialization hashref must contain normal key/value pairs only, dying' ) . "\n";
     }
 
-    $property_name = $property_name->{children}->[0];  # unwrap OpStringOrWord_272 from VarOrLitOrOpStrOrWord_245
-    if ( ( ref $property_name ) ne 'OpStringOrWord_272' ) {
+    $property_name = $property_name->{children}->[0];  # unwrap OpStringOrWord_278 from VarOrLitOrOpStrOrWord_251
+    if ( ( ref $property_name ) ne 'OpStringOrWord_278' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP37, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $property_name ) . ' found where OpStringOrWord_272 expected, object property value initialization hashref must contain bareword keys only, dying' ) . "\n";
+            'ERROR ECOGEASCP37, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $property_name ) . ' found where OpStringOrWord_278 expected, object property value initialization hashref must contain bareword keys only, dying' ) . "\n";
     }
 
-    $property_name = $property_name->{children}->[0];  # unwrap bareword from OpStringOrWord_272
+    $property_name = $property_name->{children}->[0];  # unwrap bareword from OpStringOrWord_278
 
     if ( exists $property_type_inner_optional->{children}->[0] ) {
         die RPerl::Parser::rperl_rule__replace(

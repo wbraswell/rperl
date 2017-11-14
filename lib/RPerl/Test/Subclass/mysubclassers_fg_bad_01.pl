@@ -1,32 +1,9 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'no errors' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_fg->get_bax() = 123' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_f->get_bax() = 123' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_f->get_xab() = 321' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_g->get_bax() = 123' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_g->get_xab() = 321' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_g->get_xba() = 312' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_fg->get_bax() = 111' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_f->get_bax() = 222' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_g->get_bax() = 333' >>>
-# <<< EXECUTE_SUCCESS: 'calling $my_fg->multiply_bax_FG(22)...' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_fg->get_bax() = 2442' >>>
-# <<< EXECUTE_SUCCESS: 'have RPerl::Test::Subclass::MySubclassersFG_Good::multiply_return_FG(11, 22) = 242' >>>
-# <<< EXECUTE_SUCCESS: 'calling $my_f->multiply_bax_FG(22)...' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_f->get_bax() = 4884' >>>
-# <<< EXECUTE_SUCCESS: 'calling $my_f->multiply_bax_F(-1)...' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_f->get_bax() = -4884' >>>
-# <<< EXECUTE_SUCCESS: 'have RPerl::Test::Subclass::MySubclasserF_Good::multiply_return_F(-11, 22) = -242' >>>
-# <<< EXECUTE_SUCCESS: 'calling $my_g->multiply_bax_FG(22)...' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_g->get_bax() = 7326' >>>
-# <<< EXECUTE_SUCCESS: 'calling $my_g->multiply_bax_F(-1)...' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_g->get_bax() = -7326' >>>
-# <<< EXECUTE_SUCCESS: 'calling $my_g->multiply_bax_G(-2)...' >>>
-# <<< EXECUTE_SUCCESS: 'have $my_g->get_bax() = 14652' >>>
-# <<< EXECUTE_SUCCESS: 'have RPerl::Test::Subclass::MySubclasserG_Good::multiply_return_G(-11, 33) = -363' >>>
-# <<< EXECUTE_SUCCESS: 'still no errors' >>>
+# <<< EXECUTE_ERROR: 'ERROR EIV01' >>>
+# <<< EXECUTE_ERROR: 'integer value expected but non-integer value found' >>>
+# <<< EXECUTE_ERROR: 'in variable $multiplier from subroutine multiply_bax_FG()' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -83,8 +60,8 @@ $my_fg->multiply_bax_FG(22);
 print 'have $my_fg->get_bax() = ', $my_fg->get_bax(), "\n";
 print 'have RPerl::Test::Subclass::MySubclassersFG_Good::multiply_return_FG(11, 22) = ', RPerl::Test::Subclass::MySubclassersFG_Good::multiply_return_FG(11, 22), "\n";
 
-print 'calling $my_f->multiply_bax_FG(22)...', "\n";
-$my_f->multiply_bax_FG(22);
+print 'calling $my_f->multiply_bax_FG(q{howdy})...', "\n";
+$my_f->multiply_bax_FG(q{howdy});
 print 'have $my_f->get_bax() = ', $my_f->get_bax(), "\n";
 #print 'have RPerl::Test::Subclass::MySubclasserF_Good::multiply_return_FG(11, 22) = ', RPerl::Test::Subclass::MySubclasserF_Good::multiply_return_FG(11, 22), "\n";  # ERROR HERE, MOVE TO EXPORTER EXAMPLE
 
@@ -108,12 +85,12 @@ $my_g->multiply_bax_G(-2);
 print 'have $my_g->get_bax() = ', $my_g->get_bax(), "\n";
 print 'have RPerl::Test::Subclass::MySubclasserG_Good::multiply_return_G(-11, 33) = ', RPerl::Test::Subclass::MySubclasserG_Good::multiply_return_G(-11, 33), "\n";
 
-# START HERE AFTER: create tests for class Exporter to subclass-in-same-file using new syntax BEGIN { Class->import(); } for parent include (with commented code lines above) 
-# START HERE AFTER: create tests for class Exporter to subclass-in-same-file using new syntax BEGIN { Class->import(); } for parent include (with commented code lines above) 
+# START HERE: create Bad variants to ensure normal type-checking works
+# START HERE: create Bad variants to ensure normal type-checking works
+# START HERE: create Bad variants to ensure normal type-checking works
+
 # START HERE AFTER: create tests for class Exporter to subclass-in-same-file using new syntax BEGIN { Class->import(); } for parent include (with commented code lines above) 
 
-# START HERE AFTER AFTER: create tests for Exporter, multiple packages in one file, using new syntax 'BEGIN { Package->import(); }' as Include production
-# START HERE AFTER AFTER: create tests for Exporter, multiple packages in one file, using new syntax 'BEGIN { Package->import(); }' as Include production
 # START HERE AFTER AFTER: create tests for Exporter, multiple packages in one file, using new syntax 'BEGIN { Package->import(); }' as Include production
 
 print 'still no errors', "\n";

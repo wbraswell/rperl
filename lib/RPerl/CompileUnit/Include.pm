@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Include;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_300;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -25,35 +25,44 @@ sub ast_to_rperl__generate {
 
 #    RPerl::diag( 'in Include->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag( 'in Include->ast_to_rperl__generate(), have ::class($self) = ' . ::class($self) . "\n" );
-    if ( ref $self eq 'Include_50' ) {
-        # Include -> USE_OR_REQUIRE WordScoped ';'
-        my string $use_or_require_keyword = $self->{children}->[0];
-        my string $module_name
-            = $self->{children}->[1]->{children}->[0];
-        my string $semicolon = $self->{children}->[2];
-        $rperl_source_group->{PMC}
-            .= $use_or_require_keyword . q{ } . $module_name . $semicolon . "\n";
 
+    if ( ref $self eq 'Include_54' ) {
+        # Include -> USE WordScoped OPTIONAL-22 ';'
+        my string $use_keyword = $self->{children}->[0];
+        my string $module_name = $self->{children}->[1]->{children}->[0];
+        my string $qw = q{};
+        if (defined $self->{children}->[2]->{children}->[0]) {
+            $qw = $self->{children}->[2]->{children}->[0];
+        }
+        my string $semicolon        = $self->{children}->[3];
+        $rperl_source_group->{PMC} .= $use_keyword . q{ } . $module_name . q{ } . $qw . $semicolon . "\n";
 #        RPerl::diag( 'in Include->ast_to_rperl__generate(), have $module_name = '  . $module_name . "\n" );
     }
-    elsif ( ref $self eq 'Include_51' ) {
-        # Include -> USE_OR_REQUIRE WordScoped OP01_QW ';'
-        my string $use_or_require_keyword = $self->{children}->[0];
-        my string $module_name
-            = $self->{children}->[1]->{children}->[0];
-        my string $qw            = $self->{children}->[2];
-        my string $semicolon         = $self->{children}->[3];
-        $rperl_source_group->{PMC}
-            .= $use_or_require_keyword . q{ }
-            . $module_name . q{ }
-            . $qw
-            . $semicolon . "\n";
+    elsif ( ref $self eq 'Include_55' ) {
+        # Include -> 'BEGIN {' WordScoped OP02_METHOD_THINARROW_IMP OPTIONAL-23 ')' ';' '}'
+        my string $begin_keyword_left_brace = $self->{children}->[0];
+        my string $module_name = $self->{children}->[1]->{children}->[0];
+        my string $thinarrow_import_left_parentheses = $self->{children}->[2];
+        my string $qw = q{};
+        if (defined $self->{children}->[3]->{children}->[0]) {
+            $qw = $self->{children}->[3]->{children}->[0];
+        }
+        my string $right_parentheses         = $self->{children}->[4];
+        my string $semicolon         = $self->{children}->[5];
+        my string $right_brace         = $self->{children}->[6];
+        $rperl_source_group->{PMC} .= 
+            $begin_keyword_left_brace . q{ } .
+            $module_name . $thinarrow_import_left_parentheses . q{ } .
+            $qw . q{ } .
+            $right_parentheses . q{ } .
+            $semicolon . q{ } .
+            $right_brace . "\n" ;
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
-                . ' found where Include_50 or Include_51 expected, dying' )
+                . ' found where Include_54 or Include_55 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -76,9 +85,14 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #    RPerl::diag( 'in Include->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
     my string_hashref $cpp_source_group = { H => q{} };
 
-    # NEED ANSWER: no difference between wholesale includes and selective includes in C++?
-    if (( ref $self eq 'Include_50' ) or ( ref $self eq 'Include_51' )) {
-        # Include -> USE_OR_REQUIRE WordScoped ...
+    # NEED UPGRADE: implement proper import() semantics in C++
+    # DEV NOTE: for now, treat all 4 of the following the same in C++, ignoring 'bar'
+    # 'use Foo;'
+    # 'use Foo qw(bar)'
+    # 'BEGIN { Foo->import(); }'
+    # 'BEGIN { Foo->import(qw(bar)); }'
+    if (( ref $self eq 'Include_54' ) or ( ref $self eq 'Include_55' )) {
+        # Include -> USE WordScoped ...
         # DEV NOTE: ignore manually included RPerl* and rperl* modules, presumably they will all be automatically included
         my string $module_name = $self->{children}->[1]->{children}->[0];
         if ( $module_name =~ /^\w+Perl::Config$/ ) { # DEV NOTE, CORRELATION #rp027: MathPerl::Config, PhysicsPerl::Config, etc
@@ -102,7 +116,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ( ref $self )
-                . ' found where Include_50 or Include_51 expected, dying' )
+                . ' found where Include_54 or Include_55 expected, dying' )
             . "\n";
     }
     

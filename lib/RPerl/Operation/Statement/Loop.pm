@@ -27,15 +27,15 @@ sub ast_to_rperl__generate {
 
     my string $self_class = ref $self;
 
-    # unwrap Loop_178, Loop_179, and Loop_180 from Statement_167
-    if ( $self_class eq 'Statement_167' ) {
+    # unwrap Loop_184, Loop_185, and Loop_186 from Statement_173
+    if ( $self_class eq 'Statement_173' ) {
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if (   ( $self_class eq 'Loop_178' )  # Loop -> LoopFor
-        or ( $self_class eq 'Loop_179' )  # Loop -> LoopForEach
-        or ( $self_class eq 'Loop_180' ) )  # Loop -> LoopWhile
+    if (   ( $self_class eq 'Loop_184' )  # Loop -> LoopFor
+        or ( $self_class eq 'Loop_185' )  # Loop -> LoopForEach
+        or ( $self_class eq 'Loop_186' ) )  # Loop -> LoopWhile
     {
         my object $rperl_source_subgroup = $self->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group,
@@ -45,7 +45,7 @@ sub ast_to_rperl__generate {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where Loop_178, Loop_179, or Loop_180 expected, dying'
+                . ' found where Loop_184, Loop_185, or Loop_186 expected, dying'
         ) . "\n";
     }
     return $rperl_source_group;
@@ -74,15 +74,15 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     my string $self_class = ref $self;
 
-    # unwrap Loop_178, Loop_179, and Loop_180 from Statement_167
-    if ( $self_class eq 'Statement_167' ) {
+    # unwrap Loop_184, Loop_185, and Loop_186 from Statement_173
+    if ( $self_class eq 'Statement_173' ) {
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if (   ( $self_class eq 'Loop_178' )  # Loop -> LoopFor
-        or ( $self_class eq 'Loop_179' )  # Loop -> LoopForEach
-        or ( $self_class eq 'Loop_180' ) )  # Loop -> LoopWhile
+    if (   ( $self_class eq 'Loop_184' )  # Loop -> LoopFor
+        or ( $self_class eq 'Loop_185' )  # Loop -> LoopForEach
+        or ( $self_class eq 'Loop_186' ) )  # Loop -> LoopWhile
     {
         my object $cpp_source_subgroup = $self->ast_to_cpp__generate__CPPOPS_CPPTYPES($loop_label, $modes);
         RPerl::Generator::source_group_append( $cpp_source_group,
@@ -92,7 +92,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
-                . ' found where Loop_178, Loop_179, or Loop_180 expected, dying'
+                . ' found where Loop_184, Loop_185, or Loop_186 expected, dying'
         ) . "\n";
     }
 #    RPerl::diag( 'in Loop->ast_to_cpp__generate__CPPOPS_CPPTYPES(), bottom of subroutine, have $modes->{_loop_iterators} = ' . "\n" . Dumper($modes->{_loop_iterators}) . "\n" );

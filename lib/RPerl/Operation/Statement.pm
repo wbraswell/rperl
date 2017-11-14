@@ -29,10 +29,10 @@ sub ast_to_rperl__generate {
 #    RPerl::diag( 'in Statement->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     # Conditional, OperatorVoid, VariableDeclaration, or VariableModification
-    if (   ( $child0_class eq 'Statement_166' )
-        or ( $child0_class eq 'Statement_168' )
-        or ( $child0_class eq 'Statement_169' )
-        or ( $child0_class eq 'Statement_170' ) )
+    if (   ( $child0_class eq 'Statement_172' )
+        or ( $child0_class eq 'Statement_174' )
+        or ( $child0_class eq 'Statement_175' )
+        or ( $child0_class eq 'Statement_176' ) )
     {
         $rperl_source_subgroup
             = $child0->ast_to_rperl__generate($modes);
@@ -41,7 +41,7 @@ sub ast_to_rperl__generate {
     }
 
     # Loop
-    elsif ( $child0_class eq 'Statement_167' ) {
+    elsif ( $child0_class eq 'Statement_173' ) {
         my $optional_loop_label = $child0->{children}->[0];
         my $loop = $child0->{children}->[1];
 #        RPerl::diag( 'in Statement->ast_to_rperl__generate(), have $optional_loop_label = ' . "\n" . RPerl::Parser::rperl_ast__dump($optional_loop_label) . "\n" );
@@ -55,7 +55,7 @@ sub ast_to_rperl__generate {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $child0_class
-                . ' found where Statement_166, Statement_167, Statement_168, Statement_169, or Statement_170 expected, dying'
+                . ' found where Statement_172, Statement_173, Statement_174, Statement_175, or Statement_176 expected, dying'
         ) . "\n";
     }
     return $rperl_source_group;
@@ -85,10 +85,10 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #    RPerl::diag( 'in Statement->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     # Conditional, OperatorVoid, VariableDeclaration, or VariableModification
-    if (   ( $child0_class eq 'Statement_166' )
-        or ( $child0_class eq 'Statement_168' )
-        or ( $child0_class eq 'Statement_169' )
-        or ( $child0_class eq 'Statement_170' ) )
+    if (   ( $child0_class eq 'Statement_172' )
+        or ( $child0_class eq 'Statement_174' )
+        or ( $child0_class eq 'Statement_175' )
+        or ( $child0_class eq 'Statement_176' ) )
     {
         $cpp_source_subgroup = $child0->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
 #        RPerl::diag( 'in Statement->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
@@ -96,7 +96,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
 
     # Loop
-    elsif ( $child0_class eq 'Statement_167' ) {
+    elsif ( $child0_class eq 'Statement_173' ) {
         my object $optional_loop_label = $child0->{children}->[0];
         my object $loop = $child0->{children}->[1];
         my string $loop_label = undef;
@@ -114,7 +114,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $child0_class
-                . ' found where Statement_166, Statement_167, Statement_168, Statement_169, or Statement_170 expected, dying'
+                . ' found where Statement_172, Statement_173, Statement_174, Statement_175, or Statement_176 expected, dying'
         ) . "\n";
     }
     return $cpp_source_group;

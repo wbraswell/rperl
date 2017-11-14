@@ -23,9 +23,9 @@ sub ast_to_rperl__generate {
 
     my string $self_class = ref $self;
 
-    if (( $self_class eq 'SubExpression_151' )    # SubExpression -> Literal
-        or ( $self_class eq 'VariableOrLiteral_242' ) # VariableOrLiteral -> Literal
-        or ( $self_class eq 'VarOrLitOrOpStrOrWord_244' ) # VarOrLitOrOpStrOrWord -> Literal
+    if (( $self_class eq 'SubExpression_157' )    # SubExpression -> Literal
+        or ( $self_class eq 'VariableOrLiteral_248' ) # VariableOrLiteral -> Literal
+        or ( $self_class eq 'VarOrLitOrOpStrOrWord_250' ) # VarOrLitOrOpStrOrWord -> Literal
         )
     {
         my object $number_or_string = $self->{children}->[0];
@@ -35,7 +35,7 @@ sub ast_to_rperl__generate {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where SubExpression_151, VariableOrLiteral_242, or VarOrLitOrOpStrOrWord_244 expected, dying'
+                . ' found where SubExpression_157, VariableOrLiteral_248, or VarOrLitOrOpStrOrWord_250 expected, dying'
         ) . "\n"; 
     }
     return $rperl_source_group;
@@ -62,9 +62,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     my string $self_class = ref $self;
 
-    if (( $self_class eq 'SubExpression_151' )    # SubExpression -> Literal
-        or ( $self_class eq 'VariableOrLiteral_242' ) # VariableOrLiteral -> Literal
-        or ( $self_class eq 'VarOrLitOrOpStrOrWord_244' ) # VarOrLitOrOpStrOrWord -> Literal
+    if (( $self_class eq 'SubExpression_157' )    # SubExpression -> Literal
+        or ( $self_class eq 'VariableOrLiteral_248' ) # VariableOrLiteral -> Literal
+        or ( $self_class eq 'VarOrLitOrOpStrOrWord_250' ) # VarOrLitOrOpStrOrWord -> Literal
         )
     {
         my object $number_or_string = $self->{children}->[0];
@@ -74,7 +74,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where SubExpression_151, VariableOrLiteral_242, or VarOrLitOrOpStrOrWord_244 expected, dying'
+                . ' found where SubExpression_157, VariableOrLiteral_248, or VarOrLitOrOpStrOrWord_250 expected, dying'
         ) . "\n"; 
     }
     return $cpp_source_group;

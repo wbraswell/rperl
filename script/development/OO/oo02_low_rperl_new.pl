@@ -49,17 +49,6 @@ print 'have $my_object_subclass->get_bax() = ', $my_object_subclass->get_bax(), 
 print 'have $my_object_subclass->multiply_bax_return(20) = ', $my_object_subclass->multiply_bax_return(20), "\n";
 print 'have $my_object_subclass->get_bax() = ', $my_object_subclass->get_bax(), "\n";
 
-
-
-# START HERE: why doesn't this give an RPerl type-checking error???
-# START HERE: why doesn't this give an RPerl type-checking error???
-# START HERE: why doesn't this give an RPerl type-checking error???
-print 'have $my_object_subclass->multiply_bax_return(q{howdy}) = ', $my_object_subclass->multiply_bax_return(q{howdy}), "\n";
-
-
-
-
-
 # subclass example 2
 
 my MySubclass02LowRPerlNew $my_object_subclass2 = MySubclass02LowRPerlNew->new({bar => 33, bax => 88});
