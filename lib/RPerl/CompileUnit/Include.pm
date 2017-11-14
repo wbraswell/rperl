@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Include;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -32,7 +32,7 @@ sub ast_to_rperl__generate {
         my string $module_name = $self->{children}->[1]->{children}->[0];
         my string $qw = q{};
         if (defined $self->{children}->[2]->{children}->[0]) {
-            $qw = $self->{children}->[2]->{children}->[0];
+            $qw = $self->{children}->[2]->{children}->[0]->{attr};
         }
         my string $semicolon        = $self->{children}->[3];
         $rperl_source_group->{PMC} .= $use_keyword . q{ } . $module_name . q{ } . $qw . $semicolon . "\n";
@@ -45,7 +45,7 @@ sub ast_to_rperl__generate {
         my string $thinarrow_import_left_parentheses = $self->{children}->[2];
         my string $qw = q{};
         if (defined $self->{children}->[3]->{children}->[0]) {
-            $qw = $self->{children}->[3]->{children}->[0];
+            $qw = $self->{children}->[3]->{children}->[0]->{attr};
         }
         my string $right_parentheses         = $self->{children}->[4];
         my string $semicolon         = $self->{children}->[5];
