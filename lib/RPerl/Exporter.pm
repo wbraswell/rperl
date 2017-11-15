@@ -3,7 +3,7 @@ package RPerl::Exporter;
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 #use parent qw(RPerl::CompileUnit::Module::Class);
@@ -36,9 +36,11 @@ our $SUPPORTED_ALL = [
         number
         character
         string
+        arrayref
         integer_arrayref
         number_arrayref
         string_arrayref
+        hashref
         integer_hashref
         number_hashref
         string_hashref

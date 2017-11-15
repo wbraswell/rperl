@@ -46,7 +46,7 @@ our hashref $properties = {};
 sub check_class {
     { my void::method $RETURN_TYPE };
     ( my RPerl::Test::TypeCheckingTrace::AllTypes $self ) = @ARG;
-    
+
 #    RPerl::diag('in check_class(), received $self =', "\n", Dumper($self), "\n");
     return;
 }
@@ -54,7 +54,7 @@ sub check_class {
 sub check_class_integer {
     { my void::method $RETURN_TYPE };
     ( my RPerl::Test::TypeCheckingTrace::AllTypes $self, my integer $input_1 ) = @ARG;
-    
+
 #    RPerl::diag('in check_class_integer(), received $self =', "\n", Dumper($self), "\n");
 #    RPerl::diag('in check_class_integer(), received $input_1 = ', $input_1, "\n");
     return;

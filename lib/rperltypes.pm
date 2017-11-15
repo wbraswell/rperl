@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.011_000;
+our $VERSION = 0.012_000;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -101,9 +101,11 @@ our string_arrayref $SUPPORTED = [
         integer
         number
         string
+        arrayref
         integer_arrayref
         number_arrayref
         string_arrayref
+        hashref
         integer_hashref
         number_hashref
         string_hashref
