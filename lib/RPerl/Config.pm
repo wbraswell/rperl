@@ -4,7 +4,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.008_000;
+our $VERSION = 0.009_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -107,13 +107,23 @@ use constant EPSILON => POSIX::DBL_EPSILON();
 sub eval_use {
     (my $package_name, my $display_errors) = @ARG;
 #    RPerl::debug('in RPerl::eval_use(), received $package_name = ', $package_name, "\n");
+#    RPerl::debug('in RPerl::eval_use(), CHECKPOINT c000', "\n");
 
     my $INC_ref_pre = {};
     foreach my $INC_key_pre (keys %INC) { $INC_ref_pre->{$INC_key_pre} = 1; }
 #    RPerl::debug('in RPerl::eval_use(), have $INC_ref_pre = ', Dumper($INC_ref_pre), "\n");
+#    RPerl::debug('in RPerl::eval_use(), CHECKPOINT c001', "\n");
 
-    my $eval_string .=<<"EOL";
-    use $package_name;
+    my $eval_string =<<"EOL";
+#   no warnings 'all';               # DOES NOT SUPPRESS
+    local \$SIG{__WARN__} = sub {};  # DOES     SUPPRESS
+#    BEGIN { RPerl::debug('in RPerl::eval_use() eval, about to call use $package_name...', "\\n"); }
+
+#   use $package_name;      # DOES NOT SUPPRESS, THIS IS THE HIDDEN PERPETRATOR OF UNSUPPRESSABLE WARNINGS!  'Too late to call INIT block' inside multi-class module files
+    require $package_name;  # DOES     SUPPRESS
+
+#    BEGIN { RPerl::debug('in RPerl::eval_use() eval, ret from use $package_name...', "\\n"); }
+
     # detect compiled C++ code and call cpp_load() accordingly
     if (defined \&$package_name\:\:cpp_load) {
 #        RPerl::debug('in RPerl::eval_use() eval, $package_name\:\:cpp_load() is defined, calling...', "\\n");
@@ -126,6 +136,7 @@ sub eval_use {
 EOL
 
 #    RPerl::debug('in RPerl::eval_use(), have $eval_string = ', "\n\n", $eval_string, "\n\n");
+#    RPerl::debug('in RPerl::eval_use(), CHECKPOINT c002', "\n");
 
     $eval_string .=<<'EOL';
     my $INC_ref_post = {};
@@ -137,16 +148,22 @@ EOL
 #    RPerl::debug('in RPerl::eval_use() eval, have $INC_ref_post = ', Dumper($INC_ref_post), "\n");
     RPerl::CompileUnit::Module::Class::create_symtab_entries_and_accessors_mutators($INC_ref_post);
 EOL
+#    RPerl::debug('in RPerl::eval_use(), CHECKPOINT c003', "\n");
 
     my $eval_retval = eval $eval_string;
+#    RPerl::debug('in RPerl::eval_use(), CHECKPOINT c004', "\n");
+
+    # FOR DEBUG PURPOSES
 #    if (defined $eval_retval) { print 'have $eval_retval = ', $eval_retval, "\n"; }
 #    else { print 'have $eval_retval = undef, have $EVAL_ERROR = ', $EVAL_ERROR, "\n"; }
+
     if ($display_errors and (defined $EVAL_ERROR) and ($EVAL_ERROR ne q{})) {
         RPerl::warning( 'WARNING WCOEU00, EVAL USE: Failed to eval-use package ' . q{'}
             . $package_name . q{'} . ', fatal error trapped and delayed' . "\n" );
         RPerl::diag( '                                                Trapped the following error message...' . "\n\n" . $EVAL_ERROR . "\n" );
         RPerl::warning("\n");
     }
+#    RPerl::debug('in RPerl::eval_use(), CHECKPOINT c005', "\n");
 
     return $eval_retval;
 }

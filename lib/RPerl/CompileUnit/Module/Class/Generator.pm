@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.013_000;
+our $VERSION = 0.014_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -29,7 +29,7 @@ sub ast_to_rperl__generate {
     ( my object $self, my string $package_name_underscores, my string_hashref $modes ) = @ARG;
     my string_hashref $rperl_source_group = {};
 
-    #    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
 
@@ -107,26 +107,38 @@ sub ast_to_rperl__generate {
         }
 #        RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), AFTER EXPORTS, have $rperl_source_group->{PMC} = ' . "\n" . RPerl::Parser::rperl_ast__dump($rperl_source_group->{PMC}) . "\n" );
     }
-    
+
+#    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), CHECKPOINT a000', "\n" );
+
     if ( exists $include_star->{children}->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
             $rperl_source_group->{PMC} .= "\n" . '# [[[ INCLUDES ]]]' . "\n";
         }
     }
+
+#    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), CHECKPOINT a001', "\n" );
+
     foreach my object $include ( @{ $include_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         $rperl_source_subgroup = $include->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
+
+#    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), CHECKPOINT a002', "\n" );
 
     if ( exists $constant_star->{children}->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
             $rperl_source_group->{PMC} .= "\n" . '# [[[ CONSTANTS ]]]' . "\n";
         }
     }
+
+#    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), CHECKPOINT a003', "\n" );
+
     foreach my object $constant ( @{ $constant_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
         $rperl_source_subgroup = $constant->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
+
+#    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), CHECKPOINT a004', "\n" );
 
     if ( $modes->{label} eq 'ON' ) {
         $rperl_source_group->{PMC} .= "\n" . '# [[[ OO PROPERTIES ]]]' . "\n";
@@ -137,7 +149,13 @@ sub ast_to_rperl__generate {
     # generate accessors & mutators for inherited $properties
     my string $package_name_colons = $package_name_underscores;
     $package_name_colons =~ s/__/::/gxms;
+
+#    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), CHECKPOINT a005', "\n" );
+
     my $parent_package_names = RPerl::CompileUnit::Module::Class::parent_and_grandparent_package_names($package_name_colons);
+
+#    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), CHECKPOINT a006', "\n" );
+
 #    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), have $parent_package_names = ' . Dumper($parent_package_names) . "\n" );
 
     if ( ref $properties eq 'Properties_82' ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if

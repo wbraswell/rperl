@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 # <<< CHANGE_ME: leave as base class for no inheritance, or replace with real parent package name >>>
@@ -56,6 +56,7 @@ sub ast_to_rperl__generate {
 
     foreach my object $header_or_module (@{$modules_and_headers}) {
 #        RPerl::diag('in Module->ast_to_rperl__generate(), have $header_or_module = ' . "\n" . RPerl::Parser::rperl_ast__dump($header_or_module) . "\n\n");
+#        RPerl::diag('in Module->ast_to_rperl__generate(), have $header_or_module = ' . "\n" . $header_or_module . "\n\n");
         if ((ref $header_or_module) eq 'ModuleHeader_23') {
             if ($header_started) {
                 die 'ERROR ECOGEASRP34, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: ModuleHeader found without first finding Module for previous ModuleHeader, dying' . "\n";
@@ -73,7 +74,9 @@ sub ast_to_rperl__generate {
         }
         elsif (((ref $header_or_module) eq 'Module_24') or ((ref $header_or_module) eq 'Module_25')) {
             if ($header_started) {
+#                RPerl::diag('in Module->ast_to_rperl__generate(), have Module_24 or Module_25, about to call ast_to_rperl__generate()...', "\n");
                 $rperl_source_subgroup = $header_or_module->ast_to_rperl__generate($package_name_underscores, $modes);
+#                RPerl::diag('in Module->ast_to_rperl__generate(), have Module_24 or Module_25, ret from ast_to_rperl__generate()', "\n");
                 RPerl::Generator::source_group_append($rperl_source_group, $rperl_source_subgroup);
                 $header_started = 0;
                 $current_package_count++;

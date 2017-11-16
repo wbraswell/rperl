@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get @ARG, Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.047_000;
+our $VERSION = 0.048_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -99,10 +99,15 @@ sub parent_and_grandparent_package_names {
 #    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), top of subroutine, received $ARG[0] = ', $ARG[0], "\n";
     no strict;
 
+#    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), CHECKPOINT b000', "\n" ;
+
     RPerl::eval_use($ARG[0]);
+
+#    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), CHECKPOINT b001', "\n" ;
 
     my $arg0_isa_string = $ARG[0] . '::ISA';
 #    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), have $arg0_isa_string = ', $arg0_isa_string, "\n";
+#    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), CHECKPOINT b002', "\n" ;
 
     my @arg0_isa = @{$arg0_isa_string};
 #    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), have @arg0_isa = ', Dumper(\@arg0_isa), "\n";

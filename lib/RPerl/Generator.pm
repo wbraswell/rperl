@@ -4,7 +4,7 @@ package RPerl::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -401,8 +401,8 @@ sub ast_to_rperl__generate {
     { my string_hashref $RETURN_TYPE };
     ( my object $node, my string_hashref $modes) = @ARG;
 
-    #    RPerl::diag("in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n");
-    #    RPerl::diag("in Generator::ast_to_rperl__generate(), received \$modes =\n" . Dumper($modes) . "\n");
+#    RPerl::diag("in Generator::ast_to_rperl__generate(), received \$node =\n" . RPerl::Parser::rperl_ast__dump($node) . "\n");
+#    RPerl::diag('in Generator::ast_to_rperl__generate(), received $modes =', "\n", Dumper($modes), "\n");
 
     RPerl::verbose('GENERATE:           Generate RPerl syntax...       ');
 
@@ -413,10 +413,17 @@ sub ast_to_rperl__generate {
         die 'ERROR ECOGEMO01, RPERL GENERATOR, RPERL TYPES MODE: ' . q{'PERL'} . ' types mode expected in PERL ops mode, but non-matching value ' . q{'} . $modes->{types} . q{'} . ' found, dying' . "\n";
     }
 
+#    RPerl::diag('in Generator::ast_to_rperl__generate(), about to call grammar_rules__map()...', "\n");
+
     grammar_rules__map();
+
+#    RPerl::diag('in Generator::ast_to_rperl__generate(), ret from grammar_rules__map()', "\n");
+#    RPerl::diag('in Generator::ast_to_rperl__generate(), about to call $node->ast_to_rperl__generate($modes)...', "\n");
 
     # NEED FIX: check to ensure we are generating a valid return object
     my string_hashref $rperl_source_group = $node->ast_to_rperl__generate($modes);
+
+#    RPerl::diag('in Generator::ast_to_rperl__generate(), ret from $node->ast_to_rperl__generate($modes)...', "\n");
 
     RPerl::verbose( ' done.' . "\n" );
     return $rperl_source_group;

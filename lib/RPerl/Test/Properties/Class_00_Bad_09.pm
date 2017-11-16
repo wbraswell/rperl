@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'Transliteration replacement not terminated' >>>
+# <<< PARSE_ERROR: 'Replacement list is longer than search list' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
