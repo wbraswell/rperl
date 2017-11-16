@@ -50,6 +50,12 @@ our $INC_SCANNED = {};    # global variable to avoid repeated calls to scan_deps
 sub filter {
     ( my $input ) = @ARG;
 
+    my $modified_tag = '# [[[<<< AUTOMATICALLY MODIFIED BY RPerl::filter() >>>]]]';
+    if ((index $input, $modified_tag) > 0) {
+#       print {*STDERR} "\n", 'in RPerl::filter(), file already modified here, SKIPPING', "\n";
+       return $input; 
+    }
+
     my $output = q{};
     my $namespace_root;
     my $package = q{};
@@ -65,6 +71,8 @@ sub filter {
     my $inc_skip = {};
 
     my $rand_serial = rand();
+
+#    print {*STDERR} 'in RPerl::filter(), $rand_serial = ' . $rand_serial . ', near top of subroutine', "\n";
 
     # pre-generate $inc_skip to use in this file and in Module::ScanDeps::scan_deps()
     foreach my $included_filename_short ( sort keys %INC ) {
@@ -134,6 +142,11 @@ sub filter {
 #        print {*STDERR} 'in RPerl::filter(), have $input_line = ' . $input_line . "\n";
         
         if ( $input_line =~ /^\s*package\s+(.*)\s*;/xms ) {
+            if ($package ne q{}) {
+                # multiple packages in one module file
+                $output .= $post_package_lines;
+            }
+
             # not all packages are classes
             $package_line = $input_line;
             $package = $1;
@@ -227,13 +240,16 @@ sub filter {
         }
     }
 
-    # package but not a class
+    # final package (not class)
     $output .= $post_package_lines;
-    
+
     # replace fake SSE infix operators with their actually-overloaded single-character selves
     foreach my $sse_define_pair (['sse_add', '+'], ['sse_sub', '-'], ['sse_mul', '*'], ['sse_div', '/']) {
         $output =~ s/$sse_define_pair->[0]/$sse_define_pair->[1]/gxms;
     }
+
+    # append modified tag at the end, so it will show up in repeated calls to 'use RPerl;' in a multi-package module
+    $output .= "\n" . $modified_tag . "\n";
 
 #    print {*STDERR} "\n" . 'in RPerl::filter(), have post-modification $output = ' . "\n" . '<<<<<<<<<<<<<<<<================ BEGIN OUTPUT FILE ================>>>>>>>>>>>>>>' . "\n" . $output . '<<<<<<<<<<<<<<<<================ END OUTPUT FILE ================>>>>>>>>>>>>>>' . "\n\n";
 

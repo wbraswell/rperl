@@ -1,14 +1,13 @@
 # [[[ PREPROCESSOR ]]]
 # <<< TYPE_CHECKING: TRACE >>>
-# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: "Can't locate RPerl/Test/Subclass/MySubclasserF_Bad_02.pm in @INC" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Subclass::MySubclassersFG_Bad_02;
+
+package RPerl::Test::Exporter::Class_FG_Exporter_Importer_03_Good;
 use strict;
 use warnings;
-our $VERSION = 0.002_000;
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Test);
@@ -18,6 +17,10 @@ use RPerl::Test;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
+# [[[ EXPORTS ]]]
+use RPerl::Exporter qw(import);
+our @EXPORT = qw(multiply_return_FG);
+
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = { bax => my integer $TYPED_bax = 123 };
 
@@ -25,7 +28,7 @@ our hashref $properties = { bax => my integer $TYPED_bax = 123 };
 
 sub multiply_bax_FG {
     { my void::method $RETURN_TYPE };
-    ( my RPerl::Test::Subclass::MySubclassersFG_Bad_02 $self, my integer $multiplier ) = @ARG;
+    ( my RPerl::Test::Exporter::Class_FG_Exporter_Importer_03_Good $self, my integer $multiplier ) = @ARG;
     $self->{bax} = $self->{bax} * $multiplier;
     return;
 }
@@ -39,16 +42,19 @@ sub multiply_return_FG {
 1;    # end of class
 
 
-# [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Subclass::MySubclasserF_Bad_02;
+package RPerl::Test::Exporter::Class_F_Exporter_Importer_03_Good;
 use strict;
 use warnings;
-our $VERSION = 0.002_000;
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent -norequire, qw(RPerl::Test::Subclass::MySubclassersFG_Bad_02);
-{ RPerl::Test::Subclass::MySubclassersFG_Bad_02->import(); }
+use parent -norequire, qw(RPerl::Test::Exporter::Class_FG_Exporter_Importer_03_Good);
+{ RPerl::Test::Exporter::Class_FG_Exporter_Importer_03_Good->import(); }
+
+# [[[ EXPORTS ]]]
+use RPerl::Exporter qw(import);
+our @EXPORT = qw(multiply_return_FG multiply_return_F);
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = { xab => my integer $TYPED_xab = 321 };
@@ -57,7 +63,7 @@ our hashref $properties = { xab => my integer $TYPED_xab = 321 };
 
 sub multiply_bax_F {
     { my void::method $RETURN_TYPE };
-    ( my RPerl::Test::Subclass::MySubclasserF_Bad_02 $self, my integer $multiplier ) = @ARG;
+    ( my RPerl::Test::Exporter::Class_F_Exporter_Importer_03_Good $self, my integer $multiplier ) = @ARG;
     $self->{bax} = $self->{bax} * $multiplier;
     return;
 }
@@ -71,16 +77,15 @@ sub multiply_return_F {
 1;    # end of class
 
 
-# [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Subclass::MySubclasserG_Bad_02;
+package RPerl::Test::Exporter::Class_G_Importer_03_Good;
 use strict;
 use warnings;
-our $VERSION = 0.002_000;
+our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent qw(RPerl::Test::Subclass::MySubclasserF_Bad_02);
-{ RPerl::Test::Subclass::MySubclasserF_Bad_02->import(); }
+use parent -norequire, qw(RPerl::Test::Exporter::Class_F_Exporter_Importer_03_Good);
+{ RPerl::Test::Exporter::Class_F_Exporter_Importer_03_Good->import(); }
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = { xba => my integer $TYPED_xba = 312 };
@@ -89,7 +94,7 @@ our hashref $properties = { xba => my integer $TYPED_xba = 312 };
 
 sub multiply_bax_G {
     { my void::method $RETURN_TYPE };
-    ( my RPerl::Test::Subclass::MySubclasserG_Bad_02 $self, my integer $multiplier ) = @ARG;
+    ( my RPerl::Test::Exporter::Class_G_Importer_03_Good $self, my integer $multiplier ) = @ARG;
     $self->{bax} = $self->{bax} * $multiplier;
     return;
 }

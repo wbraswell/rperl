@@ -98,6 +98,7 @@ sub import {
 
 #    RPerl::diag(q{in Exporter::import(), have $package_exporter = '}, $package_exporter, q{'}, "\n");
 #    RPerl::diag(q{in Exporter::import(), have @{$package_exporter . '::EXPORT'} = }, Dumper(\@{$package_exporter . '::EXPORT'}), "\n");
+#    RPerl::diag(q{in Exporter::import(), have @{$package_exporter . '::EXPORT_OK'} = }, Dumper(\@{$package_exporter . '::EXPORT_OK'}), "\n");
 
     # there are still arguments remaining to be received
     if (scalar @ARG) {
@@ -290,8 +291,8 @@ sub import {
 #                        $subroutine_arguments_check_code_call .= 'print eval ' . $subroutine_arguments_check_code_name . '(), "\n\n";';
 #                        $subroutine_arguments_check_code_call .= q{::integer_CHECKTRACE( $_[0], '$hard_coded', 'hard_coded()' );};
 #                        $subroutine_arguments_check_code_call .= q{::integer_CHECKTRACE( 21, '$hard_coded', 'hard_coded()' );};
-                        $subroutine_arguments_check_code_call = 'print qq{BEFORE ARGS CHECK CODE EVAL1\n};' . $subroutine_arguments_check_code_call;
-                        $subroutine_arguments_check_code_call .= 'print qq{AFTER ARGS CHECK CODE EVAL1\n};';
+#                        $subroutine_arguments_check_code_call = 'print qq{BEFORE ARGS CHECK CODE EVAL1\n};' . $subroutine_arguments_check_code_call;
+#                        $subroutine_arguments_check_code_call .= 'print qq{AFTER ARGS CHECK CODE EVAL1\n};';
     
                         # define actual exported subroutine
                         my $subroutine_definition_code = q{};

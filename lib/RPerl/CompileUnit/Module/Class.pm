@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get @ARG, Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.046_000;
+our $VERSION = 0.047_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -296,6 +296,7 @@ sub create_symtab_entries_and_accessors_mutators {
                 ( not exists $rperlnamespaces_generated::RPERL_DEPS->{$namespace_root} ) and
                 ( not exists $rperlnamespaces_generated::RPERL_FILES->{$module_filename_short}) )
         {
+#            RPerl::diag("\n\n", '=' x 50, "\n" );
 #            RPerl::diag( 'in Class.pm INIT block, not skipping due to CORE & RPERL_DEPS namespaces, $module_filename_long = ' . $module_filename_long . "\n" );
 #            RPerl::diag(q{in Class.pm INIT block, have $namespace_root = '} . $namespace_root . "'\n");
 
@@ -390,10 +391,13 @@ sub create_symtab_entries_and_accessors_mutators {
  
                 # package declaration
                 if ( $module_file_line =~ /^\s*package\s+/xms ) {
+#                    RPerl::diag( 'in Class.pm INIT block, found package declaration', "\n" );
 
                     # object properties, save types from just-finished package
                     if ($inside_package) {
+#                        RPerl::diag( 'in Class.pm INIT block, already $inside_package, about to call save_object_properties_types()...', "\n" );
                         $object_properties_types = save_object_properties_types( $package_name, $object_properties_string, $object_properties_types );
+#                        RPerl::diag( 'in Class.pm INIT block, already $inside_package, ret from save_object_properties_types()', "\n" );
                         $object_properties_string = q{};
                     }
                     $inside_package = 1;
@@ -484,7 +488,6 @@ sub create_symtab_entries_and_accessors_mutators {
 #                if ( $module_file_line =~ /^\s*sub\s+(\w+)\s*\{[\s\n\r]*\{\s*my\s+([\w:]+)\s+\$RETURN_TYPE\s*\};/xms ) {  # can't match multi-line content against single-line input
 
                 # first half of subroutine header (name)
-#                if ( $module_file_line =~ /^\s*sub\s+(\w+)\s*\{/xms ) {
                 if ( $module_file_line =~ /^\s*sub\s+(\w+)\s*\{\s*(.*)$/xms ) {
 #                    RPerl::diag(q{in Class.pm INIT block, found first half of subroutine header for } . $1 . q{() in $module_filename_short = } . $module_filename_short . "\n");
                     if ($inside_subroutine_header) {
@@ -533,7 +536,6 @@ sub create_symtab_entries_and_accessors_mutators {
                     RPerl::warning(q{WARNING WCOPR01, PRE-PROCESSOR: Likely typo of '$RETURN_VALUE' instead of '$RETURN_TYPE' in subroutine } . $subroutine_name . q{() in $module_filename_short = } . $module_filename_short . "\n");
                 }
                 # second half of subroutine header (return type)
-#                if ( $module_file_line =~ /^\s*\{\s*my\s+([\w:]+)\s+\$RETURN_TYPE\s*\}\s*;/xms ) {
                 if ( $module_file_line =~ /^\s*\{\s*my\s+([\w:]+)\s+\$RETURN_TYPE\s*\}\s*;\s*(.*)/xms ) {
 #                    RPerl::diag(q{in Class.pm INIT block, found second half of subroutine header for } . $subroutine_name . q{() in $module_filename_short = } . $module_filename_short . "\n");
                     if ($inside_subroutine_header) {
@@ -602,7 +604,7 @@ sub create_symtab_entries_and_accessors_mutators {
                     }
 #                    else { RPerl::diag(q{in Class.pm INIT block, have $use_rperl, enabling inside subroutine in $module_filename_short = } . $module_filename_short . "\n"); }
 
-#                    RPerl::diag( q{in Class.pm INIT block, have $inside_subroutine = 1} . "\n" );
+#                    RPerl::diag('in Class.pm INIT block, have $inside_subroutine = 1', "\n");
 #                    RPerl::diag("in Class.pm INIT block, have \$module_file_line =\n$module_file_line\n");
                     if ( $module_file_line =~ /^\s*\(\s*my/xms ) {
                         $inside_subroutine_arguments = 1;
@@ -711,7 +713,7 @@ sub create_symtab_entries_and_accessors_mutators {
 
                 foreach my $property_name ( sort keys %{$object_properties} ) {
 
- #                   RPerl::diag("in Class.pm INIT block, about to create accessors/mutators, have \$property_name = '$property_name'\n");
+#                    RPerl::diag("in Class.pm INIT block, about to create accessors/mutators, have \$property_name = '$property_name'\n");
                     # DEV NOTE, CORRELATION #rp003: avoid re-defining class accessor/mutator methods; so far only triggered by RPerl::CodeBlock::Subroutine
                     # because it has a special BEGIN{} block with multiple package names including it's own package name
 
@@ -996,6 +998,7 @@ sub activate_subroutine_args_checking {
     do
     {
         no strict;
+
         # create unchecked symbol table entry for original subroutine
         *{ $package_name . '::__UNCHECKED_' . $subroutine_name } = \&{ $package_name . '::' . $subroutine_name };  # short form, symbol table direct, not strict
 
@@ -1015,6 +1018,7 @@ sub activate_subroutine_args_checking {
 #        ${ $check_code_subroutine_name } = $subroutine_arguments_check_code;  # DOES NOT WORK
 #        $subroutine_definition_code .= "\n" . '    $' . $check_code_subroutine_name . q{ =<<'EOF';} . "\n" . $subroutine_arguments_check_code . "\n" . 'EOF' . "\n";  # DOES NOT WORK
 #        RPerl::diag('in Class::activate_subroutine_args_checking(), have $' . $check_code_subroutine_name . '  = ' . "\n" . '[BEGIN_CHECK_CODE]' . "\n" . ${ $check_code_subroutine_name } . "\n" . ' [END_CHECK_CODE]' . "\n");
+#        RPerl::diag('in Class::activate_subroutine_args_checking(), have $' . $check_code_subroutine_name . '  = ' . "\n" . '[BEGIN_CHECK_CODE]' . "\n" . $check_code_subroutine_name . "\n" . ' [END_CHECK_CODE]' . "\n");
  
         $subroutine_definition_code .= "\n" . '*' . $check_code_subroutine_name . ' = sub {' . "\n" . '    my $retval ' . q{ =<<'EOF';} . "\n" . $subroutine_arguments_check_code . "\n" . 'EOF' . "\n" . '};' . "\n";
     };

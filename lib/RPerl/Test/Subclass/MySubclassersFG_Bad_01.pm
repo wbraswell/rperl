@@ -48,7 +48,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent -norequire, qw(RPerl::Test::Subclass::MySubclassersFG_Bad_01);
-use RPerl::Test::Subclass::MySubclasserF_Bad_01;
+use RPerl::Test::Subclass::MySubclassersFG_Bad_01;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = { xab => my integer $TYPED_xab = 321 };
@@ -80,7 +80,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent -norequire, qw(RPerl::Test::Subclass::MySubclasserF_Bad_01);
-BEGIN { RPerl::Test::Subclass::MySubclasserF_Bad_01->import(); }
+{ RPerl::Test::Subclass::MySubclasserF_Bad_01->import(); }
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = { xba => my integer $TYPED_xba = 312 };

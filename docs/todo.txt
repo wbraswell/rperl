@@ -1,16 +1,18 @@
 DONE
+    Monolithic Modules, Enable Proper Exporting & Class Inheritance in PERLOPS_PERLTYPES
 
 DOING
-    new subroutine headers
-        Learning RPerl
-        PhysicsPerl
-        MathPerl
     RPerl::Exporter
-        re-enable t/10 & t/11
+        re-enable t/10 & t/11  <<< ==== DO THIS FIRST!!! === >>>
+        Class/Generator.pm, error if class name from 'use parent Foo' does not match class name from following 'use Foo' or '{ Foo->import(); }'
         Class/Generator.pm & Package.pm & Include.pm: CPPOPS_CPPTYPES
         fix & test *_CHECK*() exporting in rperlgmp.pm & rperlsse.pm, as hard-coded in rperlgsl.pm
         enable qw(:all)
         Learning RPerl
+    new subroutine headers
+        Learning RPerl
+        PhysicsPerl
+        MathPerl
     Quick-Start Guide
         finish
     GSL support

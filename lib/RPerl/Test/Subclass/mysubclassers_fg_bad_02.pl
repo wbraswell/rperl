@@ -85,13 +85,5 @@ $my_g->multiply_bax_G(-2);
 print 'have $my_g->get_bax() = ', $my_g->get_bax(), "\n";
 print 'have RPerl::Test::Subclass::MySubclasserG_Good::multiply_return_G(-11, 33) = ', RPerl::Test::Subclass::MySubclasserG_Good::multiply_return_G(-11, 33), "\n";
 
-# START HERE: create Bad variants to ensure normal type-checking works
-# START HERE: create Bad variants to ensure normal type-checking works
-# START HERE: create Bad variants to ensure normal type-checking works
-
-# START HERE AFTER: create tests for class Exporter to subclass-in-same-file using new syntax BEGIN { Class->import(); } for parent include (with commented code lines above) 
-
-# START HERE AFTER AFTER: create tests for Exporter, multiple packages in one file, using new syntax 'BEGIN { Package->import(); }' as Include production
-
 print 'still no errors', "\n";
 
