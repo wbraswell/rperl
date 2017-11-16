@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'Replacement list is longer than search list' >>>
+# <<< PARSE_ERROR: 'eplacement' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
