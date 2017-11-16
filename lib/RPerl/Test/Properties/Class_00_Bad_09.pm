@@ -1,6 +1,5 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'eplacement' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
