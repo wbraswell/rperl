@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Include;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -39,19 +39,20 @@ sub ast_to_rperl__generate {
 #        RPerl::diag( 'in Include->ast_to_rperl__generate(), have $module_name = '  . $module_name . "\n" );
     }
     elsif ( ref $self eq 'Include_55' ) {
-        # Include -> 'BEGIN {' WordScoped OP02_METHOD_THINARROW_IMP OPTIONAL-23 ')' ';' '}'
-        my string $begin_keyword_left_brace = $self->{children}->[0];
-        my string $module_name = $self->{children}->[1]->{children}->[0];
-        my string $thinarrow_import_left_parentheses = $self->{children}->[2];
+        # Include -> 'INIT' LBRACE WordScoped OP02_METHOD_THINARROW_IMP OPTIONAL-23 ')' ';' '}'
+        my string $init_keyword = $self->{children}->[0];
+        my string $left_brace = $self->{children}->[1];
+        my string $module_name = $self->{children}->[2]->{children}->[0];
+        my string $thinarrow_import_left_parentheses = $self->{children}->[3];
         my string $qw = q{};
-        if (defined $self->{children}->[3]->{children}->[0]) {
-            $qw = $self->{children}->[3]->{children}->[0]->{attr};
+        if (defined $self->{children}->[4]->{children}->[0]) {
+            $qw = $self->{children}->[4]->{children}->[0]->{attr};
         }
-        my string $right_parentheses         = $self->{children}->[4];
-        my string $semicolon         = $self->{children}->[5];
-        my string $right_brace         = $self->{children}->[6];
+        my string $right_parentheses         = $self->{children}->[5];
+        my string $semicolon         = $self->{children}->[6];
+        my string $right_brace         = $self->{children}->[7];
         $rperl_source_group->{PMC} .= 
-            $begin_keyword_left_brace . q{ } .
+            $init_keyword . q{ } . $left_brace . q{ } .
             $module_name . $thinarrow_import_left_parentheses . q{ } .
             $qw . q{ } .
             $right_parentheses . q{ } .
@@ -89,12 +90,20 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     # DEV NOTE: for now, treat all 4 of the following the same in C++, ignoring 'bar'
     # 'use Foo;'
     # 'use Foo qw(bar)'
-    # 'BEGIN { Foo->import(); }'
-    # 'BEGIN { Foo->import(qw(bar)); }'
+    # 'INIT { Foo->import(); }'
+    # 'INIT { Foo->import(qw(bar)); }'
     if (( ref $self eq 'Include_54' ) or ( ref $self eq 'Include_55' )) {
+        my string $module_name;
         # Include -> USE WordScoped ...
+        if ( ref $self eq 'Include_54' ) {
+            $module_name = $self->{children}->[1]->{children}->[0];
+        }
+        # Include -> 'INIT' LBRACE WordScoped ...
+        else {
+            $module_name = $self->{children}->[2]->{children}->[0];
+        }
+        
         # DEV NOTE: ignore manually included RPerl* and rperl* modules, presumably they will all be automatically included
-        my string $module_name = $self->{children}->[1]->{children}->[0];
         if ( $module_name =~ /^\w+Perl::Config$/ ) { # DEV NOTE, CORRELATION #rp027: MathPerl::Config, PhysicsPerl::Config, etc
 #            RPerl::diag('in CompileUnit::Include->ast_to_cpp__generate__CPPOPS_CPPTYPES(), skipping system config file $module_name = ' . $module_name . "\n");
         }

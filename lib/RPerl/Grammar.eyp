@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.011_000;
+    our $VERSION = 0.012_000;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -195,7 +195,7 @@ Package:                 Critic* Exports? Include* Constant* Subroutine+ LITERAL
 Header:                  'use strict;' 'use warnings;' USE_RPERL_AFTER? OUR VERSION_NUMBER_ASSIGN ;
 Critic:                  '## no critic qw(' WORD+ ')' ;
 Exports:                 USE_EXPORTER (OUR_EXPORT OP01_QW ';')? (OUR_EXPORT_OK OP01_QW ';')? ;
-Include:                 USE WordScoped OP01_QW? ';' | '{' WordScoped OP02_METHOD_THINARROW_IMP OP01_QW? ')' ';' '}' ;
+Include:                 USE WordScoped OP01_QW? ';' | 'INIT' LBRACE WordScoped OP02_METHOD_THINARROW_IMP OP01_QW? ')' ';' '}' ;
 Constant:                'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';' ;
 #Constant:               'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
 #ConstantValue:          Literal | LBRACKET TypeInnerConstant? Literal (OP21_LIST_COMMA TypeInnerConstant? Literal)* ']' | 
@@ -306,7 +306,7 @@ Header_39 => 'RPerl::NonGenerator',                                         # He
 Critic_42 => 'RPerl::CompileUnit::Critic',                                  # Critic -> '## no critic qw(' PLUS-17 ')'
 Exports_49 => 'RPerl::NonGenerator',                                        # Exports -> USE_EXPORTER OPTIONAL-19 OPTIONAL-21
 Include_54 => 'RPerl::CompileUnit::Include',                                # Include -> USE WordScoped OPTIONAL-22 ';'
-Include_55 => 'RPerl::CompileUnit::Include',                                # Include -> '{' WordScoped OP02_METHOD_THINARROW_IMP OPTIONAL-23 ')' ';' '}'
+Include_55 => 'RPerl::CompileUnit::Include',                                # Include -> 'INIT' LBRACE WordScoped OP02_METHOD_THINARROW_IMP OPTIONAL-23 ')' ';' '}'
 Constant_56 => 'RPerl::CompileUnit::Constant',                              # Constant -> 'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';'
 Subroutine_61 => 'RPerl::CodeBlock::Subroutine',                            # Subroutine -> SUB WORD LBRACE LBRACE MY Type '$RETURN_TYPE' '}' ';' OPTIONAL-22 STAR-23 '}'
 SubroutineArguments_65 => 'RPerl::CodeBlock::Subroutine::Arguments',        # SubroutineArguments -> LPAREN_MY Type VARIABLE_SYMBOL STAR-25 ')' OP19_VARIABLE_ASSIGN '@ARG;'

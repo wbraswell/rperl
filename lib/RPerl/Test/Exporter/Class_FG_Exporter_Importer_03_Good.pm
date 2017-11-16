@@ -50,7 +50,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent -norequire, qw(RPerl::Test::Exporter::Class_FG_Exporter_Importer_03_Good);
-{ RPerl::Test::Exporter::Class_FG_Exporter_Importer_03_Good->import(); }
+INIT { RPerl::Test::Exporter::Class_FG_Exporter_Importer_03_Good->import(); }
 
 # [[[ EXPORTS ]]]
 use RPerl::Exporter qw(import);
@@ -85,7 +85,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent -norequire, qw(RPerl::Test::Exporter::Class_F_Exporter_Importer_03_Good);
-{ RPerl::Test::Exporter::Class_F_Exporter_Importer_03_Good->import(); }
+INIT { RPerl::Test::Exporter::Class_F_Exporter_Importer_03_Good->import(); }
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = { xba => my integer $TYPED_xba = 312 };

@@ -40,7 +40,7 @@ use RPerl::Exporter qw(import);
 our @EXPORT_OK = qw(multiply_return_FG multiply_return_F);
 
 # [[[ INCLUDES ]]]
-{ RPerl::Test::Exporter::Package_FG_Exporter_Importer_01_Good->import(); }
+INIT { RPerl::Test::Exporter::Package_FG_Exporter_Importer_01_Good->import(); }
 
 # [[[ SUBROUTINES ]]]
 
@@ -60,7 +60,7 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ INCLUDES ]]]
-{ RPerl::Test::Exporter::Package_F_Exporter_Importer_01_Good->import(qw(multiply_return_FG multiply_return_F)); }
+INIT { RPerl::Test::Exporter::Package_F_Exporter_Importer_01_Good->import(qw(multiply_return_FG multiply_return_F)); }
 
 # [[[ SUBROUTINES ]]]
 
