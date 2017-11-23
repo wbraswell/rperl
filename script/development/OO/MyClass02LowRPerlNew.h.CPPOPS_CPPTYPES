@@ -1,0 +1,195 @@
+// [[[ HEADER ]]]
+using std::cout;  using std::cerr;  using std::endl;
+
+#ifndef __CPP__INCLUDED__MyClass02LowRPerlNew_h
+#define __CPP__INCLUDED__MyClass02LowRPerlNew_h 0.001_000
+
+// [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
+#include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
+#include <RPerl/CompileUnit/Module/Class.cpp>
+
+# ifdef __PERL__TYPES
+
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+
+# elif defined __CPP__TYPES
+
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+
+// [[[ OO INHERITANCE ]]]
+class MyClass02LowRPerlNew : public RPerl__CompileUnit__Module__Class__CPP {
+public:
+    // [[[ OO PROPERTIES ]]]
+    integer bar = 23;
+
+    // [[[ OO METHODS ]]]
+
+    // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
+    integer get_bar() { return bar; }  // WBRASWELL: remove this->
+    void set_bar(integer bar_new) { bar = bar_new; }  // WBRASWELL: remove this->
+
+    // <<< CONSTRUCTOR & DESTRUCTOR >>>
+    MyClass02LowRPerlNew() {}
+    ~MyClass02LowRPerlNew() {}
+
+    // <<< CLASS NAME REPORTER >>>
+    virtual string myclassname() { return (const string) "MyClass02LowRPerlNew"; }
+
+    // <<< USER-DEFINED METHODS >>>
+    void double_bar_save();
+    integer double_bar_return();
+};  // end of class
+
+// [[[ OO SUBCLASSES ]]]
+#define MyClass02LowRPerlNew_rawptr MyClass02LowRPerlNew*
+typedef std::unique_ptr<MyClass02LowRPerlNew> MyClass02LowRPerlNew_ptr;
+typedef std::vector<MyClass02LowRPerlNew_ptr> MyClass02LowRPerlNew_arrayref;
+typedef std::unordered_map<string, MyClass02LowRPerlNew_ptr> MyClass02LowRPerlNew_hashref;
+typedef std::unordered_map<string, MyClass02LowRPerlNew_ptr>::iterator MyClass02LowRPerlNew_hashref_iterator;
+
+// <<< OPERATIONS & DATA TYPES REPORTER >>>
+integer MyClass02LowRPerlNew__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
+
+
+
+
+
+// WBRASWELL
+// constructor wrapper class, allow initialization of named parameters using method chaining
+class NEW_MyClass02LowRPerlNew {
+public:
+    // wrapped object
+    MyClass02LowRPerlNew_ptr wrapped_object;
+
+    // constructor w/ initializer list for wrapped_object data member
+    NEW_MyClass02LowRPerlNew() : wrapped_object{new MyClass02LowRPerlNew()} {}
+
+    // initializers
+    NEW_MyClass02LowRPerlNew& bar(integer bar_init) { wrapped_object->bar = bar_init; return *this; }
+
+    // chaining terminator, move semantics
+    MyClass02LowRPerlNew_ptr&& NEW() { return std::move(wrapped_object); }
+};
+
+
+
+
+
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+
+# else
+
+Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+
+# endif
+
+#endif
+
+// end of class
+
+
+// [[[ ADDITIONAL CLASSES ]]]
+
+// [[[ HEADER ]]]
+using std::cout;  using std::cerr;  using std::endl;
+
+#ifndef __CPP__INCLUDED__MySubclass02LowRPerlNew_h
+#define __CPP__INCLUDED__MySubclass02LowRPerlNew_h 0.001_000
+
+// [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
+
+# ifdef __PERL__TYPES
+
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+
+# elif defined __CPP__TYPES
+
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+
+// [[[ OO INHERITANCE ]]]
+class MySubclass02LowRPerlNew : public MyClass02LowRPerlNew {
+public:
+    // [[[ OO PROPERTIES ]]]
+    integer bax = 123;
+
+    // [[[ OO METHODS ]]]
+
+    // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
+    integer get_bax() { return bax; }  // WBRASWELL: remove this->
+    void set_bax(integer bax_new) { bax = bax_new; }  // WBRASWELL: remove this->
+    integer get_bar() { return bar; }  // WBRASWELL: remove this->
+    void set_bar(integer bar_new) { bar = bar_new; }  // WBRASWELL: remove this->
+
+    // <<< CONSTRUCTOR & DESTRUCTOR >>>
+    MySubclass02LowRPerlNew() {}
+    ~MySubclass02LowRPerlNew() {}
+
+    // <<< CLASS NAME REPORTER >>>
+    virtual string myclassname() { return (const string) "MySubclass02LowRPerlNew"; }
+
+    // <<< USER-DEFINED METHODS >>>
+    void triple_bax_save();
+    integer triple_bax_return();
+    integer add_bax_return(integer addend);
+    integer subtract_bax_return(integer subtrahend);
+    integer multiply_bax_return(integer multiplier);
+    integer multiply_multiply_bax_return(integer multiplier, integer multiplier2);
+};  // end of class
+
+// [[[ OO SUBCLASSES ]]]
+#define MySubclass02LowRPerlNew_rawptr MySubclass02LowRPerlNew*
+typedef std::unique_ptr<MySubclass02LowRPerlNew> MySubclass02LowRPerlNew_ptr;
+typedef std::vector<MySubclass02LowRPerlNew_ptr> MySubclass02LowRPerlNew_arrayref;
+typedef std::unordered_map<string, MySubclass02LowRPerlNew_ptr> MySubclass02LowRPerlNew_hashref;
+typedef std::unordered_map<string, MySubclass02LowRPerlNew_ptr>::iterator MySubclass02LowRPerlNew_hashref_iterator;
+
+// <<< OPERATIONS & DATA TYPES REPORTER >>>
+integer MySubclass02LowRPerlNew__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
+
+
+
+
+
+
+// WBRASWELL
+// constructor wrapper class, allow initialization of named parameters using method chaining
+class NEW_MySubclass02LowRPerlNew {
+public:
+    // wrapped object
+    MySubclass02LowRPerlNew_ptr wrapped_object;
+
+    // constructor w/ initializer list for wrapped_object data member
+    NEW_MySubclass02LowRPerlNew() : wrapped_object{new MySubclass02LowRPerlNew()} {}
+
+    // initializers
+    NEW_MySubclass02LowRPerlNew& bar(integer bar_init) { wrapped_object->bar = bar_init; return *this; }  // INHERITED PROPERTY
+    NEW_MySubclass02LowRPerlNew& bax(integer bax_init) { wrapped_object->bax = bax_init; return *this; }
+
+    // chaining terminator, move semantics
+    MySubclass02LowRPerlNew_ptr&& NEW() { return std::move(wrapped_object); }
+};
+
+
+
+
+
+
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+
+# else
+
+Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+
+# endif
+
+#endif
+
+// end of class

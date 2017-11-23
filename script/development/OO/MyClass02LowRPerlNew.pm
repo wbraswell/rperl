@@ -48,7 +48,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent -norequire, qw(MyClass02LowRPerlNew);  # CORRECT: EDITS @ISA ONLY
-BEGIN { MyClass02LowRPerlNew->import(); }  # CORRECT: IMPORTS ONLY
+INIT { MyClass02LowRPerlNew->import(); }  # CORRECT: IMPORTS ONLY
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator

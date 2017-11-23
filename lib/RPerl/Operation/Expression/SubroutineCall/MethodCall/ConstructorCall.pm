@@ -35,12 +35,12 @@ sub ast_to_rperl__generate {
     }
 
     # Expression -> WordScoped OP02_METHOD_THINARROW_NEW OPTIONAL-36 ')'
-    my object $type                      = $self->{children}->[0];
+    my object $type                      = $self->{children}->[0]->{children}->[0];
     my string $thin_arrow_new_left_paren = $self->{children}->[1];
     my object $properties_init_optional  = $self->{children}->[2];
     my string $right_paren               = $self->{children}->[3];
 
-    $rperl_source_group->{PMC} .= $type->{children}->[0] . $thin_arrow_new_left_paren;
+    $rperl_source_group->{PMC} .= $type . $thin_arrow_new_left_paren;
 
     if ( exists $properties_init_optional->{children}->[0] ) {
         $rperl_source_subgroup = $properties_init_optional->{children}->[0]->ast_to_rperl__generate($modes);
@@ -85,10 +85,10 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     if ( exists $properties_init_optional->{children}->[0] ) {
         $properties_init_optional = $properties_init_optional->{children}->[0];  # unwrap hashref object
-#        RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have unwrapped $properties_init_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($properties_init_optional) . "\n" );
+        RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have unwrapped $properties_init_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($properties_init_optional) . "\n" );
 
         my object $property_0 = $properties_init_optional->{children}->[1];
-#        RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_0 = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_0) . "\n" );
+        RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_0 = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_0) . "\n" );
 
         if ( ( ref $property_0 ) ne 'HashEntry_224' ) {
             die RPerl::Parser::rperl_rule__replace(
@@ -97,7 +97,8 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
         $cpp_source_subgroup = $self->ast_to_cpp__generate__CPPOPS_CPPTYPES__property_init($modes, $property_0);
         RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup from $property_0 = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
-        die 'TMP DEBUG';
+#        die 'TMP DEBUG';
+        $cpp_source_group->{CPP} .= ' <<<DUMMY CODE, OBJECT PROPERTY INIT>>> ';
 
         # START HERE: generate C++ for property 0, add foreach loop to handle remaining properties, copy CPPOPS_CPPTYPES property init semantics to PERLOPS_PERLTYPES mode above, create passing & failing tests
         # START HERE: generate C++ for property 0, add foreach loop to handle remaining properties, copy CPPOPS_CPPTYPES property init semantics to PERLOPS_PERLTYPES mode above, create passing & failing tests

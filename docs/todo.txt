@@ -2,6 +2,17 @@ DONE
     Monolithic Modules, Enable Proper Exporting & Class Inheritance in PERLOPS_PERLTYPES
 
 DOING
+    Moo(se) support
+        Always
+            better subroutine/method return types; GRAMMAR
+            new() accept properties init values; GRAMMAR
+            subroutine arguments received via 'shift' instead of @ARG only; GRAMMAR
+            package 'integer' exports sub 'integer()' to check type, and friends
+            accessors & mutators available (only?) w/out using 'get_' & 'set_' prefixes; Class.pm PERLOPS_PERLTYPES, Properties.pm? CPPOPS_CPPTYPES
+        When Moo(se) is enabled
+            'use parent' should not exist, replaced by 'extends'; GRAMMAR
+            $properties should not exist, replaced by 'has'; GRAMMAR
+            new() from Moo(se) instead of RPerl
     RPerl::Exporter
         re-enable t/10 & t/11  <<< ==== DO THIS FIRST!!! === >>>
         Class/Generator.pm, error if class name from 'use parent Foo' does not match class name from following 'use Foo' or '{ Foo->import(); }'
@@ -35,17 +46,6 @@ DOING
         substitution LHS must be variable
         non-destructive regex /r
         !~ logic
-    Moo(se) support
-        Always
-            better subroutine/method return types; GRAMMAR
-            new() accept properties init values; GRAMMAR
-            subroutine arguments received via 'shift' instead of @ARG only; GRAMMAR
-            package 'integer' exports sub 'integer()' to check type, and friends
-            accessors & mutators available (only?) w/out using 'get_' & 'set_' prefixes; Class.pm PERLOPS_PERLTYPES, Properties.pm? CPPOPS_CPPTYPES
-        When Moo(se) is enabled
-            'use parent' should not exist, replaced by 'extends'; GRAMMAR
-            $properties should not exist, replaced by 'has'; GRAMMAR
-            new() from Moo(se) instead of RPerl
 
     allow non-standard shebangs
 

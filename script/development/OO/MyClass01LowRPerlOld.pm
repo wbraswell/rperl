@@ -45,7 +45,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent -norequire, qw(MyClass01LowRPerlOld);
-BEGIN { MyClass01LowRPerlOld->import(); }
+INIT { MyClass01LowRPerlOld->import(); }
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
