@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.029_000;
+our $VERSION = 0.030_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -794,6 +794,7 @@ sub save_source_files {
 
 #    RPerl::diag( 'in Compiler::save_source_files(), have [sort keys %{$source_group}] = ' . Dumper([sort keys %{$source_group}]) . "\n" );
 #    RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{H} = ' . Dumper($source_group->{H}) . "\n" );
+#    RPerl::diag( 'in Compiler::save_source_files(), have $source_group->{_PMC_includes} = ' . Dumper($source_group->{_PMC_includes}) . "\n" );
 #    RPerl::diag( 'in Compiler::save_source_files(), have $source_group = ' . Dumper($source_group) . "\n" );
 
 #    foreach my string $suffix_key ( sort keys %{$file_name_group} ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
@@ -894,6 +895,7 @@ sub post_processor_cpp__header_unneeded {
         return $source_group_CPP_no_header;
     }
     else {
+#        RPerl::diag( 'in Compiler::post_processor_cpp__header_unneeded(), NOT removing unneeded __NEED_HEADER_PATH line' . "\n" );
         return $source_group->{CPP};
     }
 }
@@ -902,6 +904,7 @@ sub post_processor_cpp__header_unneeded {
 sub post_processor_cpp__header_or_cpp_path {
     { my string $RETURN_TYPE };
     ( my string $source_CPP, my string $file_path ) = @ARG;
+#    RPerl::diag( 'in Compiler::post_processor_cpp__header_or_cpp_path(), top of subroutine, received $file_path = ' . $file_path . "\n" );
 
     # remove leading '.\' or './' if present
     if ( $OSNAME eq 'MSWin32' ) {
@@ -916,6 +919,7 @@ sub post_processor_cpp__header_or_cpp_path {
     }
 
     $file_path = post_processor_cpp__lib_path_delete($file_path);
+#    RPerl::diag( 'in Compiler::post_processor_cpp__header_or_cpp_path(), after post_processor_cpp__lib_path_delete() have $file_path = ' . $file_path . "\n" );
 
     # DEV NOTE, CORRELATION #rp033: deferred, finally set path to H module header file in CPP module file
     $source_CPP =~ s/__NEED_HEADER_PATH/$file_path/gxms;
@@ -1346,6 +1350,9 @@ sub post_processor_cpp__pmc_generate {
                         $file_line = ( substr $file_line, 0, 43 ) . "\n" . $source_group->{_PMC_subroutines_shims}->{$module_name_underscores} . "\n\n";
                     }
                     else { $file_line = undef; }
+                }
+                elsif ( $file_line eq ( '# <<< CHANGE_ME: add OO ISA here >>>' . "\n" ) ) {
+                    $file_line = 'our @ISA = qw(' . $source_group->{_parent_names}->{$module_name_underscores} . ');' . "\n";
                 }
                 elsif ( $file_line eq ( '# <<< CHANGE_ME: add distribution-specific config include here >>>' . "\n" ) ) {
                     my string $distribution_package = ( split /::/, $source_group->{_package_name} )[0];

@@ -109,6 +109,9 @@ sub parent_and_grandparent_package_names {
 #    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), have $arg0_isa_string = ', $arg0_isa_string, "\n";
 #    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), CHECKPOINT b002', "\n" ;
 
+#    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), have HARD-CODED @RPerl::Test::OO::MyClass01Good::ISA = ', Dumper(\@RPerl::Test::OO::MyClass01Good::ISA), "\n";
+#    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), have HARD-CODED @RPerl::Test::OO::MySubclass01Good::ISA = ', Dumper(\@RPerl::Test::OO::MySubclass01Good::ISA), "\n" ;
+
     my @arg0_isa = @{$arg0_isa_string};
 #    print {*STDERR} 'in Class::parent_and_grandparent_package_names(), have @arg0_isa = ', Dumper(\@arg0_isa), "\n";
 

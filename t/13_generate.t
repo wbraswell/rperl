@@ -395,6 +395,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
 #        RPerl::diag( 'in 13_generate.t, have $types = ' . $types . "\n" );
 
         $modes->{_input_file_name} = $test_file;
+        $modes->{_input_file_name_current} = $test_file;
  
         # [[[ GENERATE ]]]
         # reset symbol table namespace & subroutine for each generate phase of each file,
@@ -474,7 +475,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
                             $test_file_reference = $reference_file_name_group->{$suffix_key};
                         }
 
-                        #                        RPerl::diag( 'in 13_generate.t, have $test_file_reference = ' . $test_file_reference . "\n" );
+#                        RPerl::diag( 'in 13_generate.t, have $test_file_reference = ' . $test_file_reference . "\n" );
 
                         # reference file does not exist (okay for some cases, such as H suffix for some .pl EXE input files)
                         if (( not -e $test_file_reference ) or ( not -f $test_file_reference ) or ( not -T $test_file_reference )) {

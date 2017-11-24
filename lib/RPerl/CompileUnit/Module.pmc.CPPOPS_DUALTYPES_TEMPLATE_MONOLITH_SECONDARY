@@ -5,6 +5,9 @@ use warnings;
 use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
+# [[[ OO INHERITANCE ]]]
+# <<< CHANGE_ME: add OO ISA here >>>
+
 # [[[ INCLUDES ]]]
 use RPerl::Inline;
 # <<< CHANGE_ME: add user-defined includes here >>>

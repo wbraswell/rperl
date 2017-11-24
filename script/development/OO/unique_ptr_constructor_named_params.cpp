@@ -18,7 +18,7 @@ public:
 // [[[ OO SUBCLASSES ]]]
 typedef std::unique_ptr<MyClass> MyClass_ptr;
 
-// wrapper class
+// constructor wrapper class, allow initialization of named parameters using method chaining
 class NEW_MyClass {
 public:
     // wrapped object
@@ -27,11 +27,11 @@ public:
     // constructor w/ initializer list for wrapped_object data member
     NEW_MyClass() : wrapped_object{new MyClass()} {}
 
-    // initializers
+    // OO properties initializers
     NEW_MyClass& bar(int bar_init) { wrapped_object->bar = bar_init; return *this; }
     NEW_MyClass& bax(int bax_init) { wrapped_object->bax = bax_init; return *this; }
 
-    // move semantics
+    // chaining terminator, move semantics
     MyClass_ptr&& NEW() { return std::move(wrapped_object); }
 };
 
@@ -44,7 +44,8 @@ int main() {
     std::cout << "in main(), have my_object_default1->get_bar() = " << my_object_default1->get_bar() << std::endl;
     std::cout << "in main(), have my_object_default1->get_bax() = " << my_object_default1->get_bax() << std::endl;
 
-    MyClass_ptr my_object_default2 = NEW_MyClass{}.NEW();
+//    MyClass_ptr my_object_default2 = NEW_MyClass{}.NEW();
+    MyClass_ptr my_object_default2 = (NEW_MyClass{}).NEW();
 
     std::cout << "in main(), have my_object_default2->bar = " << my_object_default2->bar << std::endl;
     std::cout << "in main(), have my_object_default2->bax = " << my_object_default2->bax << std::endl;
@@ -52,7 +53,8 @@ int main() {
     std::cout << "in main(), have my_object_default2->get_bar() = " << my_object_default2->get_bar() << std::endl;
     std::cout << "in main(), have my_object_default2->get_bax() = " << my_object_default2->get_bax() << std::endl;
 
-    MyClass_ptr my_object_init = NEW_MyClass{}.bar(22).bax(33).NEW();
+//    MyClass_ptr my_object_init = NEW_MyClass{}.bar(22).bax(33).NEW();
+    MyClass_ptr my_object_init = (NEW_MyClass{}).bar(22).bax(33).NEW();
 
     std::cout << "in main(), have my_object_init->bar = " << my_object_init->bar << std::endl;
     std::cout << "in main(), have my_object_init->bax = " << my_object_init->bax << std::endl;

@@ -4,7 +4,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.009_000;
+our $VERSION = 0.010_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -130,9 +130,7 @@ sub eval_use {
         $package_name\:\:cpp_load();
 #        RPerl::debug('in RPerl::eval_use() eval, $package_name\:\:cpp_load() is defined, returned from call', "\\n");
     }
-#    else {
-#        RPerl::debug('in RPerl::eval_use() eval, $package_name\:\:cpp_load() is NOT defined, skipping...', "\\n");
-#    }
+#    else { RPerl::debug('in RPerl::eval_use() eval, $package_name\:\:cpp_load() is NOT defined, skipping...', "\\n"); }
 EOL
 
 #    RPerl::debug('in RPerl::eval_use(), have $eval_string = ', "\n\n", $eval_string, "\n\n");

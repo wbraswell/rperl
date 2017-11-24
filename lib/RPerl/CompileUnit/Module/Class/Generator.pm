@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.014_000;
+our $VERSION = 0.016_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -493,6 +493,11 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my object $properties                = $self->{children}->[9];
     my object $method_or_subroutine_star = $self->{children}->[10];
 
+    if ((not exists $cpp_source_group->{_parent_names}) or (not defined $cpp_source_group->{_parent_names})) {
+        $cpp_source_group->{_parent_names} = {};
+    }
+    $cpp_source_group->{_parent_names}->{$package_name_underscores} = $parent_name;
+
     if ( $modes->{label} eq 'ON' ) {
         $cpp_source_group->{H_INCLUDES} .= '// [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]' . "\n";
         $cpp_source_group->{CPP}        .= '// [[[ INCLUDES ]]]' . "\n";
@@ -552,33 +557,80 @@ EOL
 
     # NEED FIX WIN32: change hard-coded forward-slash in generated path name below?
     # NEED FIX: handle absolute vs relative include paths
-    #    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_name = ' . $parent_name . "\n");
+#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_name = ' . $parent_name . "\n");
     my string $parent_name_path = $parent_name;
     $parent_name_path =~ s/::/\//gxms;
     $parent_name_path .= '.cpp';
-    if ( $parent_name =~ /^\w+Perl::Config$/ ) {    # DEV NOTE, CORRELATION #rp027: MathPerl::Config, PhysicsPerl::Config, etc
 
+    my string $parent_name_underscores = $parent_name;
+    $parent_name_underscores =~ s/::/__/gxms;
+
+#    RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_name_underscores = ' . $parent_name_underscores . "\n");
+
+    # DEV NOTE: avoid namespace clobbering of CPPOPS base class over PERLOPS base class
+    if ( $parent_name_underscores eq 'RPerl__CompileUnit__Module__Class' ) {
+        $parent_name_underscores .= '__CPP';
+    }
+
+    # DEV NOTE, CORRELATION #rp044: shared logic between class parent includes and misc user includes, always check both when changing either
+    my boolean $is_rperl_system = 0;
+    my boolean $is_rperl_test = 0;
+    if ( ( ( substr $parent_name_path, 0, 5 ) eq 'RPerl' ) or ( ( substr $parent_name_path, 0, 5 ) eq 'rperl' ) ) {
+        if ( ( ( substr $parent_name_path, 0, 10 ) eq 'RPerl/Test' ) or ( ( substr $parent_name_path, 0, 10 ) eq 'RPerl\Test' ) ) {
+            $is_rperl_test = 1;
+        }
+        else {
+            $is_rperl_system = 1;
+        }
+    }
+    
+    if ( $parent_name =~ /^\w+Perl::Config$/ ) {    # DEV NOTE, CORRELATION #rp027: MathPerl::Config, PhysicsPerl::Config, etc
         #        RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), skipping system config file $parent_name = ' . $parent_name . "\n");
     }
-    elsif ( ( ( substr $parent_name_path, 0, 5 ) ne 'RPerl' ) and ( ( substr $parent_name_path, 0, 5 ) ne 'rperl' ) ) {
-#        RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have user-defined module to possibly be #include $parent_name = ' . $parent_name . "\n");
+    elsif ( $is_rperl_test or (not $is_rperl_system) ) {
+        # DEV NOTE: RPerl::Test files do not qualify as RPerl system files
 #        RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes = ' . Dumper($modes) . "\n");
 
         # DEV NOTE, CORRELATION #rp042: do not recursively load the same .cpp/.h file from within itself
         # it is incorrect for a subclass inside a multi-class file to include its parent class' .cpp file name, which is the .cpp version of it's own .h file name 
-        my $parent_name_length = (length $parent_name) + 3;
-        if (($parent_name . '.pm') ne (substr $modes->{_input_file_name_current}, ($parent_name_length * -1), $parent_name_length)) {
+        if ((not exists $modes->{_input_file_name_current}) or (not defined $modes->{_input_file_name_current}) or ($modes->{_input_file_name_current} eq q{})) {
+            die 'ERROR ECOGEASCP46, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Undefined or empty value provided for current input file name, dying' . "\n";
+        }
+        my string $input_file_name_current_underscores = $modes->{_input_file_name_current};
+
+        substr $input_file_name_current_underscores, -3, 3, q{};  # remove trailing '.pm' 
+        $input_file_name_current_underscores =~ s/\//__/gxms;
+        $input_file_name_current_underscores =~ s/\\/__/gxms;
+
+        my integer $parent_name_underscores_length = (length $parent_name_underscores);
+        $input_file_name_current_underscores = substr $input_file_name_current_underscores, ($parent_name_underscores_length * -1), $parent_name_underscores_length;  # remove leading @INC directories 'lib', etc.
+#        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have user-defined module to possibly #include $input_file_name_current_underscores = ' . $input_file_name_current_underscores . "\n");
+
+        if ($parent_name_underscores ne $input_file_name_current_underscores) {
             # non-RPerl user-defined module, wrapped in double-quotes " " to denote user nature
             $cpp_source_group->{H_INCLUDES} .= '#include "' . $parent_name_path . '"' . "\n";
+#            RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have user-defined module to #include $parent_name = ' . $parent_name . "\n");
+        }
+        else {
+            $cpp_source_group->{H_INCLUDES} .= '//#include "' . $parent_name_path . '" // DISABLED: do not recursively load the same .cpp/.h file from within itself' . "\n";
+#            RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have user-defined module to NOT #include $parent_name = ' . $parent_name . "\n");
         }
     }
     else {
         # RPerl system module, wrapped in angle-brackets < > to denote system nature
+#        RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have RPerl system module to #include $parent_name = ' . $parent_name . "\n");
         $cpp_source_group->{H_INCLUDES} .= '#include <' . $parent_name_path . '>' . "\n";
     }
     $cpp_source_group->{CPP} .= '#include "__NEED_HEADER_PATH"' . "\n";  # DEV NOTE, CORRELATION #rp033: defer setting header include path until files are saved in Compiler
 
+#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_group->{H} = ' . "\n" . $cpp_source_group->{H} . "\n");
+#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_group->{H_INCLUDES} = ' . "\n" . $cpp_source_group->{H_INCLUDES} . "\n");
+
     my string_hashref $cpp_source_subgroup;
+
+
+
+
 
 
 
@@ -608,6 +660,11 @@ EOL
 #        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), AFTER EXPORTS, have $rperl_source_group->{H} = ' . "\n" . RPerl::Parser::rperl_ast__dump($rperl_source_group->{H}) . "\n" );
     }
 =cut
+
+
+
+
+
 
 
 
@@ -652,15 +709,6 @@ EOL
     if ( $modes->{label} eq 'ON' ) {
         $cpp_source_group->{H} .= '// [[[ OO INHERITANCE ]]]' . "\n";
     }
-    my string $parent_name_underscores = $parent_name;
-    $parent_name_underscores =~ s/::/__/gxms;
-
-    #    RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_name_underscores = ' . $parent_name_underscores . "\n");
-
-    # DEV NOTE: avoid namespace clobbering of CPPOPS base class over PERLOPS base class
-    if ( $parent_name_underscores eq 'RPerl__CompileUnit__Module__Class' ) {
-        $parent_name_underscores .= '__CPP';
-    }
 
     $cpp_source_group->{H} .= 'class ' . $package_name_underscores . ' : public ' . $parent_name_underscores . ' {' . "\n";
     $cpp_source_group->{H} .= 'public:' . "\n";
@@ -669,6 +717,7 @@ EOL
     my string_arrayref $properties_accessors_mutators_shims = [];
     my string_arrayref $properties_declarations             = [];
     my string_arrayref $properties_initializations          = [];
+    my string_arrayref $properties_initializers             = [];
     my string $property_declaration;
 
     # prepare for later use in:
@@ -795,9 +844,12 @@ EOL
         $property_declaration .= ';';
         push @{$properties_declarations}, $property_declaration;
 
-        $cpp_source_subgroup = ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES( $property_key, $modes->{_symbol_table}->{_namespace}, $modes );
+        $cpp_source_subgroup = ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES( $property_key, $modes->{_symbol_table}->{_namespace}, $package_name_underscores, 0, $modes );  # $is_inherited = 0
         if ( $cpp_source_subgroup->{H} ne q{} ) {
             push @{$properties_accessors_mutators}, $cpp_source_subgroup->{H};
+        }
+        if ( $cpp_source_subgroup->{_H_initializers} ne q{} ) {
+            push @{$properties_initializers}, $cpp_source_subgroup->{_H_initializers};
         }
         if ((exists $cpp_source_subgroup->{PMC}) and (defined $cpp_source_subgroup->{PMC}) and ($cpp_source_subgroup->{PMC} ne q{})) {
             push @{$properties_accessors_mutators_shims}, $cpp_source_subgroup->{PMC};
@@ -917,9 +969,12 @@ EOL
             $property_declaration .= ';';
             push @{$properties_declarations}, $property_declaration;
 
-            $cpp_source_subgroup = ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES( $property_key, $modes->{_symbol_table}->{_namespace}, $modes );
+            $cpp_source_subgroup = ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES( $property_key, $modes->{_symbol_table}->{_namespace}, $package_name_underscores, 0, $modes );  # $is_inherited = 0
             if ( $cpp_source_subgroup->{H} ne q{} ) {
                 push @{$properties_accessors_mutators}, $cpp_source_subgroup->{H};
+            }
+            if ( $cpp_source_subgroup->{_H_initializers} ne q{} ) {
+                push @{$properties_initializers}, $cpp_source_subgroup->{_H_initializers};
             }
             if ((exists $cpp_source_subgroup->{PMC}) and (defined $cpp_source_subgroup->{PMC}) and ($cpp_source_subgroup->{PMC} ne q{})) {
                 push @{$properties_accessors_mutators_shims}, $cpp_source_subgroup->{PMC};
@@ -928,15 +983,24 @@ EOL
         delete $modes->{_inside_class_properties};
     }
 
+
+
+
+
+
+
     # generate accessors & mutators for inherited $properties
     foreach my $parent_package_name (@{$parent_package_names}) {
 #        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_package_name = ' . $parent_package_name . "\n" );
 #        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{ $parent_package_name . q{::} } = ' . Dumper($modes->{_symbol_table}->{ $parent_package_name . q{::} }) . "\n" );
         foreach my $parent_property_key (keys %{ $modes->{_symbol_table}->{ $parent_package_name . q{::} }->{_properties} }) {
             if (not exists $modes->{_symbol_table}->{ $package_name_colons . q{::} }->{_properties}->{$parent_property_key}) {
-                $cpp_source_subgroup = ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES( $parent_property_key, $parent_package_name . q{::}, $modes );
+                $cpp_source_subgroup = ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES( $parent_property_key, $parent_package_name . q{::}, $package_name_underscores, 1, $modes );  # $is_inherited = 1
                 if ( $cpp_source_subgroup->{H} ne q{} ) {
                     push @{$properties_accessors_mutators}, $cpp_source_subgroup->{H};
+                }
+                if ( $cpp_source_subgroup->{_H_initializers} ne q{} ) {
+                    push @{$properties_initializers}, $cpp_source_subgroup->{_H_initializers};
                 }
                 if ((exists $cpp_source_subgroup->{PMC}) and (defined $cpp_source_subgroup->{PMC}) and ($cpp_source_subgroup->{PMC} ne q{})) {
                     push @{$properties_accessors_mutators_shims}, $cpp_source_subgroup->{PMC};
@@ -944,6 +1008,13 @@ EOL
             }
         }
     }
+
+
+
+
+
+
+
 
     if ( exists $properties_declarations->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
@@ -1086,6 +1157,38 @@ EOL
     $cpp_source_group->{H}
         .= 'typedef std::unordered_map<string, ' . $package_name_underscores . '_ptr>::iterator ' . $package_name_underscores . '_hashref_iterator;' . "\n\n";
 
+    if ( $modes->{label} eq 'ON' ) {
+        $cpp_source_group->{H} .= '// [[[ OO CONSTRUCTOR WRAPPER CLASS ]]]' . "\n";
+    }
+
+    $cpp_source_group->{H} .= 'class NEW_' . $package_name_underscores . ' {' . "\n";
+    $cpp_source_group->{H} .= 'public:' . "\n";
+    $cpp_source_group->{H} .= q{    } . $package_name_underscores . '_ptr wrapped_object;' . "\n";
+    $cpp_source_group->{H} .= q{    } . 'NEW_' . $package_name_underscores . '() : wrapped_object{new ' . $package_name_underscores . '()} {}' . "\n";
+    $cpp_source_group->{H} .= q{    } . $package_name_underscores . '_ptr&& NEW() { return std::move(wrapped_object); }' . "\n\n";
+
+    if ( exists $properties_initializers->[0] ) {
+        if ( $modes->{label} eq 'ON' ) {
+            $cpp_source_group->{H} .= '    // <<< OO PROPERTIES, INITIALIZERS >>>' . "\n";
+        }
+        $cpp_source_group->{H} .= ( join "\n", @{$properties_initializers} ) . "\n";
+    }
+
+    $cpp_source_group->{H} .= '};' . "\n\n";
+
+=HARDCODED_EXAMPLE
+// [[[ OO CONSTRUCTOR WRAPPER CLASS ]]]
+class NEW_MyClass02LowRPerlNew {
+public:
+    MyClass02LowRPerlNew_ptr wrapped_object;
+    NEW_MyClass02LowRPerlNew() : wrapped_object{new MyClass02LowRPerlNew()} {}
+    MyClass02LowRPerlNew_ptr&& NEW() { return std::move(wrapped_object); }
+
+    // <<< OO PROPERTIES, INITIALIZERS >>>
+    NEW_MyClass02LowRPerlNew& bar(integer bar_init) { wrapped_object->bar = bar_init; return *this; }
+};
+=cut
+
     if ( exists $subroutine_declarations->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
             $cpp_source_group->{H} .= '// [[[ SUBROUTINES ]]]' . "\n";
@@ -1136,12 +1239,12 @@ EOL
 }
 
 # generate accessors/mutators
-sub ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES {
+sub ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES {
     { my string_hashref $RETURN_TYPE };
-    ( my string $property_key, my string $namespace_from, my string_hashref $modes ) = @ARG;
-    my string_hashref $cpp_source_group = { H => q{} };
+    ( my string $property_key, my string $namespace_from, my string $package_name_underscores, my boolean $is_inherited, my string_hashref $modes ) = @ARG;
+    my string_hashref $cpp_source_group = { H => q{}, _H_initializers => q{} };
 
-#    RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
+#    RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
 
     # grab RPerl-style type out of symtab, instead of accepting-as-arg now-C++-style type from $property_type in caller
 #    my string $property_type = $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type};
@@ -1209,10 +1312,22 @@ sub ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES {
     }
 
     if ($is_direct) {
-        $cpp_source_group->{H} = $property_type . ' get_' . $property_key . '() { return this->' . $property_key . '; }' . "\n";
-        $cpp_source_group->{H}
-            .= 'void set_' . $property_key . '(' . $property_type . q{ } . $property_key . '_new) { this->' . $property_key . ' = ' . $property_key . '_new; }';
+        my string $inherited_comment = q{};
+        if ($is_inherited) { $inherited_comment = '  // inherited from ' . $namespace_from; }
+
+        # disabled unnecessary usage of 'this->'
+#        $cpp_source_group->{H} = $property_type . ' get_' . $property_key . '() { return this->' . $property_key . '; }' . "\n";
+#        $cpp_source_group->{H} .= 'void set_' . $property_key . '(' . $property_type . q{ } . $property_key . '_new) { this->' . $property_key . ' = ' . $property_key . '_new; }';
+
+        $cpp_source_group->{H} = q{    } . $property_type . ' get_' . $property_key . '() { return ' . $property_key . '; }' . $inherited_comment . "\n";
+        $cpp_source_group->{H} .= q{    } . 'void set_' . $property_key . '(' . $property_type . q{ } . $property_key . '_new) { ' . $property_key . ' = ' . $property_key . '_new; }' . $inherited_comment;
+
+        # HARD-CODED EXAMPLE
+        # NEW_MyClass02LowRPerlNew& bar(integer bar_init) { wrapped_object->bar = bar_init; return *this; }
+        $cpp_source_group->{_H_initializers} .= q{    } . 'NEW_' . $package_name_underscores . '& ' . $property_key . '(' . $property_type . q{ } . $property_key . 
+                                                '_init) { wrapped_object->' . $property_key . ' = ' . $property_key . '_init; return *this; }' . $inherited_comment;
     }
+    # NEED UPDATE: remove unnecessary usage of 'this->' below
     else {
 # HARD-CODED EXAMPLE:
 #integer get_bodies_size() { return this->bodies.size(); }  // call from Perl or C++
@@ -1288,11 +1403,11 @@ sub ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES {
             . $property_key
             . '_element_rawptr; }  // call from Perl';
 
-#        RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES(), have $modes->{subcompile} = ' . "\n" . $modes->{subcompile} . "\n" );
+#        RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), have $modes->{subcompile} = ' . "\n" . $modes->{subcompile} . "\n" );
 
         # DEV NOTE: only generate PMC output file in dynamic (default) subcompile mode
         if ($modes->{subcompile} eq 'DYNAMIC') {
-#            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES(), YES PMC SHIMS' . "\n" );
+#            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), YES PMC SHIMS' . "\n" );
             # Perl shim code
             # DEV NOTE: must create return variable object in Perl so it will be memory-managed by Perl,
             # and not wrongly destructed or double-destructed by Perl garbage collector and/or C++ memory.h,
@@ -1315,9 +1430,9 @@ sub ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES {
 #            $cpp_source_group->{PMC} .= '}';  # DEV NOTE: use alternate syntax to avoid "subroutine redefined" errors
             $cpp_source_group->{PMC} .= '};';
         }
-#        else { RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES(), NO PMC SHIMS' . "\n" ); }
+#        else { RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), NO PMC SHIMS' . "\n" ); }
 
-#            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_mutators__CPPOPS_CPPTYPES(), have $cpp_source_group->{H} = ' . "\n" . $cpp_source_group->{H} . "\n" );
+#            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), have $cpp_source_group->{H} = ' . "\n" . $cpp_source_group->{H} . "\n" );
     }
     return $cpp_source_group;
 }

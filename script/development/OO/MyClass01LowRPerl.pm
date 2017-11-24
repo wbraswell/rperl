@@ -3,7 +3,7 @@
 
 # [[[ HEADER ]]]
 use RPerl;
-package MyClass02LowRPerlNew;
+package MyClass01LowRPerl;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
@@ -25,14 +25,14 @@ our hashref $properties = { bar => my integer $TYPED_bar = 23 };
 
 sub double_bar_save {
     { my void::method $RETURN_TYPE };
-    ( my MyClass02LowRPerlNew $self ) = @ARG;
+    ( my MyClass01LowRPerl $self ) = @ARG;
     $self->{bar} = $self->{bar} * 2;
     return;
 }
 
 sub double_bar_return {
     { my integer::method $RETURN_TYPE };
-    ( my MyClass02LowRPerlNew $self ) = @ARG;
+    ( my MyClass01LowRPerl $self ) = @ARG;
     return $self->{bar} * 2;
 }
 
@@ -47,8 +47,8 @@ use warnings;
 our $VERSION = 0.001_000;
 
 # [[[ OO INHERITANCE ]]]
-use parent -norequire, qw(MyClass02LowRPerlNew);  # CORRECT: EDITS @ISA ONLY
-INIT { MyClass02LowRPerlNew->import(); }  # CORRECT: IMPORTS ONLY
+use parent -norequire, qw(MyClass01LowRPerl);  # CORRECT: EDITS @ISA ONLY
+INIT { MyClass01LowRPerl->import(); }  # CORRECT: IMPORTS ONLY
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator

@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.009_000;
+our $VERSION = 0.010_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -363,6 +363,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
         substr $symbol, 0, 1, q{};                          # remove leading $ sigil
         my boolean $is_constructor_call_normal  = 0;
+        my boolean $is_constructor_call_params  = 0;
         my boolean $is_constructor_call_special = 0;
 
         my string $opnamed_or_subexp_or_input_scolon_type = ref $opnamed_or_subexp_or_input_scolon;
@@ -390,9 +391,15 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                     ->isa('RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall') )
                 )
             {
-                $is_constructor_call_normal = 1;
-                my string $constructor_type
-                    = $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0];
+                my object $constructor_call = $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0];
+                my object $properties_init_optional  = $constructor_call->{children}->[2];
+                if (exists $properties_init_optional->{children}->[0]) {
+                    $is_constructor_call_params = 1;
+                }
+                else {
+                    $is_constructor_call_normal = 1;
+                }
+                my string $constructor_type = $constructor_call->{children}->[0]->{children}->[0];
 
 #                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $constructor_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($constructor_type) . "\n" );
 
@@ -469,6 +476,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
             $cpp_source_group->{CPP} .= $type . q{ } . $symbol;
 
+            # OO constructor, no params: omit '=' assignment operator and wrap in parentheses
             if ($is_constructor_call_normal) {
                 if ( not exists $rperlnamespaces_generated::RPERL->{ $type . '::' } ) {    # not scalar or SSE number pair
                     $cpp_source_group->{CPP} .= '(';
@@ -477,6 +485,17 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                     $cpp_source_group->{CPP} .= ')';
                 }
                 # purposefully do nothing here, no code needed
+            }
+            # OO constructor, yes params: include '=' assignment operator, no additional parentheses
+            elsif ($is_constructor_call_params) {
+                if ( not exists $rperlnamespaces_generated::RPERL->{ $type . '::' } ) {    # not scalar or SSE number pair
+                    $cpp_source_group->{CPP} .= q{ } . $assign . q{ };
+                    $cpp_source_subgroup = $opnamed_or_subexp_or_input_scolon->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);   # subexpression
+                    RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+                }
+                else {
+                    die 'ERROR ECOGEASCP64, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Constructor for RPerl data type ' . q{'} . $type . q{'} . ' should not be passed initialization parameters, dying' . "\n";
+                }
             }
             elsif ($is_constructor_call_special) {
                 if ( exists $rperlnamespaces_generated::RPERL->{ $type . '::' } ) {

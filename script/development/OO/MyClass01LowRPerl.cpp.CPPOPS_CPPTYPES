@@ -1,11 +1,11 @@
 // [[[ HEADER ]]]
 using std::cout;  using std::cerr;  using std::endl;
 
-#ifndef __CPP__INCLUDED__MyClass02LowRPerlNew_cpp
-#define __CPP__INCLUDED__MyClass02LowRPerlNew_cpp 0.001_000
+#ifndef __CPP__INCLUDED__MyClass01LowRPerl_cpp
+#define __CPP__INCLUDED__MyClass01LowRPerl_cpp 0.001_000
 
 // [[[ INCLUDES ]]]
-#include "MyClass02LowRPerlNew.h"
+#include "MyClass01LowRPerl.h"
 
 # ifdef __PERL__TYPES
 
@@ -19,12 +19,12 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 
 // [[[ SUBROUTINES & OO METHODS ]]]
 
-void MyClass02LowRPerlNew::double_bar_save() {
+void MyClass01LowRPerl::double_bar_save() {
     this->bar = this->bar * 2;
     return;
 }
 
-integer MyClass02LowRPerlNew::double_bar_return() {
+integer MyClass01LowRPerl::double_bar_return() {
     return this->bar * 2;
 }
 
@@ -52,7 +52,7 @@ using std::cout;  using std::cerr;  using std::endl;
 #define __CPP__INCLUDED__MySubclass02LowRPerlNew_cpp 0.001_000
 
 // [[[ INCLUDES ]]]
-#include "MyClass02LowRPerlNew.h"
+#include "MyClass01LowRPerl.h"
 
 # ifdef __PERL__TYPES
 

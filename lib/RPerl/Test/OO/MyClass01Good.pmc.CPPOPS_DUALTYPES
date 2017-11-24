@@ -1,0 +1,89 @@
+# [[[ HEADER ]]]
+package RPerl::Test::OO::MyClass01Good;
+use strict;
+use warnings;
+use RPerl::AfterSubclass;
+our $VERSION = 0.001_000;
+
+# [[[ OO INHERITANCE ]]]
+our @ISA = qw(RPerl::CompileUnit::Module::Class);
+
+# [[[ INCLUDES ]]]
+use RPerl::Inline;
+
+# [[[ SUBROUTINES ]]]
+
+1;    # end of package
+
+# [[[ HEADER ]]]
+package RPerl::Test::OO::MySubclass01Good;
+use strict;
+use warnings;
+use RPerl::AfterSubclass;
+our $VERSION = 0.001_000;
+
+# [[[ OO INHERITANCE ]]]
+our @ISA = qw(RPerl::Test::OO::MyClass01Good);
+
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
+
+# [[[ INCLUDES ]]]
+use RPerl::Inline;
+use RPerl::Config;
+
+# [[[ SUBROUTINES ]]]
+
+# <<< C++ LOADER >>>
+sub cpp_load {
+    { my void::method $RETURN_TYPE };
+    my $need_load_cpp = 0;
+    if (    ( exists $main::{'RPerl__Test__OO__MySubclass01Good__MODE_ID'} )
+        and ( defined &{ $main::{'RPerl__Test__OO__MySubclass01Good__MODE_ID'} } ) )
+    {
+#RPerl::diag('in RPerl::Test::OO::MySubclass01Good::cpp_load, RPerl__Test__OO__MySubclass01Good__MODE_ID() exists & defined' . "\n");
+#RPerl::diag(q{in RPerl::Test::OO::MySubclass01Good::cpp_load, have RPerl__Test__OO__MySubclass01Good__MODE_ID() retval = '} . main::RPerl__Test__OO__MySubclass01Good__MODE_ID() . q{'} . "\n");
+        if ( $RPerl::MODES->{ main::RPerl__Test__OO__MySubclass01Good__MODE_ID() }->{ops} ne 'CPP' ) {
+            $need_load_cpp = 1;
+        }
+    }
+    else {
+        #RPerl::diag('in RPerl::Test::OO::MySubclass01Good::cpp_load, RPerl__Test__OO__MySubclass01Good__MODE_ID() does not exist or undefined' . "\n");
+        $need_load_cpp = 1;
+    }
+
+    if ($need_load_cpp) {
+
+        #RPerl::diag('in RPerl::Test::OO::MySubclass01Good::cpp_load, need load CPP code' . "\n");
+
+        my $eval_string = <<"EOF";
+package main;
+use RPerl::Inline;
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/Test/OO/MyClass01Good.cpp' ]]]\n" x 1); }
+use Inline (CPP => '$main::INCLUDE_PATH' . '/RPerl/Test/OO/MyClass01Good.cpp', \%RPerl::Inline::ARGS);
+RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/Test/OO/MyClass01Good.cpp' ]]]\n" x 1);
+1;
+EOF
+
+        $RPerl::Inline::ARGS{ccflagsex}
+            = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypessizes::type_number_native_ccflag();
+        $RPerl::Inline::ARGS{cppflags} = $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypessizes::type_number_native_ccflag();
+
+#RPerl::diag('in RPerl::Test::OO::MySubclass01Good::cpp_load(), CPP not yet loaded, about to call eval() on $eval_string =' . "\n" . '<<< BEGIN EVAL STRING>>>' . "\n" . $eval_string . '<<< END EVAL STRING >>>' . "\n");
+
+        eval $eval_string or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
+        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+    }
+
+    #else { RPerl::diag('in RPerl::Test::OO::MySubclass01Good::cpp_load(), CPP already loaded, DOING NOTHING' . "\n"); }
+}
+
+# DEV NOTE, CORRELATION #rp015: suppress 'Too late to run INIT block' at run-time loading via require or eval
+no warnings;
+INIT {
+    # actually compile and load C++ code when 'use RPerl::Test::OO::MySubclass01Good' is called
+    RPerl::Test::OO::MySubclass01Good::cpp_load();
+}
+use warnings;
+
+1;    # end of package

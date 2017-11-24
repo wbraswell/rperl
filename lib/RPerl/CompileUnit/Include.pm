@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Include;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -102,12 +102,23 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         else {
             $module_name = $self->{children}->[2]->{children}->[0];
         }
-        
-        # DEV NOTE: ignore manually included RPerl* and rperl* modules, presumably they will all be automatically included
+
+        # DEV NOTE, CORRELATION #rp044: shared logic between class parent includes and misc user includes, always check both when changing either
+        my boolean $is_rperl_system = 0;
+        my boolean $is_rperl_test = 0;
+        if ( ( ( substr $module_name, 0, 5 ) eq 'RPerl' ) or ( ( substr $module_name, 0, 5 ) eq 'rperl' ) ) {
+            if ( ( substr $module_name, 0, 11 ) eq 'RPerl::Test' ) {
+                $is_rperl_test = 1;
+            }
+            else {
+                $is_rperl_system = 1;
+            }
+        }
+
         if ( $module_name =~ /^\w+Perl::Config$/ ) { # DEV NOTE, CORRELATION #rp027: MathPerl::Config, PhysicsPerl::Config, etc
 #            RPerl::diag('in CompileUnit::Include->ast_to_cpp__generate__CPPOPS_CPPTYPES(), skipping system config file $module_name = ' . $module_name . "\n");
         }
-        elsif (((substr $module_name, 0, 5) ne 'RPerl') and ((substr $module_name, 0, 5) ne 'rperl')) {
+        elsif ( $is_rperl_test or (not $is_rperl_system) ) {
             if ((not exists $cpp_source_group->{_PMC_includes}) or (not defined $cpp_source_group->{_PMC_includes})) {
                 $cpp_source_group->{_PMC_includes} = {};
             }
@@ -120,13 +131,16 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             $cpp_source_group->{H} .= q{#include "} . $module_name . q{.cpp"} . "\n";
 #            RPerl::diag( 'in Include->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $module_name = '  . $module_name . "\n" );
         }
+        else {
+            # DEV NOTE: ignore manually included RPerl* and rperl* system modules, they should all be automatically included in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES();
+            # delete empty H to avoid error...
+            # ERROR ECOCOFI05, COMPILER, SAVE OUTPUT FILES: Expecting source code for suffix 'H', but received empty or no 
+#            RPerl::diag('in Include->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have RPerl system module to skip here and defer to Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES() $module_name = ' . $module_name . "\n");
+            delete $cpp_source_group->{H};
+        }
     }
     else {
-        die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
-                . ( ref $self )
-                . ' found where Include_54 or Include_55 expected, dying' )
-            . "\n";
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Include_54 or Include_55 expected, dying' ) . "\n";
     }
     
 #    RPerl::diag( 'in Include->ast_to_cpp__generate__CPPOPS_CPPTYPES(), about to return $cpp_source_group = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_group) . "\n" );

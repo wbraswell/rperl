@@ -1,8 +1,8 @@
 // [[[ HEADER ]]]
 using std::cout;  using std::cerr;  using std::endl;
 
-#ifndef __CPP__INCLUDED__MyClass02LowRPerlNew_h
-#define __CPP__INCLUDED__MyClass02LowRPerlNew_h 0.001_000
+#ifndef __CPP__INCLUDED__MyClass01LowRPerl_h
+#define __CPP__INCLUDED__MyClass01LowRPerl_h 0.001_000
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
@@ -19,7 +19,7 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
 // [[[ OO INHERITANCE ]]]
-class MyClass02LowRPerlNew : public RPerl__CompileUnit__Module__Class__CPP {
+class MyClass01LowRPerl : public RPerl__CompileUnit__Module__Class__CPP {
 public:
     // [[[ OO PROPERTIES ]]]
     integer bar = 23;
@@ -27,15 +27,15 @@ public:
     // [[[ OO METHODS ]]]
 
     // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
-    integer get_bar() { return bar; }  // WBRASWELL: remove this->
-    void set_bar(integer bar_new) { bar = bar_new; }  // WBRASWELL: remove this->
+    integer get_bar() { return bar; }
+    void set_bar(integer bar_new) { bar = bar_new; }
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
-    MyClass02LowRPerlNew() {}
-    ~MyClass02LowRPerlNew() {}
+    MyClass01LowRPerl() {}
+    ~MyClass01LowRPerl() {}
 
     // <<< CLASS NAME REPORTER >>>
-    virtual string myclassname() { return (const string) "MyClass02LowRPerlNew"; }
+    virtual string myclassname() { return (const string) "MyClass01LowRPerl"; }
 
     // <<< USER-DEFINED METHODS >>>
     void double_bar_save();
@@ -43,39 +43,26 @@ public:
 };  // end of class
 
 // [[[ OO SUBCLASSES ]]]
-#define MyClass02LowRPerlNew_rawptr MyClass02LowRPerlNew*
-typedef std::unique_ptr<MyClass02LowRPerlNew> MyClass02LowRPerlNew_ptr;
-typedef std::vector<MyClass02LowRPerlNew_ptr> MyClass02LowRPerlNew_arrayref;
-typedef std::unordered_map<string, MyClass02LowRPerlNew_ptr> MyClass02LowRPerlNew_hashref;
-typedef std::unordered_map<string, MyClass02LowRPerlNew_ptr>::iterator MyClass02LowRPerlNew_hashref_iterator;
+#define MyClass01LowRPerl_rawptr MyClass01LowRPerl*
+typedef std::unique_ptr<MyClass01LowRPerl> MyClass01LowRPerl_ptr;
+typedef std::vector<MyClass01LowRPerl_ptr> MyClass01LowRPerl_arrayref;
+typedef std::unordered_map<string, MyClass01LowRPerl_ptr> MyClass01LowRPerl_hashref;
+typedef std::unordered_map<string, MyClass01LowRPerl_ptr>::iterator MyClass01LowRPerl_hashref_iterator;
 
-// <<< OPERATIONS & DATA TYPES REPORTER >>>
-integer MyClass02LowRPerlNew__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
-
-
-
-
-
-// WBRASWELL
-// constructor wrapper class, allow initialization of named parameters using method chaining
-class NEW_MyClass02LowRPerlNew {
+// [[[ OO CONSTRUCTOR WRAPPER CLASS ]]]
+class NEW_MyClass01LowRPerl {
 public:
-    // wrapped object
-    MyClass02LowRPerlNew_ptr wrapped_object;
+    MyClass01LowRPerl_ptr wrapped_object;
+    NEW_MyClass01LowRPerl() : wrapped_object{new MyClass01LowRPerl()} {}
+    MyClass01LowRPerl_ptr&& NEW() { return std::move(wrapped_object); }
 
-    // constructor w/ initializer list for wrapped_object data member
-    NEW_MyClass02LowRPerlNew() : wrapped_object{new MyClass02LowRPerlNew()} {}
+    // <<< OO PROPERTIES, INITIALIZERS >>>
+    NEW_MyClass01LowRPerl& bar(integer bar_init) { wrapped_object->bar = bar_init; return *this; }
 
-    // initializers
-    NEW_MyClass02LowRPerlNew& bar(integer bar_init) { wrapped_object->bar = bar_init; return *this; }
-
-    // chaining terminator, move semantics
-    MyClass02LowRPerlNew_ptr&& NEW() { return std::move(wrapped_object); }
 };
 
-
-
-
+// <<< OPERATIONS & DATA TYPES REPORTER >>>
+integer MyClass01LowRPerl__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 
 // [[[<<< END CPP TYPES >>>]]]
 // [[[<<< END CPP TYPES >>>]]]
@@ -113,7 +100,7 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 // [[[<<< BEGIN CPP TYPES >>>]]]
 
 // [[[ OO INHERITANCE ]]]
-class MySubclass02LowRPerlNew : public MyClass02LowRPerlNew {
+class MySubclass02LowRPerlNew : public MyClass01LowRPerl {
 public:
     // [[[ OO PROPERTIES ]]]
     integer bax = 123;
@@ -121,10 +108,10 @@ public:
     // [[[ OO METHODS ]]]
 
     // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
-    integer get_bax() { return bax; }  // WBRASWELL: remove this->
-    void set_bax(integer bax_new) { bax = bax_new; }  // WBRASWELL: remove this->
-    integer get_bar() { return bar; }  // WBRASWELL: remove this->
-    void set_bar(integer bar_new) { bar = bar_new; }  // WBRASWELL: remove this->
+    integer get_bax() { return bax; }
+    void set_bax(integer bax_new) { bax = bax_new; }
+    integer get_bar() { return bar; }  // inherited from MyClass01LowRPerl::
+    void set_bar(integer bar_new) { bar = bar_new; }  // inherited from MyClass01LowRPerl::
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     MySubclass02LowRPerlNew() {}
@@ -149,36 +136,21 @@ typedef std::vector<MySubclass02LowRPerlNew_ptr> MySubclass02LowRPerlNew_arrayre
 typedef std::unordered_map<string, MySubclass02LowRPerlNew_ptr> MySubclass02LowRPerlNew_hashref;
 typedef std::unordered_map<string, MySubclass02LowRPerlNew_ptr>::iterator MySubclass02LowRPerlNew_hashref_iterator;
 
-// <<< OPERATIONS & DATA TYPES REPORTER >>>
-integer MySubclass02LowRPerlNew__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
-
-
-
-
-
-
-// WBRASWELL
-// constructor wrapper class, allow initialization of named parameters using method chaining
+// [[[ OO CONSTRUCTOR WRAPPER CLASS ]]]
 class NEW_MySubclass02LowRPerlNew {
 public:
-    // wrapped object
     MySubclass02LowRPerlNew_ptr wrapped_object;
-
-    // constructor w/ initializer list for wrapped_object data member
     NEW_MySubclass02LowRPerlNew() : wrapped_object{new MySubclass02LowRPerlNew()} {}
-
-    // initializers
-    NEW_MySubclass02LowRPerlNew& bar(integer bar_init) { wrapped_object->bar = bar_init; return *this; }  // INHERITED PROPERTY
-    NEW_MySubclass02LowRPerlNew& bax(integer bax_init) { wrapped_object->bax = bax_init; return *this; }
-
-    // chaining terminator, move semantics
     MySubclass02LowRPerlNew_ptr&& NEW() { return std::move(wrapped_object); }
+
+    // <<< OO PROPERTIES, INITIALIZERS >>>
+    NEW_MySubclass02LowRPerlNew& bax(integer bax_init) { wrapped_object->bax = bax_init; return *this; }
+    NEW_MySubclass02LowRPerlNew& bar(integer bar_init) { wrapped_object->bar = bar_init; return *this; }  // inherited from MyClass01LowRPerl::
+
 };
 
-
-
-
-
+// <<< OPERATIONS & DATA TYPES REPORTER >>>
+integer MySubclass02LowRPerlNew__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 
 // [[[<<< END CPP TYPES >>>]]]
 // [[[<<< END CPP TYPES >>>]]]
