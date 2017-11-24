@@ -1,5 +1,14 @@
 Revision history for Perl compiler RPerl.
 
+3.400000 2017-11-23 Codename Orion
+
+    - HOLIDAY EDITION: Happy Thanksgiving!
+    - OO Constructors, Enable Initialization Of Object Properties Via Named Parameters
+    - Monolithic Modules AKA Multi-Package & Multi-Class Modules,
+        Grammar, Allow 'use parent -norequire' & Explicit import();
+        Enable Proper Exporting & Class Inheritance in PERLOPS_PERLTYPES
+    - Subroutine Arguments Type Checking, Fix Double-Checking
+
 3.200000 2017-10-31 Codename Pleiades
 
     - HOLIDAY EDITION: Happy Halloween!
