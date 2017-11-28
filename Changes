@@ -1,5 +1,13 @@
 Revision history for Perl compiler RPerl.
 
+3.401000 2017-11-27
+
+    - Bug Fix, Remove & Disable Pre-Compiled Binary Files
+        RPerl/Test/OO/oo01_good
+        RPerl/Test/OO/oo01_good__compile.sh
+        RPerl/Test/Operator06RegularExpressionMatch/program_20_good
+        etc.
+
 3.400000 2017-11-23 Codename Orion
 
     - HOLIDAY EDITION: Happy Thanksgiving!

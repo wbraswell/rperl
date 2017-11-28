@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.025_000;
+our $VERSION = 0.026_000;
 use 5.010;  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 
 use ExtUtils::MakeMaker;
