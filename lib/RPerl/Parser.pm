@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.009_000;
+our $VERSION = 0.010_000;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -130,8 +130,14 @@ sub rperl_source__check_syntax {
                 $rperl_source__perl_syntax_retstring_line;
         }
     }
-
-    if ( ( scalar @{$rperl_source__perl_syntax_retstring_warnings} ) != 0 ) {
+    
+    if (((scalar @{$rperl_source__perl_syntax_retstring_warnings}) == 1) and 
+        ((substr $rperl_source__perl_syntax_retstring_warnings->[0], 0, 59) eq 'Name "Win32::Locale::Lexicon" used only once: possible typo')) {
+        # this issue should affect Perl v5.12 only, patched here:
+        # https://www.nntp.perl.org/group/perl.perl5.changes/2011/01/msg28822.html
+        RPerl::warning("\n", q{WARNING WCOPAPL00, RPERL PARSER, PERL SYNTAX WARNING: Non-fatal Perl v5.12 warning, 'Name "Win32::Locale::Lexicon" used only once', ignoring}, "\n");
+    }
+    elsif ( ( scalar @{$rperl_source__perl_syntax_retstring_warnings} ) != 0 ) {
         my $error_pretty = "\n"
             . 'ERROR ECOPAPL03, RPERL PARSER, PERL SYNTAX WARNING' . "\n"
             . 'Failed normal Perl strictures-and-fatal-warnings syntax check with the following information:' . "\n\n" 

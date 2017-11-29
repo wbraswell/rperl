@@ -2,7 +2,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.006_000;
+our $VERSION = 0.007_000;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -54,13 +54,24 @@ our $CCFLAGSEX = $is_msvc_compiler ? '-DNO_XSLOCKS'
 # for regex support
 $CCFLAGSEX .= ' -L"' . $pcre2_lib_dir . '"';
 
+my $optimize;
+if ($is_msvc_compiler) {
+    $optimize = q{};
+}
+# NEED FIX: NetBSD does not support -march=native switch for some reason,
+# must wait until NetBSD OS devs fix this then test $Config::Config{osvers} to see if NetBSD is new enough to include fix
+# error: bad value (native) for -march= switch
+elsif ($Config::Config{osname} eq 'netbsd') {
+    $optimize = '-O3 -fomit-frame-pointer -g';
+}
+else {
+    $optimize = '-O3 -fomit-frame-pointer -march=native -g';
+}
+
 our %ARGS = (
     typemaps => "$RPerl::INCLUDE_PATH/typemap.rperl",
      # disable default '-O2 -g' (or similar) from Perl core & Makemaker
-    ($is_msvc_compiler
-        ? ()
-        : (optimize => '-O3 -fomit-frame-pointer -march=native -g')
-    ),
+    optimize => $optimize,
 
 # NEED UPGRADE: strip C++ incompat CFLAGS
 #  ccflags => $Config{ccflags} . ' -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
