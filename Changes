@@ -1,5 +1,11 @@
 Revision history for Perl compiler RPerl.
 
+3.402000 2017-11-29
+
+    - Bug Fix, NetBSD, Disable -march=native Flag
+    - Bug Fix, Perl v5.12, Allow Win32::Locale::Lexicon Warning
+    - Bug Fix, Inline::RPerl, Change Foo::Tester To Avoid PAUSE Indexing Conflict
+
 3.401000 2017-11-27
 
     - Bug Fix, Remove & Disable Pre-Compiled Binary Files
