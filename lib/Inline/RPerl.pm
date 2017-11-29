@@ -3,7 +3,7 @@
 package Inline::RPerl;
 use strict;
 use warnings;
-our $VERSION = 0.002_000;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(Inline);
@@ -67,7 +67,7 @@ sub build {
     $code =~ s/$pattern//g;
     $code =~ s/bar-//g if $o->{ILSM}{BAR};
     {
-        package Foo::Tester;
+        package Foo::Tester::RPerl;
         our $VERSION = 0.001_000;
         eval $code;
     }
