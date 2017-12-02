@@ -1,5 +1,5 @@
 DONE
- 
+
 
 DOING
     Moo(se) support
@@ -66,10 +66,8 @@ DOING
         subroutines, final operation must be return operator
         WHAT ELSE?!?
 
-    Alien::GSL
     Alien::Pluto
     Alien::astyle upgrade to EU::MM
-    Alien::GMP
     Alien::???  what else?
     Inline::RPerl
     update tests to emit more useful failure info, for CPAN testers debugging

@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.026_000;
+our $VERSION = 0.027_000;
 use 5.010;  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 
 use ExtUtils::MakeMaker;
@@ -112,12 +112,14 @@ WriteMakefile(
         'Module::ScanDeps'    => '1.19',
         'Time::HiRes'         => '1.9726',
         'List::MoreUtils'     => '0.33',
-        'Math::BigInt::GMP'   => '1.46',
-        'Math::GSL'           => '0.39',
         'IO::Socket::SSL'     => '2.043',     # pre-prerequisite for Alien::astyle
         'Alien::astyle'       => '0.009',
         'Alien::PCRE2'        => '0.015',     # for regex support
         'Alien::JPCRE2'       => '0.012',     # for regex support
+        'Alien::GMP'          => '1.05',      # prerequisite for Math::BigInt::GMP
+        'Alien::GSL'          => '1.01',      # prerequisite for Math::GSL
+        'Math::BigInt::GMP'   => '1.46',
+        'Math::GSL'           => '0.39',
 
         # RPERL SYSTEM (NON-USER) DEPENDENCIES
         'Parse::Eyapp'        => '1.21',      # RPerl Grammar; used by grammar_recompile.sh

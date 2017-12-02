@@ -1,5 +1,5 @@
 language: perl
-# v0.025_000
+# v0.030_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -12,10 +12,7 @@ perl:
     - "5.20"
     - "5.22"
     - "5.24"
-    - "5.25"  # built using Travis-CI Helper
     - "5.26"
-    - "5.27"  # built using Travis-CI Helper
-#    - "dev"  # build using Travis-CI Helper, same as latest 5.odd dev version above
     - "blead"  # built using Travis-CI Helper
 
 # DEV NOTE, CORRELATION #rp011: update g++ to 4.8 for full C++11 support, including:
@@ -37,8 +34,6 @@ perl:
 matrix:
     allow_failures:
         # NEED FIX, CORRELATION #aj100: in Alien::JPCRE2, why is File::Find::Rule from t/02_make_check.t failing in v5.25 and v5.27 only?!?
-        - perl: "5.25"
-        - perl: "5.27"  # let's try to keep RPerl passing on all new dev versions of Perl!
         - perl: "blead"
 before_install:
     - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
@@ -60,9 +55,12 @@ before_install:
 install:
     - sudo apt-get install gcc-5 g++-5
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 90 --slave /usr/bin/g++ g++ /usr/bin/g++-5
-    - sudo apt-get install libgmp-dev
-    - sudo apt-get install libgsl0-dev
-    # begin Pluto PolyCC
+#   - sudo apt-get install libpcre2-8-0 libpcre2-16-0 libpcre2-32-0 libpcre2-dev  # DISABLED, DOES NOT EXIST UNTIL UBUNTU v16.04 XENIAL
+#   - sudo apt-get install libjpcre2-dev                                          # DISABLED, DOES NOT EXIST
+    - sudo apt-get install astyle        # "system" install via Ubuntu  here vs "share" install via CPAN Alien::astyle
+    - sudo apt-get install libgmp-dev    # "system" install via Ubuntu  here vs "share" install via CPAN Alien::GMP
+    - sudo apt-get install libgsl0-dev   # "system" install via Ubuntu  here vs "share" install via CPAN Alien::GSL
+    # begin Pluto PolyCC                 # "system" install via tarball here vs "share" install via CPAN Alien::astyle
     - sudo apt-get install texinfo
     #- wget https://github.com/wbraswell/pluto-mirror/raw/master/backup/pluto-0.11.4.tar.gz  # prefer official repo below
     - wget https://github.com/bondhugula/pluto/files/737550/pluto-0.11.4.tar.gz
@@ -75,7 +73,6 @@ install:
     - cd ..
     # end Pluto PolyCC
     - sudo apt-get install curl
-    #- sudo apt-get install astyle  # rely on Alien::astyle for more platform-independent testing
 
 # NEED REMOVE FOLLOWING 1 LINE IF NOT USED
 # NEED REMOVE FOLLOWING 1 LINE IF NOT USED
@@ -91,11 +88,6 @@ before_script:
 #    - export RPERL_DEBUG=1
 # UNCOMMENT FOLLOWING LINE FOR DEV VERSIONS OF MODULES, which travis can't get from Makefile.PL
 #    - cpanm -n INGY/Inline-C-0.62_03.tar.gz
-# DEV NOTE: Alien::base v0.036 requires Test2::Suite which seems to be causing RPerl builds to error
-#    - cpanm --verbose Test2::Suite  # FAIL, TAKES FOREVER
-#    - cpanm -n Test2::Suite  # PASS, SKIP TESTS
-#    - wget https://cpan.metacpan.org/authors/id/E/EX/EXODIST/Test2-Suite-0.000067.tar.gz && tar -xzf Test2-Suite-0.000067.tar.gz && cd Test2-Suite-0.000067 && cpanm --verbose --installdeps . && perl Makefile.PL && make && make test TEST_VERBOSE=1 && make install && cd ..  # FAIL, MANUAL BUILD
-#    - wget https://cpan.metacpan.org/authors/id/E/EX/EXODIST/Test2-Suite-0.000068-TRIAL.tar.gz && tar -xzf Test2-Suite-0.000068-TRIAL.tar.gz && cd Test2-Suite-0.000068* && cpanm --verbose --installdeps . && perl Makefile.PL && make && make test TEST_VERBOSE=1 && make install && cd ..  # PASS, TRIAL FIX
 # DEV NOTE, CORRELATION #rp011: following line was not necessary until before_install & install sections added
 #    - cpanm --quiet --installdeps --notest .
     - cpanm --verbose --installdeps .
@@ -120,3 +112,6 @@ notifications:
 env:
     global:
         - AUTHOR_TESTING=0
+    matrix:
+        - ALIEN_INSTALL_TYPE=share
+        - ALIEN_INSTALL_TYPE=system
