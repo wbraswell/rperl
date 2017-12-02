@@ -26,15 +26,24 @@ DOING
         MathPerl
     Quick-Start Guide
         finish
-    GSL support
+
+    Alien::Pluto
+    Alien::astyle upgrade to EU::MM
+    Alien::???  what else?
+    Alien::GSL
+        make pull request for Math::GSL to use Alien::GSL    https://github.com/leto/math--gsl/issues/99
         add 'apt-get install libgsl-dev' (or libgsl0-dev) & 'cpanm Math::GSL::Matrix' in RPerl & LAMP Installers, document in INSTALL?
         gsl_matrix_CHECK*() CPPOPS_CPPTYPES
         tests for all EMAV00 - EMAV09
         enable gsl_linalg.h & other gsl friends
-
+    Alien::GMP
+        detect non-C++ system install (missing gmpxx.h) and force Alien::GMP share install instead
     Alien::PCRE2
         ensure tests pass on both share & system installs
         replace mirrored DEV version (Windows bug fix) w/ new official version when released
+            same as cygwin failure below???
+            warning: "FWRITE" redefined ... error: _O_BINARY undeclared
+            https://bugs.exim.org/show_bug.cgi?id=2152
         extend XS test
         CPAN testers failures
     Alien::JPCRE2
@@ -66,9 +75,6 @@ DOING
         subroutines, final operation must be return operator
         WHAT ELSE?!?
 
-    Alien::Pluto
-    Alien::astyle upgrade to EU::MM
-    Alien::???  what else?
     Inline::RPerl
     update tests to emit more useful failure info, for CPAN testers debugging
     update CPPOPS_DUALTYPES reference files

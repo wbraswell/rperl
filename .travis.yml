@@ -55,12 +55,12 @@ before_install:
 install:
     - sudo apt-get install gcc-5 g++-5
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 90 --slave /usr/bin/g++ g++ /usr/bin/g++-5
-#   - sudo apt-get install libpcre2-8-0 libpcre2-16-0 libpcre2-32-0 libpcre2-dev  # DISABLED, DOES NOT EXIST UNTIL UBUNTU v16.04 XENIAL
-#   - sudo apt-get install libjpcre2-dev                                          # DISABLED, DOES NOT EXIST
+#   - sudo apt-get install libpcre2-8-0 libpcre2-16-0 libpcre2-32-0 libpcre2-dev  # DEV NOTE, CORRELATION #rp060: disabled, does not exist until Ubuntu v16.04 Xenial
+#   - sudo apt-get install libjpcre2-dev                                          # DEV NOTE, CORRELATION #rp060: disabled, does not exist
     - sudo apt-get install astyle        # "system" install via Ubuntu  here vs "share" install via CPAN Alien::astyle
     - sudo apt-get install libgmp-dev    # "system" install via Ubuntu  here vs "share" install via CPAN Alien::GMP
     - sudo apt-get install libgsl0-dev   # "system" install via Ubuntu  here vs "share" install via CPAN Alien::GSL
-    # begin Pluto PolyCC                 # "system" install via tarball here vs "share" install via CPAN Alien::astyle
+    # begin Pluto PolyCC                 # "system" install via tarball here vs "share" install via CPAN Alien::Pluto
     - sudo apt-get install texinfo
     #- wget https://github.com/wbraswell/pluto-mirror/raw/master/backup/pluto-0.11.4.tar.gz  # prefer official repo below
     - wget https://github.com/bondhugula/pluto/files/737550/pluto-0.11.4.tar.gz
@@ -80,6 +80,13 @@ install:
     #- cpan-install --deps       # Travis-CI Helper: installs prereqs, including recommends
 
 before_script:
+    # DEV NOTE, CORRELATION #rp060: must force share install of dists which are not available during system install
+    # Configuring Alien-PCRE2-xxx ... Alien::Build::Plugin::PkgConfig::Negotiate> Using PkgConfig plugin: PkgConfig::CommandLine
+    # Alien::Build::CommandSequence> + pkg-config --exists libpcreX-X
+    # external command failed at xxx/Alien/Build/CommandSequence.pm line XX.
+    # N/A
+    # ! Configure failed for Alien-PCRE2-xxx
+    - ALIEN_INSTALL_TYPE=share && cpanm --verbose Alien::PCRE2 && cpanm --verbose Alien::JPCRE2
     # NEED REMOVE FOLLOWING 1 LINE when bug is fixed   https://github.com/daoswald/Inline-CPP/issues/38
     - cpanm --verbose --force ExtUtils::CppGuess
 # MODIFY FOLLOWING LINE TO ENABLE TEST_VERBOSE STDOUT DURING `make test`
