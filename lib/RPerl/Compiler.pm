@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.030_000;
+our $VERSION = 0.032_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -1367,8 +1367,12 @@ sub post_processor_cpp__pmc_generate {
                     else { $file_line = undef; }
                 }
                 elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional SSE support here >>>' . "\n" ) ) {
+#                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n" );
+#                    RPerl::diag( 'in Compiler::save_source_files(), have $pm_file_path = ' . $pm_file_path . "\n" );
+                    $pm_file_path = post_processor__absolute_path_delete($pm_file_path);
+                    $pm_file_path = post_processor__current_directory_path_delete($pm_file_path);
+#                    RPerl::diag( 'in Compiler::save_source_files(), have possibly-trimmed $pm_file_path = ' . $pm_file_path . "\n" );
 
-                   #                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n" );
                     if (    ( exists $modes->{_enable_sse} )
                         and ( defined $modes->{_enable_sse} )
                         and ( exists $modes->{_enable_sse}->{$pm_file_path} )
@@ -1383,16 +1387,20 @@ sub post_processor_cpp__pmc_generate {
                     else { $file_line = undef; }
                 }
                 elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional GMP support here >>>' . "\n" ) ) {
-
 #                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n" );
 #                    RPerl::diag( 'in Compiler::save_source_files(), have $pm_file_path = ' . $pm_file_path . "\n" );
+                    $pm_file_path = post_processor__absolute_path_delete($pm_file_path);
+                    $pm_file_path = post_processor__current_directory_path_delete($pm_file_path);
+#                    RPerl::diag( 'in Compiler::save_source_files(), have possibly-trimmed $pm_file_path = ' . $pm_file_path . "\n" );
+
                     if (    ( exists $modes->{_enable_gmp} )
                         and ( defined $modes->{_enable_gmp} )
                         and ( exists $modes->{_enable_gmp}->{$pm_file_path} )
                         and ( defined $modes->{_enable_gmp}->{$pm_file_path} )
                         and $modes->{_enable_gmp}->{$pm_file_path} )
                     {
-                        $file_line = q(        $RPerl::Inline::ARGS{libs}  = '-lgmpxx -lgmp';  # enable GMP support) . "\n";
+                        $file_line = q(        $RPerl::Inline::ARGS{libs}  = '-L' . $RPerl::Inline::gmp_lib_dir . ' -lgmpxx -lgmp';  # enable GMP support) . "\n";
+                        $file_line .= q(        $RPerl::Inline::ARGS{inc}  .= ' -I' . $RPerl::Inline::gmp_include_dir;  # enable GMP support) . "\n";
                         $file_line
                             .= q(        $RPerl::Inline::ARGS{auto_include} = [ @{ $RPerl::Inline::ARGS{auto_include} }, '#include <gmpxx.h>', '#include <gmp.h>' ];    # enable GMP support)
                             . "\n";
@@ -1413,7 +1421,7 @@ sub post_processor_cpp__pmc_generate {
                         and $modes->{_enable_gsl}->{$pm_file_path} )
                     {
                         # DEV NOTE: linking instructions    https://www.gnu.org/software/gsl/doc/html/usage.html#linking-programs-with-the-library
-                        $file_line = q(        $RPerl::Inline::ARGS{libs}  = '-lgsl -lgslcblas -lm';  # enable GSL support) . "\n";
+                        $file_line = q(        $RPerl::Inline::ARGS{libs}  = '-L' . $RPerl::Inline::gsl_lib_dir . ' -lgsl -lgslcblas -lm';  # enable GSL support) . "\n";
                         $file_line .= q(        $RPerl::Inline::ARGS{inc}  .= ' -I' . $RPerl::Inline::gsl_include_dir;  # enable GSL support) . "\n";
                         $file_line
                             .= q(        $RPerl::Inline::ARGS{auto_include} = [ @{ $RPerl::Inline::ARGS{auto_include} }, '#include <gsl_matrix.h>', '#include <gsl_blas.h>' ];    # enable GSL support)
@@ -1616,7 +1624,9 @@ sub cpp_to_xsbinary__subcompile {
         $subcompile_command .= q{ } . '-I"' . $RPerl::BASE_PATH . '"';
         $subcompile_command .= q{ } . '-I"' . $RPerl::INCLUDE_PATH . '"'; # different than original Inline::CPP subcompile command, double-quotes added to encapsulate user-name directories
         $subcompile_command .= q{ } . '-Ilib';
-        $subcompile_command .= q{ } . '-I"' . $RPerl::Inline::pcre2_include_dir . '"';  # for regex support
+        $subcompile_command .= q{ } . '-I"' . $RPerl::Inline::gmp_include_dir . '"';     # prerequisite for Math::BigInt::GMP
+        $subcompile_command .= q{ } . '-I"' . $RPerl::Inline::gsl_include_dir . '"';     # prerequisite for Math::GSL
+        $subcompile_command .= q{ } . '-I"' . $RPerl::Inline::pcre2_include_dir . '"';   # for regex support
         $subcompile_command .= q{ } . '-I"' . $RPerl::Inline::jpcre2_include_dir . '"';  # for regex support
 
         $subcompile_command .= q{ } . $RPerl::Inline::CCFLAGSEX;
