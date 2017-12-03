@@ -2,6 +2,9 @@ DONE
 
 
 DOING
+
+    META files in MANIFEST.SKIP???
+
     Moo(se) support
         Always
             better subroutine/method return types; GRAMMAR

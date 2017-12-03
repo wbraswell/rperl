@@ -1,4 +1,4 @@
-# RPerl Developer Notes 20170112 2017.012
+# RPerl Developer Notes 20171202 2017.336
 
 ##########################################################################################
 # WARNING & ERROR CODES
@@ -261,7 +261,7 @@ $ cpanm --installdeps .; make disttest
 $ make dist
     # produces tarball output
 $ cp MYMETA.json META.json
-	# properly install configure-time dependencies, must have for Alien::* 
+	# DEV NOTE, CORRELATION #rp061: properly install configure-time dependencies, must have for RPerl & Alien::* 
 
 # INSTALL & TEST DIST, LOCAL COPY
 $ cpanm ./RPerl-VERSION.tar.gz

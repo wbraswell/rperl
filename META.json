@@ -1,0 +1,113 @@
+{
+   "abstract" : "Restricted Perl, The Optimizing Perl 5 Compiler",
+   "author" : [
+      "Will Braswell <wbraswell@cpan.org>"
+   ],
+   "description" : "RPerl is the optimizing compiler for the Perl 5 programming language.  RPerl compiles slow low-magic Perl 5 code into fast binary code, which can optionally be mixed back into high-magic Perl apps.",
+   "dynamic_config" : 0,
+   "generated_by" : "ExtUtils::MakeMaker version 7.0401, CPAN::Meta::Converter version 2.150005",
+   "keywords" : [
+      "rperl",
+      "perl5",
+      "optimizing",
+      "compiler",
+      "optimize",
+      "compile"
+   ],
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "RPerl",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "inc"
+      ],
+      "namespace" : [
+         "RPerl::Test"
+      ],
+      "package" : [
+         "array",
+         "boolean",
+         "hash",
+         "integer",
+         "method",
+         "number",
+         "object",
+         "ref",
+         "string",
+         "unknown"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Alien::GMP" : "1.05",
+            "Alien::GSL" : "1.01",
+            "IO::Socket::SSL" : "2.043"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Alien::JPCRE2" : "0.012",
+            "Alien::PCRE2" : "0.015",
+            "Alien::astyle" : "0.009",
+            "App::Pod2CpanHtml" : "0.04",
+            "CPAN::Meta" : "2.150005",
+            "Date::Format" : "2.24",
+            "ExtUtils::MakeMaker" : "7.04",
+            "File::Which" : "1.21",
+            "Filter::Simple" : "0.91",
+            "IPC::Run3" : "0.048",
+            "Inline" : "0.80",
+            "Inline::C" : "0.76",
+            "Inline::CPP" : "0.74",
+            "Inline::Filters" : "0.19",
+            "List::MoreUtils" : "0.33",
+            "Math::BigInt::GMP" : "1.46",
+            "Math::GSL" : "0.39",
+            "Module::Refresh" : "0.17",
+            "Module::ScanDeps" : "1.19",
+            "PadWalker" : "2.1",
+            "Parse::Eyapp" : "1.21",
+            "Perl::Critic" : "1.121",
+            "Perl::Tidy" : "20140711",
+            "Pod::PseudoPod" : "0.18",
+            "Test2::Suite" : "0.000069",
+            "Test::CPAN::Changes" : "0.400002",
+            "Test::Exception" : "0.43",
+            "Test::Number::Delta" : "1.06",
+            "Text::ASCIITable" : "0.20",
+            "Time::HiRes" : "1.9726",
+            "perl" : "5.010000"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "http://rt.cpan.org/Public/Dist/Display.html?Name=RPerl"
+      },
+      "homepage" : "http://www.rperl.org",
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ],
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/wbraswell/rperl.git",
+         "web" : "https://github.com/wbraswell/rperl"
+      },
+      "x_IRC" : "irc://irc.perl.org/#perl11"
+   },
+   "version" : "3.402000",
+   "x_serialization_backend" : "JSON::PP version 2.27300"
+}
