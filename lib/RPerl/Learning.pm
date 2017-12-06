@@ -15859,8 +15859,8 @@ RPerl currently supports the following array stringification subroutines, with s
 
 In Perl, we use the comma C<,> character to separate elements in a C<"list">, which may then be utilized either as the operands passed as input to an appropriate operation, or as the values stored inside an array data structure.  Thus, an array variable may be assigned the value of an enclosed list, but in RPerl the reverse is not true.  (Please see L</Section 3.7: Array Assignment> for more information.)
 
-    my                 @variable_storing_array_by_value     = ('list', 'enclosed', 'within', 'round',  'parentheses');  # fine in  Perl, error in RPerl, list assigned to stored-by-value     array
-    my string_arrayref $variable_storing_array_by_reference = ['list', 'enclosed', 'within', 'square', 'brackets'];     # fine in RPerl, fine  in RPerl, list assigned to stored-by-reference array
+    my                 @variable_storing_array_by_value     = ('list', 'enclosed', 'within', 'round',  'parentheses');  # fine in Perl, error in RPerl, list assigned to stored-by-value     array
+    my string_arrayref $variable_storing_array_by_reference = ['list', 'enclosed', 'within', 'square', 'brackets'];     # fine in Perl, fine  in RPerl, list assigned to stored-by-reference array
 
     my ($list, $of, $variables) = @variable_storing_array_by_value;      # fine  in Perl, error in RPerl, stored-by-value     array assigned to list
     my [$list, $of, $variables] = $variable_storing_array_by_reference;  # error in Perl, error in RPerl, stored-by-reference array assigned to list
