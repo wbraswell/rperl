@@ -221,6 +221,16 @@ FATHER'S DAY?
 
 
 ##########################################################################################
+# CPAN INSTALLATION PROCESS
+##########################################################################################
+
+your dist's configure prereqs are checked in META.json, the CPAN client goes and installs those.
+the CPAN client runs your Makefile.PL (configure phase).
+the CPAN client checks MYMETA.json for build, test and runtime prereqs and installs those.
+neither your Makefile.PL nor generated Makefile are involved in installation of other modules.
+
+
+##########################################################################################
 # CPAN DISTRIBUTION
 ##########################################################################################
 
