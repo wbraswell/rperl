@@ -428,6 +428,12 @@ if [ $MENU_CHOICE -le 25 ]; then
         echo '[ Pluto polyCC: polycc Required For Parallel Compiling, Depends On texinfo flex bison ]'
         echo '[ AStyle: Artistic Style C++ Formatter, Required By RPerl Test Suite ]'
         echo
+        echo '[ UBUNTU OPTION ONLY: Add non-base apt repositories ]'
+        S add-apt-repository \"deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse\"
+
+        echo '[ UBUNTU OPTION ONLY: Run apt-get update ]'
+        S apt-get update
+
         echo '[ UBUNTU OPTION ONLY: Install RPerl Dependencies ]'
         S apt-get install g++ libc6-dev libperl-dev zlib1g-dev libgmp-dev libgsl0-dev texinfo flex bison astyle
 
