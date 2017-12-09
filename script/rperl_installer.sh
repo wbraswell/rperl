@@ -1,7 +1,7 @@
 #!/bin/bash
 # Copyright © 2014, 2015, 2016, 2017, William N. Braswell, Jr.. All Rights Reserved. This work is Free \& Open Source; you can redistribute it and/or modify it under the same terms as Perl 5.26.0.
 # RPerl Installer Script
-VERSION='0.117_000'
+VERSION='0.118_000'
 
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
@@ -428,10 +428,10 @@ if [ $MENU_CHOICE -le 25 ]; then
         echo '[ Pluto polyCC: polycc Required For Parallel Compiling, Depends On texinfo flex bison ]'
         echo '[ AStyle: Artistic Style C++ Formatter, Required By RPerl Test Suite ]'
         echo
-        echo '[ UBUNTU OPTION ONLY: Add non-base apt repositories ]'
+        echo '[ UBUNTU OPTION ONLY: Add Non-Base APT Repositories ]'
         S add-apt-repository \"deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse\"
 
-        echo '[ UBUNTU OPTION ONLY: Run apt-get update ]'
+        echo '[ UBUNTU OPTION ONLY: Update APT Repositories ]'
         S apt-get update
 
         echo '[ UBUNTU OPTION ONLY: Install RPerl Dependencies ]'
