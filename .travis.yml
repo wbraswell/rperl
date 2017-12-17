@@ -1,5 +1,5 @@
 language: perl
-# v0.030_000
+# v0.031_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -57,30 +57,19 @@ install:
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 90 --slave /usr/bin/g++ g++ /usr/bin/g++-5
 #   - sudo apt-get install libpcre2-8-0 libpcre2-16-0 libpcre2-32-0 libpcre2-dev  # DEV NOTE, CORRELATION #rp060: disabled, does not exist until Ubuntu v16.04 Xenial
 #   - sudo apt-get install libjpcre2-dev                                          # DEV NOTE, CORRELATION #rp060: disabled, does not exist
-    - sudo apt-get install astyle        # "system" install via Ubuntu  here vs "share" install via CPAN Alien::astyle
-    - sudo apt-get install libgmp-dev    # "system" install via Ubuntu  here vs "share" install via CPAN Alien::GMP
-    - sudo apt-get install libgsl0-dev   # "system" install via Ubuntu  here vs "share" install via CPAN Alien::GSL
-    # begin Pluto PolyCC                 # "system" install via tarball here vs "share" install via CPAN Alien::Pluto
-    - sudo apt-get install texinfo
-    #- wget https://github.com/wbraswell/pluto-mirror/raw/master/backup/pluto-0.11.4.tar.gz  # prefer official repo below
-    - wget https://github.com/bondhugula/pluto/files/737550/pluto-0.11.4.tar.gz
-    - tar -xzvf pluto-0.11.4.tar.gz
-    - cd pluto-0.11.4/
-    - ./configure
-    - make
-    - make test
-    - sudo make install
-    - cd ..
-    # end Pluto PolyCC
-    - sudo apt-get install curl
+    - perl -e 'if ($ENV{ALIEN_INSTALL_TYPE} eq q{system}) { system qw(sudo apt-get install astyle); }'       # "system" install via Ubuntu  here vs "share" install via CPAN Alien::astyle
+    - perl -e 'if ($ENV{ALIEN_INSTALL_TYPE} eq q{system}) { system qw(sudo apt-get install libgmp-dev); }'   # "system" install via Ubuntu  here vs "share" install via CPAN Alien::GMP
+    - perl -e 'if ($ENV{ALIEN_INSTALL_TYPE} eq q{system}) { system qw(sudo apt-get install libgsl0-dev); }'  # "system" install via Ubuntu  here vs "share" install via CPAN Alien::GSL
+    - perl -e 'if ($ENV{ALIEN_INSTALL_TYPE} eq q{system}) { system qw(sudo apt-get install texinfo); }'      # "system" install via Ubuntu  here vs "share" install via CPAN Alien::Texinfo (A::Pluto dep)
+    - perl -e 'if ($ENV{ALIEN_INSTALL_TYPE} eq q{system}) { system q{wget https://github.com/bondhugula/pluto/files/737550/pluto-0.11.4.tar.gz; tar -xzvf pluto-0.11.4.tar.gz; cd pluto-0.11.4/; ./configure; make; make test; sudo make install; cd .. }; }'  # "system" install via tarball here vs "share" install via CPAN Alien::Pluto
 
-# NEED REMOVE FOLLOWING 1 LINE IF NOT USED
-# NEED REMOVE FOLLOWING 1 LINE IF NOT USED
-# NEED REMOVE FOLLOWING 1 LINE IF NOT USED
-    #- cpan-install --deps       # Travis-CI Helper: installs prereqs, including recommends
+    # NEED DELETE FOLLOWING LINE IF NOT USED!!!
+    # NEED DELETE FOLLOWING LINE IF NOT USED!!!
+    # NEED DELETE FOLLOWING LINE IF NOT USED!!!
+#    - sudo apt-get install curl
 
 before_script:
-    # DEV NOTE, CORRELATION #rp060: must force share install of dists which are not available during system install
+    # DEV NOTE, CORRELATION #rp060: must force share install of dists which are not available via system install; PCRE2 & JPCRE2 are not readily available via the OS package manager
     # Configuring Alien-PCRE2-xxx ... Alien::Build::Plugin::PkgConfig::Negotiate> Using PkgConfig plugin: PkgConfig::CommandLine
     # Alien::Build::CommandSequence> + pkg-config --exists libpcreX-X
     # external command failed at xxx/Alien/Build/CommandSequence.pm line XX.
