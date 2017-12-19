@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.029_000;
+our $VERSION = 0.030_000;
 use 5.010;  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 
 use ExtUtils::MakeMaker;
@@ -96,7 +96,7 @@ WriteMakefile(
     CONFIGURE_REQUIRES => {
         # DEV NOTE, CORRELATION #rp061: prioritize installation of all dists which are (or may be) prerequisites for other dists or components
         'IO::Socket::SSL'     => '2.043',     # (infamously problematic) pre-prerequisite for Alien::astyle
-        'Alien::GMP'          => '1.05',      # prerequisite for Math::BigInt::GMP
+        'Alien::GMP'          => '1.07',      # prerequisite for Math::BigInt::GMP
         'Alien::GSL'          => '1.01',      # prerequisite for Math::GSL
     },
     PREREQ_PM        => {

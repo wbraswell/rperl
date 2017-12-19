@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use rperlnamespaces;
-our $VERSION = 0.012_000;
+our $VERSION = 0.014_000;
 
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 
@@ -44,6 +44,8 @@ my $namespaces_rperl_missed = {
     'rperlsse::' => 1,
     'rperlgmp::' => 1,
     'rperlgsl::' => 1,
+    'RPerl::Support::' => 1,
+    'RPerl::Support::MongoDB::' => 1,
     'perlapinames_generated::' => 1,
 };
 
@@ -56,6 +58,8 @@ my $filenames_rperl = {
     'RPerl/HelperFunctions_cpp.pm' => 1,
     'RPerl/Inline.pm' => 1,
     'RPerl/Exporter.pm' => 1,
+    'RPerl/Support.pm' => 1,
+    'RPerl/Support/MongoDB.pm' => 1,
 
     # backslash
     'RPerl\CompileUnit\Module\Class.pm' => 1,
@@ -64,6 +68,8 @@ my $filenames_rperl = {
     'RPerl\HelperFunctions_cpp.pm' => 1,
     'RPerl\Inline.pm' => 1,
     'RPerl\Exporter.pm' => 1,
+    'RPerl\Support.pm' => 1,
+    'RPerl\Support\MongoDB.pm' => 1,
 
     # no slash
     'RPerl.pm' => 1,
@@ -88,6 +94,7 @@ my $namespaces_rperl_deps = {
     'Alien::'    => 1,
     'AutoSplit::'    => 1,
     'AutoLoader::'    => 1,
+    'BSON::'         => 1,  # subdependency of MongoDB?
     'Capture::'      => 1,
     'Class::'        => 1,
     'Clone::'        => 1,
@@ -96,6 +103,7 @@ my $namespaces_rperl_deps = {
     'Config_heavy::' => 1,
     'CPAN::'         => 1,
     'Cwd::'          => 1,
+    'DateTime::'       => 1,
     'Devel::'       => 1,
     'Digest::'       => 1,
     'DirHandle::'    => 1,
@@ -104,6 +112,7 @@ my $namespaces_rperl_deps = {
     'Email::'       => 1,
     'Encode::'       => 1,
     'Env::'       => 1,
+    'Eval::'       => 1,
     'Exception::'     => 1,
     'ExtUtils::'     => 1,
     'Fcntl::'        => 1,
@@ -125,10 +134,13 @@ my $namespaces_rperl_deps = {
     'Math::'         => 1,
     'Method::'         => 1,  # subdependency of Moo(se)
     'Module::'       => 1,
+    'MongoDB::'       => 1,
     'Moo::'       => 1,
     'Moose::'       => 1,
+    'MRO::'         => 1,
     'POSIX::'        => 1,
     'PadWalker::'    => 1,
+    'Package::'    => 1,
     'Params::'       => 1,
     'Parse::'        => 1,
     'Path::'        => 1,
@@ -138,16 +150,19 @@ my $namespaces_rperl_deps = {
     'PPIx::'        => 1,
     'Readonly::'  => 1,
     'Role::'   => 1,
+    'Safe::'     => 1,
     'SDL_perl::'     => 1,
     'SDL::'          => 1,
     'SDLx::'         => 1,
     'SelectSaver::'  => 1,
     'SelfLoader::'   => 1,
     'Socket::'       => 1,
+    'Specio::'       => 1,  # subdependency of MongoDB
     'Storable::'     => 1,
     'String::'  => 1,
     'Symbol::'       => 1,
     'Syntax::'       => 1,
+    'Sys::'       => 1,
     'Sub::'       => 1,
     'Term::'         => 1,
     'Test::'         => 1,
@@ -155,12 +170,18 @@ my $namespaces_rperl_deps = {
     'Text::'         => 1,
     'Tie::'          => 1,
     'Time::'         => 1,
+    'Try::'         => 1,
+    'Type::'       => 1,  # subdependency of MongoDB
+    'Types::'       => 1,  # subdependency of MongoDB
+    'Variable::'          => 1,
     'VMS::'          => 1,
     'Win32::'        => 1,
     'auto::'         => 1,
     'base::'         => 1,
     'charnames::'         => 1,
     '_charnames::'         => 1,
+    'attributes::'  => 1,
+    'boolean::'  => 1,
     'bytes_heavy::'  => 1,
     'deprecate::'  => 1,
     'feature::'      => 1,
@@ -168,6 +189,7 @@ my $namespaces_rperl_deps = {
     'if::'           => 1,
     'integer::'      => 1,    # NEED FIX: this is also an RPerl data type, duplicate entry below
     'locale::'       => 1,
+    'namespace::'       => 1,
     'parent::'       => 1,
     'psSnake::'      => 1,
     're::'           => 1,
@@ -184,6 +206,8 @@ eval 'use RPerl::AfterSubclass';
 eval 'use rperlsse';
 eval 'use rperlgmp';
 eval 'use rperlgsl';
+eval 'use RPerl::Support';
+eval 'use RPerl::Support::MongoDB';
 eval 'use perlapinames_generated';
 
 #print 'in namespaces_regenerate.pl main::, after evals, about to call rperlnamespaces::hash()...', "\n";

@@ -8,14 +8,14 @@ our $VERSION = 0.009_000;
 #use Config;
 use RPerl::Config;  # for $RPerl::DEBUG
 use Alien::GMP;     # prerequisite for Math::BigInt::GMP
-use Alien::GSL;     # prerequisite for Math::GSL
+#use Alien::GSL;     # prerequisite for Math::GSL
 use Alien::PCRE2;   # for regex support
 use Alien::JPCRE2;  # for regex support
 use File::Spec;  # for splitpath() and catpath()
 
 # for regex support, look up include & lib dirs
 my $gmp_dir = Alien::GMP->dist_dir();
-my $gsl_dir = Alien::GSL->dist_dir();
+#my $gsl_dir = Alien::GSL->dist_dir();
 my $pcre2_dir = Alien::PCRE2->dist_dir();
 my $jpcre2_dir = Alien::JPCRE2->dist_dir();
 #print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $gmp_dir = '}, $gmp_dir, q{'}, "\n\n";
@@ -25,11 +25,11 @@ my $jpcre2_dir = Alien::JPCRE2->dist_dir();
 
 # 'our' vars below utilized from Compiler.pm and/or generated *.pmc files
 our $gmp_include_dir = File::Spec->catpath(q{}, $gmp_dir, q{include});
-our $gsl_include_dir = File::Spec->catpath(q{}, $gsl_dir, q{include});
+#our $gsl_include_dir = File::Spec->catpath(q{}, $gsl_dir, q{include});
 our $pcre2_include_dir = File::Spec->catpath(q{}, $pcre2_dir, q{include});
 our $jpcre2_include_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{include});
 our $gmp_lib_dir = File::Spec->catpath(q{}, $gmp_dir, q{lib});
-our $gsl_lib_dir = File::Spec->catpath(q{}, $gsl_dir, q{lib});
+#our $gsl_lib_dir = File::Spec->catpath(q{}, $gsl_dir, q{lib});
 my $pcre2_lib_dir = File::Spec->catpath(q{}, $pcre2_dir, q{lib});
 #my $jpcre2_lib_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{lib});  # NOT USED
 #print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $pcre2_include_dir = '}, $pcre2_include_dir, q{'}, "\n\n";

@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get @ARG, Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.048_000;
+our $VERSION = 0.049_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -229,8 +229,7 @@ sub create_symtab_entries_and_accessors_mutators {
 #    RPerl::diag(q{in Class.pm INIT block, have $TYPES_SUPPORTED = } . Dumper($TYPES_SUPPORTED) . "\n");
 
     foreach my $module_filename_short ( sort keys %{$INC_ref} ) {
-
-#        RPerl::diag("in Class.pm INIT block, have \$module_filename_short = '$module_filename_short'\n");
+#        RPerl::diag('in Class.pm INIT block, have $module_filename_short = ', q{'}, $module_filename_short, q{'}, "\n");
 
         # skip special entry created by Filter::Util::Call
         if ( $module_filename_short eq '-e' ) {
@@ -246,7 +245,7 @@ sub create_symtab_entries_and_accessors_mutators {
         if (defined $module_filename_long) {
             # skip already-processed modules, triggered by imaginary $module_filename_short created by Perl in %INC when one .pm file contains multiple packages 
             if (exists $module_filename_long_processed->{$module_filename_long}) {
-                RPerl::diag( 'in Class.pm INIT block, skipping due to already-processed PM file, have $module_filename_long = ', q{'}, $module_filename_long, q{'}, ', $module_filename_short = ', q{'}, $module_filename_short, q{'}, "\n" );
+#                RPerl::diag( 'in Class.pm INIT block, skipping due to already-processed PM file, have $module_filename_long = ', q{'}, $module_filename_long, q{'}, ', $module_filename_short = ', q{'}, $module_filename_short, q{'}, "\n" );
                 next;
             }
             $module_filename_long_processed->{$module_filename_long} = 1;

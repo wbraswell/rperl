@@ -51,7 +51,7 @@
       },
       "configure" : {
          "requires" : {
-            "Alien::GMP" : "1.05",
+            "Alien::GMP" : "1.07",
             "Alien::GSL" : "1.01",
             "IO::Socket::SSL" : "2.043"
          }
@@ -60,6 +60,7 @@
          "requires" : {
             "Alien::JPCRE2" : "0.012",
             "Alien::PCRE2" : "0.015",
+            "Alien::Pluto" : "0.003",
             "Alien::astyle" : "0.009",
             "App::Pod2CpanHtml" : "0.04",
             "CPAN::Meta" : "2.150005",

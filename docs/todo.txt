@@ -31,8 +31,12 @@ DOING
         finish
 
     Alien::Pluto
+        CPAN testers stability
+    Alien::Texinfo
+        add minimum version checking when Alien subsystem supports it in non-PkgConfig software like Texinfo
     Alien::astyle upgrade to EU::MM
-    Alien::???  what else?
+    Alien::bison
+    Alien::flex
     Alien::GSL
         make pull request for Math::GSL to use Alien::GSL    https://github.com/leto/math--gsl/issues/99
         add 'apt-get install libgsl-dev' (or libgsl0-dev) & 'cpanm Math::GSL::Matrix' in RPerl & LAMP Installers, document in INSTALL?

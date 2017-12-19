@@ -263,6 +263,7 @@ sub find_dependencies {
                 # DEV NOTE, CORRELATION #rp042: do not recursively load the same .pm file from within itself
                 next;
             }
+            # use rperlsse;
             elsif ( $file_line =~ /use\s+rperlsse\s*;/ ) {
 
 #               RPerl::diag('in Compiler::find_dependencies(), found rperlsse line, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
@@ -280,6 +281,7 @@ sub find_dependencies {
 #                RPerl::diag('in Compiler::find_dependencies(), after finding rperlsse line, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
                 next;
             }
+            # use rperlgmp;
             elsif ( $file_line =~ /use\s+rperlgmp\s*;/ ) {
 #                RPerl::diag('in Compiler::find_dependencies(), found rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
                 if ( ( not exists $modes->{_enable_gmp} ) or ( not defined $modes->{_enable_gmp} ) ) {
@@ -290,6 +292,7 @@ sub find_dependencies {
 #                RPerl::diag('in Compiler::find_dependencies(), after finding rperlgmp line, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
                 next;
             }
+            # use rperlgsl;
             elsif ( $file_line =~ /use\s+rperlgsl\s*;/ ) {
 #                RPerl::diag('in Compiler::find_dependencies(), found rperlgsl line, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
                 if ( ( not exists $modes->{_enable_gsl} ) or ( not defined $modes->{_enable_gsl} ) ) {
@@ -298,6 +301,17 @@ sub find_dependencies {
                 $modes->{_enable_gsl}->{$file_name} = 1;
 
 #                RPerl::diag('in Compiler::find_dependencies(), after finding rperlgsl line, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
+                next;
+            }
+            # use RPerl::Support::MongoDB;
+            elsif ( $file_line =~ /use\s+RPerl::Support::MongoDB\s*;/ ) {
+#                RPerl::diag('in Compiler::find_dependencies(), found RPerl::Support::MongoDB line, have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n");
+                if ( ( not exists $modes->{_enable_mongodb} ) or ( not defined $modes->{_enable_mongodb} ) ) {
+                    $modes->{_enable_mongodb} = {};
+                }
+                $modes->{_enable_mongodb}->{$file_name} = 1;
+
+#                RPerl::diag('in Compiler::find_dependencies(), after finding RPerl::Support::MongoDB line, have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n");
                 next;
             }
             elsif ( $file_line =~ /use\s+lib/ ) {
