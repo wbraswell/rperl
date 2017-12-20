@@ -1,9 +1,5 @@
 #!/usr/bin/perl
 
-# START HERE: clean up CPP file, add find_one to CPP, compile!!!
-# START HERE: clean up CPP file, add find_one to CPP, compile!!!
-# START HERE: clean up CPP file, add find_one to CPP, compile!!!
-
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -23,19 +19,20 @@ my MongoDB::MongoClient $client = MongoDB::MongoClient->new({host => 'localhost'
 my string $db_name = 'rperl_test_db';
 print {*STDERR} 'have $db_name = ', $db_name, "\n";
 
-my MongoDB::Database $database = $client->get_database($db_name);
+my MongoDB::Database $database = $client->mongodb_get_database($db_name);
 print {*STDERR} 'have $database = ', Dumper($database), "\n";
 
-my MongoDB::Collection $collection = $database->get_collection('record-collection');
+my MongoDB::Collection $collection = $database->mongodb_get_collection('record-collection');
 print {*STDERR} 'have $collection = ', Dumper($collection), "\n";
 
-$collection->insert_one({
+my MongoDB::InsertOneResult $result = $collection->mongodb_insert_one({
     name => 'rperl_test_data',
     source => 'Perl',
     foo_integer => 1,
     foo_stringarrayref => ['abc', 'def', 'ghi'],
     foo_integer_hashref => { x => 203, y => 102 }
 });
+print {*STDERR} 'have $result = ', Dumper($result), "\n";
 
-my hashref $found = $collection->find_one( { 'name' => 'rperl_test_data' } );
-print {*STDERR} 'have $found = ', Dumper($found), "\n";
+my hashref $found_data = $collection->mongodb_find_one({ name => 'rperl_test_data' });
+print {*STDERR} 'have $found_data = ', Dumper($found_data), "\n";
