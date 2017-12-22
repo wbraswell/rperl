@@ -45,6 +45,7 @@ use RPerl::AfterSubclass;
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(
+    mongodb_new
     mongodb_get_database
 );
 
@@ -56,13 +57,18 @@ our hashref $properties = {};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
+#my MongoDB::MongoClient $my_client = mongodb_new({host => 'localhost', port => 27_017});
+sub mongodb_new {
+    { my MongoDB::MongoClient $RETURN_TYPE };
+    return MongoDB::MongoClient->new(@ARG);
+}
+
 #my MongoDB::Database $database = $client->mongodb_get_database($database_name);  # wrapped calling convention
 sub mongodb_get_database {
     { my MongoDB::Database::method $RETURN_TYPE };
     ( my MongoDB::MongoClient $self, my string $database_name ) = @ARG;
     return $self->get_database($database_name);
 }
-
 
 
 # [[[ SWITCH CONTEXT TO FOOOOOOOOO ]]]

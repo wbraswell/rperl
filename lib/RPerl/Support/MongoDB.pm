@@ -1,3 +1,15 @@
+# NEED MOVE TO MongoBSONType.pm
+# NEED MOVE TO MongoBSONType.pm
+# NEED MOVE TO MongoBSONType.pm
+package bson_docval;
+1;
+package bson_arrayref;
+1;
+package bson_hashref;
+1;
+
+
+
 # [[[ HEADER ]]]
 package RPerl::Support::MongoDB;
 use strict;
