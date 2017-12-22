@@ -29,14 +29,14 @@ print {*STDERR} 'have $my_collection_name = ', $my_collection_name, "\n";
 my MongoDB::Collection $my_collection = $my_database->mongodb_get_collection($my_collection_name);
 #print {*STDERR} 'have $my_collection = ', Dumper($my_collection), "\n";  # ERROR IN C++
 
-my bson_docval $my_document_value = {
-    name => 'rperl_test_data',
-    source => 'Perl',
+my bson_document $my_document = {
+    name => my string $TYPED_name = 'rperl_test_data',
+    source => my string $TYPED_source = 'Perl',
     foo_integer => my integer $TYPED_foo_integer = 1,
     foo_string_arrayref => my bson_arrayref $TYPED_foo_string_arrayref = ['abc', 'def', 'ghi'],
     foo_integer_hashref => my bson_hashref  $TYPED_foo_integer_hashref = { x => 203, y => 102 }
 };
-my MongoDB::InsertOneResult $my_result = $my_collection->mongodb_insert_one($my_document_value);
+my MongoDB::InsertOneResult $my_result = $my_collection->mongodb_insert_one($my_document);
 #print {*STDERR} 'have $my_result = ', Dumper($my_result), "\n";  # ERROR IN C++
 
 my hashref $my_found_data = $my_collection->mongodb_find_one({ name => 'rperl_test_data' });

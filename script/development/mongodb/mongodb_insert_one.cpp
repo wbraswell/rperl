@@ -44,8 +44,8 @@ int main() {
     // print {*STDERR} 'have $my_collection = ', Dumper($my_collection), "\n";
 //    cerr << "have $my_collection = " << my_collection << endl;  // ERROR
 
-    // my bson_docval $my_document_value = {
-    bsoncxx::document::value my_document_value = bsoncxx::builder::stream::document{}
+    // my bson_document $my_document = {
+    bsoncxx::document::value my_document = bsoncxx::builder::stream::document{}
         // name => 'rperl_test_data',
         << "name" << "rperl_test_data"
         // source => 'Perl',
@@ -64,8 +64,8 @@ int main() {
     // };
     << bsoncxx::builder::stream::finalize;
 
-    // my MongoDB::InsertOneResult $my_result = $my_collection->mongodb_insert_one($my_document_value);
-    bsoncxx::stdx::optional<mongocxx::result::insert_one> my_result = my_collection.insert_one(my_document_value.view());
+    // my MongoDB::InsertOneResult $my_result = $my_collection->mongodb_insert_one($my_document);
+    bsoncxx::stdx::optional<mongocxx::result::insert_one> my_result = my_collection.insert_one(my_document.view());
 
     // print {*STDERR} 'have $my_result = ', Dumper($my_result), "\n";
 //    cerr << "have $my_result = " << my_result << endl;  // ERROR

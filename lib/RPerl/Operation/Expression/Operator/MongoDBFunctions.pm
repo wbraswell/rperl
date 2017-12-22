@@ -1,6 +1,6 @@
-# START HERE: clean C++ code, add find_one to C++ code, create C++ wrappers, compile!
-# START HERE: clean C++ code, add find_one to C++ code, create C++ wrappers, compile!
-# START HERE: clean C++ code, add find_one to C++ code, create C++ wrappers, compile!
+# START HERE: create C++ wrappers, compile!
+# START HERE: create C++ wrappers, compile!
+# START HERE: create C++ wrappers, compile!
 
 # [[[ PREPROCESSOR ]]]
 # <<< TYPE_CHECKING: OFF >>>
@@ -36,7 +36,7 @@ use MongoDB;
 
 
 
-# [[[ SWITCH CONTEXT TO FOOOOOOOOO ]]]
+# [[[ SWITCH CONTEXT ]]]
 package MongoDB::MongoClient;
 use strict;
 use warnings;
@@ -71,7 +71,7 @@ sub mongodb_get_database {
 }
 
 
-# [[[ SWITCH CONTEXT TO FOOOOOOOOO ]]]
+# [[[ SWITCH CONTEXT ]]]
 package MongoDB::Database;
 use strict;
 use warnings;
@@ -100,7 +100,7 @@ sub mongodb_get_collection {
 
 
 
-# [[[ SWITCH CONTEXT TO FOOOOOOOOO ]]]
+# [[[ SWITCH CONTEXT ]]]
 package MongoDB::Collection;
 use strict;
 use warnings;
