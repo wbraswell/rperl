@@ -1673,7 +1673,7 @@ sub cpp_to_xsbinary__subcompile {
         $subcompile_command .= q{ } . '-I"' . $RPerl::INCLUDE_PATH . '"'; # different than original Inline::CPP subcompile command, double-quotes added to encapsulate user-name directories
         $subcompile_command .= q{ } . '-Ilib';
 
-        # DEV NOTE: must have $pm_file_path for support checking below; GMP, GSL, MongoDB 
+        # DEV NOTE: must have $pl_file_path for support checking below; GMP, GSL, MongoDB 
         RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n" );
         my string $pl_file_path = $modes->{_input_file_name};
         RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $pl_file_path = ' . $pl_file_path . "\n" );

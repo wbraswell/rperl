@@ -223,6 +223,72 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
     $cpp_source_group->{CPP} .= '#include <rperlstandalone.h>' . "\n";
 
+    # DEV NOTE: must have $pl_file_path for support checking below; GMP, GSL, MongoDB 
+#    RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n" );
+    my string $pl_file_path = $modes->{_input_file_name};
+#    RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $pl_file_path = ' . $pl_file_path . "\n" );
+    $pl_file_path = RPerl::Compiler::post_processor__absolute_path_delete($pl_file_path);
+    $pl_file_path = RPerl::Compiler::post_processor__current_directory_path_delete($pl_file_path);
+#    RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have possibly-trimmed $pl_file_path = ' . $pl_file_path . "\n" );
+
+
+
+
+
+
+
+    # START HERE: remove H_INCLUDES below, in favor of CPP only for *.pl files???  implement RPerl/Support/*.h as in RPerl/Support/MongoDB.h
+    # START HERE: remove H_INCLUDES below, in favor of CPP only for *.pl files???  implement RPerl/Support/*.h as in RPerl/Support/MongoDB.h
+    # START HERE: remove H_INCLUDES below, in favor of CPP only for *.pl files???  implement RPerl/Support/*.h as in RPerl/Support/MongoDB.h
+
+
+#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
+    if ( ( exists $modes->{_enable_sse} ) and ( defined $modes->{_enable_sse} ) ) {
+        foreach my string $enabled_file_name ( keys %{ $modes->{_enable_sse} } ) {
+            if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_sse}->{$enabled_file_name} ) ) {
+#                $cpp_source_group->{H_INCLUDES} .= '#include <rperlsse.h>' . "\n";
+                $cpp_source_group->{CPP} .= '#include <RPerl/Support/SSEStandAlone.h>' . "\n";
+            }
+        }
+    }
+
+#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+    if ( ( exists $modes->{_enable_gmp} ) and ( defined $modes->{_enable_gmp} ) ) {
+        foreach my string $enabled_file_name ( keys %{ $modes->{_enable_gmp} } ) {
+            if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_gmp}->{$enabled_file_name} ) ) {
+#                $cpp_source_group->{H_INCLUDES} .= '#include <rperlgmp.h>' . "\n";
+#                $cpp_source_group->{CPP} .= '#include <rperlgmp.h>' . "\n";
+                $cpp_source_group->{CPP} .= '#include <RPerl/Support/GMPStandAlone.h>' . "\n";
+            }
+        }
+    }
+
+#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
+    if ( ( exists $modes->{_enable_gsl} ) and ( defined $modes->{_enable_gsl} ) ) {
+        foreach my string $enabled_file_name ( keys %{ $modes->{_enable_gsl} } ) {
+            if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_gsl}->{$enabled_file_name} ) ) {
+#                $cpp_source_group->{H_INCLUDES} .= '#include <rperlgsl.h>' . "\n";
+                $cpp_source_group->{CPP} .= '#include <RPerl/Support/GLSStandAlone.h>' . "\n";
+            }
+        }
+    }
+
+#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n");
+    if ( ( exists $modes->{_enable_mongodb} ) and ( defined $modes->{_enable_mongodb} ) ) {
+        foreach my string $enabled_file_name ( keys %{ $modes->{_enable_mongodb} } ) {
+            if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_mongodb}->{$enabled_file_name} ) ) {
+#                RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_mongodb}->{' . $enabled_file_name . '} = TRUE' . "\n");
+#                $cpp_source_group->{H_INCLUDES} .= '#include <RPerl/Support/MongoDB.h>' . "\n";
+                $cpp_source_group->{CPP} .= '#include <RPerl/Support/MongoDBStandAlone.h>' . "\n";
+            }
+        }
+    }
+
+
+
+
+
+
     my string $file_name_underscores = $modes->{_input_file_name};
 #    $file_name_underscores =~ s/^[\/\\.]*//gxms;  # remove leading forward slashes, back slashes, and dots
     substr $file_name_underscores, -3, 3, q{};  # remove trailing '.pl'

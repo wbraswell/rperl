@@ -377,6 +377,17 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             # OpNamedScolonOrSubExpIn -> OP10_NAMED_UNARY_SCOLON
             $cpp_source_group->{CPP} .= $opnamed_or_subexp_or_input_scolon->{children}->[0];
         }
+
+
+
+
+        # THEN START HERE: change error messages to have uppercase MISMATCH as in other error messages???  translate FROM -> TO below
+        # THEN START HERE: change error messages to have uppercase MISMATCH as in other error messages???  translate FROM -> TO below
+        # THEN START HERE: change error messages to have uppercase MISMATCH as in other error messages???  translate FROM -> TO below
+ 
+        # FROM: my MongoDB::MongoClient $my_client = MongoDB::MongoClient->mongodb_new({host => 'localhost', port => 27_017});
+        #   TO: mongocxx::client my_client{mongocxx::uri{"mongodb://localhost:27017"}};
+
         elsif ( $opnamed_or_subexp_or_input_scolon_type eq 'OpNamedScolonOrSubExpIn_261' ) {    # OpNamedScolonOrSubExpIn -> SubExpressionOrInput ';'
             if (    ( exists $opnamed_or_subexp_or_input_scolon->{children} )
                 and ( exists $opnamed_or_subexp_or_input_scolon->{children}->[0] )
