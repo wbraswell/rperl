@@ -1,0 +1,2 @@
+rm mongodb_insert_one_find_one.cpp
+ln -s mongodb_insert_one_find_one.cpp.NO_RPERL mongodb_insert_one_find_one.cpp

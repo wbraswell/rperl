@@ -2,20 +2,15 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <bsoncxx/json.hpp>
-#include <mongocxx/client.hpp>
-#include <mongocxx/stdx.hpp>
-#include <mongocxx/uri.hpp>
-#include <mongocxx/instance.hpp>
+#include <mongocxx/client.hpp>    // in RPerl::Support::MongoDB.h
+#include <mongocxx/stdx.hpp>      // in RPerl::Support::MongoDB.h
+#include <mongocxx/uri.hpp>       // in RPerl::Support::MongoDB.h
+#include <mongocxx/instance.hpp>  // in RPerl::Support::MongoDB.h
 
-using std::cout;  using std::cerr;  using std::endl;
+using std::cout;  using std::cerr;  using std::endl;  // in rperlstandalone.h
 
-using bsoncxx::builder::stream::close_array;
-using bsoncxx::builder::stream::close_document;
-using bsoncxx::builder::stream::document;
-using bsoncxx::builder::stream::finalize;
-using bsoncxx::builder::stream::open_array;
-using bsoncxx::builder::stream::open_document;
+#include <bsoncxx/json.hpp>                     // in RPerl::DataStructure::MongoDBBSON.h
+#define bson_document bsoncxx::document::value  // in RPerl::DataStructure::MongoDBBSON.h
 
 int main() {
     // this should be done only once; this line does not exist in Perl
@@ -45,7 +40,7 @@ int main() {
 //    cerr << "have $my_collection = " << my_collection << endl;  // ERROR
 
     // my bson_document $my_document = {
-    bsoncxx::document::value my_document = bsoncxx::builder::stream::document{}
+    bson_document my_document = bsoncxx::builder::stream::document{}
         // name => 'rperl_test_data',
         << "name" << "rperl_test_data"
         // source => 'Perl',
@@ -55,7 +50,7 @@ int main() {
         // foo_string_arrayref => my bson_arrayref $TYPED_foo_string_arrayref = ['abc', 'def', 'ghi'],
         << "foo_string_arrayref" << bsoncxx::builder::stream::open_array
             << "abc" << "def" << "ghi"
-        << close_array
+        << bsoncxx::builder::stream::close_array
         // foo_integer_hashref => my bson_hashref  $TYPED_foo_integer_hashref = { x => 203, y => 102 }
         << "foo_integer_hashref" << bsoncxx::builder::stream::open_document
             << "x" << 203
@@ -71,7 +66,7 @@ int main() {
 //    cerr << "have $my_result = " << my_result << endl;  // ERROR
 
     // my hashref $my_found_data = $my_collection->mongodb_find_one({ name => 'rperl_test_data' });
-    bsoncxx::stdx::optional<bsoncxx::document::value> my_found_data = my_collection.find_one(document{} << "name" << "rperl_test_data" << finalize);
+    bsoncxx::stdx::optional<bsoncxx::document::value> my_found_data = my_collection.find_one(bsoncxx::builder::stream::document{} << "name" << "rperl_test_data" << bsoncxx::builder::stream::finalize);
 
     // if (defined $my_found_data) { print {*STDERR} 'have    $my_found_data = ', Dumper($my_found_data), "\n"; }
     if (my_found_data) { cerr << "have    $my_found_data = " << bsoncxx::to_json(*my_found_data) << endl; }

@@ -56,6 +56,7 @@ EOF
         # <<< CHANGE_ME: enable optional SSE support here >>>
         # <<< CHANGE_ME: enable optional GMP support here >>>
         # <<< CHANGE_ME: enable optional GSL support here >>>
+        # <<< CHANGE_ME: enable optional MongoDB support here >>>
 
 #RPerl::diag('in RPerl::CompileUnit::Module::cpp_load(), CPP not yet loaded, about to call eval() on $eval_string =' . "\n" . '<<< BEGIN EVAL STRING>>>' . "\n" . $eval_string . '<<< END EVAL STRING >>>' . "\n");
 

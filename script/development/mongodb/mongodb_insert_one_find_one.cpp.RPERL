@@ -1,0 +1,121 @@
+//!/usr/bin/rperl
+
+// [[[ HEADER ]]]
+#include <rperlstandalone.h>
+#include <RPerl/Support/MongoDBStandAlone.h>
+#ifndef __CPP__INCLUDED__mongodb_insert_one_find_one_cpp
+#define __CPP__INCLUDED__mongodb_insert_one_find_one_cpp 0.001_000
+# ifdef __CPP__TYPES
+
+
+// [[[ INCLUDES ]]]
+int main() {
+    // [[[ OPERATIONS HEADER ]]]
+
+// [[[ OPERATIONS ]]]
+
+    // my MongoDB::MongoClient $my_client = MongoDB::MongoClient->mongodb_new({host => 'localhost', port => 27_017});
+    mongocxx::client my_client{mongocxx::uri{"mongodb://localhost:27017"}};
+
+    // WRONG NEED FIX!!!
+//    MongoDB__MongoClient_ptr my_client = MongoDB__MongoClient__mongodb_new({ {"host", (const string) "localhost"}, {"port", 27017} });  // mongodb_new()
+//    MongoDB__MongoClient_ptr my_client = (NEW_MongoDB__MongoClient{}).host((const string) "localhost").port(27017).NEW();               //         new()
+
+
+
+    // my string $my_database_name = 'rperl_test_database';
+    string my_database_name = (const string) "rperl_test_database";
+    // print {*STDERR} 'have $my_database_name = ', $my_database_name, "\n";
+    prerr "have $my_database_name = " << my_database_name << endl;
+
+
+
+    // my MongoDB::Database $my_database = $my_client->mongodb_get_database($my_database_name);
+    mongocxx::database my_database = my_client[my_database_name];
+
+    // WRONG NEED FIX!!!
+//    MongoDB__Database_ptr my_database = my_client->mongodb_get_database(my_database_name);
+
+
+    
+    // my string $my_collection_name = 'rperl_test_collection';
+    string my_collection_name = (const string) "rperl_test_collection";
+    // print {*STDERR} 'have $my_collection_name = ', $my_collection_name, "\n";
+    prerr "have $my_collection_name = " << my_collection_name << endl;
+
+
+
+    // my MongoDB::Collection $my_collection = $my_database->mongodb_get_collection($my_collection_name);
+    mongocxx::collection my_collection = my_database[my_collection_name];
+
+    // WRONG NEED FIX!!!
+//    MongoDB__Collection_ptr my_collection = my_database->mongodb_get_collection(my_collection_name);
+
+
+
+    // my bson_document $my_document = {
+    bson_document my_document = bsoncxx::builder::stream::document{}
+        // name => 'rperl_test_data',
+        << "name" << "rperl_test_data"
+        // source => 'Perl',
+        << "source" << "C++"
+        // foo_integer => my integer $TYPED_foo_integer = 1,
+        << "foo_integer" << 1
+        // foo_string_arrayref => my bson_arrayref $TYPED_foo_string_arrayref = ['abc', 'def', 'ghi'],
+        << "foo_string_arrayref" << bsoncxx::builder::stream::open_array
+            << "abc" << "def" << "ghi"
+        << bsoncxx::builder::stream::close_array
+        // foo_integer_hashref => my bson_hashref  $TYPED_foo_integer_hashref = { x => 203, y => 102 }
+        << "foo_integer_hashref" << bsoncxx::builder::stream::open_document
+            << "x" << 203
+            << "y" << 102
+        << bsoncxx::builder::stream::close_document
+    // };
+    << bsoncxx::builder::stream::finalize;
+
+    // WRONG NEED FIX!!!
+//    bson_document_ptr my_document = { {"name", (const string) "rperl_test_data"}, {"source", (const string) "Perl"}, {"foo_integer", 1}, {"foo_string_arrayref", {(const string) "abc", (const string) "def", (const string) "ghi"}}, {"foo_integer_hashref", { {"x", 203}, {"y", 102} }} };
+
+
+
+    // my MongoDB::InsertOneResult $my_result = $my_collection->mongodb_insert_one($my_document);
+    bsoncxx::stdx::optional<mongocxx::result::insert_one> my_result = my_collection.insert_one(my_document.view());
+    
+    // WRONG NEED FIX!!!
+//    MongoDB__InsertOneResult_ptr my_result = my_collection->mongodb_insert_one(my_document);
+
+
+
+    // my hashref $my_found_data = $my_collection->mongodb_find_one({ name => 'rperl_test_data' });
+    bsoncxx::stdx::optional<bsoncxx::document::value> my_found_data = my_collection.find_one(bsoncxx::builder::stream::document{} << "name" << "rperl_test_data" << bsoncxx::builder::stream::finalize);
+    
+    // WRONG NEED FIX!!!
+//    hashref my_found_data = my_collection->mongodb_find_one({ {"name", (const string) "rperl_test_data"} });
+
+
+
+    // if ($my_found_data) {
+    if (my_found_data) { 
+        // print {*STDERR} 'have    $my_found_data = ', Dumper($my_found_data), "\n";
+        prerr "have    $my_found_data = " << bsoncxx::to_json(*my_found_data) << endl;
+
+        // WRONG NEED FIX!!!
+//        prerr "have    $my_found_data = " << Dumper(my_found_data) << endl;
+    }
+    // else {
+    else               {
+        // print {*STDERR} 'have NO $my_found_data', "\n";
+        prerr "have NO $my_found_data" << endl;
+    }
+
+
+
+    // [[[ OPERATIONS FOOTER ]]]
+    return 0;
+}
+
+// [[[ FOOTER ]]]
+# elif defined __PERL__TYPES
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+# endif
+#endif

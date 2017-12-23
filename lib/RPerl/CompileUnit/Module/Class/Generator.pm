@@ -555,6 +555,15 @@ EOL
         }
     }
 
+#    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n");
+    if ( ( exists $modes->{_enable_mongodb} ) and ( defined $modes->{_enable_mongodb} ) ) {
+        foreach my string $module_path_name ( keys %{ $modes->{_enable_mongodb} } ) {
+            if ( ( $module_path_name =~ /$module_file_name$/xms ) and ( $modes->{_enable_mongodb}->{$module_path_name} ) ) {
+                $cpp_source_group->{H_INCLUDES} .= '#include <RPerl/Support/MongoDB.h>' . "\n";
+            }
+        }
+    }
+
     # NEED FIX WIN32: change hard-coded forward-slash in generated path name below?
     # NEED FIX: handle absolute vs relative include paths
 #    RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_name = ' . $parent_name . "\n");

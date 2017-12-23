@@ -30,6 +30,7 @@ DOING
     Quick-Start Guide
         finish
 
+    Alien::PkgConfig???  for MongoDB driver build support
     Alien::Pluto
         CPAN testers stability
     Alien::Texinfo

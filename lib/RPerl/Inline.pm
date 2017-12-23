@@ -24,12 +24,16 @@ my $jpcre2_dir = Alien::JPCRE2->dist_dir();
 #print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $jpcre2_dir = '}, $jpcre2_dir, q{'}, "\n\n";
 
 # 'our' vars below utilized from Compiler.pm and/or generated *.pmc files
+#our $mongodb_include_dir = File::Spec->catpath(q{}, q{FOO}, q{include});  # NOT USED, replaced by pkg-config at compile time as in Compiler.pm
 our $gmp_include_dir = File::Spec->catpath(q{}, $gmp_dir, q{include});
 #our $gsl_include_dir = File::Spec->catpath(q{}, $gsl_dir, q{include});
 our $pcre2_include_dir = File::Spec->catpath(q{}, $pcre2_dir, q{include});
 our $jpcre2_include_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{include});
 our $gmp_lib_dir = File::Spec->catpath(q{}, $gmp_dir, q{lib});
 #our $gsl_lib_dir = File::Spec->catpath(q{}, $gsl_dir, q{lib});
+our $mongodb_lib_dir = `pkg-config --libs-only-L libmongocxx`;  # NEED FIX: add Alien::PkgConfig dependency; add error checking for missing pkg-config or bad return value
+substr $mongodb_lib_dir, 0, 2, q{};  # trim leading '-L'
+chomp $mongodb_lib_dir;  # trim trailing newline
 my $pcre2_lib_dir = File::Spec->catpath(q{}, $pcre2_dir, q{lib});
 #my $jpcre2_lib_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{lib});  # NOT USED
 #print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $pcre2_include_dir = '}, $pcre2_include_dir, q{'}, "\n\n";

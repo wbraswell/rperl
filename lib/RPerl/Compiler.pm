@@ -1444,8 +1444,41 @@ sub post_processor_cpp__pmc_generate {
                     else { $file_line = undef; }
                 }
 
+
+
+
+                elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional MongoDB support here >>>' . "\n" ) ) {
+#                    RPerl::diag( 'in Compiler::save_source_files(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n" );
+#                    RPerl::diag( 'in Compiler::save_source_files(), have $pm_file_path = ' . $pm_file_path . "\n" );
+                    $pm_file_path = post_processor__absolute_path_delete($pm_file_path);
+                    $pm_file_path = post_processor__current_directory_path_delete($pm_file_path);
+#                    RPerl::diag( 'in Compiler::save_source_files(), have possibly-trimmed $pm_file_path = ' . $pm_file_path . "\n" );
+                    
+                    if (    ( exists $modes->{_enable_mongodb} )
+                        and ( defined $modes->{_enable_mongodb} )
+                        and ( exists $modes->{_enable_mongodb}->{$pm_file_path} )
+                        and ( defined $modes->{_enable_mongodb}->{$pm_file_path} )
+                        and $modes->{_enable_mongodb}->{$pm_file_path} )
+                    {
+                        # DEV NOTE: linking instructions    http://mongodb.github.io/mongo-cxx-driver/mongocxx-v3/tutorial/ 
+                        # g++ --std=c++11 ... $(pkg-config --cflags --libs libmongocxx) -Wl,-rpath,/usr/local/lib
+                        $file_line = q(        $RPerl::Inline::ARGS{libs}  = '$(pkg-config --libs libmongocxx) -Wl,-rpath,' . $RPerl::Inline::mongodb_lib_dir;  # enable MongoDB support) . "\n";
+                        $file_line .= q(        $RPerl::Inline::ARGS{inc}  .= ' $(pkg-config --cflags libmongocxx)';  # enable MongoDB support) . "\n";
+                        # fix conflict between RPerl's use of "exp" exponent function from math.h (in rperloperations.h) & MongoDB BSON "exp" expected value (in bsoncxx/v_noabi/bsoncxx/third_party/mnmlstc/core/optional.hpp);
+                        # error: expected ‘,’ or ‘...’    AND    note: in expansion of macro ‘exp’
+                        $file_line .= q(        $RPerl::Inline::ARGS{auto_include} = [ @{ $RPerl::Inline::ARGS{auto_include} }, ) .
+                                      q('#undef exp', '#include <mongocxx/client.hpp>', '#include <mongocxx/stdx.hpp>', '#include <mongocxx/uri.hpp>', ) .
+                                      q('#include <mongocxx/instance.hpp>', '#include <<bsoncxx/json.hpp>' ];    # enable MongoDB support) . "\n";
+                    }
+                    else { $file_line = undef; }
+                }
+
                 if ( defined $file_line ) { $source_group->{PMC} .= $file_line; }
             }
+
+
+
+
 
             close $FILE_HANDLE
                 or die 'ERROR ECOCOFI04, COMPILER, SAVE OUTPUT FILES, MODULE TEMPLATE COPY: Cannot close file '
@@ -1608,6 +1641,7 @@ sub cpp_to_xsbinary__subcompile {
         }
 
         my string $subcompile_command = $modes->{CXX};
+        my string $subcompile_command_append = q{};
 
         if (   ( $modes->{subcompile} eq 'ASSEMBLE' )
             or ( $modes->{subcompile} eq 'ARCHIVE' ) )
@@ -1638,8 +1672,46 @@ sub cpp_to_xsbinary__subcompile {
         $subcompile_command .= q{ } . '-I"' . $RPerl::BASE_PATH . '"';
         $subcompile_command .= q{ } . '-I"' . $RPerl::INCLUDE_PATH . '"'; # different than original Inline::CPP subcompile command, double-quotes added to encapsulate user-name directories
         $subcompile_command .= q{ } . '-Ilib';
-        $subcompile_command .= q{ } . '-I"' . $RPerl::Inline::gmp_include_dir . '"';     # prerequisite for Math::BigInt::GMP
-        $subcompile_command .= q{ } . '-I"' . $RPerl::Inline::gsl_include_dir . '"';     # prerequisite for Math::GSL
+
+        # DEV NOTE: must have $pm_file_path for support checking below; GMP, GSL, MongoDB 
+        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n" );
+        my string $pl_file_path = $modes->{_input_file_name};
+        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $pl_file_path = ' . $pl_file_path . "\n" );
+        $pl_file_path = post_processor__absolute_path_delete($pl_file_path);
+        $pl_file_path = post_processor__current_directory_path_delete($pl_file_path);
+        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have possibly-trimmed $pl_file_path = ' . $pl_file_path . "\n" );
+
+        # GMP support
+        if (    ( exists $modes->{_enable_gmp} )
+            and ( defined $modes->{_enable_gmp} )
+            and ( exists $modes->{_enable_gmp}->{$pl_file_path} )
+            and ( defined $modes->{_enable_gmp}->{$pl_file_path} )
+            and $modes->{_enable_gmp}->{$pl_file_path} )
+        {
+            $subcompile_command .= q{ } . '-I"' . $RPerl::Inline::gmp_include_dir . '"';
+        }
+
+        # GSL support
+        if (    ( exists $modes->{_enable_gsl} )
+            and ( defined $modes->{_enable_gsl} )
+            and ( exists $modes->{_enable_gsl}->{$pl_file_path} )
+            and ( defined $modes->{_enable_gsl}->{$pl_file_path} )
+            and $modes->{_enable_gsl}->{$pl_file_path} )
+        {
+            $subcompile_command .= q{ } . '-I"' . $RPerl::Inline::gsl_include_dir . '"';
+        }
+
+        # MongoDB support
+        if (    ( exists $modes->{_enable_mongodb} )
+            and ( defined $modes->{_enable_mongodb} )
+            and ( exists $modes->{_enable_mongodb}->{$pl_file_path} )
+            and ( defined $modes->{_enable_mongodb}->{$pl_file_path} )
+            and $modes->{_enable_mongodb}->{$pl_file_path} )
+        {
+            $subcompile_command .= q{ } . '$(pkg-config --cflags libmongocxx)';
+            $subcompile_command_append .= q{ } . '$(pkg-config --libs libmongocxx) -Wl,-rpath,' . $RPerl::Inline::mongodb_lib_dir;
+        }
+
         $subcompile_command .= q{ } . '-I"' . $RPerl::Inline::pcre2_include_dir . '"';   # for regex support
         $subcompile_command .= q{ } . '-I"' . $RPerl::Inline::jpcre2_include_dir . '"';  # for regex support
 
@@ -1694,7 +1766,10 @@ sub cpp_to_xsbinary__subcompile {
                 $subcompile_command .= q{ } . $cpp_output_file_name_group->{OPENMP_EXE};
             }
         }
-        
+
+        # some subcompile arguments must be at the end of the command (presumably after the filenames?)
+        $subcompile_command .= $subcompile_command_append;
+
         if ( $modes->{subcompile} eq 'SHARED' ) {
             $subcompile_command .= q{ } . '-shared';
         }
