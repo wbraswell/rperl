@@ -2,7 +2,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -35,7 +35,7 @@ $pkgconfig_path = can_run('pkg-config');
 
 my $mongodb_pkgconfig_command = $pkgconfig_path . ' --libs-only-L libmongocxx';
 my $mongodb_pkgconfig_command_stdout = q{};
-my $mongodb_pkgconfig_command = q{};
+my $mongodb_pkgconfig_command_stderr = q{};
 run3( $mongodb_pkgconfig_command, \undef, \$mongodb_pkgconfig_command_stdout, \$mongodb_pkgconfig_command_stderr );  # disable STDIN w/ \undef
 my $mongodb_pkgconfig_command_exit_status = $CHILD_ERROR >> 8;
 
