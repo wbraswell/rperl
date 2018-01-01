@@ -929,7 +929,7 @@ sub save_object_properties_types {
         while ( ( defined $object_property_key ) and ( defined $object_property_type ) and ( defined $object_property_inner_type_name ) ) {
             if ( $object_property_key ne $object_property_inner_type_name ) {
                 # DEV NOTE, CORRELATION #rp030: matches numbering of ECOGEASCP20 in RPerl/CompileUnit/Module/Class/Generator.pm
-                die 'ERROR ECOGEPPRP20, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                die 'ERROR ECOGEPPRP20, CODE GENERATOR, PURE PERL TO RPERL, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                     . $object_property_inner_type_name . q{'}
                     . ' does not equal OO properties key ' . q{'}
                     . $object_property_key . q{'}

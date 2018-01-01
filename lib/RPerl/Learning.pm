@@ -11733,14 +11733,14 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP06, CODE GENERATOR, ABSTRACT SYNTAX TO RPerl: C-style for() loop header variable mismatch, initial-condition variable '
+    ERROR ECOGEASRP06, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, VARIABLE-CHECKING MISMATCH: C-style for() loop header, initial-condition variable '
                 . q{'}
                 . $variable_symbol0 . q{'}
                 . ' is different than exit-condition variable ' . q{'}
                 . $variable_symbol1 . q{'}
                 . ', dying
 
-    ERROR ECOGEASCP06, CODE GENERATOR, ABSTRACT SYNTAX TO C++: C-style for() loop header variable mismatch, initial-condition variable ' . q{'}
+    ERROR ECOGEASCP06, CODE GENERATOR, ABSTRACT SYNTAX TO C++, VARIABLE-CHECKING MISMATCH: C-style for() loop header, initial-condition variable ' . q{'}
                 . $variable_symbol0 . q{'}
                 . ' is different than exit-condition variable ' . q{'}
                 . $variable_symbol1 . q{'}
@@ -11952,13 +11952,13 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
+    ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, TYPE-CHECKING MISMATCH: ' . q{'}
                             . $type . q{'}
                             . ' type is different than ' . q{'}
                             . $constructor_type . q{'}
                             . ' constructor type, dying
 
-    ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: data type mismatch, ' . q{'}
+    ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++, TYPE-CHECKING MISMATCH: ' . q{'}
                             . $type . q{'}
                             . ' type is different than ' . q{'}
                             . $constructor_type . q{'}
@@ -11974,13 +11974,13 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+    ERROR ECOGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                 . $property_name . q{'}
                 . ' does not equal OO properties key ' . q{'}
                 . $property_key . q{'}
                 . ', dying
 
-    ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+    ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                 . $property_name . q{'}
                 . ' does not equal OO properties key ' . q{'}
                 . $property_key . q{'}
@@ -11996,13 +11996,13 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP22, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+    ERROR ECOGEASRP22, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                     . $type_inner_name . q{'}
                     . ' does not end with OO properties or hash key ' . q{'}
                     . $key_name . q{'}
                     . ', dying
 
-    ERROR ECOGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+    ERROR ECOGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                     . $type_inner_name . q{'}
                     . ' does not end with OO properties or hash key ' . q{'}
                     . $key_name . q{'}
@@ -12316,7 +12316,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEPPRP20, CODE GENERATOR, PURE PERL TO RPERL: redundant name mismatch, inner type name ' . q{'}
+    ERROR ECOGEPPRP20, CODE GENERATOR, PURE PERL TO RPERL, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                     . $object_property_inner_type_name . q{'}
                     . ' does not equal OO properties key ' . q{'}
                     . $object_property_key . q{'}

@@ -92,7 +92,7 @@ sub ast_to_rperl__generate {
         my object $codeblock                 = $self->{children}->[11];
 
         if ( $variable_symbol0 ne $variable_symbol1 ) {
-            die 'ERROR ECOGEASRP06, CODE GENERATOR, ABSTRACT SYNTAX TO RPerl: C-style for() loop header variable mismatch, initial-condition variable '
+            die 'ERROR ECOGEASRP06, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, VARIABLE-CHECKING MISMATCH: C-style for() loop header, initial-condition variable '
                 . q{'}
                 . $variable_symbol0 . q{'}
                 . ' is different than exit-condition variable ' . q{'}
@@ -331,7 +331,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         my object $codeblock                 = $self->{children}->[11];
 
         if ( $variable_symbol0 ne $variable_symbol1 ) {
-            die 'ERROR ECOGEASCP06, CODE GENERATOR, ABSTRACT SYNTAX TO C++: C-style for() loop header variable mismatch, initial-condition variable ' . q{'}
+            die 'ERROR ECOGEASCP06, CODE GENERATOR, ABSTRACT SYNTAX TO C++, VARIABLE-CHECKING MISMATCH: C-style for() loop header, initial-condition variable ' . q{'}
                 . $variable_symbol0 . q{'}
                 . ' is different than exit-condition variable ' . q{'}
                 . $variable_symbol1 . q{'}

@@ -35,7 +35,7 @@ sub ast_to_rperl__generate {
     }
 
     # Expression -> WordScoped OP02_METHOD_THINARROW_NEW OPTIONAL-36 ')'
-    my object $type                      = $self->{children}->[0]->{children}->[0];
+    my string $type                      = $self->{children}->[0]->{children}->[0];
     my string $thin_arrow_new_left_paren = $self->{children}->[1];
     my object $properties_init_optional  = $self->{children}->[2];
     my string $right_paren               = $self->{children}->[3];
@@ -77,11 +77,66 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
 
     # Expression -> WordScoped OP02_METHOD_THINARROW_NEW OPTIONAL-36 ')'
-    my object $type                      = $self->{children}->[0]->{children}->[0];
-    $type = RPerl::Generator::type_convert_perl_to_cpp($type, 0);  # $pointerify_classes = 0
+    my string $type                      = $self->{children}->[0]->{children}->[0];
+    my string $type_cpp = RPerl::Generator::type_convert_perl_to_cpp($type, 0);  # $pointerify_classes = 0
     my object $properties_init_optional  = $self->{children}->[2];
 
-    if ( exists $properties_init_optional->{children}->[0] ) {
+
+
+
+    # FIFTH START HERE: actually generate C++ code
+    # FIFTH START HERE: actually generate C++ code
+    # FIFTH START HERE: actually generate C++ code
+
+    # FROM: MongoDB::MongoClient->new();                                       # YES SUPPORT, default value
+    # FROM: MongoDB::MongoClient->new({host => 'localhost', port => 27_017});  # NO  SUPPORT, parsing of non-host parameters not yet implemented below
+    # FROM: MongoDB::MongoClient->new({host => 'mongodb://localhost:27017'});  # YES SUPPORT, host parameter
+    #   TO:                   {mongodb_host   {"mongodb://localhost:27017"}};
+
+    # DEV NOTE, CORRELATION #rp131: constructor call for MongoDB
+    if ( (substr $type, 0, 7) eq 'MongoDB' ) {
+        if ((not exists $modes->{_enable_mongodb}) or (not defined $modes->{_enable_mongodb}) or (not $modes->{_enable_mongodb})) {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP91b, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Found constructor call for package '
+                . q{'} . $type . q{'}
+                . ' but MongoDB support is not enabled, perhaps you forgot to load MongoDB support via `use RPerl::Support::MongoDB;`, dying' )
+                . "\n";
+        }
+        # only MongoClient objects may be directly constructed, see MongoDB::Database & MongoDB::Collection documentation
+        if ($type ne 'MongoDB::MongoClient') {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP92b, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Found constructor call for package '
+                . q{'} . $type . q{'}
+                . ' but only ' . q{'} . 'MongoDB::MongoClient' . q{'} . ' may be directly constructed, please see the MongoDB documentation on CPAN for more information, dying' )
+                . "\n";
+        }
+        
+        my string $mongodb_host;
+        if ( exists $properties_init_optional->{children}->[0] ) {
+            # NEED UPGRADE: parse MongoDB parameters other than only 'host' below 
+            RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), MongoDB constructor, have $properties_init_optional->{children}->[0] = ' . "\n" . RPerl::Parser::rperl_ast__dump($properties_init_optional->{children}->[0]) . "\n" );
+            die 'TMP DEBUG';
+
+            $mongodb_host = 'FOOOOOO';
+
+
+
+
+
+
+        }
+        # default host & port
+        else {
+            $mongodb_host = 'mongodb://localhost:27017';
+        }
+        
+        $cpp_source_group->{CPP} .= '{mongodb_host{"' . $mongodb_host . '"}}';
+
+
+
+
+
+    }
+    # constructor call with properties to initialize
+    elsif ( exists $properties_init_optional->{children}->[0] ) {
         $properties_init_optional = $properties_init_optional->{children}->[0];  # unwrap hashref object
 #        RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have unwrapped $properties_init_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($properties_init_optional) . "\n" );
 
@@ -95,8 +150,8 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
         $cpp_source_subgroup = $self->ast_to_cpp__generate__CPPOPS_CPPTYPES__property_init($modes, $property_0);
 #        RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup from $property_0 = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
-#        $cpp_source_group->{CPP} .= 'NEW_' . $type . '{}.' . $cpp_source_subgroup->{CPP_name} . '(' . $cpp_source_subgroup->{CPP_value} . ')';  # this should work except for AStyle bug
-        $cpp_source_group->{CPP} .= '(NEW_' . $type . '{}).' . $cpp_source_subgroup->{CPP_name} . '(' . $cpp_source_subgroup->{CPP_value} . ')';  # NEED FIX: extraneous parentheses required due to AStyle bug    https://sourceforge.net/p/astyle/bugs/468/
+#        $cpp_source_group->{CPP} .= 'NEW_' . $type_cpp . '{}.' . $cpp_source_subgroup->{CPP_name} . '(' . $cpp_source_subgroup->{CPP_value} . ')';  # this should work except for AStyle bug
+        $cpp_source_group->{CPP} .= '(NEW_' . $type_cpp . '{}).' . $cpp_source_subgroup->{CPP_name} . '(' . $cpp_source_subgroup->{CPP_value} . ')';  # NEED FIX: extraneous parentheses required due to AStyle bug    https://sourceforge.net/p/astyle/bugs/468/
 
         my object $properties = $properties_init_optional->{children}->[2];
 #        RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $properties = ' . "\n" . RPerl::Parser::rperl_ast__dump($properties) . "\n" );
@@ -114,8 +169,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
         $cpp_source_group->{CPP} .= '.NEW()';
     }
+    # constructor call without properties to initialize
     else {
-        $cpp_source_group->{CPP} .= 'new ' . $type;
+        $cpp_source_group->{CPP} .= 'new ' . $type_cpp;
     }
     return $cpp_source_group;
 }

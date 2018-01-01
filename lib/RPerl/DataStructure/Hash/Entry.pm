@@ -61,7 +61,7 @@ sub ast_to_rperl__generate {
             my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3]->{children}->[0];
             $type_inner_name =~ s/^(\w+)\s*$/$1/gxms;  # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ( $type_inner_name !~ /$key_name$/xms ) {
-                die 'ERROR ECOGEASRP22, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                die 'ERROR ECOGEASRP22, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, NAME-CHECKCING MISMATCH: redundant inner type name ' . q{'}
                     . $type_inner_name . q{'}
                     . ' does not end with OO properties or hash key ' . q{'}
                     . $key_name . q{'}
@@ -148,7 +148,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             my string $type_inner_name = $type_inner_optional->{children}->[0]->{children}->[3]->{children}->[0];
             $type_inner_name =~ s/^(\w+)\s*$/$1/gxms;  # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ( $type_inner_name !~ /$key_name$/xms ) {
-                die 'ERROR ECOGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+                die 'ERROR ECOGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                     . $type_inner_name . q{'}
                     . ' does not end with OO properties or hash key ' . q{'}
                     . $key_name . q{'}

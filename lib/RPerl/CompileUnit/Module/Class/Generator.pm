@@ -199,7 +199,7 @@ sub ast_to_rperl__generate {
         # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_244 & TypeInnerProperties_245 below
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
         if ( $property_name ne $property_key ) {
-            die 'ERROR ECOGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+            die 'ERROR ECOGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                 . $property_name . q{'}
                 . ' does not equal OO properties key ' . q{'}
                 . $property_key . q{'}
@@ -316,7 +316,7 @@ sub ast_to_rperl__generate {
                 $property_name =~ s/^(\w+)\s*$/$1/gxms;             # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
 
                 if ( $property_name ne $property_key ) {
-                    die 'ERROR ECOGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: redundant name mismatch, inner type name ' . q{'}
+                    die 'ERROR ECOGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                         . $property_name . q{'}
                         . ' does not equal OO properties key ' . q{'}
                         . $property_key . q{'}
@@ -768,7 +768,7 @@ EOL
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
         if ( $property_name ne $property_key ) {
             # DEV NOTE, CORRELATION #rp030: matches numbering of ECOGEPPRP20 in RPerl/CompileUnit/Module/Class.pm
-            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                 . $property_name . q{'}
                 . ' does not equal OO properties key ' . q{'}
                 . $property_key . q{'}
@@ -893,7 +893,7 @@ EOL
             # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
             if ( $property_name ne $property_key ) {
                 # DEV NOTE, CORRELATION #rp030: matches numbering of ECOGEPPRP20 in RPerl/CompileUnit/Module/Class.pm
-                die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++: redundant name mismatch, inner type name ' . q{'}
+                die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                     . $property_name . q{'}
                     . ' does not equal OO properties key ' . q{'}
                     . $property_key . q{'}

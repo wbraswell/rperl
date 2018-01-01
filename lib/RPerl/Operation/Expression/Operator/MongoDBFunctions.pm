@@ -57,14 +57,6 @@ our hashref $properties = {};
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
-=DISABLED_NEED_DELETE_IF_UNUSED
-#my MongoDB::MongoClient $my_client = mongodb_new({host => 'localhost', port => 27_017});
-sub mongodb_new {
-    { my MongoDB::MongoClient $RETURN_TYPE };
-    return MongoDB::MongoClient->new(@ARG);
-}
-=cut
-
 #my MongoDB::Database $database = $client->mongodb_get_database($database_name);  # wrapped calling convention
 sub mongodb_get_database {
     { my MongoDB::Database::method $RETURN_TYPE };

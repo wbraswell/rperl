@@ -11,6 +11,7 @@ using std::cout;  using std::cerr;  using std::endl;
 
 // [[[ TYPEDEFS ]]]
 #define bson_document bsoncxx::document::value
+#define bson_document__optional bsoncxx::stdx::optional<bsoncxx::document::value>
 //#define bson_arrayref ---  // NOT AN ACTUAL C++ TYPE
 //#define bson_hashref ---   // NOT AN ACTUAL C++ TYPE
 

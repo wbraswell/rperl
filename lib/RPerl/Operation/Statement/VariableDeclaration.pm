@@ -127,7 +127,7 @@ sub ast_to_rperl__generate {
 #                    RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), have $constructor_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($constructor_type) . "\n" );
 
                 if ( $type ne $constructor_type ) {
-                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
+                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, TYPE-CHECKING MISMATCH: ' . q{'}
                             . $type . q{'}
                             . ' type is different than ' . q{'}
                             . $constructor_type . q{'}
@@ -155,7 +155,7 @@ sub ast_to_rperl__generate {
 #                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $constructor_type = ' . $constructor_type . "\n" );
 
                     if ( $type ne $constructor_type ) {
-                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: data type mismatch, ' . q{'}
+                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, TYPE-CHECKING MISMATCH: ' . q{'}
                                 . $type . q{'}
                                 . ' type is different than ' . q{'}
                                 . $constructor_type . q{'}
@@ -364,11 +364,23 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         substr $symbol, 0, 1, q{};                          # remove leading $ sigil
         my boolean $is_constructor_call_normal  = 0;
         my boolean $is_constructor_call_params  = 0;
+        my boolean $is_constructor_call_mongodb = 0;
         my boolean $is_constructor_call_special = 0;
+        my boolean $pointerify_classes          = 1;
 
         my string $opnamed_or_subexp_or_input_scolon_type = ref $opnamed_or_subexp_or_input_scolon;
 
 #        RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $opnamed_or_subexp_or_input_scolon_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($opnamed_or_subexp_or_input_scolon_type) . "\n" );
+
+        if (((substr $type, 0, 7) eq 'MongoDB') or ((substr $type, 0, 4) eq 'bson')) {
+            if ((not exists $modes->{_enable_mongodb}) or (not defined $modes->{_enable_mongodb}) or (not $modes->{_enable_mongodb})) {
+                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP90, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Found variable declaration for package '
+                    . q{'} . $type . q{'}
+                    . ' but MongoDB support is not enabled, perhaps you forgot to load MongoDB support via `use RPerl::Support::MongoDB;`, dying' )
+                    . "\n";
+            }
+            $pointerify_classes = 0;
+        }
 
         if (   ( $opnamed_or_subexp_or_input_scolon_type eq 'OpNamedScolonOrSubExpIn_259' )
             or ( $opnamed_or_subexp_or_input_scolon_type eq 'OpNamedScolonOrSubExpIn_260' ) )
@@ -377,17 +389,6 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             # OpNamedScolonOrSubExpIn -> OP10_NAMED_UNARY_SCOLON
             $cpp_source_group->{CPP} .= $opnamed_or_subexp_or_input_scolon->{children}->[0];
         }
-
-
-
-
-        # THEN START HERE: change error messages to have uppercase MISMATCH as in other error messages???  translate FROM -> TO below
-        # THEN START HERE: change error messages to have uppercase MISMATCH as in other error messages???  translate FROM -> TO below
-        # THEN START HERE: change error messages to have uppercase MISMATCH as in other error messages???  translate FROM -> TO below
- 
-        # FROM: my MongoDB::MongoClient $my_client = MongoDB::MongoClient->mongodb_new({host => 'localhost', port => 27_017});
-        #   TO: mongocxx::client my_client{mongocxx::uri{"mongodb://localhost:27017"}};
-
         elsif ( $opnamed_or_subexp_or_input_scolon_type eq 'OpNamedScolonOrSubExpIn_261' ) {    # OpNamedScolonOrSubExpIn -> SubExpressionOrInput ';'
             if (    ( exists $opnamed_or_subexp_or_input_scolon->{children} )
                 and ( exists $opnamed_or_subexp_or_input_scolon->{children}->[0] )
@@ -404,23 +405,46 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             {
                 my object $constructor_call = $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0];
                 my object $properties_init_optional  = $constructor_call->{children}->[2];
-                if (exists $properties_init_optional->{children}->[0]) {
-                    $is_constructor_call_params = 1;
-                }
-                else {
-                    $is_constructor_call_normal = 1;
-                }
                 my string $constructor_type = $constructor_call->{children}->[0]->{children}->[0];
 
 #                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $constructor_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($constructor_type) . "\n" );
 
                 if ( $type ne $constructor_type ) {
-                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: data type mismatch, ' . q{'}
+                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++, TYPE-CHECKING MISMATCH: ' . q{'}
                             . $type . q{'}
                             . ' type is different than ' . q{'}
                             . $constructor_type . q{'}
                             . ' constructor type, dying' )
                         . "\n";
+                }
+
+                # DEV NOTE, CORRELATION #rp131: constructor call for MongoDB
+                if ( (substr $type, 0, 7) eq 'MongoDB' ) {
+                    if ((not exists $modes->{_enable_mongodb}) or (not defined $modes->{_enable_mongodb}) or (not $modes->{_enable_mongodb})) {
+                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP91a, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Found constructor call for package '
+                            . q{'} . $type . q{'}
+                            . ' but MongoDB support is not enabled, perhaps you forgot to load MongoDB support via `use RPerl::Support::MongoDB;`, dying' )
+                            . "\n";
+                    }
+                    # only MongoClient objects may be directly constructed, see MongoDB::Database & MongoDB::Collection documentation
+                    if ($type ne 'MongoDB::MongoClient') {
+                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP92a, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Found constructor call for package '
+                            . q{'} . $type . q{'}
+                            . ' but only ' . q{'} . 'MongoDB::MongoClient' . q{'} . ' may be directly constructed, please see the MongoDB documentation on CPAN for more information, dying' )
+                            . "\n";
+                    }
+                    $is_constructor_call_mongodb = 1;
+                    $pointerify_classes = 0;
+                }
+                # constructor call with properties to initialize
+                elsif (exists $properties_init_optional->{children}->[0]) {
+                    $is_constructor_call_params = 1;
+                    $pointerify_classes = 1;
+                }
+                # constructor call without properties to initialize
+                else {
+                    $is_constructor_call_normal = 1;
+                    $pointerify_classes = 1;
                 }
             }
             elsif (
@@ -439,12 +463,13 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                     = $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0];
                 if ( $constructor_name =~ m/::new$/xms ) {
                     $is_constructor_call_special = 1;
+                    $pointerify_classes = 1;
 #                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $constructor_name = ' . $constructor_name . "\n" );
                     my string $constructor_type = substr $constructor_name, 0, ( ( length $constructor_name ) - 5 );
 #                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $constructor_type = ' . $constructor_type . "\n" );
 
                     if ( $type ne $constructor_type ) {
-                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++: data type mismatch, ' . q{'}
+                        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++, TYPE-CHECKING MISMATCH: ' . q{'}
                                 . $type . q{'}
                                 . ' type is different than ' . q{'}
                                 . $constructor_type . q{'}
@@ -482,7 +507,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
                 = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
 
-            $type = RPerl::Generator::type_convert_perl_to_cpp( $type, 1 );    # $pointerify_classes = 1
+            $type = RPerl::Generator::type_convert_perl_to_cpp( $type, $pointerify_classes );
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}->{type_cpp} = $type; # add converted C++ type to symtab entry
 
             $cpp_source_group->{CPP} .= $type . q{ } . $symbol;
@@ -508,6 +533,16 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                     die 'ERROR ECOGEASCP64, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Constructor for RPerl data type ' . q{'} . $type . q{'} . ' should not be passed initialization parameters, dying' . "\n";
                 }
             }
+            # MongoDB constructor, optional params: omit '=' assignment operator, no additional parentheses
+            # FROM: my MongoDB::MongoClient $my_client = MongoDB::MongoClient->new({host => 'mongodb://localhost:27017'});
+            #   TO:    MongoDB__MongoClient  my_client                       {mongocxx::uri{"mongodb://localhost:27017"}};
+            elsif ($is_constructor_call_mongodb) {
+                $cpp_source_subgroup = $opnamed_or_subexp_or_input_scolon->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);   # subexpression
+                RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+            }
+            # special constructors, including *_arrayref_arrayref 2-D data structures, for example:
+            # my integer_arrayref_arrayref $my_2d_set = integer_arrayref_arrayref::new( $y_count,                 $x_count );  # Perl, row-major form (RMF)
+            #    integer_arrayref_arrayref  my_2d_set(                                   y_count, integer_arrayref(x_count));  # C++, row-major form (RMF)
             elsif ($is_constructor_call_special) {
                 if ( exists $rperlnamespaces_generated::RPERL->{ $type . '::' } ) {
                     if (($type eq 'integer_arrayref_arrayref') or ($type eq 'number_arrayref_arrayref') or ($type eq 'string_arrayref_arrayref')) {

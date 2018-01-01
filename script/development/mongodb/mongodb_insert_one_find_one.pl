@@ -15,8 +15,9 @@ use RPerl::Support::MongoDB;
 
 # [[[ OPERATIONS ]]]
 
-#my MongoDB::MongoClient $my_client = MongoDB::MongoClient::mongodb_new({host => 'localhost', port => 27_017});  # NEED DELETE IF UNUSED
-my MongoDB::MongoClient $my_client = MongoDB::MongoClient->new({host => 'localhost', port => 27_017});
+my MongoDB::MongoClient $my_client = MongoDB::MongoClient->new();                                       # YES SUPPORT, default value
+#my MongoDB::MongoClient $my_client = MongoDB::MongoClient->new({host => 'localhost', port => 27_017});  # NO  SUPPORT, parsing of non-host parameters not yet implemented below
+#my MongoDB::MongoClient $my_client = MongoDB::MongoClient->new({host => 'mongodb://localhost:27017'});  # YES SUPPORT, host parameter
 
 my string $my_database_name = 'rperl_test_database';
 print {*STDERR} 'have $my_database_name = ', $my_database_name, "\n";
@@ -40,6 +41,6 @@ my bson_document $my_document = {
 my MongoDB::InsertOneResult $my_result = $my_collection->mongodb_insert_one($my_document);
 #print {*STDERR} 'have $my_result = ', Dumper($my_result), "\n";  # ERROR IN C++
 
-my hashref $my_found_data = $my_collection->mongodb_find_one({ name => 'rperl_test_data' });
+my bson_document__optional $my_found_data = $my_collection->mongodb_find_one({ name => 'rperl_test_data' });
 if ($my_found_data) { print {*STDERR} 'have    $my_found_data = ', Dumper($my_found_data), "\n"; }
 else                { print {*STDERR} 'have NO $my_found_data', "\n"; }

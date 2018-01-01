@@ -39,6 +39,7 @@ DOING
     Alien::bison
     Alien::flex
     Alien::GSL
+        Program.pm: convert rperl*.h to RPerl/Support/*.h and RPerl/Support/*StandAlone.h, as in RPerl/Support/MongoDB.h  [ SSE GMP GSL ]
         make pull request for Math::GSL to use Alien::GSL    https://github.com/leto/math--gsl/issues/99
         add 'apt-get install libgsl-dev' (or libgsl0-dev) & 'cpanm Math::GSL::Matrix' in RPerl & LAMP Installers, document in INSTALL?
         gsl_matrix_CHECK*() CPPOPS_CPPTYPES
@@ -68,10 +69,10 @@ DOING
 
     Learning RPerl exercises, check on CloudForFree.org
     RPerl-calling-Perl support
-    database support
-        MongoDB
-        PostgreSQL
-        MySQL
+    MySQL
+    PostgreSQL
+    MongoDB
+        add support for MongoDB::MongoClient constructor parameters other than 'host', in ConstructorCall.pm
 
     KICKSTARTER:
     DONE??? Monolithic Modules, Fix Deps Warning & Create Tests

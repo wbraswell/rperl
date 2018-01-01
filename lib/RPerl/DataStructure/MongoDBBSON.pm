@@ -20,6 +20,10 @@ package    # hide from PAUSE indexing
 1;    # end of class
 
 package    # hide from PAUSE indexing
+    bson_document__optional;
+1;    # end of class
+
+package    # hide from PAUSE indexing
     bson_arrayref;
 1;    # end of class
 

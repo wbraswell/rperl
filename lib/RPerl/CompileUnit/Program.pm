@@ -167,6 +167,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group = { CPP => q{} };
+#    my string_hashref $cpp_source_group = { CPP => q{}, H => q{} };  # NEED ANSWER, CORRELATION #rp111: do we need a .h output file for a stand-alone *.pl input file???
     my string_hashref $cpp_source_subgroup;
     my integer $cpp_source_group_CPP_line_count = 0;
 
@@ -237,16 +238,16 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
 
 
-    # START HERE: remove H_INCLUDES below, in favor of CPP only for *.pl files???  implement RPerl/Support/*.h as in RPerl/Support/MongoDB.h
-    # START HERE: remove H_INCLUDES below, in favor of CPP only for *.pl files???  implement RPerl/Support/*.h as in RPerl/Support/MongoDB.h
-    # START HERE: remove H_INCLUDES below, in favor of CPP only for *.pl files???  implement RPerl/Support/*.h as in RPerl/Support/MongoDB.h
+    # START HERE: convert rperl*.h to RPerl/Support/*.h and RPerl/Support/*StandAlone.h, as in RPerl/Support/MongoDB.h
+    # START HERE: convert rperl*.h to RPerl/Support/*.h and RPerl/Support/*StandAlone.h, as in RPerl/Support/MongoDB.h
+    # START HERE: convert rperl*.h to RPerl/Support/*.h and RPerl/Support/*StandAlone.h, as in RPerl/Support/MongoDB.h
 
 
 #    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
     if ( ( exists $modes->{_enable_sse} ) and ( defined $modes->{_enable_sse} ) ) {
         foreach my string $enabled_file_name ( keys %{ $modes->{_enable_sse} } ) {
             if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_sse}->{$enabled_file_name} ) ) {
-#                $cpp_source_group->{H_INCLUDES} .= '#include <rperlsse.h>' . "\n";
+#                $cpp_source_group->{H_INCLUDES} .= '#include <RPerl/Support/SSEStandAlone.h>' . "\n";  # NEED ANSWER, CORRELATION #rp111: do we need a .h output file for a stand-alone *.pl input file???
                 $cpp_source_group->{CPP} .= '#include <RPerl/Support/SSEStandAlone.h>' . "\n";
             }
         }
@@ -256,8 +257,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     if ( ( exists $modes->{_enable_gmp} ) and ( defined $modes->{_enable_gmp} ) ) {
         foreach my string $enabled_file_name ( keys %{ $modes->{_enable_gmp} } ) {
             if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_gmp}->{$enabled_file_name} ) ) {
-#                $cpp_source_group->{H_INCLUDES} .= '#include <rperlgmp.h>' . "\n";
-#                $cpp_source_group->{CPP} .= '#include <rperlgmp.h>' . "\n";
+#                $cpp_source_group->{H_INCLUDES} .= '#include <RPerl/Support/GMPStandAlone.h>' . "\n";  # NEED ANSWER, CORRELATION #rp111: do we need a .h output file for a stand-alone *.pl input file???
                 $cpp_source_group->{CPP} .= '#include <RPerl/Support/GMPStandAlone.h>' . "\n";
             }
         }
@@ -267,7 +267,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     if ( ( exists $modes->{_enable_gsl} ) and ( defined $modes->{_enable_gsl} ) ) {
         foreach my string $enabled_file_name ( keys %{ $modes->{_enable_gsl} } ) {
             if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_gsl}->{$enabled_file_name} ) ) {
-#                $cpp_source_group->{H_INCLUDES} .= '#include <rperlgsl.h>' . "\n";
+#                $cpp_source_group->{H_INCLUDES} .= '#include <RPerl/Support/GSLStandAlone.h>' . "\n";  # NEED ANSWER, CORRELATION #rp111: do we need a .h output file for a stand-alone *.pl input file???
                 $cpp_source_group->{CPP} .= '#include <RPerl/Support/GLSStandAlone.h>' . "\n";
             }
         }
@@ -278,7 +278,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         foreach my string $enabled_file_name ( keys %{ $modes->{_enable_mongodb} } ) {
             if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_mongodb}->{$enabled_file_name} ) ) {
 #                RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_mongodb}->{' . $enabled_file_name . '} = TRUE' . "\n");
-#                $cpp_source_group->{H_INCLUDES} .= '#include <RPerl/Support/MongoDB.h>' . "\n";
+#                $cpp_source_group->{H_INCLUDES} .= '#include <RPerl/Support/MongoDB.h>' . "\n";  # NEED ANSWER, CORRELATION #rp111: do we need a .h output file for a stand-alone *.pl input file???
                 $cpp_source_group->{CPP} .= '#include <RPerl/Support/MongoDBStandAlone.h>' . "\n";
             }
         }
@@ -406,6 +406,27 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 # endif
 #endif
 EOF
+
+
+
+
+
+=DISABLED_NEED_ANSWER
+    # NEED ANSWER, CORRELATION #rp111: do we need a .h output file for a stand-alone *.pl input file???
+    # deferred, prepend possibly-updated H_INCLUDES to H, discarding duplicates
+    my string $H_INCLUDES_UNIQUE = '';
+    foreach my string $H_INCLUDE ( split /\n/, $cpp_source_group->{H_INCLUDES} ) {
+        if ( $H_INCLUDES_UNIQUE !~ /$H_INCLUDE/ ) {
+            $H_INCLUDES_UNIQUE .= $H_INCLUDE . "\n";
+        }
+    }
+    $cpp_source_group->{H} = $H_INCLUDES_UNIQUE . $cpp_source_group->{H};
+    delete $cpp_source_group->{H_INCLUDES};
+=cut
+
+
+
+
 
 #    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), about to return $cpp_source_group = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_group) . "\n");
     return $cpp_source_group;

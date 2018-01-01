@@ -1,3 +1,5 @@
+// NEED UPDATE, CORRELATION #rp130: all changes to this file must also be made in lib/RPerl/Support/MongoDBStandAlone.h !!!
+
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Support__MongoDB_h
@@ -21,9 +23,11 @@ using std::cout;  using std::cerr;  using std::endl;
 #define __CPP__INCLUDED__RPerl__Support__MongoDB_h__typedefs 1
 
 // [[[ TYPEDEFS ]]]
-#define bson_document bsoncxx::document::value
-//#define bson_arrayref ---  // NOT AN ACTUAL C++ TYPE
-//#define bson_hashref ---   // NOT AN ACTUAL C++ TYPE
+#define MongoDB__MongoClient mongocxx::client
+#define MongoDB__Database mongocxx::database
+#define MongoDB__Collection mongocxx::collection
+#define MongoDB__InsertOneResult bsoncxx::stdx::optional<mongocxx::result::insert_one>  // all InsertOneResult data types are optional, no need for '__optional' suffix
+#define mongodb_host mongocxx::uri
 
 // [[[ LOAD MONGODB DRIVER ]]]
 // this should be done only once; this line does not exist in Perl
