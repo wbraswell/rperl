@@ -31,6 +31,8 @@ DOING
         finish
 
     Alien::PkgConfig???  for MongoDB driver build support
+    Alien::MongoDB???
+    Alien::MongoCXX???
     Alien::Pluto
         CPAN testers stability
     Alien::Texinfo

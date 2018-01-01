@@ -2,7 +2,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.009_000;
+our $VERSION = 0.010_000;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -12,32 +12,81 @@ use Alien::GMP;     # prerequisite for Math::BigInt::GMP
 use Alien::PCRE2;   # for regex support
 use Alien::JPCRE2;  # for regex support
 use File::Spec;  # for splitpath() and catpath()
+use IPC::Cmd qw(can_run);
+use IPC::Run3 qw(run3);
 
-# for regex support, look up include & lib dirs
-my $gmp_dir = Alien::GMP->dist_dir();
-#my $gsl_dir = Alien::GSL->dist_dir();
-my $pcre2_dir = Alien::PCRE2->dist_dir();
-my $jpcre2_dir = Alien::JPCRE2->dist_dir();
-#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $gmp_dir = '}, $gmp_dir, q{'}, "\n\n";
-#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $gsl_dir = '}, $gsl_dir, q{'}, "\n\n";
-#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $pcre2_dir = '}, $pcre2_dir, q{'}, "\n\n";
-#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $jpcre2_dir = '}, $jpcre2_dir, q{'}, "\n\n";
+# DEV NOTE: all 'our' vars below utilized from Compiler.pm and/or generated *.pmc files
 
-# 'our' vars below utilized from Compiler.pm and/or generated *.pmc files
+
+
+
+# MongoDB support
+# NEED FIX: add Alien::PkgConfig & Alien::Mongo* dependencies; add error checking for missing pkg-config or bad return value
+
 #our $mongodb_include_dir = File::Spec->catpath(q{}, q{FOO}, q{include});  # NOT USED, replaced by pkg-config at compile time as in Compiler.pm
-our $gmp_include_dir = File::Spec->catpath(q{}, $gmp_dir, q{include});
-#our $gsl_include_dir = File::Spec->catpath(q{}, $gsl_dir, q{include});
-our $pcre2_include_dir = File::Spec->catpath(q{}, $pcre2_dir, q{include});
-our $jpcre2_include_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{include});
-our $gmp_lib_dir = File::Spec->catpath(q{}, $gmp_dir, q{lib});
-#our $gsl_lib_dir = File::Spec->catpath(q{}, $gsl_dir, q{lib});
-our $mongodb_lib_dir = `pkg-config --libs-only-L libmongocxx`;  # NEED FIX: add Alien::PkgConfig dependency; add error checking for missing pkg-config or bad return value
+
+my string $pkgconfig_path = undef;
+$pkgconfig_path = can_run('pkg-config');
+ 
+# NEED ENABLE: uncomment when Alien::PkgConfig dependency is added
+#if ( not defined $pkgconfig_path ) {
+#    die 'ERROR xxxxxxx, yyy: Command `pkg-config` not found, dying' . "\n" );
+#}
+
+my $mongodb_pkgconfig_command = $pkgconfig_path . ' --libs-only-L libmongocxx';
+my $mongodb_pkgconfig_command_stdout = q{};
+my $mongodb_pkgconfig_command = q{};
+run3( $mongodb_pkgconfig_command, \undef, \$mongodb_pkgconfig_command_stdout, \$mongodb_pkgconfig_command_stderr );  # disable STDIN w/ \undef
+my $mongodb_pkgconfig_command_exit_status = $CHILD_ERROR >> 8;
+
+#RPerl::diag( 'in RPerl::Inline, have $CHILD_ERROR = ' . $CHILD_ERROR . "\n" );
+#RPerl::diag( 'in RPerl::Inline, have $mongodb_pkgconfig_command_exit_status = ' . $mongodb_pkgconfig_command_exit_status . "\n" );
+
+# NEED ENABLE: uncomment when Alien::MongoDB* dependencies are added
+#if ((defined $mongodb_pkgconfig_command_stderr) and ($mongodb_pkgconfig_command_stderr ne q{})) {
+#    die 'ERROR xxxxxxx, yyy: Command `' . $mongodb_pkgconfig_command . '` generated the following STDERR output when none was expected' . "\n\n" . $mongodb_pkgconfig_command . "\n\n" . 'dying' . "\n" ;
+#}
+#elsif ((not defined $mongodb_pkgconfig_command_stdout) or ($mongodb_pkgconfig_command_stdout eq q{})) {
+#    die 'ERROR xxxxxxx, yyy: Command `' . $mongodb_pkgconfig_command . '` generated no STDOUT output when the MongoDB C++ driver library path was expected, dying' . "\n" ;
+#}
+
+# Package libmongocxx was not found in the pkg-config search path.
+# Perhaps you should add the directory containing `libmongocxx.pc' to the PKG_CONFIG_PATH environment variable
+# No package 'libmongocxx' found
+#our $mongodb_lib_dir = `pkg-config --libs-only-L libmongocxx`;  # WRONG: causes uncontrolled STDERR output above & numerous false errors
+our $mongodb_lib_dir = $mongodb_pkgconfig_command_stdout;
 substr $mongodb_lib_dir, 0, 2, q{};  # trim leading '-L'
 chomp $mongodb_lib_dir;  # trim trailing newline
+
+
+
+
+# GMP support
+my $gmp_dir = Alien::GMP->dist_dir();
+our $gmp_include_dir = File::Spec->catpath(q{}, $gmp_dir, q{include});
+our $gmp_lib_dir = File::Spec->catpath(q{}, $gmp_dir, q{lib});
+#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $gmp_dir = '}, $gmp_dir, q{'}, "\n\n";
+
+# GSL support
+#my $gsl_dir = Alien::GSL->dist_dir();
+#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $gsl_dir = '}, $gsl_dir, q{'}, "\n\n";
+#our $gsl_include_dir = File::Spec->catpath(q{}, $gsl_dir, q{include});
+#our $gsl_lib_dir = File::Spec->catpath(q{}, $gsl_dir, q{lib});
+
+# PCRE2 support
+my $pcre2_dir = Alien::PCRE2->dist_dir();
+#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $pcre2_dir = '}, $pcre2_dir, q{'}, "\n\n";
+our $pcre2_include_dir = File::Spec->catpath(q{}, $pcre2_dir, q{include});
 my $pcre2_lib_dir = File::Spec->catpath(q{}, $pcre2_dir, q{lib});
-#my $jpcre2_lib_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{lib});  # NOT USED
 #print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $pcre2_include_dir = '}, $pcre2_include_dir, q{'}, "\n\n";
+
+# JPCRE2 support
+my $jpcre2_dir = Alien::JPCRE2->dist_dir();
+#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $jpcre2_dir = '}, $jpcre2_dir, q{'}, "\n\n";
+our $jpcre2_include_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{include});
+#my $jpcre2_lib_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{lib});  # NOT USED
 #print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $jpcre2_include_dir = '}, $jpcre2_include_dir, q{'}, "\n\n";
+
 
 # long form
 #use Inline CPP => config => classes =>

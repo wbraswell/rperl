@@ -88,7 +88,8 @@ before_script:
 #    - cpanm --quiet --installdeps --notest .
 # DEV NOTE: after adding multiple Alien dependencies with build times, we exceeded Travis' ~40-minute time limit, disable CPAN tests for now to shorten non-RPerl build times
 #    - cpanm --verbose --installdeps .
-    - cpanm --verbose --installdeps --notest .
+# DEV NOTE: after adding multiple Alien dependencies with build times, we exceeded Travis' ~4MB log data limit, disable verbose CPAN output for now to shorten non-RPerl log output
+    - cpanm --installdeps --notest .
 
 # replace default build command "perl Makefile.PL && make test"
 # DEV NOTE: TEST_VERBOSE variable for ExtUtils::MakeMaker 'make' command disables suppression of stdout;
