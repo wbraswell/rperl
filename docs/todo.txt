@@ -74,7 +74,8 @@ DOING
     MySQL
     PostgreSQL
     MongoDB
-        add support for MongoDB::MongoClient constructor parameters other than 'host', in ConstructorCall.pm
+        ConstructorCall.pm: add support for MongoDB::MongoClient constructor parameters other than 'host'
+        Inline.pm: add Alien::PkgConfig & Alien::Mongo* dependencies; add error checking for missing pkg-config or bad return value
 
     KICKSTARTER:
     DONE??? Monolithic Modules, Fix Deps Warning & Create Tests
@@ -222,6 +223,7 @@ UNSIGNED INTEGER FIX
     CPPOPS_CPPTYPES conversion routines
 
 TESTS 
+    DatabaseMongoDB: errors, additional test cases
     create EXECUTE_WARNING & PARSE_WARNING & GENERATE_WARNING for t/*, begin by testing for WCOPR00 & WCOPR01 in RPerl/Test/SubroutineArguments/*_10_*
     split author (developer) tests from normal user tests
     TypeConversion, all 42 normal conversions plus to_string()

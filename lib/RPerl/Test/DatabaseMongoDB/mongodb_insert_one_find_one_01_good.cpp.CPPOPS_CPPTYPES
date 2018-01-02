@@ -3,8 +3,8 @@
 // [[[ HEADER ]]]
 #include <rperlstandalone.h>
 #include <RPerl/Support/MongoDBStandAlone.h>
-#ifndef __CPP__INCLUDED__script__development__mongodb__mongodb_insert_one_find_one_cpp
-#define __CPP__INCLUDED__script__development__mongodb__mongodb_insert_one_find_one_cpp 0.001_000
+#ifndef __CPP__INCLUDED__RPerl__Test__DatabaseMongoDB__mongodb_insert_one_find_one_01_good_cpp
+#define __CPP__INCLUDED__RPerl__Test__DatabaseMongoDB__mongodb_insert_one_find_one_01_good_cpp 0.001_000
 # ifdef __CPP__TYPES
 
 

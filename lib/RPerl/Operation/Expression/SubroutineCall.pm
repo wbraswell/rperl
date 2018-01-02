@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubroutineCall;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_100;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression);
@@ -102,11 +102,6 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     # replace all semicolons with underscores
     $name_string =~ s/:/_/gxms;
 
-
-
-
-
-
     # MongoDB support
     if ($name_string eq 'bson_build') {
         if ((not exists $modes->{_enable_mongodb}) or (not defined $modes->{_enable_mongodb}) or (not $modes->{_enable_mongodb})) {
@@ -119,11 +114,85 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #        RPerl::diag( 'in SubroutineCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), call to bson_build(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
 #        RPerl::diag( 'in SubroutineCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), call to bson_build(), have $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0] = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]) . "\n" );
 
+        if ((exists $modes->{_bson_build_inside}) and
+            (defined $modes->{_bson_build_inside}) and
+            $modes->{_bson_build_inside}) {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP94, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
+                . q{'} . $name_string . q{()'} . ', already inside the same subroutine call, nesting disallowed for this subroutine, dying' ) . "\n";
+        }
 
-        # START HERE: add error-checking, exactly 1 arg & must be hashref, also die if $modes->{_bson_build_inside} defined & true
-        # START HERE: add error-checking, exactly 1 arg & must be hashref, also die if $modes->{_bson_build_inside} defined & true
-        # START HERE: add error-checking, exactly 1 arg & must be hashref, also die if $modes->{_bson_build_inside} defined & true
+        elsif ((not defined $arguments_optional) or 
+            ((ref $arguments_optional) ne '_OPTIONAL')) {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP95a, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
+                . q{'} . $name_string . q{()'} . ', invalid or no arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
+        }
+        elsif ((not exists $arguments_optional->{children}) or 
+            (not defined $arguments_optional->{children}) or
+            (scalar @{$arguments_optional->{children}}) != 1) {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP96a, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
+                . q{'} . $name_string . q{()'} . ', wrong number of arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
+        }
 
+        elsif ((not defined $arguments_optional->{children}->[0]) or
+            ((ref $arguments_optional->{children}->[0]) ne 'ListElements_210')) {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP95b, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
+                . q{'} . $name_string . q{()'} . ', invalid or no arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
+        }
+        elsif ((not exists $arguments_optional->{children}->[0]->{children}) or
+            (not defined $arguments_optional->{children}->[0]->{children}) or
+            ((scalar @{$arguments_optional->{children}->[0]->{children}}) != 2)) {  # the empty _STAR_LIST makes 2 elements instead of 1
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP96b, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
+                . q{'} . $name_string . q{()'} . ', wrong number of arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
+        }
+
+        elsif ((not defined $arguments_optional->{children}->[0]->{children}->[1]) or
+            ((ref $arguments_optional->{children}->[0]->{children}->[1]) ne '_STAR_LIST')) {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP95c, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
+                . q{'} . $name_string . q{()'} . ', invalid or no arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
+        }
+        elsif ((not exists $arguments_optional->{children}->[0]->{children}->[1]->{children}) or
+            (not defined $arguments_optional->{children}->[0]->{children}->[1]->{children}) or
+            ((scalar @{$arguments_optional->{children}->[0]->{children}->[1]->{children}}) != 0)) {  # the empty _STAR_LST has 0 children elements
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP96c, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
+                . q{'} . $name_string . q{()'} . ', wrong number of arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
+        }
+
+        elsif ((not defined $arguments_optional->{children}->[0]->{children}->[0]) or
+            ((ref $arguments_optional->{children}->[0]->{children}->[0]) ne 'ListElement_211')) {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP95d, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
+                . q{'} . $name_string . q{()'} . ', invalid or no arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
+        }
+        elsif ((not exists $arguments_optional->{children}->[0]->{children}->[0]->{children}) or
+            (not defined $arguments_optional->{children}->[0]->{children}->[0]->{children}) or
+            ((scalar @{$arguments_optional->{children}->[0]->{children}->[0]->{children}}) != 1)) {
+#            RPerl::diag( 'in SubroutineCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), call to bson_build(), have $arguments_optional->{children}->[0]->{children}->[0]->{children} = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional->{children}->[0]->{children}->[0]->{children}) . "\n" );
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP96d, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
+                . q{'} . $name_string . q{()'} . ', wrong number of arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
+        }
+
+        elsif ((not defined $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]) or
+            ((ref $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]) ne 'SubExpression_161')) {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP95e, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
+                . q{'} . $name_string . q{()'} . ', invalid or no arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
+        }
+        elsif ((not exists $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]->{children}) or
+            (not defined $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]->{children}) or
+            ((scalar @{$arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]->{children}}) != 1)) {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP96e, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
+                . q{'} . $name_string . q{()'} . ', wrong number of arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
+        }
+
+        elsif ((not defined $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]) or
+            ((ref $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]) ne 'HashReference_231')) {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP95f, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
+                . q{'} . $name_string . q{()'} . ', invalid or no arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
+        }
+        elsif ((not exists $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]->{children}) or
+            (not defined $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]->{children}) or
+            ((scalar @{$arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]->{children}}) == 0)) {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP96f, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
+                . q{'} . $name_string . q{()'} . ', wrong number of arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
+        }
 
         $cpp_source_group->{CPP} .= 'bson_begin';
 
@@ -132,16 +201,11 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             $modes->{_bson_build_inside} = 1;
             $cpp_source_subgroup = $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build($modes);
             RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+            $modes->{_bson_build_inside} = 0;
         }
 
         $cpp_source_group->{CPP} .= ' << bson_end';
     }
-
-
-
-
-
-
 
     # normal subroutine call
     else {

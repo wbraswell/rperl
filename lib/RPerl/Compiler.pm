@@ -1674,12 +1674,12 @@ sub cpp_to_xsbinary__subcompile {
         $subcompile_command .= q{ } . '-Ilib';
 
         # DEV NOTE: must have $pl_file_path for support checking below; GMP, GSL, MongoDB 
-        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n" );
+#        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n" );
         my string $pl_file_path = $modes->{_input_file_name};
-        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $pl_file_path = ' . $pl_file_path . "\n" );
+#        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $pl_file_path = ' . $pl_file_path . "\n" );
         $pl_file_path = post_processor__absolute_path_delete($pl_file_path);
         $pl_file_path = post_processor__current_directory_path_delete($pl_file_path);
-        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have possibly-trimmed $pl_file_path = ' . $pl_file_path . "\n" );
+#        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have possibly-trimmed $pl_file_path = ' . $pl_file_path . "\n" );
 
         # GMP support
         if (    ( exists $modes->{_enable_gmp} )

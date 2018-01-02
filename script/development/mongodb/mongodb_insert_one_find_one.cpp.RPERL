@@ -88,10 +88,8 @@ int main() {
     // if ($my_found_data) {
     if (my_found_data) { 
         // print {*STDERR} 'have    $my_found_data = ', Dumper($my_found_data), "\n";
-//        prerr "have    $my_found_data = " << bsoncxx::to_json(*my_found_data) << endl;
-
-        // WRONG NEED FIX!!!
-        prerr "have    $my_found_data = " << bson_Dumper(my_found_data) << endl;
+//        prerr "have    $my_found_data = " << bsoncxx::to_json(*my_found_data) << endl;  // NO  SUPPORT, unwrapped calling convention, procedural
+        prerr "have    $my_found_data = " << bson_Dumper(my_found_data) << endl;          // YES SUPPORT,   wrapped calling convention, procedural
     }
     // else {
     else               {
