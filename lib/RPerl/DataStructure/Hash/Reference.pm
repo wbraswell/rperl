@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::Reference;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Modifier::Reference);
@@ -134,10 +134,8 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         my object $hash_entries_star = $self->{children}->[2];
 
         $cpp_source_group->{CPP} .= '{ ';
-        my string_hashref $cpp_source_subgroup
-            = $hash_entry->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group,
-            $cpp_source_subgroup );
+        my string_hashref $cpp_source_subgroup = $hash_entry->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
 
         foreach my $hash_entry_star ( @{ $hash_entries_star->{children} } ) {
             if ( ref $hash_entry_star eq 'TERMINAL' ) {
@@ -148,14 +146,11 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                             . q{' found where OP21_LIST_COMMA ',' expected, dying}
                     ) . "\n";
                 }
-                $cpp_source_group->{CPP}
-                    .= $hash_entry_star->{attr} . q{ };    # OP21_LIST_COMMA
+                $cpp_source_group->{CPP} .= $hash_entry_star->{attr} . q{ };    # OP21_LIST_COMMA
             }
             else {
-                $cpp_source_subgroup
-                    = $hash_entry_star->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-                RPerl::Generator::source_group_append( $cpp_source_group,
-                    $cpp_source_subgroup );
+                $cpp_source_subgroup = $hash_entry_star->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+                RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
             }
         }
 
@@ -171,6 +166,79 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                 . ' found where HashReference_231, HashReference_232, or SubExpression_161 expected, dying'
         ) . "\n";
     }
+    return $cpp_source_group;
+}
+
+
+sub ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build {
+    { my string_hashref::method $RETURN_TYPE };
+    ( my object $self, my string_hashref $modes) = @ARG;
+    my string_hashref $cpp_source_group = { CPP => q{} };
+
+#    RPerl::diag( 'in Hash::Reference->ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    my string $self_class = ref $self;
+
+    # unwrap HashReference_231 & HashReference_232 from SubExpression_161
+    if ( $self_class eq 'SubExpression_161' ) {
+        $self = $self->{children}->[0];
+        $self_class = ref $self;
+    }
+
+    if ( $self_class eq 'HashReference_231' ) { # HashReference -> LBRACE HashEntry STAR-50 '}'
+        my object $hash_entry        = $self->{children}->[1];
+        my object $hash_entries_star = $self->{children}->[2];
+
+#        $cpp_source_group->{CPP} .= '{ ';
+        my boolean $modes_bson_build_top_local = $modes->{_bson_build_top};
+        $modes->{_bson_build_top} = 0;
+        if ($modes_bson_build_top_local) {
+#            $cpp_source_group->{CPP} .= ' ';
+        }
+        else {
+            $cpp_source_group->{CPP} .= 'bson_hashref_begin';
+        }
+
+        my string_hashref $cpp_source_subgroup = $hash_entry->ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+
+        foreach my $hash_entry_star ( @{ $hash_entries_star->{children} } ) {
+            if ( ref $hash_entry_star eq 'TERMINAL' ) {
+                if ( $hash_entry_star->{attr} ne q{,} ) {
+                    die RPerl::Parser::rperl_rule__replace(
+                        q{ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '}
+                            . $hash_entry_star->{attr}
+                            . q{' found where OP21_LIST_COMMA ',' expected, dying}
+                    ) . "\n";
+                }
+#                $cpp_source_group->{CPP} .= $hash_entry_star->{attr} . q{ };    # OP21_LIST_COMMA
+#                $cpp_source_group->{CPP} .= '<<' . q{ };    # OP21_LIST_COMMA
+            }
+            else {
+                $cpp_source_subgroup = $hash_entry_star->ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build($modes);
+                RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+            }
+        }
+
+#        $cpp_source_group->{CPP} .= ' }';
+        if ($modes_bson_build_top_local) {
+#            $cpp_source_group->{CPP} .= ' ';
+        }
+        else {
+            $cpp_source_group->{CPP} .= ' << bson_hashref_end';
+        }
+    }
+    elsif ( $self_class eq 'HashReference_232' ) { # HashReference -> LBRACE '}'
+#        $cpp_source_group->{CPP} .= '{}';
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace(
+            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+                . ($self_class)
+                . ' found where HashReference_231, HashReference_232, or SubExpression_161 expected, dying'
+        ) . "\n";
+    }
+
     return $cpp_source_group;
 }
 

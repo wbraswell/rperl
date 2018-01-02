@@ -27,10 +27,9 @@ int main() {
 
 
     // my MongoDB::Database $my_database = $my_client->mongodb_get_database($my_database_name);
-    MongoDB__Database my_database = my_client[my_database_name];
-
-    // WRONG NEED FIX!!!
-//    MongoDB__Database my_database = my_client->mongodb_get_database(my_database_name);
+//    MongoDB__Database my_database = my_client[my_database_name];                        // NO  SUPPORT, unwrapped calling convention, OO
+//    MongoDB__Database my_database = my_client->mongodb_get_database(my_database_name);  // NO  SUPPORT,   wrapped calling convention, OO
+    MongoDB__Database my_database = mongodb_get_database(my_client, my_database_name);    // YES SUPPORT,   wrapped calling convention, procedural
 
 
     
@@ -42,14 +41,14 @@ int main() {
 
 
     // my MongoDB::Collection $my_collection = $my_database->mongodb_get_collection($my_collection_name);
-    MongoDB__Collection my_collection = my_database[my_collection_name];
+//    MongoDB__Collection my_collection = my_database[my_collection_name];                          // NO  SUPPORT, unwrapped calling convention, OO
+//    MongoDB__Collection my_collection = my_database->mongodb_get_collection(my_collection_name);  // NO  SUPPORT,   wrapped calling convention, OO
+    MongoDB__Collection my_collection = mongodb_get_collection(my_database, my_collection_name);    // YES SUPPORT,   wrapped calling convention, procedural
 
-    // WRONG NEED FIX!!!
-//    MongoDB__Collection my_collection = my_database->mongodb_get_collection(my_collection_name);
 
 
     // my bson_document $my_document = {
-    bson_document my_document = bsoncxx::builder::stream::document{}
+    bson_document my_document = bson_begin
         // name => 'rperl_test_data',
         << "name" << "rperl_test_data"
         // source => 'Perl',
@@ -57,44 +56,42 @@ int main() {
         // foo_integer => my integer $TYPED_foo_integer = 1,
         << "foo_integer" << 1
         // foo_string_arrayref => my bson_arrayref $TYPED_foo_string_arrayref = ['abc', 'def', 'ghi'],
-        << "foo_string_arrayref" << bsoncxx::builder::stream::open_array
+        << "foo_string_arrayref" << bson_arrayref_begin 
             << "abc" << "def" << "ghi"
-        << bsoncxx::builder::stream::close_array
+        << bson_arrayref_end
         // foo_integer_hashref => my bson_hashref  $TYPED_foo_integer_hashref = { x => 203, y => 102 }
-        << "foo_integer_hashref" << bsoncxx::builder::stream::open_document
+        << "foo_integer_hashref" << bson_hashref_begin
             << "x" << 203
             << "y" << 102
-        << bsoncxx::builder::stream::close_document
+        << bson_hashref_end
     // };
-    << bsoncxx::builder::stream::finalize;
-
-    // WRONG NEED FIX!!!
-//    bson_document my_document = { {"name", (const string) "rperl_test_data"}, {"source", (const string) "Perl"}, {"foo_integer", 1}, {"foo_string_arrayref", {(const string) "abc", (const string) "def", (const string) "ghi"}}, {"foo_integer_hashref", { {"x", 203}, {"y", 102} }} };
+    << bson_end;
+//    bson_document my_document = bson_begin << "name" << (const string) "rperl_test_data" << "source" << (const string) "Perl" << "foo_integer" << 1 << "foo_string_arrayref" << bson_arrayref_begin << (const string) "abc" << (const string) "def" << (const string) "ghi" << bson_arrayref_end << "foo_integer_hashref" << bson_hashref_begin << "x" << 203 << "y" << 102 << bson_hashref_end << bson_end;
 
 
 
     // my MongoDB::InsertOneResult $my_result = $my_collection->mongodb_insert_one($my_document);
-    MongoDB__InsertOneResult my_result = my_collection.insert_one(my_document.view());
-    
-    // WRONG NEED FIX!!!
-//    MongoDB__InsertOneResult my_result = my_collection->mongodb_insert_one(my_document);
+//    MongoDB__InsertOneResult my_result = my_collection.insert_one(my_document.view());    // NO  SUPPORT, unwrapped calling convention, OO
+//    MongoDB__InsertOneResult my_result = my_collection->mongodb_insert_one(my_document);  // NO  SUPPORT,   wrapped calling convention, OO
+    MongoDB__InsertOneResult my_result = mongodb_insert_one(my_collection, my_document);    // YES SUPPORT,   wrapped calling convention, procedural
 
 
 
-    // my hashref $my_found_data = $my_collection->mongodb_find_one({ name => 'rperl_test_data' });
-    bson_document__optional my_found_data = my_collection.find_one(bsoncxx::builder::stream::document{} << "name" << "rperl_test_data" << bsoncxx::builder::stream::finalize);
-    
-    // WRONG NEED FIX!!!
-//    bson_document__optional my_found_data = my_collection->mongodb_find_one({ {"name", (const string) "rperl_test_data"} });
+    // my bson_document__optional $my_found_data = $my_collection->mongodb_find_one({ name => 'rperl_test_data' });
+//    bson_document__optional my_found_data = my_collection.find_one(bsoncxx::builder::stream::document{} << "name" << "rperl_test_data" << bsoncxx::builder::stream::finalize);  // NO  SUPPORT, unwrapped calling convention, OO
+
+//    bson_document__optional my_found_data = my_collection->mongodb_find_one(bson_begin << "name" << (const string) "rperl_test_data" << bson_end);  // NO  SUPPORT,   wrapped calling convention, OO
+    bson_document__optional my_found_data = mongodb_find_one(my_collection, bson_begin << "name" << (const string) "rperl_test_data" << bson_end);    // YES SUPPORT,   wrapped calling convention, procedural
+
 
 
     // if ($my_found_data) {
     if (my_found_data) { 
         // print {*STDERR} 'have    $my_found_data = ', Dumper($my_found_data), "\n";
-        prerr "have    $my_found_data = " << bsoncxx::to_json(*my_found_data) << endl;
+//        prerr "have    $my_found_data = " << bsoncxx::to_json(*my_found_data) << endl;
 
         // WRONG NEED FIX!!!
-//        prerr "have    $my_found_data = " << Dumper(my_found_data) << endl;
+        prerr "have    $my_found_data = " << bson_Dumper(my_found_data) << endl;
     }
     // else {
     else               {

@@ -30,3 +30,32 @@ package    # hide from PAUSE indexing
 package    # hide from PAUSE indexing
     bson_hashref;
 1;    # end of class
+
+
+
+# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE ]]]
+package RPerl::DataStructure::MongoDBBSON;
+use strict;
+use warnings;
+
+# [[[ EXPORTS ]]]
+use RPerl::Exporter 'import';
+our @EXPORT = qw(
+    bson_build
+    bson_Dumper
+);
+
+# DEV NOTE: do nothing in Perl, this subroutine is only used in C++
+sub bson_build {
+    { my bson_document $RETURN_TYPE };
+    ( my hashref $bson_document_raw ) = @ARG;
+    return $bson_document_raw;
+}
+
+sub bson_Dumper {
+    { my string $RETURN_TYPE };
+    ( my bson_document $bson_document ) = @ARG;
+    return Dumper($bson_document);
+}
+
+1;    # end of class

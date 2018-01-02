@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::Reference;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Modifier::Reference);
@@ -122,6 +122,44 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
 
     $cpp_source_group->{CPP} .= '}';
+    return $cpp_source_group;
+}
+
+sub ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build {
+    { my string_hashref::method $RETURN_TYPE };
+    ( my object $self, my string_hashref $modes) = @ARG;
+    my string_hashref $cpp_source_group = { CPP => q{} };
+
+    #    RPerl::diag( 'in Array::Reference->ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    my string $self_class = ref $self;
+
+    # unwrap ArrayReference_217 from SubExpression_159
+    if ( $self_class eq 'SubExpression_159' ) {
+        $self       = $self->{children}->[0];
+        $self_class = ref $self;
+    }
+
+    if ( ($self_class) ne 'ArrayReference_217' ) {
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+                . ($self_class)
+                . ' found where ArrayReference_217 or SubExpression_159 expected, dying' )
+            . "\n";
+    }
+
+    # ArrayReference -> LBRACKET OPTIONAL-45 ']'
+    my object $list_elements_optional = $self->{children}->[1];
+
+#    $cpp_source_group->{CPP} .= '{';
+    $cpp_source_group->{CPP} .= 'bson_arrayref_begin << ';
+
+    if ( exists $list_elements_optional->{children}->[0] ) {
+        my string_hashref $cpp_source_subgroup = $list_elements_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+    }
+
+#    $cpp_source_group->{CPP} .= '}';
+    $cpp_source_group->{CPP} .= ' << bson_arrayref_end';
     return $cpp_source_group;
 }
 

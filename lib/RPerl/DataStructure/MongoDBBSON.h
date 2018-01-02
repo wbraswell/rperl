@@ -17,6 +17,15 @@ using std::cout;  using std::cerr;  using std::endl;
 //#define bson_arrayref ---  // NOT AN ACTUAL C++ TYPE
 //#define bson_hashref ---   // NOT AN ACTUAL C++ TYPE
 
+// [[[ MACROS ]]]
+#define bson_begin bsoncxx::builder::stream::document{}
+#define bson_end bsoncxx::builder::stream::finalize
+#define bson_arrayref_begin bsoncxx::builder::stream::open_array
+#define bson_arrayref_end bsoncxx::builder::stream::close_array
+#define bson_hashref_begin bsoncxx::builder::stream::open_document
+#define bson_hashref_end bsoncxx::builder::stream::close_document
+#define bson_Dumper(my_bson_data) bsoncxx::to_json(*my_bson_data)
+
 // [[[ OO SUBCLASSES ]]]
 /* UNUSED?
 typedef std::unique_ptr<bson_document> bson_document_ptr;

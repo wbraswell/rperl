@@ -87,13 +87,13 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my string $left_paren         = $self->{children}->[1];
     my object $arguments_optional = $self->{children}->[2];
     my string $right_paren        = $self->{children}->[3];
-    
+
     # remove leading double-colon scope operator '::'
     my string $name_string = $name->{children}->[0];
     if ((substr $name_string, 0, 2) eq '::') {
         substr $name_string, 0, 2, '';
     }
-    
+
     # replace RPerl system builtin functions with proper C++ name alternatives
     if (exists $rperloperations::BUILTINS->{$name_string}) {
         $name_string = $rperloperations::BUILTINS->{$name_string};
@@ -102,16 +102,59 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     # replace all semicolons with underscores
     $name_string =~ s/:/_/gxms;
 
-    $cpp_source_group->{CPP} .= $name_string . $left_paren;
 
-    if ( exists $arguments_optional->{children}->[0] ) {
-        $cpp_source_subgroup = $arguments_optional->{children}->[0]
-            ->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-        RPerl::Generator::source_group_append( $cpp_source_group,
-            $cpp_source_subgroup );
+
+
+
+
+    # MongoDB support
+    if ($name_string eq 'bson_build') {
+        if ((not exists $modes->{_enable_mongodb}) or (not defined $modes->{_enable_mongodb}) or (not $modes->{_enable_mongodb})) {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP93, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Found subroutine call to '
+                . q{'} . $name_string . q{()'}
+                . ' but MongoDB support is not enabled, perhaps you forgot to load MongoDB support via `use RPerl::Support::MongoDB;`, dying' )
+                . "\n";
+        }
+
+#        RPerl::diag( 'in SubroutineCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), call to bson_build(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
+#        RPerl::diag( 'in SubroutineCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), call to bson_build(), have $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0] = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]) . "\n" );
+
+
+        # START HERE: add error-checking, exactly 1 arg & must be hashref, also die if $modes->{_bson_build_inside} defined & true
+        # START HERE: add error-checking, exactly 1 arg & must be hashref, also die if $modes->{_bson_build_inside} defined & true
+        # START HERE: add error-checking, exactly 1 arg & must be hashref, also die if $modes->{_bson_build_inside} defined & true
+
+
+        $cpp_source_group->{CPP} .= 'bson_begin';
+
+        if ( exists $arguments_optional->{children}->[0] ) {
+            $modes->{_bson_build_top} = 1;
+            $modes->{_bson_build_inside} = 1;
+            $cpp_source_subgroup = $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build($modes);
+            RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        }
+
+        $cpp_source_group->{CPP} .= ' << bson_end';
     }
 
-    $cpp_source_group->{CPP} .= $right_paren;
+
+
+
+
+
+
+    # normal subroutine call
+    else {
+        $cpp_source_group->{CPP} .= $name_string . $left_paren;
+
+        if ( exists $arguments_optional->{children}->[0] ) {
+            $cpp_source_subgroup = $arguments_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+            RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+        }
+
+        $cpp_source_group->{CPP} .= $right_paren;
+    }
+
     return $cpp_source_group;
 }
 

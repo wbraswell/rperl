@@ -17,15 +17,15 @@ int main() {
     MongoDB__MongoClient my_client{mongodb_host{"mongodb://localhost:27017"}};
     string my_database_name = (const string) "rperl_test_database";
     prerr "have $my_database_name = " << my_database_name << endl;
-    MongoDB__Database my_database = my_client->mongodb_get_database(my_database_name);
+    MongoDB__Database my_database = mongodb_get_database(my_client, my_database_name);
     string my_collection_name = (const string) "rperl_test_collection";
     prerr "have $my_collection_name = " << my_collection_name << endl;
-    MongoDB__Collection my_collection = my_database->mongodb_get_collection(my_collection_name);
-    bson_document my_document = { {"name", (const string) "rperl_test_data"}, {"source", (const string) "Perl"}, {"foo_integer", 1}, {"foo_string_arrayref", {(const string) "abc", (const string) "def", (const string) "ghi"}}, {"foo_integer_hashref", { {"x", 203}, {"y", 102} }} };
-    MongoDB__InsertOneResult my_result = my_collection->mongodb_insert_one(my_document);
-    bson_document__optional my_found_data = my_collection->mongodb_find_one({ {"name", (const string) "rperl_test_data"} });
+    MongoDB__Collection my_collection = mongodb_get_collection(my_database, my_collection_name);
+    bson_document my_document = bson_begin << "name" << (const string) "rperl_test_data" << "source" << (const string) "Perl" << "foo_integer" << 1 << "foo_string_arrayref" << bson_arrayref_begin << (const string) "abc" << (const string) "def" << (const string) "ghi" << bson_arrayref_end << "foo_integer_hashref" << bson_hashref_begin << "x" << 203 << "y" << 102 << bson_hashref_end << bson_end;
+    MongoDB__InsertOneResult my_result = mongodb_insert_one(my_collection, my_document);
+    bson_document__optional my_found_data = mongodb_find_one(my_collection, bson_begin << "name" << (const string) "rperl_test_data" << bson_end);
     if ( my_found_data ) {
-        prerr "have    $my_found_data = " << Dumper(my_found_data) << endl;
+        prerr "have    $my_found_data = " << bson_Dumper(my_found_data) << endl;
     }
     else {
         prerr "have NO $my_found_data" << endl;

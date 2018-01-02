@@ -16,6 +16,7 @@ using std::cout;  using std::cerr;  using std::endl;
 #include <mongocxx/instance.hpp>
 
 #include <RPerl/DataStructure/MongoDBBSONStandAlone.h> // -> bsoncxx/json.hpp
+#include <RPerl/Operation/Expression/Operator/MongoDBFunctions.h> // -> NULL
 
 # ifndef __CPP__INCLUDED__RPerl__Support__MongoDBStandAlone_h__typedefs
 #define __CPP__INCLUDED__RPerl__Support__MongoDBStandAlone_h__typedefs 1

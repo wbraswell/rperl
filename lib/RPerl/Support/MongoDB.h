@@ -18,6 +18,7 @@ using std::cout;  using std::cerr;  using std::endl;
 */
 
 #include <RPerl/DataStructure/MongoDBBSON.h> // -> NULL
+#include <RPerl/Operation/Expression/Operator/MongoDBFunctions.h> // -> NULL
 
 # ifndef __CPP__INCLUDED__RPerl__Support__MongoDB_h__typedefs
 #define __CPP__INCLUDED__RPerl__Support__MongoDB_h__typedefs 1
