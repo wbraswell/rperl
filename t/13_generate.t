@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.030_000;
+our $VERSION = 0.031_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -302,7 +302,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
 
         # DEV NOTE: do not actually follow or compile dependencies;
         # find RPerl system deps such as 'use rperlsse;', 'use rperlgmp;', 'use rperlgsl;', etc.;
-        # ignore return value, here we only care about $modes->{_enable_sse}, $modes->{_enable_gmp}, $modes->{_enable_gsl}, etc.;
+        # ignore return value, here we only care about $modes->{_enable_sse}, $modes->{_enable_gmp}, $modes->{_enable_gsl}, $modes->{_enable_mongodb}, etc.;
         RPerl::Compiler::find_dependencies( $test_file, 0, $modes );  # second argument set to 0 for false value of $find_subdependencies_recurse
 
         $output_file_name_groups_tmp = RPerl::Compiler::generate_output_file_names( [$test_file], [], 1, $modes );
