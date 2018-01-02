@@ -14,7 +14,7 @@ int main() {
     // [[[ OPERATIONS HEADER ]]]
 
 // [[[ OPERATIONS ]]]
-    MongoDB__MongoClient my_client{mongodb_host{"mongodb://localhost:27017"}};
+    MongoDB__MongoClient my_client {mongodb_host{"mongodb://localhost:27017"}};
     string my_database_name = (const string) "rperl_test_database";
     prerr "have $my_database_name = " << my_database_name << endl;
     MongoDB__Database my_database = mongodb_get_database(my_client, my_database_name);

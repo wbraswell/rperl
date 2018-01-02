@@ -15,7 +15,7 @@ int main() {
 // [[[ OPERATIONS ]]]
 
     // my MongoDB::MongoClient $my_client = MongoDB::MongoClient->new({host => 'mongodb://localhost:27017'});
-    MongoDB__MongoClient my_client{mongodb_host{"mongodb://localhost:27017"}};
+    MongoDB__MongoClient my_client {mongodb_host{"mongodb://localhost:27017"}};
 
 
 
