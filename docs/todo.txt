@@ -76,6 +76,7 @@ DOING
     MongoDB
         ConstructorCall.pm: add support for MongoDB::MongoClient constructor parameters other than 'host'
         Inline.pm: add Alien::PkgConfig & Alien::Mongo* dependencies; add error checking for missing pkg-config or bad return value
+        Makefile.PL: handle "v1.8.0" v-string properly in PREREQ_PM
 
     KICKSTARTER:
     DONE??? Monolithic Modules, Fix Deps Warning & Create Tests

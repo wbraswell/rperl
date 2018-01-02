@@ -60,7 +60,6 @@
          "requires" : {
             "Alien::JPCRE2" : "0.012",
             "Alien::PCRE2" : "0.015",
-            "Alien::Pluto" : "0.003",
             "Alien::astyle" : "0.009",
             "App::Pod2CpanHtml" : "0.04",
             "CPAN::Meta" : "2.150005",
@@ -78,6 +77,7 @@
             "Math::GSL" : "0.39",
             "Module::Refresh" : "0.17",
             "Module::ScanDeps" : "1.19",
+            "MongoDB" : "v1.8.0",
             "PadWalker" : "2.1",
             "Parse::Eyapp" : "1.21",
             "Perl::Critic" : "1.121",
