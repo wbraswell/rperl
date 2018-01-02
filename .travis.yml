@@ -1,5 +1,5 @@
 language: perl
-# v0.032_000
+# v0.033_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -112,5 +112,5 @@ env:
     global:
         - AUTHOR_TESTING=0
     matrix:
-        - ALIEN_INSTALL_TYPE=share
+#        - ALIEN_INSTALL_TYPE=share
         - ALIEN_INSTALL_TYPE=system
