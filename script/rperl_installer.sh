@@ -16,6 +16,7 @@ shopt -s extglob
 # global variables
 USER_INPUT=''
 CURRENT_SECTION=0
+OS_CHOICE="UNKNOWN"
 
 # block comment template
 : <<'END_COMMENT'
@@ -177,6 +178,51 @@ B () {  # _B_ash command
     echo
 }
 
+VERIFY_OS_CHOICE() {
+    local OS_REQ="$1"
+    local CHOICE="$OS_CHOICE"
+
+    local GUESS='UNKNOWN'
+    if [[ -f "/etc/redhat-release" ]]; then
+        GUESS='CENTOS'
+    elif [[ -f "/etc/debian_version" ]]; then
+        GUESS='UBUNTU'
+    fi
+
+    if [[ "$GUESS" != "$CHOICE" ]]; then
+        PROMPT="NOT OK: OS_CHOICE is $CHOICE but I think you are running $GUESS ! Proceed? "
+        while true; do
+            read -p "$PROMPT" -n 1 PROMPT_INPUT
+            case $PROMPT_INPUT in
+                n|N ) echo; echo; exit 1;;
+                y|Y ) echo; break;;
+                * ) echo;;
+            esac
+        done
+    fi
+
+    if [[ "$OS_REQ" != "$CHOICE" ]]; then
+        PROMPT="NOT OK: OS must be $OS_REQ but you chose $OS_CHOICE! Proceed Anyway? "
+        while true; do
+            read -p "$PROMPT" -n 1 PROMPT_INPUT
+            case $PROMPT_INPUT in
+                n|N ) echo; echo; exit 1;;
+                y|Y ) echo; break;;
+                * ) echo;;
+            esac
+        done
+        echo
+    fi
+}
+
+VERIFY_CENTOS() {
+    VERIFY_OS_CHOICE 'CENTOS'
+}
+
+VERIFY_UBUNTU() {
+    VERIFY_OS_CHOICE 'UBUNTU'
+}
+
 echo "[[[<<< RPerl Installer Script v$VERSION >>>]]]"
 echo
 echo '  [[[<<< Tested Using Fresh Installs >>>]]]'
@@ -227,6 +273,22 @@ echo
 #    esac
 #done
 
+echo  '          [[[<<< OS Menu >>>]]]'
+echo
+echo \ '0. [[[           UBUNTU       ]]]'
+echo \ '1. [[[           CENTOS       ]]]'
+echo
+
+while true; do
+   read -p 'Please type your OS menu choice number, or press <ENTER> for 0... ' OS_CHOICE
+   case $OS_CHOICE in
+       0 ) echo; OS_CHOICE='UBUNTU'; break;;
+       1 ) echo; OS_CHOICE='CENTOS'; break;;
+       '' ) echo; OS_CHOICE='UBUNTU'; break;;
+       * ) echo 'Please choose a number from the menu!'; echo;;
+   esac
+done
+
 # SECTION 0 VARIABLES
 EDITOR='__EMPTY__'
 USERNAME='__EMPTY__'
@@ -234,6 +296,7 @@ USERNAME='__EMPTY__'
 if [ $MENU_CHOICE -le 20 ]; then
     echo '20. [[[ UBUNTU LINUX, INSTALL PERL DEPENDENCIES ]]]'
     echo
+    VERIFY_UBUNTU
 #    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ Overview Of Perl Dependencies In This Section ]'
         echo '[ Git: Source Code Version Control, Required To Install Latest Development & Unstable Software ]'
@@ -284,6 +347,7 @@ fi
 if [ $MENU_CHOICE -le 21 ]; then
     echo '21. [[[ UBUNTU LINUX, INSTALL SINGLE-USER PERL LOCAL::LIB & CPANM ]]]'
     echo
+    VERIFY_UBUNTU
 #    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You SHOULD Use This Instead Of Perlbrew Or Perl From Source Or System Perl In Sections 22 & 23 & 24, Unless You Have No Choice ]'
         echo '[ This Option Will Contain All Perl Code In Your Home Directory Under The ~/perl5 Subdirectory ]'
@@ -316,6 +380,7 @@ fi
 if [ $MENU_CHOICE -le 22 ]; then
     echo '22. [[[ UBUNTU LINUX, INSTALL SINGLE-USER PERLBREW & CPANM ]]]'
     echo
+    VERIFY_UBUNTU
 #    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You SHOULD NOT Use This Instead Of local::lib In Section 21, Unless You Have No Choice ]'
         echo '[ This Option WILL Work With Older Versions Of Debian GNU/Linux Which Include A Broken Perl v5.14 ]'
@@ -369,6 +434,7 @@ fi
 if [ $MENU_CHOICE -le 23 ]; then
     echo '23. [[[ UBUNTU LINUX, INSTALL SYSTEM-WIDE PERL FROM SOURCE & CPANM ]]]'
     echo
+    VERIFY_UBUNTU
 #    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You SHOULD NOT Use This Instead Of local::lib In Section 21, Unless You Have No Choice ]'
         echo '[ WARNING: Do NOT Mix With local::lib In Section 21! ]'
@@ -399,6 +465,7 @@ fi
 if [ $MENU_CHOICE -le 24 ]; then
     echo '24. [[[ UBUNTU LINUX, INSTALL SYSTEM-WIDE SYSTEM PERL & CPANM ]]]'
     echo
+    VERIFY_UBUNTU
 #    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You SHOULD NOT Use This Instead Of local::lib In Section 21, Unless You Have No Choice ]'
         echo '[ This Option Will Install Both Perl & cpanminus System-Wide ]'
@@ -428,14 +495,18 @@ if [ $MENU_CHOICE -le 25 ]; then
         echo '[ Pluto polyCC: polycc Required For Parallel Compiling, Depends On texinfo flex bison ]'
         echo '[ AStyle: Artistic Style C++ Formatter, Required By RPerl Test Suite ]'
         echo
-        echo '[ UBUNTU OPTION ONLY: Add Non-Base APT Repositories ]'
-        S add-apt-repository \"deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse\"
+        if [[ "$OS_CHOICE" == "UBUNTU" ]]; then
+            VERIFY_UBUNTU
 
-        echo '[ UBUNTU OPTION ONLY: Update APT Repositories ]'
-        S apt-get update
+            echo '[ UBUNTU OPTION ONLY: Add Non-Base APT Repositories ]'
+            S add-apt-repository \"deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse\"
 
-        echo '[ UBUNTU OPTION ONLY: Install RPerl Dependencies ]'
-        S apt-get install g++ libc6-dev libperl-dev zlib1g-dev libgmp-dev libgsl0-dev texinfo flex bison astyle
+            echo '[ UBUNTU OPTION ONLY: Update APT Repositories ]'
+            S apt-get update
+
+            echo '[ UBUNTU OPTION ONLY: Install RPerl Dependencies ]'
+            S apt-get install g++ libc6-dev libperl-dev zlib1g-dev libgmp-dev libgsl0-dev texinfo flex bison astyle
+        fi
 
         echo '[ ANY OPTION: Check GCC Version, Must Be v4.7 Or Newer, Use Manual Build Option If Automatic Install Options Fail Or Are Too Old ]'
         B g++ --version
@@ -452,18 +523,20 @@ if [ $MENU_CHOICE -le 25 ]; then
         S 'cd pluto-0.11.4; make install'
 
         # OR
+        if [[ "$OS_CHOICE" == "CENTOS" ]]; then
+            VERIFY_CENTOS
 
-        echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GCC, Download Yum Repo ]'
-        S wget http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo -P /etc/yum.repos.d
-        echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GCC, Enable Yum Repo ]'
-        S 'echo "enabled=1" >> /etc/yum.repos.d/devtools-1.1.repo'
-        echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GCC, Install Via Yum ]'
-        S yum install devtoolset-1.1
-        echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GCC, Enable Via .bashrc ]'
-        B 'echo -e "\n# utilize upgraded GCC\nexport CC=/opt/centos/devtoolset-1.1/root/usr/bin/gcc\nexport CPP=/opt/centos/devtoolset-1.1/root/usr/bin/cpp\nexport CXX=/opt/centos/devtoolset-1.1/root/usr/bin/c++" >> ~/.bashrc'  # DEV NOTE: must wrap redirects in quotes
-        echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GMP, Install GMP Via urmpi ]'
-        S urpmi gmpxx-devel
-
+            echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GCC, Download Yum Repo ]'
+            S wget http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo -P /etc/yum.repos.d
+            echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GCC, Enable Yum Repo ]'
+            S 'echo "enabled=1" >> /etc/yum.repos.d/devtools-1.1.repo'
+            echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GCC, Install Via Yum ]'
+            S yum install devtoolset-1.1
+            echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GCC, Enable Via .bashrc ]'
+            B 'echo -e "\n# utilize upgraded GCC\nexport CC=/opt/centos/devtoolset-1.1/root/usr/bin/gcc\nexport CPP=/opt/centos/devtoolset-1.1/root/usr/bin/cpp\nexport CXX=/opt/centos/devtoolset-1.1/root/usr/bin/c++" >> ~/.bashrc'  # DEV NOTE: must wrap redirects in quotes
+            echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GMP, Install GMP Via urmpi ]'
+            S urpmi gmpxx-devel
+        fi
         # OR
 
         echo '[ MANUAL BUILD OPTION ONLY: Install RPerl Dependency GCC, Download ]'
@@ -556,9 +629,14 @@ if [ $MENU_CHOICE -le 27 ]; then
             echo '[ SECURE GIT OPTION ONLY: SSH Key File(s) Already Exist, Skipping Key Generation ]'
         fi
 
-        echo '[ SECURE GIT OPTION ON UBUNTU ONLY: Install Keychain Key Manager For OpenSSH ]'
-        S apt-get install keychain
-        C '[ SECURE GIT OPTION ON NON-UBUNTU ONLY: Please See Your Operating System Documentation To Install Keychain Key Manager For OpenSSH ]'
+        if [[ "$OS_CHOICE" == "UBUNTU" ]]; then
+            VERIFY_UBUNTU
+            echo '[ SECURE GIT OPTION ON UBUNTU ONLY: Install Keychain Key Manager For OpenSSH ]'
+            S apt-get install keychain
+        else
+            C '[ SECURE GIT OPTION ON NON-UBUNTU ONLY: Please See Your Operating System Documentation To Install Keychain Key Manager For OpenSSH ]'
+        fi
+
         echo '[ SECURE GIT OPTION ONLY: Enable Keychain ]'
         echo '[ NOTE: Do Not Run The Following Step If You Already Copied Your Own Pre-Existing LAMP University .bashrc File In Section 0 ]'
         B 'echo -e "\n# SSH Keys; for GitHub, etc.\nif [ -f /usr/bin/keychain ] && [ -f \$HOME/.ssh/id_rsa ]; then\n    /usr/bin/keychain \$HOME/.ssh/id_rsa\n    source \$HOME/.keychain/\$HOSTNAME-sh\nfi" >> ~/.bashrc;'
