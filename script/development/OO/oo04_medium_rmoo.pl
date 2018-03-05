@@ -18,7 +18,8 @@ use MyClass04MediumRMoo;
 
 # class example
 
-my MyClass04MediumRMoo $my_object = MyClass04MediumRMoo->new({bar => 22});
+my MyClass04MediumRMoo $my_object = MyClass04MediumRMoo->new();  # NO INITIALIZATION, WORKS
+#my MyClass04MediumRMoo $my_object = MyClass04MediumRMoo->new({bar => 22});  # YES INITIALIZATION, WORKS
 
 print 'have $my_object->bar() = ', $my_object->bar(), "\n";
 

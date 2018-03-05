@@ -16,7 +16,10 @@ use Moo;
 
 # [[[ OO PROPERTIES ]]]
 sub integer { return sub { shift =~ /\A-?[0-9]+\z/ or die; }; }    # NEED REMOVE, SHOULD BE IN DataTypes/Integer.pm
-has 'bar' => ( is => 'ro', required => 1, isa => integer );
+#has 'bar' => ( isa => integer, is => 'ro', required => 1 );  # NO DEFAULT, WORKS
+#has 'bar' => ( isa => integer, default => sub { 23 }, is => 'ro', required => 1 );  # YES DEFAULT, WORKS
+#has 'bar' => ( isa => integer, default => 23, is => 'ro', required => 1 );  # YES DEFAULT, WORKS
+has bar => ( isa => integer, default => 23, is => 'ro', required => 1 );  # YES DEFAULT, WORKS, PREFERRED
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 

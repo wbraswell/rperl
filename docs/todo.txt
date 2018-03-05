@@ -3,6 +3,9 @@ DONE
 
 DOING
 
+    MongoDB C++ driver in installer 
+    MongoDB documentation
+
     META files in MANIFEST.SKIP???
 
     Moo(se) support
