@@ -222,7 +222,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 ),
 
              # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
-                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2_112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => -33\b)(?=.*'g_key' => 1_701\b).*\}$/m},
+                q{/^\\\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2_112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => -33\b)(?=.*'g_key' => 1_701\b).*\}$/m},
                 q{TIVHVRV21 integer_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1_701}) returns correct value}
             );
         },
@@ -285,7 +285,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                         'ncc'    => 1_701
                     }
                 ),
-                q{/^\{(?=.*'binary' => 2\b)(?=.*'rush' => 2_112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => -33\b)(?=.*'ncc' => 1_701\b).*\}}
+                q{/^\\\{(?=.*'binary' => 2\b)(?=.*'rush' => 2_112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => -33\b)(?=.*'ncc' => 1_701\b).*\}}
                     . $mode_tagline . q{$/m},
 
 #                q{TIVHVRV34 integer_hashref__typetest0({'binary' => 2, 'rush' => 2_112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => -33, 'ncc' => 1_701}) returns correct value}
@@ -430,7 +430,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                     }
                 ),
 
-                q{/^\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2_112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => -33\b)(?=.*'g_key' => 1_701\b).*\}$/m},
+                q{/^\\\{(?=.*'a_key' => 2\b)(?=.*'b_key' => 2_112\b)(?=.*'c_key' => 42\b)(?=.*'d_key' => 23\b)(?=.*'e_key' => -877\b)(?=.*'f_key' => -33\b)(?=.*'g_key' => 1_701\b).*\}$/m},
                 q{TNVHVRV21 number_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1_701}) returns correct value}
             );
         },
@@ -461,8 +461,8 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 ),
 
 # NEED DELETE OLD CODE
-#                q{/^\{(?=.*'a_key' => 2\.123_443_211_234_4\b)(?=.*'b_key' => 2_112\.432_1\b)(?=.*'c_key' => 42\.456_7\b)(?=.*'d_key' => 23\.765_444_444_444\b)(?=.*'e_key' => -877\.5_678\b)(?=.*'f_key' => -33\.876_587_658_765\b)(?=.*'g_key' => 1_701\.6_789\b).*\}$/m},
-                q{/^\{(?=.*'a_key' => 2\.123_443_211_234)(?=.*'b_key' => 2_112\.432_1)(?=.*'c_key' => 42\.456_7)(?=.*'d_key' => 23\.765_444_444_44)(?=.*'e_key' => -877\.567_8)(?=.*'f_key' => -33\.876_587_658_76)(?=.*'g_key' => 1_701\.678_9).*\}$/m},
+#                q{/^\\\{(?=.*'a_key' => 2\.123_443_211_234_4\b)(?=.*'b_key' => 2_112\.432_1\b)(?=.*'c_key' => 42\.456_7\b)(?=.*'d_key' => 23\.765_444_444_444\b)(?=.*'e_key' => -877\.5_678\b)(?=.*'f_key' => -33\.876_587_658_765\b)(?=.*'g_key' => 1_701\.6_789\b).*\}$/m},
+                q{/^\\\{(?=.*'a_key' => 2\.123_443_211_234)(?=.*'b_key' => 2_112\.432_1)(?=.*'c_key' => 42\.456_7)(?=.*'d_key' => 23\.765_444_444_44)(?=.*'e_key' => -877\.567_8)(?=.*'f_key' => -33\.876_587_658_76)(?=.*'g_key' => 1_701\.678_9).*\}$/m},
 
 #                q{TNVHVRV23 number_hashref_to_string(a_key => 2.123_443_211_234_432_1, b_key => 2_112.432_1, c_key => 42.456_7, d_key => 23.765_444_444_444_444_444, e_key => -877.567_8, f_key => -33.876_587_658_765_875_687_658_765, g_key => 1_701.678_9) returns correct value}
                 q{TNVHVRV23 number_hashref_to_string(a_key => 2.123_443_211_234_432_1, b_key => 2_112.432_1, c_key => 42.456_7, ..., g_key => 1_701.678_9) returns correct value}
@@ -529,8 +529,8 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 ),
 
 # NEED DELETE OLD CODE
-#                q{/^\{(?=.*'binary' => 2\.123_443_211_234_43\b)(?=.*'rush' => 2_112\.432_1\b)(?=.*'answer' => 42\.456_7\b)(?=.*'fnord' => 23\.765_444_444_444_4\b)(?=.*'units' => -877\.567_8\b)(?=.*'degree' => -33\.8765876587659\b)(?=.*'ncc' => 1_701\.678_9\b).*\}}
-                q{/^\{(?=.*'binary' => 2\.123_443_211_234)(?=.*'rush' => 2_112\.432_1)(?=.*'answer' => 42\.456_7)(?=.*'fnord' => 23\.765_444_444_44)(?=.*'units' => -877\.567_8)(?=.*'degree' => -33\.876_587_658_76)(?=.*'ncc' => 1_701\.678_9).*\}}
+#                q{/^\\\{(?=.*'binary' => 2\.123_443_211_234_43\b)(?=.*'rush' => 2_112\.432_1\b)(?=.*'answer' => 42\.456_7\b)(?=.*'fnord' => 23\.765_444_444_444_4\b)(?=.*'units' => -877\.567_8\b)(?=.*'degree' => -33\.8765876587659\b)(?=.*'ncc' => 1_701\.678_9\b).*\}}
+                q{/^\\\{(?=.*'binary' => 2\.123_443_211_234)(?=.*'rush' => 2_112\.432_1)(?=.*'answer' => 42\.456_7)(?=.*'fnord' => 23\.765_444_444_44)(?=.*'units' => -877\.567_8)(?=.*'degree' => -33\.876_587_658_76)(?=.*'ncc' => 1_701\.678_9).*\}}
                     . $mode_tagline . q{$/m},
                 q{TNVHVRV34 number_hashref__typetest0({'binary' => 2.123_443_211_234_432_1, 'rush' => 2_112.432_1, ..., 'ncc' => 1_701.678_9}) returns correct value}
             );
@@ -681,7 +681,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                         'greenmartian_bloodwynd_jonnjonnz'           => 'Martian Manhunter'
                     }
                 ),
-                q{/^\{(?=.*'stuckinaworldhenevercreated' => 'Howard The Duck')(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}$/m}
+                q{/^\\\{(?=.*'stuckinaworldhenevercreated' => 'Howard The Duck')(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'gothamite_darkknight_brucewayne' => 'Batman')(?=.*'amazonian_dianathemyscira_dianaprince' => 'Wonder Woman')(?=.*'scarletspeedster_barryallenetal' => 'Flash')(?=.*'alanscottetal' => 'Green Lantern')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}$/m}
                 ,    ## PERLTIDY BUG comma on newline
                 q{TPVHVRV20 string_hashref_to_string({'stuckinaworldhenevercreated' => 'Howard The Duck', 'kryptonian_manofsteel_clarkkent' => 'Superman', ...}) returns correct value}
             );
@@ -697,7 +697,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                         'STRING_NOT_UNDEF'                 => 'undef'
                     }
                 ),
-                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_UNDEF' => 'undef').*\}$/m}
+                q{/^\\\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_UNDEF' => 'undef').*\}$/m}
                 ,    ## PERLTIDY BUG comma on newline
                 q{TPVHVRV21 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'STRING_NOT_UNDEF' => 'undef'}) returns correct value}
             );
@@ -713,7 +713,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                         'STRING_NOT_INTEGER'               => '23'
                     }
                 ),
-                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_INTEGER' => '23').*\}$/m}
+                q{/^\\\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_INTEGER' => '23').*\}$/m}
                 ,    ## PERLTIDY BUG comma on newline
                 q{TPVHVRV22 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'STRING_NOT_INTEGER' => '23'}) returns correct value}
             );
@@ -729,7 +729,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                         'STRING_NOT_NUMBER'                => '-2_112.23'
                     }
                 ),
-                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_NUMBER' => '-2_112.23').*\}$/m}
+                q{/^\\\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_NUMBER' => '-2_112.23').*\}$/m}
                 ,    ## PERLTIDY BUG comma on newline
                 q{TPVHVRV23 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'STRING_NOT_NUMBER' => '-2_112.23'}) returns correct value}
             );
@@ -745,7 +745,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                         "STRING_NOT_ARRAY"                 => "[Tonto]"
                     }
                 ),
-                q{/^\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_ARRAY' => '\[Tonto\]').*\}$/m}
+                q{/^\\\{(?=.*'kryptonian_manofsteel_clarkkent' => 'Superman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter')(?=.*'STRING_NOT_ARRAY' => '\[Tonto\]').*\}$/m}
                 ,    ## PERLTIDY BUG comma on newline
                 q{TPVHVRV24 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., "STRING_NOT_ARRAY" => "[Tonto]"}) returns correct value}
             );
@@ -824,7 +824,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                         'greenmartian_bloodwynd_jonnjonnz'           => 'Martian Manhunter'
                     }
                 ),
-                q{/^\{(?=.*'stuckinaworldhenevercreated' => 'Howard The Duck')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}}
+                q{/^\\\{(?=.*'stuckinaworldhenevercreated' => 'Howard The Duck')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}}
                     . $mode_tagline . q{$/m},
                 q{TPVHVRV34 string_hashref__typetest0({'stuckinaworldhenevercreated' => 'Howard The Duck', ...}) returns correct value}
             );
