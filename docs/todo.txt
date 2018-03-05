@@ -1,4 +1,5 @@
 DONE
+    disable Operator05BitwiseNegation/program_00_bad_07.pl due to RPerl v3.6 CPAN Testers failures
 
 
 DOING
