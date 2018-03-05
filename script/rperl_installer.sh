@@ -1,7 +1,7 @@
 #!/bin/bash
-# Copyright © 2014, 2015, 2016, 2017, William N. Braswell, Jr.. All Rights Reserved. This work is Free \& Open Source; you can redistribute it and/or modify it under the same terms as Perl 5.26.0.
+# Copyright © 2014, 2015, 2016, 2017, 2018, William N. Braswell, Jr.. All Rights Reserved. This work is Free \& Open Source; you can redistribute it and/or modify it under the same terms as Perl 5.26.0.
 # RPerl Installer Script
-VERSION='0.125_000'
+VERSION='0.126_000'
 
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
@@ -494,6 +494,7 @@ if [ $MENU_CHOICE -le 25 ]; then
         echo '[ GSL: GNU Scientific Library Required For Math ]'
         echo '[ Pluto polyCC: polycc Required For Parallel Compiling, Depends On texinfo flex bison ]'
         echo '[ AStyle: Artistic Style C++ Formatter, Required By RPerl Test Suite ]'
+        echo '[ pkg-config: Compilation Library Detection Tool, Required By RPerl Support For MongoDB ]'
         echo
         if [[ "$OS_CHOICE" == "UBUNTU" ]]; then
             VERIFY_UBUNTU
@@ -505,7 +506,7 @@ if [ $MENU_CHOICE -le 25 ]; then
             S apt-get update
 
             echo '[ UBUNTU OPTION ONLY: Install RPerl Dependencies ]'
-            S apt-get install g++ libc6-dev libperl-dev zlib1g-dev libgmp-dev libgsl0-dev texinfo flex bison astyle
+            S apt-get install g++ libc6-dev libperl-dev zlib1g-dev libgmp-dev libgsl0-dev texinfo flex bison astyle pkg-config
         fi
 
         echo '[ ANY OPTION: Check GCC Version, Must Be v4.7 Or Newer, Use Manual Build Option If Automatic Install Options Fail Or Are Too Old ]'
