@@ -1,6 +1,4 @@
 DONE
-    disable Operator05BitwiseNegation/program_00_bad_07.pl due to RPerl v3.6 CPAN Testers failures
-    fix regex unescaped left braces, will be fatal in Perl v5.30  
 
 
 DOING
