@@ -1,5 +1,5 @@
 language: perl
-# v0.033_000
+# v0.034_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -88,6 +88,8 @@ before_script:
 #    - cpanm --quiet --installdeps --notest .
 # DEV NOTE: after adding multiple Alien dependencies with build times, we exceeded Travis' ~40-minute time limit, disable CPAN tests for now to shorten non-RPerl build times
 #    - cpanm --verbose --installdeps .
+# DEV NOTE: verbose install to debug Alien::GMP failures
+    - cpanm --verbose Alien::GMP
 # DEV NOTE: after adding multiple Alien dependencies with build times, we exceeded Travis' ~4MB log data limit, disable verbose CPAN output for now to shorten non-RPerl log output
     - cpanm --installdeps --notest .
 
