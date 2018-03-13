@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.033_000;
+our $VERSION = 0.034_000;
 use 5.010;  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 
 use ExtUtils::MakeMaker;
@@ -95,9 +95,10 @@ WriteMakefile(
 #    MAKE             => 'gmake',   # CORRELATION #rp200, Windows + EU::MM + GNU makef
     CONFIGURE_REQUIRES => {
         # DEV NOTE, CORRELATION #rp061: prioritize installation of all dists which are (or may be) prerequisites for other dists or components
-        'IO::Socket::SSL'     => '2.043',     # (infamously problematic) pre-prerequisite for Alien::astyle
-        'Alien::GMP'          => '1.08',      # prerequisite for Math::BigInt::GMP, v1.08 uses http intead of ftp
-        'Alien::GSL'          => '1.01',      # prerequisite for Math::GSL
+        'IO::Socket::SSL'          => '2.043',     # (infamously problematic) pre-prerequisite for Alien::astyle
+        'Alien::Base::ModuleBuild' => '1.02',      # prerequisite for Alien::GSL etc, v1.02 allows setting download protocol via env var as workaround for Alien::GSL
+        'Alien::GMP'               => '1.08',      # prerequisite for Math::BigInt::GMP, v1.08 uses http intead of ftp, no env var workaround required
+        'Alien::GSL'               => '1.01',      # prerequisite for Math::GSL, set env var ALIEN_GSL_REPO_FTP_PROTOCOL=http in .travis.yml as workaround fix to avoid Travis network failures
     },
     PREREQ_PM        => {
         # RPERL USER DEPENDENCIES

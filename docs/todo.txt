@@ -3,6 +3,9 @@ DONE
 
 DOING
 
+    .travis.yml, disable dev version of Alien::Base::ModuleBuild v1.01_01, update min version required in Makefile.PL
+    .travis.yml, disable Alien::GSL testing, update min version required in Makefile.PL
+
     MongoDB C++ driver in installer 
     MongoDB documentation
 
