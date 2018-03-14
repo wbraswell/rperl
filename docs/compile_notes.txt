@@ -1,0 +1,140 @@
+[[[ CentOS 7 ]]]
+
+package 'perl-libs' contains 'libperl.so' but not 'libperl.a', not available in any official packages
+thus, RPerl subcompile link mode must be 'dynamic' and not 'static', due to missing 'libperl.a' file
+
+
+[ a00; RPerl v3.601_000 automatic; dynamic link; no ldconfig for libperl.so; DEFAULT BEHAVIOR ]
+
+unsuccessful compile
+
+$ rperl -V -D ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world.pl
+
+g++ -pthread -fwrapv -fno-strict-aliasing -pipe -fstack-protector-strong -I/home/FOO/BAR/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_FORTIFY_SOURCE=2 -xc++ -I"/home/builder/perl5" -I"/home/builder/perl5/lib/perl5" -Ilib -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/include" -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-JPCRE2/include" -Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix -L"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/lib" -D__CPP__TYPES -D__TYPE__INTEGER__LONG -D__TYPE__NUMBER__DOUBLE -O3 -fomit-frame-pointer -march=native -g -DVERSION=\"0.00\" -DXS_VERSION=\"0.00\" -fPIC "-I/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE" ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world.cpp -o  ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world -lperl -lpcre2-8 -lpcre2-16 -lpcre2-32
+
+/bin/ld: cannot find -lperl
+collect2: error: ld returned 1 exit status
+
+
+[ a01; RPerl v3.601_000 automatic; dynamic link; yes ldconfig for libperl.so ]
+
+unsuccessful compile
+
+$ ldconfig -p | grep perl
+196:    libperl.so (libc6,x86-64) => /home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE/libperl.so
+
+$ rperl -V -D ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world.pl
+
+g++ -pthread -fwrapv -fno-strict-aliasing -pipe -fstack-protector-strong -I/home/FOO/BAR/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_FORTIFY_SOURCE=2 -xc++ -I"/home/builder/perl5" -I"/home/builder/perl5/lib/perl5" -Ilib -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/include" -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-JPCRE2/include" -Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix -L"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/lib" -D__CPP__TYPES -D__TYPE__INTEGER__LONG -D__TYPE__NUMBER__DOUBLE -O3 -fomit-frame-pointer -march=native -g -DVERSION=\"0.00\" -DXS_VERSION=\"0.00\" -fPIC "-I/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE" ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world.cpp -o  ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world -lperl -lpcre2-8 -lpcre2-16 -lpcre2-32
+
+/bin/ld: cannot find -lperl
+collect2: error: ld returned 1 exit status
+
+
+[ a02; RPerl v3.601_000 automatic; static link; no ldconfig for libperl.so ]
+
+unsuccessful compile
+
+$ rperl -V -D --static ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world.pl
+
+g++ -pthread -fwrapv -fno-strict-aliasing -pipe -fstack-protector-strong -I/home/FOO/BAR/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_FORTIFY_SOURCE=2 -xc++ -I"/home/builder/perl5" -I"/home/builder/perl5/lib/perl5" -Ilib -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/include" -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-JPCRE2/include" -Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix -L"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/lib" -D__CPP__TYPES -D__TYPE__INTEGER__LONG -D__TYPE__NUMBER__DOUBLE -O3 -fomit-frame-pointer -march=native -g -DVERSION=\"0.00\" -DXS_VERSION=\"0.00\" -fPIC "-I/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE" ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world.cpp -o  ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world -static -lperl -lpcre2-8 -lpcre2-16 -lpcre2-32 -lcrypt
+
+/bin/ld: cannot find -lperl
+/bin/ld: cannot find -lcrypt
+/bin/ld: cannot find -lstdc++
+/bin/ld: cannot find -lm
+/bin/ld: cannot find -lpthread
+/bin/ld: cannot find -lc
+collect2: error: ld returned 1 exit status
+
+
+[ a03; RPerl v3.601_000 automatic; static link; yes ldconfig for libperl.so ]
+
+unsuccessful compile
+
+$ ldconfig -p | grep perl
+196:    libperl.so (libc6,x86-64) => /home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE/libperl.so
+
+$ rperl -V -D --static ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world.pl
+
+g++ -pthread -fwrapv -fno-strict-aliasing -pipe -fstack-protector-strong -I/home/FOO/BAR/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_FORTIFY_SOURCE=2 -xc++ -I"/home/builder/perl5" -I"/home/builder/perl5/lib/perl5" -Ilib -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/include" -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-JPCRE2/include" -Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix -L"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/lib" -D__CPP__TYPES -D__TYPE__INTEGER__LONG -D__TYPE__NUMBER__DOUBLE -O3 -fomit-frame-pointer -march=native -g -DVERSION=\"0.00\" -DXS_VERSION=\"0.00\" -fPIC "-I/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE" ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world.cpp -o  ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world -static -lperl -lpcre2-8 -lpcre2-16 -lpcre2-32 -lcrypt
+
+/bin/ld: cannot find -lperl
+/bin/ld: cannot find -lcrypt
+/bin/ld: cannot find -lstdc++
+/bin/ld: cannot find -lm
+/bin/ld: cannot find -lpthread
+/bin/ld: cannot find -lc
+collect2: error: ld returned 1 exit status
+
+[ m00; RPerl v3.601_000 manual; dynamic link; add -Wl,-rpath,/DIR_OF_libperl.so; no ldconfig for libperl.so ]
+
+$ ldconfig -p | grep perl
+
+$ g++ -pthread -fwrapv -fno-strict-aliasing -pipe -fstack-protector-strong -I/home/FOO/BAR/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_FORTIFY_SOURCE=2 -xc++ -I"/home/builder/perl5" -I"/home/builder/perl5/lib/perl5" -Ilib -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/include" -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-JPCRE2/include" -Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix -L"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/lib" -D__CPP__TYPES -D__TYPE__INTEGER__LONG -D__TYPE__NUMBER__DOUBLE -O3 -fomit-frame-pointer -march=native -g -DVERSION=\"0.00\" -DXS_VERSION=\"0.00\" -fPIC "-I/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE" -Wl,-E -Wl,-rpath,/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world.cpp -o  perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world -lperl -lpcre2-8 -lpcre2-16 -lpcre2-32
+
+/bin/ld: cannot find -lperl
+collect2: error: ld returned 1 exit status
+
+
+[ m01; RPerl v3.601_000 manual; dynamic link; add -Wl,-rpath,/DIR_OF_libperl.so; yes ldconfig for libperl.so ]
+
+unsuccessful compile
+
+$ ldconfig -p | grep perl
+196:    libperl.so (libc6,x86-64) => /home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE/libperl.so
+
+$ g++ -pthread -fwrapv -fno-strict-aliasing -pipe -fstack-protector-strong -I/home/FOO/BAR/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_FORTIFY_SOURCE=2 -xc++ -I"/home/builder/perl5" -I"/home/builder/perl5/lib/perl5" -Ilib -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/include" -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-JPCRE2/include" -Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix -L"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/lib" -D__CPP__TYPES -D__TYPE__INTEGER__LONG -D__TYPE__NUMBER__DOUBLE -O3 -fomit-frame-pointer -march=native -g -DVERSION=\"0.00\" -DXS_VERSION=\"0.00\" -fPIC "-I/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE" -Wl,-E -Wl,-rpath,/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world.cpp -o  perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world -lperl -lpcre2-8 -lpcre2-16 -lpcre2-32
+
+/bin/ld: cannot find -lperl
+collect2: error: ld returned 1 exit status
+
+
+[ m02; RPerl v3.601_000 manual; dynamic link; add -L"/DIR_OF_libperl.so"; add -Wl,-rpath,/DIR_OF_libperl.so; no ldconfig for libperl.so ]
+
+successful compile
+
+$ g++ -pthread -fwrapv -fno-strict-aliasing -pipe -fstack-protector-strong -I/home/FOO/BAR/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_FORTIFY_SOURCE=2 -xc++ -I"/home/builder/perl5" -I"/home/builder/perl5/lib/perl5" -Ilib -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/include" -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-JPCRE2/include" -Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix -L"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/lib" -D__CPP__TYPES -D__TYPE__INTEGER__LONG -D__TYPE__NUMBER__DOUBLE -O3 -fomit-frame-pointer -march=native -g -DVERSION=\"0.00\" -DXS_VERSION=\"0.00\" -fPIC "-I/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE" -L"/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE" -Wl,-E -Wl,-rpath,/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world.cpp -o  perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world -lperl -lpcre2-8 -lpcre2-16 -lpcre2-32
+
+successful execution
+
+$ ldconfig -p | grep perl
+$ ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world                                                                                                                   
+Hello, World!
+
+
+[ m03; RPerl v3.601_000 manual; dynamic link; add -L"/DIR_OF_libperl.so"; no ldconfig for libperl.so ]
+
+successful compile
+
+$ g++ -pthread -fwrapv -fno-strict-aliasing -pipe -fstack-protector-strong -I/home/FOO/BAR/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_FORTIFY_SOURCE=2 -xc++ -I"/home/builder/perl5" -I"/home/builder/perl5/lib/perl5" -Ilib -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/include" -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-JPCRE2/include" -Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix -L"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/lib" -D__CPP__TYPES -D__TYPE__INTEGER__LONG -D__TYPE__NUMBER__DOUBLE -O3 -fomit-frame-pointer -march=native -g -DVERSION=\"0.00\" -DXS_VERSION=\"0.00\" -fPIC "-I/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE" -L"/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE" perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world.cpp -o  perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world -lperl -lpcre2-8 -lpcre2-16 -lpcre2-32
+
+unsuccessful execution
+
+$ ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world
+./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world: error while loading shared libraries: libperl.so: cannot open shared object file: No such file or directory
+
+
+[ m04; RPerl v3.601_000 manual; dynamic link; add -L"/DIR_OF_libperl.so"; yes ldconfig for libperl.so ]
+
+root, enable ldconfig
+
+# vi /etc/ld.so.conf.d/perl-x86_64.conf
+
+    #/usr/lib64/perl5/CORE/  # DISABLED, system Perl
+    /home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE/  # ENABLED, special Perl
+
+# ldconfig
+# ldconfig -p | grep perl
+    libperl.so (libc6,x86-64) => /home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE/libperl.so
+
+use already-compiled executable from m03 step
+OR
+successful compile, same command as m03 step
+
+$ g++ -pthread -fwrapv -fno-strict-aliasing -pipe -fstack-protector-strong -I/home/FOO/BAR/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_FORTIFY_SOURCE=2 -xc++ -I"/home/builder/perl5" -I"/home/builder/perl5/lib/perl5" -Ilib -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/include" -I"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-JPCRE2/include" -Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix -L"/home/builder/perl5/lib/perl5/x86_64-linux/auto/share/dist/Alien-PCRE2/lib" -D__CPP__TYPES -D__TYPE__INTEGER__LONG -D__TYPE__NUMBER__DOUBLE -O3 -fomit-frame-pointer -march=native -g -DVERSION=\"0.00\" -DXS_VERSION=\"0.00\" -fPIC "-I/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE" -L"/home/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE" perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world.cpp -o  perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world -lperl -lpcre2-8 -lpcre2-16 -lpcre2-32
+
+successful execution
+
+$ ./perl5/lib/perl5/RPerl/Learning/Chapter1/exercise_1-hello_world                                                                                                                   
+Hello, World!

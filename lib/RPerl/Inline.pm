@@ -2,7 +2,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.011_000;
+our $VERSION = 0.012_000;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -110,6 +110,19 @@ my $is_msvc_compiler = ($Config::Config{cc} =~ /cl/);
 our $CCFLAGSEX = $is_msvc_compiler ? '-DNO_XSLOCKS'
     : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
 
+# for support of dynamic linking to libperl.so
+if (defined $Config::Config{ccdlflags}) {
+    my $ccdlflags = $Config::Config{ccdlflags};
+    $CCFLAGSEX .= ' ' . $ccdlflags;  # subcompile dynamic linking flags, may include '-rpath' directory containing 'libperl.so'; if present, '-rpath' removes need for ldconfig
+#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $ccdlflags = '}, $ccdlflags, q{'}, "\n\n";
+
+    if ($ccdlflags =~ m/.*-Wl,-rpath,(\w(?:[\w:-\\\/]|\\\ )*)/gxms) {  # find -Wl,rpath,/DIR_CONTAINING_libperl.so
+        my $libperl_lib_dir = $1;
+        $CCFLAGSEX .= ' -L"' . $libperl_lib_dir . '"';
+#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $libperl_lib_dir = '}, $libperl_lib_dir, q{'}, "\n\n";
+    }
+}
+
 # for regex support
 $CCFLAGSEX .= ' -L"' . $pcre2_lib_dir . '"';
 
@@ -133,7 +146,7 @@ our %ARGS = (
     optimize => $optimize,
 
 # NEED UPGRADE: strip C++ incompat CFLAGS
-#  ccflags => $Config{ccflags} . ' -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
+#  ccflags => $Config::Config{ccflags} . ' -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
 #    force_build => 1,  # debug use only
     inc               => '-I' . $RPerl::INCLUDE_PATH . ' -Ilib -I' . $pcre2_include_dir . ' -I' . $jpcre2_include_dir,
     build_noisy       => ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ),  # suppress or display actual g++ compiler commands
