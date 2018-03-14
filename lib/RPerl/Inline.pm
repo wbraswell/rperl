@@ -2,7 +2,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.012_000;
+our $VERSION = 0.013_000;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -113,13 +113,24 @@ our $CCFLAGSEX = $is_msvc_compiler ? '-DNO_XSLOCKS'
 # for support of dynamic linking to libperl.so
 if (defined $Config::Config{ccdlflags}) {
     my $ccdlflags = $Config::Config{ccdlflags};
-    $CCFLAGSEX .= ' ' . $ccdlflags;  # subcompile dynamic linking flags, may include '-rpath' directory containing 'libperl.so'; if present, '-rpath' removes need for ldconfig
-#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $ccdlflags = '}, $ccdlflags, q{'}, "\n\n";
 
-    if ($ccdlflags =~ m/.*-Wl,-rpath,(\w(?:[\w:-\\\/]|\\\ )*)/gxms) {  # find -Wl,rpath,/DIR_CONTAINING_libperl.so
+# for testing paths containing space characters, for example somewhere in the '/home' directory, create a symlink '/ho\ me' which points to '/home', then use the debug code below
+# ln -s /home /ho\ me
+#$ccdlflags = '-Wl,-E -Wl,-rpath,/ho\ me/FOO/BAR/lib/perl5/5.22.1/x86_64-linux/CORE';  # TMP DEBUG
+#print "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $ccdlflags = '}, $ccdlflags, q{'}, "\n\n";
+
+    # subcompile dynamic linking flags, may include '-rpath' directory containing 'libperl.so'; if present, '-rpath' removes need for ldconfig; 
+    # not enclosed by quotes, so leave backslash-escaped characters as-is
+    $CCFLAGSEX .= ' ' . $ccdlflags;
+
+    if ($ccdlflags =~ m/.*\-Wl,\-rpath,([\w\-\.\\\/](?:\\\ |[\w:\-\.\\\/])*)/gxms) {  # find -Wl,rpath,/DIR_CONTAINING_libperl.so; allow backslash-escaped spaces
+#    if ($ccdlflags =~ m/.*\-Wl,\-rpath,([\w:\-\.\\\/]+)/gxms) {  # find -Wl,rpath,/DIR_CONTAINING_libperl.so
         my $libperl_lib_dir = $1;
+        if ($libperl_lib_dir =~ m/\\\ /gxms) {
+            $libperl_lib_dir =~ s/\\\ /\ /gxms;  # replace backslash-escaped space with just space, for compatibility with double-quote enclosing -L"..." below
+        }
         $CCFLAGSEX .= ' -L"' . $libperl_lib_dir . '"';
-#print {*STDERR} "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $libperl_lib_dir = '}, $libperl_lib_dir, q{'}, "\n\n";
+#print "\n\n", q{<<< DEBUG >>> in RPerl::Inline, have $libperl_lib_dir = '}, $libperl_lib_dir, q{'}, "\n\n";
     }
 }
 

@@ -2,6 +2,7 @@
 
 cd ~/perl5/lib/perl5
 rm -Rf RPerl* rperl* *rperl
+rm -Rf Inline/RPerl*
 cd ~/perl5/bin
 rm -f rperl*
 cd ~/perl5/man/man1
