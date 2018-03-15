@@ -2,7 +2,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.013_000;
+our $VERSION = 0.014_000;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -25,7 +25,7 @@ use IPC::Run3 qw(run3);
 
 #our $mongodb_include_dir = File::Spec->catpath(q{}, q{FOO}, q{include});  # NOT USED, replaced by pkg-config at compile time as in Compiler.pm
 
-my string $pkgconfig_path = undef;
+my $pkgconfig_path = undef;
 $pkgconfig_path = can_run('pkg-config');
  
 # NEED ENABLE: uncomment when Alien::PkgConfig dependency is added
