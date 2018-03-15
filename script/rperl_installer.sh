@@ -1,14 +1,21 @@
 #!/bin/bash
-# Copyright © 2014, 2015, 2016, 2017, 2018, William N. Braswell, Jr.. All Rights Reserved. This work is Free \& Open Source; you can redistribute it and/or modify it under the same terms as Perl 5.26.0.
-# RPerl Installer Script
-VERSION='0.126_000'
+# Copyright © 2014, 2015, 2016, 2017, 2018, William N. Braswell, Jr.. All Rights Reserved. This work is Free \& Open Source; you can redistribute it and/or modify it under the same terms as Perl 5.24.0.
+# LAMP Installer Script
+VERSION='0.210_000'
 
-# IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
-# IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
-# IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
+# IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to rperl_installer.sh!!!
+# IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to rperl_installer.sh!!!
+# IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to rperl_installer.sh!!!
+
+# PRE-PRE-INSTALL: install wget
+# sudo apt-get install wget
+# OR
+# sudo yum install wget
 
 # PRE-INSTALL: download the latest version of this file and make it executable
-# wget https://raw.githubusercontent.com/wbraswell/rperl/master/script/rperl_installer.sh; chmod a+x ./rperl_installer.sh
+# wget https://raw.githubusercontent.com/wbraswell/lampuniversity.org/master/bin/LAMP_installer.sh; chmod a+x ./LAMP_installer.sh
+# OR
+# wget tinyurl.com/lampinstaller; chmod a+x lampinstaller
 
 # enable extended pattern matching in case statements
 shopt -s extglob
@@ -223,7 +230,7 @@ VERIFY_UBUNTU() {
     VERIFY_OS_CHOICE 'UBUNTU'
 }
 
-echo "[[[<<< RPerl Installer Script v$VERSION >>>]]]"
+echo "[[[<<< LAMP Installer Script v$VERSION >>>]]]"
 echo
 echo '  [[[<<< Tested Using Fresh Installs >>>]]]'
 echo
@@ -234,24 +241,75 @@ echo 'Xubuntu v16.04.1 (Xenial Xerus)'
 echo
 echo  '          [[[<<< Main Menu >>>]]]'
 echo
+echo  '        <<< LOCAL CLI SECTIONS >>>'
+echo \ '0. [[[        LINUX, CONFIGURE OPERATING SYSTEM USERS ]]]'
+echo \ '1. [[[        LINUX, CONFIGURE CLOUD NETWORKING ]]]'
+echo \ '2. [[[ UBUNTU LINUX, USB INSTALL, FIX BROKEN SWAP DEVICE ]]]'
+echo \ '3. [[[ UBUNTU LINUX, FIX BROKEN LOCALE ]]]'
+echo \ '4. [[[ UBUNTU LINUX, INSTALL EXPERIMENTAL UBUNTU SDK BEFORE OTHER PACKAGES ]]]'
+echo \ '5. [[[ UBUNTU LINUX, UPGRADE ENTIRE OPERATING SYSTEM OR ALL PACKAGES ]]]'
+echo \ '6. [[[        LINUX, INSTALL BASE CLI OPERATING SYSTEM PACKAGES ]]]'
+echo \ '7. [[[ UBUNTU LINUX, INSTALL & TEST CLAMAV ANTI-VIRUS ]]]'
+echo \ '8. [[[        LINUX, INSTALL LAMP UNIVERSITY TOOLS ]]]'
+echo \ '9. [[[ UBUNTU LINUX, INSTALL HEIRLOOM TOOLS (including bdiff) ]]]'
+echo  '10. [[[ UBUNTU LINUX, INSTALL BROADCOM B43 WIFI ]]]'
+echo  '11. [[[ UBUNTU LINUX, PERFORMANCE BENCHMARKING ]]]'
+echo
+echo  '        <<< LOCAL GUI SECTIONS >>>'
+echo  '12. [[[ UBUNTU LINUX, INSTALL BASE GUI OPERATING SYSTEM PACKAGES ]]]'
+echo  '13. [[[ UBUNTU LINUX, INSTALL EXTRA GUI OPERATING SYSTEM PACKAGES ]]]'
+echo  '14. [[[ UBUNTU LINUX, INSTALL XPRA ]]]'
+echo  '15. [[[ UBUNTU LINUX, INSTALL VIRTUALBOX GUEST ADDITIONS ]]]'
+echo  '16. [[[ UBUNTU LINUX, UNINSTALL HUD & BLUETOOTH & MODEMMANAGER & GVFS ]]]'
+echo  '17. [[[ UBUNTU LINUX, FIX BROKEN SCREENSAVER ]]]'
+echo  '18. [[[ UBUNTU LINUX, CONFIGURE XFCE WINDOW MANAGER ]]]'
+echo  '19. [[[ UBUNTU LINUX, ENABLE AUTOMATIC SECURITY UPDATES ]]]'
+echo
 echo  '         <<< PERL & RPERL SECTIONS >>>'
-echo  '20. [[[ UBUNTU LINUX,   INSTALL  PERL DEPENDENCIES ]]]'
-echo  '21. [[[ UBUNTU LINUX,   INSTALL SINGLE-USER PERL LOCAL::LIB  & CPANM ]]]'
-echo  '22. [[[ UBUNTU LINUX,   INSTALL SINGLE-USER PERLBREW         & CPANM ]]]'
-echo  '23. [[[ UBUNTU LINUX,   INSTALL SYSTEM-WIDE PERL FROM SOURCE & CPANM ]]]'
-echo  '24. [[[ UBUNTU LINUX,   INSTALL SYSTEM-WIDE SYSTEM PERL      & CPANM ]]]'
+echo  '20. [[[        LINUX,   INSTALL  PERL DEPENDENCIES ]]]'
+echo  '21. [[[        LINUX,   INSTALL SINGLE-USER PERL LOCAL::LIB  & CPANM ]]]'
+echo  '22. [[[        LINUX,   INSTALL SINGLE-USER PERLBREW         & CPANM ]]]'
+echo  '23. [[[        LINUX,   INSTALL SYSTEM-WIDE PERL FROM SOURCE & CPANM ]]]'
+echo  '24. [[[        LINUX,   INSTALL SYSTEM-WIDE SYSTEM PERL      & CPANM ]]]'
 echo  '25. [[[        LINUX,   INSTALL RPERL DEPENDENCIES ]]]'
 echo  '26. [[[  PERL,          INSTALL RPERL, LATEST   STABLE VIA CPAN ]]]'
 echo  '27. [[[  PERL,          INSTALL RPERL, LATEST UNSTABLE VIA GITHUB ]]]'
 echo  '28. [[[ RPERL,          RUN COMPILER TESTS ]]]'
 echo  '29. [[[ RPERL,          INSTALL RPERL FAMILY & RUN DEMOS ]]]'
 echo
+echo  '         <<< SERVICE SECTIONS >>>'
+echo  '30. [[[ UBUNTU LINUX,   INSTALL NFS ]]]'
+echo  '31. [[[ UBUNTU LINUX,   INSTALL APACHE & MOD_PERL ]]]'
+echo  '32. [[[ APACHE,         CONFIGURE DOMAIN(S) ]]]'
+echo  '33. [[[ UBUNTU LINUX,   INSTALL MYSQL & PHPMYADMIN ]]]'
+echo  '34. [[[ APACHE & MYSQL, CONFIGURE PHPMYADMIN ]]]'
+echo  '35. [[[ UBUNTU LINUX,   INSTALL WEBMIN ]]]'
+echo  '36. [[[ UBUNTU LINUX,   INSTALL POSTFIX ]]]'
+echo  '37. [[[ PERL,           INSTALL     LATEST CATALYST ]]]'
+echo  '38. [[[ UBUNTU LINUX,   INSTALL NON-LATEST CATALYST ]]]'
+echo  '39. [[[ PERL,           CHECK CATALYST VERSIONS ]]]'
+echo  '40. [[[ PERL,           INSTALL RAPIDAPP ]]]'
+echo  '41. [[[ UBUNTU LINUX,   INSTALL SHINYCMS DEPENDENCIES ]]]'
+echo  '42. [[[ PERL SHINYCMS,  INSTALL SHINYCMS DEPENDENCIES & SHINYCMS ]]]'
+echo  '43. [[[ PERL SHINYCMS,  CREATE DATABASE & EDIT MYSHINYTEMPLATE FILES ]]]'
+echo  '44. [[[ PERL SHINYCMS,  BUILD DEMO DATA & RUN TESTS ]]]'
+echo  '45. [[[ PERL SHINYCMS,  BACKUP & RESTORE DATABASE ]]]'
+echo  '46. [[[ PERL SHINYCMS,  CONFIGURE APACHE MOD_FASTCGI ]]]'
+echo  '47. [[[ PERL SHINYCMS,  CONFIGURE APACHE MOD_PERL ]]]'
+echo  '48. [[[ PERL SHINYCMS,  CREATE    APACHE DIRECTORIES & ENABLE STATIC  PAGE ]]]'
+echo  '49. [[[ PERL SHINYCMS,  CONFIGURE APACHE PERMISSIONS & ENABLE DYNAMIC PAGES ]]]'
+echo  '50. [[[ PERL SHINYCMS,  CONFIGURE SHINY ]]]'
+echo
+echo  '51. [[[ PERL CLOUDFORFREE, FOOOOOO ]]]'
+echo
+echo  '60. [[[ UBUNTU LINUX,   INSTALL MONGODB ]]]'
+echo
 
 while true; do
-    read -p 'Please type your chosen main menu section number, or press <ENTER> for 20... ' MENU_CHOICE
+    read -p 'Please type your chosen main menu section number, or press <ENTER> for 0... ' MENU_CHOICE
     case $MENU_CHOICE in
-        [0123456789]|[123][0123456789]|4[0123] ) echo; break;;
-        '' ) echo; MENU_CHOICE=20; break;;
+        [0123456789]|[1234][0123456789]|5[01]|60 ) echo; break;;
+        '' ) echo; MENU_CHOICE=0; break;;
         * ) echo 'Please choose a section number from the menu!'; echo;;
     esac
 done
@@ -264,14 +322,14 @@ echo \ '0. [[[      NEW MACHINE; SERVER; REMOTE CLOUD HOST ]]]'
 echo \ '1. [[[ EXISTING MACHINE; CLIENT; LOCAL USER SYSTEM ]]]'
 echo
 
-#while true; do
-#    read -p 'Please type your machine menu choice number, or press <ENTER> for 0... ' MACHINE_CHOICE
-#    case $MACHINE_CHOICE in
-#        [01] ) echo; break;;
-#        '' ) echo; MACHINE_CHOICE=0; break;;
-#        * ) echo 'Please choose a number from the menu!'; echo;;
-#    esac
-#done
+while true; do
+    read -p 'Please type your machine menu choice number, or press <ENTER> for 0... ' MACHINE_CHOICE
+    case $MACHINE_CHOICE in
+        [01] ) echo; break;;
+        '' ) echo; MACHINE_CHOICE=0; break;;
+        * ) echo 'Please choose a number from the menu!'; echo;;
+    esac
+done
 
 echo  '          [[[<<< OS Menu >>>]]]'
 echo
@@ -294,24 +352,47 @@ EDITOR='__EMPTY__'
 USERNAME='__EMPTY__'
 
 if [ $MENU_CHOICE -le 20 ]; then
-    echo '20. [[[ UBUNTU LINUX, INSTALL PERL DEPENDENCIES ]]]'
+    echo '20. [[[ LINUX, INSTALL PERL DEPENDENCIES ]]]'
     echo
-    VERIFY_UBUNTU
-#    if [ $MACHINE_CHOICE -eq 0 ]; then
+    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ Overview Of Perl Dependencies In This Section ]'
+        echo '[ CPAN: The Comprehensive Perl Archive Network, Required For Installing Perl Software ]'
+        echo '[ Perl Debug: Symbols For The Perl Interpreter, Optional For Perl Core & XS & RPerl Debugging ]'
         echo '[ Git: Source Code Version Control, Required To Install Latest Development & Unstable Software ]'
         echo '[ Make: Program Builder, Required To Build ExtUtils::MakeMaker ]'
         echo '[ cURL: Downloader, Required To Install cpanminus & Perlbrew & Perl-Build ]'
         echo '[ ExtUtils::MakeMaker: Source Code Builder, Required To Build Many Perl Software Suites ]'
         echo
-        echo '[ Install git ]'
-        S apt-get install git
-        
-        echo '[ Install make ]'
-        S apt-get install make
 
-        echo '[ Install cURL ]'
-        S apt-get install curl
+        if [[ "$OS_CHOICE" == "UBUNTU" ]]; then
+            VERIFY_UBUNTU
+            echo '[ UBUNTU ONLY: Install Perl Debugging Symbols System-Wide ]'
+            S apt-get install perl-debug
+            echo '[ UBUNTU ONLY: Install git ]'
+            S apt-get install git
+            echo '[ UBUNTU ONLY: Install make ]'
+            S apt-get install make
+            echo '[ UBUNTU ONLY: Install cURL ]'
+            S apt-get install curl
+            echo '[ UBUNTU ONLY: Check Install, Confirm No Errors ]'
+            S apt-get -f install
+        # OR
+        elif [[ "$OS_CHOICE" == "CENTOS" ]]; then
+            VERIFY_CENTOS
+            echo '[ CENTOS ONLY: Install CPAN ]'
+            S yum install perl-core perl-CPAN
+            echo '[ CENTOS ONLY: Install Perl Debugging Symbols System-Wide ]'
+            echo '[ NOT CURRENTLY AVAILABLE FOR CENTOS ]'
+            echo '[ CENTOS ONLY: Install git ]'
+            S yum install git
+            echo '[ CENTOS ONLY: Install make ]'
+            S yum install make
+            echo '[ CENTOS ONLY: Install cURL ]'
+            S yum install curl
+            echo '[ CENTOS ONLY: Check Install, Confirm No Errors; WARNING! MAKE TAKE HOURS TO RUN! ]'
+            S yum check
+        fi
+
         echo '[ Check cURL Installation ]'
         B 'curl -L cpanmin.us > /dev/null'
         echo
@@ -331,24 +412,24 @@ if [ $MENU_CHOICE -le 20 ]; then
         S 'perl -MExtUtils::MakeMaker\ 999'  # system-wide v7.04 or newer required by Inline::C & possibly others
         echo '[ Install ExtUtils::MakeMaker System-Wide ]'
         echo '[ NOTE: You MUST Have v7.04 Or Newer Installed System-Wide (And Also Single-User) For RPerl ]'
-        echo '[ Choose Yes For Automatic Configuration & Also Yes For Automatic CPAN Mirror Selection ]'
+        echo '[ Choose "yes" For Automatic Configuration & Also "yes" For Automatic CPAN Mirror Selection & "sudo" For Installation Approach ]'
         S cpan ExtUtils::MakeMaker
         echo '[ Install ExtUtils::MakeMaker System-Wide, Check Updated Version, Must Be v7.04 Or Newer ]'
         S 'perl -MExtUtils::MakeMaker\ 999'
 
-        echo '[ Install ExtUtils::MakeMaker, Check Perl Version To Determine Which Of The Following Sections To Choose ]'
+        echo '[ Check Perl Version To Determine Which Of The Following Sections To Choose ]'
         B perl -v
-#    elif [ $MACHINE_CHOICE -eq 1 ]; then
-#        echo "Nothing To Do On Existing Machine!"
-#    fi
+
+    elif [ $MACHINE_CHOICE -eq 1 ]; then
+        echo "Nothing To Do On Existing Machine!"
+    fi
     CURRENT_SECTION_COMPLETE
 fi
 
 if [ $MENU_CHOICE -le 21 ]; then
-    echo '21. [[[ UBUNTU LINUX, INSTALL SINGLE-USER PERL LOCAL::LIB & CPANM ]]]'
+    echo '21. [[[ LINUX, INSTALL SINGLE-USER PERL LOCAL::LIB & CPANM ]]]'
     echo
-    VERIFY_UBUNTU
-#    if [ $MACHINE_CHOICE -eq 0 ]; then
+    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You SHOULD Use This Instead Of Perlbrew Or Perl From Source Or System Perl In Sections 22 & 23 & 24, Unless You Have No Choice ]'
         echo '[ This Option Will Contain All Perl Code In Your Home Directory Under The ~/perl5 Subdirectory ]'
         echo '[ This Option May  Not Work With Older Versions Of Debian GNU/Linux Which Include A Broken Perl v5.14, Use Perlbrew in Section 22 Instead ]'
@@ -371,17 +452,16 @@ if [ $MENU_CHOICE -le 21 ]; then
         echo '[ Ensure The Following 4 Environmental Variables Now Include ~/perl5: PERL_MM_OPT, PERL_MB_OPT, PERL5LIB, PATH ]'
         echo '[ If Not, Please Log Out & Log Back In, Then Return To This Point & Check Again ]'
         B 'set | grep perl5'
-#    elif [ $MACHINE_CHOICE -eq 1 ]; then
-#        echo "Nothing To Do On Existing Machine!"
-#    fi
+    elif [ $MACHINE_CHOICE -eq 1 ]; then
+        echo "Nothing To Do On Existing Machine!"
+    fi
     CURRENT_SECTION_COMPLETE
 fi
 
 if [ $MENU_CHOICE -le 22 ]; then
-    echo '22. [[[ UBUNTU LINUX, INSTALL SINGLE-USER PERLBREW & CPANM ]]]'
+    echo '22. [[[ LINUX, INSTALL SINGLE-USER PERLBREW & CPANM ]]]'
     echo
-    VERIFY_UBUNTU
-#    if [ $MACHINE_CHOICE -eq 0 ]; then
+    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You SHOULD NOT Use This Instead Of local::lib In Section 21, Unless You Have No Choice ]'
         echo '[ This Option WILL Work With Older Versions Of Debian GNU/Linux Which Include A Broken Perl v5.14 ]'
         echo '[ This Option WILL Work With Older Versions Of Perl Which Are Not At Least v5.10 Or Newer ]'
@@ -390,52 +470,84 @@ if [ $MENU_CHOICE -le 22 ]; then
         echo '[ WARNING: Do NOT Mix With System Perl In Section 24! ]'
         C 'Please read the warnings above.  Seriously.'
 
-        echo '[ You Should Use apt-get Instead Of curl Below, Unless You Are Not In Ubuntu Or Have No Choice ]'
-        echo '[ WARNING: Use Only ONE Of The Following Two Commands, EITHER apt-get OR curl, But NOT Both! ]'
+        echo '[ You Should Use Ubuntu Or CentOS Instead Of curl Below, Unless You Are Not In Ubuntu Or CentOS, Or You Have No Choice ]'
+        echo '[ WARNING: Use Only ONE Of The Following Three Options, EITHER Ubuntu OR CentOS OR curl, But NOT More Than One! ]'
         C 'Please read the warning above.  Seriously.'
-        echo '[ APT-GET OPTION ONLY: Install Perlbrew ]'
-        S sudo apt-get install perlbrew
+
+        if [[ "$OS_CHOICE" == "UBUNTU" ]]; then
+            VERIFY_UBUNTU
+
+            echo '[ UBUNTU ONLY: Install Perlbrew ]'
+            S apt-get install perlbrew
+
+            echo '[ UBUNTU ONLY: Check Install, Confirm No Errors ]'
+            S apt-get -f install
         # OR
-        echo '[ CURL OPTION ONLY: Install Perlbrew ]'
+        elif [[ "$OS_CHOICE" == "CENTOS" ]]; then
+            VERIFY_CENTOS
+            echo '[ WARNING: Use Only ONE Of The Following Two CentOS Options, EITHER CPAN OR perlbrew_install.sh, But NOT More Than One! ]'
+            C 'Please read the warning above.  Seriously.'
+
+            echo '[ CENTOS & CPAN ONLY: Install Perl & CPAN ]'
+            S yum install perl perl-core perl-CPAN perl-CPAN-Meta
+            echo '[ CENTOS & CPAN ONLY: Install CPANM ]'
+            S cpan App::cpanminus
+            echo '[ CENTOS & CPAN ONLY: Install Perlbrew ]'
+            S cpanm install App::perlbrew
+
+            # OR
+
+            echo '[ CENTOS & perlbrew_install.sh ONLY: Install GCC Compiler & Other Requirements ]'
+            S yum install gcc bzip2 patch 
+            echo '[ CENTOS & perlbrew_install.sh ONLY: Download perlbrew_install.sh Script ]'
+            B curl -L https://install.perlbrew.pl -o perlbrew_install.sh
+            echo '[ CENTOS & perlbrew_install.sh ONLY: Run perlbrew_install.sh Script  ]'
+            B chmod a+x ./perlbrew_install.sh && ./perlbrew_install.sh
+
+            echo '[ CENTOS ONLY: Check Install, Confirm No Errors; WARNING! MAKE TAKE HOURS TO RUN! ]'
+            S yum check
+        fi
+
+        # OR
+        echo '[ CURL ONLY: Install Perlbrew; DO NOT USE IF apt-get OR yum WAS SUCCESSFUL! ]'
         S 'curl -L http://install.perlbrew.pl | bash'
 
-        echo '[ EITHER OPTION: Configure Perlbrew ]'
+        echo '[ Configure Perlbrew ]'
         B perlbrew init
-        echo '[ EITHER OPTION: In Texas, The Following Perlbrew Mirror Is Recommended: Arlington, TX #222 http://mirror.uta.edu/CPAN/ ]'
+        echo '[ In Texas, The Following Perlbrew Mirror Is Recommended: Arlington, TX #222 http://mirror.uta.edu/CPAN/ ]'
         B perlbrew mirror
         B 'echo "source ~/perl5/perlbrew/etc/bashrc" >> ~/.bashrc'
         SOURCE ~/.bashrc
-        echo '[ EITHER OPTION: Ensure The Following 3 Environmental Variables Now Include ~/perl5: PERLBREW_MANPATH, PERLBREW_PATH, PERLBREW_ROOT ]'
+        echo '[ Ensure The Following 3 Environmental Variables Now Include ~/perl5: PERLBREW_MANPATH, PERLBREW_PATH, PERLBREW_ROOT ]'
         B 'set | grep perl5'
         
-        echo '[ EITHER OPTION: Build Perlbrew Perl v5.24.0 ]'
+        echo '[ Build Perlbrew Perl v5.24.0 ]'
         B perlbrew install perl-5.24.0
-        echo '[ EITHER OPTION: Temporaily Enable Perlbrew Perl v5.24.0 ]'
+        echo '[ Temporaily Enable Perlbrew Perl v5.24.0 ]'
         B perlbrew use perl-5.24.0
-        echo '[ EITHER OPTION: Permanently Enable Perlbrew Perl v5.24.0 ]'
+        echo '[ Permanently Enable Perlbrew Perl v5.24.0 ]'
         B perlbrew switch perl-5.24.0
-        echo '[ EITHER OPTION: Install Perlbrew CPANM ]'
+        echo '[ Install Perlbrew CPANM ]'
         B perlbrew install-cpanm
 
-        echo '[ EITHER OPTION: ExtUtils::MakeMaker v7.04 Or Newer Is Required By Inline::C, May Need To Re-Install In Single-User Mode ]'
-        echo '[ EITHER OPTION: Check Version Of ExtUtils::MakeMaker, Re-Install If Older Than v7.04 ]'
+        echo '[ ExtUtils::MakeMaker v7.04 Or Newer Is Required By Inline::C, May Need To Re-Install In Single-User Mode ]'
+        echo '[ Check Version Of ExtUtils::MakeMaker, Re-Install If Older Than v7.04 ]'
         B 'perl -MExtUtils::MakeMaker\ 999'
-        echo '[ EITHER OPTION: Re-Install ExtUtils::MakeMaker Via CPAN, Because Perlbrew Acts As System-Wide Perl In Single-User Mode ]'
+        echo '[ Re-Install ExtUtils::MakeMaker Via CPAN, Because Perlbrew Acts As System-Wide Perl In Single-User Mode ]'
         echo '[ NOTE: You MUST Have v7.04 Or Newer Installed System-Wide (And Also Single-User) For RPerl ]'
         B cpanm ExtUtils::MakeMaker
-        echo '[ EITHER OPTION: Re-Check Version Of ExtUtils::MakeMaker, Must Be v7.04 Or Newer ]'
+        echo '[ Re-Check Version Of ExtUtils::MakeMaker, Must Be v7.04 Or Newer ]'
         B 'perl -MExtUtils::MakeMaker\ 999'
-#    elif [ $MACHINE_CHOICE -eq 1 ]; then
-#        echo "Nothing To Do On Existing Machine!"
-#    fi
+    elif [ $MACHINE_CHOICE -eq 1 ]; then
+        echo "Nothing To Do On Existing Machine!"
+    fi
     CURRENT_SECTION_COMPLETE
 fi
 
 if [ $MENU_CHOICE -le 23 ]; then
-    echo '23. [[[ UBUNTU LINUX, INSTALL SYSTEM-WIDE PERL FROM SOURCE & CPANM ]]]'
+    echo '23. [[[ LINUX, INSTALL SYSTEM-WIDE PERL FROM SOURCE & CPANM ]]]'
     echo
-    VERIFY_UBUNTU
-#    if [ $MACHINE_CHOICE -eq 0 ]; then
+    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You SHOULD NOT Use This Instead Of local::lib In Section 21, Unless You Have No Choice ]'
         echo '[ WARNING: Do NOT Mix With local::lib In Section 21! ]'
         echo '[ WARNING: Do NOT Mix With Perlbrew In Section 22! ]'
@@ -444,11 +556,11 @@ if [ $MENU_CHOICE -le 23 ]; then
         echo '[ WARNING: Choose ONLY ONE Of The Following Two Methods: Manual Build, Or Tokuhirom Perl-Build ]'
         C 'Please read the warning above.  Seriously.'
         # NEED ANSWER: does this actually work?
-        echo '[ MANUAL BUILD OPTION ONLY: Download Perl Source Code ]'
+        echo '[ MANUAL BUILD ONLY: Download Perl Source Code ]'
         B 'wget http://www.cpan.org/src/5.0/perl-5.24.0.tar.bz2; tar -xjvf perl-5.24.0.tar.bz2'
-        echo '[ MANUAL BUILD OPTION ONLY: Build Perl Source Code ]'
+        echo '[ MANUAL BUILD ONLY: Build Perl Source Code ]'
         B 'cd perl-5.24.0; ./Configure -des; make; make test'
-        echo '[ MANUAL BUILD OPTION ONLY: Install Perl Build ]'
+        echo '[ MANUAL BUILD ONLY: Install Perl Build ]'
         S 'cd perl-5.24.0; make install'
         # OR
         echo '[ TOKUHIROM PERL-BUILD ONLY: Download, Build, Install Perl ]'
@@ -456,17 +568,16 @@ if [ $MENU_CHOICE -le 23 ]; then
         S 'curl https://raw.githubusercontent.com/tokuhirom/Perl-Build/master/perl-build | perl - 5.24.0 /usr/local/bin/perl-5.24.0/'
         echo '[ EITHER OPTION: Install cpanminus ]'
         S perl -MCPAN -e 'install App::cpanminus'
-#    elif [ $MACHINE_CHOICE -eq 1 ]; then
-#        echo "Nothing To Do On Existing Machine!"
-#    fi
+    elif [ $MACHINE_CHOICE -eq 1 ]; then
+        echo "Nothing To Do On Existing Machine!"
+    fi
     CURRENT_SECTION_COMPLETE
 fi
 
 if [ $MENU_CHOICE -le 24 ]; then
-    echo '24. [[[ UBUNTU LINUX, INSTALL SYSTEM-WIDE SYSTEM PERL & CPANM ]]]'
+    echo '24. [[[ LINUX, INSTALL SYSTEM-WIDE SYSTEM PERL & CPANM ]]]'
     echo
-    VERIFY_UBUNTU
-#    if [ $MACHINE_CHOICE -eq 0 ]; then
+    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You SHOULD NOT Use This Instead Of local::lib In Section 21, Unless You Have No Choice ]'
         echo '[ This Option Will Install Both Perl & cpanminus System-Wide ]'
         echo '[ Also, All Future CPAN Distributions Will Install System-Wide In A Hard-To Control Manner ]'
@@ -474,21 +585,39 @@ if [ $MENU_CHOICE -le 24 ]; then
         echo '[ WARNING: Do NOT Mix With Perlbrew In Section 22! ]'
         echo '[ WARNING: Do NOT Mix With Perl From Source In Section 23! ]'
         C 'Please read the warnings above.  Seriously.'
-        S apt-get install perl cpanminus
-#    elif [ $MACHINE_CHOICE -eq 1 ]; then
-#        echo "Nothing To Do On Existing Machine!"
-#    fi
+
+        if [[ "$OS_CHOICE" == "UBUNTU" ]]; then
+            VERIFY_UBUNTU
+            echo '[ UBUNTU ONLY: Install Perl & CPANM ]'
+            S apt-get install perl cpanminus
+            echo '[ UBUNTU ONLY: Check Install, Confirm No Errors ]'
+            S apt-get -f install
+        # OR
+        elif [[ "$OS_CHOICE" == "CENTOS" ]]; then
+            VERIFY_CENTOS 
+            echo '[ CENTOS ONLY: Install Perl & CPANM Dependencies ]'
+            S yum install perl-core perl-libs perl-devel perl-CPAN curl
+            echo '[ CENTOS ONLY: Install CPANM System-Wide ]'
+            S 'curl -L http://cpanmin.us | perl - --sudo App::cpanminus'
+            echo '[ CENTOS ONLY: Check Install, Confirm No Errors; WARNING! MAKE TAKE HOURS TO RUN! ]'
+            S yum check
+        fi
+
+    elif [ $MACHINE_CHOICE -eq 1 ]; then
+        echo "Nothing To Do On Existing Machine!"
+    fi
     CURRENT_SECTION_COMPLETE
 fi
 
 if [ $MENU_CHOICE -le 25 ]; then
     echo '25. [[[ LINUX, INSTALL RPERL DEPENDENCIES ]]]'
     echo
-#    if [ $MACHINE_CHOICE -eq 0 ]; then
+    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ Overview Of RPerl Dependencies In This Section ]'
         echo '[ GCC: gcc & g++ Required For Compiling ]'
         echo '[ libc: libcrypt.(a|so) Required For Compiling ]'
-        echo '[ libperl: libperl.(a|so) Required For Compiling ]'
+        echo '[ libperl: libperl.(a|so) & perl.h etc, Required For Compiling ]'
+        echo '[ openssl: err.h Required By RPerl Subdependency Net::SSLeay From IO::Socket::SSL ]'
         echo '[ zlib: zlib.h Required By SDL.pm, Which Is Required For Graphics ]'
         echo '[ GMP: GNU Multiple-Precision Arithmetic Library Required For Math ]'
         echo '[ GSL: GNU Scientific Library Required For Math ]'
@@ -496,70 +625,77 @@ if [ $MENU_CHOICE -le 25 ]; then
         echo '[ AStyle: Artistic Style C++ Formatter, Required By RPerl Test Suite ]'
         echo '[ pkg-config: Compilation Library Detection Tool, Required By RPerl Support For MongoDB ]'
         echo
+
+        # Ubuntu, libperl-dev,  /usr/lib/x86_64-linux-gnu/libperl.so SYMLINK    /usr/lib/x86_64-linux-gnu/libperl.a REAL FILE
+        # Ubuntu, libperl5.XX,  /usr/lib/x86_64-linux-gnu/libperl.so.5.XX.Y REAL FILE    /usr/lib/x86_64-linux-gnu/perl/5.26.0/CORE/perl.h  and other *.h *.so *.pm *.ph files
+
+        # CentOS 7, perl-libs,  /usr/lib64/perl5/CORE/libperl.so
+        # CentOS 7, perl-devel, /usr/lib64/perl5/CORE/perl.h     /usr/bin/h2xs  and other *.h files
+
         if [[ "$OS_CHOICE" == "UBUNTU" ]]; then
             VERIFY_UBUNTU
-
-            echo '[ UBUNTU OPTION ONLY: Add Non-Base APT Repositories ]'
+            echo '[ UBUNTU ONLY: Add Non-Base APT Repositories ]'
             S add-apt-repository \"deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse\"
-
-            echo '[ UBUNTU OPTION ONLY: Update APT Repositories ]'
+            echo '[ UBUNTU ONLY: Update APT Repositories ]'
             S apt-get update
-
-            echo '[ UBUNTU OPTION ONLY: Install RPerl Dependencies ]'
-            S apt-get install g++ libc6-dev libperl-dev zlib1g-dev libgmp-dev libgsl0-dev texinfo flex bison astyle pkg-config
-        fi
-
-        echo '[ ANY OPTION: Check GCC Version, Must Be v4.7 Or Newer, Use Manual Build Option If Automatic Install Options Fail Or Are Too Old ]'
-        B g++ --version
-
-        echo '[ ANY OPTION: Check AStyle Version, Must Be v2.05.1 Or Newer, Use Manual Build Option If Automatic Install Options Fail Or Are Too Old ]'
-        B astyle -V
-
-        echo '[ ANY OPTION: Install RPerl Dependency Pluto PolyCC, Download ]'
-        # B 'wget https://github.com/wbraswell/pluto-mirror/raw/master/backup/pluto-0.11.4.tar.gz; tar -xzvf pluto-0.11.4.tar.gz'  # prefer official repo below
-        B 'wget https://github.com/bondhugula/pluto/files/737550/pluto-0.11.4.tar.gz; tar -xzvf pluto-0.11.4.tar.gz'
-        echo '[ ANY OPTION: Install RPerl Dependency Pluto PolyCC, Build ]'
-        B 'cd pluto-0.11.4; ./configure; make; make test'
-        echo '[ ANY OPTION: Install RPerl Dependency Pluto PolyCC, Install ]'
-        S 'cd pluto-0.11.4; make install'
-
+            echo '[ UBUNTU ONLY: Install RPerl Dependencies ]'
+            S apt-get install g++ libc6-dev libperl-dev libssl-dev zlib1g-dev libgmp-dev libgsl0-dev texinfo flex bison astyle pkg-config
+            echo '[ UBUNTU ONLY: Check Install, Confirm No Errors ]'
+            S apt-get -f install
         # OR
-        if [[ "$OS_CHOICE" == "CENTOS" ]]; then
+        elif [[ "$OS_CHOICE" == "CENTOS" ]]; then
             VERIFY_CENTOS
 
-            echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GCC, Download Yum Repo ]'
-            S wget http://people.centos.org/tru/devtools-1.1/devtools-1.1.repo -P /etc/yum.repos.d
-            echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GCC, Enable Yum Repo ]'
-            S 'echo "enabled=1" >> /etc/yum.repos.d/devtools-1.1.repo'
-            echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GCC, Install Via Yum ]'
-            S yum install devtoolset-1.1
-            echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GCC, Enable Via .bashrc ]'
-            B 'echo -e "\n# utilize upgraded GCC\nexport CC=/opt/centos/devtoolset-1.1/root/usr/bin/gcc\nexport CPP=/opt/centos/devtoolset-1.1/root/usr/bin/cpp\nexport CXX=/opt/centos/devtoolset-1.1/root/usr/bin/c++" >> ~/.bashrc'  # DEV NOTE: must wrap redirects in quotes
-            echo '[ REDHAT OR CENTOS OPTION ONLY: Install RPerl Dependency GMP, Install GMP Via urmpi ]'
-            S urpmi gmpxx-devel
-        fi
-        # OR
+            echo '[ CENTOS ONLY: Install RPerl Dependencies ]'
+            S yum install gcc-c++ make glibc-devel perl-core perl-libs perl-devel openssl-devel zlib zlib-static zlib-devel gmp gmp-static gmp-devel gsl gsl-devel texinfo flex bison pkgconfig
+            echo '[ CENTOS ONLY: Download & Install RPerl Dependency AStyle ]'
+            B wget https://github.com/wbraswell/astyle-mirror/raw/master/backup/astyle-2.05.1-1.el7.centos.x86_64.rpm
+            S rpm -v -i ./astyle-2.05.1-1.el7.centos.x86_64.rpm
 
-        echo '[ MANUAL BUILD OPTION ONLY: Install RPerl Dependency GCC, Download ]'
+            echo '[ CENTOS ONLY: Check Install, Confirm No Errors; WARNING! MAKE TAKE HOURS TO RUN! ]'
+            S yum check
+        fi
+
+        echo '[ Check GCC Version, Must Be v4.7 Or Newer, Use Manual Build Option If Automatic Install Options Fail Or Are Too Old ]'
+        B g++ --version
+
+        echo '[ Check AStyle Version, Must Be v2.05.1 Or Newer, Use Manual Build Option If Automatic Install Options Fail Or Are Too Old ]'
+        B astyle -V
+
+        # OR
+        echo '[ WARNING: Do NOT Use Manual Build Options Below, Unless You Are Not In Ubuntu Or CentOS, Or You Have No Choice! ]'
+        C 'Please read the warnings above.  Seriously.'
+        echo '[ MANUAL BUILD ONLY: Install RPerl Dependency GCC, Download ]'
         B 'wget http://www.netgull.com/gcc/releases/gcc-5.2.0/gcc-5.2.0.tar.bz2; tar -xjvf gcc-5.2.0.tar.bz2'
-        echo '[ MANUAL BUILD OPTION ONLY: Install RPerl Dependency GCC, Build ]'
+        echo '[ MANUAL BUILD ONLY: Install RPerl Dependency GCC, Build ]'
         B 'cd gcc-5.2.0; ./configure; make; make test'
-        echo '[ MANUAL BUILD OPTION ONLY: Install RPerl Dependency GCC, Install ]'
+        echo '[ MANUAL BUILD ONLY: Install RPerl Dependency GCC, Install ]'
         S 'cd gcc-5.2.0; make install'
-        echo '[ MANUAL BUILD OPTION ONLY: Install RPerl Dependency GMP, Visit The Following URL For Installation Instructions ]'
+        echo '[ MANUAL BUILD ONLY: Install RPerl Dependency GMP, Visit The Following URL For Installation Instructions ]'
         echo 'https://gmplib.org'
-        echo '[ MANUAL BUILD OPTION ONLY: Install RPerl Dependency AStyle, Visit The Following URL For Installation Instructions ]'
+        echo
+        echo '[ MANUAL BUILD ONLY: Install RPerl Dependency AStyle, Visit The Following URL For Installation Instructions ]'
         echo 'http://astyle.sourceforge.net'
-#    elif [ $MACHINE_CHOICE -eq 1 ]; then
-#        echo "Nothing To Do On Existing Machine!"
-#    fi
+        echo
+
+        echo '[ Install RPerl Dependency Pluto PolyCC, Download ]'
+        # B 'wget https://github.com/wbraswell/pluto-mirror/raw/master/backup/pluto-0.11.4.tar.gz; tar -xzvf pluto-0.11.4.tar.gz'  # prefer official repo below
+        B 'wget https://github.com/bondhugula/pluto/files/737550/pluto-0.11.4.tar.gz; tar -xzvf pluto-0.11.4.tar.gz'
+        echo '[ Install RPerl Dependency Pluto PolyCC, Build ]'
+        B 'cd pluto-0.11.4; ./configure; make; make test'
+        echo '[ Install RPerl Dependency Pluto PolyCC, Install ]'
+        S 'cd pluto-0.11.4; make install'
+
+    elif [ $MACHINE_CHOICE -eq 1 ]; then
+        echo "Nothing To Do On Existing Machine!"
+    fi
     CURRENT_SECTION_COMPLETE
 fi
 
 if [ $MENU_CHOICE -le 26 ]; then
     echo '26. [[[ PERL, INSTALL RPERL, LATEST STABLE VIA CPAN ]]]'
     echo
-#    if [ $MACHINE_CHOICE -eq 0 ]; then
+    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You Should Use This Instead Of Unstable Via GitHub In Section 27, Unless You Are An RPerl System Developer ]'
         echo '[ This Option Will Install The Latest Stable Public Release Of RPerl ]'
         echo '[ WARNING: Do NOT Mix With Unstable Via GitHub In Section 27! ]'
@@ -568,10 +704,14 @@ if [ $MENU_CHOICE -le 26 ]; then
         echo '[ You Should Use Single-User Instead Of System-Wide Below, Unless local::lib Or Perlbrew Is Not Installed Or You Have No Choice ]'
         echo '[ WARNING: Use Only ONE Of The Following Two Options, EITHER Single-User OR System-Wide, But NOT Both! ]'
         C 'Please read the warning above.  Seriously.'
-        echo '[ SINGLE-USER OPTION ONLY: Install RPerl ]'
+        echo '[ SINGLE-USER ONLY: Install Problematic RPerl Dependency IO::Socket::SSL, Skip Tests ]'
+        B cpanm -v --notest IO::Socket::SSL
+        echo '[ SINGLE-USER ONLY: Install RPerl ]'
         B cpanm -v RPerl
         # OR
-        echo '[ SYSTEM-WIDE OPTION ONLY: Install RPerl ]'
+        echo '[ SYSTEM-WIDE ONLY: Install Problematic RPerl Dependency IO::Socket::SSL, Skip Tests ]'
+        S cpanm -v --notest IO::Socket::SSL
+        echo '[ SYSTEM-WIDE ONLY: Install RPerl ]'
         S cpanm -v RPerl
 
         echo '[ EITHER OPTION: If cpanm Is Not Installed, Exit This Installer & Manually Try cpan Instead ]'
@@ -581,9 +721,9 @@ if [ $MENU_CHOICE -le 26 ]; then
         echo '[ Copy The Command From The Following Line For System-Wide Option ]'
         echo '$ sudo cpan RPerl'
         echo
-#    elif [ $MACHINE_CHOICE -eq 1 ]; then
-#        echo "Nothing To Do On Existing Machine!"
-#    fi
+    elif [ $MACHINE_CHOICE -eq 1 ]; then
+        echo "Nothing To Do On Existing Machine!"
+    fi
     CURRENT_SECTION_COMPLETE
 fi
 
@@ -596,7 +736,7 @@ RPERL_REPO_DIRECTORY='__EMPTY__'
 if [ $MENU_CHOICE -le 27 ]; then
     echo '27. [[[ PERL, INSTALL RPERL, LATEST UNSTABLE VIA GITHUB ]]]'
     echo
-#    if [ $MACHINE_CHOICE -eq 0 ]; then
+    if [ $MACHINE_CHOICE -eq 0 ]; then
         echo '[ You SHOULD NOT Use This Instead Of Stable Via CPAN In Section 26, Unless You Are An RPerl System Developer ]'
         echo '[ This Option Will Install The Latest Unstable Development Release Of RPerl ]'
         echo '[ WARNING: Do NOT Mix With Stable Via CPAN In Section 26! ]'
@@ -622,50 +762,65 @@ if [ $MENU_CHOICE -le 27 ]; then
         # DEV NOTE: for more info, see  https://help.github.com/articles/generating-ssh-keys
         #if [ ! -f ~/.ssh/id_rsa.pub ] && [ ! -f ~/.ssh/id_dsa.pub ]; then  # NEED ANSWER: do we need id_dsa.pub???
         if [ ! -f ~/.ssh/id_rsa.pub ]; then
-            echo '[ SECURE GIT OPTION ONLY: Generate SSH Keys, Do Create Secure Key Passphrase When Prompted ]'
+            echo '[ SECURE GIT ONLY: Generate SSH Keys, Do Create Secure Key Passphrase When Prompted ]'
             echo '[ WARNING: Be Sure To Record Your Secure Key Passphrase & Store It In A Safe Place ]'
             C 'Please read the warning above.  Seriously.'
             B "ssh-keygen -t rsa -C '$GITHUB_EMAIL'; eval `ssh-agent -s` ssh-add ~/.ssh/id_rsa; ssh-agent -k"
         else
-            echo '[ SECURE GIT OPTION ONLY: SSH Key File(s) Already Exist, Skipping Key Generation ]'
+            echo '[ SECURE GIT ONLY: SSH Key File(s) Already Exist, Skipping Key Generation ]'
         fi
 
         if [[ "$OS_CHOICE" == "UBUNTU" ]]; then
             VERIFY_UBUNTU
-            echo '[ SECURE GIT OPTION ON UBUNTU ONLY: Install Keychain Key Manager For OpenSSH ]'
+            echo '[ SECURE GIT ON UBUNTU ONLY: Install Keychain Key Manager For OpenSSH ]'
             S apt-get install keychain
+            echo '[ UBUNTU ONLY: Check Install, Confirm No Errors ]'
+            S apt-get -f install
+        # OR
+        elif [[ "$OS_CHOICE" == "CENTOS" ]]; then
+            VERIFY_CENTOS 
+            C '[ SECURE GIT ON NON-CENTOS ONLY: Not Currently Supported ]'
+#            echo '[ SECURE GIT ON CENTOS ONLY: Install Keychain Key Manager For OpenSSH ]'
+#            S rpm --import http://mirror.ghettoforge.org/distributions/gf/RPM-GPG-KEY-gf.el7
+#            S rpm -Uvh http://mirror.ghettoforge.org/distributions/gf/gf-release-latest.gf.el7.noarch.rpm 
+#            S yum clean all
+#            S yum install keychain
+#            echo '[ CENTOS ONLY: Check Install, Confirm No Errors; WARNING! MAKE TAKE HOURS TO RUN! ]'
+#            S yum check
         else
-            C '[ SECURE GIT OPTION ON NON-UBUNTU ONLY: Please See Your Operating System Documentation To Install Keychain Key Manager For OpenSSH ]'
+            C '[ SECURE GIT ON NON-UBUNTU AND NON-CENTOS ONLY: Please See Your Operating System Documentation To Install Keychain Key Manager For OpenSSH ]'
         fi
 
-        echo '[ SECURE GIT OPTION ONLY: Enable Keychain ]'
+        echo '[ SECURE GIT ONLY: Enable Keychain ]'
         echo '[ NOTE: Do Not Run The Following Step If You Already Copied Your Own Pre-Existing LAMP University .bashrc File In Section 0 ]'
-        B 'echo -e "\n# SSH Keys; for GitHub, etc.\nif [ -f /usr/bin/keychain ] && [ -f \$HOME/.ssh/id_rsa ]; then\n    /usr/bin/keychain \$HOME/.ssh/id_rsa\n    source \$HOME/.keychain/\$HOSTNAME-sh\nfi" >> ~/.bashrc;'
+        B 'echo -e "\n# SSH Keys; for GitHub, etc.\nif [ -f /usr/bin/keychain ] && [ -f \$HOME/.ssh/id_rsa ]; then\n    /usr/bin/keychain \$HOME/.ssh/id_rsa\n    source \$HOME/.keychain/\$HOSTNAME-sh\nfi\n" >> ~/.bashrc;'
         SOURCE ~/.bashrc
-        echo '[ SECURE GIT OPTION ONLY: How To Enable SSH Key On GitHub... ]'
-        echo '[ SECURE GIT OPTION ONLY: Copy Data Produced By The Next Command ]'
-        echo '[ SECURE GIT OPTION ONLY: Then Browse To https://github.com/settings/ssh ]'
-        echo "[ SECURE GIT OPTION ONLY: Then Click 'Add SSH Key', Paste Copied Key Data, Title '$USERNAME@$HOSTNAME', Click 'Save' ]"
+        echo '[ SECURE GIT ONLY: How To Enable SSH Key On GitHub... ]'
+        echo '[ SECURE GIT ONLY: Copy Data Produced By The Next Command ]'
+        echo '[ SECURE GIT ONLY: Then Browse To https://github.com/settings/ssh ]'
+        echo "[ SECURE GIT ONLY: Then Click 'Add SSH Key', Paste Copied Key Data, Title '$USERNAME@$HOSTNAME', Click 'Save' ]"
         echo
         B 'cat ~/.ssh/id_rsa.pub'
         echo
-        C '[ SECURE GIT OPTION ONLY: Please Follow The Instructions Above ]'
-        echo '[ SECURE GIT OPTION ONLY: Test SSH Key On GitHub, Enter Passphrase When Prompted, Confirm Automatic Reply Greeting From GitHub Server ]'
+        C '[ SECURE GIT ONLY: Please Follow The Instructions Above ]'
+        echo '[ SECURE GIT ONLY: Test SSH Key On GitHub, Enter Passphrase When Prompted, Confirm Automatic Reply Greeting From GitHub Server ]'
         B ssh -T git@github.com
-        echo '[ SECURE GIT OPTION ONLY: Configure GitHub Account Setting On Local Machine ]'
+        echo '[ SECURE GIT ONLY: Configure GitHub Account Setting On Local Machine ]'
         echo '[ NOTE: Do Not Repeat The 3 Following git config Steps If You Already Copied Your Own Pre-Existing .gitconfig File In Section 0 ]'
         B git config --global user.email "$GITHUB_EMAIL"
         B git config --global user.name "$GITHUB_FIRST_NAME $GITHUB_LAST_NAME"
         B git config --global core.editor "$EDITOR"
-        echo '[ SECURE GIT OPTION ONLY: Clone (Download) RPerl Repository Onto New Machine ]'
+        echo '[ SECURE GIT ONLY: Clone (Download) RPerl Repository Onto New Machine ]'
         B git clone git@github.com:wbraswell/rperl.git $RPERL_REPO_DIRECTORY
         # OR
-        echo '[ PUBLIC GIT OPTION ONLY: Clone (Download) RPerl Repository Onto New Machine ]'
+        echo '[ PUBLIC GIT ONLY: Clone (Download) RPerl Repository Onto New Machine ]'
         B git clone https://github.com/wbraswell/rperl.git $RPERL_REPO_DIRECTORY
         # OR
-        echo '[ PUBLIC ZIP OPTION ONLY: Download RPerl Repository Onto New Machine ]'
+        echo '[ PUBLIC ZIP ONLY: Download RPerl Repository Onto New Machine ]'
         B 'wget https://github.com/wbraswell/rperl/archive/master.zip; unzip master.zip; mv rperl-master $RPERL_REPO_DIRECTORY; rm master.zip'
 
+        echo '[ ALL OPTIONS: Install Problematic RPerl Dependency IO::Socket::SSL, Skip Tests ]'
+        B cpanm -v --notest IO::Socket::SSL
         echo '[ ALL OPTIONS: Install RPerl Dependencies Via CPAN ]'
         CD $RPERL_REPO_DIRECTORY
         B 'perl Makefile.PL; cpanm --installdeps .'
@@ -675,9 +830,9 @@ if [ $MENU_CHOICE -le 27 ]; then
         B 'make; make test TEST_VERBOSE=1'
         echo '[ ALL OPTIONS: Install RPerl ]'
         B 'make install'
-#    elif [ $MACHINE_CHOICE -eq 1 ]; then
-#        echo "Nothing To Do On Existing Machine!"
-#    fi
+    elif [ $MACHINE_CHOICE -eq 1 ]; then
+        echo "Nothing To Do On Existing Machine!"
+    fi
     CURRENT_SECTION_COMPLETE
 fi
 
@@ -690,7 +845,7 @@ RPERL_INSTALL_DIRECTORY='__EMPTY__'
 if [ $MENU_CHOICE -le 28 ]; then
     echo '28. [[[ RPERL, RUN COMPILER TESTS ]]]'
     echo
-#    if [ $MACHINE_CHOICE -eq 0 ]; then
+    if [ $MACHINE_CHOICE -eq 0 ]; then
         D $RPERL_VERBOSE 'RPERL_VERBOSE additional user output, 0 for off, 1 for on' '1'
         export RPERL_VERBOSE=$USER_INPUT
         D $RPERL_DEBUG 'RPERL_DEBUG additional system output, 0 for off, 1 for on' '1'
@@ -763,9 +918,9 @@ if [ $MENU_CHOICE -le 28 ]; then
 
         echo '[ Test Command Sequence #2, Bubble Sort Timing Test: Clean New Compiled Files ]'
         B ../script/demo/unlink_bubble.sh
-#    elif [ $MACHINE_CHOICE -eq 1 ]; then
-#        echo "Nothing To Do On Existing Machine!"
-#    fi
+    elif [ $MACHINE_CHOICE -eq 1 ]; then
+        echo "Nothing To Do On Existing Machine!"
+    fi
     CURRENT_SECTION_COMPLETE
 fi
 
