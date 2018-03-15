@@ -1,8 +1,8 @@
-#!/usr/bin/perly
+#!/usr/bin/p3rly
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  y' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  #!/usr/bin' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

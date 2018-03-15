@@ -1,4 +1,4 @@
-#!/usr/binperl
+#!/usr/binp erl
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
