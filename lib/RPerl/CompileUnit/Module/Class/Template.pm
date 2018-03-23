@@ -45,6 +45,7 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitUselessNoCritic PodSpelling)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code, must be on line 1
 ## no critic qw(ProhibitUnreachableCode RequirePodSections RequirePodAtEnd)  # DEVELOPER DEFAULT 1b: allow POD & unreachable or POD-commented code, must be after line 1
 ## no critic qw(ProhibitStringySplit ProhibitInterpolationOfLiterals)  # DEVELOPER DEFAULT 2: allow string test values
+## no critic qw(ProhibitUnusedPrivateSubroutines)  # DEVELOPER DEFAULT 3: allow uncalled subroutines
 
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 ## no critic qw(ProhibitCascadingIfElse)  # SYSTEM DEFAULT 2: allow argument-handling logic

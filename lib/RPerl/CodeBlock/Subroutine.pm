@@ -75,10 +75,22 @@ sub ast_to_rperl__generate {
     my object $operations_star         = $self->{children}->[10];
     my string $right_brace             = $self->{children}->[11];
 
+
+
+
+
+=DISABLE_TMP
+    # in C, identifiers beginning with double-underscore '__howdy' or underscore-uppercase '_Howdy' are forbidden everywhere, 
+    # and identifiers starting with single-underscore '_howdy' are forbidden in global scope
     if ((substr $name, 0, 1) eq '_') {
         die 'ERROR ECOGEASRP08, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
+=cut
+
+
+
+
 
     if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$name}) or
         (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
@@ -145,10 +157,18 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
 
     my string_arrayref $arguments = [];
 
+
+
+
+
+=DISABLE_TMP
     if ((substr $name, 0, 1) eq '_') {
         die 'ERROR ECOGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
+=cut
+
+
 
     if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$name}) or
         (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
@@ -288,10 +308,18 @@ sub ast_to_cpp__generate_shims__CPPOPS_CPPTYPES {
 #RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shims__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
 #RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shims__CPPOPS_CPPTYPES(), have $return_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($return_type) . "\n" );
  
+
+
+
+=DISABLE_TMP
     if ((substr $name, 0, 1) eq '_') {
         die 'ERROR ECOGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
+=cut
+
+
+
 
     # DEV NOTE, CORRELATION #rp022: must create shims to un-prefix subroutine names with namespace-underscores to un-simulate Perl's behavior of not exporting subroutines by default
     my string $namespace_colons = q{};

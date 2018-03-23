@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.014_000;
+    our $VERSION = 0.015_000;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -180,7 +180,8 @@
 %token LPAREN               = /(\()/                          # '('
 %token LBRACKET             = /(\[)/                          # '['
 %token LBRACE               = /(\{)/                          # '{'
-%token WORD                 = /([a-z]\w*|[A-Z]\w*[a-z]\w*)/   # lowercase letter followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters; ex. 'foo' or 'foo23' or 'Foo_23'
+#%token WORD                 = /([a-z]\w*|[A-Z]\w*[a-z]\w*)/   # lowercase letter followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters; ex. 'foo' or 'foo23' or 'Foo_23'
+%token WORD                 = /([a-z_]\w*|[A-Z]\w*[a-z]\w*)/   # lowercase letter or underscore followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters; ex. 'foo' or 'foo23' or 'Foo_23'
 %token WORD_UPPERCASE       = /([A-Z][A-Z0-9_]*|[A-Z])/       # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOO' or 'FOOBAR_42_HOWDY'
 
 %%

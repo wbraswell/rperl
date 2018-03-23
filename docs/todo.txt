@@ -2,9 +2,14 @@ DONE
     Installer, CentOS 7 Support
     Subcompile Dynamic Linking To libperl.so Using $Config::Config{ccdlflags}
     Grammar, Shebang Support, "/usr/bin/env perl" & Other Special Formats
+    allow building in current directory "." as well as "lib/" directory
+    fix bug in auto-generated accessors "get_PROPERTY_size()", in RPerl::CompileUnit::Module::Class::create_symtab_entries_and_accessors_mutators()
 
 
 DOING
+
+    allow subroutine names beginning with underscore, NEED DETERMINE IF CORRECT, need add tests
+    implement string_arrayref_hashref
 
     .travis.yml, disable dev version of Alien::Base::ModuleBuild v1.01_01, update min version required in Makefile.PL
     .travis.yml, disable Alien::GSL testing, update min version required in Makefile.PL

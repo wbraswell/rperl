@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.014_000;
+our $VERSION = 0.015_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -682,6 +682,27 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use parent -norequire, qw(hashref);
+
+# (ref to hash) of (refs to (arrays of integers))
+package  # hide from PAUSE indexing
+    integer_arrayref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_hashref);
+
+# (ref to hash) of (refs to (arrays of numbers))
+package  # hide from PAUSE indexing
+    number_arrayref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_hashref);
+
+# (ref to hash) of (refs to (arrays of strings))
+package  # hide from PAUSE indexing
+    string_arrayref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_hashref);
 
 # [[[ HASH HASHES (2-dimesional) ]]]
 

@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get @ARG, Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.049_000;
+our $VERSION = 0.050_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -746,7 +746,7 @@ sub create_symtab_entries_and_accessors_mutators {
                         }
                         else {
                             $eval_string
-                                = 'sub'
+                                = '*{'
                                 . $package_name
                                 . '::get_'
                                 . $property_name . '_size'
