@@ -115,7 +115,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             }
         }
 
-        if ( $module_name =~ /^\w+Perl::Config$/ ) { # DEV NOTE, CORRELATION #rp027: MathPerl::Config, PhysicsPerl::Config, etc
+        if ( $module_name =~ /^\w+Perl::Config$/ ) { # DEV NOTE, CORRELATION #rp027: RPerl::Config, MathPerl::Config, PhysicsPerl::Config, etc
 #            RPerl::diag('in CompileUnit::Include->ast_to_cpp__generate__CPPOPS_CPPTYPES(), skipping system config file $module_name = ' . $module_name . "\n");
         }
         elsif ( $is_rperl_test or (not $is_rperl_system) ) {

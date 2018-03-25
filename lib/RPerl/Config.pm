@@ -4,7 +4,8 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
+our $IS_RPERL_CONFIG = 1;  # DEV NOTE, CORRELATION #rp027: RPerl::Config, MathPerl::Config, PhysicsPerl::Config, etc
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils

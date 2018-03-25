@@ -106,6 +106,13 @@ sub accept_and_verify_input_files {
                 . ', dying' . "\n";
         }
 
+        # strip leading './' dot-slash and '.\' dot-backslash "current directory" paths;
+        while (((substr $input_file_name, 0, 2) eq q{./}) or ((substr $input_file_name, 0, 2) eq q{.\\})) {
+#            RPerl::diag( 'in rperl::accept_and_verify_input_files(), stripping leading dot-slash or dot-backslash, have BEFORE $input_file_name = ' . q{'} . $input_file_name . q{'} . "\n" );
+            substr $input_file_name, 0, 2, q{};
+#            RPerl::diag( 'in rperl::accept_and_verify_input_files(), stripping leading dot-slash or dot-backslash, have AFTER $input_file_name = ' . q{'} . $input_file_name . q{'} . "\n" );
+            $input_file_names->[$i] = $input_file_name;
+        }
     }
     return $input_file_names;
 }

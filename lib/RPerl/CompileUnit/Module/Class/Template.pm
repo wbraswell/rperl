@@ -108,8 +108,12 @@ use constant PIE => my string $TYPED_PIE = 'pecan';
 our hashref $properties = {
     plugh => my integer $TYPED_plugh         = 23,
     xyzzy => my string $TYPED_xyzzy          = 'twenty-three',
-    thud  => my integer_arrayref $TYPED_thud = [ 2, 4, 6, 8 ],
-    yyz => my number_hashref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }
+    thub  => my integer_arrayref $TYPED_thub = undef,                    # no  initial size, no  initial values 
+    thud  => my integer_arrayref $TYPED_thud = [ 2, 4, 6, 8 ],           # no  initial size, yes initial values
+    thuj  => my integer_arrayref $TYPED_thuj->[4 - 1] = undef,           # yes initial size, no  initial values
+    thuv  => my integer_arrayref $TYPED_thuv->[4 - 1] = [ 2, 4, 6, 8 ],  # yes initial size, yes initial values; NEED ANSWER, DOES THIS CURRENTLY WORK???
+    yyx   => my number_hashref $TYPED_yyx = undef,
+    yyz   => my number_hashref $TYPED_yyz = { a => 3.1, b => 6.2, c => 9.3 }  # NEED FIX, DOES NOT CURRENTLY WORK
 };
 
 # [[[ SUBROUTINES & OO METHODS ]]]

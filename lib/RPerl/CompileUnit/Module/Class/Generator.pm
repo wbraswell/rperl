@@ -597,7 +597,7 @@ EOL
         }
     }
 
-    if ( $parent_name =~ /^\w+Perl::Config$/ ) {    # DEV NOTE, CORRELATION #rp027: MathPerl::Config, PhysicsPerl::Config, etc
+    if ( $parent_name =~ /^\w+Perl::Config$/ ) {    # DEV NOTE, CORRELATION #rp027: RPerl::Config, MathPerl::Config, PhysicsPerl::Config, etc
         #        RPerl::diag('in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), skipping system config file $parent_name = ' . $parent_name . "\n");
     }
     elsif ( $is_rperl_test or (not $is_rperl_system) ) {
