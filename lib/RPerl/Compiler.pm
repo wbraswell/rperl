@@ -1432,6 +1432,10 @@ sub post_processor_cpp__pmc_generate {
                     # relative path, w/ leading dots
                     ($cpp_directories_char0 eq '.')) {
                         # prepend nothing, even if $has_rperl_config
+                        # DEV NOTE, CORRELATION #rp036: handle input file names with leading dots
+                        # we should have already stripped all leading single-dots in rperl::accept_and_verify_input_files(),
+                        # so all leading-dot $cpp_directories here should be double-dots, although the same logic here should also apply to single-dots,
+                        # because the point is not to prepend INCLUDE_PATH to anything which has dots at all, which is almost certainly wrong
 #                        RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, absolute path or relative path w/ leading dots, PREPEND NOTHING', "\n" );
                         $file_line  = q<BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '> . $cpp_file_path . q<' ]]]\n" x 1); }> . "\n";
                         $file_line .= q{use Inline (CPP => '} . $cpp_file_path . q{', \%RPerl::Inline::ARGS);} . "\n";

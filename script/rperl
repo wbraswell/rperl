@@ -43,8 +43,8 @@ sub accept_and_verify_input_files {
     #    RPerl::diag( 'in rperl::accept_and_verify_input_files(), received $input_file_names_unlabeled = ' . Dumper($input_file_names_unlabeled) . "\n" );
 
     RPerl::diag("\n\n");    # move output away from initial Inline compiler output
-    RPerl::diag( 'in rperl, have $RPerl::DEBUG = ' . $RPerl::DEBUG . "\n" );
-    RPerl::diag( 'in rperl, have $RPerl::VERBOSE = ' . $RPerl::VERBOSE . "\n" );
+    RPerl::diag( 'in rperl, have $RPerl::DEBUG   = ' . $RPerl::DEBUG   . ', $ENV{RPERL_DEBUG}   = ' . $ENV{RPERL_DEBUG}   . "\n" );
+    RPerl::diag( 'in rperl, have $RPerl::VERBOSE = ' . $RPerl::VERBOSE . ', $ENV{RPERL_VERBOSE} = ' . $ENV{RPERL_VERBOSE} . "\n" );
 
     # accept unlabeled input file name(s) if no labeled values specified
     if ( ( scalar @{$input_file_names_unlabeled} ) > 0 ) {
@@ -106,6 +106,7 @@ sub accept_and_verify_input_files {
                 . ', dying' . "\n";
         }
 
+        # DEV NOTE, CORRELATION #rp036: handle input file names with leading dots
         # strip leading './' dot-slash and '.\' dot-backslash "current directory" paths;
         while (((substr $input_file_name, 0, 2) eq q{./}) or ((substr $input_file_name, 0, 2) eq q{.\\})) {
 #            RPerl::diag( 'in rperl::accept_and_verify_input_files(), stripping leading dot-slash or dot-backslash, have BEFORE $input_file_name = ' . q{'} . $input_file_name . q{'} . "\n" );
