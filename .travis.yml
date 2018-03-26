@@ -63,11 +63,6 @@ install:
     - perl -e 'if ($ENV{ALIEN_INSTALL_TYPE} eq q{system}) { system qw(sudo apt-get install texinfo); }'      # "system" install via Ubuntu  here vs "share" install via CPAN Alien::Texinfo (A::Pluto dep)
     - perl -e 'if ($ENV{ALIEN_INSTALL_TYPE} eq q{system}) { system q{wget https://github.com/bondhugula/pluto/files/737550/pluto-0.11.4.tar.gz; tar -xzvf pluto-0.11.4.tar.gz; cd pluto-0.11.4/; ./configure; make; make test; sudo make install; cd .. }; }'  # "system" install via tarball here vs "share" install via CPAN Alien::Pluto
 
-    # NEED DELETE FOLLOWING LINE IF NOT USED!!!
-    # NEED DELETE FOLLOWING LINE IF NOT USED!!!
-    # NEED DELETE FOLLOWING LINE IF NOT USED!!!
-#    - sudo apt-get install curl
-
 before_script:
     # DEV NOTE, CORRELATION #rp060: must force share install of dists which are not available via system install; PCRE2 & JPCRE2 are not readily available via the OS package manager
     # Configuring Alien-PCRE2-xxx ... Alien::Build::Plugin::PkgConfig::Negotiate> Using PkgConfig plugin: PkgConfig::CommandLine
@@ -95,8 +90,8 @@ before_script:
 # NEED DISABLE, TMP DEBUG
 # NEED DISABLE, TMP DEBUG
 # NEED DISABLE, TMP DEBUG
-    - export ALIEN_GSL_REPO_FTP_PROTOCOL=http
-    - cpanm --verbose Alien::GSL
+#    - export ALIEN_GSL_REPO_FTP_PROTOCOL=http
+#    - cpanm --verbose Alien::GSL
 
 # DEV NOTE: after adding multiple Alien dependencies with build times, we exceeded Travis' ~4MB log data limit, disable verbose CPAN output for now to shorten non-RPerl log output
     - cpanm --installdeps --notest .
