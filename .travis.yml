@@ -1,5 +1,5 @@
 language: perl
-# v0.041_000
+# v0.042_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -71,32 +71,33 @@ before_script:
     # N/A
     # ! Configure failed for Alien-PCRE2-xxx
     - ALIEN_INSTALL_TYPE=share && cpanm --verbose Alien::PCRE2 && cpanm --verbose Alien::JPCRE2
+
     # NEED REMOVE FOLLOWING 1 LINE when bug is fixed   https://github.com/daoswald/Inline-CPP/issues/38
     - cpanm --verbose --force ExtUtils::CppGuess
-# MODIFY FOLLOWING LINE TO ENABLE TEST_VERBOSE STDOUT DURING `make test`
+
+    # MODIFY FOLLOWING LINE TO ENABLE TEST_VERBOSE STDOUT DURING `make test`
     - export RPERL_VERBOSE=0
-# UNCOMMENT FOLLOWING LINE TO ENABLE NOISY BUILD DURING `make test`; REQUIRES RPERL_VERBOSE=1 ABOVE
+    # UNCOMMENT FOLLOWING LINE TO ENABLE NOISY BUILD DURING `make test`; REQUIRES RPERL_VERBOSE=1 ABOVE
 #    - export RPERL_DEBUG=1
-# UNCOMMENT FOLLOWING LINE FOR DEV VERSIONS OF MODULES, which travis can't get from Makefile.PL
+
+    # UNCOMMENT FOLLOWING LINE FOR DEV VERSIONS OF MODULES, which travis can't get from Makefile.PL
 #    - cpanm -n INGY/Inline-C-0.62_03.tar.gz
-# DEV NOTE, CORRELATION #rp011: following line was not necessary until before_install & install sections added
-#    - cpanm --quiet --installdeps --notest .
-# DEV NOTE: after adding multiple Alien dependencies with build times, we exceeded Travis' ~40-minute time limit, disable CPAN tests for now to shorten non-RPerl build times
-#    - cpanm --verbose --installdeps .
 
+    # DEV NOTE: beginning in mid-March 2018, Travis must be forced to use HTTP for file transfers, at least in the case of Alien::GSL; example errors follow...
+    # Could not find any matching files at /home/travis/perl5/perlbrew/perls/5.10/lib/site_perl/5.10.1/Alien/Base/ModuleBuild.pm line 404.
+    # no files found in repository at /home/travis/perl5/perlbrew/perls/5.10/lib/site_perl/5.10.1/Alien/Base/ModuleBuild.pm line 415
+    - export ALIEN_GSL_REPO_FTP_PROTOCOL=http
 
+    # DEV NOTE: verbose install to debug specific CPAN failures
+#    - cpanm --verbose SOME::BUGGY::DISTRIBUTION
 
-# DEV NOTE: verbose install to debug specific CPAN failures
-# NEED DISABLE, TMP DEBUG
-# NEED DISABLE, TMP DEBUG
-# NEED DISABLE, TMP DEBUG
-#    - export ALIEN_GSL_REPO_FTP_PROTOCOL=http
-    - cpanm --verbose Alien::GSL
+    # DEV NOTE: after adding multiple Alien dependencies with build times, we exceeded Travis' ~40-minute time limit;
+    # disable CPAN tests for now to shorten non-RPerl build times
+#    - cpanm --verbose --installdeps --notest .
 
-# DEV NOTE: after adding multiple Alien dependencies with build times, we exceeded Travis' ~4MB log data limit, disable verbose CPAN output for now to shorten non-RPerl log output
+    # DEV NOTE: after adding multiple Alien dependencies with build times, we exceeded Travis' ~4MB log data limit;
+    # disable verbose CPAN output for now to shorten non-RPerl log output
     - cpanm --installdeps --notest .
-
-
 
 # replace default build command "perl Makefile.PL && make test"
 # DEV NOTE: TEST_VERBOSE variable for ExtUtils::MakeMaker 'make' command disables suppression of stdout;
