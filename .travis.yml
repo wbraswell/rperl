@@ -1,5 +1,5 @@
 language: perl
-# v0.043_000
+# v0.044_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -36,16 +36,12 @@ matrix:
         # NEED FIX, CORRELATION #aj100: in Alien::JPCRE2, why is File::Find::Rule from t/02_make_check.t failing in v5.25 and v5.27 only?!?
         - perl: "blead"
 before_install:
+    # DEV NOTE: allow Perlbrew and/or Travis errors related to building blead, such as shown below, as long as the `perl -V` command still shows blead version is properly installed
+    # ERROR: The installation "blead" is unknown.
     - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
     - source ~/travis-perl-helpers/init
     - build-perl
     - perl -V
-
-# NEED REMOVE FOLLOWING 2 LINES IF NOT USED
-# NEED REMOVE FOLLOWING 2 LINES IF NOT USED
-# NEED REMOVE FOLLOWING 2 LINES IF NOT USED
-    - build-dist
-    - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
 # [ END Travis-CI Helper ]
 
     # legacy Travis-CI stack, currently enabled, supports sudo & update-alternatives
