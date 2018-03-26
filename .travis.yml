@@ -91,7 +91,7 @@ before_script:
 # NEED DISABLE, TMP DEBUG
 # NEED DISABLE, TMP DEBUG
 #    - export ALIEN_GSL_REPO_FTP_PROTOCOL=http
-#    - cpanm --verbose Alien::GSL
+    - cpanm --verbose Alien::GSL
 
 # DEV NOTE: after adding multiple Alien dependencies with build times, we exceeded Travis' ~4MB log data limit, disable verbose CPAN output for now to shorten non-RPerl log output
     - cpanm --installdeps --notest .
