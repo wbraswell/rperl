@@ -1,5 +1,6 @@
+# NEED UPDATE, CORRELATION #rp037: all changes made to this file MUST be propagated to the corresponding .travis.yml files for all other RPerl Family software suites 
 language: perl
-# v0.044_000
+# v0.100_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -29,8 +30,7 @@ perl:
 #           - g++-4.8
 #           - time
 
-
-# [ BEGIN Travis-CI Helper ]
+# [ BEGIN Travis-CI Helper, for building blead ]
 matrix:
     allow_failures:
         # NEED FIX, CORRELATION #aj100: in Alien::JPCRE2, why is File::Find::Rule from t/02_make_check.t failing in v5.25 and v5.27 only?!?
@@ -42,7 +42,7 @@ before_install:
     - source ~/travis-perl-helpers/init
     - build-perl
     - perl -V
-# [ END Travis-CI Helper ]
+# [ END Travis-CI Helper, for building blead ]
 
     # legacy Travis-CI stack, currently enabled, supports sudo & update-alternatives
     - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
@@ -61,26 +61,25 @@ install:
 
 before_script:
     # DEV NOTE, CORRELATION #rp060: must force share install of dists which are not available via system install; PCRE2 & JPCRE2 are not readily available via the OS package manager
-    # Configuring Alien-PCRE2-xxx ... Alien::Build::Plugin::PkgConfig::Negotiate> Using PkgConfig plugin: PkgConfig::CommandLine
+    # EXAMPLE ERROR:  Configuring Alien-PCRE2-xxx ... Alien::Build::Plugin::PkgConfig::Negotiate> Using PkgConfig plugin: PkgConfig::CommandLine
     # Alien::Build::CommandSequence> + pkg-config --exists libpcreX-X
     # external command failed at xxx/Alien/Build/CommandSequence.pm line XX.
-    # N/A
-    # ! Configure failed for Alien-PCRE2-xxx
+    # N/A    ! Configure failed for Alien-PCRE2-xxx
     - ALIEN_INSTALL_TYPE=share && cpanm --verbose Alien::PCRE2 && cpanm --verbose Alien::JPCRE2
 
-    # NEED REMOVE FOLLOWING 1 LINE when bug is fixed   https://github.com/daoswald/Inline-CPP/issues/38
+    # NEED FIX: remove following 1 line when bug is fixed    https://github.com/daoswald/Inline-CPP/issues/38
     - cpanm --verbose --force ExtUtils::CppGuess
 
-    # MODIFY FOLLOWING LINE TO ENABLE TEST_VERBOSE STDOUT DURING `make test`
+    # VERBOSE BUILD: modify following line to enable TEST_VERBOSE stdout during `make test`
     - export RPERL_VERBOSE=0
-    # UNCOMMENT FOLLOWING LINE TO ENABLE NOISY BUILD DURING `make test`; REQUIRES RPERL_VERBOSE=1 ABOVE
+    # DEBUG BUILD: uncomment following line to enable noisy build during `make test`; REQUIRES RPERL_VERBOSE=1 ABOVE
 #    - export RPERL_DEBUG=1
 
-    # UNCOMMENT FOLLOWING LINE FOR DEV VERSIONS OF MODULES, which travis can't get from Makefile.PL
+    # DEV MODULES: uncomment following line for dev versions of modules, which travis can't get from Makefile.PL
 #    - cpanm -n INGY/Inline-C-0.62_03.tar.gz
 
-    # DEV NOTE: beginning in mid-March 2018, Travis must be forced to use HTTP for file transfers, at least in the case of Alien::GSL; example errors follow...
-    # Could not find any matching files at /home/travis/perl5/perlbrew/perls/5.10/lib/site_perl/5.10.1/Alien/Base/ModuleBuild.pm line 404.
+    # DEV NOTE: beginning in mid-March 2018, Travis must be forced to use HTTP for file transfers, at least in the case of Alien::GSL; reason unknown
+    # EXAMPLE ERROR:  Could not find any matching files at /home/travis/perl5/perlbrew/perls/5.10/lib/site_perl/5.10.1/Alien/Base/ModuleBuild.pm line 404.
     # no files found in repository at /home/travis/perl5/perlbrew/perls/5.10/lib/site_perl/5.10.1/Alien/Base/ModuleBuild.pm line 415
     - export ALIEN_GSL_REPO_FTP_PROTOCOL=http
 
@@ -106,7 +105,7 @@ notifications:
             - "irc.perl.org#perl11"
         on_success: always
         on_failure: always
-        # to enable skip_join, in IRC channel first execute `/mode -n`
+        # DEV NOTE: to enable skip_join, in IRC channel first execute `/mode -n`
         skip_join: true
         template:
             - "RPerl build %{result}. %{author} says '%{commit_message}'"
@@ -116,5 +115,6 @@ env:
     global:
         - AUTHOR_TESTING=0
     matrix:
+        # NEED FIX: re-enable Alien share builds when all Alien::* requirements are implemented and working properly 
 #        - ALIEN_INSTALL_TYPE=share
         - ALIEN_INSTALL_TYPE=system

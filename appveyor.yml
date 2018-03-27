@@ -1,3 +1,4 @@
+# NEED UPDATE, CORRELATION #rp038: all changes made to this file MUST be propagated to the corresponding appveyor.yml files for all other RPerl Family software suites 
 # v0.014_000
 version: 1.0.{build}
 pull_requests:

@@ -4,7 +4,7 @@ package RPerl::DataStructure::SSENumberPair;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataStructure);
@@ -36,6 +36,7 @@ package    # hide from PAUSE indexing
     sse_number_pair;
 use strict;
 use warnings;
+use RPerl::Config;  # needed for 'use English;' for @ARG
 use parent qw(RPerl::DataStructure::SSENumberPair);
 
 sub new_from_singleton_duplicate {
@@ -61,6 +62,7 @@ package    # hide from PAUSE indexing
     constant_sse_number_pair;
 use strict;
 use warnings;
+use RPerl::Config;  # needed for 'use English;' for @ARG
 use parent qw(RPerl::DataStructure::SSENumberPair);
 
 sub new_from_singleton_duplicate {
