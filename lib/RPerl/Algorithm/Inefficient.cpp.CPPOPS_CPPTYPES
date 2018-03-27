@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp
-#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 0.011_000
+#define __CPP__INCLUDED__RPerl__Algorithm__Inefficient_cpp 0.012_000
 
 // [[[ INCLUDES ]]]
 #include "RPerl/Algorithm/Inefficient.h"
@@ -21,6 +21,7 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 
 void RPerl__Algorithm__Inefficient::inherited__Inefficient(string person) {
     RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FLUFFY" + (const string) "\n");
+    return;
 }
 
 string RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_get() {
@@ -31,6 +32,7 @@ string RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_get() {
 void RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_set(string bar_new) {
     RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient_bar_set(), have ::class($self) = " + classname(this) + (const string) " and $bar_new = " + bar_new + (const string) ", FLUFFY" + (const string) "\n");
     this->bar = bar_new;
+    return;
 }
 
 string RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_get() {
@@ -41,10 +43,12 @@ string RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_get() {
 void RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_set(string foo_new) {
     RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient_foo_set(), have ::class($self) = " + classname(this) + (const string) " and $foo_new = " + foo_new + (const string) ", FLUFFY" + (const string) "\n");
     this->foo = foo_new;
+    return;
 }
 
 void RPerl__Algorithm__Inefficient::inherited(string person) {
     RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", INCOMPATIBLE" + (const string) "\n");
+    return;
 }
 
 string RPerl__Algorithm__Inefficient__uninherited__Inefficient(string person) {

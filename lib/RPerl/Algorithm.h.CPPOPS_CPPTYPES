@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Algorithm_h
-#define __CPP__INCLUDED__RPerl__Algorithm_h 0.010_000
+#define __CPP__INCLUDED__RPerl__Algorithm_h 0.011_000
 
 // [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
 #include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
@@ -33,8 +33,8 @@ public:
     // [[[ OO METHODS ]]]
 
     // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
-    string get_foo() { return this->foo; }
-    void set_foo(string foo_new) { this->foo = foo_new; }
+    string get_foo() { return foo; }
+    void set_foo(string foo_new) { foo = foo_new; }
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm() {}
@@ -61,6 +61,17 @@ typedef std::unique_ptr<RPerl__Algorithm> RPerl__Algorithm_ptr;
 typedef std::vector<RPerl__Algorithm_ptr> RPerl__Algorithm_arrayref;
 typedef std::unordered_map<string, RPerl__Algorithm_ptr> RPerl__Algorithm_hashref;
 typedef std::unordered_map<string, RPerl__Algorithm_ptr>::iterator RPerl__Algorithm_hashref_iterator;
+
+// [[[ OO CONSTRUCTOR WRAPPER CLASS ]]]
+class NEW_RPerl__Algorithm {
+public:
+    RPerl__Algorithm_ptr wrapped_object;
+    NEW_RPerl__Algorithm() : wrapped_object{new RPerl__Algorithm()} {}
+    RPerl__Algorithm_ptr&& NEW() { return std::move(wrapped_object); }
+
+    // <<< OO PROPERTIES, INITIALIZERS >>>
+    NEW_RPerl__Algorithm& foo(string foo_init) { wrapped_object->foo = foo_init; return *this; }
+};
 
 // [[[ SUBROUTINES ]]]
 string RPerl__Algorithm__uninherited__Algorithm(string person);

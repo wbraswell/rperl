@@ -21,14 +21,17 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 
 void RPerl__Algorithm__Sort__Bubble::integer_sort() {
     this->integer_data = RPerl__Algorithm__Sort__Bubble__integer_bubblesort(this->integer_data);
+    return;
 }
 
 void RPerl__Algorithm__Sort__Bubble::number_sort() {
     this->number_data = RPerl__Algorithm__Sort__Bubble__number_bubblesort(this->number_data);
+    return;
 }
 
 void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(string person) {
     RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited__Bubble(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FRIED" + (const string) "\n");
+    return;
 }
 
 string RPerl__Algorithm__Sort__Bubble::inherited__Bubble_foo_get() {
@@ -39,10 +42,12 @@ string RPerl__Algorithm__Sort__Bubble::inherited__Bubble_foo_get() {
 void RPerl__Algorithm__Sort__Bubble::inherited__Bubble_foo_set(string foo_new) {
     RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited__Bubble_foo_set(), have ::class($self) = " + classname(this) + (const string) " and $foo_new = " + foo_new + (const string) ", FRIED" + (const string) "\n");
     this->foo = foo_new;
+    return;
 }
 
 void RPerl__Algorithm__Sort__Bubble::inherited(string person) {
     RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", ILLOGICAL" + (const string) "\n");
+    return;
 }
 
 integer_arrayref RPerl__Algorithm__Sort__Bubble__integer_bubblesort(integer_arrayref integer_data) {

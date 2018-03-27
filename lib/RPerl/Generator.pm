@@ -85,11 +85,11 @@ sub arrayref_convert_index_max_to_size {
                         else {
                             # '$foo - 10' becomes '$foo - 9'
                             my number $tmp_number
-                                = string_to_number( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0] );
+                                = main::string_to_number( $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0] );
 #                            RPerl::diag( 'in Generator->arrayref_convert_index_max_to_size(), setting ($foo - ' . $tmp_number . ') to ($foo - ' . ($tmp_number - 1)  .')' . "\n");
                             $tmp_number--;
                             $subexpression->{children}->[0]->{children}->[0]->{children}->[2]->{children}->[0]->{children}->[0]
-                                = number_to_string($tmp_number);
+                                = main::number_to_string($tmp_number);
                             $is_modified = 1;
                             if ($nested_parenthesis) { $nested_parenthesis = 1; }  # keep 1 set of parens if 1 or more is present
                         }

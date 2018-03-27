@@ -1,0 +1,96 @@
+# [[[ HEADER ]]]
+package RPerl::Algorithm::Sort::Bubble;
+use strict;
+use warnings;
+use RPerl::AfterSubclass;
+our $VERSION = 0.001_000;
+
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
+
+# [[[ INCLUDES ]]]
+use RPerl::Inline;
+use RPerl::Config;
+use Sub::Delete;
+
+# [[[ SUBROUTINES ]]]
+
+print '[[[ in Bubble.pmc, before SUBROUTINE SHIMS ]]]', "\n";
+
+# <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>
+#undef &RPerl::Algorithm::Sort::Bubble::integer_bubblesort;
+#*RPerl::Algorithm::Sort::Bubble::integer_bubblesort = sub { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@ARG); };
+*RPerl::Algorithm::Sort::Bubble::integer_bubblesort = sub { print '[[[ in Bubble.pmc SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::integer_bubblesort() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@ARG); };
+#undef &RPerl::Algorithm::Sort::Bubble::number_bubblesort;
+#*RPerl::Algorithm::Sort::Bubble::number_bubblesort = sub { return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort(@ARG); };
+*RPerl::Algorithm::Sort::Bubble::number_bubblesort = sub { print '[[[ in Bubble.pmc SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::number_bubblesort() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort(@ARG); };
+
+#undef &RPerl::Algorithm::Sort::Bubble::uninherited__Bubble;
+delete_sub 'RPerl::Algorithm::Sort::Bubble::uninherited__Bubble';
+#*RPerl::Algorithm::Sort::Bubble::uninherited__Bubble = sub { return main::RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(@ARG); };
+*RPerl::Algorithm::Sort::Bubble::uninherited__Bubble = sub { print '[[[ in Bubble.pmc SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::uninherited__Bubble() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(@ARG); };
+#*RPerl::Algorithm::Sort::Bubble::uninherited__Bubble = \&main::RPerl__Algorithm__Sort__Bubble__uninherited__Bubble;
+
+#undef &RPerl::Algorithm::Sort::Bubble::uninherited;
+#*RPerl::Algorithm::Sort::Bubble::uninherited = sub { return main::RPerl__Algorithm__Sort__Bubble__uninherited(@ARG); };
+*RPerl::Algorithm::Sort::Bubble::uninherited = sub { print '[[[ in Bubble.pmc SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::uninherited() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__uninherited(@ARG); };
+#undef &RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0;
+#*RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0 = sub { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(@ARG); };
+*RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0 = sub { print '[[[ in Bubble.pmc SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(@ARG); };
+#undef &RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0;
+#*RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0 = sub { return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(@ARG); };
+*RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0 = sub { print '[[[ in Bubble.pmc SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(@ARG); };
+
+# <<< C++ LOADER >>>
+sub cpp_load {
+    { my void::method $RETURN_TYPE };
+    my $need_load_cpp = 0;
+    if (    ( exists $main::{'RPerl__Algorithm__Sort__Bubble__MODE_ID'} )
+        and ( defined &{ $main::{'RPerl__Algorithm__Sort__Bubble__MODE_ID'} } ) )
+    {
+#RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load, RPerl__Algorithm__Sort__Bubble__MODE_ID() exists & defined' . "\n");
+#RPerl::diag(q{in RPerl::Algorithm::Sort::Bubble::cpp_load, have RPerl__Algorithm__Sort__Bubble__MODE_ID() retval = '} . main::RPerl__Algorithm__Sort__Bubble__MODE_ID() . q{'} . "\n");
+        if ( $RPerl::MODES->{ main::RPerl__Algorithm__Sort__Bubble__MODE_ID() }->{ops} ne 'CPP' ) {
+            $need_load_cpp = 1;
+        }
+    }
+    else {
+        #RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load, RPerl__Algorithm__Sort__Bubble__MODE_ID() does not exist or undefined' . "\n");
+        $need_load_cpp = 1;
+    }
+
+    if ($need_load_cpp) {
+
+        #RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load, need load CPP code' . "\n");
+
+        my $eval_string = <<"EOF";
+package main;
+use RPerl::Inline;
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1); }
+use Inline (CPP => '$main::INCLUDE_PATH' . '/RPerl/Algorithm/Sort/Bubble.cpp', \%RPerl::Inline::ARGS);
+RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1);
+1;
+EOF
+
+        $RPerl::Inline::ARGS{ccflagsex}
+            = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypessizes::type_number_native_ccflag();
+        $RPerl::Inline::ARGS{cppflags} = $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypessizes::type_number_native_ccflag();
+
+#RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load(), CPP not yet loaded, about to call eval() on $eval_string =' . "\n" . '<<< BEGIN EVAL STRING>>>' . "\n" . $eval_string . '<<< END EVAL STRING >>>' . "\n");
+
+        eval $eval_string or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
+        if ($EVAL_ERROR) { croak($EVAL_ERROR); }
+    }
+
+    #else { RPerl::diag('in RPerl::Algorithm::Sort::Bubble::cpp_load(), CPP already loaded, DOING NOTHING' . "\n"); }
+}
+
+# DEV NOTE, CORRELATION #rp015: suppress 'Too late to run INIT block' at run-time loading via require or eval
+no warnings;
+INIT {
+    # actually compile and load C++ code when 'use RPerl::Algorithm::Sort::Bubble' is called
+    RPerl::Algorithm::Sort::Bubble::cpp_load();
+}
+use warnings;
+
+1;    # end of package

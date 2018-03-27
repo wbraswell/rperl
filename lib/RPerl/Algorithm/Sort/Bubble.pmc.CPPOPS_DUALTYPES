@@ -5,41 +5,31 @@ use warnings;
 use RPerl::AfterSubclass;
 our $VERSION = 0.001_000;
 
+# [[[ OO INHERITANCE ]]]
+our @ISA = qw(RPerl::Algorithm::Sort);
+
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitStringyEval)  # SYSTEM DEFAULT 1: allow eval()
 
 # [[[ INCLUDES ]]]
 use RPerl::Inline;
 use RPerl::Config;
-use Sub::Delete;
 
 # [[[ SUBROUTINES ]]]
 
-print '[[[ in Bubble.pmc, before SUBROUTINE SHIMS ]]]', "\n";
-
 # <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>
-#undef &RPerl::Algorithm::Sort::Bubble::integer_bubblesort;
-#*RPerl::Algorithm::Sort::Bubble::integer_bubblesort = sub { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@ARG); };
-*RPerl::Algorithm::Sort::Bubble::integer_bubblesort = sub { print '[[[ in Bubble.pmc SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::integer_bubblesort() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@ARG); };
-#undef &RPerl::Algorithm::Sort::Bubble::number_bubblesort;
-#*RPerl::Algorithm::Sort::Bubble::number_bubblesort = sub { return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort(@ARG); };
-*RPerl::Algorithm::Sort::Bubble::number_bubblesort = sub { print '[[[ in Bubble.pmc SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::number_bubblesort() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort(@ARG); };
-
-#undef &RPerl::Algorithm::Sort::Bubble::uninherited__Bubble;
-delete_sub 'RPerl::Algorithm::Sort::Bubble::uninherited__Bubble';
-#*RPerl::Algorithm::Sort::Bubble::uninherited__Bubble = sub { return main::RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(@ARG); };
-*RPerl::Algorithm::Sort::Bubble::uninherited__Bubble = sub { print '[[[ in Bubble.pmc SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::uninherited__Bubble() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(@ARG); };
-#*RPerl::Algorithm::Sort::Bubble::uninherited__Bubble = \&main::RPerl__Algorithm__Sort__Bubble__uninherited__Bubble;
-
-#undef &RPerl::Algorithm::Sort::Bubble::uninherited;
-#*RPerl::Algorithm::Sort::Bubble::uninherited = sub { return main::RPerl__Algorithm__Sort__Bubble__uninherited(@ARG); };
-*RPerl::Algorithm::Sort::Bubble::uninherited = sub { print '[[[ in Bubble.pmc SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::uninherited() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__uninherited(@ARG); };
-#undef &RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0;
-#*RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0 = sub { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(@ARG); };
-*RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0 = sub { print '[[[ in Bubble.pmc SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(@ARG); };
-#undef &RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0;
-#*RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0 = sub { return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(@ARG); };
-*RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0 = sub { print '[[[ in Bubble.pmc SUBROUTINE SHIM RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0() ]]]', "\n"; return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(@ARG); };
+undef &RPerl::Algorithm::Sort::Bubble::integer_bubblesort;
+*RPerl::Algorithm::Sort::Bubble::integer_bubblesort = sub { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort(@ARG); };
+undef &RPerl::Algorithm::Sort::Bubble::number_bubblesort;
+*RPerl::Algorithm::Sort::Bubble::number_bubblesort = sub { return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort(@ARG); };
+undef &RPerl::Algorithm::Sort::Bubble::uninherited__Bubble;
+*RPerl::Algorithm::Sort::Bubble::uninherited__Bubble = sub { return main::RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(@ARG); };
+undef &RPerl::Algorithm::Sort::Bubble::uninherited;
+*RPerl::Algorithm::Sort::Bubble::uninherited = sub { return main::RPerl__Algorithm__Sort__Bubble__uninherited(@ARG); };
+undef &RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0;
+*RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0 = sub { return main::RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(@ARG); };
+undef &RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0;
+*RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0 = sub { return main::RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(@ARG); };
 
 # <<< C++ LOADER >>>
 sub cpp_load {
@@ -67,7 +57,7 @@ sub cpp_load {
 package main;
 use RPerl::Inline;
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1); }
-use Inline (CPP => '$main::INCLUDE_PATH' . '/RPerl/Algorithm/Sort/Bubble.cpp', \%RPerl::Inline::ARGS);
+use Inline (CPP => '$main::INCLUDE_PATH' . '/' . 'RPerl/Algorithm/Sort/Bubble.cpp', \%RPerl::Inline::ARGS);
 RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/Algorithm/Sort/Bubble.cpp' ]]]\n" x 1);
 1;
 EOF

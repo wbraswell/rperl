@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.015_000;
+our $VERSION = 0.017_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -18,6 +18,7 @@ our $VERSION = 0.015_000;
 ## no critic qw(ProhibitDeepNests)  # SYSTEM SPECIAL 7: allow deeply-nested code
 
 # [[[ INCLUDES ]]]
+#use FooPerl
 use RPerl::Parser;
 use RPerl::Generator;
 use RPerl::Compiler;
@@ -30,6 +31,7 @@ use File::Spec;
 
 # [[[ CONSTANTS ]]]
 use constant PATH_TESTS => my string $TYPED_PATH_TESTS = $RPerl::INCLUDE_PATH . '/RPerl/Test';
+use constant PATH_FOO   => my string $TYPED_PATH_FOO   = $RPerl::INCLUDE_PATH . '/RPerl/Foo';
 
 # [[[ OPERATIONS ]]]
 our $verbose_newline = q{};
@@ -65,7 +67,7 @@ find(
     sub {
         my $file = $File::Find::name;
 
-        #        RPerl::diag('in 12_parse.t, have $file = ' . $file . "\n");
+#        RPerl::diag('in 12_parse.t, have $file = ' . $file . "\n");
 
         if (defined $ARGV[0]) {
             # restore saved path, because File::Find changes directories while searching for files
@@ -83,6 +85,7 @@ find(
         if ( ( $file =~ m/Good/ms ) or ( $file =~ m/good/ms ) ) {
             $test_files->{$file} = undef;
 
+            # check for existence of PARSE preprocessor directive, skip file if parsing is explicitly disabled, <<< PARSE: OFF >>>
             # NEED UPDATE: remove use of $_ magic variable
             open my filehandleref $FILE_HANDLE, '<', $_
                 or croak 'ERROR, Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
@@ -96,6 +99,7 @@ find(
                 or croak 'ERROR, Cannot close file ' . $file . ' after reading,' . $OS_ERROR . ', croaking';
         }
         elsif ( ( $file =~ m/Bad/ms ) or ( $file =~ m/bad/ms ) ) {
+            # check for existence of PARSE & PARSE_ERROR preprocessor directives, compile list of expected parse errors, <<< PARSE_ERROR: 'FOO' >>>
             # NEED UPDATE: remove use of $_ magic variable
             open my filehandleref $FILE_HANDLE, '<', $_
                 or croak 'ERROR, Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
@@ -111,10 +115,22 @@ find(
             close $FILE_HANDLE
                 or croak 'ERROR, Cannot close file ' . $file . ' after reading,' . $OS_ERROR . ', croaking';
         }
-        else {
-            return;
+        else {  # file named neither Good nor Bad
+            # check for existence of PARSE preprocessor directive, do NOT skip file if parsing is explicitly enabled, <<< PARSE: ON >>>
+            # NEED UPDATE: remove use of $_ magic variable
+            open my filehandleref $FILE_HANDLE, '<', $_
+                or croak 'ERROR, Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
+            while (<$FILE_HANDLE>) {
+                if (m/^\#\s*\<\<\<\s*PARSE\s*\:\s*ON\s*\>\>\>/xms) {
+                    $test_files->{$file} = undef;
+                    last;
+                }
+            }
+            close $FILE_HANDLE
+                or croak 'ERROR, Cannot close file ' . $file . ' after reading,' . $OS_ERROR . ', croaking';
         }
     },
+#    (defined $ARGV[0]) ? $ARGV[0] : (PATH_TESTS(), PATH_FOO())  # accept optional command-line argument
     (defined $ARGV[0]) ? $ARGV[0] : PATH_TESTS()  # accept optional command-line argument
 );
 
@@ -174,12 +190,12 @@ for my $test_file ( sort keys %{$test_files} ) {
 #    RPerl::diag( 'in 12_parse.t, have $eval_return_value = ' . $eval_return_value . "\n" );  # warning if undef retval
 
     if ( ( defined $eval_return_value ) and $eval_return_value ) {    # Perl eval return code defined & true, success
-        if ( ( $test_file =~ m/Good/xms ) or ( $test_file =~ m/good/xms ) ) {
-            ok( 1, 'Program or module parses without errors:' . (q{ } x 10) . $test_file );
+        if ( ( $test_file =~ m/Bad/xms ) or ( $test_file =~ m/bad/xms ) ) {
+            ok( 0, 'Program or module parses with errors:' . (q{ } x 13) . $test_file );
 #            $number_of_tests_run++;
         }
         else {
-            ok( 0, 'Program or module parses with errors:' . (q{ } x 13) . $test_file );
+            ok( 1, 'Program or module parses without errors:' . (q{ } x 10) . $test_file );
 #            $number_of_tests_run++;
         }
     }

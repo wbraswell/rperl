@@ -34,12 +34,12 @@ public:
     // [[[ OO METHODS ]]]
 
     // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
-    integer_arrayref get_integer_data() { return this->integer_data; }
-    void set_integer_data(integer_arrayref integer_data_new) { this->integer_data = integer_data_new; }
-    number_arrayref get_number_data() { return this->number_data; }
-    void set_number_data(number_arrayref number_data_new) { this->number_data = number_data_new; }
-    string get_foo() { return this->foo; }
-    void set_foo(string foo_new) { this->foo = foo_new; }
+    integer_arrayref get_integer_data() { return integer_data; }
+    void set_integer_data(integer_arrayref integer_data_new) { integer_data = integer_data_new; }
+    number_arrayref get_number_data() { return number_data; }
+    void set_number_data(number_arrayref number_data_new) { number_data = number_data_new; }
+    string get_foo() { return foo; }  // inherited from RPerl::Algorithm::
+    void set_foo(string foo_new) { foo = foo_new; }  // inherited from RPerl::Algorithm::
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm__Sort__Bubble() {}
@@ -69,6 +69,19 @@ typedef std::unique_ptr<RPerl__Algorithm__Sort__Bubble> RPerl__Algorithm__Sort__
 typedef std::vector<RPerl__Algorithm__Sort__Bubble_ptr> RPerl__Algorithm__Sort__Bubble_arrayref;
 typedef std::unordered_map<string, RPerl__Algorithm__Sort__Bubble_ptr> RPerl__Algorithm__Sort__Bubble_hashref;
 typedef std::unordered_map<string, RPerl__Algorithm__Sort__Bubble_ptr>::iterator RPerl__Algorithm__Sort__Bubble_hashref_iterator;
+
+// [[[ OO CONSTRUCTOR WRAPPER CLASS ]]]
+class NEW_RPerl__Algorithm__Sort__Bubble {
+public:
+    RPerl__Algorithm__Sort__Bubble_ptr wrapped_object;
+    NEW_RPerl__Algorithm__Sort__Bubble() : wrapped_object{new RPerl__Algorithm__Sort__Bubble()} {}
+    RPerl__Algorithm__Sort__Bubble_ptr&& NEW() { return std::move(wrapped_object); }
+
+    // <<< OO PROPERTIES, INITIALIZERS >>>
+    NEW_RPerl__Algorithm__Sort__Bubble& integer_data(integer_arrayref integer_data_init) { wrapped_object->integer_data = integer_data_init; return *this; }
+    NEW_RPerl__Algorithm__Sort__Bubble& number_data(number_arrayref number_data_init) { wrapped_object->number_data = number_data_init; return *this; }
+    NEW_RPerl__Algorithm__Sort__Bubble& foo(string foo_init) { wrapped_object->foo = foo_init; return *this; }  // inherited from RPerl::Algorithm::
+};
 
 // [[[ SUBROUTINES ]]]
 integer_arrayref RPerl__Algorithm__Sort__Bubble__integer_bubblesort(integer_arrayref integer_data);

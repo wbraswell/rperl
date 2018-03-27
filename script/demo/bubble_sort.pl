@@ -29,8 +29,8 @@ use rperltypesconv;
 
 # [[[ OPERATIONS ]]]
 
-my integer $number_of_integers = 5_000;  # default
-#my integer $number_of_integers = 500;
+#my integer $number_of_integers = 5_000;  # default
+my integer $number_of_integers = 500;
 if (defined $ARGV[0]) { $number_of_integers = string_to_integer($ARGV[0]); }  # user input, command-line argument
 
 my $a = [reverse 0 .. $number_of_integers];
