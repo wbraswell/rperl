@@ -753,11 +753,14 @@ sub generate_output_file_names {
             }
         }
 
-        # all CPP ops modes require CPP output files; H output files may optionally be generated as needed
+        # all CPP ops modes require CPP output files; H output files may optionally be generated as needed for .pm input files only
         if ( $modes->{ops} eq 'CPP' ) {
             $output_file_name_groups->[$i]->{CPP}      = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_SOURCE}->{CPP}->[0];
-            $output_file_name_groups->[$i]->{H}        = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_SOURCE}->{H}->[0];
-            $output_file_name_groups->[$i]->{_H_label} = ' (if needed)';
+            # DEV NOTE, CORRELATION #rp037: programs never have header files
+            if ( $input_file_name =~ /[.]pm$/xms ) {
+                $output_file_name_groups->[$i]->{H}        = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_SOURCE}->{H}->[0];
+                $output_file_name_groups->[$i]->{_H_label} = ' (if needed)';
+            }
             if ( $modes->{parallel} eq 'OPENMP' ) {
                 $output_file_name_groups->[$i]->{OPENMP_CPP} = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_SOURCE}->{OPENMP_CPP}->[0];
             }
@@ -777,6 +780,7 @@ sub save_source_files {
 #    RPerl::diag( q{in Compiler::save_source_files(), received $file_name_group =} . "\n" . Dumper($file_name_group) . "\n" );
 #    RPerl::diag( 'in Compiler::save_source_files(), received $modes =' . "\n" . Dumper($modes) . "\n" );
 #    RPerl::diag( 'in Compiler::save_source_files(), received $modes->{_symbol_table} =' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
+#    RPerl::diag( 'in Compiler::save_source_files(), received $modes->{_input_file_name} =' . "\n" . Dumper($modes->{_input_file_name}) . "\n" );
 #    RPerl::diag( "\n" . 'in Compiler::save_source_files(), received $modes->{subcompile} =' . "\n" . Dumper($modes->{subcompile}) . "\n" );
 
     foreach my string $suffix_key ( sort keys %{$source_group} ) {
@@ -794,9 +798,13 @@ sub save_source_files {
         RPerl::verbose('SAVE  PHASE 0:      Final file modifications...    ');
 
         $source_group->{CPP} = post_processor_cpp__header_unneeded( $source_group );
-        $source_group->{CPP} = post_processor_cpp__header_or_cpp_path( $source_group->{CPP}, $file_name_group->{H} );
 
-        # MODULE POST-PROCESSING
+        # DEV NOTE, CORRELATION #rp037: programs never have header files
+        if (defined $source_group->{H}) {
+            $source_group->{CPP} = post_processor_cpp__header_or_cpp_path( $source_group->{CPP}, $file_name_group->{H} );
+        }
+
+        # MODULE POST-PROCESSING, only if primary input file is a module, thus requiring PMC file creation etc.
         if ( $modes->{_input_file_name} =~ /[.]pm$/xms ) {
             $source_group = post_processor_cpp__types_change( $source_group, $modes );
             post_processor_cpp__pmc_generate( $source_group, $file_name_group, $modes );

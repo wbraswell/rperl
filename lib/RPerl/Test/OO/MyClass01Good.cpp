@@ -1,0 +1,118 @@
+// [[[ HEADER ]]]
+using std::cout;  using std::cerr;  using std::endl;
+
+#ifndef __CPP__INCLUDED__RPerl__Test__OO__MyClass01Good_cpp
+#define __CPP__INCLUDED__RPerl__Test__OO__MyClass01Good_cpp 0.001_000
+
+// [[[ INCLUDES ]]]
+#include "RPerl/Test/OO/MyClass01Good.h"
+
+# ifdef __PERL__TYPES
+
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+
+# elif defined __CPP__TYPES
+
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+
+// [[[ SUBROUTINES & OO METHODS ]]]
+
+void RPerl__Test__OO__MyClass01Good::double_bar_save() {
+    this->bar = this->bar * 2;
+    return;
+}
+
+integer RPerl__Test__OO__MyClass01Good::double_bar_return() {
+    return this->bar * 2;
+}
+
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+
+# else
+
+Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+
+# endif
+
+#endif
+
+// end of class
+
+
+// [[[ ADDITIONAL CLASSES ]]]
+
+// [[[ HEADER ]]]
+using std::cout;  using std::cerr;  using std::endl;
+
+#ifndef __CPP__INCLUDED__RPerl__Test__OO__MySubclass01Good_cpp
+#define __CPP__INCLUDED__RPerl__Test__OO__MySubclass01Good_cpp 0.001_000
+
+// [[[ INCLUDES ]]]
+#include "RPerl/Test/OO/MyClass01Good.h"
+
+# ifdef __PERL__TYPES
+
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+
+# elif defined __CPP__TYPES
+
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+
+// [[[ SUBROUTINES & OO METHODS ]]]
+
+void RPerl__Test__OO__MySubclass01Good::triple_bax_save() {
+    this->bax = this->bax * 3;
+    return;
+}
+
+integer RPerl__Test__OO__MySubclass01Good::triple_bax_return() {
+    return this->bax * 3;
+}
+
+integer RPerl__Test__OO__MySubclass01Good::add_bax_return(integer addend) {
+    if ( addend < 10 ) {
+        return this->bax + addend;
+    }
+    return this->bax + 3;
+}
+
+integer RPerl__Test__OO__MySubclass01Good::subtract_bax_return(integer subtrahend) {
+    if ( subtrahend < 10 ) {
+        return this->bax - subtrahend;
+    }
+    return this->bax - 3;
+}
+
+integer RPerl__Test__OO__MySubclass01Good::multiply_bax_return(integer multiplier) {
+    if ( multiplier < 10 ) {
+        return this->bax * multiplier;
+    }
+    return this->bax * 3;
+}
+
+integer RPerl__Test__OO__MySubclass01Good::multiply_multiply_bax_return(integer multiplier, integer multiplier2) {
+    if ( multiplier < 10 ) {
+        return this->bax * multiplier * multiplier2;
+    }
+    return this->bax * 3 * multiplier2;
+}
+
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+
+# else
+
+Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+
+# endif
+
+#endif
+
+// end of class

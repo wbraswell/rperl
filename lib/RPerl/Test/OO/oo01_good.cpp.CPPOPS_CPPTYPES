@@ -34,12 +34,12 @@
 
 
 // [[[ INCLUDES ]]]
-#include "RPerl/Test/OO/oo01_good.h"
+#include "RPerl/Test/OO/MyClass01Good.cpp"
 int main() {
     // [[[ OPERATIONS HEADER ]]]
 
 // [[[ OPERATIONS ]]]
-    RPerl__Test__OO__MyClass01Good_ptr my_object = (NEW_RPerl__Test__OO__MyClass01Good {}).bar(22).NEW();
+    RPerl__Test__OO__MyClass01Good_ptr my_object = (NEW_RPerl__Test__OO__MyClass01Good{}).bar(22).NEW();
     print "have $my_object->get_bar() = " << my_object->get_bar() << endl;
     my_object->double_bar_save();
     print "have $my_object->get_bar() = " << my_object->get_bar() << endl;

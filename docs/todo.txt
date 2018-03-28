@@ -415,6 +415,7 @@ PERL::CRITIC BUGS
     InputOutput::RequireCheckedSyscalls False Positive On Typed Loop Iterator Without Final Newline    https://github.com/Perl-Critic/Perl-Critic/issues/671
 
 INLINE::CPP BUGS
+    remove all usage of double-underscore in identifiers, including auto-generated class names where '::' is replaced by '__'
     file bug, I::CPP comments, 7 lines okay, 8 lines broken
     file bug, I::CPP std::array
     file bug, I::CPP when attempting to return object type, CORRELATION #pp04
