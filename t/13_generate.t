@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.040_000;
+our $VERSION = 0.042_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -61,25 +61,23 @@ BEGIN {
 # TEMP DEBUGGING, ONLY LOAD SPECIFIC FILES
 #my $test_files = { './lib/RPerl/FOO/BAR.pm' => undef };
 
-#=DEBUG_DISABLE
 # NEED UPDATE: add string_arrayref_hashref_hashref type
 #my string_arrayref_hashref_hashref $test_files = {};
 my $test_files = {};
 
-# save current directory for file checks, because File::Find changes directory;
-# use File::Spec for MS Windows support, etc.
-my $current_working_directory = getcwd;
-(my $volume, my $directories, my $dummy_file) = File::Spec->splitpath( $current_working_directory, 1 );  # no_file = 1
-
 # locate all *Good* *good* *Bad* *bad* test files in PATH_TESTS directory or ARGV command-line argument directory
 find(
+    {
+        no_chdir => 1,  # if not set, causes incorrect paths when $ARGV[0] is defined
+        wanted =>
     sub {
-#        return;  # TMP DEBUG
- 
         my $file = $File::Find::name;
 
 #        RPerl::diag('in 13_generate.t, find0, have $file = ' . $file . "\n");
+#        RPerl::diag('in 13_generate.t, find0, have $File::Find::dir = ' . $File::Find::dir . "\n");
 #        RPerl::diag('in 13_generate.t, find0, have $_    = ' . $_ . "\n");
+#        RPerl::diag('in 13_generate.t, find0, have $File::Find::name = ' . $File::Find::name . "\n");
+#        RPerl::diag('in 13_generate.t, find0, have getcwd = ' . getcwd . "\n");
 
 #        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
 #        if ( $file !~ m/.*Module\/.*$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
@@ -134,6 +132,7 @@ find(
             close $FILE_HANDLE
                 or croak 'ERROR ETE13GE05: Cannot close file ' . $file . ' after reading,' . $OS_ERROR . ', croaking';
         }
+    }
     },
     (defined $ARGV[0]) ? $ARGV[0] : PATH_TESTS()  # accept optional command-line argument
 );
@@ -217,8 +216,6 @@ find(
     },
     (defined $ARGV[0]) ? $ARGV[0] : PATH_PRECOMPILED()  # accept optional command-line argument
 );
-
-#=cut
 
 # trim unnecessary (and possibly problematic) absolute paths from input file names
 # must be done outside find() to properly utilize getcwd()
@@ -464,11 +461,17 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
             if ( $ops eq 'CPP' ) {
                 # CPPOPS POST-PROCESSING: set H paths in CPP files & finally create PMC file, as needed
                 $source_group->{CPP} = RPerl::Compiler::post_processor_cpp__header_unneeded( $source_group );
-                $source_group->{CPP} = RPerl::Compiler::post_processor_cpp__header_or_cpp_path( $source_group->{CPP}, $output_file_name_group->{H} );
+
+                # DEV NOTE, CORRELATION #rp039: programs never have header files
+                if (defined $output_file_name_group->{H}) {
+#                    RPerl::diag( 'in 13_generate.t, about to call post_processor_cpp__header_or_cpp_path() w/ $output_file_name_group->{H} = ' . $output_file_name_group->{H} . "\n" );
+                    $source_group->{CPP} = RPerl::Compiler::post_processor_cpp__header_or_cpp_path( $source_group->{CPP}, $output_file_name_group->{H} );
+                }
             }
 
             if (( $ops eq 'CPP' ) and (exists $output_file_name_group->{PMC}) and (defined $output_file_name_group->{PMC})) {
                 # generate PMC source code
+#                RPerl::diag( 'in 13_generate.t, about to call post_processor_cpp__pmc_generate() w/ $output_file_name_group->{H} = ' . $output_file_name_group->{H} . "\n" );
                 RPerl::Compiler::post_processor_cpp__pmc_generate( $source_group, $output_file_name_group, $modes );
             }
 

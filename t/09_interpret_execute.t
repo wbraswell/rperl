@@ -55,6 +55,7 @@ BEGIN {
 
 my $test_files = {};    # string_hashref
 
+# NEED UPDATE: use 'no_chdir => 1' like 13_generate.t
 # save current directory for file checks, because File::Find changes directory;
 # use File::Spec for MS Windows support, etc.
 my $current_working_directory = getcwd;

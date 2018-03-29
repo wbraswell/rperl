@@ -4,7 +4,7 @@ package RPerl::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.007_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -347,7 +347,11 @@ sub diff_check_file_vs_string {
             or die 'ERROR ECOGEDI09, RPERL GENERATOR, DIFF CHECK: Cannot close temporary AStyle-tidied file ' . q{'} . $file_name_generated_tmp . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
         
         # POST-PROCESS C++ SOURCE CODE     
-        $string_generated_tidied = RPerl::Compiler::post_processor_cpp__header_or_cpp_path($string_generated_tidied, $file_name_group->{H});
+        # DEV NOTE, CORRELATION #rp039: programs never have header files
+        if (defined $file_name_group->{H}) {
+#            RPerl::diag( 'in 13_generate.t, about to call post_processor_cpp__header_or_cpp_path() w/ $file_name_group->{H} = ' . $file_name_group->{H} . "\n" );
+            $string_generated_tidied = RPerl::Compiler::post_processor_cpp__header_or_cpp_path($string_generated_tidied, $file_name_group->{H});
+        }
 
         # discard code we are not currently checking, no extra work performed by post-processor
         my string_hashref $source_group_tmp = RPerl::Compiler::post_processor_cpp__types_change({$suffix_key => $string_generated_tidied}, $modes);

@@ -800,8 +800,8 @@ sub save_source_files {
         $source_group->{CPP} = post_processor_cpp__header_unneeded( $source_group );
 
         # DEV NOTE, CORRELATION #rp039: programs never have header files
-        if (defined $source_group->{H}) {
-            RPerl::diag( 'in Compiler::save_source_files(), about to call post_processor_cpp__header_or_cpp_path() w/ $file_name_group->{H} = ' . $file_name_group->{H} . "\n" );
+        if (defined $file_name_group->{H}) {
+#            RPerl::diag( 'in Compiler::save_source_files(), about to call post_processor_cpp__header_or_cpp_path() w/ $file_name_group->{H} = ' . $file_name_group->{H} . "\n" );
             $source_group->{CPP} = post_processor_cpp__header_or_cpp_path( $source_group->{CPP}, $file_name_group->{H} );
         }
 
