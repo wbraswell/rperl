@@ -50,10 +50,10 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	inherited('MANORBEAST?', 'Dr. Hank McCoy');  # RPerl no, C++ no; inherited method should only work as method!
     print "\n";
  
-    uninherited__Bubble('Claws');         # RPerl yes, C++ yes
-    uninherited__Sort('Claws');           # RPerl yes, C++ yes
-#    uninherited__Inefficient('Claws');    # RPerl yes, C++ yes  # NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
-    uninherited__Algorithm('Claws');      # RPerl yes, C++ yes
+    uninherited_Bubble('Claws');         # RPerl yes, C++ yes
+    uninherited_Sort('Claws');           # RPerl yes, C++ yes
+#    uninherited_Inefficient('Claws');    # RPerl yes, C++ yes  # NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
+    uninherited_Algorithm('Claws');      # RPerl yes, C++ yes
     print "\n";
     
     uninherited('Wolverine');             # RPerl yes, C++ yes

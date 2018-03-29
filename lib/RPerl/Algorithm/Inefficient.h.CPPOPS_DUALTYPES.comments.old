@@ -32,7 +32,7 @@ public:
 
 // [[[ SUBROUTINES ]]]
 
-SV* uninherited__Inefficient(SV* person);
+SV* uninherited_Inefficient(SV* person);
 
 // DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 //SV* uninherited(SV* person);
@@ -67,7 +67,7 @@ public:
 
 // [[[ SUBROUTINES ]]]
 
-string uninherited__Inefficient(string person);
+string uninherited_Inefficient(string person);
 
 // DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 //string uninherited(string person);

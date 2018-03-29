@@ -29,9 +29,9 @@ void RPerl__Algorithm__Sort::inherited__Sort_foo_set(SV* foo_new) {
     this->foo = foo_new;
 }
 
-SV* RPerl__Algorithm__Sort__uninherited__Sort(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Sort::uninherited__Sort(), received $person = " << SvPV_nolen(person) << ", MY\n";
-    return newSVpv("Sort::uninherited__Sort() RULES! CPPOPS_PERLTYPES", 0);
+SV* RPerl__Algorithm__Sort__uninherited_Sort(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Sort::uninherited_Sort(), received $person = " << SvPV_nolen(person) << ", MY\n";
+    return newSVpv("Sort::uninherited_Sort() RULES! CPPOPS_PERLTYPES", 0);
 }
 
 // [[[<<< END PERL TYPES >>>]]]

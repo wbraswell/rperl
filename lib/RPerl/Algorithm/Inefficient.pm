@@ -83,11 +83,11 @@ sub inherited {
 #RPerl::Algorithm::Inefficient->uninherited("Mad Scientist");  # ignores "Mad Scientist"
 #RPerl::diag("LATERZ FROM Inefficient.pm\n");
 
-sub uninherited__Inefficient {
+sub uninherited_Inefficient {
     { my string $RETURN_TYPE };
     ( my string $person ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Inefficient::uninherited__Inefficient(), received $person = ' . $person . ', MESSY' . "\n" );
-    return 'Inefficient::uninherited__Inefficient() RULES! PERLOPS_PERLTYPES';
+    RPerl::diag( 'in PERLOPS_PERLTYPES Inefficient::uninherited_Inefficient(), received $person = ' . $person . ', MESSY' . "\n" );
+    return 'Inefficient::uninherited_Inefficient() RULES! PERLOPS_PERLTYPES';
 }
 
 # DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*

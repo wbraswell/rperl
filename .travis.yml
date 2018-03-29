@@ -1,6 +1,6 @@
 # NEED UPDATE, CORRELATION #rp037: all changes made to this file MUST be propagated to the corresponding .travis.yml files for all other RPerl Family software suites 
 language: perl
-# v0.100_000
+# v0.100_100
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -71,9 +71,9 @@ before_script:
     - cpanm --verbose --force ExtUtils::CppGuess
 
     # VERBOSE BUILD: modify following line to enable TEST_VERBOSE stdout during `make test`
-    - export RPERL_VERBOSE=0
+    - export RPERL_VERBOSE=1
     # DEBUG BUILD: uncomment following line to enable noisy build during `make test`; REQUIRES RPERL_VERBOSE=1 ABOVE
-#    - export RPERL_DEBUG=1
+    - export RPERL_DEBUG=1
 
     # DEV MODULES: uncomment following line for dev versions of modules, which travis can't get from Makefile.PL
 #    - cpanm -n INGY/Inline-C-0.62_03.tar.gz

@@ -56,10 +56,20 @@ sub ast_to_rperl__generate {
     my object $operations_star         = $self->{children}->[10];
     my string $right_brace             = $self->{children}->[11];
 
+
+
+
+
+
+=DISABLE_NEED_FIX
     if ((substr $name, 0, 1) eq '_') {
         die 'ERROR ECOGEASRP09, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: method name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
+=cut
+
+
+
 
     if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$name}) or
         (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
@@ -133,10 +143,20 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
 #    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $name = ' . $name . "\n" );
 #    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
 
+
+
+
+
+
+=DISABLE_NEED_FIX
     if ((substr $name, 0, 1) eq '_') {
         die 'ERROR ECOGEASCP09, CODE GENERATOR, ABSTRACT SYNTAX TO C++: method name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
+=cut
+
+
+
 
     if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$name}) or
         (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or

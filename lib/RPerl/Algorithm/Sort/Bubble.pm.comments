@@ -162,12 +162,12 @@ LOOP_OUTER:
 
 # OO INHERITANCE TESTING, CONTINUED
 
-sub uninherited__Bubble {
+sub uninherited_Bubble {
     { my string $RETURN_TYPE };
     ( my string $person ) = @ARG;
 
-    #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n");
-    return ('Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES');
+    #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited_Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n");
+    return ('Bubble::uninherited_Bubble() RULES! PERLOPS_PERLTYPES');
 }
 
 # DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*

@@ -58,10 +58,10 @@ typedef std::unordered_map<string, RPerl__Algorithm__Inefficient_ptr> RPerl__Alg
 typedef std::unordered_map<string, RPerl__Algorithm__Inefficient_ptr>::iterator RPerl__Algorithm__Inefficient_hashref_iterator;
 
 // [[[ SUBROUTINES ]]]
-SV* RPerl__Algorithm__Inefficient__uninherited__Inefficient(SV* person);
+SV* RPerl__Algorithm__Inefficient__uninherited_Inefficient(SV* person);
 
 // <<< SHIM MACROS >>>
-#define uninherited__Inefficient(person) RPerl__Algorithm__Inefficient__uninherited__Inefficient(person)
+#define uninherited_Inefficient(person) RPerl__Algorithm__Inefficient__uninherited_Inefficient(person)
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
 SV* RPerl__Algorithm__Inefficient__MODE_ID() { return newSViv(1); }  // CPPOPS_PERLTYPES is 1

@@ -92,9 +92,9 @@ number_arrayref RPerl__Algorithm__Sort__Bubble__number_bubblesort(number_arrayre
     return number_data;
 }
 
-string RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(string person) {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble::uninherited__Bubble(), received $person = " + person + (const string) ", MITOCHONDRIAL" + (const string) "\n");
-    return (const string) "Bubble::uninherited__Bubble() RULES! CPPOPS_CPPTYPES";
+string RPerl__Algorithm__Sort__Bubble__uninherited_Bubble(string person) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble::uninherited_Bubble(), received $person = " + person + (const string) ", MITOCHONDRIAL" + (const string) "\n");
+    return (const string) "Bubble::uninherited_Bubble() RULES! CPPOPS_CPPTYPES";
 }
 
 string RPerl__Algorithm__Sort__Bubble__uninherited(string person) {

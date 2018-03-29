@@ -43,9 +43,9 @@ void RPerl__Algorithm__Inefficient::inherited(SV* person) {
     cout << "in CPPOPS_PERLTYPES Inefficient->inherited(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", INCOMPATIBLE" << "\n";
 }
 
-SV* RPerl__Algorithm__Inefficient__uninherited__Inefficient(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Inefficient::uninherited__Inefficient(), received $person = " << SvPV_nolen(person) << ", MESSY" << "\n";
-    return newSVpv("Inefficient::uninherited__Inefficient() RULES! CPPOPS_PERLTYPES", 0);
+SV* RPerl__Algorithm__Inefficient__uninherited_Inefficient(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Inefficient::uninherited_Inefficient(), received $person = " << SvPV_nolen(person) << ", MESSY" << "\n";
+    return newSVpv("Inefficient::uninherited_Inefficient() RULES! CPPOPS_PERLTYPES", 0);
 }
 
 // [[[<<< END PERL TYPES >>>]]]

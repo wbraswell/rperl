@@ -31,7 +31,7 @@ public:
 
 // [[[ SUBROUTINES ]]]
 
-SV* uninherited__Sort(SV* person);
+SV* uninherited_Sort(SV* person);
 
 //SV* uninherited(SV* person);
 
@@ -65,7 +65,7 @@ public:
 
 // [[[ SUBROUTINES ]]]
 
-string uninherited__Sort(string person);
+string uninherited_Sort(string person);
 
 //string uninherited(string person);
 

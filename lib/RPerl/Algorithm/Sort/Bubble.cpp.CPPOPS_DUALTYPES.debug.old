@@ -221,8 +221,8 @@ SV* number_bubblesort(SV* number_data)
 
 // OO INHERITANCE TESTING, CONTINUED
 
-////sub uninherited__Bubble { { my string $RETURN_TYPE }; ( my string $person) = @ARG; RPerl::diag("in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received \$person = '$person', MITOCHONDRIAL\n"); return ('Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES'); }
-SV* uninherited__Bubble(SV* person) { cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n"; return(newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0)); }
+////sub uninherited_Bubble { { my string $RETURN_TYPE }; ( my string $person) = @ARG; RPerl::diag("in PERLOPS_PERLTYPES Bubble::uninherited_Bubble(), received \$person = '$person', MITOCHONDRIAL\n"); return ('Bubble::uninherited_Bubble() RULES! PERLOPS_PERLTYPES'); }
+SV* uninherited_Bubble(SV* person) { cout << "in CPPOPS_PERLTYPES Bubble::uninherited_Bubble(), received person = '" << SvPV_nolen(person) << "', MITOCHONDRIAL\n"; return(newSVpv("Bubble::uninherited_Bubble() RULES! CPPOPS_PERLTYPES", 0)); }
 
 // DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
 ////sub uninherited { { my string $RETURN_TYPE }; ( my string $person) = @ARG; RPerl::diag("in PERLOPS_PERLTYPES Bubble::uninherited(), received \$person = '$person', TETRAHEDRON\n"); return ('Bubble::uninherited() ROCKS! PERLOPS_PERLTYPES'); }
@@ -450,12 +450,12 @@ number_arrayref number_bubblesort(number_arrayref number_data)
 
 // OO INHERITANCE TESTING, CONTINUED
 
-////sub uninherited__Bubble { { my string $RETURN_TYPE }; ( my string $person ) = @ARG;
-////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n");
-////    return 'Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES'; }
-string uninherited__Bubble(string person) {
-    RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble::uninherited__Bubble(), received $person = " + person + (const string) ", MITOCHONDRIAL" + (const string) "\n");
-    return (const string) "Bubble::uninherited__Bubble() RULES! CPPOPS_CPPTYPES";
+////sub uninherited_Bubble { { my string $RETURN_TYPE }; ( my string $person ) = @ARG;
+////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited_Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n");
+////    return 'Bubble::uninherited_Bubble() RULES! PERLOPS_PERLTYPES'; }
+string uninherited_Bubble(string person) {
+    RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble::uninherited_Bubble(), received $person = " + person + (const string) ", MITOCHONDRIAL" + (const string) "\n");
+    return (const string) "Bubble::uninherited_Bubble() RULES! CPPOPS_CPPTYPES";
 }
 
 // DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*

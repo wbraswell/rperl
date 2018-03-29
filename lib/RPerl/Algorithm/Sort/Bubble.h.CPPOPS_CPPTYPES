@@ -86,7 +86,7 @@ public:
 // [[[ SUBROUTINES ]]]
 integer_arrayref RPerl__Algorithm__Sort__Bubble__integer_bubblesort(integer_arrayref integer_data);
 number_arrayref RPerl__Algorithm__Sort__Bubble__number_bubblesort(number_arrayref number_data);
-string RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(string person);
+string RPerl__Algorithm__Sort__Bubble__uninherited_Bubble(string person);
 string RPerl__Algorithm__Sort__Bubble__uninherited(string person);
 string RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(integer_arrayref lucky_integers);
 string RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(number_arrayref lucky_numbers);
@@ -94,7 +94,7 @@ string RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(number_array
 // <<< SHIM MACROS >>>
 #define integer_bubblesort(integer_data) RPerl__Algorithm__Sort__Bubble__integer_bubblesort(integer_data)
 #define number_bubblesort(number_data) RPerl__Algorithm__Sort__Bubble__number_bubblesort(number_data)
-#define uninherited__Bubble(person) RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(person)
+#define uninherited_Bubble(person) RPerl__Algorithm__Sort__Bubble__uninherited_Bubble(person)
 #define uninherited(person) RPerl__Algorithm__Sort__Bubble__uninherited(person)
 #define integer_bubblesort__typetest0(lucky_integers) RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(lucky_integers)
 #define number_bubblesort__typetest0(lucky_numbers) RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(lucky_numbers)

@@ -57,11 +57,11 @@ sub inherited__Algorithm_foo_set {
 #    return;
 #}
 
-sub uninherited__Algorithm {
+sub uninherited_Algorithm {
     { my string $RETURN_TYPE };
     ( my string $person ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Algorithm::uninherited__Algorithm(), received $person = ' . $person . ', MYSTIC' . "\n" );
-    return 'Algorithm::uninherited__Algorithm() RULES! PERLOPS_PERLTYPES';
+    RPerl::diag( 'in PERLOPS_PERLTYPES Algorithm::uninherited_Algorithm(), received $person = ' . $person . ', MYSTIC' . "\n" );
+    return 'Algorithm::uninherited_Algorithm() RULES! PERLOPS_PERLTYPES';
 }
 
 #sub uninherited {

@@ -18,8 +18,8 @@ use RPerl::Config;
 # [[[ SUBROUTINES ]]]
 
 # <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>
-undef &RPerl::Algorithm::uninherited__Algorithm;
-*RPerl::Algorithm::uninherited__Algorithm = sub { return main::RPerl__Algorithm__uninherited__Algorithm(@ARG); };
+undef &RPerl::Algorithm::uninherited_Algorithm;
+*RPerl::Algorithm::uninherited_Algorithm = sub { return main::RPerl__Algorithm__uninherited_Algorithm(@ARG); };
 
 # <<< C++ LOADER >>>
 sub cpp_load {

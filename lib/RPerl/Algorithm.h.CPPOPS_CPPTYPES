@@ -74,10 +74,10 @@ public:
 };
 
 // [[[ SUBROUTINES ]]]
-string RPerl__Algorithm__uninherited__Algorithm(string person);
+string RPerl__Algorithm__uninherited_Algorithm(string person);
 
 // <<< SHIM MACROS >>>
-#define uninherited__Algorithm(person) RPerl__Algorithm__uninherited__Algorithm(person)
+#define uninherited_Algorithm(person) RPerl__Algorithm__uninherited_Algorithm(person)
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
 integer RPerl__Algorithm__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2

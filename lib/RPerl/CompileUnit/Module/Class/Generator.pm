@@ -752,11 +752,23 @@ EOL
 
         my string $property_key = $property_0->{children}->[0]->{children}->[0];
         $property_key =~ s/^(\w+)\s*$/$1/gxms;    # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
+
+
+
+
+
+# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+=DISABLE_NEED_ANSWER
         if ( $property_key !~ /^[a-z]/ ) {
             die 'ERROR ECOGEASCP24, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
                 . $property_key . q{'}
                 . ' does not start with a lowercase letter a-z, dying' . "\n";
         }
+=cut
+
+
+
+
         my object $property_type_inner         = $property_0->{children}->[2];
         my string $property_type               = undef;
         my object $property_subexpression      = undef;
@@ -880,11 +892,30 @@ EOL
 
             $property_key = $property->{children}->[0]->{children}->[0];
             $property_key =~ s/^(\w+)\s*$/$1/gxms;      # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
+
+
+
+
+
+
+
+
+
+# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+=DISABLE_NEED_ANSWER
             if ( $property_key !~ /^[a-z]/ ) {
                 die 'ERROR ECOGEASCP24, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
                     . $property_key . q{'}
                     . ' does not start with a lowercase letter a-z, dying' . "\n";
             }
+=cut
+
+
+
+
+
+
+
             $property_type_inner = $property->{children}->[2];
             $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
             $property_name =~ s/^(\w+)\s*$/$1/gxms;     # strip trailing whitespace, caused by grammar matching operator names with trailing spaces

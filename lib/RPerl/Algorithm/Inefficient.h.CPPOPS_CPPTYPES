@@ -74,10 +74,10 @@ public:
 };
 
 // [[[ SUBROUTINES ]]]
-string RPerl__Algorithm__Inefficient__uninherited__Inefficient(string person);
+string RPerl__Algorithm__Inefficient__uninherited_Inefficient(string person);
 
 // <<< SHIM MACROS >>>
-#define uninherited__Inefficient(person) RPerl__Algorithm__Inefficient__uninherited__Inefficient(person)
+#define uninherited_Inefficient(person) RPerl__Algorithm__Inefficient__uninherited_Inefficient(person)
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
 integer RPerl__Algorithm__Inefficient__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2

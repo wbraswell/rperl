@@ -117,6 +117,14 @@ DOING
     uncompile delete EXE files
     disable variable declaration w/out initial value, grammar & tests & docs
     Learning RPerl
+                              names can NOT include double-underscore, C++ standard
+                              names can NOT start with     underscore uppercase, C++ standard
+                   variable   names can NOT start with     underscore, defined by VARIABLE_SYMBOL in Grammar.eyp
+            global subroutine names can NOT start with     underscore, C++ standard
+        non-global subroutine names can     start with     underscore, C++ standard
+                   method     names ???
+                   property   names ???
+        
         upgrade install instructions
         add chapter 1 bonus exercise, create stand-alone executable for Hello World
         add missing operator tables as with 2.4.13 chop & chomp, etc

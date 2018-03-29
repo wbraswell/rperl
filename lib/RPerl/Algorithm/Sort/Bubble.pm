@@ -18,8 +18,8 @@ use RPerl::Algorithm::Sort;
 
 # [[[ EXPORTS ]]]
 use RPerl::Exporter qw(import);
-our @EXPORT = qw(integer_sort number_sort integer_bubblesort number_bubblesort uninherited__Bubble uninherited integer_bubblesort__typetest0 number_bubblesort__typetest0);
-#our @EXPORT_OK = qw(integer_sort number_sort integer_bubblesort number_bubblesort uninherited__Bubble uninherited integer_bubblesort__typetest0 number_bubblesort__typetest0);
+our @EXPORT = qw(integer_sort number_sort integer_bubblesort number_bubblesort uninherited_Bubble uninherited integer_bubblesort__typetest0 number_bubblesort__typetest0);
+#our @EXPORT_OK = qw(integer_sort number_sort integer_bubblesort number_bubblesort uninherited_Bubble uninherited integer_bubblesort__typetest0 number_bubblesort__typetest0);
 
 # [[[ CONSTANTS ]]]
 use constant TIME_BEST    => my string $TYPED_TIME_BEST    = 'O($n)';
@@ -140,11 +140,11 @@ sub inherited {
     return;
 }
 
-sub uninherited__Bubble {
+sub uninherited_Bubble {
     { my string $RETURN_TYPE };
     ( my string $person ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited__Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n" );
-    return 'Bubble::uninherited__Bubble() RULES! PERLOPS_PERLTYPES';
+    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble::uninherited_Bubble(), received $person = ' . $person . ', MITOCHONDRIAL' . "\n" );
+    return 'Bubble::uninherited_Bubble() RULES! PERLOPS_PERLTYPES';
 }
 
 # DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*

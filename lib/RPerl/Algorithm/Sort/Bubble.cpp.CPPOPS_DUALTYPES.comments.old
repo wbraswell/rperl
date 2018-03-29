@@ -112,9 +112,9 @@ SV* number_bubblesort(SV* number_data) {
 // OO INHERITANCE TESTING, CONTINUED
 
 
-SV* uninherited__Bubble(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = " << SvPV_nolen(person) << ", MITOCHONDRIAL\n";
-    return (newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0));
+SV* uninherited_Bubble(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Bubble::uninherited_Bubble(), received person = " << SvPV_nolen(person) << ", MITOCHONDRIAL\n";
+    return (newSVpv("Bubble::uninherited_Bubble() RULES! CPPOPS_PERLTYPES", 0));
 }
 
 // DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*
@@ -222,9 +222,9 @@ number_arrayref number_bubblesort(number_arrayref number_data) {
 
 // OO INHERITANCE TESTING, CONTINUED
 
-string uninherited__Bubble(string person) {
-    RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble::uninherited__Bubble(), received $person = " + person + (const string) ", MITOCHONDRIAL" + (const string) "\n");
-    return (const string) "Bubble::uninherited__Bubble() RULES! CPPOPS_CPPTYPES";
+string uninherited_Bubble(string person) {
+    RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble::uninherited_Bubble(), received $person = " + person + (const string) ", MITOCHONDRIAL" + (const string) "\n");
+    return (const string) "Bubble::uninherited_Bubble() RULES! CPPOPS_CPPTYPES";
 }
 
 string uninherited(string person) {

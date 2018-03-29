@@ -31,7 +31,7 @@ public:
 
 // [[[ SUBROUTINES ]]]
 
-SV* uninherited__Algorithm(SV* person);
+SV* uninherited_Algorithm(SV* person);
 //SV* uninherited(SV* person);
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
@@ -64,7 +64,7 @@ public:
 
 // [[[ SUBROUTINES ]]]
 
-string uninherited__Algorithm(string person);
+string uninherited_Algorithm(string person);
 //string uninherited(string person);
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>

@@ -93,9 +93,9 @@ SV* RPerl__Algorithm__Sort__Bubble__number_bubblesort(SV* number_data) {
     return number_data;
 }
 
-SV* RPerl__Algorithm__Sort__Bubble__uninherited__Bubble(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Bubble::uninherited__Bubble(), received person = " << SvPV_nolen(person) << ", MITOCHONDRIAL\n";
-    return (newSVpv("Bubble::uninherited__Bubble() RULES! CPPOPS_PERLTYPES", 0));
+SV* RPerl__Algorithm__Sort__Bubble__uninherited_Bubble(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Bubble::uninherited_Bubble(), received person = " << SvPV_nolen(person) << ", MITOCHONDRIAL\n";
+    return (newSVpv("Bubble::uninherited_Bubble() RULES! CPPOPS_PERLTYPES", 0));
 }
 
 SV* RPerl__Algorithm__Sort__Bubble__uninherited(SV* person) {

@@ -31,9 +31,9 @@ void RPerl__Algorithm::inherited__Algorithm_foo_set(SV* foo_new) {
     this->foo = foo_new;
 }
 
-SV* RPerl__Algorithm__uninherited__Algorithm(SV* person) {
-//    cout << "in CPPOPS_PERLTYPES Algorithm::uninherited__Algorithm(), received $person = " << SvPV_nolen(person) << ", MYSTIC" << "\n";
-    return newSVpv("Algorithm::uninherited__Algorithm() RULES! CPPOPS_PERLTYPES", 0);
+SV* RPerl__Algorithm__uninherited_Algorithm(SV* person) {
+//    cout << "in CPPOPS_PERLTYPES Algorithm::uninherited_Algorithm(), received $person = " << SvPV_nolen(person) << ", MYSTIC" << "\n";
+    return newSVpv("Algorithm::uninherited_Algorithm() RULES! CPPOPS_PERLTYPES", 0);
 }
 
 // [[[<<< END PERL TYPES >>>]]]
@@ -62,9 +62,9 @@ void RPerl__Algorithm::inherited__Algorithm_foo_set(string foo_new) {
     this->foo = foo_new;
 }
 
-string RPerl__Algorithm__uninherited__Algorithm(string person) {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm::uninherited__Algorithm(), received $person = " + person + (const string) ", MYSTIC" + (const string) "\n");
-    return (const string) "Algorithm::uninherited__Algorithm() RULES! CPPOPS_CPPTYPES";
+string RPerl__Algorithm__uninherited_Algorithm(string person) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm::uninherited_Algorithm(), received $person = " + person + (const string) ", MYSTIC" + (const string) "\n");
+    return (const string) "Algorithm::uninherited_Algorithm() RULES! CPPOPS_CPPTYPES";
 }
 
 // [[[<<< END CPP TYPES >>>]]]

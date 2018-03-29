@@ -756,7 +756,7 @@ sub generate_output_file_names {
         # all CPP ops modes require CPP output files; H output files may optionally be generated as needed for .pm input files only
         if ( $modes->{ops} eq 'CPP' ) {
             $output_file_name_groups->[$i]->{CPP}      = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_SOURCE}->{CPP}->[0];
-            # DEV NOTE, CORRELATION #rp037: programs never have header files
+            # DEV NOTE, CORRELATION #rp039: programs never have header files
             if ( $input_file_name =~ /[.]pm$/xms ) {
                 $output_file_name_groups->[$i]->{H}        = $output_file_name_path_prefix . $filename_suffixes_supported->{OUTPUT_SOURCE}->{H}->[0];
                 $output_file_name_groups->[$i]->{_H_label} = ' (if needed)';
@@ -799,8 +799,9 @@ sub save_source_files {
 
         $source_group->{CPP} = post_processor_cpp__header_unneeded( $source_group );
 
-        # DEV NOTE, CORRELATION #rp037: programs never have header files
+        # DEV NOTE, CORRELATION #rp039: programs never have header files
         if (defined $source_group->{H}) {
+            RPerl::diag( 'in Compiler::save_source_files(), about to call post_processor_cpp__header_or_cpp_path() w/ $file_name_group->{H} = ' . $file_name_group->{H} . "\n" );
             $source_group->{CPP} = post_processor_cpp__header_or_cpp_path( $source_group->{CPP}, $file_name_group->{H} );
         }
 

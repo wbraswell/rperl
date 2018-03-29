@@ -50,11 +50,11 @@ sub inherited__Sort_foo_set {
 #    return;
 #}
 
-sub uninherited__Sort {
+sub uninherited_Sort {
     { my string $RETURN_TYPE };
     ( my string $person ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Sort::uninherited__Sort(), received $person = ' . $person . ', MY' . "\n" );
-    return 'Sort::uninherited__Sort() RULES! PERLOPS_PERLTYPES';
+    RPerl::diag( 'in PERLOPS_PERLTYPES Sort::uninherited_Sort(), received $person = ' . $person . ', MY' . "\n" );
+    return 'Sort::uninherited_Sort() RULES! PERLOPS_PERLTYPES';
 }
 
 #sub uninherited {

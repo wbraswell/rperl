@@ -35,9 +35,9 @@ void RPerl__Algorithm::inherited__Algorithm_foo_set(string foo_new) {
     return;
 }
 
-string RPerl__Algorithm__uninherited__Algorithm(string person) {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm::uninherited__Algorithm(), received $person = " + person + (const string) ", MYSTIC" + (const string) "\n");
-    return (const string) "Algorithm::uninherited__Algorithm() RULES! CPPOPS_CPPTYPES";
+string RPerl__Algorithm__uninherited_Algorithm(string person) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm::uninherited_Algorithm(), received $person = " + person + (const string) ", MYSTIC" + (const string) "\n");
+    return (const string) "Algorithm::uninherited_Algorithm() RULES! CPPOPS_CPPTYPES";
 }
 
 // [[[<<< END CPP TYPES >>>]]]

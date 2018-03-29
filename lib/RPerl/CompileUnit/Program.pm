@@ -167,7 +167,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group = { CPP => q{} };
-#    my string_hashref $cpp_source_group = { CPP => q{}, H => q{} };  # DEV NOTE, CORRELATION #rp037: programs never have header files
+#    my string_hashref $cpp_source_group = { CPP => q{}, H => q{} };  # DEV NOTE, CORRELATION #rp039: programs never have header files
     my string_hashref $cpp_source_subgroup;
     my integer $cpp_source_group_CPP_line_count = 0;
 
@@ -250,7 +250,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     if ( ( exists $modes->{_enable_sse} ) and ( defined $modes->{_enable_sse} ) ) {
         foreach my string $enabled_file_name ( keys %{ $modes->{_enable_sse} } ) {
             if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_sse}->{$enabled_file_name} ) ) {
-                $cpp_source_group->{CPP} .= '#include <RPerl/Support/SSEStandAlone.h>' . "\n";  # DEV NOTE, CORRELATION #rp037: programs never have header files, append to CPP instead of H
+                $cpp_source_group->{CPP} .= '#include <RPerl/Support/SSEStandAlone.h>' . "\n";  # DEV NOTE, CORRELATION #rp039: programs never have header files, append to CPP instead of H
             }
         }
     }
@@ -259,7 +259,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     if ( ( exists $modes->{_enable_gmp} ) and ( defined $modes->{_enable_gmp} ) ) {
         foreach my string $enabled_file_name ( keys %{ $modes->{_enable_gmp} } ) {
             if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_gmp}->{$enabled_file_name} ) ) {
-                $cpp_source_group->{CPP} .= '#include <RPerl/Support/GMPStandAlone.h>' . "\n";  # DEV NOTE, CORRELATION #rp037: programs never have header files, append to CPP instead of H
+                $cpp_source_group->{CPP} .= '#include <RPerl/Support/GMPStandAlone.h>' . "\n";  # DEV NOTE, CORRELATION #rp039: programs never have header files, append to CPP instead of H
             }
         }
     }
@@ -268,7 +268,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     if ( ( exists $modes->{_enable_gsl} ) and ( defined $modes->{_enable_gsl} ) ) {
         foreach my string $enabled_file_name ( keys %{ $modes->{_enable_gsl} } ) {
             if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_gsl}->{$enabled_file_name} ) ) {
-                $cpp_source_group->{CPP} .= '#include <RPerl/Support/GLSStandAlone.h>' . "\n";  # DEV NOTE, CORRELATION #rp037: programs never have header files, append to CPP instead of H
+                $cpp_source_group->{CPP} .= '#include <RPerl/Support/GLSStandAlone.h>' . "\n";  # DEV NOTE, CORRELATION #rp039: programs never have header files, append to CPP instead of H
             }
         }
     }
@@ -278,7 +278,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         foreach my string $enabled_file_name ( keys %{ $modes->{_enable_mongodb} } ) {
             if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_mongodb}->{$enabled_file_name} ) ) {
 #                RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_mongodb}->{' . $enabled_file_name . '} = TRUE' . "\n");
-                $cpp_source_group->{CPP} .= '#include <RPerl/Support/MongoDBStandAlone.h>' . "\n";  # DEV NOTE, CORRELATION #rp037: programs never have header files, append to CPP instead of H
+                $cpp_source_group->{CPP} .= '#include <RPerl/Support/MongoDBStandAlone.h>' . "\n";  # DEV NOTE, CORRELATION #rp039: programs never have header files, append to CPP instead of H
             }
         }
     }
@@ -313,7 +313,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #        RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $include = ' . "\n" . RPerl::Parser::rperl_ast__dump($include) . "\n");
         $cpp_source_subgroup = $include->ast_to_cpp__generate__CPPOPS_CPPTYPES('main', $modes);
 
-        # DEV NOTE, CORRELATION #rp037: programs never have header files, due to the following reasons:
+        # DEV NOTE, CORRELATION #rp039: programs never have header files, due to the following reasons:
         # 1.  all Perl subroutines (C++ functions) are declared before the C++ main() function is executed, which serves the dual purpose of defining the C++ functions as well, so no C++ function prototypes are necessary, which would normall be in the header file
         # 2.  programs never contain class definitions, so again there is no class declaration or definition code which needs to go into a header file
 #        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
@@ -323,7 +323,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
 #    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_group = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_group) . "\n");
 
-    # DEV NOTE, CORRELATION #rp037: programs never have header files
+    # DEV NOTE, CORRELATION #rp039: programs never have header files
 #    $cpp_source_group->{CPP} .= '#include "__NEED_HEADER_PATH"' . "\n";  # DEV NOTE, CORRELATION #rp033: defer setting header include path until files are saved in Compiler
 
     if ( exists $constant_star->{children}->[0] ) {

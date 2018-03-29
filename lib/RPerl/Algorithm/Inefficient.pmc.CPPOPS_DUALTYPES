@@ -18,8 +18,8 @@ use RPerl::Config;
 # [[[ SUBROUTINES ]]]
 
 # <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>
-undef &RPerl::Algorithm::Inefficient::uninherited__Inefficient;
-*RPerl::Algorithm::Inefficient::uninherited__Inefficient = sub { return main::RPerl__Algorithm__Inefficient__uninherited__Inefficient(@ARG); };
+undef &RPerl::Algorithm::Inefficient::uninherited_Inefficient;
+*RPerl::Algorithm::Inefficient::uninherited_Inefficient = sub { return main::RPerl__Algorithm__Inefficient__uninherited_Inefficient(@ARG); };
 
 # <<< C++ LOADER >>>
 sub cpp_load {

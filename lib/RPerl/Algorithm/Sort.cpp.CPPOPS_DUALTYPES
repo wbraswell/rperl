@@ -31,9 +31,9 @@ void RPerl__Algorithm__Sort::inherited__Sort_foo_set(SV* foo_new) {
     this->foo = foo_new;
 }
 
-SV* RPerl__Algorithm__Sort__uninherited__Sort(SV* person) {
-//    cout << "in CPPOPS_PERLTYPES Sort::uninherited__Sort(), received $person = " << SvPV_nolen(person) << ", MY\n";
-    return newSVpv("Sort::uninherited__Sort() RULES! CPPOPS_PERLTYPES", 0);
+SV* RPerl__Algorithm__Sort__uninherited_Sort(SV* person) {
+//    cout << "in CPPOPS_PERLTYPES Sort::uninherited_Sort(), received $person = " << SvPV_nolen(person) << ", MY\n";
+    return newSVpv("Sort::uninherited_Sort() RULES! CPPOPS_PERLTYPES", 0);
 }
 
 // [[[<<< END PERL TYPES >>>]]]
@@ -62,9 +62,9 @@ void RPerl__Algorithm__Sort::inherited__Sort_foo_set(string foo_new) {
     this->foo = foo_new;
 }
 
-string RPerl__Algorithm__Sort__uninherited__Sort(string person) {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Sort::uninherited__Sort(), received $person = " + person + (const string) ", MY" + (const string) "\n");
-    return (const string) "Sort::uninherited__Sort() RULES! CPPOPS_CPPTYPES";
+string RPerl__Algorithm__Sort__uninherited_Sort(string person) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Sort::uninherited_Sort(), received $person = " + person + (const string) ", MY" + (const string) "\n");
+    return (const string) "Sort::uninherited_Sort() RULES! CPPOPS_CPPTYPES";
 }
 
 // [[[<<< END CPP TYPES >>>]]]
