@@ -30,9 +30,9 @@ our @EXPORT = qw(
     number_arrayref_to_gsl_matrix
 );
 our @EXPORT_OK = qw(
-    gsl_matrix__typetest0
-    gsl_matrix__typetest1
-    gsl_matrix__typetest99
+    gsl_matrix_typetest0
+    gsl_matrix_typetest1
+    gsl_matrix_typetest99
 );
 
 # [[[ INCLUDES ]]]
@@ -237,32 +237,32 @@ sub number_arrayref_to_gsl_matrix {
 
 # [[[ TYPE TESTING ]]]
 
-sub gsl_matrix__typetest0 {
+sub gsl_matrix_typetest0 {
     { my gsl_matrix $RETURN_TYPE };
-    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix__typetest0(), top of subroutine' . "\n");
+    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_typetest0(), top of subroutine' . "\n");
 
     my gsl_matrix $retval = gsl_matrix_alloc(21, 12);
     gsl_matrix_set($retval, 0, 0, (main::RPerl__DataType__Integer__MODE_ID() + 23));
     return ($retval);
 }
 
-sub gsl_matrix__typetest1 {
+sub gsl_matrix_typetest1 {
     { my gsl_matrix $RETURN_TYPE };
     ( my gsl_matrix $lucky_gsl_matrix ) = @ARG;
-    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix__typetest1(), top of subroutine' . "\n");
+    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_typetest1(), top of subroutine' . "\n");
 
 #    ::gsl_matrix_CHECK($lucky_gsl_matrix);
-    ::gsl_matrix_CHECKTRACE( $lucky_gsl_matrix, '$lucky_gsl_matrix', 'gsl_matrix__typetest1()' );
+    ::gsl_matrix_CHECKTRACE( $lucky_gsl_matrix, '$lucky_gsl_matrix', 'gsl_matrix_typetest1()' );
 
-    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix__typetest1(), received $lucky_gsl_matrix = ', "\n", gsl_matrix_to_string($lucky_gsl_matrix), "\n");
+    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_typetest1(), received $lucky_gsl_matrix = ', "\n", gsl_matrix_to_string($lucky_gsl_matrix), "\n");
 
     gsl_matrix_add_constant($lucky_gsl_matrix, main::RPerl__DataType__Integer__MODE_ID());
 
-    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix__typetest1(), about to return $lucky_gsl_matrix = ', "\n", gsl_matrix_to_string($lucky_gsl_matrix), "\n");
+    RPerl::diag('in PERLOPS_PERLTYPES gsl_matrix_typetest1(), about to return $lucky_gsl_matrix = ', "\n", gsl_matrix_to_string($lucky_gsl_matrix), "\n");
     return $lucky_gsl_matrix;
 }
 
-sub gsl_matrix__typetest99 {
+sub gsl_matrix_typetest99 {
     { my integer $RETURN_TYPE };
     return 23;
 }

@@ -379,42 +379,42 @@ gsl_matrix_rawptr number_arrayref_to_gsl_matrix(number_arrayref input_number_arr
 
 # ifdef __PERL__TYPES
 
-SV* gsl_matrix__typetest0() {
+SV* gsl_matrix_typetest0() {
     // NEED ADD EVENTUALLY
 }
 
-SV* gsl_matrix__typetest1(SV* lucky_gsl_matrix) {
+SV* gsl_matrix_typetest1(SV* lucky_gsl_matrix) {
 //	gsl_matrix_CHECK(lucky_gsl_matrix);
-    gsl_matrix_CHECKTRACE(lucky_gsl_matrix, "lucky_gsl_matrix", "gsl_matrix__typetest1()");
+    gsl_matrix_CHECKTRACE(lucky_gsl_matrix, "lucky_gsl_matrix", "gsl_matrix_typetest1()");
     // NEED ADD CODE EVENTUALLY
 }
 
 # elif defined __CPP__TYPES
 
-gsl_matrix_rawptr gsl_matrix__typetest0() {
-//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest0(), top of subroutine" << endl;
+gsl_matrix_rawptr gsl_matrix_typetest0() {
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix_typetest0(), top of subroutine" << endl;
 
     gsl_matrix_rawptr retval = gsl_matrix_alloc(21, 12);
     gsl_matrix_set(retval, 0, 0, (RPerl__DataStructure__GSLMatrix__MODE_ID() + 23));
     return retval;
 }
 
-gsl_matrix_rawptr gsl_matrix__typetest1(gsl_matrix_rawptr lucky_gsl_matrix) {
-//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), top of subroutine" << endl;
-//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), received lucky_gsl_matrix = " << lucky_gsl_matrix << endl;
-//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have lucky_gsl_matrix->size1 = " << lucky_gsl_matrix->size1 << endl;
-//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have lucky_gsl_matrix->size2 = " << lucky_gsl_matrix->size2 << endl;
-//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have pre-add gsl_matrix_get(lucky_gsl_matrix, 0, 0) = " << gsl_matrix_get(lucky_gsl_matrix, 0, 0) << endl;
+gsl_matrix_rawptr gsl_matrix_typetest1(gsl_matrix_rawptr lucky_gsl_matrix) {
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix_typetest1(), top of subroutine" << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix_typetest1(), received lucky_gsl_matrix = " << lucky_gsl_matrix << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix_typetest1(), have lucky_gsl_matrix->size1 = " << lucky_gsl_matrix->size1 << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix_typetest1(), have lucky_gsl_matrix->size2 = " << lucky_gsl_matrix->size2 << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix_typetest1(), have pre-add gsl_matrix_get(lucky_gsl_matrix, 0, 0) = " << gsl_matrix_get(lucky_gsl_matrix, 0, 0) << endl;
 
     integer add_retval = gsl_matrix_add_constant(lucky_gsl_matrix, RPerl__DataType__Integer__MODE_ID());
 
-//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have add_retval = " << add_retval << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix_typetest1(), have add_retval = " << add_retval << endl;
 
     if (add_retval != 0) {
         croak("\nERROR EMAV20, GSL MATRIX TYPETEST, CPPOPS_CPPTYPES:\nExpected return value 0 (success) from gsl_matrix_add_constant() but %"INTEGER" return value found,\ncroaking", gsl_matrix_add_constant);
     }
 
-//    cerr << "in CPPOPS_CPPTYPES gsl_matrix__typetest1(), have post-add gsl_matrix_get(lucky_gsl_matrix, 0, 0) = " << gsl_matrix_get(lucky_gsl_matrix, 0, 0) << endl;
+//    cerr << "in CPPOPS_CPPTYPES gsl_matrix_typetest1(), have post-add gsl_matrix_get(lucky_gsl_matrix, 0, 0) = " << gsl_matrix_get(lucky_gsl_matrix, 0, 0) << endl;
     return lucky_gsl_matrix;
 
     // SHORT FORM

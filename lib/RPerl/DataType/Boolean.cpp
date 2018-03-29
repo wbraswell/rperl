@@ -160,19 +160,19 @@ string boolean_to_string(boolean input_boolean) {
 
 # ifdef __PERL__TYPES
 
-SV* boolean__typetest0() {
+SV* boolean_typetest0() {
     // DEV NOTE: maintain independence from Integer data type, re-implement integer_to_boolean() here & below
     SV* retval = newSViv(1);
     if (SvIV(RPerl__DataType__Boolean__MODE_ID()) == 0) { retval = newSViv(0); }
 //	SV* retval = integer_to_boolean(RPerl__DataType__Boolean__MODE_ID());
-//fprintf(stderr, "in CPPOPS_PERLTYPES boolean__typetest0(), have retval = %"INTEGER"\n", SvIV(retval));
+//fprintf(stderr, "in CPPOPS_PERLTYPES boolean_typetest0(), have retval = %"INTEGER"\n", SvIV(retval));
 	return retval;
 }
 
-SV* boolean__typetest1(SV* lucky_boolean) {
+SV* boolean_typetest1(SV* lucky_boolean) {
 //	boolean_CHECK(lucky_boolean);
-	boolean_CHECKTRACE(lucky_boolean, "lucky_boolean", "boolean__typetest1()");
-//fprintf(stderr, "in CPPOPS_PERLTYPES boolean__typetest1(), received lucky_boolean = %"INTEGER"\n", SvIV(lucky_boolean));
+	boolean_CHECKTRACE(lucky_boolean, "lucky_boolean", "boolean_typetest1()");
+//fprintf(stderr, "in CPPOPS_PERLTYPES boolean_typetest1(), received lucky_boolean = %"INTEGER"\n", SvIV(lucky_boolean));
     SV* retval = newSViv(1);
     if ((SvIV(lucky_boolean) + SvIV(RPerl__DataType__Boolean__MODE_ID())) == 0) { retval = newSViv(0); }
 	return retval;
@@ -181,19 +181,19 @@ SV* boolean__typetest1(SV* lucky_boolean) {
 
 # elif defined __CPP__TYPES
 
-boolean boolean__typetest0() {
+boolean boolean_typetest0() {
 //	boolean retval = integer_to_boolean(RPerl__DataType__Boolean__MODE_ID());
 	boolean retval = 1;
 	if (RPerl__DataType__Boolean__MODE_ID() == 0) { retval = 0; }
-//fprintf(stderr, "in CPPOPS_CPPTYPES boolean__typetest0(), have retval = %"INTEGER"\n", retval);
+//fprintf(stderr, "in CPPOPS_CPPTYPES boolean_typetest0(), have retval = %"INTEGER"\n", retval);
 	return retval;
 }
 
-boolean boolean__typetest1(boolean lucky_boolean) {
-//fprintf(stderr, "in CPPOPS_CPPTYPES boolean__typetest1(), received lucky_boolean = %"INTEGER"\n", lucky_boolean);
+boolean boolean_typetest1(boolean lucky_boolean) {
+//fprintf(stderr, "in CPPOPS_CPPTYPES boolean_typetest1(), received lucky_boolean = %"INTEGER"\n", lucky_boolean);
     boolean retval = 1;
     if ((lucky_boolean + RPerl__DataType__Boolean__MODE_ID()) == 0) { retval = 0; }
-//fprintf(stderr, "in CPPOPS_CPPTYPES boolean__typetest0(), have retval = %"INTEGER"\n", retval);
+//fprintf(stderr, "in CPPOPS_CPPTYPES boolean_typetest0(), have retval = %"INTEGER"\n", retval);
 	return retval;
 //	return(integer_to_boolean(lucky_boolean + RPerl__DataType__Boolean__MODE_ID()));
 }

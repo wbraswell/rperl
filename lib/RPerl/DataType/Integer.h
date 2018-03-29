@@ -206,11 +206,11 @@ string integer_to_string_CPPTYPES(integer input_integer);
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
-SV* integer__typetest0();
-SV* integer__typetest1(SV* lucky_integer);
+SV* integer_typetest0();
+SV* integer_typetest1(SV* lucky_integer);
 # elif defined __CPP__TYPES
-integer integer__typetest0();
-integer integer__typetest1(integer lucky_integer);
+integer integer_typetest0();
+integer integer_typetest1(integer lucky_integer);
 # endif
 
 #endif

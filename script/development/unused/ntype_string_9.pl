@@ -13,8 +13,8 @@ TYPEMAPS => "blib/lib/typemap.rperl",
   );
 print "[[[ END   'use Inline' STAGE for 'DATA' ]]]\n"x3;
 
-#my $string_retval = string__typetest0();
-my $string_retval = string__typetest1('howdy');
+#my $string_retval = string_typetest0();
+my $string_retval = string_typetest1('howdy');
 RPerl::diag("in ntype.pl have \$string_retval = '$string_retval'\n");
 
 
@@ -40,8 +40,8 @@ void XS_pack_string(SV* output_sv, string input_string);
 string string_to_string(string input_string);
 
 // [[[ TYPE TESTING ]]]
-string string__typetest0();
-string string__typetest1(string lucky_string);
+string string_typetest0();
+string string_typetest1(string lucky_string);
 
 
 
@@ -79,11 +79,11 @@ string string_to_string(string input_string)
 	return(input_string);
 }
 
-string string__typetest0() {
+string string_typetest0() {
 	string retval = "Spice CPPOPS_CPPTYPES";
 	return retval;
 }
 
-string string__typetest1(string lucky_string) {
+string string_typetest1(string lucky_string) {
 	return(string_to_string(lucky_string) + " CPPOPS_CPPTYPES");
 }

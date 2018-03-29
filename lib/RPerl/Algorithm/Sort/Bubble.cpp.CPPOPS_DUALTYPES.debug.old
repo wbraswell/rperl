@@ -230,18 +230,18 @@ SV* uninherited(SV* person) { cout << "in CPPOPS_PERLTYPES Bubble::uninherited()
 
 // TYPE TESTING
 
-SV* integer_bubblesort__typetest0(SV* lucky_integers)
+SV* integer_bubblesort_typetest0(SV* lucky_integers)
 {
 //  dSP;  PUSHMARK(SP);  // DEV NOTE: necessary to avoid "panic: memory wrap" or messing up Perl stack in some cases, but not here!
 //  integer_arrayref_CHECK(lucky_integers);
-    integer_arrayref_CHECKTRACE(lucky_integers, "lucky_integers", "integer_bubblesort__typetest0()");
+    integer_arrayref_CHECKTRACE(lucky_integers, "lucky_integers", "integer_bubblesort_typetest0()");
     /*
     AV* lucky_integers_deref = (AV*)SvRV(lucky_integers);
     integer how_lucky = av_len(lucky_integers_deref) + 1;
     integer i;
     for (i = 0;  i < how_lucky;  ++i)
     {
-        fprintf(stderr, "in CPPOPS_PERLTYPES integer_bubblesort__typetest0(), have lucky_integer %"INTEGER"/%"INTEGER" = %"INTEGER", BATBAR\n", i, (how_lucky - 1), (integer)SvIV(*av_fetch(lucky_integers_deref, i, 0)));
+        fprintf(stderr, "in CPPOPS_PERLTYPES integer_bubblesort_typetest0(), have lucky_integer %"INTEGER"/%"INTEGER" = %"INTEGER", BATBAR\n", i, (how_lucky - 1), (integer)SvIV(*av_fetch(lucky_integers_deref, i, 0)));
     }
     */
 
@@ -254,17 +254,17 @@ SV* integer_bubblesort__typetest0(SV* lucky_integers)
     return (newSVpvf("%s%s", SvPV_nolen(integer_arrayref_to_string(integer_bubblesort(lucky_integers))), "CPPOPS_PERLTYPES"));
 }
 
-SV* number_bubblesort__typetest0(SV* lucky_numbers)
+SV* number_bubblesort_typetest0(SV* lucky_numbers)
 {
 //  number_arrayref_CHECK(lucky_numbers);
-    number_arrayref_CHECKTRACE(lucky_numbers, "lucky_numbers", "number_bubblesort__typetest0()");
+    number_arrayref_CHECKTRACE(lucky_numbers, "lucky_numbers", "number_bubblesort_typetest0()");
     /*
     AV* lucky_numbers_deref = (AV*)SvRV(lucky_numbers);
     integer how_lucky = av_len(lucky_numbers_deref) + 1;
     integer i;
     for (i = 0;  i < how_lucky;  ++i)
     {
-        fprintf(stderr, "in CPPOPS_PERLTYPES number_bubblesort__typetest0(), have lucky_number %"INTEGER"/%"INTEGER" = %Lf, BATBAR\n", i, (how_lucky - 1), (number)SvNV(*av_fetch(lucky_numbers_deref, i, 0)));
+        fprintf(stderr, "in CPPOPS_PERLTYPES number_bubblesort_typetest0(), have lucky_number %"INTEGER"/%"INTEGER" = %Lf, BATBAR\n", i, (how_lucky - 1), (number)SvNV(*av_fetch(lucky_numbers_deref, i, 0)));
     }
     */
 
@@ -469,27 +469,27 @@ string uninherited(string person) {
 
 // TYPE TESTING
 
-string integer_bubblesort__typetest0(integer_arrayref lucky_integers)
+string integer_bubblesort_typetest0(integer_arrayref lucky_integers)
 {
     /*
     integer how_lucky = lucky_integers.size();
     integer i;
     for (i = 0;  i < how_lucky;  ++i)
     {
-        fprintf(stderr, "in CPPOPS_CPPTYPES integer_bubblesort__typetest0(), have lucky_integer %"INTEGER"/%"INTEGER" = %"INTEGER", BATBAR\n", i, (how_lucky - 1), lucky_integers[i]);
+        fprintf(stderr, "in CPPOPS_CPPTYPES integer_bubblesort_typetest0(), have lucky_integer %"INTEGER"/%"INTEGER" = %"INTEGER", BATBAR\n", i, (how_lucky - 1), lucky_integers[i]);
     }
     */
     return (integer_arrayref_to_string(integer_bubblesort(lucky_integers)) + (const string) "CPPOPS_CPPTYPES");
 }
 
-string number_bubblesort__typetest0(number_arrayref lucky_numbers)
+string number_bubblesort_typetest0(number_arrayref lucky_numbers)
 {
     /*
     integer how_lucky = lucky_numbers.size();
     integer i;
     for (i = 0;  i < how_lucky;  ++i)
     {
-        fprintf(stderr, "in CPPOPS_CPPTYPES number_bubblesort__typetest0(), have lucky_number %"INTEGER"/%"INTEGER" = %Lf, BATBAR\n", i, (how_lucky - 1), lucky_numbers[i]);
+        fprintf(stderr, "in CPPOPS_CPPTYPES number_bubblesort_typetest0(), have lucky_number %"INTEGER"/%"INTEGER" = %Lf, BATBAR\n", i, (how_lucky - 1), lucky_numbers[i]);
     }
     */
     return (number_arrayref_to_string(number_bubblesort(lucky_numbers)) + (const string) "CPPOPS_CPPTYPES");

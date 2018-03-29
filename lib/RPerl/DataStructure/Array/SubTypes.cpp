@@ -242,24 +242,24 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # elif defined __CPP__TYPES
 
 /* DISABLE TMP
-string integer_arrayref__typetest0(integer_arrayref lucky_integers)
+string integer_arrayref_typetest0(integer_arrayref lucky_integers)
 {
 	integer how_lucky = lucky_integers.size();
 	integer i;
 //	for (i = 0;  i < how_lucky;  ++i)
 //	{
-//		fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref__typetest0(), have lucky number %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", i, (how_lucky - 1), lucky_integers[i]);
+//		fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_typetest0(), have lucky number %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", i, (how_lucky - 1), lucky_integers[i]);
 //	}
 	return(integer_arrayref_to_string(lucky_integers) + "CPPOPS_CPPTYPES");
 }
 
-integer_arrayref integer_arrayref__typetest1(integer my_size)
+integer_arrayref integer_arrayref_typetest1(integer my_size)
 {
 	integer_arrayref new_vec(my_size);
 	integer i;
 	for (i = 0;  i < my_size;  ++i) {
 		new_vec[i] = i * 5;
-//		fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref__typetest1(), setting element %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", i, (my_size - 1), new_vec[i]);
+//		fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_typetest1(), setting element %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", i, (my_size - 1), new_vec[i]);
 	}
 	return(new_vec);
 }

@@ -56,7 +56,7 @@ use POSIX qw(floor);
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(number_CHECK number_CHECKTRACE number_to_boolean number_to_unsigned_integer number_to_integer number_to_character number_to_string);
-our @EXPORT_OK = qw(number__typetest0 number__typetest1);
+our @EXPORT_OK = qw(number_typetest0 number_typetest1);
 
 # [[[ TYPE-CHECKING ]]]
 sub number_CHECK {
@@ -179,22 +179,22 @@ sub number_to_string {
 }
 
 # [[[ TYPE TESTING ]]]
-sub number__typetest0 {
+sub number_typetest0 {
     { my number $RETURN_TYPE };
     my number $retval
         = ( 22 / 7 ) + main::RPerl__DataType__Number__MODE_ID(); # return floating-point number value
 
-#    RPerl::diag("in PERLOPS_PERLTYPES number__typetest0(), have \$retval = $retval\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES number_typetest0(), have \$retval = $retval\n");
     return ($retval);
 }
-sub number__typetest1 {
+sub number_typetest1 {
     { my number $RETURN_TYPE };
     ( my number $lucky_number ) = @ARG;
 #    number_CHECK($lucky_number);
     number_CHECKTRACE( $lucky_number, '$lucky_number',
-        'number__typetest1()' );
+        'number_typetest1()' );
 
-#    RPerl::diag('in PERLOPS_PERLTYPES number__typetest1(), received $lucky_number = ' . number_to_string($lucky_number) . "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES number_typetest1(), received $lucky_number = ' . number_to_string($lucky_number) . "\n");
     return ( ( $lucky_number * 2 ) + main::RPerl__DataType__Number__MODE_ID() );
 }
 

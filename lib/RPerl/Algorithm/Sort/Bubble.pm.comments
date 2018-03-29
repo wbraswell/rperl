@@ -181,35 +181,35 @@ sub uninherited {
 
 # TYPE TESTING
 
-sub integer_bubblesort__typetest0 {
+sub integer_bubblesort_typetest0 {
     { my string $RETURN_TYPE };
     ( my integer_arrayref $lucky_integers ) = @ARG;
 
     #    ::integer_arrayref_CHECK($lucky_integers );
-    ::integer_arrayref_CHECKTRACE( $lucky_integers, '$lucky_integers', 'integer_bubblesort__typetest0()' );
+    ::integer_arrayref_CHECKTRACE( $lucky_integers, '$lucky_integers', 'integer_bubblesort_typetest0()' );
 
 #    my integer $how_lucky = scalar @{$lucky_integers};
 #    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
 #        my $lucky_integer = $lucky_integers->[$i];
-#        RPerl::diag("in PERLOPS_PERLTYPES integer_bubblesort__typetest0(), have lucky_integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BATBAR\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES integer_bubblesort_typetest0(), have lucky_integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BATBAR\n");
 #    }
-#    RPerl::diag("in PERLOPS_PERLTYPES integer_bubblesort__typetest0(), bottom of subroutine\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_bubblesort_typetest0(), bottom of subroutine\n");
     return ( ::integer_arrayref_to_string( integer_bubblesort($lucky_integers) ) . 'PERLOPS_PERLTYPES' );
 }
 
-sub number_bubblesort__typetest0 {
+sub number_bubblesort_typetest0 {
     { my string $RETURN_TYPE };
     ( my number_arrayref $lucky_numbers ) = @ARG;
 
     #    ::number_arrayref_CHECK($lucky_numbers );
-    ::number_arrayref_CHECKTRACE( $lucky_numbers, '$lucky_numbers', 'number_bubblesort__typetest0()' );
+    ::number_arrayref_CHECKTRACE( $lucky_numbers, '$lucky_numbers', 'number_bubblesort_typetest0()' );
 
 #    my integer $how_lucky = scalar @{$lucky_numbers};
 #    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
 #        my $lucky_number = $lucky_numbers->[$i];
-#        RPerl::diag("in PERLOPS_PERLTYPES number_bubblesort__typetest0(), have lucky_number $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_numbers->[$i] . ", BATBAR\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES number_bubblesort_typetest0(), have lucky_number $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_numbers->[$i] . ", BATBAR\n");
 #    }
-#    RPerl::diag("in PERLOPS_PERLTYPES number_bubblesort__typetest0(), bottom of subroutine\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES number_bubblesort_typetest0(), bottom of subroutine\n");
     return ( ::number_arrayref_to_string( number_bubblesort($lucky_numbers) ) . 'PERLOPS_PERLTYPES' );
 }
 

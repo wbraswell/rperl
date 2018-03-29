@@ -86,21 +86,21 @@ string string_arrayref_to_string(string_arrayref input_vector);
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
-//void integer_arrayref__typetest0(SV* lucky_integers);
-SV* integer_arrayref__typetest0(SV* lucky_integers);
-//void integer_arrayref__typetest1(SV* my_size);
-SV* integer_arrayref__typetest1(SV* my_size);
-SV* number_arrayref__typetest0(SV* lucky_numbers);
-SV* number_arrayref__typetest1(SV* my_size);
-SV* string_arrayref__typetest0(SV* people);
-SV* string_arrayref__typetest1(SV* my_size);
+//void integer_arrayref_typetest0(SV* lucky_integers);
+SV* integer_arrayref_typetest0(SV* lucky_integers);
+//void integer_arrayref_typetest1(SV* my_size);
+SV* integer_arrayref_typetest1(SV* my_size);
+SV* number_arrayref_typetest0(SV* lucky_numbers);
+SV* number_arrayref_typetest1(SV* my_size);
+SV* string_arrayref_typetest0(SV* people);
+SV* string_arrayref_typetest1(SV* my_size);
 # elif defined __CPP__TYPES
-string integer_arrayref__typetest0(integer_arrayref lucky_integers);
-integer_arrayref integer_arrayref__typetest1(integer my_size);
-string number_arrayref__typetest0(number_arrayref lucky_numbers);
-number_arrayref number_arrayref__typetest1(integer my_size);
-string string_arrayref__typetest0(string_arrayref people);
-string_arrayref string_arrayref__typetest1(integer my_size);
+string integer_arrayref_typetest0(integer_arrayref lucky_integers);
+integer_arrayref integer_arrayref_typetest1(integer my_size);
+string number_arrayref_typetest0(number_arrayref lucky_numbers);
+number_arrayref number_arrayref_typetest1(integer my_size);
+string string_arrayref_typetest0(string_arrayref people);
+string_arrayref string_arrayref_typetest1(integer my_size);
 # endif
 
 #endif

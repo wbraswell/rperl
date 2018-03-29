@@ -212,29 +212,29 @@ string unsigned_integer_to_string_CPPTYPES(unsigned_integer input_unsigned_integ
 /*
 # ifdef __PERL__TYPES
 
-SV* unsigned_integer__typetest0() {
+SV* unsigned_integer_typetest0() {
 	SV* retval = newSViv((21 / 7) + SvIV(RPerl__DataType__UnsignedInteger__MODE_ID()));
-//fprintf(stderr, "in CPPOPS_PERLTYPES unsigned_integer__typetest0(), have retval = %"INTEGER"\n", (unsigned_integer)SvIV(retval));
+//fprintf(stderr, "in CPPOPS_PERLTYPES unsigned_integer_typetest0(), have retval = %"INTEGER"\n", (unsigned_integer)SvIV(retval));
 	return retval;
 }
 
-SV* unsigned_integer__typetest1(SV* lucky_unsigned_integer) {
+SV* unsigned_integer_typetest1(SV* lucky_unsigned_integer) {
 //	unsigned_integer_CHECK(lucky_unsigned_integer);
-	unsigned_integer_CHECKTRACE(lucky_unsigned_integer, "lucky_unsigned_integer", "unsigned_integer__typetest1()");
-//fprintf(stderr, "in CPPOPS_PERLTYPES unsigned_integer__typetest1(), received lucky_unsigned_integer = %"INTEGER"\n", (unsigned_integer)SvIV(lucky_unsigned_integer));
+	unsigned_integer_CHECKTRACE(lucky_unsigned_integer, "lucky_unsigned_integer", "unsigned_integer_typetest1()");
+//fprintf(stderr, "in CPPOPS_PERLTYPES unsigned_integer_typetest1(), received lucky_unsigned_integer = %"INTEGER"\n", (unsigned_integer)SvIV(lucky_unsigned_integer));
 	return newSViv((SvIV(lucky_unsigned_integer) * 2) + SvIV(RPerl__DataType__UnsignedInteger__MODE_ID()));
 }
 
 # elif defined __CPP__TYPES
 
-unsigned_integer unsigned_integer__typetest0() {
+unsigned_integer unsigned_integer_typetest0() {
 	unsigned_integer retval = (21 / 7) + RPerl__DataType__UnsignedInteger__MODE_ID();
-//fprintf(stderr, "in CPPOPS_CPPTYPES unsigned_integer__typetest0(), have retval = %"INTEGER"\n", retval);
+//fprintf(stderr, "in CPPOPS_CPPTYPES unsigned_integer_typetest0(), have retval = %"INTEGER"\n", retval);
 	return retval;
 }
 
-unsigned_integer unsigned_integer__typetest1(unsigned_integer lucky_unsigned_integer) {
-//fprintf(stderr, "in CPPOPS_CPPTYPES unsigned_integer__typetest1(), received lucky_unsigned_integer = %"INTEGER"\n", lucky_unsigned_integer);
+unsigned_integer unsigned_integer_typetest1(unsigned_integer lucky_unsigned_integer) {
+//fprintf(stderr, "in CPPOPS_CPPTYPES unsigned_integer_typetest1(), received lucky_unsigned_integer = %"INTEGER"\n", lucky_unsigned_integer);
 	return (lucky_unsigned_integer * 2) + RPerl__DataType__UnsignedInteger__MODE_ID();
 }
 

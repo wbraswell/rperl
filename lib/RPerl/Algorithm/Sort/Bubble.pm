@@ -18,8 +18,8 @@ use RPerl::Algorithm::Sort;
 
 # [[[ EXPORTS ]]]
 use RPerl::Exporter qw(import);
-our @EXPORT = qw(integer_sort number_sort integer_bubblesort number_bubblesort uninherited_Bubble uninherited integer_bubblesort__typetest0 number_bubblesort__typetest0);
-#our @EXPORT_OK = qw(integer_sort number_sort integer_bubblesort number_bubblesort uninherited_Bubble uninherited integer_bubblesort__typetest0 number_bubblesort__typetest0);
+our @EXPORT = qw(integer_sort number_sort integer_bubblesort number_bubblesort uninherited_Bubble uninherited integer_bubblesort_typetest0 number_bubblesort_typetest0);
+#our @EXPORT_OK = qw(integer_sort number_sort integer_bubblesort number_bubblesort uninherited_Bubble uninherited integer_bubblesort_typetest0 number_bubblesort_typetest0);
 
 # [[[ CONSTANTS ]]]
 use constant TIME_BEST    => my string $TYPED_TIME_BEST    = 'O($n)';
@@ -157,17 +157,17 @@ sub uninherited {
 
 # [ TYPE TESTING ]
 
-sub integer_bubblesort__typetest0 {
+sub integer_bubblesort_typetest0 {
     { my string $RETURN_TYPE };
     ( my integer_arrayref $lucky_integers ) = @ARG;
-    ::integer_arrayref_CHECKTRACE( $lucky_integers, '$lucky_integers', 'integer_bubblesort__typetest0()' );
+    ::integer_arrayref_CHECKTRACE( $lucky_integers, '$lucky_integers', 'integer_bubblesort_typetest0()' );
     return ( ::integer_arrayref_to_string( RPerl::Algorithm::Sort::Bubble::integer_bubblesort($lucky_integers) ) . 'PERLOPS_PERLTYPES' );
 }
 
-sub number_bubblesort__typetest0 {
+sub number_bubblesort_typetest0 {
     { my string $RETURN_TYPE };
     ( my number_arrayref $lucky_numbers ) = @ARG;
-    ::number_arrayref_CHECKTRACE( $lucky_numbers, '$lucky_numbers', 'number_bubblesort__typetest0()' );
+    ::number_arrayref_CHECKTRACE( $lucky_numbers, '$lucky_numbers', 'number_bubblesort_typetest0()' );
     return ( ::number_arrayref_to_string( RPerl::Algorithm::Sort::Bubble::number_bubblesort($lucky_numbers) ) . 'PERLOPS_PERLTYPES' );
 }
 

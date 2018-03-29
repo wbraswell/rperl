@@ -125,13 +125,13 @@ SV* uninherited(SV* person) {
 
 // TYPE TESTING
 
-SV* integer_bubblesort__typetest0(SV* lucky_integers) {
-    integer_arrayref_CHECKTRACE(lucky_integers, "lucky_integers", "integer_bubblesort__typetest0()");
+SV* integer_bubblesort_typetest0(SV* lucky_integers) {
+    integer_arrayref_CHECKTRACE(lucky_integers, "lucky_integers", "integer_bubblesort_typetest0()");
     return (newSVpvf("%s%s", SvPV_nolen(integer_arrayref_to_string(integer_bubblesort(lucky_integers))), "CPPOPS_PERLTYPES"));
 }
 
-SV* number_bubblesort__typetest0(SV* lucky_numbers) {
-    number_arrayref_CHECKTRACE(lucky_numbers, "lucky_numbers", "number_bubblesort__typetest0()");
+SV* number_bubblesort_typetest0(SV* lucky_numbers) {
+    number_arrayref_CHECKTRACE(lucky_numbers, "lucky_numbers", "number_bubblesort_typetest0()");
     return (newSVpvf("%s%s", SvPV_nolen(number_arrayref_to_string(number_bubblesort(lucky_numbers))), "CPPOPS_PERLTYPES"));
 }
 
@@ -234,11 +234,11 @@ string uninherited(string person) {
 
 // TYPE TESTING
 
-string integer_bubblesort__typetest0(integer_arrayref lucky_integers) {
+string integer_bubblesort_typetest0(integer_arrayref lucky_integers) {
     return (integer_arrayref_to_string(integer_bubblesort(lucky_integers)) + (const string) "CPPOPS_CPPTYPES");
 }
 
-string number_bubblesort__typetest0(number_arrayref lucky_numbers) {
+string number_bubblesort_typetest0(number_arrayref lucky_numbers) {
     return (number_arrayref_to_string(number_bubblesort(lucky_numbers)) + (const string) "CPPOPS_CPPTYPES");
 }
 

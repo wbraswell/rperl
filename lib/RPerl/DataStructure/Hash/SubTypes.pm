@@ -14,7 +14,7 @@ our $VERSION = 0.015_000;
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(hashref_CHECK hashref_CHECKTRACE integer_hashref_CHECK integer_hashref_CHECKTRACE number_hashref_CHECK number_hashref_CHECKTRACE string_hashref_CHECK string_hashref_CHECKTRACE integer_hashref_to_string number_hashref_to_string string_hashref_to_string);
-our @EXPORT_OK = qw(integer_hashref__typetest0 integer_hashref__typetest1 number_hashref__typetest0 number_hashref__typetest1 string_hashref__typetest0 string_hashref__typetest1);
+our @EXPORT_OK = qw(integer_hashref_typetest0 integer_hashref_typetest1 number_hashref_typetest0 number_hashref_typetest1 string_hashref_typetest0 string_hashref_typetest1);
 
 # [[[ INCLUDES ]]]
 use RPerl::DataType::Integer;  # integer_CHECKTRACE
@@ -241,40 +241,40 @@ sub integer_hashref_to_string {
 
 # [[[ TYPE TESTING ]]]
 
-sub integer_hashref__typetest0 {
+sub integer_hashref_typetest0 {
     { my string $RETURN_TYPE };
     ( my integer_hashref $lucky_integers) = @ARG;
 
     #    integer_hashref_CHECK($lucky_integers);
     integer_hashref_CHECKTRACE( $lucky_integers, '$lucky_integers',
-        'integer_hashref__typetest0()' );
+        'integer_hashref_typetest0()' );
 
 #    foreach my string $key ( sort keys %{$lucky_integers} ) {
 #        my $lucky_integer = $lucky_integers->{$key};
 #        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
 #        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 #
-#        RPerl::diag("in PERLOPS_PERLTYPES integer_hashref__typetest0(), have lucky integer '$key' => " . $lucky_integer . ", BARSTOOL\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES integer_hashref_typetest0(), have lucky integer '$key' => " . $lucky_integer . ", BARSTOOL\n");
 #    }
-#    RPerl::diag("in PERLOPS_PERLTYPES integer_hashref__typetest0(), bottom of subroutine\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_hashref_typetest0(), bottom of subroutine\n");
     return (
         integer_hashref_to_string($lucky_integers) . 'PERLOPS_PERLTYPES' );
 }
 
-sub integer_hashref__typetest1 {
+sub integer_hashref_typetest1 {
     { my integer_hashref $RETURN_TYPE };
     ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
     integer_CHECKTRACE( $my_size, '$my_size',
-        'integer_hashref__typetest1()' );
+        'integer_hashref_typetest1()' );
     my integer_hashref $new_hash = {};
     my string $temp_key;
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
         $new_hash->{$temp_key} = $i * 5;
 
-#        RPerl::diag("in PERLOPS_PERLTYPES integer_hashref__typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES integer_hashref_typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n");
     }
     return ($new_hash);
 }
@@ -434,38 +434,38 @@ sub number_hashref_to_string {
 
 # [[[ TYPE TESTING ]]]
 
-sub number_hashref__typetest0 {
+sub number_hashref_typetest0 {
     { my string $RETURN_TYPE };
     ( my number_hashref $lucky_numbers) = @ARG;
 
     #    number_hashref_CHECK($lucky_numbers);
     number_hashref_CHECKTRACE( $lucky_numbers, '$lucky_numbers',
-        'number_hashref__typetest0()' );
+        'number_hashref_typetest0()' );
 
 #    foreach my string $key ( sort keys %{$lucky_numbers} ) {
 #        my $lucky_number = $lucky_numbers->{$key};
 #        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
 #        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-#        RPerl::diag("in PERLOPS_PERLTYPES number_hashref__typetest0(), have lucky number '$key' => " . $lucky_number . ", BARSTOOL\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES number_hashref_typetest0(), have lucky number '$key' => " . $lucky_number . ", BARSTOOL\n");
 #    }
     return (
         number_hashref_to_string($lucky_numbers) . 'PERLOPS_PERLTYPES' );
 }
 
-sub number_hashref__typetest1 {
+sub number_hashref_typetest1 {
     { my number_hashref $RETURN_TYPE };
     ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
     integer_CHECKTRACE( $my_size, '$my_size',
-        'number_hashref__typetest1()' );
+        'number_hashref_typetest1()' );
     my number_hashref $new_hash = {};
     my string $temp_key;
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
         $new_hash->{$temp_key} = $i * 5.123456789;
 
-#        RPerl::diag("in PERLOPS_PERLTYPES number_hashref__typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES number_hashref_typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n");
     }
     return ($new_hash);
 }
@@ -631,36 +631,36 @@ sub string_hashref_to_string {
 
 # [[[ TYPE TESTING ]]]
 
-sub string_hashref__typetest0 {
+sub string_hashref_typetest0 {
     { my string $RETURN_TYPE };
     ( my string_hashref $people) = @ARG;
 
     #    string_hashref_CHECK($lucky_numbers);
     string_hashref_CHECKTRACE( $people, '$people',
-        'string_hashref__typetest0()' );
+        'string_hashref_typetest0()' );
 
 #    foreach my string $key ( sort keys %{$people} ) {
 #        my $person = $people->{$key};
 #        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
 #        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-#        RPerl::diag("in PERLOPS_PERLTYPES string_hashref__typetest0(), have person '$key' => '" . $person . "', STARBOOL\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES string_hashref_typetest0(), have person '$key' => '" . $person . "', STARBOOL\n");
 #    }
     return ( string_hashref_to_string($people) . 'PERLOPS_PERLTYPES' );
 }
 
-sub string_hashref__typetest1 {
+sub string_hashref_typetest1 {
     { my string_hashref $RETURN_TYPE };
     ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
     integer_CHECKTRACE( $my_size, '$my_size',
-        'string_hashref__typetest1()' );
+        'string_hashref_typetest1()' );
     my string_hashref $people = {};
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $people->{ 'PERLOPS_PERLTYPES_Luker_key' . $i }
             = q{Jeffy Ten! } . $i . q{/} . ( $my_size - 1 );
 
-#        RPerl::diag("in PERLOPS_PERLTYPES string_hashref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy!\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES string_hashref_typetest1(), bottom of for() loop, have i = $i, just set another Jeffy!\n");
     }
     return ($people);
 }

@@ -1025,10 +1025,10 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 
 # ifdef __PERL__TYPES
 
-SV* integer_hashref__typetest0(SV* lucky_integers)
+SV* integer_hashref_typetest0(SV* lucky_integers)
 {
 //	integer_hashref_CHECK(lucky_integers);
-	integer_hashref_CHECKTRACE(lucky_integers, "lucky_integers", "integer_hashref__typetest0()");
+	integer_hashref_CHECKTRACE(lucky_integers, "lucky_integers", "integer_hashref_typetest0()");
 	HV* lucky_integers_deref = (HV*)SvRV(lucky_integers);
 	integer how_lucky = hv_iterinit(lucky_integers_deref);
 	integer i;
@@ -1038,23 +1038,23 @@ SV* integer_hashref__typetest0(SV* lucky_integers)
 		HE* lucky_integer_entry = hv_iternext(lucky_integers_deref);
 		// DEV NOTE: hash entry type-checking already done as part of integer_hashref_CHECKTRACE()
 //		hashentry_CHECK(lucky_integer_entry);
-//		hashentry_CHECKTRACE(lucky_integer_entry, "lucky_integer_entry", "integer_hashref__typetest0()");
+//		hashentry_CHECKTRACE(lucky_integer_entry, "lucky_integer_entry", "integer_hashref_typetest0()");
 
 		// DEV NOTE: not using lucky_number variable as in Hash.pm
 		// DEV NOTE: integer type-checking already done as part of integer_hashref_CHECKTRACE()
 //		integer_CHECK(hv_iterval(lucky_integers_deref, lucky_integer_entry));
-//		integer_CHECKTRACE(hv_iterval(lucky_integers_deref, lucky_integer_entry), (char*)((string)"hv_iterval(lucky_integers_deref, lucky_integer_entry) at key '" + (string)SvPV_nolen(hv_iterkeysv(lucky_integer_entry)) + "'").c_str(), "integer_hashref__typetest0()");
+//		integer_CHECKTRACE(hv_iterval(lucky_integers_deref, lucky_integer_entry), (char*)((string)"hv_iterval(lucky_integers_deref, lucky_integer_entry) at key '" + (string)SvPV_nolen(hv_iterkeysv(lucky_integer_entry)) + "'").c_str(), "integer_hashref_typetest0()");
 
-//		fprintf(stderr, "in CPPOPS_PERLTYPES integer_hashref__typetest0(), have lucky integer '%s' => %"INTEGER", BARSTOOL\n", SvPV_nolen(hv_iterkeysv(lucky_integer_entry)), (integer)SvIV(hv_iterval(lucky_integers_deref, lucky_integer_entry)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES integer_hashref_typetest0(), have lucky integer '%s' => %"INTEGER", BARSTOOL\n", SvPV_nolen(hv_iterkeysv(lucky_integer_entry)), (integer)SvIV(hv_iterval(lucky_integers_deref, lucky_integer_entry)));
 	}
 
 	return(newSVpvf("%s%s", SvPV_nolen(integer_hashref_to_string(lucky_integers)), "CPPOPS_PERLTYPES"));
 }
 
-SV* integer_hashref__typetest1(SV* my_size)
+SV* integer_hashref_typetest1(SV* my_size)
 {
 //	integer_CHECK(my_size);
-	integer_CHECKTRACE(my_size, "my_size", "integer_hashref__typetest1()");
+	integer_CHECKTRACE(my_size, "my_size", "integer_hashref_typetest1()");
 	HV* output_hv = newHV();
 	integer i;
 	char temp_key[30];
@@ -1063,16 +1063,16 @@ SV* integer_hashref__typetest1(SV* my_size)
 	{
 		sprintf(temp_key, "CPPOPS_PERLTYPES_funkey%"INTEGER"", i);
 		hv_store(output_hv, (const char*)temp_key, (U32)strlen(temp_key), newSViv(i * 5), (U32)0);
-//		fprintf(stderr, "in CPPOPS_PERLTYPES integer_hashref__typetest1(), setting entry '%s' => %"INTEGER", BARBAT\n", temp_key, (integer)SvIV(*hv_fetch(output_hv, (const char*)temp_key, (U32)strlen(temp_key), (I32)0)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES integer_hashref_typetest1(), setting entry '%s' => %"INTEGER", BARBAT\n", temp_key, (integer)SvIV(*hv_fetch(output_hv, (const char*)temp_key, (U32)strlen(temp_key), (I32)0)));
 	}
 
 	return(newRV_noinc((SV*) output_hv));
 }
 
-SV* number_hashref__typetest0(SV* lucky_numbers)
+SV* number_hashref_typetest0(SV* lucky_numbers)
 {
 //	number_hashref_CHECK(lucky_numbers);
-	number_hashref_CHECKTRACE(lucky_numbers, "lucky_numbers", "number_hashref__typetest0()");
+	number_hashref_CHECKTRACE(lucky_numbers, "lucky_numbers", "number_hashref_typetest0()");
 	/*
 	HV* lucky_numbers_deref = (HV*)SvRV(lucky_numbers);
 	integer how_lucky = hv_iterinit(lucky_numbers_deref);
@@ -1081,17 +1081,17 @@ SV* number_hashref__typetest0(SV* lucky_numbers)
 	for (i = 0;  i < how_lucky;  ++i)
 	{
 		HE* lucky_number_entry = hv_iternext(lucky_numbers_deref);
-//		fprintf(stderr, "in CPPOPS_PERLTYPES number_hashref__typetest0(), have lucky number '%s' => %Lf, BARSTOOP\n", SvPV_nolen(hv_iterkeysv(lucky_number_entry)), (double)SvNV(hv_iterval(lucky_numbers_deref, lucky_number_entry)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES number_hashref_typetest0(), have lucky number '%s' => %Lf, BARSTOOP\n", SvPV_nolen(hv_iterkeysv(lucky_number_entry)), (double)SvNV(hv_iterval(lucky_numbers_deref, lucky_number_entry)));
 	}
 	*/
 
 	return(newSVpvf("%s%s", SvPV_nolen(number_hashref_to_string(lucky_numbers)), "CPPOPS_PERLTYPES"));
 }
 
-SV* number_hashref__typetest1(SV* my_size)
+SV* number_hashref_typetest1(SV* my_size)
 {
 //	integer_CHECK(my_size);
-	integer_CHECKTRACE(my_size, "my_size", "number_hashref__typetest1()");
+	integer_CHECKTRACE(my_size, "my_size", "number_hashref_typetest1()");
 	HV* output_hv = newHV();
 	integer i;
 	char temp_key[30];
@@ -1100,16 +1100,16 @@ SV* number_hashref__typetest1(SV* my_size)
 	{
 		sprintf(temp_key, "CPPOPS_PERLTYPES_funkey%"INTEGER"", i);
 		hv_store(output_hv, (const char*)temp_key, (U32)strlen(temp_key), newSVnv(i * 5.123456789), (U32)0);
-//		fprintf(stderr, "in CPPOPS_PERLTYPES number_hashref__typetest1(), setting entry '%s' => %Lf, BARTAB\n", temp_key, (double)SvNV(*hv_fetch(output_hv, (const char*)temp_key, (U32)strlen(temp_key), (I32)0)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES number_hashref_typetest1(), setting entry '%s' => %Lf, BARTAB\n", temp_key, (double)SvNV(*hv_fetch(output_hv, (const char*)temp_key, (U32)strlen(temp_key), (I32)0)));
 	}
 
 	return(newRV_noinc((SV*) output_hv));
 }
 
-SV* string_hashref__typetest0(SV* people)
+SV* string_hashref_typetest0(SV* people)
 {
 //	string_hashref_CHECK(people);
-	string_hashref_CHECKTRACE(people, "people", "string_hashref__typetest0()");
+	string_hashref_CHECKTRACE(people, "people", "string_hashref_typetest0()");
 	/*
 	HV* people_deref = (HV*)SvRV(people);
 	integer how_crowded = hv_iterinit(people_deref);
@@ -1118,17 +1118,17 @@ SV* string_hashref__typetest0(SV* people)
 	for (i = 0;  i < how_crowded;  ++i)
 	{
 		HE* person_entry = hv_iternext(people_deref);
-//		fprintf(stderr, "in CPPOPS_PERLTYPES string_hashref__typetest0(), have person '%s' => '%s', BARSPOON\n", (char*)SvPV_nolen(hv_iterkeysv(person_entry)), (char*)SvPV_nolen(hv_iterval(people_deref, person_entry)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES string_hashref_typetest0(), have person '%s' => '%s', BARSPOON\n", (char*)SvPV_nolen(hv_iterkeysv(person_entry)), (char*)SvPV_nolen(hv_iterval(people_deref, person_entry)));
 	}
 	*/
 
 	return(newSVpvf("%s%s", SvPV_nolen(string_hashref_to_string(people)), "CPPOPS_PERLTYPES"));
 }
 
-SV* string_hashref__typetest1(SV* my_size)
+SV* string_hashref_typetest1(SV* my_size)
 {
 //	integer_CHECK(my_size);
-	integer_CHECKTRACE(my_size, "my_size", "string_hashref__typetest1()");
+	integer_CHECKTRACE(my_size, "my_size", "string_hashref_typetest1()");
 	HV* people = newHV();
 	integer i;
 	char temp_key[30];
@@ -1137,7 +1137,7 @@ SV* string_hashref__typetest1(SV* my_size)
 	{
 		sprintf(temp_key, "CPPOPS_PERLTYPES_Luker_key%"INTEGER"", i);
 		hv_store(people, (const char*)temp_key, (U32)strlen(temp_key), newSVpvf("Jeffy Ten! %"INTEGER"/%"INTEGER"", i, (integer)(SvIV(my_size) - 1)), (U32)0);
-//		fprintf(stderr, "in CPPOPS_PERLTYPES string_hashref__typetest1(), have temp_key = '%s', just set another Jeffy, BARTAT\n", temp_key);
+//		fprintf(stderr, "in CPPOPS_PERLTYPES string_hashref_typetest1(), have temp_key = '%s', just set another Jeffy, BARTAT\n", temp_key);
 	}
 
 	return(newRV_noinc((SV*) people));
@@ -1145,19 +1145,19 @@ SV* string_hashref__typetest1(SV* my_size)
 
 # elif defined __CPP__TYPES
 
-string integer_hashref__typetest0(integer_hashref lucky_integers)
+string integer_hashref_typetest0(integer_hashref lucky_integers)
 {
 	/*
 	integer_hashref_const_iterator i;
 	for (i = lucky_integers.begin();  i != lucky_integers.end();  ++i)
 	{
-		fprintf(stderr, "in CPPOPS_CPPTYPES integer_hashref__typetest0(), have lucky integer '%s' => %"INTEGER", BARSTOOL\n", (i->first).c_str(), i->second);
+		fprintf(stderr, "in CPPOPS_CPPTYPES integer_hashref_typetest0(), have lucky integer '%s' => %"INTEGER", BARSTOOL\n", (i->first).c_str(), i->second);
 	}
 	*/
 	return(integer_hashref_to_string(lucky_integers) + "CPPOPS_CPPTYPES");
 }
 
-integer_hashref integer_hashref__typetest1(integer my_size)
+integer_hashref integer_hashref_typetest1(integer my_size)
 {
 	integer_hashref new_unordered_map(my_size);
 	integer i;
@@ -1166,24 +1166,24 @@ integer_hashref integer_hashref__typetest1(integer my_size)
 	{
 		temp_key = "CPPOPS_CPPTYPES_funkey" + std::to_string(i);
 		new_unordered_map[temp_key] = i * 5;
-//		fprintf(stderr, "in CPPOPS_CPPTYPES integer_hashref__typetest1(), setting entry '%s' => %"INTEGER", BARSTOOL\n", temp_key.c_str(), new_unordered_map[temp_key]);
+//		fprintf(stderr, "in CPPOPS_CPPTYPES integer_hashref_typetest1(), setting entry '%s' => %"INTEGER", BARSTOOL\n", temp_key.c_str(), new_unordered_map[temp_key]);
 	}
 	return(new_unordered_map);
 }
 
-string number_hashref__typetest0(number_hashref lucky_numbers)
+string number_hashref_typetest0(number_hashref lucky_numbers)
 {
 	/*
 	number_hashref_const_iterator i;
 	for (i = lucky_numbers.begin();  i != lucky_numbers.end();  ++i)
 	{
-		fprintf(stderr, "in CPPOPS_CPPTYPES number_hashref__typetest0(), have lucky number '%s' => %Lf, BARSTOOL\n", (i->first).c_str(), i->second);
+		fprintf(stderr, "in CPPOPS_CPPTYPES number_hashref_typetest0(), have lucky number '%s' => %Lf, BARSTOOL\n", (i->first).c_str(), i->second);
 	}
 	*/
 	return(number_hashref_to_string(lucky_numbers) + "CPPOPS_CPPTYPES");
 }
 
-number_hashref number_hashref__typetest1(integer my_size)
+number_hashref number_hashref_typetest1(integer my_size)
 {
 	number_hashref new_unordered_map(my_size);
 	integer i;
@@ -1192,24 +1192,24 @@ number_hashref number_hashref__typetest1(integer my_size)
 	{
 		temp_key = "CPPOPS_CPPTYPES_funkey" + std::to_string(i);
 		new_unordered_map[temp_key] = i * 5.123456789;
-//		fprintf(stderr, "in CPPOPS_CPPTYPES number_hashref__typetest1(), setting entry '%s' => %Lf, BARSTOOL\n", temp_key.c_str(), new_unordered_map[temp_key]);
+//		fprintf(stderr, "in CPPOPS_CPPTYPES number_hashref_typetest1(), setting entry '%s' => %Lf, BARSTOOL\n", temp_key.c_str(), new_unordered_map[temp_key]);
 	}
 	return(new_unordered_map);
 }
 
-string string_hashref__typetest0(string_hashref people)
+string string_hashref_typetest0(string_hashref people)
 {
 	/*
 	string_hashref_const_iterator i;
 	for (i = people.begin();  i != people.end();  ++i)
 	{
-		fprintf(stderr, "in CPPOPS_CPPTYPES string_hashref__typetest0(), have person '%s' => '%s', STARBOOL\n", (i->first).c_str(), (i->second).c_str());
+		fprintf(stderr, "in CPPOPS_CPPTYPES string_hashref_typetest0(), have person '%s' => '%s', STARBOOL\n", (i->first).c_str(), (i->second).c_str());
 	}
 	*/
 	return(string_hashref_to_string(people) + "CPPOPS_CPPTYPES");
 }
 
-string_hashref string_hashref__typetest1(integer my_size)
+string_hashref string_hashref_typetest1(integer my_size)
 {
 	string_hashref people;
 	integer i;
@@ -1217,7 +1217,7 @@ string_hashref string_hashref__typetest1(integer my_size)
 	for (i = 0;  i < my_size;  ++i)
 	{
 		people["CPPOPS_CPPTYPES_Luker_key" + std::to_string(i)] = "Jeffy Ten! " + std::to_string(i) + "/" + std::to_string(my_size - 1);
-//		fprintf(stderr, "in CPPOPS_CPPTYPES string_hashref__typetest1(), bottom of for() loop, have i = %"INTEGER", just set another Jeffy!\n", i);
+//		fprintf(stderr, "in CPPOPS_CPPTYPES string_hashref_typetest1(), bottom of for() loop, have i = %"INTEGER", just set another Jeffy!\n", i);
 	}
 	return(people);
 }

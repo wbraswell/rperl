@@ -53,7 +53,7 @@ use POSIX qw(floor);
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(string_CHECK string_CHECKTRACE string_to_boolean string_to_unsigned_integer string_to_integer string_to_number string_to_character string_to_string);
-our @EXPORT_OK = qw(string__typetest0 string__typetest1);
+our @EXPORT_OK = qw(string_typetest0 string_typetest1);
 
 # [[[ TYPE CHECKING ]]]
 sub string_CHECK {
@@ -161,21 +161,21 @@ sub string_to_string {
 }
 
 # [[[ TYPE TESTING ]]]
-sub string__typetest0 {
+sub string_typetest0 {
     { my string $RETURN_TYPE };
     my string $retval = 'Spice PERLOPS_PERLTYPES';
 
-#    RPerl::diag("in PERLOPS_PERLTYPES string__typetest0(), have \$retval = '$retval'\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES string_typetest0(), have \$retval = '$retval'\n");
     return ($retval);
 }
-sub string__typetest1 {
+sub string_typetest1 {
     { my string $RETURN_TYPE };
     ( my string $lucky_string ) = @ARG;
 #    string_CHECK($lucky_string);
     string_CHECKTRACE( $lucky_string, '$lucky_string',
-        'string__typetest1()' );
+        'string_typetest1()' );
 
-#    RPerl::diag("in PERLOPS_PERLTYPES string__typetest1(), received \$lucky_string = '$lucky_string'\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES string_typetest1(), received \$lucky_string = '$lucky_string'\n");
     return ( string_to_string($lucky_string) . ' PERLOPS_PERLTYPES' );
 }
 

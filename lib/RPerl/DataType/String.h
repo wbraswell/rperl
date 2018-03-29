@@ -217,11 +217,11 @@ string string_to_string(string input_string);
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
-SV* string__typetest0();
-SV* string__typetest1(SV* lucky_string);
+SV* string_typetest0();
+SV* string_typetest1(SV* lucky_string);
 # elif defined __CPP__TYPES
-string string__typetest0();
-string string__typetest1(string lucky_string);
+string string_typetest0();
+string string_typetest1(string lucky_string);
 # endif
 
 #endif

@@ -51,14 +51,14 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = integer_arrayref_to_string([2, 2112, 42, 23, -877, -33, 1701]);  # TIVAVRV21
     RPerl::diag("in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n");
 
-#	$retval_stringify = integer_arrayref__typetest0();  # TIVAVRV30; error PERLOPS EIVAVRV00, CPPOPS "Usage: main::integer_arrayref__typetest0(lucky_integers)"
-#	$retval_stringify = integer_arrayref__typetest0(2);  # TIVAVRV31; error EIVAVRV01
-#	$retval_stringify = integer_arrayref__typetest0([2, 2112, undef, 23, -877, -33, 1701]);  # TIVAVRV32; error EIVAVRV02
-#	$retval_stringify = integer_arrayref__typetest0([2, 2112, 42, 'abcdefg', -877, -33, 1701]);  # TIVAVRV33; error EIVAVRV03
-#	$retval_stringify = integer_arrayref__typetest0([2, 2112, 42, 23, -877, -33, 1701]);  # TIVAVRV34
+#	$retval_stringify = integer_arrayref_typetest0();  # TIVAVRV30; error PERLOPS EIVAVRV00, CPPOPS "Usage: main::integer_arrayref_typetest0(lucky_integers)"
+#	$retval_stringify = integer_arrayref_typetest0(2);  # TIVAVRV31; error EIVAVRV01
+#	$retval_stringify = integer_arrayref_typetest0([2, 2112, undef, 23, -877, -33, 1701]);  # TIVAVRV32; error EIVAVRV02
+#	$retval_stringify = integer_arrayref_typetest0([2, 2112, 42, 'abcdefg', -877, -33, 1701]);  # TIVAVRV33; error EIVAVRV03
+#	$retval_stringify = integer_arrayref_typetest0([2, 2112, 42, 23, -877, -33, 1701]);  # TIVAVRV34
 #	RPerl::diag("in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n");
 
-#	$retval_integer_arrayref = integer_arrayref__typetest1(5);  # TIVAVRV40
+#	$retval_integer_arrayref = integer_arrayref_typetest1(5);  # TIVAVRV40
 #	RPerl::diag("in array_test.pl $i/$i_MAX, have \$retval_integer_arrayref = \n" . Dumper($retval_integer_arrayref) . "\n");
 
     # [[[ NUMBER TESTS ]]]
@@ -80,14 +80,14 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = number_arrayref_to_string([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789]);  # TNVAVRV24
 #	RPerl::diag("in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n");
 
-#	$retval_stringify = number_arrayref__typetest0();  # TNVAVRV30; error PERLOPS ENVAVRV00, CPPOPS "Usage: main::number_arrayref__typetest0(lucky_numbers)"
-#	$retval_stringify = number_arrayref__typetest0(2);  # TNVAVRV31; error ENVAVRV01
-#	$retval_stringify = number_arrayref__typetest0([2.1234432112344321, 2112.4321, undef, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789]);  # TNVAVRV32; error ENVAVRV02
-#	$retval_stringify = number_arrayref__typetest0([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 'abcdefg', -33.876587658765875687658765, 1701.6789]);  # TNVAVRV33; error ENVAVRV03
-#	$retval_stringify = number_arrayref__typetest0([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789]);  # TNVAVRV34
+#	$retval_stringify = number_arrayref_typetest0();  # TNVAVRV30; error PERLOPS ENVAVRV00, CPPOPS "Usage: main::number_arrayref_typetest0(lucky_numbers)"
+#	$retval_stringify = number_arrayref_typetest0(2);  # TNVAVRV31; error ENVAVRV01
+#	$retval_stringify = number_arrayref_typetest0([2.1234432112344321, 2112.4321, undef, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789]);  # TNVAVRV32; error ENVAVRV02
+#	$retval_stringify = number_arrayref_typetest0([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 'abcdefg', -33.876587658765875687658765, 1701.6789]);  # TNVAVRV33; error ENVAVRV03
+#	$retval_stringify = number_arrayref_typetest0([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789]);  # TNVAVRV34
 #	RPerl::diag("in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n");
 
-#	$retval_number_arrayref = number_arrayref__typetest1(5);  # TNVAVRV40
+#	$retval_number_arrayref = number_arrayref_typetest1(5);  # TNVAVRV40
 #	RPerl::diag("in array_test.pl $i/$i_MAX, have \$retval_number_arrayref = \n" . Dumper($retval_number_arrayref) . "\n");
 
     # [[[ STRING TESTS ]]]
@@ -111,14 +111,14 @@ for my integer $i ( 0 .. $i_MAX ) {
 #	$retval_stringify = string_arrayref_to_string(['Superman', 'Martian Manhunter', '{buzz => 5}']);  # TPVAVRV25
 #	RPerl::diag("in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n");
 
-#	$retval_stringify = string_arrayref__typetest0();  # TPVAVRV30; error PERLOPS EPVAVRV00, CPPOPS "Usage: main::string_arrayref__typetest0(people)"
-#	$retval_stringify = string_arrayref__typetest0(2);  # TPVAVRV31; error EPVAVRV01
-#	$retval_stringify = string_arrayref__typetest0(['Superman', 'Batman', 'Wonder Woman', undef, 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # TPVAVRV32; error EPVAVRV02
-#	$retval_stringify = string_arrayref__typetest0(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', [23, -42.3]]);  # TPVAVRV33; error EPVAVRV03
-#	$retval_stringify = string_arrayref__typetest0(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # TPVAVRV34
+#	$retval_stringify = string_arrayref_typetest0();  # TPVAVRV30; error PERLOPS EPVAVRV00, CPPOPS "Usage: main::string_arrayref_typetest0(people)"
+#	$retval_stringify = string_arrayref_typetest0(2);  # TPVAVRV31; error EPVAVRV01
+#	$retval_stringify = string_arrayref_typetest0(['Superman', 'Batman', 'Wonder Woman', undef, 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # TPVAVRV32; error EPVAVRV02
+#	$retval_stringify = string_arrayref_typetest0(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', [23, -42.3]]);  # TPVAVRV33; error EPVAVRV03
+#	$retval_stringify = string_arrayref_typetest0(['Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter']);  # TPVAVRV34
 #	RPerl::diag("in array_test.pl $i/$i_MAX, have \$retval_stringify =\n$retval_stringify\n");
 
-#	$retval_jeffys = string_arrayref__typetest1(5);  # TPVAVRV40
+#	$retval_jeffys = string_arrayref_typetest1(5);  # TPVAVRV40
 #	RPerl::diag("in array_test.pl $i/$i_MAX, have \$retval_jeffys = \n" . Dumper($retval_jeffys) . "\n");
 
     croak('Done for now, croaking');

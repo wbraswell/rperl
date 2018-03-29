@@ -15,8 +15,8 @@ TYPEMAPS => "blib/lib/typemap.rperl",
   );
 print "[[[ END   'use Inline' STAGE for '_debugging/ntype.cpp' ]]]\n"x3;
 
-#my $string_retval = string__typetest0();
-my $string_retval = string__typetest1('howdy');
+#my $string_retval = string_typetest0();
+my $string_retval = string_typetest1('howdy');
 RPerl::diag("in ntype.pl have \$string_retval = '$string_retval'\n");
 
 

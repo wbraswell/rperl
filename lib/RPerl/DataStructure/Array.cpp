@@ -677,21 +677,21 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 # ifdef __PERL__TYPES
 
 // DEV NOTE: direct manipulation of the Perl Stack shown in /* block comments */
-/*void integer_arrayref__typetest0(SV* lucky_integers) */
-SV* integer_arrayref__typetest0(SV* lucky_integers)
+/*void integer_arrayref_typetest0(SV* lucky_integers) */
+SV* integer_arrayref_typetest0(SV* lucky_integers)
 {
 /*	dSP; */
 
 /*	SV* output_sv; */
 //	integer_arrayref_CHECK(lucky_integers);
-	integer_arrayref_CHECKTRACE(lucky_integers, "lucky_integers", "integer_arrayref__typetest0()");
+	integer_arrayref_CHECKTRACE(lucky_integers, "lucky_integers", "integer_arrayref_typetest0()");
 //	AV* lucky_integers_deref = (AV*)SvRV(lucky_integers);
 //	integer how_lucky = av_len(lucky_integers_deref) + 1;
 //	integer i;
 
 //	for (i = 0;  i < how_lucky;  ++i)
 //	{
-//		fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref__typetest0(), have lucky integer %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", i, (how_lucky - 1), (integer)SvIV(*av_fetch(lucky_integers_deref, i, 0)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_typetest0(), have lucky integer %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", i, (how_lucky - 1), (integer)SvIV(*av_fetch(lucky_integers_deref, i, 0)));
 //	}
 
 //	ENTER;
@@ -707,7 +707,7 @@ SV* integer_arrayref__typetest0(SV* lucky_integers)
 //	LEAVE;
 
 /*	sv_catpv(output_sv, "BARBAT"); */
-/*	fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref__typetest0(), have output_sv = %s\n", SvPV_nolen(output_sv)); */
+/*	fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_typetest0(), have output_sv = %s\n", SvPV_nolen(output_sv)); */
 
 /*
 //	SPAGAIN;
@@ -721,14 +721,14 @@ SV* integer_arrayref__typetest0(SV* lucky_integers)
 }
 
 // DEV NOTE: direct manipulation of the Perl Stack shown in /* block comments */
-/*void integer_arrayref__typetest1(integer my_size) */
-SV* integer_arrayref__typetest1(SV* my_size)
+/*void integer_arrayref_typetest1(integer my_size) */
+SV* integer_arrayref_typetest1(SV* my_size)
 {
 /*	dSP;
 	dAXMARK; */
 
 //	integer_CHECK(my_size);
-	integer_CHECKTRACE(my_size, "my_size", "integer_arrayref__typetest1()");
+	integer_CHECKTRACE(my_size, "my_size", "integer_arrayref_typetest1()");
 	AV* output_av = newAV();
 	integer i;
 
@@ -737,7 +737,7 @@ SV* integer_arrayref__typetest1(SV* my_size)
 	for (i = 0;  i < SvIV(my_size);  ++i)
 	{
 		av_store(output_av, (I32)i, newSViv(i * 5));
-//		fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref__typetest1(), setting element %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", i, (integer)(SvIV(my_size) - 1), (integer)SvIV(*av_fetch(output_av, (I32)i, 0)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_typetest1(), setting element %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", i, (integer)(SvIV(my_size) - 1), (integer)SvIV(*av_fetch(output_av, (I32)i, 0)));
 	}
 
 /*
@@ -747,10 +747,10 @@ SV* integer_arrayref__typetest1(SV* my_size)
 	return(newRV_noinc((SV*) output_av));
 }
 
-SV* number_arrayref__typetest0(SV* lucky_numbers)
+SV* number_arrayref_typetest0(SV* lucky_numbers)
 {
 //	number_arrayref_CHECK(lucky_numbers);
-	number_arrayref_CHECKTRACE(lucky_numbers, "lucky_numbers", "number_arrayref__typetest0()");
+	number_arrayref_CHECKTRACE(lucky_numbers, "lucky_numbers", "number_arrayref_typetest0()");
 //	AV* lucky_numbers_deref = (AV*)SvRV(lucky_numbers);
 //	integer how_lucky = av_len(lucky_numbers_deref) + 1;
 //	integer i;
@@ -758,92 +758,92 @@ SV* number_arrayref__typetest0(SV* lucky_numbers)
 //	for (i = 0;  i < how_lucky;  ++i)
 //	{
 //		number_CHECK(*av_fetch(lucky_numbers_deref, i, 0));
-//		number_CHECKTRACE(*av_fetch(lucky_numbers_deref, i, 0), (char*)((string)"*av_fetch(lucky_numbers_deref, i, 0) at index " + to_string(i)).c_str(), "number_arrayref__typetest0()");
-//		fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref__typetest0(), have lucky number %"INTEGER"/%"INTEGER" = %Lf, BARBAT\n", i, (how_lucky - 1), (number)SvNV(*av_fetch(lucky_numbers_deref, i, 0)));
+//		number_CHECKTRACE(*av_fetch(lucky_numbers_deref, i, 0), (char*)((string)"*av_fetch(lucky_numbers_deref, i, 0) at index " + to_string(i)).c_str(), "number_arrayref_typetest0()");
+//		fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref_typetest0(), have lucky number %"INTEGER"/%"INTEGER" = %Lf, BARBAT\n", i, (how_lucky - 1), (number)SvNV(*av_fetch(lucky_numbers_deref, i, 0)));
 //	}
 	return(newSVpvf("%s%s", SvPV_nolen(number_arrayref_to_string(lucky_numbers)), "CPPOPS_PERLTYPES"));
 }
 
-SV* number_arrayref__typetest1(SV* my_size)
+SV* number_arrayref_typetest1(SV* my_size)
 {
 //	integer_CHECK(my_size);
-	integer_CHECKTRACE(my_size, "my_size", "number_arrayref__typetest1()");
+	integer_CHECKTRACE(my_size, "my_size", "number_arrayref_typetest1()");
 	AV* output_av = newAV();
 	integer i;
 	av_extend(output_av, (I32)(SvIV(my_size) - 1));
 	for (i = 0;  i < SvIV(my_size);  ++i)
 	{
 		av_store(output_av, (I32)i, newSVnv(i * 5.123456789));
-//		fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref__typetest1(), setting element %"INTEGER"/%"INTEGER" = %Lf, BARBAT\n", i, (integer)(SvIV(my_size) - 1), (number)SvNV(*av_fetch(output_av, (I32)i, 0)));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref_typetest1(), setting element %"INTEGER"/%"INTEGER" = %Lf, BARBAT\n", i, (integer)(SvIV(my_size) - 1), (number)SvNV(*av_fetch(output_av, (I32)i, 0)));
 	}
 	return(newRV_noinc((SV*) output_av));
 }
 
-SV* string_arrayref__typetest0(SV* people)
+SV* string_arrayref_typetest0(SV* people)
 {
 //	string_arrayref_CHECK(people);
-	string_arrayref_CHECKTRACE(people, "people", "string_arrayref__typetest0()");
+	string_arrayref_CHECKTRACE(people, "people", "string_arrayref_typetest0()");
 //	AV* people_deref = (AV*)SvRV(people);
 //	integer i;
 //	for (i = 0;  i < (av_len(people_deref) + 1);  ++i)
 //	{
 //		string_CHECK(*av_fetch(people_deref, i, 0));
-//		string_CHECKTRACE(*av_fetch(people_deref, i, 0), (char*)((string)"*av_fetch(people_deref, i, 0) at index " + to_string(i)).c_str(), "string_arrayref__typetest0()");
-//		fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref__typetest0(), have person %"INTEGER" = '%s', BARBAR\n", i, (char *)SvPV_nolen(*av_fetch(people_deref, i, 0)));
+//		string_CHECKTRACE(*av_fetch(people_deref, i, 0), (char*)((string)"*av_fetch(people_deref, i, 0) at index " + to_string(i)).c_str(), "string_arrayref_typetest0()");
+//		fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref_typetest0(), have person %"INTEGER" = '%s', BARBAR\n", i, (char *)SvPV_nolen(*av_fetch(people_deref, i, 0)));
 //	}
 	return(newSVpvf("%s%s", SvPV_nolen(string_arrayref_to_string(people)), "CPPOPS_PERLTYPES"));
 }
 
-SV* string_arrayref__typetest1(SV* my_size)
+SV* string_arrayref_typetest1(SV* my_size)
 {
 //	integer_CHECK(my_size);
-	integer_CHECKTRACE(my_size, "my_size", "string_arrayref__typetest1()");
+	integer_CHECKTRACE(my_size, "my_size", "string_arrayref_typetest1()");
 	AV* people = newAV();
 	integer i;
 	av_extend(people, (I32)(SvIV(my_size) - 1));
 	for (i = 0;  i < SvIV(my_size);  ++i)
 	{
 		av_store(people, (I32)i, newSVpvf("Jeffy Ten! %"INTEGER"/%"INTEGER" CPPOPS_PERLTYPES", i, (integer)(SvIV(my_size) - 1)));
-//		fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref__typetest1(), bottom of for() loop, have i = %"INTEGER", (integer)(SvIV(my_size) - 1) = %"INTEGER", just set another Jeffy, BARBAR\n", i, (integer)(SvIV(my_size) - 1));
+//		fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref_typetest1(), bottom of for() loop, have i = %"INTEGER", (integer)(SvIV(my_size) - 1) = %"INTEGER", just set another Jeffy, BARBAR\n", i, (integer)(SvIV(my_size) - 1));
 	}
 	return(newRV_noinc((SV*) people));
 }
 
 # elif defined __CPP__TYPES
 
-string integer_arrayref__typetest0(integer_arrayref lucky_integers)
+string integer_arrayref_typetest0(integer_arrayref lucky_integers)
 {
 	integer how_lucky = lucky_integers.size();
 	integer i;
 //	for (i = 0;  i < how_lucky;  ++i)
 //	{
-//		fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref__typetest0(), have lucky number %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", i, (how_lucky - 1), lucky_integers[i]);
+//		fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_typetest0(), have lucky number %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", i, (how_lucky - 1), lucky_integers[i]);
 //	}
 	return(integer_arrayref_to_string(lucky_integers) + "CPPOPS_CPPTYPES");
 }
 
-integer_arrayref integer_arrayref__typetest1(integer my_size)
+integer_arrayref integer_arrayref_typetest1(integer my_size)
 {
 	integer_arrayref new_vec(my_size);
 	integer i;
 	for (i = 0;  i < my_size;  ++i) {
 		new_vec[i] = i * 5;
-//		fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref__typetest1(), setting element %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", i, (my_size - 1), new_vec[i]);
+//		fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_typetest1(), setting element %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", i, (my_size - 1), new_vec[i]);
 	}
 	return(new_vec);
 }
 
-string number_arrayref__typetest0(number_arrayref lucky_numbers)
+string number_arrayref_typetest0(number_arrayref lucky_numbers)
 {
 	integer how_lucky = lucky_numbers.size();
 	integer i;
 //	for (i = 0;  i < how_lucky;  ++i)
 //	{
-//		fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref__typetest0(), have lucky number %"INTEGER"/%"INTEGER" = %Lf, BARBAZ\n", i, (how_lucky - 1), lucky_numbers[i]);
+//		fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_typetest0(), have lucky number %"INTEGER"/%"INTEGER" = %Lf, BARBAZ\n", i, (how_lucky - 1), lucky_numbers[i]);
 //	}
 	return(number_arrayref_to_string(lucky_numbers) + "CPPOPS_CPPTYPES");
 }
-number_arrayref number_arrayref__typetest1(integer my_size)
+number_arrayref number_arrayref_typetest1(integer my_size)
 {
 	number_arrayref new_vec(my_size);
 	integer i;
@@ -855,18 +855,18 @@ number_arrayref number_arrayref__typetest1(integer my_size)
 	return(new_vec);
 }
 
-//string string_arrayref__typetest0(string_arrayref people) { integer i;  for (i = 0;  i < people.size();  ++i) { fprintf(stderr, "in CPPOPS_CPPTYPES fprintf(stderr, ) string_arrayref__typetest0(), have person %"INTEGER" = '%s', BARBAR\n", i, people[i].c_str()); }  return(string_arrayref_to_string(people) + "BARBAR"); }
-string string_arrayref__typetest0(string_arrayref people)
+//string string_arrayref_typetest0(string_arrayref people) { integer i;  for (i = 0;  i < people.size();  ++i) { fprintf(stderr, "in CPPOPS_CPPTYPES fprintf(stderr, ) string_arrayref_typetest0(), have person %"INTEGER" = '%s', BARBAR\n", i, people[i].c_str()); }  return(string_arrayref_to_string(people) + "BARBAR"); }
+string string_arrayref_typetest0(string_arrayref people)
 {
 	integer i;
 //	for (i = 0;  i < people.size();  ++i)
 //	{
-//		cout << "in CPPOPS_CPPTYPES string_arrayref__typetest0(), have person " << i << " = '" << people[i] << "', BARBAR\n";
+//		cout << "in CPPOPS_CPPTYPES string_arrayref_typetest0(), have person " << i << " = '" << people[i] << "', BARBAR\n";
 //	}
 	return(string_arrayref_to_string(people) + "CPPOPS_CPPTYPES");
 }
 
-string_arrayref string_arrayref__typetest1(integer my_size)
+string_arrayref string_arrayref_typetest1(integer my_size)
 {
 	string_arrayref people;
 	integer i;
@@ -874,7 +874,7 @@ string_arrayref string_arrayref__typetest1(integer my_size)
 	for (i = 0;  i < my_size;  ++i)
 	{
 		people[i] = "Jeffy Ten! " + std::to_string(i) + "/" + std::to_string(my_size - 1) + " CPPOPS_CPPTYPES";
-//		fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref__typetest1(), bottom of for() loop, have i = %"INTEGER", (my_size - 1) = %"INTEGER", just set another Jeffy, BARBAR\n", i, (my_size - 1));
+//		fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_typetest1(), bottom of for() loop, have i = %"INTEGER", (my_size - 1) = %"INTEGER", just set another Jeffy, BARBAR\n", i, (my_size - 1));
 	}
 	return(people);
 }

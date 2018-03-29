@@ -285,30 +285,30 @@ string string_to_string(string input_string)
 
 # ifdef __PERL__TYPES
 
-SV* string__typetest0() {
-//fprintf(stderr, "in CPPOPS_PERLTYPES string__typetest0()\n");
+SV* string_typetest0() {
+//fprintf(stderr, "in CPPOPS_PERLTYPES string_typetest0()\n");
 	return(newSVpv("Spice CPPOPS_PERLTYPES", 0));
 }
 
-SV* string__typetest1(SV* lucky_string) {
+SV* string_typetest1(SV* lucky_string) {
 //	string_CHECK(lucky_string);
-	string_CHECKTRACE(lucky_string, "lucky_string", "string__typetest1()");
-//cout << "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << '\n';  cout.flush();  // DEV NOTE: must flush buffer to avoid endl over-flushing and out-of-order printing
-//cerr << "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << '\n';  // DEV NOTE: cerr doesn't have a buffer to flush
-//fprintf(stderr, "in CPPOPS_PERLTYPES string__typetest1(), received lucky_string = '%s'\n", SvPV_nolen(lucky_string));
+	string_CHECKTRACE(lucky_string, "lucky_string", "string_typetest1()");
+//cout << "in CPPOPS_PERLTYPES string_typetest1(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << '\n';  cout.flush();  // DEV NOTE: must flush buffer to avoid endl over-flushing and out-of-order printing
+//cerr << "in CPPOPS_PERLTYPES string_typetest1(), received lucky_string '" << SvPV_nolen(lucky_string) << "'" << '\n';  // DEV NOTE: cerr doesn't have a buffer to flush
+//fprintf(stderr, "in CPPOPS_PERLTYPES string_typetest1(), received lucky_string = '%s'\n", SvPV_nolen(lucky_string));
 	return(newSVpvf("%s%s", SvPV_nolen(string_to_string(lucky_string)), " CPPOPS_PERLTYPES"));
 }
 
 # elif defined __CPP__TYPES
 
-string string__typetest0() {
+string string_typetest0() {
 	string retval = "Spice CPPOPS_CPPTYPES";
-//fprintf(stderr, "in CPPOPS_CPPTYPES string__typetest0(), have retval = '%s'\n", retval.c_str());
+//fprintf(stderr, "in CPPOPS_CPPTYPES string_typetest0(), have retval = '%s'\n", retval.c_str());
 	return retval;
 }
 
-string string__typetest1(string lucky_string) {
-//fprintf(stderr, "in CPPOPS_CPPTYPES string__typetest1(), received lucky_string = '%s'\n", lucky_string.c_str());
+string string_typetest1(string lucky_string) {
+//fprintf(stderr, "in CPPOPS_CPPTYPES string_typetest1(), received lucky_string = '%s'\n", lucky_string.c_str());
 	return(string_to_string(lucky_string) + " CPPOPS_CPPTYPES");
 }
 

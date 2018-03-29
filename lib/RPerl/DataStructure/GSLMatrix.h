@@ -175,12 +175,12 @@ gsl_matrix_rawptr number_arrayref_to_gsl_matrix(number_arrayref input_number_arr
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
-SV* gsl_matrix__typetest0();
-SV* gsl_matrix__typetest1(SV* lucky_gsl_matrix);
+SV* gsl_matrix_typetest0();
+SV* gsl_matrix_typetest1(SV* lucky_gsl_matrix);
 # elif defined __CPP__TYPES
-gsl_matrix_rawptr gsl_matrix__typetest0();
-gsl_matrix_rawptr gsl_matrix__typetest1(gsl_matrix_rawptr lucky_gsl_matrix);
-integer gsl_matrix__typetest99() { /* XS_pack_gsl_matrixPtr(newSV(0), gsl_matrix_alloc(1, 1)); gsl_matrix__typetest0(); */ return 25; }
+gsl_matrix_rawptr gsl_matrix_typetest0();
+gsl_matrix_rawptr gsl_matrix_typetest1(gsl_matrix_rawptr lucky_gsl_matrix);
+integer gsl_matrix_typetest99() { /* XS_pack_gsl_matrixPtr(newSV(0), gsl_matrix_alloc(1, 1)); gsl_matrix_typetest0(); */ return 25; }
 # endif
 
 #endif

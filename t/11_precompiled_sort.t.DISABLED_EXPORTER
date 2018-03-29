@@ -334,50 +334,50 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TIVALSOBU22a eval { my $retval = RPerl::Algorithm::Sort::Bubble::integer_bubblesort( [ reverse 0 .. 7 ] ); return $retval; } lives}
     );
     throws_ok(                                                         # TIVALSOBU30
-        sub { RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0() },
-        "/(EIVAVRV00.*$mode_tagline)|(Usage.*integer_bubblesort__typetest0)/"
+        sub { RPerl::Algorithm::Sort::Bubble::integer_bubblesort_typetest0() },
+        "/(EIVAVRV00.*$mode_tagline)|(Usage.*integer_bubblesort_typetest0)/"
         ,                                                              # DEV NOTE: 2 different error messages, RPerl & C
-        q{TIVALSOBU30 RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0() throws correct exception}
+        q{TIVALSOBU30 RPerl::Algorithm::Sort::Bubble::integer_bubblesort_typetest0() throws correct exception}
     );
     throws_ok(                                                         # TIVALSOBU31
-        sub { RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0(2) },
+        sub { RPerl::Algorithm::Sort::Bubble::integer_bubblesort_typetest0(2) },
         "/EIVAVRV01.*$mode_tagline/",
-        q{TIVALSOBU31 RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0(2) throws correct exception}
+        q{TIVALSOBU31 RPerl::Algorithm::Sort::Bubble::integer_bubblesort_typetest0(2) throws correct exception}
     );
     throws_ok(                                                         # TIVALSOBU32
         sub {
-            RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0( [ 2, 2_112, undef, 23, -877, -33, 1_701 ] );
+            RPerl::Algorithm::Sort::Bubble::integer_bubblesort_typetest0( [ 2, 2_112, undef, 23, -877, -33, 1_701 ] );
         },
         "/EIVAVRV02.*$mode_tagline/",
-        q{TIVALSOBU32 RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0([2, 2_112, undef, 23, -877, -33, 1_701]) throws correct exception}
+        q{TIVALSOBU32 RPerl::Algorithm::Sort::Bubble::integer_bubblesort_typetest0([2, 2_112, undef, 23, -877, -33, 1_701]) throws correct exception}
     );
     throws_ok(                                                         # TIVALSOBU33
         sub {
-            RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0( [ 2, 2_112, 42, 23, -877, -33, 1_701, [ 23, -42.3 ] ] );
+            RPerl::Algorithm::Sort::Bubble::integer_bubblesort_typetest0( [ 2, 2_112, 42, 23, -877, -33, 1_701, [ 23, -42.3 ] ] );
         },
         "/EIVAVRV03.*$mode_tagline/",
-        q{TIVALSOBU33 RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0([2, 2_112, 42, 23, -877, -33, 1_701, [23, -42.3]]) throws correct exception}
+        q{TIVALSOBU33 RPerl::Algorithm::Sort::Bubble::integer_bubblesort_typetest0([2, 2_112, 42, 23, -877, -33, 1_701, [23, -42.3]]) throws correct exception}
     );
     lives_and(                                                         # TIVALSOBU34
         sub {
-            is( RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+            is( RPerl::Algorithm::Sort::Bubble::integer_bubblesort_typetest0( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
                 '[-877, -33, 2, 23, 42, 1_701, 2_112]' . $mode_tagline,
-                q{TIVALSOBU34 RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0([2, 2_112, 42, 23, -877, -33, 1_701]) returns correct value}
+                q{TIVALSOBU34 RPerl::Algorithm::Sort::Bubble::integer_bubblesort_typetest0([2, 2_112, 42, 23, -877, -33, 1_701]) returns correct value}
             );
         },
-        q{TIVALSOBU34 RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0([2, 2_112, 42, 23, -877, -33, 1_701]) lives}
+        q{TIVALSOBU34 RPerl::Algorithm::Sort::Bubble::integer_bubblesort_typetest0([2, 2_112, 42, 23, -877, -33, 1_701]) lives}
     );
     lives_and(                                                         # TIVALSOBU34a
         sub {
             is( eval {
-                    my $retval = RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] );
+                    my $retval = RPerl::Algorithm::Sort::Bubble::integer_bubblesort_typetest0( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] );
                     return $retval;
                 },
                 '[-877, -33, 2, 23, 42, 1_701, 2_112]' . $mode_tagline,
-                q{TIVALSOBU34a eval { my $retval = RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0( [2, 2_112, 42, 23, -877, -33, 1_701] ); return $retval; } returns correct value}
+                q{TIVALSOBU34a eval { my $retval = RPerl::Algorithm::Sort::Bubble::integer_bubblesort_typetest0( [2, 2_112, 42, 23, -877, -33, 1_701] ); return $retval; } returns correct value}
             );
         },
-        q{TIVALSOBU34a eval { my $retval = RPerl::Algorithm::Sort::Bubble::integer_bubblesort__typetest0( [2, 2_112, 42, 23, -877, -33, 1_701] ); return $retval; } lives}
+        q{TIVALSOBU34a eval { my $retval = RPerl::Algorithm::Sort::Bubble::integer_bubblesort_typetest0( [2, 2_112, 42, 23, -877, -33, 1_701] ); return $retval; } lives}
     );
 
     # [[[ NUMBER SORT TESTS ]]]
@@ -510,57 +510,57 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TNVALSOBU25 RPerl::Algorithm::Sort::Bubble::number_bubblesort([2.123_443_211_234_432_1, ..., -33.876_587_658_765_875_687_658_765, 1_701.678_9]) lives}
     );
     throws_ok(    # TNVALSOBU30
-        sub { RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0() },
-        "/(ENVAVRV00.*$mode_tagline)|(Usage.*number_bubblesort__typetest0)/"
+        sub { RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0() },
+        "/(ENVAVRV00.*$mode_tagline)|(Usage.*number_bubblesort_typetest0)/"
         ,         # DEV NOTE: 2 different error messages, RPerl & C
-        q{TNVALSOBU30 RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0() throws correct exception}
+        q{TNVALSOBU30 RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0() throws correct exception}
     );
     throws_ok(    # TNVALSOBU31
-        sub { RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0(2) },
+        sub { RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0(2) },
         "/ENVAVRV01.*$mode_tagline/",
-        q{TNVALSOBU31 RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0(2) throws correct exception}
+        q{TNVALSOBU31 RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0(2) throws correct exception}
     );
     throws_ok(    # TNVALSOBU32
         sub {
-            RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0( [ 2.123_443_211_234_432_1, 2_112.4_321, undef, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
+            RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0( [ 2.123_443_211_234_432_1, 2_112.4_321, undef, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
         },
         "/ENVAVRV02.*$mode_tagline/",
-        q{TNVALSOBU32 RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0([2.123_443_211_234_432_1, 2_112.4_321, undef, ..., 1_701.678_9]) throws correct exception}
+        q{TNVALSOBU32 RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0([2.123_443_211_234_432_1, 2_112.4_321, undef, ..., 1_701.678_9]) throws correct exception}
     );
     throws_ok(    # TNVALSOBU33
         sub {
-            RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0(
+            RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0(
                 [ 2.123_443_211_234_432_1, 2_112.4_321, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, 'abcdefg', -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
         },
         "/ENVAVRV03.*$mode_tagline/",
-        q{TNVALSOBU33 RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0([2.123_443_211_234_432_1, ..., 'abcdefg', -33.876_587_658_765_875_687_658_765, 1_701.678_9]) throws correct exception}
+        q{TNVALSOBU33 RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0([2.123_443_211_234_432_1, ..., 'abcdefg', -33.876_587_658_765_875_687_658_765, 1_701.678_9]) throws correct exception}
     );
 
     lives_and(    # TNVALSOBU34
         sub {
 # NEED DELETE OLD CODE
-#            is( RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0( [ 2.123_443_211_234_432_1, 2_112.4_321, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] ),
+#            is( RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0( [ 2.123_443_211_234_432_1, 2_112.4_321, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] ),
 #                '[-877.567_8, -33.876_587_658_765_9, 2.123_443_211_234_43, 23.765_444_444_444_4, 42.456_7, 1_701.678_9, 2_112.432_1]' . $mode_tagline,
-#                q{TNVALSOBU34 RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0([2.123_443_211_234_432_1, ..., -33.876_587_658_765_875_687_658_765, 1_701.678_9]) returns correct value}
+#                q{TNVALSOBU34 RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0([2.123_443_211_234_432_1, ..., -33.876_587_658_765_875_687_658_765, 1_701.678_9]) returns correct value}
 #            );
 
-            my string $tmp_retval = RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0(
+            my string $tmp_retval = RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0(
                 [ 2.123_443_211_234_432_1, 2_112.4_321, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
             like(
                 $tmp_retval,
                 qr/\[-877\.567_8, -33\.876_587_658_765/,
-                q{TNVALSOBU34a RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0([2.123_443_211_234_432_1, ..., -33.876_587_658_765_875_687_658_765, 1_701.678_9]) returns correct value, array beginning}
+                q{TNVALSOBU34a RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0([2.123_443_211_234_432_1, ..., -33.876_587_658_765_875_687_658_765, 1_701.678_9]) returns correct value, array beginning}
             );
             like(
                 $tmp_retval,
                 qr/42\.456_7, 1_701\.678_9, 2_112\.432_1\]/,
-                q{TNVALSOBU34b RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0([2.123_443_211_234_432_1, ..., -33.876_587_658_765_875_687_658_765, 1_701.678_9]) returns correct value, array end}
+                q{TNVALSOBU34b RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0([2.123_443_211_234_432_1, ..., -33.876_587_658_765_875_687_658_765, 1_701.678_9]) returns correct value, array end}
             );
             like( $tmp_retval, qr/$mode_tagline/,
-                q{TNVALSOBU34c RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0([2.123_443_211_234_432_1, ..., -33.876_587_658_765_875_687_658_765, 1_701.678_9]) returns correct value, mode tagline}
+                q{TNVALSOBU34c RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0([2.123_443_211_234_432_1, ..., -33.876_587_658_765_875_687_658_765, 1_701.678_9]) returns correct value, mode tagline}
             );
         },
-        q{TNVALSOBU34 RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0([2.123_443_211_234_432_1, ..., -33.876_587_658_765_875_687_658_765, 1_701.678_9]) lives}
+        q{TNVALSOBU34 RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0([2.123_443_211_234_432_1, ..., -33.876_587_658_765_875_687_658_765, 1_701.678_9]) lives}
     );
 
     # same as TNVALSOBU34, but inside an eval block
@@ -568,34 +568,34 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         sub {
 # NEED DELETE OLD CODE
 #            is( eval {
-#                    my $retval = RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0( [ 2.123_443_211_234_432_1, 2_112.4_321, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
+#                    my $retval = RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0( [ 2.123_443_211_234_432_1, 2_112.4_321, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
 #                    return $retval;
 #                },
 #                '[-877.567_8, -33.876_587_658_765_9, 2.123_443_211_234_43, 23.765_444_444_444_4, 42.456_7, 1_701.678_9, 2_112.432_1]' . $mode_tagline,
-#                q{TNVALSOBU35 eval { my $retval = RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0( [2.123_443_211_234_432_1, ..., 1_701.678_9] ); return $retval; } returns correct value}
+#                q{TNVALSOBU35 eval { my $retval = RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0( [2.123_443_211_234_432_1, ..., 1_701.678_9] ); return $retval; } returns correct value}
 #            );
 
             my string $tmp_retval = eval {
                 my $inner_retval
-                    = RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0(
+                    = RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0(
                     [ 2.123_443_211_234_432_1, 2_112.4_321, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
                 return $inner_retval;
             };
             like(
                 $tmp_retval,
                 qr/\[-877\.567_8, -33\.876_587_658_765/,
-                q{TNVALSOBU35 eval { my $inner_retval = RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0( [2.123_443_211_234_432_1, ..., 1_701.678_9] ); return $inner_retval; } returns correct value, array beginning}
+                q{TNVALSOBU35 eval { my $inner_retval = RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0( [2.123_443_211_234_432_1, ..., 1_701.678_9] ); return $inner_retval; } returns correct value, array beginning}
             );
             like(
                 $tmp_retval,
                 qr/42\.456_7, 1_701\.678_9, 2_112\.432_1\]/,
-                q{TNVALSOBU35 eval { my $inner_retval = RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0( [2.123_443_211_234_432_1, ..., 1_701.678_9] ); return $inner_retval; } returns correct value, array end}
+                q{TNVALSOBU35 eval { my $inner_retval = RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0( [2.123_443_211_234_432_1, ..., 1_701.678_9] ); return $inner_retval; } returns correct value, array end}
             );
             like( $tmp_retval, qr/$mode_tagline/,
-                q{TTNVALSOBU35 eval { my $inner_retval = RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0( [2.123_443_211_234_432_1, ..., 1_701.678_9] ); return $inner_retval; } returns correct value, mode tagline}
+                q{TTNVALSOBU35 eval { my $inner_retval = RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0( [2.123_443_211_234_432_1, ..., 1_701.678_9] ); return $inner_retval; } returns correct value, mode tagline}
             );
         },
-        q{TNVALSOBU35 eval { my $inner_retval = RPerl::Algorithm::Sort::Bubble::number_bubblesort__typetest0( [2.123_443_211_234_432_1, ..., 1_701.678_9] ); return $inner_retval; } lives}
+        q{TNVALSOBU35 eval { my $inner_retval = RPerl::Algorithm::Sort::Bubble::number_bubblesort_typetest0( [2.123_443_211_234_432_1, ..., 1_701.678_9] ); return $inner_retval; } lives}
     );
 }
 

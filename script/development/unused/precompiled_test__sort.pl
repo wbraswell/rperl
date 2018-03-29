@@ -136,11 +136,11 @@ for my integer $i ( 0 .. $i_MAX ) {
 
     #=cut
 
-#	$string_retval = integer_bubblesort__typetest0();  # TIVALSOBU30; error PERLOPS EIVAVRV00, CPPOPS "Usage: main::integer_bubblesort__typetest0(lucky_integers)"
-#	$string_retval = integer_bubblesort__typetest0(2);  # TIVALSOBU31; error EIVAVRV01
-#	$string_retval = integer_bubblesort__typetest0([2, 2112, undef, 23, -877, -33, 1701]);  # TIVALSOBU32; error EIVAVRV02
-#	$string_retval = integer_bubblesort__typetest0([2, 2112, 42, 23, -877, -33, 1701, [23, -42.3]]);  # TIVALSOBU33; error EIVAVRV03
-#	$string_retval = integer_bubblesort__typetest0([2, 2112, 42, 23, -877, -33, 1701]);  # TIVALSOBU34
+#	$string_retval = integer_bubblesort_typetest0();  # TIVALSOBU30; error PERLOPS EIVAVRV00, CPPOPS "Usage: main::integer_bubblesort_typetest0(lucky_integers)"
+#	$string_retval = integer_bubblesort_typetest0(2);  # TIVALSOBU31; error EIVAVRV01
+#	$string_retval = integer_bubblesort_typetest0([2, 2112, undef, 23, -877, -33, 1701]);  # TIVALSOBU32; error EIVAVRV02
+#	$string_retval = integer_bubblesort_typetest0([2, 2112, 42, 23, -877, -33, 1701, [23, -42.3]]);  # TIVALSOBU33; error EIVAVRV03
+#	$string_retval = integer_bubblesort_typetest0([2, 2112, 42, 23, -877, -33, 1701]);  # TIVALSOBU34
 #	print "in precompiled_test__sort.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n";
 
     # [[[ NUMBER TESTS ]]]
@@ -187,11 +187,11 @@ for my integer $i ( 0 .. $i_MAX ) {
 	print "in precompiled_test__sort.pl $i/$i_MAX, have \$run_time = $run_time\n";
 =cut
 
-#	$string_retval = number_bubblesort__typetest0();  # TNVALSOBU30; error PERLOPS ENVAVRV00, CPPOPS "Usage: main::number_bubblesort__typetest0(lucky_numbers)"
-#	$string_retval = number_bubblesort__typetest0(2);  # TNVALSOBU31; error ENVAVRV01
-#	$string_retval = number_bubblesort__typetest0([2.1234432112344321, 2112.4321, undef, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789]);  # TNVALSOBU32; error ENVAVRV02
-#	$string_retval = number_bubblesort__typetest0([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 'abcdefg', -33.876587658765875687658765, 1701.6789]);  # TNVALSOBU33; error ENVAVRV03
-#	$string_retval = number_bubblesort__typetest0([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789]);  # TNVALSOBU34
+#	$string_retval = number_bubblesort_typetest0();  # TNVALSOBU30; error PERLOPS ENVAVRV00, CPPOPS "Usage: main::number_bubblesort_typetest0(lucky_numbers)"
+#	$string_retval = number_bubblesort_typetest0(2);  # TNVALSOBU31; error ENVAVRV01
+#	$string_retval = number_bubblesort_typetest0([2.1234432112344321, 2112.4321, undef, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789]);  # TNVALSOBU32; error ENVAVRV02
+#	$string_retval = number_bubblesort_typetest0([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, 'abcdefg', -33.876587658765875687658765, 1701.6789]);  # TNVALSOBU33; error ENVAVRV03
+#	$string_retval = number_bubblesort_typetest0([2.1234432112344321, 2112.4321, 42.4567, 23.765444444444444444, -877.5678, -33.876587658765875687658765, 1701.6789]);  # TNVALSOBU34
 #	print "in precompiled_test__sort.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n";
 
     croak('Done for now, croaking');

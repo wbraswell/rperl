@@ -200,11 +200,11 @@ string character_to_string(character input_character);
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
-SV* character__typetest0();
-SV* character__typetest1(SV* lucky_character);
+SV* character_typetest0();
+SV* character_typetest1(SV* lucky_character);
 # elif defined __CPP__TYPES
-character character__typetest0();
-character character__typetest1(character lucky_character);
+character character_typetest0();
+character character_typetest1(character lucky_character);
 # endif
 
 #endif

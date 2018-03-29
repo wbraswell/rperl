@@ -60,7 +60,7 @@ our @EXPORT = qw(
     gmp_integer_to_boolean gmp_integer_to_unsigned_integer gmp_integer_to_integer gmp_integer_to_number gmp_integer_to_character gmp_integer_to_string
     boolean_to_gmp_integer integer_to_gmp_integer unsigned_integer_to_gmp_integer number_to_gmp_integer character_to_gmp_integer string_to_gmp_integer
 );
-our @EXPORT_OK = qw(gmp_integer__typetest0 gmp_integer__typetest1);
+our @EXPORT_OK = qw(gmp_integer_typetest0 gmp_integer_typetest1);
 
 # DEV NOTE: never call Math::BigInt->new() without arg, to avoid 'Use of uninitialized value in new' introduced in M::BI v1.999712
 sub new {
@@ -311,21 +311,21 @@ sub string_to_gmp_integer {
 }
 
 # [[[ TYPE TESTING ]]]
-sub gmp_integer__typetest0 {
+sub gmp_integer_typetest0 {
     { my gmp_integer $RETURN_TYPE };
     my gmp_integer $retval = ( 21 / 7 ) + main::RPerl__DataType__Integer__MODE_ID();    # return gmp_integer (not number) value, don't do (22 / 7) etc.
 
-    #    RPerl::diag("in PERLOPS_PERLTYPES gmp_integer__typetest0(), have \$retval = $retval\n");
+    #    RPerl::diag("in PERLOPS_PERLTYPES gmp_integer_typetest0(), have \$retval = $retval\n");
     return ($retval);
 }
-sub gmp_integer__typetest1 {
+sub gmp_integer_typetest1 {
     { my gmp_integer $RETURN_TYPE };
     ( my gmp_integer $lucky_gmp_integer ) = @ARG;
 
     #    ::gmp_integer_CHECK($lucky_gmp_integer);
-    ::gmp_integer_CHECKTRACE( $lucky_gmp_integer, '$lucky_gmp_integer', 'gmp_integer__typetest1()' );
+    ::gmp_integer_CHECKTRACE( $lucky_gmp_integer, '$lucky_gmp_integer', 'gmp_integer_typetest1()' );
 
-    #    RPerl::diag('in PERLOPS_PERLTYPES gmp_integer__typetest1(), received $lucky_gmp_integer = ' . gmp_integer_to_string($lucky_gmp_integer) . "\n");
+    #    RPerl::diag('in PERLOPS_PERLTYPES gmp_integer_typetest1(), received $lucky_gmp_integer = ' . gmp_integer_to_string($lucky_gmp_integer) . "\n");
     return ( ( $lucky_gmp_integer * 2 ) + main::RPerl__DataType__Integer__MODE_ID() );
 }
 

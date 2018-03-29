@@ -148,24 +148,24 @@ string character_to_string(character input_character) {
 
 # ifdef __PERL__TYPES
 
-SV* character__typetest0() {
+SV* character_typetest0() {
 	return newSVpvf("%c", (character) (SvIV(RPerl__DataType__Character__MODE_ID()) + '0'));
 }
 
-SV* character__typetest1(SV* lucky_character) {
+SV* character_typetest1(SV* lucky_character) {
 //	character_CHECK(lucky_character);
-	character_CHECKTRACE(lucky_character, "lucky_character", "character__typetest1()");
-//fprintf(stderr, "in CPPOPS_PERLTYPES character__typetest1(), received lucky_character = %"INTEGER"\n", SvIV(lucky_character));
+	character_CHECKTRACE(lucky_character, "lucky_character", "character_typetest1()");
+//fprintf(stderr, "in CPPOPS_PERLTYPES character_typetest1(), received lucky_character = %"INTEGER"\n", SvIV(lucky_character));
 	return newSVpvf("%c", (character) ((SvPV_nolen(lucky_character))[0] + SvIV(RPerl__DataType__Character__MODE_ID())));
 }
 
 # elif defined __CPP__TYPES
 
-character character__typetest0() {
+character character_typetest0() {
 	return (RPerl__DataType__Character__MODE_ID() + '0');
 }
 
-character character__typetest1(character lucky_character) {
+character character_typetest1(character lucky_character) {
     return (lucky_character + RPerl__DataType__Character__MODE_ID());
 }
 

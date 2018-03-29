@@ -65,9 +65,9 @@ SV* uninherited_Bubble(SV* person);
 SV* uninherited(SV* person);
 
 // TYPE TESTING
-SV* integer_bubblesort__typetest0(SV* lucky_integers);
-SV* number_bubblesort__typetest0(SV* lucky_numbers);
-//SV* string_bubblesort__typetest0(SV* people);
+SV* integer_bubblesort_typetest0(SV* lucky_integers);
+SV* number_bubblesort_typetest0(SV* lucky_numbers);
+//SV* string_bubblesort_typetest0(SV* people);
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
 SV* RPerl__Algorithm__Sort__Bubble__MODE_ID() { return newSViv(1); }  // CPPOPS_PERLTYPES is 1
@@ -129,9 +129,9 @@ string uninherited_Bubble(string person);
 string uninherited(string person);
 
 // TYPE TESTING
-string integer_bubblesort__typetest0(integer_arrayref lucky_integers);
-string number_bubblesort__typetest0(number_arrayref lucky_numbers);
-//string string_bubblesort__typetest0(string_arrayref people);
+string integer_bubblesort_typetest0(integer_arrayref lucky_integers);
+string number_bubblesort_typetest0(number_arrayref lucky_numbers);
+//string string_bubblesort_typetest0(string_arrayref people);
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
 integer RPerl__Algorithm__Sort__Bubble__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2

@@ -20,7 +20,7 @@ use RPerl::Test;
 use Test::More tests => 247;
 use Test::Exception;
 use Test::Number::Delta;
-use RPerl::DataStructure::Hash::SubTypes qw(integer_hashref__typetest0 integer_hashref__typetest1 number_hashref__typetest0 number_hashref__typetest1 string_hashref__typetest0 string_hashref__typetest1);
+use RPerl::DataStructure::Hash::SubTypes qw(integer_hashref_typetest0 integer_hashref_typetest1 number_hashref_typetest0 number_hashref_typetest1 string_hashref_typetest0 string_hashref_typetest1);
 
 # [[[ OPERATIONS ]]]
 
@@ -229,18 +229,18 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TIVHVRV21 integer_hashref_to_string({a_key => 2, b_key => 2_112, c_key => 42, d_key => 23, e_key => -877, f_key => -33, g_key => 1_701}) lives}
     );
     throws_ok(    # TIVHVRV30
-        sub { integer_hashref__typetest0() },
-        "/(EIVHVRV00.*$mode_tagline)|(Usage.*integer_hashref__typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
-        q{TIVHVRV30 integer_hashref__typetest0() throws correct exception}
+        sub { integer_hashref_typetest0() },
+        "/(EIVHVRV00.*$mode_tagline)|(Usage.*integer_hashref_typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        q{TIVHVRV30 integer_hashref_typetest0() throws correct exception}
     );
     throws_ok(                                                                 # TIVHVRV31
-        sub { integer_hashref__typetest0(2) },
+        sub { integer_hashref_typetest0(2) },
         "/EIVHVRV01.*$mode_tagline/",
-        q{TIVHVRV31 integer_hashref__typetest0(2) throws correct exception}
+        q{TIVHVRV31 integer_hashref_typetest0(2) throws correct exception}
     );
     throws_ok(                                                                 # TIVHVRV32
         sub {
-            integer_hashref__typetest0(
+            integer_hashref_typetest0(
                 {   'binary'       => 2,
                     'rush'         => 2_112,
                     'ERROR_FUNKEY' => undef,
@@ -253,11 +253,11 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             );
         },
         "/EIVHVRV02.*$mode_tagline/",
-        q{TIVHVRV32 integer_hashref__typetest0({'binary' => 2, 'rush' => 2_112, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1_701}) throws correct exception}
+        q{TIVHVRV32 integer_hashref_typetest0({'binary' => 2, 'rush' => 2_112, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1_701}) throws correct exception}
     );
     throws_ok(    # TIVHVRV33
         sub {
-            integer_hashref__typetest0(
+            integer_hashref_typetest0(
                 {   'binary'       => 2,
                     'rush'         => 2_112,
                     'ERROR_FUNKEY' => 'abcdefg',
@@ -270,12 +270,12 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             );
         },
         "/EIVHVRV03.*$mode_tagline/",
-        q{TIVHVRV33 integer_hashref__typetest0({'binary' => 2, 'rush' => 2_112, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1_701}) throws correct exception}
+        q{TIVHVRV33 integer_hashref_typetest0({'binary' => 2, 'rush' => 2_112, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1_701}) throws correct exception}
     );
     lives_and(    # TIVHVRV34
         sub {
             like(
-                integer_hashref__typetest0(
+                integer_hashref_typetest0(
                     {   'binary' => 2,
                         'rush'   => 2_112,
                         'answer' => 42,
@@ -288,26 +288,26 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 q{/^\\\{(?=.*'binary' => 2\b)(?=.*'rush' => 2_112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => -33\b)(?=.*'ncc' => 1_701\b).*\}}
                     . $mode_tagline . q{$/m},
 
-#                q{TIVHVRV34 integer_hashref__typetest0({'binary' => 2, 'rush' => 2_112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => -33, 'ncc' => 1_701}) returns correct value}
-                q{TIVHVRV34 integer_hashref__typetest0({'binary' => 2, 'rush' => 2_112, ..., 'ncc' => 1_701}) returns correct value}
+#                q{TIVHVRV34 integer_hashref_typetest0({'binary' => 2, 'rush' => 2_112, 'answer' => 42, 'fnord' => 23, 'units' => -877, 'degree' => -33, 'ncc' => 1_701}) returns correct value}
+                q{TIVHVRV34 integer_hashref_typetest0({'binary' => 2, 'rush' => 2_112, ..., 'ncc' => 1_701}) returns correct value}
             );
         },
-        q{TIVHVRV34 integer_hashref__typetest0({'binary' => 2, 'rush' => 2_112, ..., 'ncc' => 1_701}) lives}
+        q{TIVHVRV34 integer_hashref_typetest0({'binary' => 2, 'rush' => 2_112, ..., 'ncc' => 1_701}) lives}
     );
     lives_and(    # TIVHVRV40
         sub {
             is_deeply(
-                integer_hashref__typetest1(5),
+                integer_hashref_typetest1(5),
                 {   "$mode_tagline\_funkey2" => 10,
                     "$mode_tagline\_funkey3" => 15,
                     "$mode_tagline\_funkey4" => 20,
                     "$mode_tagline\_funkey1" => 5,
                     "$mode_tagline\_funkey0" => 0
                 },
-                q{TIVHVRV40 integer_hashref__typetest1(5) returns correct value}
+                q{TIVHVRV40 integer_hashref_typetest1(5) returns correct value}
             );
         },
-        q{TIVHVRV40 integer_hashref__typetest1(5) lives}
+        q{TIVHVRV40 integer_hashref_typetest1(5) lives}
     );
 
     # [[[ NUMBER HASH TESTS ]]]
@@ -471,18 +471,18 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TNVHVRV23 number_hashref_to_string(a_key => 2.123_443_211_234_432_1, b_key => 2_112.432_1, c_key => 42.456_7, d_key => 23.765_444_444_444_444_444, e_key => -877.567_8, f_key => -33.876_587_658_765_875_687_658_765, g_key => 1_701.678_9) lives}
     );
     throws_ok(    # TNVHVRV30
-        sub { number_hashref__typetest0() },
-        "/(ENVHVRV00.*$mode_tagline)|(Usage.*number_hashref__typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
-        q{TNVHVRV30 number_hashref__typetest0() throws correct exception}
+        sub { number_hashref_typetest0() },
+        "/(ENVHVRV00.*$mode_tagline)|(Usage.*number_hashref_typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        q{TNVHVRV30 number_hashref_typetest0() throws correct exception}
     );
     throws_ok(                                                                # TNVHVRV31
-        sub { number_hashref__typetest0(2) },
+        sub { number_hashref_typetest0(2) },
         "/ENVHVRV01.*$mode_tagline/",
-        q{TNVHVRV31 number_hashref__typetest0(2) throws correct exception}
+        q{TNVHVRV31 number_hashref_typetest0(2) throws correct exception}
     );
     throws_ok(                                                                # TNVHVRV32
         sub {
-            number_hashref__typetest0(
+            number_hashref_typetest0(
                 {   'binary'       => 2.123_443_211_234_432_1,
                     'rush'         => 2_112.432_1,
                     'ERROR_FUNKEY' => undef,
@@ -495,11 +495,11 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             );
         },
         "/ENVHVRV02.*$mode_tagline/",
-        q{TNVHVRV32 number_hashref__typetest0({'binary' => 2.123_443_211_234_432_1, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1_701.678_9}) throws correct exception}
+        q{TNVHVRV32 number_hashref_typetest0({'binary' => 2.123_443_211_234_432_1, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1_701.678_9}) throws correct exception}
     );
     throws_ok(    # TNVHVRV33
         sub {
-            number_hashref__typetest0(
+            number_hashref_typetest0(
                 {   'binary'       => 2.123_443_211_234_432_1,
                     'rush'         => 2_112.432_1,
                     'ERROR_FUNKEY' => 'abcdefg',
@@ -512,12 +512,12 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             );
         },
         "/ENVHVRV03.*$mode_tagline/",
-        q{TNVHVRV33 number_hashref__typetest0({'binary' => 2.123_443_211_234_432_1, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1_701.678_9}) throws correct exception}
+        q{TNVHVRV33 number_hashref_typetest0({'binary' => 2.123_443_211_234_432_1, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1_701.678_9}) throws correct exception}
     );
     lives_and(    # TNVHVRV34
         sub {
             like(
-                number_hashref__typetest0(
+                number_hashref_typetest0(
                     {   'binary' => 2.123_443_211_234_432_1,
                         'rush'   => 2_112.432_1,
                         'answer' => 42.456_7,
@@ -532,26 +532,26 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 #                q{/^\\\{(?=.*'binary' => 2\.123_443_211_234_43\b)(?=.*'rush' => 2_112\.432_1\b)(?=.*'answer' => 42\.456_7\b)(?=.*'fnord' => 23\.765_444_444_444_4\b)(?=.*'units' => -877\.567_8\b)(?=.*'degree' => -33\.8765876587659\b)(?=.*'ncc' => 1_701\.678_9\b).*\}}
                 q{/^\\\{(?=.*'binary' => 2\.123_443_211_234)(?=.*'rush' => 2_112\.432_1)(?=.*'answer' => 42\.456_7)(?=.*'fnord' => 23\.765_444_444_44)(?=.*'units' => -877\.567_8)(?=.*'degree' => -33\.876_587_658_76)(?=.*'ncc' => 1_701\.678_9).*\}}
                     . $mode_tagline . q{$/m},
-                q{TNVHVRV34 number_hashref__typetest0({'binary' => 2.123_443_211_234_432_1, 'rush' => 2_112.432_1, ..., 'ncc' => 1_701.678_9}) returns correct value}
+                q{TNVHVRV34 number_hashref_typetest0({'binary' => 2.123_443_211_234_432_1, 'rush' => 2_112.432_1, ..., 'ncc' => 1_701.678_9}) returns correct value}
             );
         },
-        q{TNVHVRV34 number_hashref__typetest0({'binary' => 2.123_443_211_234_432_1, 'rush' => 2_112.432_1, ..., 'ncc' => 1_701.678_9}) lives}
+        q{TNVHVRV34 number_hashref_typetest0({'binary' => 2.123_443_211_234_432_1, 'rush' => 2_112.432_1, ..., 'ncc' => 1_701.678_9}) lives}
     );
     lives_and(    # TNVHVRV40
         sub {
             # NEED DELETE OLD CODE
             #            is_deeply(
-            #                number_hashref__typetest1(5),
+            #                number_hashref_typetest1(5),
             #                {   "$mode_tagline\_funkey2" => 10.246_913_578,
             #                    "$mode_tagline\_funkey3" => 15.370_370_367,
             #                    "$mode_tagline\_funkey4" => 20.493_827_156,
             #                    "$mode_tagline\_funkey1" => 5.123_456_789,
             #                    "$mode_tagline\_funkey0" => 0
             #                },
-            #                q{TNVHVRV40 number_hashref__typetest1(5) returns correct value}
+            #                q{TNVHVRV40 number_hashref_typetest1(5) returns correct value}
             #            );
 
-            my number_hashref $tmp_retval    = number_hashref__typetest1(5);
+            my number_hashref $tmp_retval    = number_hashref_typetest1(5);
             my number_hashref $correct_retval = {
                 "$mode_tagline\_funkey2" => 10.246_913_578,
                 "$mode_tagline\_funkey3" => 15.370_370_367,
@@ -561,16 +561,16 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             };
             foreach my string $correct_retval_key ( keys %{$correct_retval} ) {
                 ok( ( ( exists $tmp_retval->{$correct_retval_key} ) and ( defined $tmp_retval->{$correct_retval_key} ) ),
-                    q{TNVHVRV40a number_hashref__typetest1(5) returns defined value, at key } . $correct_retval_key
+                    q{TNVHVRV40a number_hashref_typetest1(5) returns defined value, at key } . $correct_retval_key
                 );
                 delta_ok(
                     $correct_retval->{$correct_retval_key},
                     $tmp_retval->{$correct_retval_key},
-                    q{TNVHVRV40b number_hashref__typetest1(5) returns correct value, at key } . $correct_retval_key
+                    q{TNVHVRV40b number_hashref_typetest1(5) returns correct value, at key } . $correct_retval_key
                 );
             }
         },
-        q{TNVHVRV40 number_hashref__typetest1(5) lives}
+        q{TNVHVRV40 number_hashref_typetest1(5) lives}
     );
 
     # [[[ STRING HASH TESTS ]]]
@@ -772,18 +772,18 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TPVHVRV25 string_hashref_to_string({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., "STRING_NOT_HASH" => "{buzz => 5}"}) lives}
     );
     throws_ok(       # TPVHVRV30
-        sub { string_hashref__typetest0() },
-        "/(EPVHVRV00.*$mode_tagline)|(Usage.*string_hashref__typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
-        q{TPVHVRV30 string_hashref__typetest0() throws correct exception}
+        sub { string_hashref_typetest0() },
+        "/(EPVHVRV00.*$mode_tagline)|(Usage.*string_hashref_typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        q{TPVHVRV30 string_hashref_typetest0() throws correct exception}
     );
     throws_ok(                                                                # TPVHVRV31
-        sub { string_hashref__typetest0(2) },
+        sub { string_hashref_typetest0(2) },
         "/EPVHVRV01.*$mode_tagline/",
-        q{TPVHVRV31 string_hashref__typetest0(2) throws correct exception}
+        q{TPVHVRV31 string_hashref_typetest0(2) throws correct exception}
     );
     throws_ok(                                                                # TPVHVRV32
         sub {
-            string_hashref__typetest0(
+            string_hashref_typetest0(
                 {   'kryptonian_manofsteel_clarkkent'            => 'Superman',
                     'gothamite_darkknight_brucewayne'            => 'Batman',
                     'amazonian_dianathemyscira_dianaprince'      => 'Wonder Woman',
@@ -796,11 +796,11 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             );
         },
         "/EPVHVRV02.*$mode_tagline/",
-        q{TPVHVRV32 string_hashref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'UNDEF_NOT_STRING' => undef}) throws correct exception}
+        q{TPVHVRV32 string_hashref_typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'UNDEF_NOT_STRING' => undef}) throws correct exception}
     );
     throws_ok(    # TPVHVRV33
         sub {
-            string_hashref__typetest0(
+            string_hashref_typetest0(
                 {   'kryptonian_manofsteel_clarkkent'            => 'Superman',
                     'gothamite_darkknight_brucewayne'            => 'Batman',
                     'amazonian_dianathemyscira_dianaprince'      => 'Wonder Woman',
@@ -813,12 +813,12 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             );
         },
         "/EPVHVRV03.*$mode_tagline/",
-        q{TPVHVRV33 string_hashref__typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'ARRAY_NOT_STRING' => [23, -42.3]}) throws correct exception}
+        q{TPVHVRV33 string_hashref_typetest0({'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'ARRAY_NOT_STRING' => [23, -42.3]}) throws correct exception}
     );
     lives_and(    # TPVHVRV34
         sub {
             like(
-                string_hashref__typetest0(
+                string_hashref_typetest0(
                     {   'stuckinaworldhenevercreated'                => 'Howard The Duck',
                         'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman',
                         'greenmartian_bloodwynd_jonnjonnz'           => 'Martian Manhunter'
@@ -826,25 +826,25 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 ),
                 q{/^\\\{(?=.*'stuckinaworldhenevercreated' => 'Howard The Duck')(?=.*'atlanteanhybrid_aquaticace_arthurcurryorin' => 'Aquaman')(?=.*'greenmartian_bloodwynd_jonnjonnz' => 'Martian Manhunter').*\}}
                     . $mode_tagline . q{$/m},
-                q{TPVHVRV34 string_hashref__typetest0({'stuckinaworldhenevercreated' => 'Howard The Duck', ...}) returns correct value}
+                q{TPVHVRV34 string_hashref_typetest0({'stuckinaworldhenevercreated' => 'Howard The Duck', ...}) returns correct value}
             );
         },
-        q{TPVHVRV34 string_hashref__typetest0({'stuckinaworldhenevercreated' => 'Howard The Duck', ...}) lives}
+        q{TPVHVRV34 string_hashref_typetest0({'stuckinaworldhenevercreated' => 'Howard The Duck', ...}) lives}
     );
     lives_and(    # TPVHVRV40
         sub {
             is_deeply(
-                string_hashref__typetest1(5),
+                string_hashref_typetest1(5),
                 {   "$mode_tagline\_Luker_key3" => 'Jeffy Ten! 3/4',
                     "$mode_tagline\_Luker_key2" => 'Jeffy Ten! 2/4',
                     "$mode_tagline\_Luker_key1" => 'Jeffy Ten! 1/4',
                     "$mode_tagline\_Luker_key4" => 'Jeffy Ten! 4/4',
                     "$mode_tagline\_Luker_key0" => 'Jeffy Ten! 0/4'
                 },
-                q{TPVHVRV40 string_hashref__typetest1(5) returns correct value}
+                q{TPVHVRV40 string_hashref_typetest1(5) returns correct value}
             );
         },
-        q{TPVHVRV40 string_hashref__typetest1(5) lives}
+        q{TPVHVRV40 string_hashref_typetest1(5) lives}
     );
 }
 

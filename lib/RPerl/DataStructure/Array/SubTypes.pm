@@ -14,7 +14,7 @@ our $VERSION = 0.013_000;
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(arrayref_CHECK arrayref_CHECKTRACE integer_arrayref_CHECK integer_arrayref_CHECKTRACE number_arrayref_CHECK number_arrayref_CHECKTRACE string_arrayref_CHECK string_arrayref_CHECKTRACE integer_arrayref_to_string number_arrayref_to_string string_arrayref_to_string);
-our @EXPORT_OK = qw(integer_arrayref__typetest0 integer_arrayref__typetest1 number_arrayref__typetest0 number_arrayref__typetest1 string_arrayref__typetest0 string_arrayref__typetest1);
+our @EXPORT_OK = qw(integer_arrayref_typetest0 integer_arrayref_typetest1 number_arrayref_typetest0 number_arrayref_typetest1 string_arrayref_typetest0 string_arrayref_typetest1);
 
 # [[[ INCLUDES ]]]
 use RPerl::DataType::Integer;  # integer_CHECKTRACE
@@ -253,36 +253,36 @@ sub integer_arrayref_to_string {
 
 # [[[ TYPE TESTING ]]]
 
-sub integer_arrayref__typetest0 {
+sub integer_arrayref_typetest0 {
     { my string $RETURN_TYPE };
     ( my integer_arrayref $lucky_integers) = @ARG;
 
     #    integer_arrayref_CHECK($lucky_integers);
     integer_arrayref_CHECKTRACE( $lucky_integers, '$lucky_integers',
-        'integer_arrayref__typetest0()' );
+        'integer_arrayref_typetest0()' );
 
 #    my integer $how_lucky = scalar @{$lucky_integers};
 #    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
 #        my $lucky_integer = $lucky_integers->[$i];
-#        RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref__typetest0(), have lucky integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BARBAT\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_typetest0(), have lucky integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BARBAT\n");
 #    }
-#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref__typetest0(), bottom of subroutine\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_typetest0(), bottom of subroutine\n");
     return (
         integer_arrayref_to_string($lucky_integers) . 'PERLOPS_PERLTYPES' );
 }
 
-sub integer_arrayref__typetest1 {
+sub integer_arrayref_typetest1 {
     { my integer_arrayref $RETURN_TYPE };
     ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
     integer_CHECKTRACE( $my_size, '$my_size',
-        'integer_arrayref__typetest1()' );
+        'integer_arrayref_typetest1()' );
     my integer_arrayref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i] = $i * 5;
 
-#        RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref__typetest1(), setting element $i/" . ( $my_size - 1 ) . ' = ' . $new_array->[$i] . ", BARBAT\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_typetest1(), setting element $i/" . ( $my_size - 1 ) . ' = ' . $new_array->[$i] . ", BARBAT\n");
     }
     return ($new_array);
 }
@@ -423,36 +423,36 @@ sub number_arrayref_to_string {
 
 # [[[ TYPE TESTING ]]]
 
-sub number_arrayref__typetest0 {
+sub number_arrayref_typetest0 {
     { my string $RETURN_TYPE };
     ( my number_arrayref $lucky_numbers) = @ARG;
 
     #    number_arrayref_CHECK($lucky_numbers);
     number_arrayref_CHECKTRACE( $lucky_numbers, '$lucky_numbers',
-        'number_arrayref__typetest0()' );
+        'number_arrayref_typetest0()' );
 
 #    my integer $how_lucky = scalar @{$lucky_numbers};
 #    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
 #        my $lucky_number = $lucky_numbers->[$i];
-#        RPerl::diag("in PERLOPS_PERLTYPES number_arrayref__typetest0(), have lucky number $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_numbers->[$i] . ", BARBAZ\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_typetest0(), have lucky number $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_numbers->[$i] . ", BARBAZ\n");
 #    }
-#    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref__typetest0(), bottom of subroutine\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_typetest0(), bottom of subroutine\n");
     return (
         number_arrayref_to_string($lucky_numbers) . 'PERLOPS_PERLTYPES' );
 }
 
-sub number_arrayref__typetest1 {
+sub number_arrayref_typetest1 {
     { my number_arrayref $RETURN_TYPE };
     ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
     integer_CHECKTRACE( $my_size, '$my_size',
-        'number_arrayref__typetest1()' );
+        'number_arrayref_typetest1()' );
     my number_arrayref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i] = $i * 5.123456789;
 
-#        RPerl::diag("in PERLOPS_PERLTYPES number_arrayref__typetest1(), setting element $i/" . ( $my_size - 1 ) . ' = ' . $new_array->[$i] . ", BARBAZ\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_typetest1(), setting element $i/" . ( $my_size - 1 ) . ' = ' . $new_array->[$i] . ", BARBAZ\n");
     }
     return ($new_array);
 }
@@ -600,36 +600,36 @@ sub string_arrayref_to_string {
 
 # [[[ TYPE TESTING ]]]
 
-sub string_arrayref__typetest0 {
+sub string_arrayref_typetest0 {
     { my string $RETURN_TYPE };
     ( my string_arrayref $people) = @ARG;
 
     #    string_arrayref_CHECK($people);
     string_arrayref_CHECKTRACE( $people, '$people',
-        'string_arrayref__typetest0()' );
+        'string_arrayref_typetest0()' );
 
 #    my integer $how_crowded = scalar @{$people};
 #    for my integer $i ( 0 .. ( $how_crowded - 1 ) ) {
 #        my $person = $people->[$i];
-#        RPerl::diag("in PERLOPS_PERLTYPES string_arrayref__typetest0(), have person $i/" . ( $how_crowded - 1 ) . ' = ' . $people->[$i] . ", BARBAR\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_typetest0(), have person $i/" . ( $how_crowded - 1 ) . ' = ' . $people->[$i] . ", BARBAR\n");
 #    }
-#    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref__typetest0(), bottom of subroutine\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_typetest0(), bottom of subroutine\n");
     return ( string_arrayref_to_string($people) . 'PERLOPS_PERLTYPES' );
 }
 
-sub string_arrayref__typetest1 {
+sub string_arrayref_typetest1 {
     { my string_arrayref $RETURN_TYPE };
     ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
     integer_CHECKTRACE( $my_size, '$my_size',
-        'string_arrayref__typetest1()' );
+        'string_arrayref_typetest1()' );
     my string_arrayref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i]
             = "Jeffy Ten! $i/" . ( $my_size - 1 ) . ' PERLOPS_PERLTYPES';
 
-#        RPerl::diag("in PERLOPS_PERLTYPES string_arrayref__typetest1(), bottom of for() loop, have i = $i, just set another Jeffy, BARBAR\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_typetest1(), bottom of for() loop, have i = $i, just set another Jeffy, BARBAR\n");
     }
     return ($new_array);
 }

@@ -205,11 +205,11 @@ string number_to_string_CPPTYPES(number input_number);
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
-SV* number__typetest0();
-SV* number__typetest1(SV* lucky_number);
+SV* number_typetest0();
+SV* number_typetest1(SV* lucky_number);
 # elif defined __CPP__TYPES
-number number__typetest0();
-number number__typetest1(number lucky_number);
+number number_typetest0();
+number number_typetest1(number lucky_number);
 # endif
 
 #endif

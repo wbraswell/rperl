@@ -48,7 +48,7 @@ use warnings;
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(integer_CHECK integer_CHECKTRACE integer_to_boolean integer_to_unsigned_integer integer_to_number integer_to_character integer_to_string);
-our @EXPORT_OK = qw(integer__typetest0 integer__typetest1);
+our @EXPORT_OK = qw(integer_typetest0 integer_typetest1);
 
 # [[[ TYPE-CHECKING ]]]
 sub integer_CHECK {
@@ -156,20 +156,20 @@ sub integer_to_string {
 }
 
 # [[[ TYPE TESTING ]]]
-sub integer__typetest0 {
+sub integer_typetest0 {
     { my integer $RETURN_TYPE };
     my integer $retval = ( 21 / 7 ) + main::RPerl__DataType__Integer__MODE_ID();    # return integer (not number) value, don't do (22 / 7) etc.
 
-    #    RPerl::diag("in PERLOPS_PERLTYPES integer__typetest0(), have \$retval = $retval\n");
+    #    RPerl::diag("in PERLOPS_PERLTYPES integer_typetest0(), have \$retval = $retval\n");
     return ($retval);
 }
-sub integer__typetest1 {
+sub integer_typetest1 {
     { my integer $RETURN_TYPE };
     ( my integer $lucky_integer ) = @ARG;
 #    integer_CHECK($lucky_integer);
-    integer_CHECKTRACE( $lucky_integer, '$lucky_integer', 'integer__typetest1()' );
+    integer_CHECKTRACE( $lucky_integer, '$lucky_integer', 'integer_typetest1()' );
 
-    #    RPerl::diag('in PERLOPS_PERLTYPES integer__typetest1(), received $lucky_integer = ' . integer_to_string($lucky_integer) . "\n");
+    #    RPerl::diag('in PERLOPS_PERLTYPES integer_typetest1(), received $lucky_integer = ' . integer_to_string($lucky_integer) . "\n");
     return ( ( $lucky_integer * 2 ) + main::RPerl__DataType__Integer__MODE_ID() );
 }
 

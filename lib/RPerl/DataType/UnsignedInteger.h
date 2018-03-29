@@ -199,11 +199,11 @@ string unsigned_integer_to_string_CPPTYPES(unsigned_integer input_unsigned_integ
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
-SV* unsigned_integer__typetest0();
-SV* unsigned_integer__typetest1(SV* lucky_unsigned_integer);
+SV* unsigned_integer_typetest0();
+SV* unsigned_integer_typetest1(SV* lucky_unsigned_integer);
 # elif defined __CPP__TYPES
-unsigned_integer unsigned_integer__typetest0();
-unsigned_integer unsigned_integer__typetest1(unsigned_integer lucky_unsigned_integer);
+unsigned_integer unsigned_integer_typetest0();
+unsigned_integer unsigned_integer_typetest1(unsigned_integer lucky_unsigned_integer);
 # endif
 
 #endif

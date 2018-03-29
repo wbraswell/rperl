@@ -21,5 +21,5 @@ print Dumper( \%main:: );
 
 use Math::BigInt lib => 'GMP';
 my $tmp1 = Math::BigInt->new(1234567890);
-print 'in gmp_symtab_dump.pl, have gmp_integer__typetest0() = ' . "\n" . gmp_integer__typetest0() . "\n";
+print 'in gmp_symtab_dump.pl, have gmp_integer_typetest0() = ' . "\n" . gmp_integer_typetest0() . "\n";
 print 'in gmp_symtab_dump.pl, have gmp_integer_to_integer($tmp1->{value}) = ' . "\n" . gmp_integer_to_integer($tmp1->{value}) . "\n";

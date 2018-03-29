@@ -243,29 +243,29 @@ string integer_to_string_CPPTYPES(integer input_integer)
 
 # ifdef __PERL__TYPES
 
-SV* integer__typetest0() {
+SV* integer_typetest0() {
 	SV* retval = newSViv((21 / 7) + SvIV(RPerl__DataType__Integer__MODE_ID()));
-//fprintf(stderr, "in CPPOPS_PERLTYPES integer__typetest0(), have retval = %"INTEGER"\n", (integer)SvIV(retval));
+//fprintf(stderr, "in CPPOPS_PERLTYPES integer_typetest0(), have retval = %"INTEGER"\n", (integer)SvIV(retval));
 	return retval;
 }
 
-SV* integer__typetest1(SV* lucky_integer) {
+SV* integer_typetest1(SV* lucky_integer) {
 //	integer_CHECK(lucky_integer);
-	integer_CHECKTRACE(lucky_integer, "lucky_integer", "integer__typetest1()");
-//fprintf(stderr, "in CPPOPS_PERLTYPES integer__typetest1(), received lucky_integer = %"INTEGER"\n", (integer)SvIV(lucky_integer));
+	integer_CHECKTRACE(lucky_integer, "lucky_integer", "integer_typetest1()");
+//fprintf(stderr, "in CPPOPS_PERLTYPES integer_typetest1(), received lucky_integer = %"INTEGER"\n", (integer)SvIV(lucky_integer));
 	return newSViv((SvIV(lucky_integer) * 2) + SvIV(RPerl__DataType__Integer__MODE_ID()));
 }
 
 # elif defined __CPP__TYPES
 
-integer integer__typetest0() {
+integer integer_typetest0() {
 	integer retval = (21 / 7) + RPerl__DataType__Integer__MODE_ID();
-//fprintf(stderr, "in CPPOPS_CPPTYPES integer__typetest0(), have retval = %"INTEGER"\n", retval);
+//fprintf(stderr, "in CPPOPS_CPPTYPES integer_typetest0(), have retval = %"INTEGER"\n", retval);
 	return retval;
 }
 
-integer integer__typetest1(integer lucky_integer) {
-//fprintf(stderr, "in CPPOPS_CPPTYPES integer__typetest1(), received lucky_integer = %"INTEGER"\n", lucky_integer);
+integer integer_typetest1(integer lucky_integer) {
+//fprintf(stderr, "in CPPOPS_CPPTYPES integer_typetest1(), received lucky_integer = %"INTEGER"\n", lucky_integer);
 	return (lucky_integer * 2) + RPerl__DataType__Integer__MODE_ID();
 }
 

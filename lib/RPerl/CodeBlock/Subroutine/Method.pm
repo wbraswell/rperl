@@ -61,6 +61,7 @@ sub ast_to_rperl__generate {
 
 
 
+# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 =DISABLE_NEED_FIX
     if ((substr $name, 0, 1) eq '_') {
         die 'ERROR ECOGEASRP09, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: method name ' . ($name)
@@ -148,6 +149,7 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
 
 
 
+# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 =DISABLE_NEED_FIX
     if ((substr $name, 0, 1) eq '_') {
         die 'ERROR ECOGEASCP09, CODE GENERATOR, ABSTRACT SYNTAX TO C++: method name ' . ($name)

@@ -186,11 +186,24 @@ sub ast_to_rperl__generate {
 
         $property_key = $property_0->{children}->[0]->{children}->[0];
         $property_key =~ s/^(\w+)\s*$/$1/gxms;    # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
+
+
+
+
+
+# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+=DISABLE_NEED_FIX
         if ( $property_key !~ /^[a-z]/ ) {
             die 'ERROR ECOGEASRP24, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
                 . $property_key . q{'}
                 . ' does not start with a lowercase letter a-z, dying' . "\n";
         }
+=cut
+
+
+
+
+
         $property_fat_arrow  = $property_0->{children}->[1];
         $property_type_inner = $property_0->{children}->[2];
         $property_name       = $property_type_inner->{children}->[3]->{children}->[0];
@@ -305,11 +318,21 @@ sub ast_to_rperl__generate {
                 $i++;
                 $property_key = $property->{children}->[0]->{children}->[0];
                 $property_key =~ s/^(\w+)\s*$/$1/gxms;              # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
+
+
+
+
+# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+=DISABLE_NEED_FIX
                 if ( $property_key !~ /^[a-z]/ ) {
                     die 'ERROR ECOGEASRP24, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
                         . $property_key . q{'}
                         . ' does not start with a lowercase letter a-z, dying' . "\n";
                 }
+=cut
+
+
+
                 $property_fat_arrow  = $property->{children}->[1];
                 $property_type_inner = $property->{children}->[2];
                 $property_name       = $property_type_inner->{children}->[3]->{children}->[0];

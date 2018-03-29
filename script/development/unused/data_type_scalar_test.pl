@@ -67,21 +67,21 @@ for my integer $i ( 0 .. $i_MAX ) {
 #    $string_retval = integer_to_string(-1_234_567_890_000);  # TIV09; error EIV01
 #    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n");
 
-#    $integer_retval = integer__typetest0();  # TIV10
+#    $integer_retval = integer_typetest0();  # TIV10
 #    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$integer_retval = $integer_retval\n");
     
 
-#    $integer_retval = integer__typetest1();  # TIV20; error PERLOPS EIV00, CPPOPS "Usage: main::integer__typetest1(lucky_integer)"
-#    $integer_retval = integer__typetest1(undef);  # TIV21; error EIV00
-#    $integer_retval = integer__typetest1(3);  # TIV22
-#    $integer_retval = integer__typetest1(-17);  # TIV23
-#    $integer_retval = integer__typetest1(-17.3);  # TIV24; error EIV01
-#    $integer_retval = integer__typetest1('-17.3');  # TIV25; error EIV01
-#    $integer_retval = integer__typetest1([3]);  # TIV26; error EIV01
-#    $integer_retval = integer__typetest1({a_key => 3});  # TIV27; error EIV01
-##    $integer_retval = integer__typetest1(-1_234_567_890);  # NOT TEST-WORTHY: arithmetic overflow, incorrect results
-#    $integer_retval = integer__typetest1(-234_567_890);  # TIV28
-#    $integer_retval = integer__typetest1(-1_234_567_890_000);  # TIV29; error EIV01
+#    $integer_retval = integer_typetest1();  # TIV20; error PERLOPS EIV00, CPPOPS "Usage: main::integer_typetest1(lucky_integer)"
+#    $integer_retval = integer_typetest1(undef);  # TIV21; error EIV00
+#    $integer_retval = integer_typetest1(3);  # TIV22
+#    $integer_retval = integer_typetest1(-17);  # TIV23
+#    $integer_retval = integer_typetest1(-17.3);  # TIV24; error EIV01
+#    $integer_retval = integer_typetest1('-17.3');  # TIV25; error EIV01
+#    $integer_retval = integer_typetest1([3]);  # TIV26; error EIV01
+#    $integer_retval = integer_typetest1({a_key => 3});  # TIV27; error EIV01
+##    $integer_retval = integer_typetest1(-1_234_567_890);  # NOT TEST-WORTHY: arithmetic overflow, incorrect results
+#    $integer_retval = integer_typetest1(-234_567_890);  # TIV28
+#    $integer_retval = integer_typetest1(-1_234_567_890_000);  # TIV29; error EIV01
 #    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$integer_retval = $integer_retval\n");
 
     # [[[ NUMBER TESTS ]]]
@@ -98,20 +98,20 @@ for my integer $i ( 0 .. $i_MAX ) {
     $string_retval = number_to_string(1_234_567.890_123_456);  # TNV08
     RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$string_retval = '$string_retval'\n");
 
-#    $number_retval = number__typetest0();  # TNV10
+#    $number_retval = number_typetest0();  # TNV10
 #    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n");
 
     croak('done');
 
-#    $number_retval = number__typetest1();  # TNV20; error PERLOPS ENV00, CPPOPS "Usage: main::number__typetest1(lucky_number)"
-#    $number_retval = number__typetest1(undef);  # TNV21; error ENV00
-#    $number_retval = number__typetest1(3);  # TNV22
-#    $number_retval = number__typetest1(-17);  # TNV23
-#    $number_retval = number__typetest1(-17.3);  # TNV24
-#    $number_retval = number__typetest1('-17.3');  # TNV25; error ENV01
-#    $number_retval = number__typetest1([3]);  # TNV26; error ENV01
-#    $number_retval = number__typetest1({a_key => 3});  # TNV27; error ENV01
-#    $number_retval = number__typetest1(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # TNV28
+#    $number_retval = number_typetest1();  # TNV20; error PERLOPS ENV00, CPPOPS "Usage: main::number_typetest1(lucky_number)"
+#    $number_retval = number_typetest1(undef);  # TNV21; error ENV00
+#    $number_retval = number_typetest1(3);  # TNV22
+#    $number_retval = number_typetest1(-17);  # TNV23
+#    $number_retval = number_typetest1(-17.3);  # TNV24
+#    $number_retval = number_typetest1('-17.3');  # TNV25; error ENV01
+#    $number_retval = number_typetest1([3]);  # TNV26; error ENV01
+#    $number_retval = number_typetest1({a_key => 3});  # TNV27; error ENV01
+#    $number_retval = number_typetest1(3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679);  # TNV28
 #    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$number_retval = $number_retval\n");
 
     # [[[ STRING TESTS ]]]
@@ -161,19 +161,19 @@ for my integer $i ( 0 .. $i_MAX ) {
     RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval STRINGIFY\n\n");
     RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$dumper_string =\n$dumper_string DUMPERIFY\n\n");
 
-#    $string_retval = string__typetest0();  # TPV30
+#    $string_retval = string_typetest0();  # TPV30
 #    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n");
 
-#    $string_retval = string__typetest1();  # TPV40; error PERLOPS EPV00, CPPOPS "Usage: main::string__typetest1(lucky_string)"
-#    $string_retval = string__typetest1(undef);  # TPV41; error EPV00
-#    $string_retval = string__typetest1(3);  # TPV42; error EPV01
-#    $string_retval = string__typetest1(-17);  # TPV43; error EPV01
-#    $string_retval = string__typetest1(-17.3);  # TPV44; error EPV01
-#    $string_retval = string__typetest1('-17.3');  # TPV45
-#    $string_retval = string__typetest1([3]);  # TPV46; error EPV01
-#    $string_retval = string__typetest1({a_key => 3});  # TPV47; error EPV01
-    $string_retval = string__typetest1('Melange');  # TPV48
-#    $string_retval = string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV49
+#    $string_retval = string_typetest1();  # TPV40; error PERLOPS EPV00, CPPOPS "Usage: main::string_typetest1(lucky_string)"
+#    $string_retval = string_typetest1(undef);  # TPV41; error EPV00
+#    $string_retval = string_typetest1(3);  # TPV42; error EPV01
+#    $string_retval = string_typetest1(-17);  # TPV43; error EPV01
+#    $string_retval = string_typetest1(-17.3);  # TPV44; error EPV01
+#    $string_retval = string_typetest1('-17.3');  # TPV45
+#    $string_retval = string_typetest1([3]);  # TPV46; error EPV01
+#    $string_retval = string_typetest1({a_key => 3});  # TPV47; error EPV01
+    $string_retval = string_typetest1('Melange');  # TPV48
+#    $string_retval = string_typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n");  # TPV49
 #    RPerl::diag("in scalar_test.pl $i/$i_MAX, have \$string_retval =\n$string_retval\n");
 
     croak('Done for now, croaking');

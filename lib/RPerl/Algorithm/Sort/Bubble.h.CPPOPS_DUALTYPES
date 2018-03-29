@@ -72,16 +72,16 @@ SV* RPerl__Algorithm__Sort__Bubble__integer_bubblesort(SV* integer_data);
 SV* RPerl__Algorithm__Sort__Bubble__number_bubblesort(SV* number_data);
 SV* RPerl__Algorithm__Sort__Bubble__uninherited_Bubble(SV* person);
 SV* RPerl__Algorithm__Sort__Bubble__uninherited(SV* person);
-SV* RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(SV* lucky_integers);
-SV* RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(SV* lucky_numbers);
+SV* RPerl__Algorithm__Sort__Bubble__integer_bubblesort_typetest0(SV* lucky_integers);
+SV* RPerl__Algorithm__Sort__Bubble__number_bubblesort_typetest0(SV* lucky_numbers);
 
 // <<< SHIM MACROS >>>
 #define integer_bubblesort(integer_data) RPerl__Algorithm__Sort__Bubble__integer_bubblesort(integer_data)
 #define number_bubblesort(number_data) RPerl__Algorithm__Sort__Bubble__number_bubblesort(number_data)
 #define uninherited_Bubble(person) RPerl__Algorithm__Sort__Bubble__uninherited_Bubble(person)
 #define uninherited(person) RPerl__Algorithm__Sort__Bubble__uninherited(person)
-#define integer_bubblesort__typetest0(lucky_integers) RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(lucky_integers)
-#define number_bubblesort__typetest0(lucky_numbers) RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(lucky_numbers)
+#define integer_bubblesort_typetest0(lucky_integers) RPerl__Algorithm__Sort__Bubble__integer_bubblesort_typetest0(lucky_integers)
+#define number_bubblesort_typetest0(lucky_numbers) RPerl__Algorithm__Sort__Bubble__number_bubblesort_typetest0(lucky_numbers)
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
 SV* RPerl__Algorithm__Sort__Bubble__MODE_ID() { return newSViv(1); }  // CPPOPS_PERLTYPES is 1
@@ -153,16 +153,16 @@ integer_arrayref RPerl__Algorithm__Sort__Bubble__integer_bubblesort(integer_arra
 number_arrayref RPerl__Algorithm__Sort__Bubble__number_bubblesort(number_arrayref number_data);
 string RPerl__Algorithm__Sort__Bubble__uninherited_Bubble(string person);
 string RPerl__Algorithm__Sort__Bubble__uninherited(string person);
-string RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(integer_arrayref lucky_integers);
-string RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(number_arrayref lucky_numbers);
+string RPerl__Algorithm__Sort__Bubble__integer_bubblesort_typetest0(integer_arrayref lucky_integers);
+string RPerl__Algorithm__Sort__Bubble__number_bubblesort_typetest0(number_arrayref lucky_numbers);
 
 // <<< SHIM MACROS >>>
 #define integer_bubblesort(integer_data) RPerl__Algorithm__Sort__Bubble__integer_bubblesort(integer_data)
 #define number_bubblesort(number_data) RPerl__Algorithm__Sort__Bubble__number_bubblesort(number_data)
 #define uninherited_Bubble(person) RPerl__Algorithm__Sort__Bubble__uninherited_Bubble(person)
 #define uninherited(person) RPerl__Algorithm__Sort__Bubble__uninherited(person)
-#define integer_bubblesort__typetest0(lucky_integers) RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(lucky_integers)
-#define number_bubblesort__typetest0(lucky_numbers) RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(lucky_numbers)
+#define integer_bubblesort_typetest0(lucky_integers) RPerl__Algorithm__Sort__Bubble__integer_bubblesort_typetest0(lucky_integers)
+#define number_bubblesort_typetest0(lucky_numbers) RPerl__Algorithm__Sort__Bubble__number_bubblesort_typetest0(lucky_numbers)
 
 // <<< OPERATIONS & DATA TYPES REPORTER >>>
 integer RPerl__Algorithm__Sort__Bubble__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2

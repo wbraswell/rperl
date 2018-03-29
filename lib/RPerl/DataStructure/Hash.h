@@ -87,19 +87,19 @@ string string_hashref_to_string(string_hashref input_unordered_map);
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
-SV* integer_hashref__typetest0(SV* lucky_integers);
-SV* integer_hashref__typetest1(SV* my_size);
-SV* number_hashref__typetest0(SV* lucky_numbers);
-SV* number_hashref__typetest1(SV* my_size);
-SV* string_hashref__typetest0(SV* people);
-SV* string_hashref__typetest1(SV* my_size);
+SV* integer_hashref_typetest0(SV* lucky_integers);
+SV* integer_hashref_typetest1(SV* my_size);
+SV* number_hashref_typetest0(SV* lucky_numbers);
+SV* number_hashref_typetest1(SV* my_size);
+SV* string_hashref_typetest0(SV* people);
+SV* string_hashref_typetest1(SV* my_size);
 # elif defined __CPP__TYPES
-string integer_hashref__typetest0(integer_hashref lucky_integers);
-integer_hashref integer_hashref__typetest1(integer my_size);
-string number_hashref__typetest0(number_hashref lucky_numbers);
-number_hashref number_hashref__typetest1(integer my_size);
-string string_hashref__typetest0(string_hashref people);
-string_hashref string_hashref__typetest1(integer my_size);
+string integer_hashref_typetest0(integer_hashref lucky_integers);
+integer_hashref integer_hashref_typetest1(integer my_size);
+string number_hashref_typetest0(number_hashref lucky_numbers);
+number_hashref number_hashref_typetest1(integer my_size);
+string string_hashref_typetest0(string_hashref people);
+string_hashref string_hashref_typetest1(integer my_size);
 # endif
 
 #endif

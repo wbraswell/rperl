@@ -11,9 +11,9 @@ use Data::Dumper;
 print Dumper( \%main:: );
 die 'TMP DEBUG';
 
-#print 'in gmp_symtab_dump.pl, have gmp_integer__typetest0() = ' . gmp_integer__typetest0() . "\n";
-my gmp_integer $typetested = gmp_integer__typetest0();
-#my gmp_integer $typetested = gmp_integer__typetest0(2112);
+#print 'in gmp_symtab_dump.pl, have gmp_integer_typetest0() = ' . gmp_integer_typetest0() . "\n";
+my gmp_integer $typetested = gmp_integer_typetest0();
+#my gmp_integer $typetested = gmp_integer_typetest0(2112);
 print 'in gmp_symtab_dump.pl, have Dumper($typetested) = ' . Dumper($typetested) . "\n";
 print 'in gmp_symtab_dump.pl, have gmp_get_signed_integer($typetested) = ' . gmp_get_signed_integer($typetested) . "\n";
 

@@ -79,19 +79,19 @@ void XS_pack_string_arrayref_arrayref(SV* output_avref_avref, string_arrayref_ar
 // [[[ TYPE TESTING ]]]
 // NEED ENABLE, implement function definitions in SubTypes.h
 # ifdef __PERL__TYPES
-//SV* integer_arrayref_arrayref__typetest0(SV* lucky_integers);
-//SV* integer_arrayref_arrayref__typetest1(SV* my_size);
-//SV* number_arrayref_arrayref__typetest0(SV* lucky_numbers);
-//SV* number_arrayref_arrayref__typetest1(SV* my_size);
-//SV* string_arrayref_arrayref__typetest0(SV* people);
-//SV* string_arrayref_arrayref__typetest1(SV* my_size);
+//SV* integer_arrayref_arrayref_typetest0(SV* lucky_integers);
+//SV* integer_arrayref_arrayref_typetest1(SV* my_size);
+//SV* number_arrayref_arrayref_typetest0(SV* lucky_numbers);
+//SV* number_arrayref_arrayref_typetest1(SV* my_size);
+//SV* string_arrayref_arrayref_typetest0(SV* people);
+//SV* string_arrayref_arrayref_typetest1(SV* my_size);
 # elif defined __CPP__TYPES
-//string integer_arrayref_arrayref__typetest0(integer_arrayref_arrayref lucky_integers);
-//integer_arrayref_arrayref integer_arrayref_arrayref__typetest1(integer my_size);
-//string number_arrayref_arrayref__typetest0(number_arrayref_arrayref lucky_numbers);
-//number_arrayref_arrayref number_arrayref_arrayref__typetest1(integer my_size);
-//string string_arrayref_arrayref__typetest0(string_arrayref_arrayref people);
-//string_arrayref_arrayref string_arrayref_arrayref__typetest1(integer my_size);
+//string integer_arrayref_arrayref_typetest0(integer_arrayref_arrayref lucky_integers);
+//integer_arrayref_arrayref integer_arrayref_arrayref_typetest1(integer my_size);
+//string number_arrayref_arrayref_typetest0(number_arrayref_arrayref lucky_numbers);
+//number_arrayref_arrayref number_arrayref_arrayref_typetest1(integer my_size);
+//string string_arrayref_arrayref_typetest0(string_arrayref_arrayref people);
+//string_arrayref_arrayref string_arrayref_arrayref_typetest1(integer my_size);
 # endif
 
 #endif

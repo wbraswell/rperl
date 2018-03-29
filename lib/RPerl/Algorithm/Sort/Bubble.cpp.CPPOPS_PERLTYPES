@@ -103,13 +103,13 @@ SV* RPerl__Algorithm__Sort__Bubble__uninherited(SV* person) {
     return (newSVpv("Bubble::uninherited() ROCKS! CPPOPS_PERLTYPES", 0));
 }
 
-SV* RPerl__Algorithm__Sort__Bubble__integer_bubblesort__typetest0(SV* lucky_integers) {
-    integer_arrayref_CHECKTRACE(lucky_integers, "lucky_integers", "integer_bubblesort__typetest0()");
+SV* RPerl__Algorithm__Sort__Bubble__integer_bubblesort_typetest0(SV* lucky_integers) {
+    integer_arrayref_CHECKTRACE(lucky_integers, "lucky_integers", "integer_bubblesort_typetest0()");
     return (newSVpvf("%s%s", SvPV_nolen(integer_arrayref_to_string(RPerl__Algorithm__Sort__Bubble__integer_bubblesort(lucky_integers))), "CPPOPS_PERLTYPES"));
 }
 
-SV* RPerl__Algorithm__Sort__Bubble__number_bubblesort__typetest0(SV* lucky_numbers) {
-    number_arrayref_CHECKTRACE(lucky_numbers, "lucky_numbers", "number_bubblesort__typetest0()");
+SV* RPerl__Algorithm__Sort__Bubble__number_bubblesort_typetest0(SV* lucky_numbers) {
+    number_arrayref_CHECKTRACE(lucky_numbers, "lucky_numbers", "number_bubblesort_typetest0()");
     return (newSVpvf("%s%s", SvPV_nolen(number_arrayref_to_string(RPerl__Algorithm__Sort__Bubble__number_bubblesort(lucky_numbers))), "CPPOPS_PERLTYPES"));
 }
 

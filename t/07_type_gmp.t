@@ -33,7 +33,7 @@ use RPerl::Test::Foo;
 use rperltypesconv;
 use Test::Exception;
 use Test::Number::Delta;
-use RPerl::DataType::GMPInteger qw(gmp_integer__typetest0 gmp_integer__typetest1);
+use RPerl::DataType::GMPInteger qw(gmp_integer_typetest0 gmp_integer_typetest1);
 
 # [[[ OPERATIONS ]]]
 
@@ -527,69 +527,69 @@ for my $mode_id ( 0, 2 ) {    # DEV NOTE: PERLOPS_PERLTYPES & CPPOPS_CPPTYPES on
  
     lives_and(                                                    # TGIV700
         sub {
-            is( gmp_integer__typetest0(), ( 3 + $mode_id ), q{TGIV700 gmp_integer__typetest0() returns correct value} );
+            is( gmp_integer_typetest0(), ( 3 + $mode_id ), q{TGIV700 gmp_integer_typetest0() returns correct value} );
         },
-        q{TGIV700 gmp_integer__typetest0() lives}
+        q{TGIV700 gmp_integer_typetest0() lives}
     );
 
     $number_of_tests_run += 1;
 
 =DISABLE
     throws_ok(                                                    # TGIV610
-        sub { gmp_integer__typetest1() },
-        "/(EMPV00.*$mode_tagline)|(Usage.*gmp_integer__typetest1)/"
+        sub { gmp_integer_typetest1() },
+        "/(EMPV00.*$mode_tagline)|(Usage.*gmp_integer_typetest1)/"
         ,                                                         # DEV NOTE: 2 different error messages, RPerl & C
-        q{TGIV610 gmp_integer__typetest1() throws correct exception}
+        q{TGIV610 gmp_integer_typetest1() throws correct exception}
     );
     throws_ok(                                                    # TGIV611
-        sub { gmp_integer__typetest1(undef) },
+        sub { gmp_integer_typetest1(undef) },
         "/EMPV00.*$mode_tagline/",
-        q{TGIV611 gmp_integer__typetest1(undef) throws correct exception}
+        q{TGIV611 gmp_integer_typetest1(undef) throws correct exception}
     );
     lives_and(                                                    # TGIV612
         sub {
-            is( gmp_integer__typetest1(3), ( ( 3 * 2 ) + $mode_id ), q{TGIV612 gmp_integer__typetest1(3) returns correct value} );
+            is( gmp_integer_typetest1(3), ( ( 3 * 2 ) + $mode_id ), q{TGIV612 gmp_integer_typetest1(3) returns correct value} );
         },
-        q{TGIV612 gmp_integer__typetest1(3) lives}
+        q{TGIV612 gmp_integer_typetest1(3) lives}
     );
     lives_and(                                                    # TGIV613
         sub {
-            is( gmp_integer__typetest1(-17), ( ( -17 * 2 ) + $mode_id ), q{TGIV613 gmp_integer__typetest1(-17) returns correct value} );
+            is( gmp_integer_typetest1(-17), ( ( -17 * 2 ) + $mode_id ), q{TGIV613 gmp_integer_typetest1(-17) returns correct value} );
         },
-        q{TGIV613 gmp_integer__typetest1(-17) lives}
+        q{TGIV613 gmp_integer_typetest1(-17) lives}
     );
     throws_ok(                                                    # TGIV614
-        sub { gmp_integer__typetest1(-17.3) },
+        sub { gmp_integer_typetest1(-17.3) },
         "/EMPV01.*$mode_tagline/",
-        q{TGIV614 gmp_integer__typetest1(-17.3) throws correct exception}
+        q{TGIV614 gmp_integer_typetest1(-17.3) throws correct exception}
     );
     throws_ok(                                                    # TGIV615
-        sub { gmp_integer__typetest1('-17.3') },
+        sub { gmp_integer_typetest1('-17.3') },
         "/EMPV01.*$mode_tagline/",
-        q{TGIV615 gmp_integer__typetest1('-17.3') throws correct exception}
+        q{TGIV615 gmp_integer_typetest1('-17.3') throws correct exception}
     );
     throws_ok(                                                    # TGIV616
-        sub { gmp_integer__typetest1( [3] ) },
+        sub { gmp_integer_typetest1( [3] ) },
         "/EMPV01.*$mode_tagline/",
-        q{TGIV616 gmp_integer__typetest1([3]) throws correct exception}
+        q{TGIV616 gmp_integer_typetest1([3]) throws correct exception}
     );
     throws_ok(                                                    # TGIV617
-        sub { gmp_integer__typetest1( { a_key => 3 } ) },
+        sub { gmp_integer_typetest1( { a_key => 3 } ) },
         "/EMPV01.*$mode_tagline/",
-        q{TGIV617 gmp_integer__typetest1({a_key => 3}) throws correct exception}
+        q{TGIV617 gmp_integer_typetest1({a_key => 3}) throws correct exception}
     );
     lives_and(                                                    # TGIV618
         sub {
-            is( gmp_integer__typetest1(-234_567_890), ( ( -234_567_890 * 2 ) + $mode_id ), q{TGIV618 gmp_integer__typetest1(-234_567_890) returns correct value} );
+            is( gmp_integer_typetest1(-234_567_890), ( ( -234_567_890 * 2 ) + $mode_id ), q{TGIV618 gmp_integer_typetest1(-234_567_890) returns correct value} );
         },
-        q{TGIV618 gmp_integer__typetest1(-234_567_890) lives}
+        q{TGIV618 gmp_integer_typetest1(-234_567_890) lives}
     );
     throws_ok(                                                    # TGIV619
         sub {
-            gmp_integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000);
+            gmp_integer_typetest1(-1_234_567_890_000_000_000_000_000_000_000_000);
         },
         "/EMPV01.*$mode_tagline/",
-        q{TGIV619 gmp_integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
+        q{TGIV619 gmp_integer_typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
 =cut
 }

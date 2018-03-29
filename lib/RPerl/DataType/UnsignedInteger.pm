@@ -48,7 +48,7 @@ use warnings;
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(unsigned_integer_CHECK unsigned_integer_CHECKTRACE unsigned_integer_to_boolean unsigned_integer_to_integer unsigned_integer_to_number unsigned_integer_to_character unsigned_integer_to_string);
-our @EXPORT_OK = qw(unsigned_integer__typetest0 unsigned_integer__typetest1);
+our @EXPORT_OK = qw(unsigned_integer_typetest0 unsigned_integer_typetest1);
 
 # [[[ TYPE-CHECKING ]]]
 sub unsigned_integer_CHECK {
@@ -142,21 +142,21 @@ sub unsigned_integer_to_string {
 }
 
 # [[[ TYPE TESTING ]]]
-sub unsigned_integer__typetest0 {
+sub unsigned_integer_typetest0 {
     { my unsigned_integer $RETURN_TYPE };
     my unsigned_integer $retval = ( 21 / 7 ) + main::RPerl__DataType__UnsignedInteger__MODE_ID(); # return unsigned_integer (not number) value, don't do (22 / 7) etc.
 
-    #    RPerl::diag("in PERLOPS_PERLTYPES unsigned_integer__typetest0(), have \$retval = $retval\n");
+    #    RPerl::diag("in PERLOPS_PERLTYPES unsigned_integer_typetest0(), have \$retval = $retval\n");
     return ($retval);
 }
 
-sub unsigned_integer__typetest1 {
+sub unsigned_integer_typetest1 {
     { my unsigned_integer $RETURN_TYPE };
     ( my unsigned_integer $lucky_unsigned_integer ) = @ARG;
 #    unsigned_integer_CHECK($lucky_unsigned_integer);
-    unsigned_integer_CHECKTRACE( $lucky_unsigned_integer, '$lucky_unsigned_integer', 'unsigned_integer__typetest1()' );
+    unsigned_integer_CHECKTRACE( $lucky_unsigned_integer, '$lucky_unsigned_integer', 'unsigned_integer_typetest1()' );
 
-#    RPerl::diag('in PERLOPS_PERLTYPES unsigned_integer__typetest1(), received $lucky_unsigned_integer = ' . unsigned_integer_to_string($lucky_unsigned_integer) . "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES unsigned_integer_typetest1(), received $lucky_unsigned_integer = ' . unsigned_integer_to_string($lucky_unsigned_integer) . "\n");
     return ( ( $lucky_unsigned_integer * 2 ) + main::RPerl__DataType__UnsignedInteger__MODE_ID() );
 }
 

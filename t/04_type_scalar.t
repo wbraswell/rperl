@@ -15,9 +15,9 @@ our $VERSION = 0.008_000;
 ## no critic qw(RequireCheckingReturnValueOfEval)  # SYSTEM DEFAULT 4: allow eval() test code blocks
 
 use RPerl::Test;
-use RPerl::DataType::Integer qw(integer__typetest0 integer__typetest1);
-use RPerl::DataType::Number qw(number__typetest0 number__typetest1);
-use RPerl::DataType::String qw(string__typetest0 string__typetest1);
+use RPerl::DataType::Integer qw(integer_typetest0 integer_typetest1);
+use RPerl::DataType::Number qw(number_typetest0 number_typetest1);
+use RPerl::DataType::String qw(string_typetest0 string_typetest1);
 use rperltypesconv;
 use rperltypes;  # types_enable()
 use Test::More tests => 310;
@@ -219,65 +219,65 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(                                                    # TIV20
         sub {
-            is( integer__typetest0(), ( 3 + $mode_id ), q{TIV20 integer__typetest0() returns correct value} );
+            is( integer_typetest0(), ( 3 + $mode_id ), q{TIV20 integer_typetest0() returns correct value} );
         },
-        q{TIV20 integer__typetest0() lives}
+        q{TIV20 integer_typetest0() lives}
     );
     throws_ok(                                                    # TIV30
-        sub { integer__typetest1() },
-        "/(EIV00.*$mode_tagline)|(Usage.*integer__typetest1)/"
+        sub { integer_typetest1() },
+        "/(EIV00.*$mode_tagline)|(Usage.*integer_typetest1)/"
         ,                                                         # DEV NOTE: 2 different error messages, RPerl & C
-        q{TIV30 integer__typetest1() throws correct exception}
+        q{TIV30 integer_typetest1() throws correct exception}
     );
     throws_ok(                                                    # TIV31
-        sub { integer__typetest1(undef) },
+        sub { integer_typetest1(undef) },
         "/EIV00.*$mode_tagline/",
-        q{TIV31 integer__typetest1(undef) throws correct exception}
+        q{TIV31 integer_typetest1(undef) throws correct exception}
     );
     lives_and(                                                    # TIV32
         sub {
-            is( integer__typetest1(3), ( ( 3 * 2 ) + $mode_id ), q{TIV32 integer__typetest1(3) returns correct value} );
+            is( integer_typetest1(3), ( ( 3 * 2 ) + $mode_id ), q{TIV32 integer_typetest1(3) returns correct value} );
         },
-        q{TIV32 integer__typetest1(3) lives}
+        q{TIV32 integer_typetest1(3) lives}
     );
     lives_and(                                                    # TIV33
         sub {
-            is( integer__typetest1(-17), ( ( -17 * 2 ) + $mode_id ), q{TIV33 integer__typetest1(-17) returns correct value} );
+            is( integer_typetest1(-17), ( ( -17 * 2 ) + $mode_id ), q{TIV33 integer_typetest1(-17) returns correct value} );
         },
-        q{TIV33 integer__typetest1(-17) lives}
+        q{TIV33 integer_typetest1(-17) lives}
     );
     throws_ok(                                                    # TIV34
-        sub { integer__typetest1(-17.3) },
+        sub { integer_typetest1(-17.3) },
         "/EIV01.*$mode_tagline/",
-        q{TIV34 integer__typetest1(-17.3) throws correct exception}
+        q{TIV34 integer_typetest1(-17.3) throws correct exception}
     );
     throws_ok(                                                    # TIV35
-        sub { integer__typetest1('-17.3') },
+        sub { integer_typetest1('-17.3') },
         "/EIV01.*$mode_tagline/",
-        q{TIV35 integer__typetest1('-17.3') throws correct exception}
+        q{TIV35 integer_typetest1('-17.3') throws correct exception}
     );
     throws_ok(                                                    # TIV36
-        sub { integer__typetest1( [3] ) },
+        sub { integer_typetest1( [3] ) },
         "/EIV01.*$mode_tagline/",
-        q{TIV36 integer__typetest1([3]) throws correct exception}
+        q{TIV36 integer_typetest1([3]) throws correct exception}
     );
     throws_ok(                                                    # TIV37
-        sub { integer__typetest1( { a_key => 3 } ) },
+        sub { integer_typetest1( { a_key => 3 } ) },
         "/EIV01.*$mode_tagline/",
-        q{TIV37 integer__typetest1({a_key => 3}) throws correct exception}
+        q{TIV37 integer_typetest1({a_key => 3}) throws correct exception}
     );
     lives_and(                                                    # TIV38
         sub {
-            is( integer__typetest1(-234_567_890), ( ( -234_567_890 * 2 ) + $mode_id ), q{TIV38 integer__typetest1(-234_567_890) returns correct value} );
+            is( integer_typetest1(-234_567_890), ( ( -234_567_890 * 2 ) + $mode_id ), q{TIV38 integer_typetest1(-234_567_890) returns correct value} );
         },
-        q{TIV38 integer__typetest1(-234_567_890) lives}
+        q{TIV38 integer_typetest1(-234_567_890) lives}
     );
     throws_ok(                                                    # TIV39
         sub {
-            integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000);
+            integer_typetest1(-1_234_567_890_000_000_000_000_000_000_000_000);
         },
         "/EIV01.*$mode_tagline/",
-        q{TIV39 integer__typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
+        q{TIV39 integer_typetest1(-1_234_567_890_000_000_000_000_000_000_000_000) throws correct exception}
     );
 
     # [[[ NUMBER TESTS ]]]
@@ -385,65 +385,65 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(                                                   # TNV20
         sub {
-            delta_ok( number__typetest0(), ( 3.14285714285714 + $mode_id ),
-                q{TNV20 number__typetest0() returns correct value});
+            delta_ok( number_typetest0(), ( 3.14285714285714 + $mode_id ),
+                q{TNV20 number_typetest0() returns correct value});
         },
-        q{TNV20 number__typetest0() lives}
+        q{TNV20 number_typetest0() lives}
     );
     throws_ok(                                                                   # TNV30
-        sub { number__typetest1() },
-        "/(ENV00.*$mode_tagline)|(Usage.*number__typetest1)/"
+        sub { number_typetest1() },
+        "/(ENV00.*$mode_tagline)|(Usage.*number_typetest1)/"
         ,                                                                        # DEV NOTE: 2 different error messages, RPerl & C
-        q{TNV30 number__typetest1() throws correct exception}
+        q{TNV30 number_typetest1() throws correct exception}
     );
     throws_ok(                                                                   # TNV31
-        sub { number__typetest1(undef) },
+        sub { number_typetest1(undef) },
         "/ENV00.*$mode_tagline/",
-        q{TNV31 number__typetest1(undef) throws correct exception}
+        q{TNV31 number_typetest1(undef) throws correct exception}
     );
     lives_and(                                                                   # TNV32
         sub {
-            is( number__typetest1(3), ( ( 3 * 2 ) + $mode_id ), q{TNV32 number__typetest1(3) returns correct value} );
+            is( number_typetest1(3), ( ( 3 * 2 ) + $mode_id ), q{TNV32 number_typetest1(3) returns correct value} );
         },
-        q{TNV32 number__typetest1(3) lives}
+        q{TNV32 number_typetest1(3) lives}
     );
     lives_and(                                                                   # TNV33
         sub {
-            is( number__typetest1(-17), ( ( -17 * 2 ) + $mode_id ), q{TNV33 number__typetest1(-17) returns correct value} );
+            is( number_typetest1(-17), ( ( -17 * 2 ) + $mode_id ), q{TNV33 number_typetest1(-17) returns correct value} );
         },
-        q{TNV33 number__typetest1(-17) lives}
+        q{TNV33 number_typetest1(-17) lives}
     );
     lives_and(                                                                   # TNV34
         sub {
             # NEED DELETE OLD CODE
-#            is( number__typetest1(-17.3), ( ( -17.3 * 2 ) + $mode_id ), q{TNV34 number__typetest1(-17.3) returns correct value} );
-            delta_ok( number__typetest1(-17.3), ( ( -17.3 * 2 ) + $mode_id ), q{TNV34 number__typetest1(-17.3) returns correct value} );
+#            is( number_typetest1(-17.3), ( ( -17.3 * 2 ) + $mode_id ), q{TNV34 number_typetest1(-17.3) returns correct value} );
+            delta_ok( number_typetest1(-17.3), ( ( -17.3 * 2 ) + $mode_id ), q{TNV34 number_typetest1(-17.3) returns correct value} );
         },
-        q{TNV34 number__typetest1(-17.3) lives}
+        q{TNV34 number_typetest1(-17.3) lives}
     );
     throws_ok(                                                                   # TNV35
-        sub { number__typetest1('-17.3') },
+        sub { number_typetest1('-17.3') },
         "/ENV01.*$mode_tagline/",
-        q{TNV35 number__typetest1('-17.3') throws correct exception}
+        q{TNV35 number_typetest1('-17.3') throws correct exception}
     );
     throws_ok(                                                                   # TNV36
-        sub { number__typetest1( [3] ) },
+        sub { number_typetest1( [3] ) },
         "/ENV01.*$mode_tagline/",
-        q{TNV36 number__typetest1([3]) throws correct exception}
+        q{TNV36 number_typetest1([3]) throws correct exception}
     );
     throws_ok(                                                                   # TNV37
-        sub { number__typetest1( { a_key => 3 } ) },
+        sub { number_typetest1( { a_key => 3 } ) },
         "/ENV01.*$mode_tagline/",
-        q{TNV37 number__typetest1({a_key => 3}) throws correct exception}
+        q{TNV37 number_typetest1({a_key => 3}) throws correct exception}
     );
     lives_and(                                                                   # TNV38
         sub {
-            delta_ok(number__typetest1(3.141_592_653_589_793_238_462_643_383_279_502_884_197_169_399_375_105_820_974_944_592_307_816_406_286_208_998_628_034_825_342_117_067_9),
+            delta_ok(number_typetest1(3.141_592_653_589_793_238_462_643_383_279_502_884_197_169_399_375_105_820_974_944_592_307_816_406_286_208_998_628_034_825_342_117_067_9),
                 ( ( 3.141_592_653_589_79 * 2 ) + $mode_id ),
-                q{TNV38 number__typetest1(3.141_592_653_589_793_238_462_643_383_279_502_884_197_169_399_375_105_820_974_944_592_307_816_406_286_208_998_628_034_825_342_117_067_9) returns correct value}
+                q{TNV38 number_typetest1(3.141_592_653_589_793_238_462_643_383_279_502_884_197_169_399_375_105_820_974_944_592_307_816_406_286_208_998_628_034_825_342_117_067_9) returns correct value}
             );
         },
-        q{TNV38 number__typetest1(3.141_592_653_589_793_238_462_643_383_279_502_884_197_169_399_375_105_820_974_944_592_307_816_406_286_208_998_628_034_825_342_117_067_9) lives}
+        q{TNV38 number_typetest1(3.141_592_653_589_793_238_462_643_383_279_502_884_197_169_399_375_105_820_974_944_592_307_816_406_286_208_998_628_034_825_342_117_067_9) lives}
     );
 
     # [[[ STRING TESTS ]]]
@@ -681,66 +681,66 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TPV30
         sub {
-            is( string__typetest0(), "Spice $mode_tagline", q{TPV30 string__typetest0() returns correct value} );
+            is( string_typetest0(), "Spice $mode_tagline", q{TPV30 string_typetest0() returns correct value} );
         },
-        q{TPV30 string__typetest0() lives}
+        q{TPV30 string_typetest0() lives}
     );
     throws_ok(    # TPV40
-        sub { string__typetest1() },
-        "/(EPV00.*$mode_tagline)|(Usage.*string__typetest1)/"
+        sub { string_typetest1() },
+        "/(EPV00.*$mode_tagline)|(Usage.*string_typetest1)/"
         ,         # DEV NOTE: 2 different error messages, RPerl & C
-        q{TPV40 string__typetest1() throws correct exception}
+        q{TPV40 string_typetest1() throws correct exception}
     );
     throws_ok(    # TPV41
-        sub { string__typetest1(undef) },
+        sub { string_typetest1(undef) },
         "/EPV00.*$mode_tagline/",
-        q{TPV41 string__typetest1(undef) throws correct exception}
+        q{TPV41 string_typetest1(undef) throws correct exception}
     );
     throws_ok(    # TPV42
-        sub { string__typetest1(3) },
+        sub { string_typetest1(3) },
         "/EPV01.*$mode_tagline/",
-        q{TPV42 string__typetest1(3) throws correct exception}
+        q{TPV42 string_typetest1(3) throws correct exception}
     );
     throws_ok(    # TPV43
-        sub { string__typetest1(-17) },
+        sub { string_typetest1(-17) },
         "/EPV01.*$mode_tagline/",
-        q{TPV43 string__typetest1(-17) throws correct exception}
+        q{TPV43 string_typetest1(-17) throws correct exception}
     );
     throws_ok(    # TPV44
-        sub { string__typetest1(-17.3) },
+        sub { string_typetest1(-17.3) },
         "/EPV01.*$mode_tagline/",
-        q{TPV44 string__typetest1(-17.3) throws correct exception}
+        q{TPV44 string_typetest1(-17.3) throws correct exception}
     );
     lives_and(    # TPV45
         sub {
-            is( string__typetest1('-17.3'), "'-17.3' $mode_tagline", q{TPV45 string__typetest1('-17.3') returns correct value} );
+            is( string_typetest1('-17.3'), "'-17.3' $mode_tagline", q{TPV45 string_typetest1('-17.3') returns correct value} );
         },
-        q{TPV45 string__typetest1('-17.3') lives}
+        q{TPV45 string_typetest1('-17.3') lives}
     );
     throws_ok(    # TPV46
-        sub { string__typetest1( [3] ) },
+        sub { string_typetest1( [3] ) },
         "/EPV01.*$mode_tagline/",
-        q{TPV46 string__typetest1([3]) throws correct exception}
+        q{TPV46 string_typetest1([3]) throws correct exception}
     );
     throws_ok(    # TPV47
-        sub { string__typetest1( { a_key => 3 } ) },
+        sub { string_typetest1( { a_key => 3 } ) },
         "/EPV01.*$mode_tagline/",
-        q{TPV47 string__typetest1({a_key => 3}) throws correct exception}
+        q{TPV47 string_typetest1({a_key => 3}) throws correct exception}
     );
     lives_and(    # TPV48
         sub {
-            is( string__typetest1('Melange'), "'Melange' $mode_tagline", q{TPV48 string__typetest1('Melange') returns correct value} );
+            is( string_typetest1('Melange'), "'Melange' $mode_tagline", q{TPV48 string_typetest1('Melange') returns correct value} );
         },
-        q{TPV48 string__typetest1('Melange') lives}
+        q{TPV48 string_typetest1('Melange') lives}
     );
     lives_and(    # TPV49
         sub {
-            is( string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n"),
+            is( string_typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n"),
                 "'\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n' $mode_tagline",
-                q{TPV49 string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") returns correct value}
+                q{TPV49 string_typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") returns correct value}
             );
         },
-        q{TPV49 string__typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") lives}
+        q{TPV49 string_typetest1("\nThe Spice Extends Life\nThe Spice Expands Consciousness\nThe Spice Is Vital To Space Travel\n") lives}
     );
 }
 

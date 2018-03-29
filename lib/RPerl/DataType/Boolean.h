@@ -200,11 +200,11 @@ string boolean_to_string(boolean input_boolean);
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
-SV* boolean__typetest0();
-SV* boolean__typetest1(SV* lucky_boolean);
+SV* boolean_typetest0();
+SV* boolean_typetest1(SV* lucky_boolean);
 # elif defined __CPP__TYPES
-boolean boolean__typetest0();
-boolean boolean__typetest1(boolean lucky_boolean);
+boolean boolean_typetest0();
+boolean boolean_typetest1(boolean lucky_boolean);
 # endif
 
 #endif

@@ -481,24 +481,24 @@ gmp_integer_retval string_to_gmp_integer(string input_string) {
 
 # ifdef __PERL__TYPES
 
-SV* gmp_integer__typetest0() {
+SV* gmp_integer_typetest0() {
     // NEED ADD CODE
 }
 
-SV* gmp_integer__typetest1(SV* lucky_gmp_integer) {
+SV* gmp_integer_typetest1(SV* lucky_gmp_integer) {
 //	gmp_integer_CHECK(lucky_gmp_integer);
-    gmp_integer_CHECKTRACE(lucky_gmp_integer, "lucky_gmp_integer", "gmp_integer__typetest1()");
+    gmp_integer_CHECKTRACE(lucky_gmp_integer, "lucky_gmp_integer", "gmp_integer_typetest1()");
     // NEED ADD CODE
 }
 
 # elif defined __CPP__TYPES
 
-gmp_integer_retval gmp_integer__typetest0() {
+gmp_integer_retval gmp_integer_typetest0() {
     // LONG FORM
 //    gmp_integer retval;
 //    gmp_init(retval);
 //    gmp_set_signed_integer(retval, (21 / 7) + RPerl__DataType__GMPInteger__MODE_ID());
-//fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer__typetest0(), have retval = %"INTEGER"\n", retval);
+//fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_typetest0(), have retval = %"INTEGER"\n", retval);
 //    return (gmp_integer_retval) retval;
 
     // SHORT FORM
@@ -506,7 +506,7 @@ gmp_integer_retval gmp_integer__typetest0() {
     return (gmp_integer_retval) ((21 / 7) + RPerl__DataType__GMPInteger__MODE_ID());
 }
 
-gmp_integer_retval gmp_integer__typetest1(gmp_integer_retval lucky_gmp_integer_retval) {
+gmp_integer_retval gmp_integer_typetest1(gmp_integer_retval lucky_gmp_integer_retval) {
     return (gmp_integer_retval) ((gmp_get_signed_integer(lucky_gmp_integer_retval.gmp_integer_unretval()) * 2) + RPerl__DataType__GMPInteger__MODE_ID());
 }
 

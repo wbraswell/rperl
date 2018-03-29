@@ -11,7 +11,7 @@ use Inline (CPP => 'DATA',
 );
 print "[[[ END   'use Inline' STAGE for 'DATA' ]]]\n"x3;
 
-my $string_retval = string__typetest0();
+my $string_retval = string_typetest0();
 RPerl::diag("in ntype_string_1a.pl have \$string_retval = '$string_retval'\n");
 
 __DATA__
@@ -32,7 +32,7 @@ void XS_pack_string(SV* output_sv, string input_string) {
 	sv_setsv(output_sv, sv_2mortal(newSVpv(input_string.data(), input_string.size())));
 }
 
-string string__typetest0() {
+string string_typetest0() {
 	string retval = "Spice CPPOPS_CPPTYPES";
 	return retval;
 }

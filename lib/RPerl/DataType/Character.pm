@@ -37,7 +37,7 @@ use warnings;
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(character_CHECK character_CHECKTRACE character_to_boolean character_to_unsigned_integer character_to_integer character_to_number character_to_string);
-our @EXPORT_OK = qw(character__typetest0 character__typetest1);
+our @EXPORT_OK = qw(character_typetest0 character_typetest1);
 
 # [[[ TYPE-CHECKING ]]]
 sub character_CHECK {
@@ -115,12 +115,12 @@ sub character_to_string {
 }
 
 # [[[ TYPE TESTING ]]]
-sub character__typetest0 { { my character $RETURN_TYPE }; return chr(main::RPerl__DataType__Character__MODE_ID() + (ord '0')); }
-sub character__typetest1 {
+sub character_typetest0 { { my character $RETURN_TYPE }; return chr(main::RPerl__DataType__Character__MODE_ID() + (ord '0')); }
+sub character_typetest1 {
     { my character $RETURN_TYPE };
     (my character $lucky_character) = @ARG;
 #    character_CHECK($lucky_character);
-    character_CHECKTRACE( $lucky_character, '$lucky_character', 'character__typetest1()' );
+    character_CHECKTRACE( $lucky_character, '$lucky_character', 'character_typetest1()' );
     return chr((ord $lucky_character) + main::RPerl__DataType__Character__MODE_ID());
 }
 

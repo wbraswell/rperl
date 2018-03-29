@@ -229,11 +229,11 @@ gmp_integer_retval string_to_gmp_integer(string input_string);
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
-SV* gmp_integer__typetest0();
-SV* gmp_integer__typetest1(SV* lucky_gmp_integer);
+SV* gmp_integer_typetest0();
+SV* gmp_integer_typetest1(SV* lucky_gmp_integer);
 # elif defined __CPP__TYPES
-gmp_integer_retval gmp_integer__typetest0();
-gmp_integer_retval gmp_integer__typetest1(gmp_integer_retval lucky_gmp_integer_retval);
+gmp_integer_retval gmp_integer_typetest0();
+gmp_integer_retval gmp_integer_typetest1(gmp_integer_retval lucky_gmp_integer_retval);
 # endif
 
 #endif

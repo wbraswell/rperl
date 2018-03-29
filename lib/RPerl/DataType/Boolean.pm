@@ -44,7 +44,7 @@ use warnings;
 # [[[ EXPORTS ]]]
 use RPerl::Exporter 'import';
 our @EXPORT = qw(boolean_CHECK boolean_CHECKTRACE boolean_to_unsigned_integer boolean_to_integer boolean_to_number boolean_to_character boolean_to_string);
-our @EXPORT_OK = qw(boolean__typetest0 boolean__typetest1);
+our @EXPORT_OK = qw(boolean_typetest0 boolean_typetest1);
 
 # [[[ TYPE-CHECKING ]]]
 sub boolean_CHECK {
@@ -121,25 +121,25 @@ sub boolean_to_string {
 }
 
 # [[[ TYPE TESTING ]]]
-sub boolean__typetest0 {
+sub boolean_typetest0 {
     { my boolean $RETURN_TYPE };
     # DEV NOTE: maintain independence from Integer data type, re-implement integer_to_boolean() here
 #    my boolean $retval = integer_to_boolean(main::RPerl__DataType__Boolean__MODE_ID());
     my boolean $retval = 1;
     if (main::RPerl__DataType__Boolean__MODE_ID() == 0) { $retval = 0; }
-#    RPerl::diag("in PERLOPS_PERLTYPES boolean__typetest0(), have \$retval = $retval\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES boolean_typetest0(), have \$retval = $retval\n");
     return $retval;
 }
-sub boolean__typetest1 {
+sub boolean_typetest1 {
     { my boolean $RETURN_TYPE };
     ( my boolean $lucky_boolean ) = @ARG;
 #    boolean_CHECK($lucky_boolean);
-    boolean_CHECKTRACE( $lucky_boolean, '$lucky_boolean', 'boolean__typetest1()' );
-#    RPerl::diag('in PERLOPS_PERLTYPES boolean__typetest1(), received $lucky_boolean = ' . boolean_to_string($lucky_boolean) . "\n");
+    boolean_CHECKTRACE( $lucky_boolean, '$lucky_boolean', 'boolean_typetest1()' );
+#    RPerl::diag('in PERLOPS_PERLTYPES boolean_typetest1(), received $lucky_boolean = ' . boolean_to_string($lucky_boolean) . "\n");
     # DEV NOTE: maintain independence from Integer data type, re-implement integer_to_boolean() here
     my boolean $retval = 1;
     if (($lucky_boolean + main::RPerl__DataType__Boolean__MODE_ID()) == 0) { $retval = 0; }
-#    RPerl::diag("in PERLOPS_PERLTYPES boolean__typetest1(), have \$retval = $retval\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES boolean_typetest1(), have \$retval = $retval\n");
     return $retval;
 #    return integer_to_boolean( $lucky_boolean + main::RPerl__DataType__Boolean__MODE_ID() );
 }
