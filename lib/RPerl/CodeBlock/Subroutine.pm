@@ -335,7 +335,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 sub ast_to_cpp__generate_shims__CPPOPS_CPPTYPES {
     { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my string_hashref $modes) = @ARG;
-    RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shims__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
+#    RPerl::diag( 'in Subroutine->ast_to_cpp__generate_shims__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
  
     my string_hashref $cpp_source_group = { CPP => q{} };
     my object $cpp_source_subgroup = undef;
