@@ -1,6 +1,5 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  $_foo_argu' >>>
+# <<< GENERATE_ERROR: "ERROR ECOGEASRP71b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name '_Foo_subroutine()' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -17,33 +16,34 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(ProhibitUnusedPrivateSubroutines)  # DEVELOPER DEFAULT 3: allow uncalled subroutines
+## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case & mixed-case package names
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {
-    _foo_property => my string $TYPED__foo_property = 'quite a prize'
+    foo_property => my string $TYPED_foo_property = 'quite a prize'
 };
 
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
-sub _foo_subroutine {
+sub _Foo_subroutine {
     { my integer $RETURN_TYPE };
-    ( my integer $_foo_argument ) = @ARG;
+    ( my integer $foo_argument ) = @ARG;
 
-    print 'in RPerl::Test::Reserved::Class_00_Bad_00::_foo_subroutine(), received $_foo_argument = ', $_foo_argument, "\n";
+    print 'in RPerl::Test::Reserved::Class_00_Bad_00::_Foo_subroutine(), received $foo_argument = ', $foo_argument, "\n";
 
-    return ($_foo_argument * 2);
+    return ($foo_argument * 2);
 }
 
 
 sub _foo_method {
     { my integer::method $RETURN_TYPE };
-    ( my RPerl::Test::Reserved::Class_00_Bad_00 $self, my integer $_foo_argument ) = @ARG;
+    ( my RPerl::Test::Reserved::Class_00_Bad_00 $self, my integer $foo_argument ) = @ARG;
 
-    print 'in RPerl::Test::Reserved::Class_00_Bad_00::_foo_subroutine(), received $_foo_argument = ', $_foo_argument, "\n";
-    print 'in RPerl::Test::Reserved::Class_00_Bad_00::_foo_subroutine(), have $self->{_foo_property} = ', q{'}, $self->{_foo_property}, q{'}, "\n";
+    print 'in RPerl::Test::Reserved::Class_00_Bad_00::_foo_method(), received $foo_argument = ', $foo_argument, "\n";
+    print 'in RPerl::Test::Reserved::Class_00_Bad_00::_foo_method(), have $self->{foo_property} = ', q{'}, $self->{foo_property}, q{'}, "\n";
 
-    return ($_foo_argument * -2);
+    return ($foo_argument * -2);
 }
 
 1;    # end of class

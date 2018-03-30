@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: "ERROR ECOGEASRP71a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: global subroutine name '_foo_subroutine_in_main()' must not start with an underscore, forbidden by C++ specification as a reserved identifier" >>>
+# <<< GENERATE_ERROR: "ERROR ECOGEASRP71c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name 'foo__subroutine_in_main()' must not include a double-underscore, forbidden by C++ specification as a reserved identifier" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -14,12 +14,12 @@ our $VERSION = 0.001_000;
 
 use RPerl::Test::Reserved::Class_00_Good;
 
-sub _foo_subroutine_in_main {
+sub foo__subroutine_in_main {
     { my void $RETURN_TYPE };
-    print 'Howdy from _foo_subroutine_in_main()...', "\n";
+    print 'Howdy from foo__subroutine_in_main()...', "\n";
     return;
 }
 
 # [[[ OPERATIONS ]]]
 print 'Hello, World!', "\n";
-_foo_subroutine_in_main();
+foo__subroutine_in_main();
