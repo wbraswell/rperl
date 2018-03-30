@@ -225,9 +225,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
 
 
-# START HERE: updated subroutine tests with new error codes;  grammar allow underscore var names;  copy checks into variable & method names & property names???  finish Reserved tests
-# START HERE: updated subroutine tests with new error codes;  grammar allow underscore var names;  copy checks into variable & method names & property names???  finish Reserved tests
-# START HERE: updated subroutine tests with new error codes;  grammar allow underscore var names;  copy checks into variable & method names & property names???  finish Reserved tests
+# START HERE: grammar allow underscore var names;  copy checks into variable & class & method names & property names???  finish Reserved tests
+# START HERE: grammar allow underscore var names;  copy checks into variable & class & method names & property names???  finish Reserved tests
+# START HERE: grammar allow underscore var names;  copy checks into variable & class & method names & property names???  finish Reserved tests
 
 
 

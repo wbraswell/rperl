@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.015_000;
+    our $VERSION = 0.016_000;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -51,7 +51,19 @@
 %token LITERAL_NUMBER        = /([+-]?(((\d{1,2}_)?(\d{3}_)*\d{3})|\d{1,2})(\.((\d{3}(_\d{3})*(_\d{1,2})?)|\d{1,2}))?(e[+-]?\d+)?)/   # number w/ underscores, optional scientific notation; ex. '12_345_678.910_1'
 %token LITERAL_STRING        = /(('([^'\\]+|(?:\\\\)+)+')|("((\\n)|(\\t)|[^"\@\$\\])*((\\n)|(\\t))+((\\n)|(\\t)|[^"\@\$\\])*")|(q\{([^}\\]+|(?:\\\\)+)*\}))/  # single quotes non-empty w/out odd backslashes; double quotes non-empty w/out sigils or extra backslashes & w/ newline or tab; or single q-braces w/out odd backslashes; ex. 'howdy $foo!' or "howdy foo!\n" or q{howdy $foo!} 
 %token SELF                  = /(\$self)/                                # '$self'
-%token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z]\w*)?[a-z]\w*(::[a-zA-Z]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$Foo::Bar::baz'
+
+
+
+# START HERE: update comment and remove old rule
+# START HERE: update comment and remove old rule
+# START HERE: update comment and remove old rule
+
+# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+#%token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z]\w*)?[a-z]\w*(::[a-zA-Z]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$Foo::Bar::baz'
+%token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z_]\w*)?[a-z]\w*(::[a-zA-Z_]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$Foo::Bar::baz'
+
+
+
 %token FHREF_SYMBOL_IN       = /(\<\$[A-Z][A-Z0-9_]*\>)/                 # less-than, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, greater-than; ex. '<$MY_FILEHANDLE_23>'
 %token FHREF_SYMBOL_BRACES   = /(\{\$[A-Z][A-Z0-9_]*\})/                 # left brace, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, right brace; ex. '{$MY_FILEHANDLE_23}'
 %token FHREF_SYMBOL          = /(\$[A-Z][A-Z0-9_]*)/                     # dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. '$MY_FILEHANDLE_23'
@@ -59,7 +71,20 @@
 %token TYPE_FHREF            = /(filehandleref\s+)/                      # 'filehandleref' followed by whitespace
 %token TYPE_METHOD           = /((?:[a-zA-Z]\w*)+(?:::[a-zA-Z]\w*)*::method)/  # optionally-scoped word, followed by '::method'; ex. 'string_arrayref::method' or 'Foo::Bar::method'
 %token CONSTANT_CALL_SCOPED  = /((?:[a-zA-Z]\w*)(?:::[a-zA-Z]\w*)*(?:::[A-Z0-9_]*)\(\))/  # scoped constant call; ex. 'Foo::MY_CONST()' or 'Foo::Bar::BAZ_CONST()'
-%token WORD_SCOPED           = /((?:[a-zA-Z]\w*)?(?:::[a-zA-Z]\w*)+)/    # scoped word; ex. 'Foo::Bar' or 'Foo::Bar::baz_word'
+
+
+
+# START HERE: update comment and remove old rule
+# START HERE: update comment and remove old rule
+# START HERE: update comment and remove old rule
+
+# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+# subroutine & method calls use WORD_SCOPED identifiers, also used by class & package names, allow to begin w/ underscore & check for violations during generate phase
+#%token WORD_SCOPED           = /((?:[a-zA-Z]\w*)?(?:::[a-zA-Z]\w*)+)/    # scoped word; ex. 'Foo::Bar' or 'Foo::Bar::baz_word'
+%token WORD_SCOPED           = /((?:[a-zA-Z_]\w*)?(?:::[a-zA-Z_]\w*)+)/    # scoped word; ex. 'Foo::Bar' or 'Foo::Bar::baz_word'
+
+
+
 %token STDOUT_STDERR         = /(\{\*STDOUT\}|\{\*STDERR\})/             # '{*STDOUT}' or '{*STDERR}'
 %token STDIN                 = /(<STDIN>)/                               # '<STDIN>'
 %token ARGV                  = /(\@ARGV)/                                # '@ARGV'
@@ -180,8 +205,11 @@
 %token LPAREN               = /(\()/                          # '('
 %token LBRACKET             = /(\[)/                          # '['
 %token LBRACE               = /(\{)/                          # '{'
-#%token WORD                 = /([a-z]\w*|[A-Z]\w*[a-z]\w*)/   # lowercase letter followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters; ex. 'foo' or 'foo23' or 'Foo_23'
+
+# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+# subroutine & method & property & hash key definitions use WORD identifiers, allow to begin w/ underscore & check for violations during generate phase
 %token WORD                 = /([a-z_]\w*|[A-Z]\w*[a-z]\w*)/   # lowercase letter or underscore followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters; ex. 'foo' or 'foo23' or 'Foo_23'
+# only constant and loop labels use WORD_UPPERCASE identifiers, in theory Class-scoped constants and any loop labels could begin w/ underscore w/out violating C++ reserved identifier rules
 %token WORD_UPPERCASE       = /([A-Z][A-Z0-9_]*|[A-Z])/       # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOO' or 'FOOBAR_42_HOWDY'
 
 %%
