@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.016_100;
+our $VERSION = 0.017_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -30,6 +30,9 @@ sub ast_to_rperl__generate {
     my string_hashref $rperl_source_group = {};
 
 #    RPerl::diag( 'in Class::Generator->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+
+    # all classes begin in no Perl subroutine, which is equivalent to being in no C++ function
+    $modes->{_symbol_table}->{_subroutine} = q{};
 
     my string $self_class = ref $self;
 
@@ -459,6 +462,9 @@ sub ast_to_rperl__generate {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
 
+    # after processing subroutines, all classes return to being in no Perl subroutine, which is equivalent to being in no C++ function
+    $modes->{_symbol_table}->{_subroutine} = q{};
+
     if ( $modes->{label} eq 'ON' ) {
         $rperl_source_group->{PMC} .= "\n" . $retval_literal_number . $retval_semicolon . '  # end of class' . "\n";
     }
@@ -490,6 +496,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $package_name_underscores = ' . $package_name_underscores . "\n");
 #RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 #    RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
+
+    # all classes begin in no Perl subroutine, which is equivalent to being in no C++ function
+    $modes->{_symbol_table}->{_subroutine} = q{};
 
     my string $self_class = ref $self;
 
@@ -1209,6 +1218,9 @@ EOL
             $cpp_source_group->{_PMC_subroutines_shims}->{$package_name_underscores} .= ( join "\n", @{$PMC_subroutines_shims} ) . "\n";
         }
     }
+
+    # after processing subroutines, all classes return to being in no Perl subroutine, which is equivalent to being in no C++ function
+    $modes->{_symbol_table}->{_subroutine} = q{};
 
     $cpp_source_group->{H} .= '};  // end of class' . "\n\n";
 

@@ -54,9 +54,9 @@
 
 
 
-# START HERE: update comment and remove old rule;  add tests
-# START HERE: update comment and remove old rule;  add tests
-# START HERE: update comment and remove old rule;  add tests
+# START HERE: ensure tests pass on Travis, finish variable tests
+# START HERE: ensure tests pass on Travis, finish variable tests
+# START HERE: ensure tests pass on Travis, finish variable tests
 
 # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 %token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z_]\w*)?[a-z]\w*(::[a-zA-Z_]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$_foo' or '$Foo::Bar::baz'

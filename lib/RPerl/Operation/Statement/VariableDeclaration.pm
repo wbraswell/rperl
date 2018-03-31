@@ -29,8 +29,9 @@ sub ast_to_rperl__generate {
     my string $self_class = ref $self;
     my string $name;
 
-    #    RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-    #    die 'TMP DEBUG, dying';
+#    RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
+#    die 'TMP DEBUG, dying';
 
     # unwrap VariableDeclaration_201, VariableDeclaration_202, VariableDeclaration_203, and VariableDeclaration_204 from Statement_175
     if ( $self_class eq 'Statement_175' ) {    # Statement -> VariableDeclaration
@@ -309,7 +310,8 @@ sub ast_to_rperl__generate {
 #    RPerl::diag('in VariableDeclaration->ast_to_rperl__generate(), have $name = ' . q{'} . $name . q{'} . "\n");
 #    RPerl::diag('in VariableDeclaration->ast_to_rperl__generate(), have $name_nosigil = ' . q{'} . $name_nosigil . q{'} . "\n");
 #    RPerl::diag('in VariableDeclaration->ast_to_rperl__generate(), have $modes->{_symbol_table}->{_namespace} = ' . q{'} . $modes->{_symbol_table}->{_namespace} . q{'} . "\n");
-    if (((substr $name_nosigil, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+#    RPerl::diag('in VariableDeclaration->ast_to_rperl__generate(), have $modes->{_symbol_table}->{_subroutine} = ' . q{'} . $modes->{_symbol_table}->{_subroutine} . q{'} . "\n");
+    if (((substr $name_nosigil, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{}) and ($modes->{_symbol_table}->{_subroutine} eq q{})) {
         die 'ERROR ECOGEASRP72a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'global variable name ' . q{'} . $name . q{'} .
             ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
@@ -792,7 +794,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #    RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $name = ' . q{'} . $name . q{'} . "\n");
 #    RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $name_nosigil = ' . q{'} . $name_nosigil . q{'} . "\n");
 #    RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{_namespace} = ' . q{'} . $modes->{_symbol_table}->{_namespace} . q{'} . "\n");
-    if (((substr $name_nosigil, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+    if (((substr $name_nosigil, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{}) and ($modes->{_symbol_table}->{_subroutine} eq q{})) {
         die 'ERROR ECOGEASCP72a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'global variable name ' . q{'} . $name . q{'} .
             ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }

@@ -30,6 +30,9 @@ sub ast_to_rperl__generate {
     # all programs begin in the 'main::' Perl namespace, which is equivalent to an empty C++ namespace
     $modes->{_symbol_table}->{_namespace} = q{};
 
+    # all programs begin in no Perl subroutine, which is equivalent to the C++ 'main()' function
+    $modes->{_symbol_table}->{_subroutine} = q{};
+
     my string $self_class = ref $self;
 
     # unwrap Program_18 from CompileUnit_4
@@ -136,6 +139,9 @@ sub ast_to_rperl__generate {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
 
+    # after processing subroutines, all programs return to being in no Perl subroutine, which is equivalent to the C++ 'main()' function
+    $modes->{_symbol_table}->{_subroutine} = q{};
+
     if ( $modes->{label} eq 'ON' ) {
         $rperl_source_group->{PMC} .= "\n" . '# [[[ OPERATIONS ]]]' . "\n";
     }
@@ -182,6 +188,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     # all programs begin in the 'main::' Perl namespace, which is equivalent to an empty C++ namespace
     $modes->{_symbol_table}->{_namespace} = q{};
+
+    # all programs begin in no Perl subroutine, which is equivalent to the C++ 'main()' function
+    $modes->{_symbol_table}->{_subroutine} = q{};
 
     my string $self_class = ref $self;
 
@@ -360,6 +369,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         $cpp_source_group->{CPP} .= "\n\n";
     }
+
+    # after processing subroutines, all programs return to being in no Perl subroutine, which is equivalent to the C++ 'main()' function
+    $modes->{_symbol_table}->{_subroutine} = q{};
 
     # BEGIN C++ main() function wrapper, to contain all operations which are not inside a subroutine
     $cpp_source_group->{CPP} .= 'int main() {';
