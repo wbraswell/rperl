@@ -27,6 +27,7 @@ sub ast_to_rperl__generate {
     my string_hashref $rperl_source_group = { PMC => q{} };
     my string_hashref $rperl_source_subgroup;
     my string $self_class = ref $self;
+    my string $name;
 
     #    RPerl::diag( 'in VariableDeclaration->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
     #    die 'TMP DEBUG, dying';
@@ -42,6 +43,9 @@ sub ast_to_rperl__generate {
         my string $type      = $self->{children}->[1]->{children}->[0];
         my string $symbol    = $self->{children}->[2];
         my string $semicolon = $self->{children}->[3];
+
+        # remember symbol AKA name for C++ reserved identifier check at bottom of subroutine
+        $name = $symbol;
 
         my string $symbol_no_sigil = substr $symbol, 1;
         if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
@@ -78,6 +82,9 @@ sub ast_to_rperl__generate {
         my string $symbol                            = $self->{children}->[2];
         my string $assign                            = $self->{children}->[3];
         my object $opnamed_or_subexp_or_input_scolon = $self->{children}->[4];
+
+        # remember symbol AKA name for C++ reserved identifier check at bottom of subroutine
+        $name = $symbol;
 
         my string $symbol_no_sigil = substr $symbol, 1;
         if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
@@ -217,6 +224,9 @@ sub ast_to_rperl__generate {
         my string $undef              = $self->{children}->[7];
         my string $semicolon          = $self->{children}->[8];
 
+        # remember symbol AKA name for C++ reserved identifier check at bottom of subroutine
+        $name = $symbol;
+
         my string $symbol_no_sigil = substr $symbol, 1;
         if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
             (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$symbol_no_sigil}) or
@@ -251,6 +261,9 @@ sub ast_to_rperl__generate {
         my string $symbol_fhref = $self->{children}->[2];
         my string $semicolon    = $self->{children}->[3];
 
+        # remember symbol AKA name for C++ reserved identifier check at bottom of subroutine
+        $name = $symbol_fhref;
+
         my string $symbol_no_sigil = substr $symbol_fhref, 1;
         if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
             (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$symbol_no_sigil}) or
@@ -282,6 +295,38 @@ sub ast_to_rperl__generate {
                 . ' found where VariableDeclaration_201, VariableDeclaration_202, VariableDeclaration_203, or VariableDeclaration_204 expected, dying' )
             . "\n";
     }
+
+
+
+
+
+
+
+    # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+    # NEED ANSWER: in an *.pl Perl program, should Perl global variables be allowed to begin with underscore, 
+    # because they will be made into non-global C++ variables inside the C++ main() function?  and does the Perl vs C++ behavior match in this case???
+    my string $name_nosigil = substr $name, 1;
+#    RPerl::diag('in VariableDeclaration->ast_to_rperl__generate(), have $name = ' . q{'} . $name . q{'} . "\n");
+#    RPerl::diag('in VariableDeclaration->ast_to_rperl__generate(), have $name_nosigil = ' . q{'} . $name_nosigil . q{'} . "\n");
+#    RPerl::diag('in VariableDeclaration->ast_to_rperl__generate(), have $modes->{_symbol_table}->{_namespace} = ' . q{'} . $modes->{_symbol_table}->{_namespace} . q{'} . "\n");
+    if (((substr $name_nosigil, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+        die 'ERROR ECOGEASRP72a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: global variable name ' . q{'} . $name . q{'} .
+            ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+    elsif ($name_nosigil =~ m/^_[A-Z]/gxms) {
+        die 'ERROR ECOGEASRP72b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable name ' . q{'} . $name . q{'} .
+            ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+    elsif ($name_nosigil =~ m/__/gxms) {
+        die 'ERROR ECOGEASRP72c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable name ' . q{'} . $name . q{'} .
+            ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+
+
+
+
+
+
     return $rperl_source_group;
 }
 
@@ -300,6 +345,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my string_hashref $cpp_source_group = { CPP => q{} };
     my string_hashref $cpp_source_subgroup;
     my string $self_class = ref $self;
+    my string $name;
 
 #    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
@@ -312,6 +358,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     if ( $self_class eq 'VariableDeclaration_201' ) {    # VariableDeclaration -> MY Type VARIABLE_SYMBOL ';'
         my string $type   = $self->{children}->[1]->{children}->[0];
         my string $symbol = $self->{children}->[2];
+
+        # remember symbol AKA name for C++ reserved identifier check at bottom of subroutine
+        $name = $symbol;
 
         my string $symbol_no_sigil = substr $symbol, 1;
         if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
@@ -348,6 +397,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         my string $symbol                            = $self->{children}->[2];
         my string $assign                            = $self->{children}->[3];
         my object $opnamed_or_subexp_or_input_scolon = $self->{children}->[4];
+
+        # remember symbol AKA name for C++ reserved identifier check at bottom of subroutine
+        $name = $symbol;
 
         my string $symbol_no_sigil = substr $symbol, 1;
         if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
@@ -636,6 +688,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         my object $subexpression = $self->{children}->[4];
         my string $semicolon     = $self->{children}->[8];
 
+        # remember symbol AKA name for C++ reserved identifier check at bottom of subroutine
+        $name = $symbol;
+
         my string $symbol_no_sigil = substr $symbol, 1;
         if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
             (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$symbol_no_sigil}) or
@@ -685,6 +740,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         my string $type_fhref   = $self->{children}->[1];
         my string $symbol_fhref = $self->{children}->[2];
 
+        # remember symbol AKA name for C++ reserved identifier check at bottom of subroutine
+        $name = $symbol_fhref;
+
         my string $symbol_no_sigil = substr $symbol_fhref, 1;
         if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$symbol_no_sigil}) or
             (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$symbol_no_sigil}) or
@@ -723,6 +781,34 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                 . ' found where VariableDeclaration_201, VariableDeclaration_202, VariableDeclaration_203, or VariableDeclaration_204 expected, dying' )
             . "\n";
     }
+
+
+
+
+    # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+    # NEED ANSWER: in an *.pl Perl program, should Perl global variables be allowed to begin with underscore, 
+    # because they will be made into non-global C++ variables inside the C++ main() function?  and does the Perl vs C++ behavior match in this case???
+    my string $name_nosigil = substr $name, 1;
+#    RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $name = ' . q{'} . $name . q{'} . "\n");
+#    RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $name_nosigil = ' . q{'} . $name_nosigil . q{'} . "\n");
+#    RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{_namespace} = ' . q{'} . $modes->{_symbol_table}->{_namespace} . q{'} . "\n");
+    if (((substr $name_nosigil, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+        die 'ERROR ECOGEASCP72a, CODE GENERATOR, ABSTRACT SYNTAX TO C++: global variable name ' . q{'} . $name . q{'} .
+            ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+    elsif ($name_nosigil =~ m/^_[A-Z]/gxms) {
+        die 'ERROR ECOGEASCP72b, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable name ' . q{'} . $name . q{'} .
+            ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+    elsif ($name_nosigil =~ m/__/gxms) {
+        die 'ERROR ECOGEASCP72c, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable name ' . q{'} . $name . q{'} .
+            ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+
+
+
+
+
     return $cpp_source_group;
 }
 

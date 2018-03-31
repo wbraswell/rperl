@@ -54,13 +54,12 @@
 
 
 
-# START HERE: update comment and remove old rule
-# START HERE: update comment and remove old rule
-# START HERE: update comment and remove old rule
+# START HERE: update comment and remove old rule;  add tests
+# START HERE: update comment and remove old rule;  add tests
+# START HERE: update comment and remove old rule;  add tests
 
 # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
-#%token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z]\w*)?[a-z]\w*(::[a-zA-Z]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$Foo::Bar::baz'
-%token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z_]\w*)?[a-z]\w*(::[a-zA-Z_]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$Foo::Bar::baz'
+%token VARIABLE_SYMBOL       = /(\$(?:[a-zA-Z_]\w*)?[a-z]\w*(::[a-zA-Z_]\w*)*)/ # dollar sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$_foo' or '$Foo::Bar::baz'
 
 
 
@@ -74,9 +73,9 @@
 
 
 
-# START HERE: update comment and remove old rule
-# START HERE: update comment and remove old rule
-# START HERE: update comment and remove old rule
+# START HERE: update comment and remove old rule;  add tests
+# START HERE: update comment and remove old rule;  add tests
+# START HERE: update comment and remove old rule;  add tests
 
 # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 # subroutine & method calls use WORD_SCOPED identifiers, also used by class & package names, allow to begin w/ underscore & check for violations during generate phase

@@ -27,6 +27,9 @@ sub ast_to_rperl__generate {
 #    RPerl::diag( 'in Program->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag('in Program->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 
+    # all programs begin in the 'main::' Perl namespace, which is equivalent to an empty C++ namespace
+    $modes->{_symbol_table}->{_namespace} = q{};
+
     my string $self_class = ref $self;
 
     # unwrap Program_18 from CompileUnit_4
@@ -106,6 +109,9 @@ sub ast_to_rperl__generate {
         $rperl_source_subgroup = $include->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
+
+    # after processing includes, all programs return to the 'main::' Perl namespace, which is equivalent to an empty C++ namespace
+    $modes->{_symbol_table}->{_namespace} = q{};
 
     if ( exists $constant_star->{children}->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
@@ -325,6 +331,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     # DEV NOTE, CORRELATION #rp039: programs never have header files
 #    $cpp_source_group->{CPP} .= '#include "__NEED_HEADER_PATH"' . "\n";  # DEV NOTE, CORRELATION #rp033: defer setting header include path until files are saved in Compiler
+
+    # after processing includes, all programs return to the 'main::' Perl namespace, which is equivalent to an empty C++ namespace
+    $modes->{_symbol_table}->{_namespace} = q{};
 
     if ( exists $constant_star->{children}->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
