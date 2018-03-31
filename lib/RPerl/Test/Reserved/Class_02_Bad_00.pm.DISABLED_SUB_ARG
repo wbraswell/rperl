@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  $_foo_argu' >>>
+# <<< PARSE_ERROR: "NEED ERRORS" >>>
+# <<< PARSE_ERROR: "NEED ERRORS" >>>
 
 # [[[ HEADER ]]]
 use RPerl;

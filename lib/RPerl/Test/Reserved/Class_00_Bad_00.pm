@@ -1,5 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: "ERROR ECOGEASRP71b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name '_Foo_subroutine()' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier" >>>
+# <<< GENERATE_ERROR: "P71b, CODE GENERATOR, ABSTRACT SYNTAX TO" >>>
+# <<< GENERATE_ERROR: "subroutine name '_Foo_subroutine()' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier" >>>
 
 # [[[ HEADER ]]]
 use RPerl;

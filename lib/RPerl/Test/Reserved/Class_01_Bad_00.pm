@@ -1,5 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: "ERROR ECOGEASRP72c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable name '$foo__variable' must not include a double-underscore, forbidden by C++ specification as a reserved identifier" >>>
+# <<< GENERATE_ERROR: "P72c, CODE GENERATOR, ABSTRACT SYNTAX TO" >>>
+# <<< GENERATE_ERROR: "variable name '$foo__variable' must not include a double-underscore, forbidden by C++ specification as a reserved identifier" >>>
 
 # [[[ HEADER ]]]
 use RPerl;

@@ -1,5 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: "ERROR ECOGEASRP71c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name 'foo__subroutine()' must not include a double-underscore, forbidden by C++ specification as a reserved identifier" >>>
+# <<< GENERATE_ERROR: "P71c, CODE GENERATOR, ABSTRACT SYNTAX TO" >>>
+# <<< GENERATE_ERROR: "subroutine name 'foo__subroutine()' must not include a double-underscore, forbidden by C++ specification as a reserved identifier" >>>
 
 # [[[ HEADER ]]]
 use RPerl;

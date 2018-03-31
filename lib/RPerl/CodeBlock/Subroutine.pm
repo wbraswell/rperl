@@ -77,15 +77,15 @@ sub ast_to_rperl__generate {
 
     # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
     if (((substr $name, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
-        die 'ERROR ECOGEASRP71a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: global subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASRP71a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'global subroutine name ' . q{'} . $name . q{()'} .
             ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name =~ m/^_[A-Z]/gxms) {
-        die 'ERROR ECOGEASRP71b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASRP71b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
             ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name =~ m/__/gxms) {
-        die 'ERROR ECOGEASRP71c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASRP71c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 
@@ -156,15 +156,15 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
 
     # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
     if (((substr $name, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
-        die 'ERROR ECOGEASCP71a, CODE GENERATOR, ABSTRACT SYNTAX TO C++: global subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASCP71a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'global subroutine name ' . q{'} . $name . q{()'} .
             ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name =~ m/^_[A-Z]/gxms) {
-        die 'ERROR ECOGEASCP71b, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASCP71b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
             ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name =~ m/__/gxms) {
-        die 'ERROR ECOGEASCP71c, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASCP71c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 
@@ -245,15 +245,15 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
     if (((substr $name, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
-        die 'ERROR ECOGEASCP71a, CODE GENERATOR, ABSTRACT SYNTAX TO C++: global subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASCP71a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'global subroutine name ' . q{'} . $name . q{()'} .
             ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name =~ m/^_[A-Z]/gxms) {
-        die 'ERROR ECOGEASCP71b, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASCP71b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
             ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name =~ m/__/gxms) {
-        die 'ERROR ECOGEASCP71c, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASCP71c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 

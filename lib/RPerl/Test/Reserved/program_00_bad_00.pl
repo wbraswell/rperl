@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: "ERROR ECOGEASRP71a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: global subroutine name '_foo_subroutine_in_main()' must not start with an underscore, forbidden by C++ specification as a reserved identifier" >>>
+# <<< GENERATE_ERROR: "P71a, CODE GENERATOR, ABSTRACT SYNTAX TO" >>>
+# <<< GENERATE_ERROR: "global subroutine name '_foo_subroutine_in_main()' must not start with an underscore, forbidden by C++ specification as a reserved identifier" >>>
 
 # [[[ HEADER ]]]
 use RPerl;

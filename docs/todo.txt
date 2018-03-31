@@ -442,6 +442,7 @@ PERLOPS_PERLTYPES
 
 ERROR CODES
     RPerl::CompileUnit::Module::Class (global base class) needs error codes added for all croak() or die() statements
+    fix all mis-matching *RPxx vs *CPxx error codes, compare all numeric error codes to ensure RPerl matches C++
 
 GRAMMAR
     allow comments with 3 or more chained octothorpe characters ### like this comment

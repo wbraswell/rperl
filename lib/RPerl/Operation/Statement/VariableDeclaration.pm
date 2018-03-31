@@ -310,15 +310,15 @@ sub ast_to_rperl__generate {
 #    RPerl::diag('in VariableDeclaration->ast_to_rperl__generate(), have $name_nosigil = ' . q{'} . $name_nosigil . q{'} . "\n");
 #    RPerl::diag('in VariableDeclaration->ast_to_rperl__generate(), have $modes->{_symbol_table}->{_namespace} = ' . q{'} . $modes->{_symbol_table}->{_namespace} . q{'} . "\n");
     if (((substr $name_nosigil, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
-        die 'ERROR ECOGEASRP72a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: global variable name ' . q{'} . $name . q{'} .
+        die 'ERROR ECOGEASRP72a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'global variable name ' . q{'} . $name . q{'} .
             ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name_nosigil =~ m/^_[A-Z]/gxms) {
-        die 'ERROR ECOGEASRP72b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable name ' . q{'} . $name . q{'} .
+        die 'ERROR ECOGEASRP72b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'variable name ' . q{'} . $name . q{'} .
             ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name_nosigil =~ m/__/gxms) {
-        die 'ERROR ECOGEASRP72c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable name ' . q{'} . $name . q{'} .
+        die 'ERROR ECOGEASRP72c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'variable name ' . q{'} . $name . q{'} .
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 
@@ -793,15 +793,15 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #    RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $name_nosigil = ' . q{'} . $name_nosigil . q{'} . "\n");
 #    RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{_namespace} = ' . q{'} . $modes->{_symbol_table}->{_namespace} . q{'} . "\n");
     if (((substr $name_nosigil, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
-        die 'ERROR ECOGEASCP72a, CODE GENERATOR, ABSTRACT SYNTAX TO C++: global variable name ' . q{'} . $name . q{'} .
+        die 'ERROR ECOGEASCP72a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'global variable name ' . q{'} . $name . q{'} .
             ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name_nosigil =~ m/^_[A-Z]/gxms) {
-        die 'ERROR ECOGEASCP72b, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable name ' . q{'} . $name . q{'} .
+        die 'ERROR ECOGEASCP72b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'variable name ' . q{'} . $name . q{'} .
             ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name_nosigil =~ m/__/gxms) {
-        die 'ERROR ECOGEASCP72c, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable name ' . q{'} . $name . q{'} .
+        die 'ERROR ECOGEASCP72c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'variable name ' . q{'} . $name . q{'} .
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: 'ERROR ECOGEASRP03' >>>
+# <<< GENERATE_ERROR: 'P03, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
 # <<< GENERATE_ERROR: "Argument count 4 exceeds maximum argument limit 1 for operator 'return'" >>>
 
 # [[[ HEADER ]]]

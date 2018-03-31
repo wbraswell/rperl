@@ -135,7 +135,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             # DEV NOTE, CORRELATION #rp031: NEED ANSWER: are array dereferences allowed in CPPOPS or not???
             else {
                 die RPerl::Parser::rperl_rule__replace(
-                    'ERROR ECOGEASCP13, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying'
+                    'ERROR ECOGEASCP79, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying'
                 ) . "\n";
             }
         }

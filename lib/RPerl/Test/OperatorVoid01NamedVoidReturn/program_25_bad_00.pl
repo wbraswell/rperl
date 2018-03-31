@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: 'ERROR ECOGEASRP04' >>>
+# <<< GENERATE_ERROR: 'P04, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
 # <<< GENERATE_ERROR: 'Attempt to return dereferenced array' >>>
 
 # [[[ HEADER ]]]
