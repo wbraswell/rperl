@@ -42,11 +42,14 @@ sub cpp_load {
 
         #RPerl::diag('in MyClass::cpp_load, need load CPP code' . "\n");
 
+        my $cpp_file_path        = 'blib/lib/MyClass.cpp';
+        my $cpp_file_path_noblib = 'lib/MyClass.cpp';
+        if ( not( ( -e $cpp_file_path ) and ( -f $cpp_file_path ) ) ) { $cpp_file_path = $cpp_file_path_noblib; } # fall back to non-blib, if blib does not exist
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
 BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'lib/MyClass.cpp' ]]]\n" x 1); }
-use Inline (CPP => 'lib/MyClass.cpp', \%RPerl::Inline::ARGS);
+use Inline (CPP => \$cpp_file_path, \%RPerl::Inline::ARGS);
 RPerl::diag("[[[ END   'use Inline' STAGE for 'lib/MyClass.cpp' ]]]\n" x 1);
 1;
 EOF

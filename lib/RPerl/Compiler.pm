@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.035_000;
+our $VERSION = 0.036_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -551,6 +551,7 @@ sub rperl_to_xsbinary__parse_generate_compile {
     ( my string $rperl_input_file_name, my string_hashref $cpp_output_file_name_group, my string_hashref $cpp_source_group, my string_hashref $modes ) = @ARG;
     my object $rperl_ast;
 
+    RPerl::diag( 'in Compiler->rperl_to_xsbinary__parse_generate_compile(), received $cpp_output_file_name_group = ' . "\n" . Dumper($cpp_output_file_name_group) . "\n" );
 #    RPerl::diag( 'in Compiler->rperl_to_xsbinary__parse_generate_compile(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
     # [[[ PARSE RPERL TO AST ]]]
@@ -606,10 +607,10 @@ sub generate_output_file_names {
     { my hashref_arrayref $RETURN_TYPE };
     ( my string_arrayref $input_file_names, my string_arrayref $output_file_name_prefixes, my integer $input_files_count, my string_hashref $modes ) = @ARG;
 
-    #    RPerl::diag('in Compiler::generate_output_file_names(), received $input_file_names = ' . "\n" . Dumper($input_file_names) . "\n");
-    #    RPerl::diag('in Compiler::generate_output_file_names(), received $output_file_name_prefixes = ' . "\n" . Dumper($output_file_name_prefixes) . "\n");
-    #    RPerl::diag('in Compiler::generate_output_file_names(), received $input_files_count = ' . $input_files_count . "\n");
-#    RPerl::diag( 'in Compiler::generate_output_file_names(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
+#    RPerl::diag('in Compiler::generate_output_file_names(), received $input_file_names = ' . "\n" . Dumper($input_file_names) . "\n");
+#    RPerl::diag('in Compiler::generate_output_file_names(), received $output_file_name_prefixes = ' . "\n" . Dumper($output_file_name_prefixes) . "\n");
+#    RPerl::diag('in Compiler::generate_output_file_names(), received $input_files_count = ' . $input_files_count . "\n");
+#    RPerl::diag('in Compiler::generate_output_file_names(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
 
     # NEED FIX: add string_hashref_arrayref type
     #    my string_hashref_arrayref $output_file_name_groups = [];
@@ -626,22 +627,38 @@ sub generate_output_file_names {
 
         # if output file prefix(es) provided, then use to generate output file name(s)
         if ( defined $output_file_name_prefixes->[$i] ) {
-
             # explicitly provided option should already be only prefix, but fileparse() to make sure
             ( $input_file_name_prefix, $input_file_name_path, $input_file_name_suffix ) = fileparse( $output_file_name_prefixes->[$i], qr/[.][^.]*/xms );
             if ( $input_file_name_prefix eq q{} ) {
                 die "ERROR EAR17: Invalid RPerl source code output file command-line argument specified, dying\n";
             }
+
+            # DEV NOTE: File::Basename::fileparse() wrongly (or at least stupidly) returns path './' intead of empty path '' when there is no leading path present, compensate 
+            if ((($input_file_name_path eq './') and ((substr $output_file_name_prefixes->[$i], 0, 2) ne './')) or 
+                (($input_file_name_path eq '.\\') and ((substr $output_file_name_prefixes->[$i], 0, 2) ne '.\\'))) {
+                $input_file_name_path = q{};
+            }
         }
 
         # if output file prefix(es) not provided, then generate output file name(s) from input file name(s)
         else {
-            #            RPerl::diag('in Compiler::generate_output_file_names(), have $input_file_name = ' . $input_file_name . "\n");
+#            RPerl::diag('in Compiler::generate_output_file_names(), no output file prefixes provided, have $input_file_name = ' . $input_file_name . "\n");
             # should not already be only prefix, fileparse() to isolate prefix
             ( $input_file_name_prefix, $input_file_name_path, $input_file_name_suffix ) = fileparse( $input_file_name, qr/[.][^.]*/xms );
+
+            # DEV NOTE: File::Basename::fileparse() wrongly (or at least stupidly) returns path './' intead of empty path '' when there is no leading path present, compensate 
+            if ((($input_file_name_path eq './') and ((substr $input_file_name, 0, 2) ne './')) or 
+                (($input_file_name_path eq '.\\') and ((substr $input_file_name, 0, 2) ne '.\\'))) {
+                $input_file_name_path = q{};
+            }
         }
 
         my string $output_file_name_path_prefix = $input_file_name_path . $input_file_name_prefix;
+
+#        RPerl::diag('in Compiler::generate_output_file_names(), have $input_file_name_path = ' . q{'} . $input_file_name_path . q{'} . "\n" );
+#        RPerl::diag('in Compiler::generate_output_file_names(), have $input_file_name_prefix = ' . q{'} . $input_file_name_prefix . q{'} . "\n" );
+#        RPerl::diag('in Compiler::generate_output_file_names(), have $input_file_name_suffix = ' . q{'} . $input_file_name_suffix . q{'} . "\n" );
+#        RPerl::diag('in Compiler::generate_output_file_names(), have $output_file_name_path_prefix = ' . q{'} . $output_file_name_path_prefix . q{'} . "\n" );
 
         # *.pl input files may generate *.o, *.a, *.so, *.exe, and/or non-suffix output files
         if ( $input_file_name =~ /[.]pl$/xms ) {
@@ -768,6 +785,8 @@ sub generate_output_file_names {
 
 #        RPerl::diag('in Compiler::generate_output_file_names(), bottom of loop ' . $i . ' of ' . ($input_files_count - 1) . ", have \$output_file_name_groups->[$i] = \n" . Dumper( $output_file_name_groups->[$i] ) . "\n");
     }
+
+#    RPerl::diag('in Compiler::generate_output_file_names(), returning $output_file_name_groups = ' . "\n" . Dumper($output_file_name_groups) . "\n" );
     return $output_file_name_groups;
 }
 
@@ -950,12 +969,8 @@ sub post_processor_cpp__header_or_cpp_path {
     return $source_CPP;
 }
 
-
-# NEED FIX: only remove leading library path for C++ files, not for PMC files???
-# NEED FIX: only remove leading library path for C++ files, not for PMC files???
-# NEED FIX: only remove leading library path for C++ files, not for PMC files???
-
-# remove leading library path if present, because it should already be enabled in RPerl/Inline.pm via -Ifoo subcompiler argument
+# remove leading lib or blib path if present, because it should already be enabled for C++ in RPerl/Inline.pm via -Ifoo subcompiler argument, 
+# and for Perl in the generated PMC files via $main::INCLUDE_PATH global var
 sub post_processor_cpp__lib_path_delete {
     { my string $RETURN_TYPE };
     ( my string $path ) = @ARG;
@@ -996,6 +1011,34 @@ sub post_processor_cpp__lib_path_delete {
 #    }
     elsif ( ( substr $path, 0, 11 ) eq './blib/lib/' ) {
         substr $path, 0, 11, q{};
+    }
+    return $path;
+}
+
+# remove leading blib path if present, because it should only be utilized during Makefile build phase
+sub post_processor_cpp__blib_path_delete {
+    { my string $RETURN_TYPE };
+    ( my string $path ) = @ARG;
+
+    # DEV NOTE: sometimes MS Windows OS has forward slashes in the 'blib/lib/' part of the path, so we do not differentiate by OS
+    # DEV NOTE: only delete the 'blib/' parts, not the entire 'blib/lib/' part, leave the 'lib/' in place
+    if ( ( substr $path, 0, 5 ) eq 'blib\\' ) {
+        substr $path, 0, 5, q{};
+    }
+#    elsif ( ( substr $path, 0, 6 ) eq '\\blib\\' ) {  # NEED ANSWER: is there ever a case where '/lib/' would appear instead of 'lib/' or './lib/' ???
+#        substr $path, 0, 6, q{};
+#    }
+    elsif ( ( substr $path, 0, 7 ) eq '.\\blib\\' ) {
+        substr $path, 0, 7, q{};
+    }
+    elsif ( ( substr $path, 0, 5 ) eq 'blib/' ) {
+        substr $path, 0, 5, q{};
+    }
+#    elsif ( ( substr $path, 0, 6 ) eq '/blib/' ) {  # NEED ANSWER: same question as above
+#        substr $path, 0, 6, q{};
+#    }
+    elsif ( ( substr $path, 0, 7 ) eq './blib/' ) {
+        substr $path, 0, 7, q{};
     }
     return $path;
 }
@@ -1413,22 +1456,92 @@ sub post_processor_cpp__pmc_generate {
                             . q{'} . $distribution_package . '::Config' . q{'} . ' returned undefined value, dying' . "\n";
                     }
                 }
+
+
+
+
+
+# START HERE: Travis tests pass, remove blank space in this file
+# START HERE: Travis tests pass, remove blank space in this file
+# START HERE: Travis tests pass, remove blank space in this file
+
                 elsif ( $file_line eq ( '# <<< CHANGE_ME: add use Inline path & args here >>>' . "\n" ) ) {
-                    # hardcoded example
-                    #BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/CompileUnit/Module.cpp' ]]]\n" x 1); }
-                    #use Inline (CPP => '$main::INCLUDE_PATH' . '/' . 'RPerl/CompileUnit/Module.cpp', \%RPerl::Inline::ARGS);
-                    #RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/CompileUnit/Module.cpp' ]]]\n" x 1);
+                    # common to all options
+                    $file_line  = '        my $eval_string = <<"EOF";' . "\n";
+                    $file_line .= 'package main;' . "\n";
+                    $file_line .= 'use RPerl::Inline;' . "\n";
+
+=DISABLE_hardcoded_example__absolute_or_relative_with_dots
+        my $eval_string = <<"EOF";
+package main;
+use RPerl::Inline;
+# ---vvv---
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '/foo/MyClass.pm' ]]]\n" x 1); }
+use Inline (CPP => '/foo/MyClass.pm', \%RPerl::Inline::ARGS);
+RPerl::diag("[[[ END   'use Inline' STAGE for '/foo/MyClass.pm' ]]]\n" x 1);
+# ---^^^---
+1;
+EOF
+=cut
+
+=DISABLE_hardcoded_example__relative_without_dots__has_rperl_config
+        my $eval_string = <<"EOF";
+package main;
+use RPerl::Inline;
+# ---vvv---
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/MyClass.cpp' ]]]\n" x 1); }
+use Inline (CPP => '$main::INCLUDE_PATH' . '/' . 'RPerl/MyClass.cpp', \%RPerl::Inline::ARGS);
+RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/MyClass.cpp' ]]]\n" x 1);
+# ---^^^---
+1;
+EOF
+=cut
+
+=DISABLE_hardcoded_example__relative_without_dots__no_rperl_config
+# ---vvv---
+        my $cpp_file_path = 'blib/lib/MyClass.cpp';
+        my $cpp_file_path_noblib = 'lib/MyClass.cpp';
+        if (not ((-e $cpp_file_path) and (-f $cpp_file_path))) { $cpp_file_path = $cpp_file_path_noblib; }  # fall back to non-blib, if blib does not exist
+# ---^^^---
+        my $eval_string = <<"EOF";
+package main;
+use RPerl::Inline;
+# ---vvv---
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'lib/MyClass.cpp' ]]]\\n" x 1); }
+use Inline (CPP => \$cpp_file_path, \%RPerl::Inline::ARGS);
+RPerl::diag("[[[ END   'use Inline' STAGE for 'lib/MyClass.cpp' ]]]\\n" x 1);
+# ---^^^---
+1;
+EOF
+=cut
+
                     my string $cpp_file_path = $file_name_group->{CPP};
+                    my string $cpp_file_path_noblib = q{};
+                    my boolean $has_blib = 0;
+
+#                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, have $cpp_file_path = ', q{'}, $cpp_file_path, q{'}, "\n" );
 
                     # DEV NOTE: only call post_processor_cpp__lib_path_delete() if there is an RPerl config file which will provide the proper lib directory for us
                     if ($has_rperl_config) {
+#                        RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, have true $has_rperl_config, about to call post_processor_cpp__lib_path_delete()...', "\n" );
                         $cpp_file_path = post_processor_cpp__lib_path_delete($cpp_file_path);
                     }
+                    # DEV NOTE: only call post_processor_cpp__blib_path_delete() if there is NOT an RPerl config file, due to Makefile build phase
+                    else {
+#                        RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, have false $has_rperl_config, about to call post_processor_cpp__blib_path_delete()...', "\n" );
+                        $cpp_file_path_noblib = post_processor_cpp__blib_path_delete($cpp_file_path);
+                        if ($cpp_file_path_noblib ne $cpp_file_path) {
+                            $has_blib = 1;
+                        }
+                    }
+#                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, have possibly-modified $cpp_file_path = ', q{'}, $cpp_file_path, q{'}, "\n" );
+#                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, have $cpp_file_path_noblib = ', q{'}, $cpp_file_path_noblib, q{'}, "\n" );
 
                     # $cpp_volume will be empty string q{} on *NIX & other non-volume operating systems
                     (my string $cpp_volume, my string $cpp_directories, my string $cpp_file) = File::Spec->splitpath( $cpp_file_path, my boolean $no_file = 0 );
 #                    my string $cpp_file_full_recatted = File::Spec->catpath( $cpp_volume, $cpp_directories, $cpp_file );  # unused
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, have $has_rperl_config = ', $has_rperl_config, "\n" );
+#                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, have $has_blib = ', $has_blib, "\n" );
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, have $cpp_volume = ', q{'}, $cpp_volume, q{'}, "\n" );
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, have $cpp_directories = ', q{'}, $cpp_directories, q{'}, "\n" );
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, have $cpp_file = ', q{'}, $cpp_file, q{'}, "\n" );
@@ -1439,39 +1552,55 @@ sub post_processor_cpp__pmc_generate {
                     if ((($cpp_volume ne q{}) or ($cpp_directories_char0 eq '/') or ($cpp_directories_char0 eq '\\')) or
                     # relative path, w/ leading dots
                     ($cpp_directories_char0 eq '.')) {
-                        # prepend nothing, even if $has_rperl_config
+                        # prepend nothing, even if $has_rperl_config or $has_blib
                         # DEV NOTE, CORRELATION #rp036: handle input file names with leading dots
                         # we should have already stripped all leading single-dots in rperl::accept_and_verify_input_files(),
                         # so all leading-dot $cpp_directories here should be double-dots, although the same logic here should also apply to single-dots,
-                        # because the point is not to prepend INCLUDE_PATH to anything which has dots at all, which is almost certainly wrong
+                        # because the point is not to prepend INCLUDE_PATH to anything which has dots at all, which is almost certainly wrong;
+                        # also, the Makefile build phase prepends non-absolute non-relative-w/-dots 'blib/' which should not trigger this section
 #                        RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, absolute path or relative path w/ leading dots, PREPEND NOTHING', "\n" );
-                        $file_line  = q<BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '> . $cpp_file_path . q<' ]]]\n" x 1); }> . "\n";
+                        $file_line .= q<BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '> . $cpp_file_path . q<' ]]]\n" x 1); }> . "\n";
                         $file_line .= q{use Inline (CPP => '} . $cpp_file_path . q{', \%RPerl::Inline::ARGS);} . "\n";
                         $file_line .= q{RPerl::diag("[[[ END   'use Inline' STAGE for '} . $cpp_file_path . q{' ]]]\n" x 1);} . "\n";
                     }
                     # relative path, w/out leading dots
                     else {
+                        # relative path, w/out leading dots, has RPerl config
                         if ($has_rperl_config) {
                             # prepend INCLUDE_PATH and forward slash
                             # NEED ANSWER WIN32: forward slash has been a valid path separator since MS-DOS v2.0, but can NOT be used as a path separator in the DOS shell command line because it is used for command switches instead
                             # so is it truly necessary to use backslash for WIN32 just to be safe??? 
 #                            RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, relative path w/out leading dots and true $has_rperl_config, PREPEND INCLUDE_PATH', "\n" );
                             if ( $OSNAME eq 'MSWin32' ) {
-                                $file_line  = q<BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '> . $cpp_file_path . q<' ]]]\n" x 1); }> . "\n";
+                                $file_line .= q<BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '> . $cpp_file_path . q<' ]]]\n" x 1); }> . "\n";
                                 # NEED ANSWER WIN32: should the backslash below itself be backslash escaped (double backslash), or not???
                                 $file_line .= q{use Inline (CPP => '$main::INCLUDE_PATH' . '\\' . '} . $cpp_file_path . q{', \%RPerl::Inline::ARGS);} . "\n";
                                 $file_line .= q{RPerl::diag("[[[ END   'use Inline' STAGE for '} . $cpp_file_path . q{' ]]]\n" x 1);} . "\n";
                             }
                             else {
-                                $file_line  = q<BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '> . $cpp_file_path . q<' ]]]\n" x 1); }> . "\n";
+                                $file_line .= q<BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '> . $cpp_file_path . q<' ]]]\n" x 1); }> . "\n";
                                 $file_line .= q{use Inline (CPP => '$main::INCLUDE_PATH' . '/' . '} . $cpp_file_path . q{', \%RPerl::Inline::ARGS);} . "\n";
                                 $file_line .= q{RPerl::diag("[[[ END   'use Inline' STAGE for '} . $cpp_file_path . q{' ]]]\n" x 1);} . "\n";
                             }
                         }
+                        # relative path, w/out leading dots, no RPerl config
                         else {
-                            # prepend nothing, except possibly './' before generating $file_line
+#                            RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, relative path w/out leading dots and false $has_rperl_config', "\n" );
+                            if (not $has_blib) {
+                                # artificially prepend 'blib/' so we can prepend blib-handling logic below,
+                                # allowing for uniformity between normal `rperl` front-end invocation versus Makefile build phase
+#                                RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, relative path w/out leading dots and false $has_rperl_config, false $has_blib, artificially prepending to $cpp_file_path', "\n" );
+                                if ( $OSNAME eq 'MSWin32' ) {
+                                    $cpp_file_path = 'blib\\' . $cpp_file_path;
+                                }
+                                else {
+                                    $cpp_file_path = 'blib/' . $cpp_file_path;
+                                }
+                            }
                             # DEV NOTE: barely-documented Inline::CPP bug, must have leading './' if no other directories in path
                             if ( $cpp_file_path !~ /\// ) {
+                                # prepend './' to path before generating $file_line
+#                                RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, relative path w/out leading dots and false $has_rperl_config, $cpp_file_path has no slashes, prepending dot-slash', "\n" );
                                 if ( $OSNAME eq 'MSWin32' ) {
                                     $cpp_file_path = q{.\\} . $cpp_file_path;
                                 }
@@ -1479,13 +1608,44 @@ sub post_processor_cpp__pmc_generate {
                                     $cpp_file_path = q{./} . $cpp_file_path;
                                 }
                             }
-#                            RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, relative path w/out leading dots and false $has_rperl_config, PREPEND NOTHING', "\n" );
-                            $file_line  = q<BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '> . $cpp_file_path . q<' ]]]\n" x 1); }> . "\n";
-                            $file_line .= q{use Inline (CPP => '} . $cpp_file_path . q{', \%RPerl::Inline::ARGS);} . "\n";
-                            $file_line .= q{RPerl::diag("[[[ END   'use Inline' STAGE for '} . $cpp_file_path . q{' ]]]\n" x 1);} . "\n";
+                            if ( $cpp_file_path_noblib !~ /\// ) {
+                                # prepend './' to path before generating $file_line
+#                                RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, relative path w/out leading dots and false $has_rperl_config, $cpp_file_path_noblib has no slashes, prepending dot-slash', "\n" );
+                                if ( $OSNAME eq 'MSWin32' ) {
+                                    $cpp_file_path_noblib = q{.\\} . $cpp_file_path_noblib;
+                                }
+                                else {
+                                    $cpp_file_path_noblib = q{./} . $cpp_file_path_noblib;
+                                }
+                            }
+
+                            # prepend blib-handling logic
+                            # DEV NOTE: we can never prepend nothing, in order to allow for uniformity
+#                            RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, relative path w/out leading dots and false $has_rperl_config, prepending blib-handling logic', "\n" );
+                            my $file_line_prepend = q{};
+                            $file_line_prepend .= q<        my $cpp_file_path = '> . $cpp_file_path . q<';> . "\n";
+                            $file_line_prepend .= q<        my $cpp_file_path_noblib = '> . $cpp_file_path_noblib . q<';> . "\n";
+                            $file_line_prepend .= q<        if (not ((-e $cpp_file_path) and (-f $cpp_file_path))) { $cpp_file_path = $cpp_file_path_noblib; }  # fall back to non-blib, if blib does not exist> . "\n";
+                            $file_line = $file_line_prepend . $file_line;
+
+                            # hard-code $cpp_file_path_noblib in debug statements for uniformity
+                            $file_line .= q<BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '> . $cpp_file_path_noblib . q<' ]]]\n" x 1); }> . "\n";
+                            $file_line .= q{use Inline (CPP => \$cpp_file_path, \%RPerl::Inline::ARGS);} . "\n";
+                            $file_line .= q{RPerl::diag("[[[ END   'use Inline' STAGE for '} . $cpp_file_path_noblib . q{' ]]]\n" x 1);} . "\n";
                         }
                     }
+
+                    # common to all options
+                    $file_line .= '1;' . "\n";
+                    $file_line .= 'EOF' . "\n";
                 }
+
+
+
+
+
+
+
                 elsif ( $file_line eq ( '# <<< CHANGE_ME: add user-defined includes here >>>' . "\n" ) ) {
                     if (    ( exists $source_group->{_PMC_includes}->{$module_name_underscores} )
                         and ( defined $source_group->{_PMC_includes}->{$module_name_underscores} ) )

@@ -42,12 +42,7 @@ sub cpp_load {
 
         #RPerl::diag('in RPerl::CompileUnit::Module::cpp_load, need load CPP code' . "\n");
 
-        my $eval_string = <<"EOF";
-package main;
-use RPerl::Inline;
 # <<< CHANGE_ME: add use Inline path & args here >>>
-1;
-EOF
 
         $RPerl::Inline::ARGS{ccflagsex} = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypessizes::type_number_native_ccflag();
         $RPerl::Inline::ARGS{cppflags}  = $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypessizes::type_number_native_ccflag();
