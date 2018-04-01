@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -297,12 +297,6 @@ sub ast_to_rperl__generate {
             . "\n";
     }
 
-
-
-
-
-
-
     # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
     # NEED ANSWER: in an *.pl Perl program, should Perl global variables be allowed to begin with underscore, 
     # because they will be made into non-global C++ variables inside the C++ main() function?  and does the Perl vs C++ behavior match in this case???
@@ -323,11 +317,6 @@ sub ast_to_rperl__generate {
         die 'ERROR ECOGEASRP72c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'variable name ' . q{'} . $name . q{'} .
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
-
-
-
-
-
 
     return $rperl_source_group;
 }
@@ -784,9 +773,6 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             . "\n";
     }
 
-
-
-
     # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
     # NEED ANSWER: in an *.pl Perl program, should Perl global variables be allowed to begin with underscore, 
     # because they will be made into non-global C++ variables inside the C++ main() function?  and does the Perl vs C++ behavior match in this case???
@@ -806,10 +792,6 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         die 'ERROR ECOGEASCP72c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'variable name ' . q{'} . $name . q{'} .
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
-
-
-
-
 
     return $cpp_source_group;
 }

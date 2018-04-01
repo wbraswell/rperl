@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.033_000;
+our $VERSION = 0.035_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -950,6 +950,11 @@ sub post_processor_cpp__header_or_cpp_path {
     return $source_CPP;
 }
 
+
+# NEED FIX: only remove leading library path for C++ files, not for PMC files???
+# NEED FIX: only remove leading library path for C++ files, not for PMC files???
+# NEED FIX: only remove leading library path for C++ files, not for PMC files???
+
 # remove leading library path if present, because it should already be enabled in RPerl/Inline.pm via -Ifoo subcompiler argument
 sub post_processor_cpp__lib_path_delete {
     { my string $RETURN_TYPE };
@@ -1264,20 +1269,8 @@ sub post_processor__current_directory_path_delete {
 sub post_processor_cpp__pmc_generate {
     { my void $RETURN_TYPE };
     ( my string_hashref $source_group, my string_hashref $file_name_group, my string_hashref $modes ) = @ARG;
-
-    # NEED FIX WIN32: handle back-slash for Win32 instead of forward-slash only for *NIX
-    my string $cpp_file_path = $file_name_group->{CPP};
-    $cpp_file_path = post_processor_cpp__lib_path_delete($cpp_file_path);
-
-    # DEV NOTE: barely-documented Inline::CPP bug, must have leading './' if no other directories in path
-    if ( $cpp_file_path !~ /\// ) {
-        if ( $OSNAME eq 'MSWin32' ) {
-            $cpp_file_path .= q{.\\};
-        }
-        else {
-            $cpp_file_path .= q{./};
-        }
-    }
+#    RPerl::diag( q{in Compiler::post_processor_cpp__pmc_generate(), top of surbroutine...} . "\n" );
+#    RPerl::diag( q{in Compiler::post_processor_cpp__pmc_generate(), received $file_name_group->{CPP} = } . $file_name_group->{CPP} . "\n" );
 
     # DEV NOTE: only generate PMC output file in dynamic (default) subcompile mode
     if ( $modes->{subcompile} eq 'DYNAMIC' ) {
@@ -1307,8 +1300,8 @@ sub post_processor_cpp__pmc_generate {
 
         while ( defined $module_name_underscores ) {
 
-            #            RPerl::diag( q{in Compiler::post_processor_cpp__pmc_generate(), have $cpp_file_path = } . $cpp_file_path . "\n" );
-            #            RPerl::diag( q{in Compiler::post_processor_cpp__pmc_generate(), have $module_name_underscores = } . $module_name_underscores . "\n" );
+#            RPerl::diag( q{in Compiler::post_processor_cpp__pmc_generate(), have $file_name_group->{CPP} = } . $file_name_group->{CPP} . "\n" );
+#            RPerl::diag( q{in Compiler::post_processor_cpp__pmc_generate(), have $module_name_underscores = } . $module_name_underscores . "\n" );
 
             # utilize modified copies of Module PMC template file
             my string $module_pmc_filename_manual;
@@ -1425,7 +1418,13 @@ sub post_processor_cpp__pmc_generate {
                     #BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'RPerl/CompileUnit/Module.cpp' ]]]\n" x 1); }
                     #use Inline (CPP => '$main::INCLUDE_PATH' . '/' . 'RPerl/CompileUnit/Module.cpp', \%RPerl::Inline::ARGS);
                     #RPerl::diag("[[[ END   'use Inline' STAGE for 'RPerl/CompileUnit/Module.cpp' ]]]\n" x 1);
-                    
+                    my string $cpp_file_path = $file_name_group->{CPP};
+
+                    # DEV NOTE: only call post_processor_cpp__lib_path_delete() if there is an RPerl config file which will provide the proper lib directory for us
+                    if ($has_rperl_config) {
+                        $cpp_file_path = post_processor_cpp__lib_path_delete($cpp_file_path);
+                    }
+
                     # $cpp_volume will be empty string q{} on *NIX & other non-volume operating systems
                     (my string $cpp_volume, my string $cpp_directories, my string $cpp_file) = File::Spec->splitpath( $cpp_file_path, my boolean $no_file = 0 );
 #                    my string $cpp_file_full_recatted = File::Spec->catpath( $cpp_volume, $cpp_directories, $cpp_file );  # unused
@@ -1454,13 +1453,32 @@ sub post_processor_cpp__pmc_generate {
                     else {
                         if ($has_rperl_config) {
                             # prepend INCLUDE_PATH and forward slash
+                            # NEED ANSWER WIN32: forward slash has been a valid path separator since MS-DOS v2.0, but can NOT be used as a path separator in the DOS shell command line because it is used for command switches instead
+                            # so is it truly necessary to use backslash for WIN32 just to be safe??? 
 #                            RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, relative path w/out leading dots and true $has_rperl_config, PREPEND INCLUDE_PATH', "\n" );
-                            $file_line  = q<BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '> . $cpp_file_path . q<' ]]]\n" x 1); }> . "\n";
-                            $file_line .= q{use Inline (CPP => '$main::INCLUDE_PATH' . '/' . '} . $cpp_file_path . q{', \%RPerl::Inline::ARGS);} . "\n";
-                            $file_line .= q{RPerl::diag("[[[ END   'use Inline' STAGE for '} . $cpp_file_path . q{' ]]]\n" x 1);} . "\n";
+                            if ( $OSNAME eq 'MSWin32' ) {
+                                $file_line  = q<BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '> . $cpp_file_path . q<' ]]]\n" x 1); }> . "\n";
+                                # NEED ANSWER WIN32: should the backslash below itself be backslash escaped (double backslash), or not???
+                                $file_line .= q{use Inline (CPP => '$main::INCLUDE_PATH' . '\\' . '} . $cpp_file_path . q{', \%RPerl::Inline::ARGS);} . "\n";
+                                $file_line .= q{RPerl::diag("[[[ END   'use Inline' STAGE for '} . $cpp_file_path . q{' ]]]\n" x 1);} . "\n";
+                            }
+                            else {
+                                $file_line  = q<BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '> . $cpp_file_path . q<' ]]]\n" x 1); }> . "\n";
+                                $file_line .= q{use Inline (CPP => '$main::INCLUDE_PATH' . '/' . '} . $cpp_file_path . q{', \%RPerl::Inline::ARGS);} . "\n";
+                                $file_line .= q{RPerl::diag("[[[ END   'use Inline' STAGE for '} . $cpp_file_path . q{' ]]]\n" x 1);} . "\n";
+                            }
                         }
                         else {
-                            # prepend nothing
+                            # prepend nothing, except possibly './' before generating $file_line
+                            # DEV NOTE: barely-documented Inline::CPP bug, must have leading './' if no other directories in path
+                            if ( $cpp_file_path !~ /\// ) {
+                                if ( $OSNAME eq 'MSWin32' ) {
+                                    $cpp_file_path = q{.\\} . $cpp_file_path;
+                                }
+                                else {
+                                    $cpp_file_path = q{./} . $cpp_file_path;
+                                }
+                            }
 #                            RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, relative path w/out leading dots and false $has_rperl_config, PREPEND NOTHING', "\n" );
                             $file_line  = q<BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for '> . $cpp_file_path . q<' ]]]\n" x 1); }> . "\n";
                             $file_line .= q{use Inline (CPP => '} . $cpp_file_path . q{', \%RPerl::Inline::ARGS);} . "\n";

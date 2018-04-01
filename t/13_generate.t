@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.042_000;
+our $VERSION = 0.043_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -33,7 +33,8 @@ use File::Spec;
 
 # [[[ CONSTANTS ]]]
 use constant PATH_TESTS => my string $TYPED_PATH_TESTS = $RPerl::INCLUDE_PATH . '/RPerl/Test';
-use constant PATH_PRECOMPILED => my string $TYPED_PATH_PRECOMPILED = $RPerl::INCLUDE_PATH . '/RPerl';
+#use constant PATH_PRECOMPILED => my string $TYPED_PATH_PRECOMPILED = $RPerl::INCLUDE_PATH . '/RPerl';
+use constant PATH_PRECOMPILED => my string $TYPED_PATH_PRECOMPILED = $RPerl::INCLUDE_PATH;  # include lib/MyClass.pm in testing
 
 # [[[ OPERATIONS ]]]
 our $verbose_newline = q{};

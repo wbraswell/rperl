@@ -1,0 +1,47 @@
+// [[[ HEADER ]]]
+using std::cout;  using std::cerr;  using std::endl;
+
+#ifndef __CPP__INCLUDED__MyClass_cpp
+#define __CPP__INCLUDED__MyClass_cpp 0.001_000
+
+// [[[ INCLUDES ]]]
+#include "MyClass.h"
+
+# ifdef __PERL__TYPES
+
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+
+# elif defined __CPP__TYPES
+
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+
+// [[[ SUBROUTINES & OO METHODS ]]]
+
+integer MyClass::foo_method(integer foo_argument) {
+    print "in MyClass::foo_method(), received $foo_argument = " << foo_argument << endl;
+    print "in MyClass::foo_method(), have $self->{foo_property} = " << "'" << this->foo_property << "'" << endl;
+    return (foo_argument * -2);
+}
+
+integer MyClass__foo_subroutine(integer foo_argument) {
+    print "in MyClass::foo_subroutine(), received $foo_argument = " << foo_argument << endl;
+    string foo_variable = (const string) "the prodigal son";
+    print "in MyClass::foo_subroutine(), have $foo_variable = " << foo_variable << endl;
+    return (foo_argument * 2);
+}
+
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+
+# else
+
+Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+
+# endif
+
+#endif
+
+// end of class

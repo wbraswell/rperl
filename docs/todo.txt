@@ -448,10 +448,9 @@ GRAMMAR
     allow comments with 3 or more chained octothorpe characters ### like this comment
     undef values, either remove from all possible locations in grammar for C++ compatibility, OR enable in C++ by special strings, numeric values, etc.
     fix 'x' string repeat operator vs 'x' string or bareword hash key, already fixed???
-    decide if we will allow '#!/usr/bin/env perl' as a SHEBANG, or only allow '#!/usr/bin/perl' style and allow EU::MM to mangle shebang on install?
-        https://perlbrew.pl/Dealing-with-shebangs.html
     add WORD_LPAREN & WORD_SCOPED_LPAREN to become WordScopedLParen, and friends, to disallow space between subroutine name and parens in subroutine call
         update Learning RPerl section 4.2.1 & lib/RPerl/Test/Subroutine/program_* accordingly
+    should VARIABLE_SYMBOL be allowing scoped variable identifiers, since these are not currently supported by the compiler?
 
 COMPILER
     uncompile, store list of compiled dependencies inside compiled files themselves, for optional use during uncompile

@@ -1,0 +1,83 @@
+// [[[ HEADER ]]]
+using std::cout;  using std::cerr;  using std::endl;
+
+#ifndef __CPP__INCLUDED__MyClass_h
+#define __CPP__INCLUDED__MyClass_h 0.001_000
+
+// [[[ INCLUDES & OO INHERITANCE INCLUDES ]]]
+#include <RPerl.cpp>  // -> RPerl.h -> (rperltypes_mode.h; rperloperations.h; rperltypes.h; HelperFunctions.cpp)
+#include <RPerl/CompileUnit/Module/Class.cpp>
+
+# ifdef __PERL__TYPES
+
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+
+# elif defined __CPP__TYPES
+
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+
+// [[[ OO INHERITANCE ]]]
+class MyClass : public RPerl__CompileUnit__Module__Class__CPP {
+public:
+    // [[[ OO PROPERTIES ]]]
+    string foo_property = "quite a prize";
+
+    // [[[ OO METHODS ]]]
+
+    // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
+    string get_foo_property() { return foo_property; }
+    void set_foo_property(string foo_property_new) { foo_property = foo_property_new; }
+
+    // <<< CONSTRUCTOR & DESTRUCTOR >>>
+    MyClass() {}
+    ~MyClass() {}
+
+    // <<< CLASS NAME REPORTER >>>
+    virtual string myclassname() { return (const string) "MyClass"; }
+
+    // <<< USER-DEFINED METHODS >>>
+    integer foo_method(integer foo_argument);
+};  // end of class
+
+// [[[ OO SUBCLASSES ]]]
+#define MyClass_rawptr MyClass*
+typedef std::unique_ptr<MyClass> MyClass_ptr;
+typedef std::vector<MyClass_ptr> MyClass_arrayref;
+typedef std::unordered_map<string, MyClass_ptr> MyClass_hashref;
+typedef std::unordered_map<string, MyClass_ptr>::iterator MyClass_hashref_iterator;
+
+// [[[ OO CONSTRUCTOR WRAPPER CLASS ]]]
+class NEW_MyClass {
+public:
+    MyClass_ptr wrapped_object;
+    NEW_MyClass() : wrapped_object{new MyClass()} {}
+    MyClass_ptr&& NEW() { return std::move(wrapped_object); }
+
+    // <<< OO PROPERTIES, INITIALIZERS >>>
+    NEW_MyClass& foo_property(string foo_property_init) { wrapped_object->foo_property = foo_property_init; return *this; }
+};
+
+// [[[ SUBROUTINES ]]]
+integer MyClass__foo_subroutine(integer foo_argument);
+
+// <<< SHIM MACROS >>>
+#define foo_subroutine(foo_argument) MyClass__foo_subroutine(foo_argument)
+
+// <<< OPERATIONS & DATA TYPES REPORTER >>>
+integer MyClass__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
+
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+
+# else
+
+Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+
+# endif
+
+#endif
+
+// end of class

@@ -111,10 +111,22 @@ sub ast_to_cpp__generate_begin__CPPOPS_CPPTYPES {
     my string $version_number = $self->{children}->[5]->{children}->[4];
 
     # CREATE SYMBOL TABLE ENTRY
+
+
+
+
+
+# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+=DISABLE_NEED_FIX
     if ((substr $package_name, 0, 1) eq '_') {
         die 'ERROR ECOGEASCP07, CODE GENERATOR, ABSTRACT SYNTAX TO C++: package name ' . ($package_name)
                 . ' must not start with underscore, dying' . "\n";
     }
+=cut
+
+
+
+
     $modes->{_symbol_table}->{_namespace} = $package_name . '::';  # set current namespace
  
 #    RPerl::diag( 'in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
