@@ -39,7 +39,7 @@ sub ast_to_rperl__generate {
 
     if ( ($self_class) ne 'Package_36' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($self_class)
                 . ' found where Module_24 or Package_36 expected, dying' )
             . "\n";

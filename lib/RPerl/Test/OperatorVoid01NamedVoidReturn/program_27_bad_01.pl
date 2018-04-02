@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: 'P04, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
+# <<< GENERATE_ERROR: 'P004, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
 # <<< GENERATE_ERROR: 'Attempt to return dereferenced array' >>>
 
 # [[[ HEADER ]]]

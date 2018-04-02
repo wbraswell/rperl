@@ -39,7 +39,7 @@ sub ast_to_rperl__generate {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
                 . ' found where Operator_123 or Operator_129 expected, dying' )
             . "\n";
@@ -79,7 +79,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
                 . ' found where Operator_123 or Operator_129 expected, dying' )
             . "\n";

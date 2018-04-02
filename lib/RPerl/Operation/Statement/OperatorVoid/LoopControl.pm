@@ -30,7 +30,7 @@ sub ast_to_rperl__generate {
     if ( $self_class eq 'OperatorVoid_141' ) { # OperatorVoid -> OP19_LOOP_CONTROL_SCOLON
         if (($self->{children}->[0] ne 'next;') and ($self->{children}->[0] ne 'last;')) {
             die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECOGEASRP26, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: loop control operator '
+                'ERROR ECOGEASRP026, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: loop control operator '
                     . $self->{children}->[0]
                     . ' found where next; or last; expected, dying'
             ) . "\n";
@@ -47,7 +47,7 @@ sub ast_to_rperl__generate {
  
         if (($loop_control !~ /^next/xms) and ($loop_control !~ /^last/xms) and ($loop_control !~ /^redo/xms)) {
             die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECOGEASCP27, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
+                'ERROR ECOGEASCP027, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
                     . $loop_control
                     . ' found where next, last, or redo expected, dying'
             ) . "\n";
@@ -55,7 +55,7 @@ sub ast_to_rperl__generate {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
                 . ' found where OperatorVoid_141 or OperatorVoid_142 expected, dying'
         ) . "\n";
@@ -93,7 +93,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         }
         else {
             die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECOGEASCP26, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
+                'ERROR ECOGEASCP026, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
                     . $self->{children}->[0]
                     . ' found where next; or last; expected, dying'
             ) . "\n";
@@ -114,7 +114,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         }
         else {
             die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECOGEASCP27, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
+                'ERROR ECOGEASCP027, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
                     . $loop_control
                     . ' found where next, last, or redo expected, dying'
             ) . "\n";
@@ -122,7 +122,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+            'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
                 . ' found where OperatorVoid_141 or OperatorVoid_142 expected, dying'
         ) . "\n";

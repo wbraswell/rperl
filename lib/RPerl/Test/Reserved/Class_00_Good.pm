@@ -1,6 +1,3 @@
-# [[[ PREPROCESSOR ]]]
-# <<< TYPE_CHECKING: TRACE >>>
-
 # [[[ HEADER ]]]
 use RPerl;
 package RPerl::Test::Reserved::Class_00_Good;
@@ -19,7 +16,7 @@ use RPerl::CompileUnit::Module::Class;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {
-    _foo_property => my string $TYPED__foo_property = 'quite a prize'
+    foo_property => my string $TYPED_foo_property = 'quite a prize'
 };
 
 
@@ -31,6 +28,10 @@ sub _foo_subroutine {
 
     print 'in RPerl::Test::Reserved::Class_00_Good::_foo_subroutine(), received $foo_argument = ', $foo_argument, "\n";
 
+    my string $_foo_variable = 'the prodigal son';
+
+    print 'in RPerl::Test::Reserved::Class_00_Good::_foo_subroutine(), have $_foo_variable = ', $_foo_variable, "\n";
+
     return ($foo_argument * 2);
 }
 
@@ -39,8 +40,8 @@ sub _foo_method {
     { my integer::method $RETURN_TYPE };
     ( my RPerl::Test::Reserved::Class_00_Good $self, my integer $foo_argument ) = @ARG;
 
-    print 'in RPerl::Test::Reserved::Class_00_Good::_foo_subroutine(), received $foo_argument = ', $foo_argument, "\n";
-    print 'in RPerl::Test::Reserved::Class_00_Good::_foo_subroutine(), have $self->{_foo_property} = ', q{'}, $self->{_foo_property}, q{'}, "\n";
+    print 'in RPerl::Test::Reserved::Class_00_Good::_foo_method(), received $foo_argument = ', $foo_argument, "\n";
+    print 'in RPerl::Test::Reserved::Class_00_Good::_foo_method(), have $self->{foo_property} = ', q{'}, $self->{foo_property}, q{'}, "\n";
 
     return ($foo_argument * -2);
 }

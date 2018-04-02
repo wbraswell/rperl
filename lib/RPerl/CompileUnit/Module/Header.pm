@@ -46,7 +46,7 @@ sub ast_to_rperl__generate {
 
     # CREATE SYMBOL TABLE ENTRY
     if ((substr $package_name, 0, 1) eq '_') {
-        die 'ERROR ECOGEASRP07, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: package name ' . ($package_name)
+        die 'ERROR ECOGEASRP007, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: package name ' . ($package_name)
                 . ' must not start with underscore, dying' . "\n";
     }
     $modes->{_symbol_table}->{_namespace} = $package_name . '::';  # set current namespace
@@ -119,10 +119,26 @@ sub ast_to_cpp__generate_begin__CPPOPS_CPPTYPES {
 # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 =DISABLE_NEED_FIX
     if ((substr $package_name, 0, 1) eq '_') {
-        die 'ERROR ECOGEASCP07, CODE GENERATOR, ABSTRACT SYNTAX TO C++: package name ' . ($package_name)
+        die 'ERROR ECOGEASCP007, CODE GENERATOR, ABSTRACT SYNTAX TO C++: package name ' . ($package_name)
                 . ' must not start with underscore, dying' . "\n";
     }
 =cut
+
+
+    # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+    if (((substr $package_name, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+        die 'ERROR ECOGEASCP181a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'package or class name ' . q{'} . $package_name . q{'} .
+            ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+    elsif ($package_name =~ m/^_[A-Z]/gxms) {
+        die 'ERROR ECOGEASCP181b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine name ' . q{'} . $package_name . q{()'} .
+            ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+    elsif ($package_name =~ m/__/gxms) {
+        die 'ERROR ECOGEASCP181c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine name ' . q{'} . $package_name . q{()'} .
+            ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+
 
 
 

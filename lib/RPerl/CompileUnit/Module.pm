@@ -59,7 +59,7 @@ sub ast_to_rperl__generate {
 #        RPerl::diag('in Module->ast_to_rperl__generate(), have $header_or_module = ' . "\n" . $header_or_module . "\n\n");
         if ((ref $header_or_module) eq 'ModuleHeader_23') {
             if ($header_started) {
-                die 'ERROR ECOGEASRP34, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: ModuleHeader found without first finding Module for previous ModuleHeader, dying' . "\n";
+                die 'ERROR ECOGEASRP034, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: ModuleHeader found without first finding Module for previous ModuleHeader, dying' . "\n";
             }
             else {
 #                if ($current_package_count >= 1) { $rperl_source_group->{PMC} .= "\n\n"; }  # DEV NOTE: extra spaces removed by perltidy???
@@ -82,12 +82,12 @@ sub ast_to_rperl__generate {
                 $current_package_count++;
             }
             else {
-                die 'ERROR ECOGEASRP35, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Module found without first finding ModuleHeader, dying' . "\n";
+                die 'ERROR ECOGEASRP035, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Module found without first finding ModuleHeader, dying' . "\n";
             }
         }
         else {
             die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+                'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                     . ( ref $header_or_module )
                     . ' found where ModuleHeader_23, Module_24, or Module_25 expected, dying' )
                 . "\n";
@@ -135,7 +135,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         # C++ Module::Header wraps around Module, must call both *generate_begin*() and *generate_end*()
         if ((ref $header_or_module) eq 'ModuleHeader_23') {
             if ($header_started) {
-                die 'ERROR ECOGEASCP34, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: ModuleHeader found without first finding Module for previous ModuleHeader, dying' . "\n";
+                die 'ERROR ECOGEASCP034, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: ModuleHeader found without first finding Module for previous ModuleHeader, dying' . "\n";
             }
             else {
                 if ($current_package_count >= 1) {
@@ -165,12 +165,12 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                 $current_package_count++;
             }
             else {
-                die 'ERROR ECOGEASCP35, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Module found without first finding ModuleHeader, dying' . "\n";
+                die 'ERROR ECOGEASCP035, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Module found without first finding ModuleHeader, dying' . "\n";
             }
         }
         else {
             die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Grammar rule '
+                'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Grammar rule '
                     . ( ref $header_or_module )
                     . ' found where ModuleHeader_23, Module_24, or Module_25 expected, dying' )
                 . "\n";

@@ -36,7 +36,7 @@ sub ast_to_rperl__generate {
         $rperl_source_group->{PMC} .= $self->{children}->[0];
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
                 . ' found where Expression_150 or Expression_151 expected, dying' )
             . "\n";
@@ -74,7 +74,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+            'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ( ref $self )
                 . ' found where Expression_150 or Expression_151 expected, dying' )
             . "\n";

@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.036_000;
+our $VERSION = 0.037_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -1456,15 +1456,6 @@ sub post_processor_cpp__pmc_generate {
                             . q{'} . $distribution_package . '::Config' . q{'} . ' returned undefined value, dying' . "\n";
                     }
                 }
-
-
-
-
-
-# START HERE: Travis tests pass, remove blank space in this file
-# START HERE: Travis tests pass, remove blank space in this file
-# START HERE: Travis tests pass, remove blank space in this file
-
                 elsif ( $file_line eq ( '# <<< CHANGE_ME: add use Inline path & args here >>>' . "\n" ) ) {
                     # common to all options
                     $file_line  = '        my $eval_string = <<"EOF";' . "\n";
@@ -1620,7 +1611,7 @@ EOF
                             }
 
                             # prepend blib-handling logic
-                            # DEV NOTE: we can never prepend nothing, in order to allow for uniformity
+                            # DEV NOTE: for relative path w/out leading dots, we must always prepend blib-handling logic, in order to allow for uniformity
 #                            RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), setting use Inline path & args, relative path w/out leading dots and false $has_rperl_config, prepending blib-handling logic', "\n" );
                             my $file_line_prepend = q{};
                             $file_line_prepend .= q<        my $cpp_file_path = '> . $cpp_file_path . q<';> . "\n";
@@ -1639,13 +1630,6 @@ EOF
                     $file_line .= '1;' . "\n";
                     $file_line .= 'EOF' . "\n";
                 }
-
-
-
-
-
-
-
                 elsif ( $file_line eq ( '# <<< CHANGE_ME: add user-defined includes here >>>' . "\n" ) ) {
                     if (    ( exists $source_group->{_PMC_includes}->{$module_name_underscores} )
                         and ( defined $source_group->{_PMC_includes}->{$module_name_underscores} ) )
@@ -1720,6 +1704,9 @@ EOF
 
 
 
+# START HERE: what else remains to be done w/ MongoDB support here???
+# START HERE: what else remains to be done w/ MongoDB support here???
+# START HERE: what else remains to be done w/ MongoDB support here???
 
                 elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional MongoDB support here >>>' . "\n" ) ) {
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n" );

@@ -62,14 +62,11 @@
 
 
 
-# START HERE: Travis tests pass;  finish updating comment;  remove old rule;  add tests
-# START HERE: Travis tests pass;  finish updating comment;  remove old rule;  add tests
-# START HERE: Travis tests pass;  finish updating comment;  remove old rule;  add tests
+# START HERE: add WORD_SCOPED tests for package names & class names & subroutine calls & method calls
+# START HERE: add WORD_SCOPED tests for package names & class names & subroutine calls & method calls
+# START HERE: add WORD_SCOPED tests for package names & class names & subroutine calls & method calls
 
-# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
-# subroutine & method calls use WORD_SCOPED identifiers, also used by class & package names, allow to begin w/ underscore & check for violations during generate phase
-#%token WORD_SCOPED           = /((?:[a-zA-Z]\w*)?(?:::[a-zA-Z]\w*)+)/    # scoped word; ex. 'Foo::Bar' or 'Foo::Bar::baz_word' or 'Foo::Bar::_baz_word' or '_foo::_bar::_baz_word'
-%token WORD_SCOPED           = /((?:[a-zA-Z_]\w*)?(?:::[a-zA-Z_]\w*)+)/    # scoped word; ex. 'Foo::Bar' or 'Foo::Bar::baz_word'
+%token WORD_SCOPED           = /((?:[a-zA-Z_]\w*)?(?:::[a-zA-Z_]\w*)+)/    # scoped word; ex. 'Foo::Bar' or 'Foo::Bar::baz_word' or 'Foo::Bar::_baz_word'  # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++; package names & class names & subroutine calls & method calls use WORD_SCOPED identifiers, allow to begin w/ underscore & check for violations during generate phase
 
 
 

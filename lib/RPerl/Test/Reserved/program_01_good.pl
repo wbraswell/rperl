@@ -14,10 +14,6 @@ use RPerl::Test::Reserved::Class_01_Good;
 sub foo_subroutine_in_main {
     { my void $RETURN_TYPE };
     print 'Howdy from foo_subroutine_in_main()...', "\n";
-
-    my string $_foo_variable = 'if only you could see';
-    print $_foo_variable, "\n";
-
     return;
 }
 

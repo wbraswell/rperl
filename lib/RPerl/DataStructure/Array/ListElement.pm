@@ -47,7 +47,7 @@ sub ast_to_rperl__generate {
         $rperl_source_group->{PMC} .= $argv . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
                 . ' found where ListElement_211, ListElement_212, ListElement_213 or ListElement_214 expected, dying' )
             . "\n";

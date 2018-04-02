@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: 'P20, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
+# <<< GENERATE_ERROR: 'P020, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
 # <<< GENERATE_ERROR: "'RPerl' type is different than 'RPerl::Test' constructor type" >>>
 
 # [[[ HEADER ]]]

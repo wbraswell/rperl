@@ -63,7 +63,7 @@ sub ast_to_rperl__generate {
 #        RPerl::diag( 'in Operator::NamedUnary->ast_to_rperl__generate(), have $self->{children}->[0] = ' . q{'} . $self->{children}->[0] . q{'} . "\n" );
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
                 . ' found where Operation_97, Operator_116, or Operator_117 expected, dying' )
             . "\n";
@@ -72,7 +72,7 @@ sub ast_to_rperl__generate {
 #    RPerl::diag( 'in Operator::NamedUnary->ast_to_rperl__generate(), have $operator_name = ' . q{'} . $operator_name . q{'} . "\n" );
 
     if ( not exists $NAMES->{$operator_name} ) {
-        die q{ERROR ECOGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
+        die q{ERROR ECOGEASRP019, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
             . $operator_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )
@@ -117,7 +117,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         $operator_name = $self->{children}->[0];
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
                 . ' found where Operation_97, Operator_116 or Operator_117 expected, dying' )
             . "\n";
@@ -126,7 +126,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #    RPerl::diag( 'in Operator::NamedUnary->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $operator_name = ' . q{'} . $operator_name . q{'} . "\n" );
 
     if ( not exists $NAMES->{$operator_name} ) {
-        die q{ERROR ECOGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
+        die q{ERROR ECOGEASRP019, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
             . $operator_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )

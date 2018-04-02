@@ -58,7 +58,7 @@ sub ast_to_rperl__generate {
     }
 
     if ( ($self_class) ne 'ArrayReference_217' ) {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($self_class)
                 . ' found where ArrayReference_217 or SubExpression_159 expected, dying' )
             . "\n";
@@ -105,7 +105,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
 
     if ( ($self_class) ne 'ArrayReference_217' ) {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ($self_class)
                 . ' found where ArrayReference_217 or SubExpression_159 expected, dying' )
             . "\n";
@@ -141,7 +141,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build {
     }
 
     if ( ($self_class) ne 'ArrayReference_217' ) {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ($self_class)
                 . ' found where ArrayReference_217 or SubExpression_159 expected, dying' )
             . "\n";

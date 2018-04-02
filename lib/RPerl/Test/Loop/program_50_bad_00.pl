@@ -3,7 +3,7 @@
 # Learning RPerl, Section 3.12.1: The Range for Loop
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'P12, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
+# <<< COMPILE_ERROR: 'P012, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
 # <<< COMPILE_ERROR: 'variable i already declared in this scope, namespace main::, subroutine/method main(), dying' >>>
 
 # [[[ HEADER ]]]

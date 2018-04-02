@@ -28,7 +28,7 @@ sub ast_to_rperl__generate {
 
     if ( ( ref $self ) ne 'Expression_153' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
                 . ' found where Expression_153 expected, dying' )
             . "\n";
@@ -77,7 +77,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     if ( ( ref $self ) ne 'Expression_153' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO CPP: Grammar rule '
+            'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO CPP: Grammar rule '
                 . ( ref $self )
                 . ' found where Expression_153 expected, dying' )
             . "\n";

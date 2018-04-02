@@ -41,7 +41,7 @@ sub ast_to_rperl__generate {
         }
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($self_class)
                 . ' found where SubExpression_158, VariableOrLiteral_247, VarOrLitOrOpStrOrWord_249, or Variable_197 expected, dying' )
             . "\n";
@@ -119,7 +119,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                     $types->[ $i + 1 ] = 'number';
                 }
                 elsif ( exists $rperlnamespaces_generated::RPERL->{ $types->[$i] . '::' } ) { # scalar
-                    die 'ERROR ECOGEASCP30, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve data subcomponent from scalar type ' . $types->[$i] . ', dying' . "\n";
+                    die 'ERROR ECOGEASCP030, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve data subcomponent from scalar type ' . $types->[$i] . ', dying' . "\n";
                 }
                 else { # user-defined type AKA class
                     if ( ( ref $variable_retrieval ) eq 'VariableRetrieval_199' ) {    # VariableRetrieval -> OP02_HASH_THINARROW SubExpression '}'
@@ -153,17 +153,17 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                                     if ((not exists $modes->{dependencies}) or
                                         (not defined $modes->{dependencies}) or
                                         ($modes->{dependencies} ne 'ON')) {
-                                        die 'ERROR ECOGEASCP31 #0, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, dependencies disabled, can not verify validity of OO property ' . $number_or_string_literal . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
+                                        die 'ERROR ECOGEASCP031 #0, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, dependencies disabled, can not verify validity of OO property ' . $number_or_string_literal . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
                                     }
                                     else {
-                                        die 'ERROR ECOGEASCP32 #0, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $number_or_string_literal . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
+                                        die 'ERROR ECOGEASCP032 #0, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $number_or_string_literal . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
                                     }
                                 }
                             }
                         }
                         else {
                             my string $subexpression_generated = ($subexpression->ast_to_cpp__generate__CPPOPS_CPPTYPES( $modes ))->{CPP};
-                            die 'ERROR ECOGEASCP33, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not determine OO property name (and thus type) from non-literal subexpression...' . "\n" . $subexpression_generated . "\n" . '...in user-defined class ' . $types->[$i] . ', dying' . "\n";
+                            die 'ERROR ECOGEASCP033, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not determine OO property name (and thus type) from non-literal subexpression...' . "\n" . $subexpression_generated . "\n" . '...in user-defined class ' . $types->[$i] . ', dying' . "\n";
                         }
                     }
                     elsif ( ( ref $variable_retrieval ) eq 'VariableRetrieval_200' ) {        # VariableRetrieval -> OP02_HASH_THINARROW WORD '}'
@@ -196,23 +196,23 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                                 if ((not exists $modes->{dependencies}) or
                                     (not defined $modes->{dependencies}) or
                                     ($modes->{dependencies} ne 'ON')) {
-                                    die 'ERROR ECOGEASCP31 #1, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, dependencies disabled, can not verify validity of OO property ' . $word . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
+                                    die 'ERROR ECOGEASCP031 #1, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, dependencies disabled, can not verify validity of OO property ' . $word . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
                                 }
                                 else {
-                                    die 'ERROR ECOGEASCP31 #2, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $word . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
+                                    die 'ERROR ECOGEASCP031 #2, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $word . ' in user-defined class ' . $types->[$i] . ', dying' . "\n";
                                 }
                             }
                         }
                     }
                     else {
-                        die 'ERROR ECOGEASCP34, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on object of user-defined class ' . $types->[$i] . ', dying' . "\n";
+                        die 'ERROR ECOGEASCP034, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on object of user-defined class ' . $types->[$i] . ', dying' . "\n";
                     }
                 }
             }
         }
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ($self_class)
                 . ' found where SubExpression_158, VariableOrLiteral_247, VarOrLitOrOpStrOrWord_249, or Variable_197 expected, dying' )
             . "\n";

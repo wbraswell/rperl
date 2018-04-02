@@ -23,7 +23,7 @@ sub ast_to_rperl__generate {
 
     if ( ( ref $self ) ne 'SubExpression_156' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
                 . ' found where SubExpression_156 expected, dying' )
             . "\n";

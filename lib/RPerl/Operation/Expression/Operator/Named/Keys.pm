@@ -42,7 +42,7 @@ sub ast_to_rperl__generate {
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operation_96' ) { # Operation -> OP01_NAMED_SCOLON
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+            'ERROR ECOGEASRP016, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly one argument, dying' )
             . "\n";
@@ -57,21 +57,21 @@ sub ast_to_rperl__generate {
     }
     elsif ( $operator_named_class eq 'Operator_101' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+            'ERROR ECOGEASRP014, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[1]
                 . ' does not accept multiple arguments, dying' )
             . "\n";
     }
     elsif ( $operator_named_class eq 'OperatorVoid_140' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+            'ERROR ECOGEASRP014, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' does not accept multiple arguments, dying' )
             . "\n";
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($operator_named_class)
                 . ' found where Operation_96, Operator_100, Operator_101, or OperatorVoid_140 expected, dying'
         ) . "\n";

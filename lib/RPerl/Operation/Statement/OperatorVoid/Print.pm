@@ -39,7 +39,7 @@ sub ast_to_rperl__generate {
 
         if ( exists $stdout_stderr_optional->{children}->[0] ) {
             if ( ( $stdout_stderr_optional->{children}->[0]->{attr} ne '{*STDOUT}' ) and ( $stdout_stderr_optional->{children}->[0]->{attr} ne '{*STDERR}' ) ) {
-                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP28, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: output stream '
+                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP028, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: output stream '
                         . $stdout_stderr_optional->{children}->[0]->{attr}
                         . ' found where {*STDOUT} or {*STDERR} expected, dying' )
                     . "\n";
@@ -66,7 +66,7 @@ sub ast_to_rperl__generate {
         $rperl_source_group->{PMC} .= $semicolon . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
                 . ' found where OperatorVoid_135 or OperatorVoid_136 expected, dying' )
             . "\n";
@@ -117,7 +117,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                 $cpp_source_group->{CPP} .= 'prerr ';
             }
             else {
-                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP28, CODE GENERATOR, ABSTRACT SYNTAX TO C++: output stream '
+                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP028, CODE GENERATOR, ABSTRACT SYNTAX TO C++: output stream '
                         . $stdout_stderr_optional->{children}->[0]->{attr}
                         . ' found where {*STDOUT} or {*STDERR} expected, dying' )
                     . "\n";
@@ -164,7 +164,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         $cpp_source_group->{CPP} .= '// <<< RP::O::S::OV::P __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>' . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
                 . ' found where OperatorVoid_135 or OperatorVoid_136 expected, dying' )
             . "\n";

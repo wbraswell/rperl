@@ -46,7 +46,7 @@ sub ast_to_rperl__generate {
             my object $arguments       = $arguments_optional->{children}->[0];
             my integer $argument_count = $arguments->length();
             if ( $argument_count > ARGUMENTS_MAX() ) {
-                die 'ERROR ECOGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n"
+                die 'ERROR ECOGEASRP003, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n"
                     . 'Argument count '
                     . $argument_count
                     . ' exceeds maximum argument limit '
@@ -66,7 +66,7 @@ sub ast_to_rperl__generate {
         my object $arguments       = $operator_void_named->{children}->[1];
         my integer $argument_count = $arguments->length();
         if ( $argument_count > ARGUMENTS_MAX() ) {
-            die 'ERROR ECOGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n"
+            die 'ERROR ECOGEASRP003, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n"
                 . 'Argument count '
                 . $argument_count
                 . ' exceeds maximum argument limit '
@@ -80,7 +80,7 @@ sub ast_to_rperl__generate {
         $rperl_source_group->{PMC} .= $operator_void_named->{children}->[2];    # semicolon
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $operator_void_named )
                 . ' found where OperatorVoid_137, OperatorVoid_138, or OperatorVoid_139 expected, dying' )
             . "\n";

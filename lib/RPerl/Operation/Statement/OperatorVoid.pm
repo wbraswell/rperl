@@ -48,7 +48,7 @@ sub ast_to_rperl__generate {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $child0_class
                 . ' found where OperatorVoid_135, OperatorVoid_136, OperatorVoid_121, OperatorVoid_140, OperatorVoid_121, OperatorVoid_140, OperatorVoid_141, or OperatorVoid_142 expected, dying'
         ) . "\n";
@@ -96,7 +96,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+            'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $child0_class
                 . ' found where OperatorVoid_135, OperatorVoid_136, OperatorVoid_121, OperatorVoid_140, OperatorVoid_121, OperatorVoid_140, OperatorVoid_141, or OperatorVoid_142 expected, dying'
         ) . "\n";

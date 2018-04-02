@@ -11615,11 +11615,11 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+    ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                     . ($self_class)
                     . ' found where Module_25 or Class_76 expected, dying
 
-    ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+    ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                     . ( ref $self )
                     . ' found where TypeInnerProperties_244 or TypeInnerProperties_245 expected, dying
 
@@ -11633,13 +11633,13 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP01, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named void operator '}
+    ERROR ECOGEASRP001, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named void operator '}
             . $operator_void_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )
             . ' expected, dying
 
-    ERROR ECOGEASCP01, CODE GENERATOR, ABSTRACT SYNTAX TO C++: unsupported or unrecognized named void operator '}
+    ERROR ECOGEASCP001, CODE GENERATOR, ABSTRACT SYNTAX TO C++: unsupported or unrecognized named void operator '}
             . $operator_void_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )
@@ -11655,7 +11655,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+    ERROR ECOGEASRP002, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                 . "\n"
                 . 'Argument count '
                 . $argument_count
@@ -11675,7 +11675,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+    ERROR ECOGEASRP003, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                 . "\n"
                 . 'Argument count '
                 . $argument_count
@@ -11685,7 +11685,7 @@ X<ENABLE_LIST_SPACING>
                 . NAME() . q{'}
                 . ', dying
 
-    ERROR ECOGEASCP03, CODE GENERATOR, ABSTRACT SYNTAX TO C++:'
+    ERROR ECOGEASCP003, CODE GENERATOR, ABSTRACT SYNTAX TO C++:'
                     . "\n"
                     . 'Argument count '
                     . $argument_count
@@ -11705,23 +11705,9 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP04, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying
+    ERROR ECOGEASRP004, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying
 
-    ERROR ECOGEASCP04, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying
-
-=for rperl X</noncode>
-
-I<SOLUTION: BAZ_SOLUTION>
-
-X<ENABLE_LIST_SPACING>
-
-=item * PROBLEM: BAZ_PROBLEM_LABEL
-
-=for rperl X<noncode>
-
-    ERROR ECOGEASRP05, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying
-
-    ERROR ECOGEASCP05, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying
+    ERROR ECOGEASCP004, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced array, please return arrayref instead, dying
 
 =for rperl X</noncode>
 
@@ -11733,14 +11719,28 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP06, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, VARIABLE-CHECKING MISMATCH: C-style for() loop header, initial-condition variable '
+    ERROR ECOGEASRP005, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying
+
+    ERROR ECOGEASCP005, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'Attempt to return dereferenced hash, please return hashref instead, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASRP006, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, VARIABLE-CHECKING MISMATCH: C-style for() loop header, initial-condition variable '
                 . q{'}
                 . $variable_symbol0 . q{'}
                 . ' is different than exit-condition variable ' . q{'}
                 . $variable_symbol1 . q{'}
                 . ', dying
 
-    ERROR ECOGEASCP06, CODE GENERATOR, ABSTRACT SYNTAX TO C++, VARIABLE-CHECKING MISMATCH: C-style for() loop header, initial-condition variable ' . q{'}
+    ERROR ECOGEASCP006, CODE GENERATOR, ABSTRACT SYNTAX TO C++, VARIABLE-CHECKING MISMATCH: C-style for() loop header, initial-condition variable ' . q{'}
                 . $variable_symbol0 . q{'}
                 . ' is different than exit-condition variable ' . q{'}
                 . $variable_symbol1 . q{'}
@@ -11756,26 +11756,10 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP07, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: package name ' . ($package_name)
+    ERROR ECOGEASRP007, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: package name ' . ($package_name)
                 . ' must not start with underscore, dying
 
-    ERROR ECOGEASCP07, CODE GENERATOR, ABSTRACT SYNTAX TO C++: package name ' . ($package_name)
-                . ' must not start with underscore, dying
-
-=for rperl X</noncode>
-
-I<SOLUTION: BAZ_SOLUTION>
-
-X<ENABLE_LIST_SPACING>
-
-=item * PROBLEM: BAZ_PROBLEM_LABEL
-
-=for rperl X<noncode>
-
-    ERROR ECOGEASRP08, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name ' . ($name)
-                . ' must not start with underscore, dying
-
-    ERROR ECOGEASCP08, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . ($name)
+    ERROR ECOGEASCP007, CODE GENERATOR, ABSTRACT SYNTAX TO C++: package name ' . ($package_name)
                 . ' must not start with underscore, dying
 
 =for rperl X</noncode>
@@ -11788,10 +11772,10 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP09, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: method name ' . ($name)
+    ERROR ECOGEASRP008, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: subroutine name ' . ($name)
                 . ' must not start with underscore, dying
 
-    ERROR ECOGEASCP09, CODE GENERATOR, ABSTRACT SYNTAX TO C++: method name ' . ($name)
+    ERROR ECOGEASCP008, CODE GENERATOR, ABSTRACT SYNTAX TO C++: subroutine name ' . ($name)
                 . ' must not start with underscore, dying
 
 =for rperl X</noncode>
@@ -11804,7 +11788,23 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
+    ERROR ECOGEASRP009, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: method name ' . ($name)
+                . ' must not start with underscore, dying
+
+    ERROR ECOGEASCP009, CODE GENERATOR, ABSTRACT SYNTAX TO C++: method name ' . ($name)
+                . ' must not start with underscore, dying
+
+=for rperl X</noncode>
+
+I<SOLUTION: BAZ_SOLUTION>
+
+X<ENABLE_LIST_SPACING>
+
+=item * PROBLEM: BAZ_PROBLEM_LABEL
+
+=for rperl X<noncode>
+
+    ERROR ECOGEASCP010, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
                 . $property_key
                 . ' already declared in this scope, namespace '
                 . $modes->{_symbol_table}->{_namespace}
@@ -11820,7 +11820,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+    ERROR ECOGEASCP012, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
                 . $variable_symbol
                 . ' already declared in this scope, namespace '
                 . $modes->{_symbol_table}->{_namespace}
@@ -11838,7 +11838,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP79, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
+    ERROR ECOGEASCP879, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
 
 =for rperl X</noncode>
 
@@ -11850,7 +11850,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP13, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
+    ERROR ECOGEASRP013, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
             . $operator_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )
@@ -11866,7 +11866,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+    ERROR ECOGEASRP014, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[1]
                 . ' does not accept multiple arguments, dying
 
@@ -11880,7 +11880,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP15, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+    ERROR ECOGEASRP015, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' does not accept arguments, dying
 
@@ -11894,9 +11894,9 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator 'FOO' requires exactly one argument, dying
+    ERROR ECOGEASRP016, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator 'FOO' requires exactly one argument, dying
 
-    ERROR ECOGEASCP16, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator 'FOO' requires exactly one argument, dying
+    ERROR ECOGEASCP016, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator 'FOO' requires exactly one argument, dying
 
 =for rperl X</noncode>
 
@@ -11908,7 +11908,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP17, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+    ERROR ECOGEASRP017, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires one or more arguments, dying
 
@@ -11922,7 +11922,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+    ERROR ECOGEASRP018, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires multiple arguments, dying
 
@@ -11936,7 +11936,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP19, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
+    ERROR ECOGEASRP019, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
             . $operator_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )
@@ -11952,13 +11952,13 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP20, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, TYPE-CHECKING MISMATCH: ' . q{'}
+    ERROR ECOGEASRP020, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, TYPE-CHECKING MISMATCH: ' . q{'}
                             . $type . q{'}
                             . ' type is different than ' . q{'}
                             . $constructor_type . q{'}
                             . ' constructor type, dying
 
-    ERROR ECOGEASCP20, CODE GENERATOR, ABSTRACT SYNTAX TO C++, TYPE-CHECKING MISMATCH: ' . q{'}
+    ERROR ECOGEASCP020, CODE GENERATOR, ABSTRACT SYNTAX TO C++, TYPE-CHECKING MISMATCH: ' . q{'}
                             . $type . q{'}
                             . ' type is different than ' . q{'}
                             . $constructor_type . q{'}
@@ -11974,13 +11974,13 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
+    ERROR ECOGEASRP021, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                 . $property_name . q{'}
                 . ' does not equal OO properties key ' . q{'}
                 . $property_key . q{'}
                 . ', dying
 
-    ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
+    ERROR ECOGEASCP021, CODE GENERATOR, ABSTRACT SYNTAX TO C++, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                 . $property_name . q{'}
                 . ' does not equal OO properties key ' . q{'}
                 . $property_key . q{'}
@@ -11996,13 +11996,13 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP22, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
+    ERROR ECOGEASRP022, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                     . $type_inner_name . q{'}
                     . ' does not end with OO properties or hash key ' . q{'}
                     . $key_name . q{'}
                     . ', dying
 
-    ERROR ECOGEASCP22, CODE GENERATOR, ABSTRACT SYNTAX TO C++, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
+    ERROR ECOGEASCP022, CODE GENERATOR, ABSTRACT SYNTAX TO C++, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                     . $type_inner_name . q{'}
                     . ' does not end with OO properties or hash key ' . q{'}
                     . $key_name . q{'}
@@ -12018,11 +12018,11 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP23, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid hash key ' . q{'}
+    ERROR ECOGEASRP023, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid hash key ' . q{'}
                     . $key_name . q{'}
                     . ' does not start with a lowercase letter a-z, dying
 
-    ERROR ECOGEASCP23, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid hash key ' . q{'}
+    ERROR ECOGEASCP023, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid hash key ' . q{'}
                     . $key_name . q{'}
                     . ' does not start with a lowercase letter a-z, dying
 
@@ -12036,11 +12036,11 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP24, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
+    ERROR ECOGEASRP024, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
                 . $property_key . q{'}
                 . ' does not start with a lowercase letter a-z, dying
 
-    ERROR ECOGEASCP24, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
+    ERROR ECOGEASCP024, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
                 . $property_key . q{'}
                 . ' does not start with a lowercase letter a-z, dying
 
@@ -12054,11 +12054,11 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP25, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid redundant name ' . q{'}
+    ERROR ECOGEASRP025, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid redundant name ' . q{'}
                 . $name . q{'}
                 . ' does not start with a lowercase letter a-z, dying
 
-    ERROR ECOGEASCP25, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid redundant name ' . q{'}
+    ERROR ECOGEASCP025, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid redundant name ' . q{'}
                 . $name . q{'}
                 . ' does not start with a lowercase letter a-z, dying
 
@@ -12072,11 +12072,11 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP26, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: loop control operator '
+    ERROR ECOGEASRP026, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: loop control operator '
                     . $self->{children}->[0]
                     . ' found where next; or last; expected, dying
 
-    ERROR ECOGEASCP26, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
+    ERROR ECOGEASCP026, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
                     . $self->{children}->[0]
                     . ' found where next; or last; expected, dying
 
@@ -12090,7 +12090,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP27, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
+    ERROR ECOGEASCP027, CODE GENERATOR, ABSTRACT SYNTAX TO C++: loop control operator '
                     . $loop_control
                     . ' found where next, last, or redo expected, dying
 
@@ -12104,11 +12104,11 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP28, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: output stream '
+    ERROR ECOGEASRP028, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: output stream '
                         . $stdout_stderr_optional->{children}->[0]->{attr}
                         . ' found where {*STDOUT} or {*STDERR} expected, dying
 
-    ERROR ECOGEASCP28, CODE GENERATOR, ABSTRACT SYNTAX TO C++: output stream '
+    ERROR ECOGEASCP028, CODE GENERATOR, ABSTRACT SYNTAX TO C++: output stream '
                         . $stdout_stderr_optional->{children}->[0]->{attr}
                         . ' found where {*STDOUT} or {*STDERR} expected, dying
 
@@ -12122,11 +12122,11 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP29, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: comparison operator '
+    ERROR ECOGEASRP029, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: comparison operator '
                     . $self->{children}->[1]
                     . ' found where ==, !=, <=>, eq, ne, or cmp expected, dying
 
-    ERROR ECOGEASCP29, CODE GENERATOR, ABSTRACT SYNTAX TO C++: comparison operator '
+    ERROR ECOGEASCP029, CODE GENERATOR, ABSTRACT SYNTAX TO C++: comparison operator '
                     . $self->{children}->[1]
                     . ' found where ==, !=, <=>, eq, ne, or cmp expected, dying
 
@@ -12140,7 +12140,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP30, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve data subcomponent from scalar type ' . $types->[$i] . ', dying
+    ERROR ECOGEASCP030, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve data subcomponent from scalar type ' . $types->[$i] . ', dying
 
 =for rperl X</noncode>
 
@@ -12152,7 +12152,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP31, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $number_or_string_literal . ' in user-defined class ' . $types->[$i] . ', dying
+    ERROR ECOGEASCP031, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not retrieve invalid OO property ' . $number_or_string_literal . ' in user-defined class ' . $types->[$i] . ', dying
 
 =for rperl X</noncode>
 
@@ -12164,7 +12164,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP32, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not determine OO property name (and thus type) from non-literal subexpression...' . "\n" . $subexpression_generated . "\n" . '...in user-defined class ' . $types->[$i] . ', dying
+    ERROR ECOGEASCP032, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not determine OO property name (and thus type) from non-literal subexpression...' . "\n" . $subexpression_generated . "\n" . '...in user-defined class ' . $types->[$i] . ', dying
 
 =for rperl X</noncode>
 
@@ -12176,7 +12176,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP33, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on object of user-defined class ' . $types->[$i] . ', dying
+    ERROR ECOGEASCP033, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Variable retrieval, can not use arrayref retrieval on object of user-defined class ' . $types->[$i] . ', dying
 
 =for rperl X</noncode>
 
@@ -12188,9 +12188,9 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP34, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: ModuleHeader found without first finding Module for previous ModuleHeader, dying 
+    ERROR ECOGEASRP034, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: ModuleHeader found without first finding Module for previous ModuleHeader, dying 
  
-    ERROR ECOGEASCP34, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: ModuleHeader found without first finding Module for previous ModuleHeader, dying 
+    ERROR ECOGEASCP034, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: ModuleHeader found without first finding Module for previous ModuleHeader, dying 
 
 =for rperl X</noncode>
 
@@ -12202,9 +12202,9 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASRP35, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Module found without first finding ModuleHeader, dying
+    ERROR ECOGEASRP035, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Module found without first finding ModuleHeader, dying
 
-    ERROR ECOGEASCP35, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Module found without first finding ModuleHeader, dying
+    ERROR ECOGEASCP035, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Module found without first finding ModuleHeader, dying
 
 =for rperl X</noncode>
 
@@ -12216,7 +12216,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP40, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Compile-time optimization, loop iterator '
+    ERROR ECOGEASCP040, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Compile-time optimization, loop iterator '
                     . $variable_symbol
                     . ' declared as non-integer type '
                     . $modes->{_loop_iterators}->{$variable_symbol}
@@ -12232,7 +12232,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP50, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with single-quote but not terminated with single-quote, dying
+    ERROR ECOGEASCP050, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with single-quote but not terminated with single-quote, dying
 
 =for rperl X</noncode>
 
@@ -12244,7 +12244,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP51, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with q-left-brace single-quote but not terminated with right-brace, dying
+    ERROR ECOGEASCP051, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with q-left-brace single-quote but not terminated with right-brace, dying
 
 =for rperl X</noncode>
 
@@ -12256,7 +12256,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP60, CODE GENERATOR, ABSTRACT SYNTAX TO C++: first argument missing, constructor for type ' . $type . ', dying
+    ERROR ECOGEASCP060, CODE GENERATOR, ABSTRACT SYNTAX TO C++: first argument missing, constructor for type ' . $type . ', dying
 
 =for rperl X</noncode>
 
@@ -12268,7 +12268,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP61, CODE GENERATOR, ABSTRACT SYNTAX TO C++: second argument missing, constructor for type ' . $type . ', dying
+    ERROR ECOGEASCP061, CODE GENERATOR, ABSTRACT SYNTAX TO C++: second argument missing, constructor for type ' . $type . ', dying
 
 =for rperl X</noncode>
 
@@ -12280,7 +12280,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP62, CODE GENERATOR, ABSTRACT SYNTAX TO C++: constructor called for recognized but currently unsupported type ' . $type . ', dying
+    ERROR ECOGEASCP062, CODE GENERATOR, ABSTRACT SYNTAX TO C++: constructor called for recognized but currently unsupported type ' . $type . ', dying
 
 =for rperl X</noncode>
 
@@ -12292,7 +12292,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP63, CODE GENERATOR, ABSTRACT SYNTAX TO C++: constructor called for unrecognized type ' . $type . ', dying
+    ERROR ECOGEASCP063, CODE GENERATOR, ABSTRACT SYNTAX TO C++: constructor called for unrecognized type ' . $type . ', dying
 
 =for rperl X</noncode>
 
@@ -12304,7 +12304,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP70, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator 'FOO' requires ArrayDereference argument, received 'BAR' instead, dying
+    ERROR ECOGEASCP870, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator 'FOO' requires ArrayDereference argument, received 'BAR' instead, dying
 
 =for rperl X</noncode>
 
@@ -17507,7 +17507,7 @@ The following example shows multiple instances of the loop iterator variable C<$
     # do stuff outside loops, using $i; causes error in second loop below
     my integer $i = 100;
 
-    # ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: 
+    # ERROR ECOGEASCP012, CODE GENERATOR, ABSTRACT SYNTAX TO C++: 
     # variable i already declared in this scope, namespace main::, subroutine/method main(), dying
     for my integer $i ( 20 .. 30 ) {
         # do stuff inside second loop,
@@ -18200,7 +18200,7 @@ However, when we try to compile the source code, we experience an error:
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP79, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
+    ERROR ECOGEASCP879, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
 
 =for rperl X</noncode>
 

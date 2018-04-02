@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: "P72c, CODE GENERATOR, ABSTRACT SYNTAX TO" >>>
-# <<< GENERATE_ERROR: "variable name '$foo__variable' must not include a double-underscore, forbidden by C++ specification as a reserved identifier" >>>
+# <<< GENERATE_ERROR: "P181b, CODE GENERATOR, ABSTRACT SYNTAX TO" >>>
+# <<< GENERATE_ERROR: "subroutine name '_Foo_subroutine()' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -17,6 +17,7 @@ use RPerl::CompileUnit::Module::Class;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(ProhibitUnusedPrivateSubroutines)  # DEVELOPER DEFAULT 3: allow uncalled subroutines
+## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case & mixed-case package names
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {
@@ -26,15 +27,11 @@ our hashref $properties = {
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 
-sub _foo_subroutine {
+sub _Foo_subroutine {
     { my integer $RETURN_TYPE };
     ( my integer $foo_argument ) = @ARG;
 
-    print 'in RPerl::Test::Reserved::Class_01_Bad_00::_foo_subroutine(), received $foo_argument = ', $foo_argument, "\n";
-
-    my string $foo__variable = 'the prodigal son';
-
-    print 'in RPerl::Test::Reserved::Class_01_Bad_00::_foo_subroutine(), have $foo__variable = ', $foo__variable, "\n";
+    print 'in RPerl::Test::Reserved::Class_01_Bad_00::_Foo_subroutine(), received $foo_argument = ', $foo_argument, "\n";
 
     return ($foo_argument * 2);
 }

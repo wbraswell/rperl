@@ -43,7 +43,7 @@ sub ast_to_rperl__generate {
 
     if ( ($self_class) ne 'Program_18' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ($self_class) . ' found where Program_18 expected, dying' )
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ($self_class) . ' found where Program_18 expected, dying' )
             . "\n";
     }
 
@@ -202,7 +202,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     if ( ($self_class) ne 'Program_18' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ($self_class) . ' found where Program_18 expected, dying' )
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ($self_class) . ' found where Program_18 expected, dying' )
             . "\n";
     }
 

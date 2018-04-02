@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: 'P03, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
+# <<< GENERATE_ERROR: 'P003, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
 # <<< GENERATE_ERROR: "Argument count 2 exceeds maximum argument limit 1 for operator 'return'" >>>
 
 # [[[ HEADER ]]]

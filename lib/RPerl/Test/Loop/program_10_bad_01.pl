@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: 'P06, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
+# <<< GENERATE_ERROR: 'P006, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
 # <<< GENERATE_ERROR: "initial-condition variable '$i' is different than exit-condition variable '$j'" >>>
 
 # [[[ HEADER ]]]

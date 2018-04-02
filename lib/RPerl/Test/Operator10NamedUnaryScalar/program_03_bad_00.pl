@@ -3,7 +3,7 @@
 # Learning RPerl, Section 3.16: Scalar & Array Contexts
 
 # [[[ PREPROCESSOR ]]]
-# <<< COMPILE_ERROR: 'P79, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
+# <<< COMPILE_ERROR: 'P189, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
 # <<< COMPILE_ERROR: 'Array dereference of array reference must provide data type for array reference' >>>
 
 # [[[ HEADER ]]]

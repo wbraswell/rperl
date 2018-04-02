@@ -68,7 +68,7 @@ sub ast_to_rperl__generate {
             if ( ref $hash_entry_star eq 'TERMINAL' ) {
                 if ( $hash_entry_star->{attr} ne q{,} ) {
                     die RPerl::Parser::rperl_rule__replace(
-                        q{ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '}
+                        q{ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '}
                             . $hash_entry_star->{attr}
                             . q{' found where OP21_LIST_COMMA ',' expected, dying}
                     ) . "\n";
@@ -93,7 +93,7 @@ sub ast_to_rperl__generate {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($self_class)
                 . ' found where HashReference_231, HashReference_232, or SubExpression_161 expected, dying'
         ) . "\n";
@@ -141,7 +141,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             if ( ref $hash_entry_star eq 'TERMINAL' ) {
                 if ( $hash_entry_star->{attr} ne q{,} ) {
                     die RPerl::Parser::rperl_rule__replace(
-                        q{ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '}
+                        q{ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '}
                             . $hash_entry_star->{attr}
                             . q{' found where OP21_LIST_COMMA ',' expected, dying}
                     ) . "\n";
@@ -161,7 +161,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+            'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ($self_class)
                 . ' found where HashReference_231, HashReference_232, or SubExpression_161 expected, dying'
         ) . "\n";
@@ -206,7 +206,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build {
             if ( ref $hash_entry_star eq 'TERMINAL' ) {
                 if ( $hash_entry_star->{attr} ne q{,} ) {
                     die RPerl::Parser::rperl_rule__replace(
-                        q{ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '}
+                        q{ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '}
                             . $hash_entry_star->{attr}
                             . q{' found where OP21_LIST_COMMA ',' expected, dying}
                     ) . "\n";
@@ -233,7 +233,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+            'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ($self_class)
                 . ' found where HashReference_231, HashReference_232, or SubExpression_161 expected, dying'
         ) . "\n";

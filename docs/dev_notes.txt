@@ -1,4 +1,4 @@
-# RPerl Developer Notes 20171202 2017.336
+# RPerl Developer Notes 20180402 2018.092
 
 ##########################################################################################
 # WARNING & ERROR CODES
@@ -53,6 +53,18 @@ AL: Algorithm
 SO: Sort
 BU: Bubble
 [NEED ADD MANY MORE HERE]
+
+ERROR CODE RANGES
+
+ECOGEASxP 0xx - 4xx: misc codes which match between PERLOPS_PERLTYPES & CPPOPS_CPPTYPES (& CPPOPS_PERLTYPES eventually)
+          18x      : DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++ 
+
+ECOGEASxP 5xx:       PERLOPS_PERLTYPES only codes
+
+ECOGEASxP 6xx - 7xx: CPPOPS_PERLTYPES only codes
+
+ECOGEASxP 8xx - 9xx: CPPOPS_CPPTYPES only codes
+
 
 ##########################################################################################
 # PERLTIDY 

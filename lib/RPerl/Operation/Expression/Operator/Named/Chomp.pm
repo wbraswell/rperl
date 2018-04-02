@@ -23,8 +23,8 @@ use RPerl::Operation::Expression::Operator::Named;
 # [[[ CONSTANTS ]]]
 use constant NAME          => my string $TYPED_NAME           = 'chomp';
 # DEV NOTE: with min & max args of 1, compile-time args length checking short-circuited first by Parse Phase 0 ERROR ECOPAPL03 'Useless use of FOO in void context'
-# or ERROR ECOPARP00 'Unexpected Token:  ,'; short-circuited second by ERROR ECOGEASRP14 on Operator_101 & OperatorVoid_140 multiple-argument productions below;
-# can't figure out how to create test which gets past ECOPAPL03 & ECOPARP00 to trigger ECOGEASRP14
+# or ERROR ECOPARP00 'Unexpected Token:  ,'; short-circuited second by ERROR ECOGEASRP014 on Operator_101 & OperatorVoid_140 multiple-argument productions below;
+# can't figure out how to create test which gets past ECOPAPL03 & ECOPARP00 to trigger ECOGEASRP014
 use constant ARGUMENTS_MIN => my integer $TYPED_ARGUMENTS_MIN = 1;
 use constant ARGUMENTS_MAX => my integer $TYPED_ARGUMENTS_MAX = 1;
 
@@ -45,7 +45,7 @@ sub ast_to_rperl__generate {
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operation_96' ) { # Operation -> OP01_NAMED_SCOLON
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+            'ERROR ECOGEASRP016, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly one argument, dying' )
             . "\n";
@@ -60,21 +60,21 @@ sub ast_to_rperl__generate {
     }
     elsif ( $operator_named_class eq 'Operator_101' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+            'ERROR ECOGEASRP014, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[1]
                 . ' does not accept multiple arguments, dying' )
             . "\n";
     }
     elsif ( $operator_named_class eq 'OperatorVoid_140' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP14, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+            'ERROR ECOGEASRP014, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' does not accept multiple arguments, dying' )
             . "\n";
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($operator_named_class)
                 . ' found where Operation_96, Operator_100, Operator_101, or OperatorVoid_140 expected, dying'
         ) . "\n";

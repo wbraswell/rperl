@@ -46,7 +46,7 @@ sub ast_to_rperl__generate {
 #    die 'TMP DEBUG';
 
     if ( ($self_class) ne 'Class_76' ) {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($self_class)
                 . ' found where Module_25 or Class_76 expected, dying' )
             . "\n";
@@ -197,7 +197,7 @@ sub ast_to_rperl__generate {
 # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 =DISABLE_NEED_FIX
         if ( $property_key !~ /^[a-z]/ ) {
-            die 'ERROR ECOGEASRP24, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
+            die 'ERROR ECOGEASRP024, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
                 . $property_key . q{'}
                 . ' does not start with a lowercase letter a-z, dying' . "\n";
         }
@@ -215,7 +215,7 @@ sub ast_to_rperl__generate {
         # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_244 & TypeInnerProperties_245 below
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
         if ( $property_name ne $property_key ) {
-            die 'ERROR ECOGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
+            die 'ERROR ECOGEASRP021, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                 . $property_name . q{'}
                 . ' does not equal OO properties key ' . q{'}
                 . $property_key . q{'}
@@ -229,7 +229,7 @@ sub ast_to_rperl__generate {
             (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$property_name}) or
             (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$property_name}) or
             (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$property_name})) {
-            die 'ERROR ECOGEASRP41, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, OO property name ' . q{'}
+            die 'ERROR ECOGEASRP041, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, OO property name ' . q{'}
                 . $property_name . q{'}
                 . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
         }
@@ -281,7 +281,7 @@ sub ast_to_rperl__generate {
             $rperl_source_group->{PMC} .= $property_arrayref_rightbracket . q{ } . $property_assign . q{ } . $property_subexpression_string;
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                     . ( ref $self )
                     . ' found where TypeInnerProperties_244 or TypeInnerProperties_245 expected, dying' )
                 . "\n";
@@ -289,7 +289,7 @@ sub ast_to_rperl__generate {
 
         # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key} ) {
-            die 'ERROR ECOGEASRP10, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: OO property '
+            die 'ERROR ECOGEASRP010, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: OO property '
                 . q{'} . $property_key . q{'}
                 . ' already declared in this scope, namespace '
                 . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
@@ -301,7 +301,7 @@ sub ast_to_rperl__generate {
         # disallow name masking of inherited $properties, causes mismatching behavior in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES
         foreach my $parent_package_name (@{$parent_package_names}) {
             if ( exists $modes->{_symbol_table}->{ $parent_package_name . q{::} }->{_properties}->{$property_key} ) {
-                die 'ERROR ECOGEASRP11, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: OO property '
+                die 'ERROR ECOGEASRP011, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: OO property '
                     . q{'} . $property_key . q{'}
                     . ' already declared in parent namespace '
                     . q{'} . $parent_package_name . q{::} . q{'}
@@ -328,7 +328,7 @@ sub ast_to_rperl__generate {
 # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 =DISABLE_NEED_FIX
                 if ( $property_key !~ /^[a-z]/ ) {
-                    die 'ERROR ECOGEASRP24, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
+                    die 'ERROR ECOGEASRP024, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
                         . $property_key . q{'}
                         . ' does not start with a lowercase letter a-z, dying' . "\n";
                 }
@@ -342,7 +342,7 @@ sub ast_to_rperl__generate {
                 $property_name =~ s/^(\w+)\s*$/$1/gxms;             # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
 
                 if ( $property_name ne $property_key ) {
-                    die 'ERROR ECOGEASRP21, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
+                    die 'ERROR ECOGEASRP021, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                         . $property_name . q{'}
                         . ' does not equal OO properties key ' . q{'}
                         . $property_key . q{'}
@@ -352,7 +352,7 @@ sub ast_to_rperl__generate {
                     (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$property_name}) or
                     (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$property_name}) or
                     (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$property_name})) {
-                    die 'ERROR ECOGEASRP41, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, OO property name ' . q{'}
+                    die 'ERROR ECOGEASRP041, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, OO property name ' . q{'}
                         . $property_name . q{'}
                         . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
                 }
@@ -404,7 +404,7 @@ sub ast_to_rperl__generate {
                     $rperl_source_group->{PMC} .= $property_arrayref_rightbracket . q{ } . $property_assign . q{ } . $property_subexpression_string;
                 }
                 else {
-                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+                    die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                             . ( ref $self )
                             . ' found where TypeInnerProperties_244 or TypeInnerProperties_245 expected, dying' )
                         . "\n";
@@ -412,7 +412,7 @@ sub ast_to_rperl__generate {
 
                 # CREATE SYMBOL TABLE ENTRY
                 if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key} ) {
-                    die 'ERROR ECOGEASRP10, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: OO property '
+                    die 'ERROR ECOGEASRP010, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: OO property '
                         . $property_key
                         . ' already declared in this scope, namespace '
                         . $modes->{_symbol_table}->{_namespace}
@@ -424,7 +424,7 @@ sub ast_to_rperl__generate {
                 # disallow name masking of inherited $properties, causes mismatching behavior in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES
                 foreach my $parent_package_name (@{$parent_package_names}) {
                     if ( exists $modes->{_symbol_table}->{ $parent_package_name . q{::} }->{_properties}->{$property_key} ) {
-                        die 'ERROR ECOGEASRP11, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: OO property '
+                        die 'ERROR ECOGEASRP011, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: OO property '
                             . q{'} . $property_key . q{'}
                             . ' already declared in parent namespace '
                             . q{'} . $parent_package_name . q{::} . q{'}
@@ -509,7 +509,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
 
     if ( ($self_class) ne 'Class_76' ) {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Grammar rule '
                 . ($self_class)
                 . ' found where Module_25 or Class_76 expected, dying' )
             . "\n";
@@ -639,7 +639,7 @@ EOL
         # DEV NOTE, CORRELATION #rp042: do not recursively load the same .cpp/.h file from within itself
         # it is incorrect for a subclass inside a multi-class file to include its parent class' .cpp file name, which is the .cpp version of it's own .h file name 
         if ((not exists $modes->{_input_file_name_current}) or (not defined $modes->{_input_file_name_current}) or ($modes->{_input_file_name_current} eq q{})) {
-            die 'ERROR ECOGEASCP46, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Undefined or empty value provided for current input file name, dying' . "\n";
+            die 'ERROR ECOGEASCP046, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Undefined or empty value provided for current input file name, dying' . "\n";
         }
         my string $input_file_name_current_underscores = $modes->{_input_file_name_current};
 
@@ -792,7 +792,7 @@ EOL
 # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 =DISABLE_NEED_ANSWER
         if ( $property_key !~ /^[a-z]/ ) {
-            die 'ERROR ECOGEASCP24, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
+            die 'ERROR ECOGEASCP024, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
                 . $property_key . q{'}
                 . ' does not start with a lowercase letter a-z, dying' . "\n";
         }
@@ -811,7 +811,7 @@ EOL
         # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_244 & TypeInnerProperties_245 below
         # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
         if ( $property_name ne $property_key ) {
-            die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
+            die 'ERROR ECOGEASCP021, CODE GENERATOR, ABSTRACT SYNTAX TO C++, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                 . $property_name . q{'}
                 . ' does not equal OO properties key ' . q{'}
                 . $property_key . q{'}
@@ -821,7 +821,7 @@ EOL
             (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$property_name}) or
             (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$property_name}) or
             (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$property_name})) {
-            die 'ERROR ECOGEASCP41, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, OO property name ' . q{'}
+            die 'ERROR ECOGEASCP041, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, OO property name ' . q{'}
                 . $property_name . q{'}
                 . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
         }
@@ -838,7 +838,7 @@ EOL
             $property_arrayref_index_max = $property_type_inner->{children}->[5];
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                     . ( ref $self )
                     . ' found where TypeInnerProperties_244 or TypeInnerProperties_245 expected, dying' )
                 . "\n";
@@ -852,7 +852,7 @@ EOL
 
         # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key} ) {
-            die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
+            die 'ERROR ECOGEASCP010, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
                 . q{'} . $property_key . q{'}
                 . ' already declared in this scope, namespace '
                 . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
@@ -864,7 +864,7 @@ EOL
         # disallow name masking of inherited $properties, causes mismatching behavior in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES
         foreach my $parent_package_name (@{$parent_package_names}) {
             if ( exists $modes->{_symbol_table}->{ $parent_package_name . q{::} }->{_properties}->{$property_key} ) {
-                die 'ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
+                die 'ERROR ECOGEASCP011, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
                     . q{'} . $property_key . q{'}
                     . ' already declared in parent namespace '
                     . q{'} . $parent_package_name . q{::} . q{'}
@@ -935,7 +935,7 @@ EOL
 # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 =DISABLE_NEED_ANSWER
             if ( $property_key !~ /^[a-z]/ ) {
-                die 'ERROR ECOGEASCP24, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
+                die 'ERROR ECOGEASCP024, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
                     . $property_key . q{'}
                     . ' does not start with a lowercase letter a-z, dying' . "\n";
             }
@@ -954,7 +954,7 @@ EOL
             # DEV NOTE: we can do error checking once here instead of twice for TypeInnerProperties_244 & TypeInnerProperties_245 below
             # because they both have OpStringOrWord as sub-element 3, grabbed as $property_name above
             if ( $property_name ne $property_key ) {
-                die 'ERROR ECOGEASCP21, CODE GENERATOR, ABSTRACT SYNTAX TO C++, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
+                die 'ERROR ECOGEASCP021, CODE GENERATOR, ABSTRACT SYNTAX TO C++, NAME-CHECKING MISMATCH: redundant inner type name ' . q{'}
                     . $property_name . q{'}
                     . ' does not equal OO properties key ' . q{'}
                     . $property_key . q{'}
@@ -964,7 +964,7 @@ EOL
                 (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$property_name}) or
                 (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$property_name}) or
                 (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$property_name})) {
-                die 'ERROR ECOGEASCP41, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, OO property name ' . q{'}
+                die 'ERROR ECOGEASCP041, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, OO property name ' . q{'}
                     . $property_name . q{'}
                     . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
             }
@@ -981,7 +981,7 @@ EOL
                 $property_arrayref_index_max = $property_type_inner->{children}->[5];
             }
             else {
-                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
+                die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                         . ( ref $self )
                         . ' found where TypeInnerProperties_244 or TypeInnerProperties_245 expected, dying' )
                     . "\n";
@@ -995,7 +995,7 @@ EOL
 
             # CREATE SYMBOL TABLE ENTRY
             if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key} ) {
-                die 'ERROR ECOGEASCP10, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
+                die 'ERROR ECOGEASCP010, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
                     . $property_key
                     . ' already declared in this scope, namespace '
                     . $modes->{_symbol_table}->{_namespace}
@@ -1007,7 +1007,7 @@ EOL
             # disallow name masking of inherited $properties, causes mismatching behavior in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES
             foreach my $parent_package_name (@{$parent_package_names}) {
                 if ( exists $modes->{_symbol_table}->{ $parent_package_name . q{::} }->{_properties}->{$property_key} ) {
-                    die 'ERROR ECOGEASCP11, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
+                    die 'ERROR ECOGEASCP011, CODE GENERATOR, ABSTRACT SYNTAX TO C++: OO property '
                         . q{'} . $property_key . q{'}
                         . ' already declared in parent namespace '
                         . q{'} . $parent_package_name . q{::} . q{'}
@@ -1184,7 +1184,7 @@ EOL
             }
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Grammar rule '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++, CPPOPS_CPPTYPES: Grammar rule '
                     . ( ref $method_or_subroutine )
                     . ' found where SubroutineOrMethod_94 or SubroutineOrMethod_93 expected, dying' )
                 . "\n";

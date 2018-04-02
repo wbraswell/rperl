@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: "72c, CODE GENERATOR, ABSTRACT SYNTAX TO" >>>
+# <<< GENERATE_ERROR: "P180c, CODE GENERATOR, ABSTRACT SYNTAX TO" >>>
 # <<< GENERATE_ERROR: "variable name '$foo__variable' must not include a double-underscore, forbidden by C++ specification as a reserved identifier" >>>
 
 # [[[ HEADER ]]]
@@ -13,7 +13,7 @@ our $VERSION = 0.001_000;
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
-use RPerl::Test::Reserved::Class_01_Good;
+use RPerl::Test::Reserved::Class_00_Good;
 
 sub foo_subroutine_in_main {
     { my void $RETURN_TYPE };

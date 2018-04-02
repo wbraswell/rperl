@@ -39,7 +39,7 @@ sub ast_to_rperl__generate {
 
     if ( ( ref $self ) ne 'Method_88' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ( ref $self ) . ' found where Method_88 expected, dying' )
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ( ref $self ) . ' found where Method_88 expected, dying' )
             . "\n";
     }
 
@@ -64,7 +64,7 @@ sub ast_to_rperl__generate {
 # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 =DISABLE_NEED_FIX
     if ((substr $name, 0, 1) eq '_') {
-        die 'ERROR ECOGEASRP09, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: method name ' . ($name)
+        die 'ERROR ECOGEASRP009, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: method name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
 =cut
@@ -76,7 +76,7 @@ sub ast_to_rperl__generate {
         (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
         (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$name}) or
         (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$name})) {
-        die 'ERROR ECOGEASRP45, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, method name ' . q{'}
+        die 'ERROR ECOGEASRP045, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, method name ' . q{'}
             . $name . q{'}
             . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
     }
@@ -131,7 +131,7 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
 
     if ( ( ref $self ) ne 'Method_88' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Method_88 expected, dying' )
+            'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Method_88 expected, dying' )
             . "\n";
     }
 
@@ -152,7 +152,7 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
 # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 =DISABLE_NEED_FIX
     if ((substr $name, 0, 1) eq '_') {
-        die 'ERROR ECOGEASCP09, CODE GENERATOR, ABSTRACT SYNTAX TO C++: method name ' . ($name)
+        die 'ERROR ECOGEASCP009, CODE GENERATOR, ABSTRACT SYNTAX TO C++: method name ' . ($name)
                 . ' must not start with underscore, dying' . "\n";
     }
 =cut
@@ -164,7 +164,7 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
         (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
         (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$name}) or
         (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$name})) {
-        die 'ERROR ECOGEASCP45, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, method name ' . q{'}
+        die 'ERROR ECOGEASCP045, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, method name ' . q{'}
             . $name . q{'}
             . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
     }
@@ -205,7 +205,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     if ( ( ref $self ) ne 'Method_88' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Method_88 expected, dying' )
+            'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Method_88 expected, dying' )
             . "\n";
     }
 

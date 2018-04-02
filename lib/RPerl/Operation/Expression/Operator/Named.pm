@@ -61,7 +61,7 @@ sub ast_to_rperl__generate {
         $operator_name = $self->{children}->[1];
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
                 . ' found where Operation_96, Operator_100, Operator_101, or OperatorVoid_140 expected, dying' )
             . "\n";
@@ -71,9 +71,9 @@ sub ast_to_rperl__generate {
     $operator_name =~ s/^(\w+)\s*$/$1/gxms;
 
  # DEV NOTE: compile-time operator name checking short-circuited first by Parse Phase 0 ERROR ECOPAPL02 'Bareword "FOO" not allowed while "strict subs" in use';
- # can't figure out how to create test which gets past ECOPAPL02 to trigger ECOGEASRP13
+ # can't figure out how to create test which gets past ECOPAPL02 to trigger ECOGEASRP013
     if ( not exists $NAMES->{$operator_name} ) {
-        die q{ERROR ECOGEASRP13, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
+        die q{ERROR ECOGEASRP013, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named operator '}
             . $operator_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )
@@ -119,7 +119,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         $operator_name = $self->{children}->[1];
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
                 . ' found where Operation_96, Operator_100, Operator_101, or OperatorVoid_140 expected, dying' )
             . "\n";
@@ -129,9 +129,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     $operator_name =~ s/^(\w+)\s*$/$1/gxms;
 
  # DEV NOTE: compile-time operator name checking short-circuited first by Parse Phase 0 ERROR ECOPAPL02 'Bareword "FOO" not allowed while "strict subs" in use';
- # can't figure out how to create test which gets past ECOPAPL02 to trigger ECOGEASCP14
+ # can't figure out how to create test which gets past ECOPAPL02 to trigger ECOGEASCP014
     if ( not exists $NAMES->{$operator_name} ) {
-        die q{ERROR ECOGEASCP14, CODE GENERATOR, ABSTRACT SYNTAX TO C++: unsupported or unrecognized named operator '}
+        die q{ERROR ECOGEASCP014, CODE GENERATOR, ABSTRACT SYNTAX TO C++: unsupported or unrecognized named operator '}
             . $operator_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )

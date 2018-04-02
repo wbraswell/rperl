@@ -212,7 +212,7 @@ Revision history for Perl compiler RPerl.
 
 1.200002 2015-11-07
 
-    - Re-enable 4 Tests, Fixed Error "Can't parse code: Unknown error parsing Perl document" In Perl v5.16 & Earlier, Enable Proper ECOGEASRP20 Support
+    - Re-enable 4 Tests, Fixed Error "Can't parse code: Unknown error parsing Perl document" In Perl v5.16 & Earlier, Enable Proper ECOGEASRP020 Support
     - Learning RPerl, Chapter 3, Exercise 3, Fixed RequireCheckedSyscalls Failure
         Filed Bug https://github.com/Perl-Critic/Perl-Critic/issues/671
     - Fix Bugs In Support For All Named & Named Unary Operators AKA Builtins, PERLOPS_PERLTYPES Mode 
@@ -233,7 +233,7 @@ Revision history for Perl compiler RPerl.
     - Separate Operator::Expression::Operator::Named From NamedUnary
     - Support For All Named & Named Unary Operators AKA Builtins, PERLOPS_PERLTYPES Mode 
     - Test Non-Whitespace qw(foo*baz bar-hypenated bla+rgh)
-    - Test Compile-Time Constructor Type Mismatch In VariableDeclaration (ERROR ECOGEASRP20)
+    - Test Compile-Time Constructor Type Mismatch In VariableDeclaration (ERROR ECOGEASRP020)
     - Test Zero-Argument Named & Named Unary Operators (AKA Builtins) In VariableDeclaration, C-Style For Loop, & In General
 
 1.100002 2015-09-11

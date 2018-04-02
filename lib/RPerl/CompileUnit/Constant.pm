@@ -45,14 +45,14 @@ sub ast_to_rperl__generate {
         (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
         (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$name}) or
         (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$name})) {
-        die 'ERROR ECOGEASRP42, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, constant name ' . q{'}
+        die 'ERROR ECOGEASRP042, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, constant name ' . q{'}
             . $name . q{'}
             . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
     }
 
     # CREATE SYMBOL TABLE ENTRY
     if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_global}->{$name} ) {
-        die 'ERROR ECOGEASRP12, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
+        die 'ERROR ECOGEASRP012, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
             . $name
             . ' already declared in this scope, namespace '
             . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
@@ -104,14 +104,14 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
         (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$name}) or
         (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$name})) {
-        die 'ERROR ECOGEASCP42, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, constant name ' . q{'}
+        die 'ERROR ECOGEASCP042, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, constant name ' . q{'}
             . $name . q{'}
             . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
     }
 
     # CREATE SYMBOL TABLE ENTRY
     if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_global}->{$name} ) {
-        die 'ERROR ECOGEASCP12, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
+        die 'ERROR ECOGEASCP012, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
             . $name
             . ' already declared in this scope, namespace '
             . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}

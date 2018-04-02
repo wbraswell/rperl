@@ -40,7 +40,7 @@ sub ast_to_rperl__generate {
     }
     if ( not exists $NAMES->{$operator_void_name} ) {
         die
-            q{ERROR ECOGEASRP01, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named void operator '}
+            q{ERROR ECOGEASRP001, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: unsupported or unrecognized named void operator '}
             . $operator_void_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )
@@ -83,7 +83,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
     if ( not exists $NAMES->{$operator_void_name} ) {
         die
-            q{ERROR ECOGEASCP01, CODE GENERATOR, ABSTRACT SYNTAX TO C++: unsupported or unrecognized named void operator '}
+            q{ERROR ECOGEASCP001, CODE GENERATOR, ABSTRACT SYNTAX TO C++: unsupported or unrecognized named void operator '}
             . $operator_void_name
             . q{' found where }
             . ( join ', ', ( sort keys %{$NAMES} ) )

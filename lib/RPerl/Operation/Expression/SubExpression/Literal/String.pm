@@ -23,7 +23,7 @@ sub ast_to_rperl__generate {
 
     if ( ( ref $self ) ne 'Literal_255' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
                 . ' found where Literal_255 expected, dying' )
             . "\n";
@@ -54,7 +54,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #    RPerl::diag( 'in Literal::String->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     if ( ( ref $self ) ne 'Literal_255' ) {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Literal_255 expected, dying' ) . "\n";
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $self ) . ' found where Literal_255 expected, dying' ) . "\n";
     }
     
     $cpp_source_group->{CPP} = $self->{children}->[0];
@@ -67,7 +67,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             substr $cpp_source_group->{CPP}, -1, 1, q{"};
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP50, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with single-quote but not terminated with single-quote, dying' ) . "\n";
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP050, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with single-quote but not terminated with single-quote, dying' ) . "\n";
         }
     }
     elsif ((substr $cpp_source_group->{CPP}, 0, 2) eq 'q{') {
@@ -77,12 +77,12 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             substr $cpp_source_group->{CPP}, -1, 1, q{"};
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP51, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with q-left-brace single-quote but not terminated with right-brace, dying' ) . "\n";
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP051, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal started with q-left-brace single-quote but not terminated with right-brace, dying' ) . "\n";
         }
     }
 # NEED ADD ERROR CHECKING: double-quoted strings are okay for non-sigils containing newline or tab, non-quoted strings are not okay?
 #    else {
-#        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP52, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal not started with single-quote, dying' ) . "\n";
+#        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP052, CODE GENERATOR, ABSTRACT SYNTAX TO C++: string literal not started with single-quote, dying' ) . "\n";
 #    }
 
 #    RPerl::diag( 'in Literal::String->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_inside_print_operator} = ' . $modes->{_inside_print_operator} . "\n" );

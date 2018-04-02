@@ -106,7 +106,7 @@ sub ast_to_rperl__generate {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
                 . ' found where Operator_110 expected, dying' )
             . "\n";
@@ -147,7 +147,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
         # NEED FIX: DIE ON !~ BINDING OPERATOR, should actually be logic & code generation to implement !~ binding operator
         if ($bind ne '=~') {
-            die q{ERROR ECOGEASCPxx: Regular expression binding operator '} . $bind . q{' not yet supported, dying};
+            die q{ERROR ECOGEASCP0xx: Regular expression binding operator '} . $bind . q{' not yet supported, dying};
         }
 
         # separate pattern into match/substitute flag, bare pattern, and modifiers
@@ -165,10 +165,10 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
         # test for and remove book-end forward slash characters
         if ((substr $pattern_bare, 0, 1) ne q{/}) {
-            die q{ERROR ECOGEASCP81: Regular expression pattern '} . $pattern_bare . q{' does not begin with forward slash '/' character, dying};
+            die q{ERROR ECOGEASCP081: Regular expression pattern '} . $pattern_bare . q{' does not begin with forward slash '/' character, dying};
         }
         if ((substr $pattern_bare, -1, 1) ne q{/}) {
-            die q{ERROR ECOGEASCP82: Regular expression pattern '} . $pattern_bare . q{' does not end with forward slash '/' character, dying};
+            die q{ERROR ECOGEASCP082: Regular expression pattern '} . $pattern_bare . q{' does not end with forward slash '/' character, dying};
         }
         $pattern_bare = substr $pattern_bare, 1, ((length $pattern_bare) - 2);
 
@@ -208,7 +208,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                     $modifiers_match_enabled .= $modifier;
                 }
                 else {
-                    die q{ERROR ECOGEASCP83: Non-compliant, unsupported, or unrecognized regular expression modifier '} . $modifier . q{' found, must be one of (} . (join ', ', (sort keys %{{%{$modifiers_compile}, %{$modifiers_match}}})) . q{), dying};
+                    die q{ERROR ECOGEASCP083: Non-compliant, unsupported, or unrecognized regular expression modifier '} . $modifier . q{' found, must be one of (} . (join ', ', (sort keys %{{%{$modifiers_compile}, %{$modifiers_match}}})) . q{), dying};
                 }
             }
             RPerl::diag( q{in Operator::RegularExpression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modifiers_compile_enabled = '} . $modifiers_compile_enabled . "\n" );
@@ -256,7 +256,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                     $modifiers_substitute_enabled .= $modifier;
                 }
                 else {
-                    die q{ERROR ECOGEASCP84: Non-compliant, unsupported, or unrecognized regular expression modifier '} . $modifier . q{' found, must be one of (} . (join ', ', (sort keys %{{%{$modifiers_compile}, %{$modifiers_substitute}}})) . q{), dying};
+                    die q{ERROR ECOGEASCP084: Non-compliant, unsupported, or unrecognized regular expression modifier '} . $modifier . q{' found, must be one of (} . (join ', ', (sort keys %{{%{$modifiers_compile}, %{$modifiers_substitute}}})) . q{), dying};
                 }
             }
 
@@ -273,7 +273,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             # validate substitute pattern
             my $pattern_forward_slash_count = ( $pattern_bare =~ m/\//gxms );
             if ($pattern_forward_slash_count != 1) {
-                die q{ERROR ECOGEASCP85: Substitution regular expression pattern '} . $pattern_bare . q{' does not contain exactly one forward slash '/' character, dying};
+                die q{ERROR ECOGEASCP085: Substitution regular expression pattern '} . $pattern_bare . q{' does not contain exactly one forward slash '/' character, dying};
             }
 
             # split find/replace portions of substitute pattern
@@ -306,11 +306,11 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             $cpp_source_group->{CPP} = 'regex("' . $pattern_find . '"' . $modifiers_compile_CPP . ').preplace(&' . $cpp_source_group->{CPP} . ', "' . $pattern_replace . '"' . $modifiers_substitute_CPP . ')';
         }
         else {
-            die q{ERROR ECOGEASCP80: Unrecognized regular expression type '} . $match_or_substitute . q{' found, must be 'm' for match or 's' for substitute, dying};
+            die q{ERROR ECOGEASCP080: Unrecognized regular expression type '} . $match_or_substitute . q{' found, must be 'm' for match or 's' for substitute, dying};
         }
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . $self_class . ' found where Operator_110 expected, dying' ) . "\n";
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . $self_class . ' found where Operator_110 expected, dying' ) . "\n";
     }
 
     RPerl::diag( 'in Operator::RegularExpression->ast_to_cpp__generate__CPPOPS_CPPTYPES(), about to return $cpp_source_group = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_group) . "\n" );

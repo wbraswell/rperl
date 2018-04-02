@@ -38,7 +38,7 @@ sub ast_to_rperl__generate {
 
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operation_97' ) {    # Operation -> OP10_NAMED_UNARY_SCOLON
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP016, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly one argument, dying' )
             . "\n";
@@ -49,13 +49,13 @@ sub ast_to_rperl__generate {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
     elsif ( $operator_named_class eq 'Operator_117' ) {    # Operator -> OP10_NAMED_UNARY
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP16, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP016, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires exactly one argument, dying' )
             . "\n";
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($operator_named_class)
                 . ' found where Operation_97, Operator_116, or Operator_117 expected, dying' )
             . "\n";

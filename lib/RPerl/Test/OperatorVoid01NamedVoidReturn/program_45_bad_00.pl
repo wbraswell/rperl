@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: 'P05, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
+# <<< GENERATE_ERROR: 'P005, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
 # <<< GENERATE_ERROR: 'Attempt to return dereferenced hash' >>>
 
 # [[[ HEADER ]]]

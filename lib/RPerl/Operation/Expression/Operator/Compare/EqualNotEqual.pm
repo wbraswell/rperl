@@ -34,7 +34,7 @@ sub ast_to_rperl__generate {
             and ( $self->{children}->[1] ne 'ne' )
             and ( $self->{children}->[1] ne 'cmp' ) )
         {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP29, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: comparison operator '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP029, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: comparison operator '
                     . $self->{children}->[1]
                     . ' found where ==, !=, <=>, eq, ne, or cmp expected, dying' )
                 . "\n";
@@ -48,7 +48,7 @@ sub ast_to_rperl__generate {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . $self_class . ' found where Operator_119 expected, dying' )
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . $self_class . ' found where Operator_119 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -90,7 +90,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             $cpp_source_group->{CPP} .= ' DUMMY_THREE_WAY_COMPARISON_STRING ';
         }
         else {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP29, CODE GENERATOR, ABSTRACT SYNTAX TO C++: comparison operator '
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP029, CODE GENERATOR, ABSTRACT SYNTAX TO C++: comparison operator '
                     . $self->{children}->[1]
                     . ' found where ==, !=, <=>, eq, ne, or cmp expected, dying' )
                 . "\n";
@@ -100,7 +100,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP00, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . $self_class . ' found where Operator_119 expected, dying' )
+            'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . $self_class . ' found where Operator_119 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;

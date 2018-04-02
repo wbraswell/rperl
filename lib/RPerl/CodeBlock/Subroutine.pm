@@ -56,7 +56,7 @@ sub ast_to_rperl__generate {
 
     if ( ( ref $self ) ne 'Subroutine_61' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ( ref $self ) . ' found where Subroutine_61 expected, dying' )
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ( ref $self ) . ' found where Subroutine_61 expected, dying' )
             . "\n";
     }
 
@@ -77,15 +77,15 @@ sub ast_to_rperl__generate {
 
     # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
     if (((substr $name, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
-        die 'ERROR ECOGEASRP71a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'global subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASRP181a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'global subroutine name ' . q{'} . $name . q{()'} .
             ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name =~ m/^_[A-Z]/gxms) {
-        die 'ERROR ECOGEASRP71b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASRP181b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
             ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name =~ m/__/gxms) {
-        die 'ERROR ECOGEASRP71c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASRP181c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 
@@ -93,7 +93,7 @@ sub ast_to_rperl__generate {
         (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
         (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$name}) or
         (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$name})) {
-        die 'ERROR ECOGEASRP44, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, subroutine name ' . q{'}
+        die 'ERROR ECOGEASRP044, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Perl API name conflict, subroutine name ' . q{'}
             . $name . q{'}
             . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
     }
@@ -156,15 +156,15 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
 
     # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
     if (((substr $name, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
-        die 'ERROR ECOGEASCP71a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'global subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASCP181a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'global subroutine name ' . q{'} . $name . q{()'} .
             ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name =~ m/^_[A-Z]/gxms) {
-        die 'ERROR ECOGEASCP71b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASCP181b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
             ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name =~ m/__/gxms) {
-        die 'ERROR ECOGEASCP71c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASCP181c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 
@@ -172,7 +172,7 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
         (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
         (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$name}) or
         (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$name})) {
-        die 'ERROR ECOGEASCP44, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, subroutine name ' . q{'}
+        die 'ERROR ECOGEASCP044, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, subroutine name ' . q{'}
             . $name . q{'}
             . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
     }
@@ -224,13 +224,22 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
 
 
+# START HERE: copy checks into list below;  finish Reserved tests
+# START HERE: copy checks into list below;  finish Reserved tests
+# START HERE: copy checks into list below;  finish Reserved tests
 
-# START HERE: copy checks into sub args & class names & method names & method args & property names;  finish Reserved tests
-# START HERE: copy checks into sub args & class names & method names & method args & property names;  finish Reserved tests
-# START HERE: copy checks into sub args & class names & method names & method args & property names;  finish Reserved tests
-
-
-
+=LIST_OF_UNDERSCORE_CHECKS
+ECOGEASxP 180x: variable
+ECOGEASxP 181x: subroutine def
+ECOGEASxP 182x: subroutine call
+ECOGEASxP 183x: subroutine arg
+ECOGEASxP 184x: package
+ECOGEASxP 185x: class
+ECOGEASxP 186x: method def
+ECOGEASxP 187x: method call
+ECOGEASxP 188x: method arg
+ECOGEASxP 189x: property
+=cut
 
 # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 # as of March 2018, the latest draft of the C++ standard, section 5.10 on pages 13-14, states:
@@ -245,15 +254,15 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
     if (((substr $name, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
-        die 'ERROR ECOGEASCP71a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'global subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASCP181a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'global subroutine name ' . q{'} . $name . q{()'} .
             ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name =~ m/^_[A-Z]/gxms) {
-        die 'ERROR ECOGEASCP71b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASCP181b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
             ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
     elsif ($name =~ m/__/gxms) {
-        die 'ERROR ECOGEASCP71c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
+        die 'ERROR ECOGEASCP181c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine name ' . q{'} . $name . q{()'} .
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 
@@ -261,7 +270,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
         (exists $perlapinames_generated::VARIABLES_DOCUMENTED->{$name}) or
         (exists $perlapinames_generated::VARIABLES_UNDOCUMENTED->{$name})) {
-        die 'ERROR ECOGEASCP44, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, subroutine name ' . q{'}
+        die 'ERROR ECOGEASCP044, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Perl API name conflict, subroutine name ' . q{'}
             . $name . q{'}
             . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
     }

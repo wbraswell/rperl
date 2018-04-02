@@ -40,14 +40,14 @@ sub ast_to_rperl__generate {
     my string $operator_named_class = ref $operator_named;
     if ( $operator_named_class eq 'Operation_96' ) { # Operation -> OP01_NAMED_SCOLON
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+            'ERROR ECOGEASRP018, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires multiple arguments, dying' )
             . "\n";
     }
     elsif ( $operator_named_class eq 'Operator_100' ) { # Operator -> OP01_NAMED SubExpression
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP18, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
+            'ERROR ECOGEASRP018, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
                 . $operator_named->{children}->[0]
                 . ' requires multiple arguments, dying' )
             . "\n";
@@ -63,7 +63,7 @@ sub ast_to_rperl__generate {
         my integer $argument_count = $arguments->length() + 1;
         if ( $argument_count < ARGUMENTS_MIN() ) {
             die
-                'ERROR ECOGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                'ERROR ECOGEASRP002, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                 . "\n"
                 . 'Argument count '
                 . $argument_count
@@ -75,7 +75,7 @@ sub ast_to_rperl__generate {
         }
         if ( $argument_count > ARGUMENTS_MAX() ) {
             die
-                'ERROR ECOGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                'ERROR ECOGEASRP003, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                 . "\n"
                 . 'Argument count '
                 . $argument_count
@@ -104,7 +104,7 @@ sub ast_to_rperl__generate {
         my integer $argument_count = $arguments->length() + 1;
         if ( $argument_count < ARGUMENTS_MIN() ) {
             die
-                'ERROR ECOGEASRP02, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                'ERROR ECOGEASRP002, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                 . "\n"
                 . 'Argument count '
                 . $argument_count
@@ -116,7 +116,7 @@ sub ast_to_rperl__generate {
         }
         if ( $argument_count > ARGUMENTS_MAX() ) {
             die
-                'ERROR ECOGEASRP03, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
+                'ERROR ECOGEASRP003, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:'
                 . "\n"
                 . 'Argument count '
                 . $argument_count
@@ -137,7 +137,7 @@ sub ast_to_rperl__generate {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP00, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ($operator_named_class)
                 . ' found where Operation_96, Operator_100, Operator_101, or OperatorVoid_140 expected, dying'
         ) . "\n";
