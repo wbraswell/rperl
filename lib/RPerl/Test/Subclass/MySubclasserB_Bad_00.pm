@@ -1,6 +1,6 @@
 # [[[ PREPROCESSOR ]]]
 # <<< GENERATE_ERROR: 'ERROR ECOGEAS' >>>
-# <<< GENERATE_ERROR: 'P11' >>>
+# <<< GENERATE_ERROR: 'P011' >>>
 # <<< GENERATE_ERROR: "OO property 'preschool' already declared in parent namespace 'RPerl::Test::Subclass::MySubclasserA_Good::'" >>>
 # <<< GENERATE_ERROR: 'name masking disallowed' >>>
 
