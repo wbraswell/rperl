@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.016_000;
+    our $VERSION = 0.017_000;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -116,7 +116,7 @@
 %token OP02_ARRAY_THINARROW      = /(->\[)/                      # precedence 02 infix: thin arrow, array dereference and retrieval '->['
 %token OP02_METHOD_THINARROW_NEW = /(->new\()/                   # precedence 02 infix: thin arrow, class constructor '->new('
 %token OP02_METHOD_THINARROW_IMP = /(->import\()/                # precedence 02 infix: thin arrow, module importer '->import('
-%token OP02_METHOD_THINARROW     = /(->[a-zA-Z]\w*)/             # precedence 02 infix: thin arrow, method dereference and call; ex. '->foo' or '->Bar23'
+%token OP02_METHOD_THINARROW     = /(->[a-zA-Z_]\w*)/            # precedence 02 infix: thin arrow, method dereference and call; ex. '->foo' or '->Bar23' or '->_foo'
 %token OP05_MATH_NEG_LPAREN      = /(-\()/                       # precedence 05 prefix: arithmetic negative '-('; include paren to disambiguate from literal negative sign and subtraction operator
 %token OP08_MATH_ADD_SUB         = /(\+|-\s|sse_add|sse_sub)/    # precedence 08 infix: arithmetic add '+', subtract '-', SSE add 'sse_add', SSE subtract 'sse_sub'
 %token OP11_COMPARE_LT_GT        = /(<=|>=|<|>|le|ge|lt|gt)\s/   # precedence 11 infix: numeric comparison less or equal '<=', greater or equal '>=', less than '<', greater than '>'; string comparison less or equal 'le', greater or equal 'ge', less than 'lt', greater than 'gt'

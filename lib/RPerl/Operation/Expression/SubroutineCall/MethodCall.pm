@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubroutineCall::MethodCall;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_100;
+our $VERSION = 0.003_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubroutineCall);
@@ -40,6 +40,23 @@ sub ast_to_rperl__generate {
     my string $left_paren         = $self->{children}->[2];
     my object $arguments_optional = $self->{children}->[3];
     my string $right_paren        = $self->{children}->[4];
+
+    # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+    # NEED ANSWER: how to trigger ECOGEASxP187x? we must first declare a method which will trigger ECOGEASxP182x instead...
+    # all methods are naturally scoped to their respective class, there are no global methods, thus ECOGEASRP187a is disabled & unused below
+    my string $name = substr $thin_arrow_name, 2;
+#    if (((substr $name, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+#        die 'ERROR ECOGEASRP187a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'call to global method name ' . q{'} . $name . q{()'} .
+#            ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+#    }
+    if ($name =~ m/^_[A-Z]/gxms) {
+        die 'ERROR ECOGEASRP187b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'call to method name ' . q{'} . $name . q{()'} .
+            ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+    elsif ($name =~ m/__/gxms) {
+        die 'ERROR ECOGEASRP187c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'call to method name ' . q{'} . $name . q{()'} .
+            ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
 
     $rperl_source_subgroup = $variable->ast_to_rperl__generate($modes);
     RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
@@ -89,6 +106,23 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my string $left_paren         = $self->{children}->[2];
     my object $arguments_optional = $self->{children}->[3];
     my string $right_paren        = $self->{children}->[4];
+
+    # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+    # NEED ANSWER: how to trigger ECOGEASxP187x? we must first declare a method which will trigger ECOGEASxP182x instead...
+    # all methods are naturally scoped to their respective class, there are no global methods, thus ECOGEASCP187a is disabled & unused below
+    my string $name = substr $thin_arrow_name, 2;
+#    if (((substr $name, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+#        die 'ERROR ECOGEASCP187a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'call to global method name ' . q{'} . $name . q{()'} .
+#            ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+#    }
+    if ($name =~ m/^_[A-Z]/gxms) {
+        die 'ERROR ECOGEASCP187b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'call to method name ' . q{'} . $name . q{()'} .
+            ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+    elsif ($name =~ m/__/gxms) {
+        die 'ERROR ECOGEASCP187c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'call to method name ' . q{'} . $name . q{()'} .
+            ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
 
     $cpp_source_subgroup = $variable->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
     RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );

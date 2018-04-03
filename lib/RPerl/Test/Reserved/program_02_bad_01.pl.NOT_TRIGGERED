@@ -1,0 +1,38 @@
+#!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< GENERATE_ERROR: "P182a, CODE GENERATOR, ABSTRACT SYNTAX TO" >>>
+
+# [[[ HEADER ]]]
+use RPerl;
+use strict;
+use warnings;
+our $VERSION = 0.001_000;
+
+# [[[ CRITICS ]]]
+## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
+## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
+## no critic qw(ProhibitUnusedPrivateSubroutines)  # DEVELOPER DEFAULT 3: allow uncalled subroutines
+
+# [[[ SUBROUTINES ]]]
+sub foo_subroutine {
+    { my void $RETURN_TYPE };
+    ( my integer $foo_argument ) = @ARG;
+    print 'in foo_subroutine(), received $foo_argument = ', $foo_argument, "\n";
+
+    # NEED ANSWER: why doesn't this call to _bar_subroutine() below trigger ECOGEASRP182a???
+    _bar_subroutine($foo_argument);
+    return;
+}
+
+sub _bar_subroutine {
+    { my void $RETURN_TYPE };
+    ( my integer $bar_argument ) = @ARG;
+    print 'in _bar_subroutine(), received $bar_argument = ', $bar_argument, "\n";
+    return;
+}
+
+# [[[ OPERATIONS ]]]
+print 'Hello, World!', "\n";
+my integer $foo_retval = _foo_subroutine(23);
+

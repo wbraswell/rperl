@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.009_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine);
@@ -56,21 +56,20 @@ sub ast_to_rperl__generate {
     my object $operations_star         = $self->{children}->[10];
     my string $right_brace             = $self->{children}->[11];
 
-
-
-
-
-
-# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
-=DISABLE_NEED_FIX
-    if ((substr $name, 0, 1) eq '_') {
-        die 'ERROR ECOGEASRP009, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: method name ' . ($name)
-                . ' must not start with underscore, dying' . "\n";
+    # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+    # all methods are naturally scoped to their respective class, there are no global methods, thus ECOGEASRP186a is disabled & unused below
+#    if (((substr $name, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+#        die 'ERROR ECOGEASRP186a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'global method name ' . q{'} . $name . q{()'} .
+#            ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+#    }
+    if ($name =~ m/^_[A-Z]/gxms) {
+        die 'ERROR ECOGEASRP186b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'method name ' . q{'} . $name . q{()'} .
+            ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
-=cut
-
-
-
+    elsif ($name =~ m/__/gxms) {
+        die 'ERROR ECOGEASRP186c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'method name ' . q{'} . $name . q{()'} .
+            ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
 
     if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$name}) or
         (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or
@@ -144,21 +143,20 @@ sub ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES {
 #    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $name = ' . $name . "\n" );
 #    RPerl::diag( 'in Method->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
 
-
-
-
-
-
-# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
-=DISABLE_NEED_FIX
-    if ((substr $name, 0, 1) eq '_') {
-        die 'ERROR ECOGEASCP009, CODE GENERATOR, ABSTRACT SYNTAX TO C++: method name ' . ($name)
-                . ' must not start with underscore, dying' . "\n";
+    # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+    # all methods are naturally scoped to their respective class, there are no global methods, thus ECOGEASCP186a is disabled & unused below
+#    if (((substr $name, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+#        die 'ERROR ECOGEASCP186a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'global method name ' . q{'} . $name . q{()'} .
+#            ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+#    }
+    if ($name =~ m/^_[A-Z]/gxms) {
+        die 'ERROR ECOGEASCP186b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'method name ' . q{'} . $name . q{()'} .
+            ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
-=cut
-
-
-
+    elsif ($name =~ m/__/gxms) {
+        die 'ERROR ECOGEASCP186c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'method name ' . q{'} . $name . q{()'} .
+            ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
 
     if ((exists $perlapinames_generated::FUNCTIONS_DOCUMENTED->{$name}) or
         (exists $perlapinames_generated::FUNCTIONS_UNDOCUMENTED->{$name}) or

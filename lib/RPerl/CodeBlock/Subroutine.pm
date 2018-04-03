@@ -232,11 +232,11 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 ECOGEASxP 180x: variable          DONE
 ECOGEASxP 181x: subroutine def    DONE
 ECOGEASxP 182x: subroutine call   DONE
-ECOGEASxP 183x: subroutine arg
+ECOGEASxP 183x: subroutine arg    DONE
 ECOGEASxP 184x: package or class  DONE
 ECOGEASxP 185x: include           DONE
-ECOGEASxP 186x: method def
-ECOGEASxP 187x: method call
+ECOGEASxP 186x: method def        DONE
+ECOGEASxP 187x: method call       DONE
 ECOGEASxP 188x: method arg
 ECOGEASxP 189x: property
 =cut
