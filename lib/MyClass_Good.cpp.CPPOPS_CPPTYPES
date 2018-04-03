@@ -1,11 +1,11 @@
 // [[[ HEADER ]]]
 using std::cout;  using std::cerr;  using std::endl;
 
-#ifndef __CPP__INCLUDED__MyClass_cpp
-#define __CPP__INCLUDED__MyClass_cpp 0.001_000
+#ifndef __CPP__INCLUDED__MyClass_Good_cpp
+#define __CPP__INCLUDED__MyClass_Good_cpp 0.001_000
 
 // [[[ INCLUDES ]]]
-#include "MyClass.h"
+#include "MyClass_Good.h"
 
 # ifdef __PERL__TYPES
 
@@ -19,16 +19,16 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 
 // [[[ SUBROUTINES & OO METHODS ]]]
 
-integer MyClass::foo_method(integer foo_argument) {
-    print "in MyClass::foo_method(), received $foo_argument = " << foo_argument << endl;
-    print "in MyClass::foo_method(), have $self->{foo_property} = " << "'" << this->foo_property << "'" << endl;
+integer MyClass_Good::foo_method(integer foo_argument) {
+    print "in MyClass_Good::foo_method(), received $foo_argument = " << foo_argument << endl;
+    print "in MyClass_Good::foo_method(), have $self->{foo_property} = " << "'" << this->foo_property << "'" << endl;
     return (foo_argument * -2);
 }
 
-integer MyClass__foo_subroutine(integer foo_argument) {
-    print "in MyClass::foo_subroutine(), received $foo_argument = " << foo_argument << endl;
+integer MyClass_Good__foo_subroutine(integer foo_argument) {
+    print "in MyClass_Good::foo_subroutine(), received $foo_argument = " << foo_argument << endl;
     string foo_variable = (const string) "the prodigal son";
-    print "in MyClass::foo_subroutine(), have $foo_variable = " << foo_variable << endl;
+    print "in MyClass_Good::foo_subroutine(), have $foo_variable = " << foo_variable << endl;
     return (foo_argument * 2);
 }
 

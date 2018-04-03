@@ -224,17 +224,22 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
 
 
+# START HERE FIRST: how to create _MyClass_Bad.pm (or equivalent) to trigger "ECOGEASxP 184x: package or class" errors from Header.pm???
+# START HERE FIRST: how to create _MyClass_Bad.pm (or equivalent) to trigger "ECOGEASxP 184x: package or class" errors from Header.pm???
+# START HERE FIRST: how to create _MyClass_Bad.pm (or equivalent) to trigger "ECOGEASxP 184x: package or class" errors from Header.pm???
+
+
 # START HERE: copy checks into list below;  finish Reserved tests
 # START HERE: copy checks into list below;  finish Reserved tests
 # START HERE: copy checks into list below;  finish Reserved tests
 
 =LIST_OF_UNDERSCORE_CHECKS
-ECOGEASxP 180x: variable
-ECOGEASxP 181x: subroutine def
+ECOGEASxP 180x: variable          DONE
+ECOGEASxP 181x: subroutine def    DONE
 ECOGEASxP 182x: subroutine call
 ECOGEASxP 183x: subroutine arg
-ECOGEASxP 184x: package
-ECOGEASxP 185x: class
+ECOGEASxP 184x: package or class  DONE
+ECOGEASxP 185x: include
 ECOGEASxP 186x: method def
 ECOGEASxP 187x: method call
 ECOGEASxP 188x: method arg

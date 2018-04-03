@@ -1,5 +1,5 @@
 # [[[ HEADER ]]]
-package MyClass;
+package MyClass_Good;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
@@ -17,40 +17,40 @@ use RPerl::Inline;
 # [[[ SUBROUTINES ]]]
 
 # <<< OO PROPERTIES, SUBROUTINES, SHIMS >>>
-undef &MyClass::foo_subroutine;
-*MyClass::foo_subroutine = sub { return main::MyClass__foo_subroutine(@ARG); };
+undef &MyClass_Good::foo_subroutine;
+*MyClass_Good::foo_subroutine = sub { return main::MyClass_Good__foo_subroutine(@ARG); };
 
 # <<< C++ LOADER >>>
 sub cpp_load {
     { my void::method $RETURN_TYPE };
     my $need_load_cpp = 0;
-    if (    ( exists $main::{'MyClass__MODE_ID'} )
-        and ( defined &{ $main::{'MyClass__MODE_ID'} } ) )
+    if (    ( exists $main::{'MyClass_Good__MODE_ID'} )
+        and ( defined &{ $main::{'MyClass_Good__MODE_ID'} } ) )
     {
-        #RPerl::diag('in MyClass::cpp_load, MyClass__MODE_ID() exists & defined' . "\n");
-        #RPerl::diag(q{in MyClass::cpp_load, have MyClass__MODE_ID() retval = '} . main::MyClass__MODE_ID() . q{'} . "\n");
-        if ( $RPerl::MODES->{ main::MyClass__MODE_ID() }->{ops} ne 'CPP' ) {
+        #RPerl::diag('in MyClass_Good::cpp_load, MyClass_Good__MODE_ID() exists & defined' . "\n");
+        #RPerl::diag(q{in MyClass_Good::cpp_load, have MyClass_Good__MODE_ID() retval = '} . main::MyClass_Good__MODE_ID() . q{'} . "\n");
+        if ( $RPerl::MODES->{ main::MyClass_Good__MODE_ID() }->{ops} ne 'CPP' ) {
             $need_load_cpp = 1;
         }
     }
     else {
-        #RPerl::diag('in MyClass::cpp_load, MyClass__MODE_ID() does not exist or undefined' . "\n");
+        #RPerl::diag('in MyClass_Good::cpp_load, MyClass_Good__MODE_ID() does not exist or undefined' . "\n");
         $need_load_cpp = 1;
     }
 
     if ($need_load_cpp) {
 
-        #RPerl::diag('in MyClass::cpp_load, need load CPP code' . "\n");
+        #RPerl::diag('in MyClass_Good::cpp_load, need load CPP code' . "\n");
 
-        my $cpp_file_path        = 'blib/lib/MyClass.cpp';
-        my $cpp_file_path_noblib = 'lib/MyClass.cpp';
+        my $cpp_file_path        = 'blib/lib/MyClass_Good.cpp';
+        my $cpp_file_path_noblib = 'lib/MyClass_Good.cpp';
         if ( not( ( -e $cpp_file_path ) and ( -f $cpp_file_path ) ) ) { $cpp_file_path = $cpp_file_path_noblib; } # fall back to non-blib, if blib does not exist
         my $eval_string = <<"EOF";
 package main;
 use RPerl::Inline;
-BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'lib/MyClass.cpp' ]]]\n" x 1); }
+BEGIN { RPerl::diag("[[[ BEGIN 'use Inline' STAGE for 'lib/MyClass_Good.cpp' ]]]\n" x 1); }
 use Inline (CPP => \$cpp_file_path, \%RPerl::Inline::ARGS);
-RPerl::diag("[[[ END   'use Inline' STAGE for 'lib/MyClass.cpp' ]]]\n" x 1);
+RPerl::diag("[[[ END   'use Inline' STAGE for 'lib/MyClass_Good.cpp' ]]]\n" x 1);
 1;
 EOF
 
@@ -58,20 +58,20 @@ EOF
             = $RPerl::Inline::CCFLAGSEX . $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypessizes::type_number_native_ccflag();
         $RPerl::Inline::ARGS{cppflags} = $RPerl::TYPES_CCFLAG . rperltypessizes::type_integer_native_ccflag() . rperltypessizes::type_number_native_ccflag();
 
-#RPerl::diag('in MyClass::cpp_load(), CPP not yet loaded, about to call eval() on $eval_string =' . "\n" . '<<< BEGIN EVAL STRING>>>' . "\n" . $eval_string . '<<< END EVAL STRING >>>' . "\n");
+#RPerl::diag('in MyClass_Good::cpp_load(), CPP not yet loaded, about to call eval() on $eval_string =' . "\n" . '<<< BEGIN EVAL STRING>>>' . "\n" . $eval_string . '<<< END EVAL STRING >>>' . "\n");
 
         eval $eval_string or croak( $OS_ERROR . "\n" . $EVAL_ERROR );
         if ($EVAL_ERROR) { croak($EVAL_ERROR); }
     }
 
-    #else { RPerl::diag('in MyClass::cpp_load(), CPP already loaded, DOING NOTHING' . "\n"); }
+    #else { RPerl::diag('in MyClass_Good::cpp_load(), CPP already loaded, DOING NOTHING' . "\n"); }
 }
 
 # DEV NOTE, CORRELATION #rp015: suppress 'Too late to run INIT block' at run-time loading via require or eval
 no warnings;
 INIT {
-    # actually compile and load C++ code when 'use MyClass' is called
-    MyClass::cpp_load();
+    # actually compile and load C++ code when 'use MyClass_Good' is called
+    MyClass_Good::cpp_load();
 }
 use warnings;
 

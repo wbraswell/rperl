@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.043_000;
+our $VERSION = 0.050_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -33,8 +33,12 @@ use File::Spec;
 
 # [[[ CONSTANTS ]]]
 use constant PATH_TESTS => my string $TYPED_PATH_TESTS = $RPerl::INCLUDE_PATH . '/RPerl/Test';
-#use constant PATH_PRECOMPILED => my string $TYPED_PATH_PRECOMPILED = $RPerl::INCLUDE_PATH . '/RPerl';
-use constant PATH_PRECOMPILED => my string $TYPED_PATH_PRECOMPILED = $RPerl::INCLUDE_PATH;  # include lib/MyClass.pm in testing
+use constant PATH_TESTS_MYCLASS => my string $TYPED_PATH_TESTS_MYCLASS = $RPerl::INCLUDE_PATH . '/_MyClass_Bad.pm';
+use constant PATH_PRECOMPILED => my string $TYPED_PATH_PRECOMPILED = $RPerl::INCLUDE_PATH . '/RPerl';
+use constant PATH_PRECOMPILED_MYCLASS1 => my string $TYPED_PATH_PRECOMPILED_MYCLASS1 = $RPerl::INCLUDE_PATH . '/MyClass_Good.pm';
+use constant PATH_PRECOMPILED_MYCLASS2 => my string $TYPED_PATH_PRECOMPILED_MYCLASS2 = $RPerl::INCLUDE_PATH . '/MyClass_Good.pm.CPPOPS_DUALTYPES';
+use constant PATH_PRECOMPILED_MYCLASS3 => my string $TYPED_PATH_PRECOMPILED_MYCLASS3 = $RPerl::INCLUDE_PATH . '/MyClass_Good.cpp.CPPOPS_CPPTYPES';
+use constant PATH_PRECOMPILED_MYCLASS4 => my string $TYPED_PATH_PRECOMPILED_MYCLASS4 = $RPerl::INCLUDE_PATH . '/MyClass_Good.h.CPPOPS_CPPTYPES';
 
 # [[[ OPERATIONS ]]]
 our $verbose_newline = q{};
@@ -66,157 +70,190 @@ BEGIN {
 #my string_arrayref_hashref_hashref $test_files = {};
 my $test_files = {};
 
+sub find_tests {
+    ( my string $file_full_path_arg ) = @ARG;
+    
+    # accept optional argument with pre-defined file path if provided, else fall back to File::Find
+    my string $file_full_path;
+    if (defined $file_full_path_arg) {
+        $file_full_path = $file_full_path_arg;
+    }
+    else {
+        $file_full_path = $File::Find::name;
+    }
+
+#    RPerl::diag('in 13_generate.t, find0, have $file_full_path = ' . $file_full_path . "\n");
+#    RPerl::diag('in 13_generate.t, find0, have $File::Find::dir = ' . $File::Find::dir . "\n");
+#    RPerl::diag('in 13_generate.t, find0, have $File::Find::name = ' . $File::Find::name . "\n");
+#    RPerl::diag('in 13_generate.t, find0, have getcwd = ' . getcwd . "\n");
+
+#    if ( $file_full_path !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
+#    if ( $file_full_path !~ m/.*Module\/.*$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
+    if ( $file_full_path !~ m/[.]p[ml]$/xms ) {    # find all *.pm & *.pl files
+        return;
+    }
+
+    if ( ( $file_full_path =~ m/Good/ms ) or ( $file_full_path =~ m/good/ms ) ) {
+#        RPerl::diag('in 13_generate.t, find0, have good $file_full_path = ' . $file_full_path . "\n");
+        $test_files->{$file_full_path} = undef;
+
+        # check for existence of GENERATE preprocessor directive, skip file if generating is explicitly disabled, <<< GENERATE: OFF >>>
+        open my filehandleref $FILE_HANDLE, '<', $file_full_path
+            or croak 'ERROR ETE13GE00: Cannot open file ' . $file_full_path . ' for reading,' . $OS_ERROR . ', croaking';
+        while (<$FILE_HANDLE>) {
+            if (m/^\#\s*\<\<\<\s*GENERATE\s*\:\s*OFF\s*\>\>\>/xms) {
+                delete $test_files->{$file_full_path};
+                last;
+            }
+        }
+        close $FILE_HANDLE
+            or croak 'ERROR ETE13GE01: Cannot close file ' . $file_full_path . ' after reading,' . $OS_ERROR . ', croaking';
+    }
+    elsif ( ( $file_full_path =~ m/Bad/ms ) or ( $file_full_path =~ m/bad/ms ) ) {
+#        RPerl::diag('in 13_generate.t, find0, have bad  $file_full_path = ' . $file_full_path . "\n");
+
+        # check for existence of GENERATE & GENERATE_ERROR preprocessor directives, compile list of expected parse errors, <<< GENERATE_ERROR: 'FOO' >>>
+        open my filehandleref $FILE_HANDLE, '<', $file_full_path
+            or croak 'ERROR ETE13GE02: Cannot open file ' . $file_full_path . ' for reading,' . $OS_ERROR . ', croaking';
+        while (<$FILE_HANDLE>) {
+            if (m/^\#\s*\<\<\<\s*GENERATE\s*\:\s*OFF\s*\>\>\>/xms) {
+                delete $test_files->{$file_full_path};
+                last;
+            }
+            if (m/^\#\s*\<\<\<\s*GENERATE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
+                push @{ $test_files->{$file_full_path}->{errors} }, $1;
+            }
+        }
+        close $FILE_HANDLE
+            or croak 'ERROR ETE13GE03: Cannot close file ' . $file_full_path . ' after reading,' . $OS_ERROR . ', croaking';
+    }
+    else {  # file named neither Good nor Bad
+        # check for existence of GENERATE preprocessor directive, do NOT skip file if generating is explicitly enabled, <<< GENERATE: ON >>>
+        open my filehandleref $FILE_HANDLE, '<', $file_full_path
+            or croak 'ERROR ETE13GE04: Cannot open file ' . $file_full_path . ' for reading,' . $OS_ERROR . ', croaking';
+        while (<$FILE_HANDLE>) {
+            if (m/^\#\s*\<\<\<\s*GENERATE\s*\:\s*ON\s*\>\>\>/xms) {
+                $test_files->{$file_full_path} = undef;
+                last;
+            }
+        }
+        close $FILE_HANDLE
+            or croak 'ERROR ETE13GE05: Cannot close file ' . $file_full_path . ' after reading,' . $OS_ERROR . ', croaking';
+    }
+}
+
 # locate all *Good* *good* *Bad* *bad* test files in PATH_TESTS directory or ARGV command-line argument directory
 find(
     {
         no_chdir => 1,  # if not set, causes incorrect paths when $ARGV[0] is defined
-        wanted =>
-    sub {
-        my $file = $File::Find::name;
-
-#        RPerl::diag('in 13_generate.t, find0, have $file = ' . $file . "\n");
-#        RPerl::diag('in 13_generate.t, find0, have $File::Find::dir = ' . $File::Find::dir . "\n");
-#        RPerl::diag('in 13_generate.t, find0, have $_    = ' . $_ . "\n");
-#        RPerl::diag('in 13_generate.t, find0, have $File::Find::name = ' . $File::Find::name . "\n");
-#        RPerl::diag('in 13_generate.t, find0, have getcwd = ' . getcwd . "\n");
-
-#        if ( $file !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
-#        if ( $file !~ m/.*Module\/.*$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
-        if ( $file !~ m/[.]p[ml]$/xms ) {    # find all *.pm & *.pl files
-            return;
-        }
-
-        if ( ( $file =~ m/Good/ms ) or ( $file =~ m/good/ms ) ) {
-#            RPerl::diag('in 13_generate.t, find0, have good $file = ' . $file . "\n");
-            $test_files->{$file} = undef;
-
-            # check for existence of GENERATE preprocessor directive, skip file if generating is explicitly disabled, <<< GENERATE: OFF >>>
-            open my filehandleref $FILE_HANDLE, '<', $file
-                or croak 'ERROR ETE13GE00: Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
-            while (<$FILE_HANDLE>) {
-                if (m/^\#\s*\<\<\<\s*GENERATE\s*\:\s*OFF\s*\>\>\>/xms) {
-                    delete $test_files->{$file};
-                    last;
-                }
-            }
-            close $FILE_HANDLE
-                or croak 'ERROR ETE13GE01: Cannot close file ' . $file . ' after reading,' . $OS_ERROR . ', croaking';
-        }
-        elsif ( ( $file =~ m/Bad/ms ) or ( $file =~ m/bad/ms ) ) {
-#            RPerl::diag('in 13_generate.t, find0, have bad  $file = ' . $file . "\n");
-
-            # check for existence of GENERATE & GENERATE_ERROR preprocessor directives, compile list of expected parse errors, <<< GENERATE_ERROR: 'FOO' >>>
-            open my filehandleref $FILE_HANDLE, '<', $file
-                or croak 'ERROR ETE13GE02: Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
-            while (<$FILE_HANDLE>) {
-                if (m/^\#\s*\<\<\<\s*GENERATE\s*\:\s*OFF\s*\>\>\>/xms) {
-                    delete $test_files->{$file};
-                    last;
-                }
-                if (m/^\#\s*\<\<\<\s*GENERATE_ERROR\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
-                    push @{ $test_files->{$file}->{errors} }, $1;
-                }
-            }
-            close $FILE_HANDLE
-                or croak 'ERROR ETE13GE03: Cannot close file ' . $file . ' after reading,' . $OS_ERROR . ', croaking';
-        }
-        else {  # file named neither Good nor Bad
-            # check for existence of GENERATE preprocessor directive, do NOT skip file if generating is explicitly enabled, <<< GENERATE: ON >>>
-            open my filehandleref $FILE_HANDLE, '<', $file
-                or croak 'ERROR ETE13GE04: Cannot open file ' . $file . ' for reading,' . $OS_ERROR . ', croaking';
-            while (<$FILE_HANDLE>) {
-                if (m/^\#\s*\<\<\<\s*GENERATE\s*\:\s*ON\s*\>\>\>/xms) {
-                    $test_files->{$file} = undef;
-                    last;
-                }
-            }
-            close $FILE_HANDLE
-                or croak 'ERROR ETE13GE05: Cannot close file ' . $file . ' after reading,' . $OS_ERROR . ', croaking';
-        }
-    }
+        wanted => \&find_tests
     },
     (defined $ARGV[0]) ? $ARGV[0] : PATH_TESTS()  # accept optional command-line argument
 );
 
-# locate all *.*OPS_*TYPES pre-compiled files in PATH_PRECOMPILED directory or ARGV command-line argument directory
-find(
-    sub {
-        my $file_full_path = $File::Find::name;
-#        RPerl::diag('in 13_generate.t, find1, have $file_full_path = ' . $file_full_path . "\n");
-        (my $volume_found, my $directories_found, my $file_found) = File::Spec->splitpath( $file_full_path, my $no_file = 0 );
-#        RPerl::diag('in 13_generate.t, find1, have $file_found     = ' . $file_found . "\n");
+# locate _MyClass.pm w/out unnecessary additional searching
+find_tests(PATH_TESTS_MYCLASS());
 
-#        if ( $file_found !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
-#        if ( $file_found !~ m/.*Module\/.*$/xms ) { # TEMP DEBUGGING, ONLY FIND FILES IN A CERTAIN DIRECTORY
-#        if ( $file_found =~ m/^(.*foo_bar_arith.*)[.].*OPS.*$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
-        if ( $file_found =~ m/^(.+)[.]\w+OPS_\w+TYPES$/gxms ) {    # find all pre-compiled files
-            my string $file_base = $1;
-#            RPerl::diag('in 13_generate.t, have pre-compiled $file_found  = ' . $file_found . "\n");
-#            RPerl::diag('in 13_generate.t, have pre-compiled $file_base   = ' . $file_base . "\n");
-            if (($file_base =~ m/^(.*)[.]cpp$/gxms) or ($file_base =~ m/^(.*)[.]h$/gxms) or ($file_base =~ m/^(.*)[.]pmc$/gxms)) {
-                my string $file_prefix = $1;
-#                RPerl::diag('in 13_generate.t, find1, have pre-compiled $file_prefix = ' . $file_prefix . "\n");
+sub find_precompiled {
+    ( my string $file_full_path_arg ) = @ARG;
+    
+    # accept optional argument with pre-defined file path if provided, else fall back to File::Find
+    my string $file_full_path;
+    if (defined $file_full_path_arg) {
+        $file_full_path = $file_full_path_arg;
+    }
+    else {
+        $file_full_path = $File::Find::name;
+    }
 
-                # restore saved path, because File::Find changes directories while searching for files
-                my string $file_program = $file_prefix . '.pl';
-                my string $file_module = $file_prefix . '.pm';
-#                RPerl::diag('in 13_generate.t, find1, have $file_program = ' . $file_program . "\n");
-#                RPerl::diag('in 13_generate.t, find1, have $file_module = ' . $file_module . "\n");
+#    RPerl::diag('in 13_generate.t, find1, have $file_full_path = ' . $file_full_path . "\n");
+    (my $volume_found, my $directories_found, my $file_found) = File::Spec->splitpath( $file_full_path, my $no_file = 0 );
+#    RPerl::diag('in 13_generate.t, find1, have $file_found     = ' . $file_found . "\n");
 
-                my $file_program_full_path = File::Spec->catpath( $volume_found, $directories_found, $file_program );
-                my $file_module_full_path = File::Spec->catpath( $volume_found, $directories_found, $file_module );
-#                RPerl::diag('in 13_generate.t, find1, have $file_program_full_path = ' . $file_program_full_path . "\n");
-#                RPerl::diag('in 13_generate.t, find1, have $file_module_full_path = ' . $file_module_full_path . "\n");
+#    if ( $file_found !~ m/[.]pm$/xms ) { # TEMP DEBUGGING, ONLY FIND *.pm, NOT *.pl
+#    if ( $file_found !~ m/.*Module\/.*$/xms ) { # TEMP DEBUGGING, ONLY FIND FILES IN A CERTAIN DIRECTORY
+#    if ( $file_found =~ m/^(.*foo_bar_arith.*)[.].*OPS.*$/xms ) { # TEMP DEBUGGING, ONLY FIND CERTAIN FILES
+    if ( $file_found =~ m/^(.+)[.]\w+OPS_\w+TYPES$/gxms ) {    # find all pre-compiled files
+        my string $file_base = $1;
+#        RPerl::diag('in 13_generate.t, have pre-compiled $file_found  = ' . $file_found . "\n");
+#        RPerl::diag('in 13_generate.t, have pre-compiled $file_base   = ' . $file_base . "\n");
+        if (($file_base =~ m/^(.*)[.]cpp$/gxms) or ($file_base =~ m/^(.*)[.]h$/gxms) or ($file_base =~ m/^(.*)[.]pmc$/gxms)) {
+            my string $file_prefix = $1;
+#            RPerl::diag('in 13_generate.t, find1, have pre-compiled $file_prefix = ' . $file_prefix . "\n");
 
-                if ((-e $file_program_full_path) and (-f $file_program_full_path) and (-T $file_program_full_path)) {
-#                    RPerl::diag('in 13_generate.t, find1, have all reference code for *.pl file, pre-compiled $file_prefix = ' . $file_prefix . "\n");
+            # restore saved path, because File::Find changes directories while searching for files
+            my string $file_program = $file_prefix . '.pl';
+            my string $file_module = $file_prefix . '.pm';
+#            RPerl::diag('in 13_generate.t, find1, have $file_program = ' . $file_program . "\n");
+#            RPerl::diag('in 13_generate.t, find1, have $file_module = ' . $file_module . "\n");
 
-                    # check for existence of GENERATE preprocessor directive, skip file if generating is explicitly disabled, <<< GENERATE: OFF >>>
-                    open my filehandleref $FILE_HANDLE, '<', $file_program_full_path
-                        or croak 'ERROR ETE13GE06: Cannot open file ' . $file_program_full_path . ' for reading,' . $OS_ERROR . ', croaking';
-                    while (<$FILE_HANDLE>) {
-                        if (m/^\#\s*\<\<\<\s*GENERATE\s*\:\s*OFF\s*\>\>\>/xms) {
-#                            RPerl::diag('in 13_generate.t, have explicitly-disabled pre-compiled $file_program_full_path = ' . $file_program_full_path . "\n");
-                            return;
-                        }
+            my $file_program_full_path = File::Spec->catpath( $volume_found, $directories_found, $file_program );
+            my $file_module_full_path = File::Spec->catpath( $volume_found, $directories_found, $file_module );
+#            RPerl::diag('in 13_generate.t, find1, have $file_program_full_path = ' . $file_program_full_path . "\n");
+#            RPerl::diag('in 13_generate.t, find1, have $file_module_full_path = ' . $file_module_full_path . "\n");
+
+            if ((-e $file_program_full_path) and (-f $file_program_full_path) and (-T $file_program_full_path)) {
+#                RPerl::diag('in 13_generate.t, find1, have all reference code for *.pl file, pre-compiled $file_prefix = ' . $file_prefix . "\n");
+
+                # check for existence of GENERATE preprocessor directive, skip file if generating is explicitly disabled, <<< GENERATE: OFF >>>
+                open my filehandleref $FILE_HANDLE, '<', $file_program_full_path
+                    or croak 'ERROR ETE13GE06: Cannot open file ' . $file_program_full_path . ' for reading,' . $OS_ERROR . ', croaking';
+                while (<$FILE_HANDLE>) {
+                    if (m/^\#\s*\<\<\<\s*GENERATE\s*\:\s*OFF\s*\>\>\>/xms) {
+#                        RPerl::diag('in 13_generate.t, have explicitly-disabled pre-compiled $file_program_full_path = ' . $file_program_full_path . "\n");
+                        return;
                     }
-                    close $FILE_HANDLE
-                        or croak 'ERROR ETE13GE07: Cannot close file ' . $file_program_full_path . ' after reading,' . $OS_ERROR . ', croaking';
-
-                    $test_files->{$file_program_full_path} = undef;
                 }
+                close $FILE_HANDLE
+                    or croak 'ERROR ETE13GE07: Cannot close file ' . $file_program_full_path . ' after reading,' . $OS_ERROR . ', croaking';
+
+                $test_files->{$file_program_full_path} = undef;
+            }
                 elsif ((-e $file_module_full_path) and (-f $file_module_full_path) and (-T $file_module_full_path)) {
-#                    RPerl::diag('in 13_generate.t, find1, have all reference code for *.pm file, pre-compiled $file_prefix = ' . $file_prefix . "\n");
+#                RPerl::diag('in 13_generate.t, find1, have all reference code for *.pm file, pre-compiled $file_prefix = ' . $file_prefix . "\n");
 
-                    # check for existence of GENERATE preprocessor directive, skip file if generating is explicitly disabled, <<< GENERATE: OFF >>>
-                    open my filehandleref $FILE_HANDLE, '<', $file_module_full_path
-                        or croak 'ERROR ETE13GE08: Cannot open file ' . $file_module_full_path . ' for reading,' . $OS_ERROR . ', croaking';
-                    while (<$FILE_HANDLE>) {
-                        if (m/^\#\s*\<\<\<\s*GENERATE\s*\:\s*OFF\s*\>\>\>/xms) {
-#                            RPerl::diag('in 13_generate.t, have explicitly-disabled pre-compiled $file_module_full_path = ' . $file_module_full_path . "\n");
-                            return;
-                        }
+                # check for existence of GENERATE preprocessor directive, skip file if generating is explicitly disabled, <<< GENERATE: OFF >>>
+                open my filehandleref $FILE_HANDLE, '<', $file_module_full_path
+                    or croak 'ERROR ETE13GE08: Cannot open file ' . $file_module_full_path . ' for reading,' . $OS_ERROR . ', croaking';
+                while (<$FILE_HANDLE>) {
+                    if (m/^\#\s*\<\<\<\s*GENERATE\s*\:\s*OFF\s*\>\>\>/xms) {
+#                        RPerl::diag('in 13_generate.t, have explicitly-disabled pre-compiled $file_module_full_path = ' . $file_module_full_path . "\n");
+                        return;
                     }
-                    close $FILE_HANDLE
-                        or croak 'ERROR ETE13GE09: Cannot close file ' . $file_module_full_path . ' after reading,' . $OS_ERROR . ', croaking';
+                }
+                close $FILE_HANDLE
+                    or croak 'ERROR ETE13GE09: Cannot close file ' . $file_module_full_path . ' after reading,' . $OS_ERROR . ', croaking';
 
-                    $test_files->{$file_module_full_path} = undef;
-                }
-                else {
-                    RPerl::warning( 'WARNING WTE13GE01, TEST GROUP 13, CODE GENERATOR: Missing non-compiled source code reference file ' . q{'} . $file_prefix . '.pl' . q{'} . ' or '  . q{'} . $file_prefix . '.pm' . q{'} . ', not performing difference check' . "\n" );
-                }
+                $test_files->{$file_module_full_path} = undef;
             }
             else {
-                RPerl::warning( 'WARNING WTE13GE02, TEST GROUP 13, CODE GENERATOR: Unrecognized pre-compiled source code reference file base ' . q{'} . $file_base . q{'} . ', not performing difference check' . "\n" );
+                RPerl::warning( 'WARNING WTE13GE01, TEST GROUP 13, CODE GENERATOR: Missing non-compiled source code reference file ' . q{'} . $file_prefix . '.pl' . q{'} . ' or '  . q{'} . $file_prefix . '.pm' . q{'} . ', not performing difference check' . "\n" );
             }
         }
-        else {  # not a pre-compiled file
-#            RPerl::diag('in 13_generate.t, have NOT pre-compiled $file_found = ' . $file_found . "\n");
-            return;
+        else {
+            RPerl::warning( 'WARNING WTE13GE02, TEST GROUP 13, CODE GENERATOR: Unrecognized pre-compiled source code reference file base ' . q{'} . $file_base . q{'} . ', not performing difference check' . "\n" );
         }
+    }
+    else {  # not a pre-compiled file
+#        RPerl::diag('in 13_generate.t, have NOT pre-compiled $file_found = ' . $file_found . "\n");
+        return;
+    }
+}
+
+# locate all *.*OPS_*TYPES pre-compiled files in PATH_PRECOMPILED directory or ARGV command-line argument directory
+find(
+    {
+        no_chdir => 1,  # if not set, causes incorrect paths when $ARGV[0] is defined
+        wanted => \&find_precompiled
     },
     (defined $ARGV[0]) ? $ARGV[0] : PATH_PRECOMPILED()  # accept optional command-line argument
 );
+
+# locate MyClass.pm & associated pre-compiled files w/out unnecessary additional searching
+find_precompiled(PATH_PRECOMPILED_MYCLASS1());
+find_precompiled(PATH_PRECOMPILED_MYCLASS2());
+find_precompiled(PATH_PRECOMPILED_MYCLASS3());
+find_precompiled(PATH_PRECOMPILED_MYCLASS4());
 
 # trim unnecessary (and possibly problematic) absolute paths from input file names
 # must be done outside find() to properly utilize getcwd()

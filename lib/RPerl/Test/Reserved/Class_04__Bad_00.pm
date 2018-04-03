@@ -1,8 +1,10 @@
-## no critic qw(ProtectPrivateSubs)  # SYSTEM SPECIAL x: TMP DEBUG
+# [[[ PREPROCESSOR ]]]
+# <<< GENERATE_ERROR: "P184c, CODE GENERATOR, ABSTRACT SYNTAX TO" >>>
+# <<< GENERATE_ERROR: "package or class name 'RPerl::Test::Reserved::Class_04__Bad_00()' must not include a double-underscore, forbidden by C++ specification as a reserved identifier" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Reserved::_Class_03_Bad_00;
+package RPerl::Test::Reserved::Class_04__Bad_00;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
@@ -28,11 +30,11 @@ sub _foo_subroutine {
     { my integer $RETURN_TYPE };
     ( my integer $foo_argument ) = @ARG;
 
-    print 'in RPerl::Test::Reserved::_Class_03_Bad_00::_foo_subroutine(), received $foo_argument = ', $foo_argument, "\n";
+    print 'in RPerl::Test::Reserved::Class_04__Bad_00::_foo_subroutine(), received $foo_argument = ', $foo_argument, "\n";
 
-    my string $_foo_variable = 'the prodigal son';
+    my string $foo__variable = 'the prodigal son';
 
-    print 'in RPerl::Test::Reserved::_Class_03_Bad_00::_foo_subroutine(), have $_foo_variable = ', $_foo_variable, "\n";
+    print 'in RPerl::Test::Reserved::Class_04__Bad_00::_foo_subroutine(), have $foo__variable = ', $foo__variable, "\n";
 
     return ($foo_argument * 2);
 }
@@ -40,10 +42,10 @@ sub _foo_subroutine {
 
 sub _foo_method {
     { my integer::method $RETURN_TYPE };
-    ( my RPerl::Test::Reserved::_Class_03_Bad_00 $self, my integer $foo_argument ) = @ARG;
+    ( my RPerl::Test::Reserved::Class_04__Bad_00 $self, my integer $foo_argument ) = @ARG;
 
-    print 'in RPerl::Test::Reserved::_Class_03_Bad_00::_foo_method(), received $foo_argument = ', $foo_argument, "\n";
-    print 'in RPerl::Test::Reserved::_Class_03_Bad_00::_foo_method(), have $self->{foo_property} = ', q{'}, $self->{foo_property}, q{'}, "\n";
+    print 'in RPerl::Test::Reserved::Class_04__Bad_00::_foo_method(), received $foo_argument = ', $foo_argument, "\n";
+    print 'in RPerl::Test::Reserved::Class_04__Bad_00::_foo_method(), have $self->{foo_property} = ', q{'}, $self->{foo_property}, q{'}, "\n";
 
     return ($foo_argument * -2);
 }

@@ -551,7 +551,7 @@ sub rperl_to_xsbinary__parse_generate_compile {
     ( my string $rperl_input_file_name, my string_hashref $cpp_output_file_name_group, my string_hashref $cpp_source_group, my string_hashref $modes ) = @ARG;
     my object $rperl_ast;
 
-    RPerl::diag( 'in Compiler->rperl_to_xsbinary__parse_generate_compile(), received $cpp_output_file_name_group = ' . "\n" . Dumper($cpp_output_file_name_group) . "\n" );
+#    RPerl::diag( 'in Compiler->rperl_to_xsbinary__parse_generate_compile(), received $cpp_output_file_name_group = ' . "\n" . Dumper($cpp_output_file_name_group) . "\n" );
 #    RPerl::diag( 'in Compiler->rperl_to_xsbinary__parse_generate_compile(), received $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
 
     # [[[ PARSE RPERL TO AST ]]]
