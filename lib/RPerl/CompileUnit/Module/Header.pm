@@ -55,11 +55,11 @@ sub ast_to_rperl__generate {
             ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 #    elsif ($package_name =~ m/^_[A-Z]/gxms) {
-#        die 'ERROR ECOGEASRP184b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'package or class name ' . q{'} . $package_name . q{()'} .
+#        die 'ERROR ECOGEASRP184b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'package or class name ' . q{'} . $package_name . q{'} .
 #            ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
 #    }
     elsif ($package_name =~ m/__/gxms) {
-        die 'ERROR ECOGEASRP184c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'package or class name ' . q{'} . $package_name . q{()'} .
+        die 'ERROR ECOGEASRP184c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'package or class name ' . q{'} . $package_name . q{'} .
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 
@@ -135,11 +135,11 @@ sub ast_to_cpp__generate_begin__CPPOPS_CPPTYPES {
             ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 #    elsif ($package_name =~ m/^_[A-Z]/gxms) {
-#        die 'ERROR ECOGEASCP184b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'package or class name ' . q{'} . $package_name . q{()'} .
+#        die 'ERROR ECOGEASCP184b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'package or class name ' . q{'} . $package_name . q{'} .
 #            ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
 #    }
     elsif ($package_name =~ m/__/gxms) {
-        die 'ERROR ECOGEASCP184c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'package or class name ' . q{'} . $package_name . q{()'} .
+        die 'ERROR ECOGEASCP184c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'package or class name ' . q{'} . $package_name . q{'} .
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 
