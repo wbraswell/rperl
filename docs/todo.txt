@@ -421,6 +421,7 @@ PERL::CRITIC BUGS
     ControlStructures::ProhibitPostfixControls False Positives on Typed Loop Iterator    https://github.com/Perl-Critic/Perl-Critic/issues/639
     Argument "-" isn't numeric in exponentiation (**) at .../PPI/Token/Number/Exp.pm line 55    https://github.com/Perl-Critic/Perl-Critic/issues/665
     InputOutput::RequireCheckedSyscalls False Positive On Typed Loop Iterator Without Final Newline    https://github.com/Perl-Critic/Perl-Critic/issues/671
+    Perl::Critic::Policy::Subroutines::ProtectPrivateSubs, false trigger on 'my Foo::Bar::_MyClass $foo;', presumably thinks _MyClass is a private sub
 
 INLINE::CPP BUGS
     remove all usage of double-underscore in identifiers, including auto-generated class names where '::' is replaced by '__'

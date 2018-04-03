@@ -1,5 +1,9 @@
 #!/usr/bin/perl
 
+# [[[ PREPROCESSOR ]]]
+# <<< PARSE_ERROR: 'ERROR ECOPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::Subroutines::ProtectPrivateSubs' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -21,4 +25,4 @@ sub foo_subroutine_in_main {
 print 'Hello, World!', "\n";
 foo_subroutine_in_main();
 
-RPerl::Test::Reserved::Class_01_Good::bar_subroutine(23);
+RPerl::Test::Reserved::Class_01_Good::_foo_subroutine(23);

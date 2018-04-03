@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubroutineCall;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression);
@@ -39,8 +39,22 @@ sub ast_to_rperl__generate {
     my string $left_paren         = $self->{children}->[1];
     my object $arguments_optional = $self->{children}->[2];
     my string $right_paren        = $self->{children}->[3];
-    $rperl_source_group->{PMC}
-        .= $name->{children}->[0] . $left_paren;
+    $rperl_source_group->{PMC} .= $name->{children}->[0] . $left_paren;
+
+    # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+    # NEED ANSWER: how to trigger ECOGEASxP182x? we must first declare a subroutine which will trigger ECOGEASxP181x instead...
+    if (((substr $name, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+        die 'ERROR ECOGEASRP182a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'call to global subroutine name ' . q{'} . $name . q{()'} .
+            ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+    elsif ($name =~ m/^_[A-Z]/gxms) {
+        die 'ERROR ECOGEASRP182b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'call to subroutine name ' . q{'} . $name . q{()'} .
+            ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+    elsif ($name =~ m/__/gxms) {
+        die 'ERROR ECOGEASRP182c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'call to subroutine name ' . q{'} . $name . q{()'} .
+            ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
 
     if ( exists $arguments_optional->{children}->[0] ) {
         $rperl_source_subgroup = $arguments_optional->{children}->[0]
@@ -87,6 +101,21 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my string $left_paren         = $self->{children}->[1];
     my object $arguments_optional = $self->{children}->[2];
     my string $right_paren        = $self->{children}->[3];
+
+    # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+    # NEED ANSWER: how to trigger ECOGEASxP182x? we must first declare a subroutine which will trigger ECOGEASxP181x instead...
+    if (((substr $name, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+        die 'ERROR ECOGEASCP182a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'call to global subroutine name ' . q{'} . $name . q{()'} .
+            ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+    elsif ($name =~ m/^_[A-Z]/gxms) {
+        die 'ERROR ECOGEASCP182b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'call to subroutine name ' . q{'} . $name . q{()'} .
+            ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+    elsif ($name =~ m/__/gxms) {
+        die 'ERROR ECOGEASCP182c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'call to subroutine name ' . q{'} . $name . q{()'} .
+            ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
 
     # remove leading double-colon scope operator '::'
     my string $name_string = $name->{children}->[0];

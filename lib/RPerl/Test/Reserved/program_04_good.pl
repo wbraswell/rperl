@@ -1,9 +1,5 @@
 #!/usr/bin/perl
 
-# [[[ PREPROCESSOR ]]]
-# <<< GENERATE_ERROR: "P184c, CODE GENERATOR, ABSTRACT SYNTAX TO" >>>
-# <<< GENERATE_ERROR: "package or class name 'RPerl::Test::Reserved::Class_04__Bad_00()' must not include a double-underscore, forbidden by C++ specification as a reserved identifier" >>>
-
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -13,11 +9,15 @@ our $VERSION = 0.001_000;
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 
-use RPerl::Test::Reserved::Class_04__Bad_00;
+use RPerl::Test::Reserved::_Class_04_Good;
 
 sub foo_subroutine_in_main {
     { my void $RETURN_TYPE };
     print 'Howdy from foo_subroutine_in_main()...', "\n";
+
+    my string $_foo_variable = 'if only you could see';
+    print $_foo_variable, "\n";
+
     return;
 }
 
