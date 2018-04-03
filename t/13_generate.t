@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.050_000;
+our $VERSION = 0.051_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -151,8 +151,10 @@ find(
     (defined $ARGV[0]) ? $ARGV[0] : PATH_TESTS()  # accept optional command-line argument
 );
 
-# locate _MyClass.pm w/out unnecessary additional searching
-find_tests(PATH_TESTS_MYCLASS());
+if (not defined $ARGV[0]) {
+    # locate _MyClass.pm w/out unnecessary additional searching
+    find_tests(PATH_TESTS_MYCLASS());
+}
 
 sub find_precompiled {
     ( my string $file_full_path_arg ) = @ARG;
@@ -249,11 +251,13 @@ find(
     (defined $ARGV[0]) ? $ARGV[0] : PATH_PRECOMPILED()  # accept optional command-line argument
 );
 
-# locate MyClass.pm & associated pre-compiled files w/out unnecessary additional searching
-find_precompiled(PATH_PRECOMPILED_MYCLASS1());
-find_precompiled(PATH_PRECOMPILED_MYCLASS2());
-find_precompiled(PATH_PRECOMPILED_MYCLASS3());
-find_precompiled(PATH_PRECOMPILED_MYCLASS4());
+if (not defined $ARGV[0]) {
+    # locate MyClass.pm & associated pre-compiled files w/out unnecessary additional searching
+    find_precompiled(PATH_PRECOMPILED_MYCLASS1());
+    find_precompiled(PATH_PRECOMPILED_MYCLASS2());
+    find_precompiled(PATH_PRECOMPILED_MYCLASS3());
+    find_precompiled(PATH_PRECOMPILED_MYCLASS4());
+}
 
 # trim unnecessary (and possibly problematic) absolute paths from input file names
 # must be done outside find() to properly utilize getcwd()

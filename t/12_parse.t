@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.020_000;
+our $VERSION = 0.021_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -76,7 +76,7 @@ sub find_tests {
         $file_full_path = $File::Find::name;
     }
 
-    RPerl::diag('in 12_parse.t, have $file_full_path = ' . $file_full_path . "\n");
+#    RPerl::diag('in 12_parse.t, have $file_full_path = ' . $file_full_path . "\n");
 
 =DISABLE_REPLACED_BY_nochdir
     if (defined $ARGV[0]) {
@@ -139,7 +139,6 @@ sub find_tests {
     }
 }
 
-=DISABLE_TMP_DEBUG
 find(
     {
         no_chdir => 1,  # if not set, causes incorrect paths when $ARGV[0] is defined
@@ -147,10 +146,11 @@ find(
     },
     (defined $ARGV[0]) ? $ARGV[0] : PATH_TESTS()  # accept optional command-line argument
 );
-=cut
 
-# locate _MyClass.pm w/out unnecessary additional searching
-find_tests(PATH_TESTS_MYCLASS());
+if (not defined $ARGV[0]) {
+    # locate _MyClass.pm w/out unnecessary additional searching
+    find_tests(PATH_TESTS_MYCLASS());
+}
 
 # trim unnecessary (and possibly problematic) absolute paths from input file names
 # must be done outside find() to properly utilize getcwd()
