@@ -37,6 +37,29 @@ sub ast_to_rperl__generate {
     my string $equal                   = $self->{children}->[5];
     my string $at_underscore_semicolon = $self->{children}->[6];
 
+
+
+
+
+
+    # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+    # DEV NOTE: all subroutine arguments are naturally local in scope, thus there is no way to trigger ECOGEASRP183a, it is disabled & unused below
+    my string $name0_nosigil = substr $name0, 1;
+#    if (((substr $name0_nosigil, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{}) and ($modes->{_symbol_table}->{_subroutine} eq q{})) {
+#        die 'ERROR ECOGEASRP183a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'subroutine argument name ' . q{'} . $name0_nosigil . q{'} .
+#            ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+#    }
+    if ($name0_nosigil =~ m/^_[A-Z]/gxms) {
+        die 'ERROR ECOGEASRP183b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'subroutine argument name ' . q{'} . $name0_nosigil . q{'} .
+            ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+    elsif ($name0_nosigil =~ m/__/gxms) {
+        die 'ERROR ECOGEASRP183c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'subroutine argument name ' . q{'} . $name0_nosigil . q{'} .
+            ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+
+
+
     # CREATE SYMBOL TABLE ENTRY
     $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{$modes->{_symbol_table}->{_subroutine}}->{$name0} = {isa => 'RPerl::CodeBlock::Subroutine::Arguments', type => $type0->{children}->[0]};
 
@@ -50,12 +73,33 @@ sub ast_to_rperl__generate {
         my object $my    = shift @{ $arguments_star->{children} };
         my object $type  = shift @{ $arguments_star->{children} };
         my object $name  = shift @{ $arguments_star->{children} };
-        # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
+        $name = $name->{attr};  # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
+
+
+
+        # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+        # DEV NOTE: all subroutine arguments are naturally local in scope, thus there is no way to trigger ECOGEASRP183a, it is disabled & unused below
+        my string $name_nosigil = substr $name, 1;
+#        if (((substr $name_nosigil, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{}) and ($modes->{_symbol_table}->{_subroutine} eq q{})) {
+#            die 'ERROR ECOGEASRP183a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'subroutine argument name ' . q{'} . $name_nosigil . q{'} .
+#                ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+#        }
+        if ($name_nosigil =~ m/^_[A-Z]/gxms) {
+            die 'ERROR ECOGEASRP183b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'subroutine argument name ' . q{'} . $name_nosigil . q{'} .
+                ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+        }
+        elsif ($name_nosigil =~ m/__/gxms) {
+            die 'ERROR ECOGEASRP183c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'subroutine argument name ' . q{'} . $name_nosigil . q{'} .
+                ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+        }
+
+
+
 
         # CREATE SYMBOL TABLE ENTRY
         $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{$modes->{_symbol_table}->{_subroutine}}->{$name} = {isa => 'RPerl::CodeBlock::Subroutine::Arguments', type => $type->{children}->[0]};
 
-        $rperl_source_group->{PMC} .= $comma->{attr} . q{ } . $my->{attr} . q{ } . $type->{children}->[0] . q{ } . $name->{attr};
+        $rperl_source_group->{PMC} .= $comma->{attr} . q{ } . $my->{attr} . q{ } . $type->{children}->[0] . q{ } . $name;
     }
 
     $rperl_source_group->{PMC} .= q{ } . $rparen . q{ } . $equal . q{ } . $at_underscore_semicolon . "\n";
@@ -83,6 +127,29 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my string $name0 = $self->{children}->[2];
     my object $arguments_star = $self->{children}->[3];
 
+
+
+
+
+    # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+    # DEV NOTE: all subroutine arguments are naturally local in scope, thus there is no way to trigger ECOGEASRP183a, it is disabled & unused below
+    my string $name0_nosigil = substr $name0, 1;
+#    if (((substr $name0_nosigil, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{}) and ($modes->{_symbol_table}->{_subroutine} eq q{})) {
+#        die 'ERROR ECOGEASCP183a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine argument name ' . q{'} . $name0_nosigil . q{'} .
+#            ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+#    }
+    if ($name0_nosigil =~ m/^_[A-Z]/gxms) {
+        die 'ERROR ECOGEASCP183b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine argument name ' . q{'} . $name0_nosigil . q{'} .
+            ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+    elsif ($name0_nosigil =~ m/__/gxms) {
+        die 'ERROR ECOGEASCP183c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine argument name ' . q{'} . $name0_nosigil . q{'} .
+            ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+    }
+
+
+
+
     substr $name0, 0, 1, q{};            # remove leading $ sigil
 
 #    RPerl::diag( 'in Subroutine::Arguments->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $type0 = ' . "\n" . RPerl::Parser::rperl_ast__dump($type0) . "\n" );
@@ -106,6 +173,28 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         $type = $type->{children}->[0];  # unwrap $type to allow type_convert_perl_to_cpp()
         my object $name = shift @{ $arguments_star_dclone->{children} };
         $name = $name->{attr};  # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
+
+
+
+        # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+        # DEV NOTE: all subroutine arguments are naturally local in scope, thus there is no way to trigger ECOGEASRP183a, it is disabled & unused below
+        my string $name_nosigil = substr $name, 1;
+#        if (((substr $name_nosigil, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{}) and ($modes->{_symbol_table}->{_subroutine} eq q{})) {
+#            die 'ERROR ECOGEASCP183a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine argument name ' . q{'} . $name_nosigil . q{'} .
+#                ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+#        }
+        if ($name_nosigil =~ m/^_[A-Z]/gxms) {
+            die 'ERROR ECOGEASCP183b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine argument name ' . q{'} . $name_nosigil . q{'} .
+                ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+        }
+        elsif ($name_nosigil =~ m/__/gxms) {
+            die 'ERROR ECOGEASCP183c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine argument name ' . q{'} . $name_nosigil . q{'} .
+                ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+        }
+
+
+
+
         substr $name, 0, 1, q{};            # remove leading $ sigil
 #        RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $name = ' . "\n" . RPerl::Parser::rperl_ast__dump($name) . "\n" );
 

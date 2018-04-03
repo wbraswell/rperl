@@ -44,8 +44,6 @@ sub ast_to_rperl__generate {
     my string $our_keyword              = $self->{children}->[5]->{children}->[3];    # PERLOPS only
     my string $version_number           = $self->{children}->[5]->{children}->[4];
 
-    # CREATE SYMBOL TABLE ENTRY
-
     # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
     # DEV NOTE: all fully-scoped package & class names are naturally global in scope, 
     # so we do not check the symbol table for any namespace or subroutine in the first conditional block below (ECOGEASCP184a), 
@@ -63,6 +61,7 @@ sub ast_to_rperl__generate {
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 
+    # CREATE SYMBOL TABLE ENTRY
     $modes->{_symbol_table}->{_namespace} = $package_name . '::';  # set current namespace
     
 #    RPerl::diag( 'in Header->ast_to_cpp__generate_begin__PERLOPS_PERLTYPES(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );
@@ -124,8 +123,6 @@ sub ast_to_cpp__generate_begin__CPPOPS_CPPTYPES {
     my object $package_name   = $self->{children}->[3]->{children}->[0];
     my string $version_number = $self->{children}->[5]->{children}->[4];
 
-    # CREATE SYMBOL TABLE ENTRY
-
     # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
     # DEV NOTE: all fully-scoped package & class names are naturally global in scope, 
     # so we do not check the symbol table for any namespace or subroutine in the first conditional block below (ECOGEASCP184a), 
@@ -143,6 +140,7 @@ sub ast_to_cpp__generate_begin__CPPOPS_CPPTYPES {
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 
+    # CREATE SYMBOL TABLE ENTRY
     $modes->{_symbol_table}->{_namespace} = $package_name . '::';  # set current namespace
  
 #    RPerl::diag( 'in Header->ast_to_cpp__generate_begin__CPPOPS_CPPTYPES(), have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n" );

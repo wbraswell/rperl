@@ -1,10 +1,10 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'NEED ERRORS' >>>
-# <<< PARSE_ERROR: 'NEED ERRORS' >>>
+# <<< GENERATE_ERROR: 'P183c, CODE GENERATOR, ABSTRACT SYNTAX' >>>
+# <<< GENERATE_ERROR: "subroutine argument name 'foo__argument' must not include a double-underscore, forbidden by C++ specification as a reserved identifier" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Reserved::Class_00_Bad_00;
+package RPerl::Test::Reserved::Class_03_Bad_02;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
@@ -28,22 +28,22 @@ our hashref $properties = {
 
 sub _foo_subroutine {
     { my integer $RETURN_TYPE };
-    ( my integer $_foo_argument ) = @ARG;
+    ( my integer $foo__argument ) = @ARG;
 
-    print 'in RPerl::Test::Reserved::Class_00_Bad_00::_foo_subroutine(), received $_foo_argument = ', $_foo_argument, "\n";
+    print 'in RPerl::Test::Reserved::Class_03_Bad_02::_foo_subroutine(), received $foo__argument = ', $foo__argument, "\n";
 
-    return ($_foo_argument * 2);
+    return ($foo__argument * 2);
 }
 
 
 sub _foo_method {
     { my integer::method $RETURN_TYPE };
-    ( my RPerl::Test::Reserved::Class_00_Bad_00 $self, my integer $_foo_argument ) = @ARG;
+    ( my RPerl::Test::Reserved::Class_03_Bad_02 $self, my integer $foo__argument ) = @ARG;
 
-    print 'in RPerl::Test::Reserved::Class_00_Bad_00::_foo_method(), received $_foo_argument = ', $_foo_argument, "\n";
-    print 'in RPerl::Test::Reserved::Class_00_Bad_00::_foo_method(), have $self->{foo_property} = ', q{'}, $self->{foo_property}, q{'}, "\n";
+    print 'in RPerl::Test::Reserved::Class_03_Bad_02::_foo_method(), received $foo__argument = ', $foo__argument, "\n";
+    print 'in RPerl::Test::Reserved::Class_03_Bad_02::_foo_method(), have $self->{foo_property} = ', q{'}, $self->{foo_property}, q{'}, "\n";
 
-    return ($_foo_argument * -2);
+    return ($foo__argument * -2);
 }
 
 1;    # end of class
