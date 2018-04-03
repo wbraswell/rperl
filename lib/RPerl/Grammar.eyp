@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.017_000;
+    our $VERSION = 0.017_100;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -59,17 +59,7 @@
 %token TYPE_FHREF            = /(filehandleref\s+)/                      # 'filehandleref' followed by whitespace
 %token TYPE_METHOD           = /((?:[a-zA-Z]\w*)+(?:::[a-zA-Z]\w*)*::method)/  # optionally-scoped word, followed by '::method'; ex. 'string_arrayref::method' or 'Foo::Bar::method'
 %token CONSTANT_CALL_SCOPED  = /((?:[a-zA-Z]\w*)(?:::[a-zA-Z]\w*)*(?:::[A-Z0-9_]*)\(\))/  # scoped constant call; ex. 'Foo::MY_CONST()' or 'Foo::Bar::BAZ_CONST()'
-
-
-
-# START HERE: add WORD_SCOPED tests for package names & class names & subroutine calls & method calls
-# START HERE: add WORD_SCOPED tests for package names & class names & subroutine calls & method calls
-# START HERE: add WORD_SCOPED tests for package names & class names & subroutine calls & method calls
-
 %token WORD_SCOPED           = /((?:[a-zA-Z_]\w*)?(?:::[a-zA-Z_]\w*)+)/    # scoped word; ex. 'Foo::Bar' or 'Foo::Bar::baz_word' or 'Foo::Bar::_baz_word'  # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++; package names & class names & subroutine calls & method calls use WORD_SCOPED identifiers, allow to begin w/ underscore & check for violations during generate phase
-
-
-
 %token STDOUT_STDERR         = /(\{\*STDOUT\}|\{\*STDERR\})/             # '{*STDOUT}' or '{*STDERR}'
 %token STDIN                 = /(<STDIN>)/                               # '<STDIN>'
 %token ARGV                  = /(\@ARGV)/                                # '@ARGV'
@@ -192,7 +182,7 @@
 %token LBRACE               = /(\{)/                          # '{'
 
 # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
-# subroutine & method & property & hash key definitions use WORD identifiers, allow to begin w/ underscore & check for violations during generate phase
+# subroutine & method & property & hash key definitions use WORD identifiers, allow to begin w/ underscore & check for violations during generate phase, except not for hash keys because those do not become C++ identifiers
 %token WORD                 = /([a-z_]\w*|[A-Z]\w*[a-z]\w*)/   # lowercase letter or underscore followed by optional word characters; or uppercase letter followed by at least one lowercase letter and optional word characters; ex. 'foo' or 'foo23' or 'Foo_23'
 # only constant and loop labels use WORD_UPPERCASE identifiers, in theory Class-scoped constants and any loop labels could begin w/ underscore w/out violating C++ reserved identifier rules
 %token WORD_UPPERCASE       = /([A-Z][A-Z0-9_]*|[A-Z])/       # single uppercase letter, or uppercase letter followed by uppercase letters, numbers, and underscores; ex. 'FOO' or 'FOOBAR_42_HOWDY'

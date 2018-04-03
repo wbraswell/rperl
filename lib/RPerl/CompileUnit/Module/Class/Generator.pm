@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.017_000;
+our $VERSION = 0.018_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -190,22 +190,20 @@ sub ast_to_rperl__generate {
         $property_key = $property_0->{children}->[0]->{children}->[0];
         $property_key =~ s/^(\w+)\s*$/$1/gxms;    # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
 
-
-
-
-
-# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
-=DISABLE_NEED_FIX
-        if ( $property_key !~ /^[a-z]/ ) {
-            die 'ERROR ECOGEASRP024, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
-                . $property_key . q{'}
-                . ' does not start with a lowercase letter a-z, dying' . "\n";
+        # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+        # all properties are naturally scoped to their respective class, there ECOGEASRP189a is disabled & unused below
+#        if (((substr $property_key, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+#            die 'ERROR ECOGEASRP189a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'global class property name ' . q{'} . $property_key . q{()'} .
+#                ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+#        }
+        if ($property_key =~ m/^_[A-Z]/gxms) {
+            die 'ERROR ECOGEASRP189b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'class property name ' . q{'} . $property_key . q{()'} .
+                ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
         }
-=cut
-
-
-
-
+        elsif ($property_key =~ m/__/gxms) {
+            die 'ERROR ECOGEASRP189c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'class property name ' . q{'} . $property_key . q{()'} .
+                ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+        }
 
         $property_fat_arrow  = $property_0->{children}->[1];
         $property_type_inner = $property_0->{children}->[2];
@@ -322,19 +320,20 @@ sub ast_to_rperl__generate {
                 $property_key = $property->{children}->[0]->{children}->[0];
                 $property_key =~ s/^(\w+)\s*$/$1/gxms;              # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
 
-
-
-
-# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
-=DISABLE_NEED_FIX
-                if ( $property_key !~ /^[a-z]/ ) {
-                    die 'ERROR ECOGEASRP024, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: invalid OO properties name (hash key) ' . q{'}
-                        . $property_key . q{'}
-                        . ' does not start with a lowercase letter a-z, dying' . "\n";
+                # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+                # all properties are naturally scoped to their respective class, there ECOGEASRP189a is disabled & unused below
+#                if (((substr $property_key, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+#                    die 'ERROR ECOGEASRP189a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'global class property name ' . q{'} . $property_key . q{()'} .
+#                        ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+#                }
+                if ($property_key =~ m/^_[A-Z]/gxms) {
+                    die 'ERROR ECOGEASRP189b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'class property name ' . q{'} . $property_key . q{()'} .
+                        ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
                 }
-=cut
-
-
+                elsif ($property_key =~ m/__/gxms) {
+                    die 'ERROR ECOGEASRP189c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'class property name ' . q{'} . $property_key . q{()'} .
+                        ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+                }
 
                 $property_fat_arrow  = $property->{children}->[1];
                 $property_type_inner = $property->{children}->[2];
@@ -785,21 +784,20 @@ EOL
         my string $property_key = $property_0->{children}->[0]->{children}->[0];
         $property_key =~ s/^(\w+)\s*$/$1/gxms;    # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
 
-
-
-
-
-# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
-=DISABLE_NEED_ANSWER
-        if ( $property_key !~ /^[a-z]/ ) {
-            die 'ERROR ECOGEASCP024, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
-                . $property_key . q{'}
-                . ' does not start with a lowercase letter a-z, dying' . "\n";
+        # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+        # all properties are naturally scoped to their respective class, there ECOGEASCP189a is disabled & unused below
+#        if (((substr $property_key, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+#            die 'ERROR ECOGEASCP189a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'global class property name ' . q{'} . $property_key . q{()'} .
+#                ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+#        }
+        if ($property_key =~ m/^_[A-Z]/gxms) {
+            die 'ERROR ECOGEASCP189b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'class property name ' . q{'} . $property_key . q{()'} .
+                ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
         }
-=cut
-
-
-
+        elsif ($property_key =~ m/__/gxms) {
+            die 'ERROR ECOGEASCP189c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'class property name ' . q{'} . $property_key . q{()'} .
+                ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+        }
 
         my object $property_type_inner         = $property_0->{children}->[2];
         my string $property_type               = undef;
@@ -924,28 +922,20 @@ EOL
             $property_key = $property->{children}->[0]->{children}->[0];
             $property_key =~ s/^(\w+)\s*$/$1/gxms;      # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
 
-
-
-
-
-
-
-
-
-# DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
-=DISABLE_NEED_ANSWER
-            if ( $property_key !~ /^[a-z]/ ) {
-                die 'ERROR ECOGEASCP024, CODE GENERATOR, ABSTRACT SYNTAX TO C++: invalid OO properties name (hash key) ' . q{'}
-                    . $property_key . q{'}
-                    . ' does not start with a lowercase letter a-z, dying' . "\n";
+            # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+            # all properties are naturally scoped to their respective class, there ECOGEASCP189a is disabled & unused below
+#            if (((substr $property_key, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{})) {
+#                die 'ERROR ECOGEASCP189a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'global class property name ' . q{'} . $property_key . q{()'} .
+#                    ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+#            }
+            if ($property_key =~ m/^_[A-Z]/gxms) {
+                die 'ERROR ECOGEASCP189b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'class property name ' . q{'} . $property_key . q{()'} .
+                    ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
             }
-=cut
-
-
-
-
-
-
+            elsif ($property_key =~ m/__/gxms) {
+                die 'ERROR ECOGEASCP189c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'class property name ' . q{'} . $property_key . q{()'} .
+                    ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+            }
 
             $property_type_inner = $property->{children}->[2];
             $property_name       = $property_type_inner->{children}->[3]->{children}->[0];

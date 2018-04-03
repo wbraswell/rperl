@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method::Arguments;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine::Arguments);
@@ -54,13 +54,30 @@ sub ast_to_rperl__generate {
         my object $my    = shift @{ $arguments_star_dclone->{children} };
         my object $type  = shift @{ $arguments_star_dclone->{children} };
         my object $name  = shift @{ $arguments_star_dclone->{children} };
+        $name = $name->{attr};  # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
+
+        # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+        # DEV NOTE: all method arguments are naturally local in scope, thus there is no way to trigger ECOGEASRP188a, it is disabled & unused below
+        my string $name_nosigil = substr $name, 1;
+#        if (((substr $name_nosigil, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{}) and ($modes->{_symbol_table}->{_subroutine} eq q{})) {
+#            die 'ERROR ECOGEASRP188a, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'method argument name ' . q{'} . $name_nosigil . q{'} .
+#                ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+#        }
+        if ($name_nosigil =~ m/^_[A-Z]/gxms) {
+            die 'ERROR ECOGEASRP188b, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'method argument name ' . q{'} . $name_nosigil . q{'} .
+                ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+        }
+        elsif ($name_nosigil =~ m/__/gxms) {
+            die 'ERROR ECOGEASRP188c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'method argument name ' . q{'} . $name_nosigil . q{'} .
+                ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+        }
 
         # CREATE SYMBOL TABLE ENTRY
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{ $name }
             = { isa => 'RPerl::CodeBlock::Subroutine::Method::Arguments', type => $type->{children}->[0] };
 
         # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
-        $rperl_source_group->{PMC} .= $comma->{attr} . q{ } . $my->{attr} . q{ } . $type->{children}->[0] . q{ } . $name->{attr};
+        $rperl_source_group->{PMC} .= $comma->{attr} . q{ } . $my->{attr} . q{ } . $type->{children}->[0] . q{ } . $name;
     }
 
     $rperl_source_group->{PMC} .= q{ } . $rparen . q{ } . $equal . q{ } . $at_underscore_semicolon . "\n";
@@ -106,6 +123,23 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         $type = $type->{children}->[0];  # unwrap $type to allow type_convert_perl_to_cpp()
         my string $name = shift @{ $arguments_star_dclone->{children} };
         $name = $name->{attr};  # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
+
+        # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+        # DEV NOTE: all method arguments are naturally local in scope, thus there is no way to trigger ECOGEASCP188a, it is disabled & unused below
+        my string $name_nosigil = substr $name, 1;
+#        if (((substr $name_nosigil, 0, 1) eq '_') and ($modes->{_symbol_table}->{_namespace} eq q{}) and ($modes->{_symbol_table}->{_subroutine} eq q{})) {
+#            die 'ERROR ECOGEASCP188a, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'method argument name ' . q{'} . $name_nosigil . q{'} .
+#                ' must not start with an underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+#        }
+        if ($name_nosigil =~ m/^_[A-Z]/gxms) {
+            die 'ERROR ECOGEASCP188b, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'method argument name ' . q{'} . $name_nosigil . q{'} .
+                ' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+        }
+        elsif ($name_nosigil =~ m/__/gxms) {
+            die 'ERROR ECOGEASCP188c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'method argument name ' . q{'} . $name_nosigil . q{'} .
+                ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
+        }
+
         substr $name, 0, 1, q{};        # remove leading $ sigil
 
         # CREATE SYMBOL TABLE ENTRY

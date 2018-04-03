@@ -224,9 +224,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
 
 
-# START HERE: copy checks into list below;  finish Reserved tests
-# START HERE: copy checks into list below;  finish Reserved tests
-# START HERE: copy checks into list below;  finish Reserved tests
+# START HERE: Travis tests pass; move list below to dev_notes.txt
+# START HERE: Travis tests pass; move list below to dev_notes.txt
+# START HERE: Travis tests pass; move list below to dev_notes.txt
 
 =LIST_OF_UNDERSCORE_CHECKS
 ECOGEASxP 180x: variable          DONE
@@ -237,8 +237,8 @@ ECOGEASxP 184x: package or class  DONE
 ECOGEASxP 185x: include           DONE
 ECOGEASxP 186x: method def        DONE
 ECOGEASxP 187x: method call       DONE
-ECOGEASxP 188x: method arg
-ECOGEASxP 189x: property
+ECOGEASxP 188x: method arg        DONE
+ECOGEASxP 189x: property          DONE
 =cut
 
 # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++

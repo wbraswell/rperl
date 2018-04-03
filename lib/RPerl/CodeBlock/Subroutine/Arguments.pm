@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Arguments;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.006_000;
+our $VERSION = 0.007_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -37,11 +37,6 @@ sub ast_to_rperl__generate {
     my string $equal                   = $self->{children}->[5];
     my string $at_underscore_semicolon = $self->{children}->[6];
 
-
-
-
-
-
     # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
     # DEV NOTE: all subroutine arguments are naturally local in scope, thus there is no way to trigger ECOGEASRP183a, it is disabled & unused below
     my string $name0_nosigil = substr $name0, 1;
@@ -58,8 +53,6 @@ sub ast_to_rperl__generate {
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 
-
-
     # CREATE SYMBOL TABLE ENTRY
     $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{$modes->{_symbol_table}->{_subroutine}}->{$name0} = {isa => 'RPerl::CodeBlock::Subroutine::Arguments', type => $type0->{children}->[0]};
 
@@ -74,8 +67,6 @@ sub ast_to_rperl__generate {
         my object $type  = shift @{ $arguments_star->{children} };
         my object $name  = shift @{ $arguments_star->{children} };
         $name = $name->{attr};  # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
-
-
 
         # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
         # DEV NOTE: all subroutine arguments are naturally local in scope, thus there is no way to trigger ECOGEASRP183a, it is disabled & unused below
@@ -92,9 +83,6 @@ sub ast_to_rperl__generate {
             die 'ERROR ECOGEASRP183c, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL:' . "\n" . 'subroutine argument name ' . q{'} . $name_nosigil . q{'} .
                 ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
         }
-
-
-
 
         # CREATE SYMBOL TABLE ENTRY
         $modes->{_symbol_table}->{$modes->{_symbol_table}->{_namespace}}->{$modes->{_symbol_table}->{_subroutine}}->{$name} = {isa => 'RPerl::CodeBlock::Subroutine::Arguments', type => $type->{children}->[0]};
@@ -127,10 +115,6 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my string $name0 = $self->{children}->[2];
     my object $arguments_star = $self->{children}->[3];
 
-
-
-
-
     # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
     # DEV NOTE: all subroutine arguments are naturally local in scope, thus there is no way to trigger ECOGEASRP183a, it is disabled & unused below
     my string $name0_nosigil = substr $name0, 1;
@@ -146,9 +130,6 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         die 'ERROR ECOGEASCP183c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine argument name ' . q{'} . $name0_nosigil . q{'} .
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
-
-
-
 
     substr $name0, 0, 1, q{};            # remove leading $ sigil
 
@@ -174,8 +155,6 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         my object $name = shift @{ $arguments_star_dclone->{children} };
         $name = $name->{attr};  # strings inside of STAR grammar production becomes TERMINAL object, must retrieve data from attr property
 
-
-
         # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
         # DEV NOTE: all subroutine arguments are naturally local in scope, thus there is no way to trigger ECOGEASRP183a, it is disabled & unused below
         my string $name_nosigil = substr $name, 1;
@@ -191,9 +170,6 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             die 'ERROR ECOGEASCP183c, CODE GENERATOR, ABSTRACT SYNTAX TO C++:' . "\n" . 'subroutine argument name ' . q{'} . $name_nosigil . q{'} .
                 ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
         }
-
-
-
 
         substr $name, 0, 1, q{};            # remove leading $ sigil
 #        RPerl::diag( 'in Subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $name = ' . "\n" . RPerl::Parser::rperl_ast__dump($name) . "\n" );

@@ -1,10 +1,10 @@
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'NEED ERRORS' >>>
-# <<< PARSE_ERROR: 'NEED ERRORS' >>>
+# <<< GENERATE_ERROR: 'P188b, CODE GENERATOR, ABSTRACT SYNTAX' >>>
+# <<< GENERATE_ERROR: "method argument name '_Foo_argument' must not start with an underscore followed by an uppercase letter, forbidden by C++ specification as a reserved identifier" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
-package RPerl::Test::Reserved::Class_00_Bad_00;
+package RPerl::Test::Reserved::Class_08_Bad_00;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
@@ -20,7 +20,7 @@ use RPerl::CompileUnit::Module::Class;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {
-    _foo_property => my string $TYPED__foo_property = 'quite a prize'
+    foo_property => my string $TYPED_foo_property = 'quite a prize'
 };
 
 
@@ -30,7 +30,7 @@ sub _foo_subroutine {
     { my integer $RETURN_TYPE };
     ( my integer $_foo_argument ) = @ARG;
 
-    print 'in RPerl::Test::Reserved::Class_00_Bad_00::_foo_subroutine(), received $_foo_argument = ', $_foo_argument, "\n";
+    print 'in RPerl::Test::Reserved::Class_08_Bad_00::_foo_subroutine(), received $_foo_argument = ', $_foo_argument, "\n";
 
     return ($_foo_argument * 2);
 }
@@ -38,12 +38,12 @@ sub _foo_subroutine {
 
 sub _foo_method {
     { my integer::method $RETURN_TYPE };
-    ( my RPerl::Test::Reserved::Class_00_Bad_00 $self, my integer $_foo_argument ) = @ARG;
+    ( my RPerl::Test::Reserved::Class_08_Bad_00 $self, my integer $_Foo_argument ) = @ARG;
 
-    print 'in RPerl::Test::Reserved::Class_00_Bad_00::_foo_method(), received $_foo_argument = ', $_foo_argument, "\n";
-    print 'in RPerl::Test::Reserved::Class_00_Bad_00::_foo_method(), have $self->{_foo_property} = ', q{'}, $self->{_foo_property}, q{'}, "\n";
+    print 'in RPerl::Test::Reserved::Class_08_Bad_00::_foo_method(), received $_Foo_argument = ', $_Foo_argument, "\n";
+    print 'in RPerl::Test::Reserved::Class_08_Bad_00::_foo_method(), have $self->{foo_property} = ', q{'}, $self->{foo_property}, q{'}, "\n";
 
-    return ($_foo_argument * -2);
+    return ($_Foo_argument * -2);
 }
 
 1;    # end of class
