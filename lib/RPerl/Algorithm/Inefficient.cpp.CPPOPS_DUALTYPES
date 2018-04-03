@@ -17,27 +17,27 @@ using std::cout;  using std::cerr;  using std::endl;
 
 // NEED FIX, CORRELATION #rp090: most cout disabled in CPPOPS_PERLTYPES, 4096-character STDOUT buffer dump in middle of test output, causes "Parse errors: Tests out of sequence."
 
-void RPerl__Algorithm__Inefficient::inherited__Inefficient(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FLUFFY" << "\n";
+void RPerl__Algorithm__Inefficient::inherited_Inefficient(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Inefficient->inherited_Inefficient(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FLUFFY" << "\n";
 }
 
-SV* RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_get() {
-//    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient_bar_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FLUFFY" << "\n";
+SV* RPerl__Algorithm__Inefficient::inherited_Inefficient_bar_get() {
+//    cout << "in CPPOPS_PERLTYPES Inefficient->inherited_Inefficient_bar_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FLUFFY" << "\n";
     return SvREFCNT_inc(this->bar);
 }
 
-void RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_set(SV* bar_new) {
-//    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient_bar_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $bar_new = " << SvPV_nolen(bar_new) << ", FLUFFY" << "\n";
+void RPerl__Algorithm__Inefficient::inherited_Inefficient_bar_set(SV* bar_new) {
+//    cout << "in CPPOPS_PERLTYPES Inefficient->inherited_Inefficient_bar_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $bar_new = " << SvPV_nolen(bar_new) << ", FLUFFY" << "\n";
     this->bar = bar_new;
 }
 
-SV* RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_get() {
-//    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FLUFFY" << "\n";
+SV* RPerl__Algorithm__Inefficient::inherited_Inefficient_foo_get() {
+//    cout << "in CPPOPS_PERLTYPES Inefficient->inherited_Inefficient_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FLUFFY" << "\n";
     return SvREFCNT_inc(this->foo);
 }
 
-void RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_set(SV* foo_new) {
-//    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FLUFFY" << "\n";
+void RPerl__Algorithm__Inefficient::inherited_Inefficient_foo_set(SV* foo_new) {
+//    cout << "in CPPOPS_PERLTYPES Inefficient->inherited_Inefficient_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FLUFFY" << "\n";
     this->foo = foo_new;
 }
 
@@ -62,27 +62,27 @@ SV* RPerl__Algorithm__Inefficient__uninherited_Inefficient(SV* person) {
 
 // [[[ SUBROUTINES & OO METHODS ]]]
 
-void RPerl__Algorithm__Inefficient::inherited__Inefficient(string person) {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FLUFFY" + (const string) "\n");
+void RPerl__Algorithm__Inefficient::inherited_Inefficient(string person) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited_Inefficient(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FLUFFY" + (const string) "\n");
 }
 
-string RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_get() {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient_bar_get(), have ::class($self) = " + classname(this) + (const string) ", FLUFFY" + (const string) "\n");
+string RPerl__Algorithm__Inefficient::inherited_Inefficient_bar_get() {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited_Inefficient_bar_get(), have ::class($self) = " + classname(this) + (const string) ", FLUFFY" + (const string) "\n");
     return this->bar;
 }
 
-void RPerl__Algorithm__Inefficient::inherited__Inefficient_bar_set(string bar_new) {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient_bar_set(), have ::class($self) = " + classname(this) + (const string) " and $bar_new = " + bar_new + (const string) ", FLUFFY" + (const string) "\n");
+void RPerl__Algorithm__Inefficient::inherited_Inefficient_bar_set(string bar_new) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited_Inefficient_bar_set(), have ::class($self) = " + classname(this) + (const string) " and $bar_new = " + bar_new + (const string) ", FLUFFY" + (const string) "\n");
     this->bar = bar_new;
 }
 
-string RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_get() {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient_foo_get(), have ::class($self) = " + classname(this) + (const string) ", FLUFFY" + (const string) "\n");
+string RPerl__Algorithm__Inefficient::inherited_Inefficient_foo_get() {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited_Inefficient_foo_get(), have ::class($self) = " + classname(this) + (const string) ", FLUFFY" + (const string) "\n");
     return this->foo;
 }
 
-void RPerl__Algorithm__Inefficient::inherited__Inefficient_foo_set(string foo_new) {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient_foo_set(), have ::class($self) = " + classname(this) + (const string) " and $foo_new = " + foo_new + (const string) ", FLUFFY" + (const string) "\n");
+void RPerl__Algorithm__Inefficient::inherited_Inefficient_foo_set(string foo_new) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited_Inefficient_foo_set(), have ::class($self) = " + classname(this) + (const string) " and $foo_new = " + foo_new + (const string) ", FLUFFY" + (const string) "\n");
     this->foo = foo_new;
 }
 

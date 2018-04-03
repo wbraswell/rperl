@@ -35,9 +35,9 @@ public:
     virtual string myclassname() { return (const string) "RPerl::Algorithm::Sort"; }
 
     // <<< USER-DEFINED METHODS >>>
-    void inherited__Sort(string person);
-    string inherited__Sort_foo_get();
-    void inherited__Sort_foo_set(string foo_new);
+    void inherited_Sort(string person);
+    string inherited_Sort_foo_get();
+    void inherited_Sort_foo_set(string foo_new);
 };  // end of class
 
 // [[[ OO SUBCLASSES ]]]

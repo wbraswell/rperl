@@ -19,18 +19,18 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 
 // [[[ SUBROUTINES & OO METHODS ]]]
 
-void RPerl__Algorithm::inherited__Algorithm(string person) {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm->inherited__Algorithm(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FNORD" + (const string) "\n");
+void RPerl__Algorithm::inherited_Algorithm(string person) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm->inherited_Algorithm(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FNORD" + (const string) "\n");
     return;
 }
 
-string RPerl__Algorithm::inherited__Algorithm_foo_get() {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm->inherited__Algorithm_foo_get(), have ::class($self) = " + classname(this) + (const string) ", FNORD" + (const string) "\n");
+string RPerl__Algorithm::inherited_Algorithm_foo_get() {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm->inherited_Algorithm_foo_get(), have ::class($self) = " + classname(this) + (const string) ", FNORD" + (const string) "\n");
     return this->foo;
 }
 
-void RPerl__Algorithm::inherited__Algorithm_foo_set(string foo_new) {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm->inherited__Algorithm_foo_set(), have ::class($self) = " + classname(this) + (const string) " and $foo_new = " + foo_new + (const string) ", FNORD" + (const string) "\n");
+void RPerl__Algorithm::inherited_Algorithm_foo_set(string foo_new) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Algorithm->inherited_Algorithm_foo_set(), have ::class($self) = " + classname(this) + (const string) " and $foo_new = " + foo_new + (const string) ", FNORD" + (const string) "\n");
     this->foo = foo_new;
     return;
 }

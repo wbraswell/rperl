@@ -31,9 +31,9 @@ public:
     virtual SV* myclassname() { return newSVpv("RPerl::Algorithm::Sort", 0); }
 
     // <<< USER-DEFINED METHODS >>>
-    void inherited__Sort(SV* person);
-    SV* inherited__Sort_foo_get();
-    void inherited__Sort_foo_set(SV* foo_new);
+    void inherited_Sort(SV* person);
+    SV* inherited_Sort_foo_get();
+    void inherited_Sort_foo_set(SV* foo_new);
 };  // end of class
 
 // [[[ OO SUBCLASSES ]]]
@@ -79,9 +79,9 @@ public:
     virtual string myclassname() { return (const string) "RPerl::Algorithm::Sort"; }
 
     // <<< USER-DEFINED METHODS >>>
-    void inherited__Sort(string person);
-    string inherited__Sort_foo_get();
-    void inherited__Sort_foo_set(string foo_new);
+    void inherited_Sort(string person);
+    string inherited_Sort_foo_get();
+    void inherited_Sort_foo_set(string foo_new);
 };  // end of class
 
 // [[[ OO SUBCLASSES ]]]

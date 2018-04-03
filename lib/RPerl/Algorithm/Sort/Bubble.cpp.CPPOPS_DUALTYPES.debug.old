@@ -42,10 +42,10 @@ void RPerl__Algorithm__Sort__Bubble::number_sort()
 
 
 
-////sub inherited__Bubble { { my void::method $RETURN_TYPE }; ( my object $self, my string $person ) = @ARG;
-////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n"); };
-void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FRIED\n";
+////sub inherited_Bubble { { my void::method $RETURN_TYPE }; ( my object $self, my string $person ) = @ARG;
+////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited_Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n"); };
+void RPerl__Algorithm__Sort__Bubble::inherited_Bubble(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Bubble->inherited_Bubble(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FRIED\n";
 }
 
 ////sub inherited { { my void::method $RETURN_TYPE }; ( my object $self, my string $person ) = @ARG;
@@ -306,10 +306,10 @@ void RPerl__Algorithm__Sort__Bubble::number_sort()
 
 
 
-////sub inherited__Bubble { { my void::method $RETURN_TYPE }; ( my object $self, my string $person ) = @ARG; 
-////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n"); }
-void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(string person) {
-    RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited__Bubble(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FRIED" + (const string) "\n");
+////sub inherited_Bubble { { my void::method $RETURN_TYPE }; ( my object $self, my string $person ) = @ARG; 
+////    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited_Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n"); }
+void RPerl__Algorithm__Sort__Bubble::inherited_Bubble(string person) {
+    RPerl::diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited_Bubble(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FRIED" + (const string) "\n");
 }
 
 ////sub inherited { { my void::method $RETURN_TYPE }; ( my object $self, my string $person ) = @ARG; 

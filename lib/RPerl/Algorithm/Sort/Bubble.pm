@@ -103,32 +103,32 @@ sub number_bubblesort {
 
 # [ INHERITANCE TESTING ]
 
-sub inherited__Bubble {
+sub inherited_Bubble {
     { my void::method $RETURN_TYPE };
     ( my RPerl::Algorithm::Sort::Bubble $self, my string $person ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n" );
+    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited_Bubble(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FRIED' . "\n" );
     return;
 }
 
 # NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
-#sub inherited__Bubble_bar_set {
+#sub inherited_Bubble_bar_set {
 #   { my void::method $RETURN_TYPE };
 #    ( my RPerl::Algorithm::Sort::Bubble $self, my string $bar_new ) = @ARG;
-#    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble_bar_set(), have ::class($self) = ' . ::class($self) . ' and $bar_new = ' . $bar_new . ', FRIED' . "\n" );
+#    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited_Bubble_bar_set(), have ::class($self) = ' . ::class($self) . ' and $bar_new = ' . $bar_new . ', FRIED' . "\n" );
 #    $self->{bar} = $bar_new;
 #}
 
-sub inherited__Bubble_foo_get {
+sub inherited_Bubble_foo_get {
     { my string::method $RETURN_TYPE };
     ( my RPerl::Algorithm::Sort::Bubble $self ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble_foo_get(), have ::class($self) = ' . ::class($self) . ', FRIED' . "\n" );
+    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited_Bubble_foo_get(), have ::class($self) = ' . ::class($self) . ', FRIED' . "\n" );
     return $self->{foo};
 }
 
-sub inherited__Bubble_foo_set {
+sub inherited_Bubble_foo_set {
     { my void::method $RETURN_TYPE };
     ( my RPerl::Algorithm::Sort::Bubble $self, my string $foo_new ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble_foo_set(), have ::class($self) = ' . ::class($self) . ' and $foo_new = ' . $foo_new . ', FRIED' . "\n" );
+    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited_Bubble_foo_set(), have ::class($self) = ' . ::class($self) . ' and $foo_new = ' . $foo_new . ', FRIED' . "\n" );
     $self->{foo} = $foo_new;
     return;
 }

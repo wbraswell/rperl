@@ -54,9 +54,9 @@ public:
     // <<< USER-DEFINED METHODS >>>
     void integer_sort();
     void number_sort();
-    void inherited__Bubble(SV* person);
-    SV* inherited__Bubble_foo_get();
-    void inherited__Bubble_foo_set(SV* foo_new);
+    void inherited_Bubble(SV* person);
+    SV* inherited_Bubble_foo_get();
+    void inherited_Bubble_foo_set(SV* foo_new);
     void inherited(SV* person);
 };  // end of class
 
@@ -135,9 +135,9 @@ public:
     // <<< USER-DEFINED METHODS >>>
     void integer_sort();
     void number_sort();
-    void inherited__Bubble(string person);
-    string inherited__Bubble_foo_get();
-    void inherited__Bubble_foo_set(string foo_new);
+    void inherited_Bubble(string person);
+    string inherited_Bubble_foo_get();
+    void inherited_Bubble_foo_set(string foo_new);
     void inherited(string person);
 };  // end of class
 

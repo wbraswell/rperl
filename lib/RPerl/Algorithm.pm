@@ -28,24 +28,24 @@ our hashref $properties = { foo => my string $TYPED_foo = '<<< DEFAULT, ALGORITH
 
 # [ INHERITANCE TESTING ]
 
-sub inherited__Algorithm {
+sub inherited_Algorithm {
     { my void::method $RETURN_TYPE };
     ( my RPerl::Algorithm $self, my string $person ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FNORD' . "\n" );
+    RPerl::diag( 'in PERLOPS_PERLTYPES Algorithm->inherited_Algorithm(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FNORD' . "\n" );
     return;
 }
 
-sub inherited__Algorithm_foo_get {
+sub inherited_Algorithm_foo_get {
     { my string::method $RETURN_TYPE };
     ( my RPerl::Algorithm $self ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm_foo_get(), have ::class($self) = ' . ::class($self) . ', FNORD' . "\n" );
+    RPerl::diag( 'in PERLOPS_PERLTYPES Algorithm->inherited_Algorithm_foo_get(), have ::class($self) = ' . ::class($self) . ', FNORD' . "\n" );
     return $self->{foo};
 }
 
-sub inherited__Algorithm_foo_set {
+sub inherited_Algorithm_foo_set {
     { my void::method $RETURN_TYPE };
     ( my RPerl::Algorithm $self, my string $foo_new ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Algorithm->inherited__Algorithm_foo_set(), have ::class($self) = ' . ::class($self) . ' and $foo_new = ' . $foo_new . ', FNORD' . "\n" );
+    RPerl::diag( 'in PERLOPS_PERLTYPES Algorithm->inherited_Algorithm_foo_set(), have ::class($self) = ' . ::class($self) . ' and $foo_new = ' . $foo_new . ', FNORD' . "\n" );
     $self->{foo} = $foo_new;
     return;
 }

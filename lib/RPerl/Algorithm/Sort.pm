@@ -21,24 +21,24 @@ our hashref $properties = {};
 
 # [ INHERITANCE TESTING ]
 
-sub inherited__Sort {
+sub inherited_Sort {
     { my void::method $RETURN_TYPE };
     ( my RPerl::Algorithm::Sort $self, my string $person ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Sort->inherited__Sort(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FISH' . "\n" );
+    RPerl::diag( 'in PERLOPS_PERLTYPES Sort->inherited_Sort(), have ::class($self) = ' . ::class($self) . ' and $person = ' . $person . ', FISH' . "\n" );
     return;
 }
 
-sub inherited__Sort_foo_get {
+sub inherited_Sort_foo_get {
     { my string::method $RETURN_TYPE };
     ( my RPerl::Algorithm::Sort $self ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Sort->inherited__Sort_foo_get(), have ::class($self) = ' . ::class($self) . ', FISH' . "\n" );
+    RPerl::diag( 'in PERLOPS_PERLTYPES Sort->inherited_Sort_foo_get(), have ::class($self) = ' . ::class($self) . ', FISH' . "\n" );
     return $self->{foo};
 }
 
-sub inherited__Sort_foo_set {
+sub inherited_Sort_foo_set {
     { my void::method $RETURN_TYPE };
     ( my RPerl::Algorithm::Sort $self, my string $foo_new ) = @ARG;
-    RPerl::diag( 'in PERLOPS_PERLTYPES Sort->inherited__Sort_foo_set(), have ::class($self) = ' . ::class($self) . ' and $foo_new = ' . $foo_new . ', FISH' . "\n" );
+    RPerl::diag( 'in PERLOPS_PERLTYPES Sort->inherited_Sort_foo_set(), have ::class($self) = ' . ::class($self) . ' and $foo_new = ' . $foo_new . ', FISH' . "\n" );
     $self->{foo} = $foo_new;
     return;
 }

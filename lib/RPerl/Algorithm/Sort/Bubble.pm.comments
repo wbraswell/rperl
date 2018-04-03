@@ -44,11 +44,11 @@ sub number_sort {
 
 # OO INHERITANCE TESTING
 
-sub inherited__Bubble {
+sub inherited_Bubble {
     { my void::method $RETURN_TYPE };
     ( my object $self, my string $person ) = @ARG;
 
-    #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited__Bubble(), received $self = ' . $self . ' and $person = ' . $person . ', FRIED' . "\n");
+    #    RPerl::diag( 'in PERLOPS_PERLTYPES Bubble->inherited_Bubble(), received $self = ' . $self . ' and $person = ' . $person . ', FRIED' . "\n");
     return;
 }
 

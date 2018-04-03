@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # NEED FIX: various bugs, including...
-# Subroutine RPerl::Algorithm::inherited__Algorithm redefined at /usr/lib/perl/5.18/DynaLoader.pm line 207.
+# Subroutine RPerl::Algorithm::inherited_Algorithm redefined at /usr/lib/perl/5.18/DynaLoader.pm line 207.
 # Constant subroutine RPerl::Algorithm::TIME_BEST redefined at /usr/lib/x86_64-linux-gnu/perl/5.22/DynaLoader.pm line 210.
 
 # [[[ PRE-HEADER ]]]
@@ -286,22 +286,22 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     can_ok( 'RPerl::Algorithm::Sort::Bubble', 'new' );
     my $bubbler = new_ok('RPerl::Algorithm::Sort::Bubble');
 
-    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited__Bubble' );
+    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited_Bubble' );
     lives_ok(    # TOOIN01
-        sub { $bubbler->inherited__Bubble('Frozen') },
-        q{TOOIN01 inherited__Bubble('Frozen') lives}
+        sub { $bubbler->inherited_Bubble('Frozen') },
+        q{TOOIN01 inherited_Bubble('Frozen') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited__Sort' );
+    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited_Sort' );
     lives_ok(    # TOOIN02
-        sub { $bubbler->inherited__Sort('Frozen') },
-        q{TOOIN02 inherited__Sort('Frozen') lives}
+        sub { $bubbler->inherited_Sort('Frozen') },
+        q{TOOIN02 inherited_Sort('Frozen') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited__Algorithm' );
+    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited_Algorithm' );
     lives_ok(    # TOOIN03
-        sub { $bubbler->inherited__Algorithm('Frozen') },
-        q{TOOIN03 inherited__Algorithm('Frozen') lives}
+        sub { $bubbler->inherited_Algorithm('Frozen') },
+        q{TOOIN03 inherited_Algorithm('Frozen') lives}
     );
 
     can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited' );
@@ -386,102 +386,102 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     can_ok( 'RPerl::Algorithm::Sort::Bubble', 'get_foo' );
     can_ok( 'RPerl::Algorithm::Sort::Bubble', 'set_foo' );
-    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited__Bubble_foo_get' );
+    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited_Bubble_foo_get' );
     lives_and(    # TOOIN07 - TOOIN11
         sub {
             is( $bubbler->get_foo(),
                 '<<< DEFAULT, ALGORITHM >>>',
                 q{TOOIN07 get_foo() returns correct value}
             );
-            is( $bubbler->inherited__Bubble_foo_get(),
+            is( $bubbler->inherited_Bubble_foo_get(),
                 '<<< DEFAULT, ALGORITHM >>>',
-                q{TOOIN08 inherited__Bubble_foo_get() returns correct value}
+                q{TOOIN08 inherited_Bubble_foo_get() returns correct value}
             );
             $bubbler->set_foo('Alpha Flight');
             is( $bubbler->get_foo(),
                 'Alpha Flight',
                 q{TOOIN09 set_foo('Alpha Flight') sets correct value}
             );
-            is( $bubbler->inherited__Bubble_foo_get(),
+            is( $bubbler->inherited_Bubble_foo_get(),
                 'Alpha Flight',
-                q{TOOIN10 inherited__Bubble_foo_get() returns correct value}
+                q{TOOIN10 inherited_Bubble_foo_get() returns correct value}
             );
         },
         q{TOOIN11 set_foo('Alpha Flight') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited__Bubble_foo_set' );
+    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited_Bubble_foo_set' );
     lives_and(    # TOOIN12 - TOOIN16
         sub {
             is( $bubbler->get_foo(),
                 'Alpha Flight',
                 q{TOOIN12 get_foo() returns correct value}
             );
-            is( $bubbler->inherited__Bubble_foo_get(),
+            is( $bubbler->inherited_Bubble_foo_get(),
                 'Alpha Flight',
-                q{TOOIN13 inherited__Bubble_foo_get() returns correct value}
+                q{TOOIN13 inherited_Bubble_foo_get() returns correct value}
             );
-            $bubbler->inherited__Bubble_foo_set('Avengers');
+            $bubbler->inherited_Bubble_foo_set('Avengers');
             is( $bubbler->get_foo(),
                 'Avengers',
-                q{TOOIN14 inherited__Bubble_foo_set('Avengers') sets correct value}
+                q{TOOIN14 inherited_Bubble_foo_set('Avengers') sets correct value}
             );
-            is( $bubbler->inherited__Bubble_foo_get(),
+            is( $bubbler->inherited_Bubble_foo_get(),
                 'Avengers',
-                q{TOOIN15 inherited__Bubble_foo_get() returns correct value}
+                q{TOOIN15 inherited_Bubble_foo_get() returns correct value}
             );
         },
-        q{TOOIN16 inherited__Bubble_foo_set('Avengers') lives}
+        q{TOOIN16 inherited_Bubble_foo_set('Avengers') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited__Sort_foo_get' );
-    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited__Sort_foo_set' );
+    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited_Sort_foo_get' );
+    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited_Sort_foo_set' );
     lives_and(    # TOOIN17 - TOOIN21
         sub {
             is( $bubbler->get_foo(),
                 'Avengers',
                 q{TOOIN17 get_foo() returns correct value}
             );
-            is( $bubbler->inherited__Sort_foo_get(),
+            is( $bubbler->inherited_Sort_foo_get(),
                 'Avengers',
-                q{TOOIN18 inherited__Sort_foo_get() returns correct value}
+                q{TOOIN18 inherited_Sort_foo_get() returns correct value}
             );
-            $bubbler->inherited__Sort_foo_set('X-Men');
+            $bubbler->inherited_Sort_foo_set('X-Men');
             is( $bubbler->get_foo(),
                 'X-Men',
-                q{TOOIN19 inherited__Sort_foo_set('X-Men') sets correct value}
+                q{TOOIN19 inherited_Sort_foo_set('X-Men') sets correct value}
             );
-            is( $bubbler->inherited__Sort_foo_get(),
+            is( $bubbler->inherited_Sort_foo_get(),
                 'X-Men',
-                q{TOOIN20 inherited__Sort_foo_get() returns correct value}
+                q{TOOIN20 inherited_Sort_foo_get() returns correct value}
             );
         },
-        q{TOOIN21 inherited__Sort_foo_set('X-Men') lives}
+        q{TOOIN21 inherited_Sort_foo_set('X-Men') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited__Algorithm_foo_get' );
-    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited__Algorithm_foo_set' );
+    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited_Algorithm_foo_get' );
+    can_ok( 'RPerl::Algorithm::Sort::Bubble', 'inherited_Algorithm_foo_set' );
     lives_and(    # TOOIN22 - TOOIN
         sub {
             is( $bubbler->get_foo(),
                 'X-Men',
                 q{TOOIN22 get_foo() returns correct value}
             );
-            is( $bubbler->inherited__Algorithm_foo_get(),
+            is( $bubbler->inherited_Algorithm_foo_get(),
                 'X-Men',
-                q{TOOIN23 inherited__Algorithm_foo_get() returns correct value}
+                q{TOOIN23 inherited_Algorithm_foo_get() returns correct value}
             );
-            $bubbler->inherited__Algorithm_foo_set('Weapon X');
+            $bubbler->inherited_Algorithm_foo_set('Weapon X');
             is( $bubbler->get_foo(),
                 'Weapon X',
-                q{TOOIN24 inherited__Algorithm_foo_set('Weapon X') sets correct value}
+                q{TOOIN24 inherited_Algorithm_foo_set('Weapon X') sets correct value}
             );
-            is( $bubbler->inherited__Algorithm_foo_get(),
+            is( $bubbler->inherited_Algorithm_foo_get(),
                 'Weapon X',
-                q{TOOIN25 inherited__Algorithm_foo_get() returns correct value}
+                q{TOOIN25 inherited_Algorithm_foo_get() returns correct value}
             );
         },
-        q{TOOIN26 inherited__Algorithm_foo_set('Weapon X') lives}
+        q{TOOIN26 inherited_Algorithm_foo_set('Weapon X') lives}
     );
 
 
@@ -502,91 +502,91 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TOOIN28 uninherited_Sort('Claws') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Sort', 'inherited__Sort' );
+    can_ok( 'RPerl::Algorithm::Sort', 'inherited_Sort' );
     lives_ok(    # TOOIN29
-        sub { $sorter->inherited__Sort('Frozen') },
-        q{TOOIN29 inherited__Sort('Frozen') lives}
+        sub { $sorter->inherited_Sort('Frozen') },
+        q{TOOIN29 inherited_Sort('Frozen') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Sort', 'inherited__Algorithm' );
+    can_ok( 'RPerl::Algorithm::Sort', 'inherited_Algorithm' );
     lives_ok(    # TOOIN30
-        sub { $sorter->inherited__Algorithm('Frozen') },
-        q{TOOIN30 inherited__Algorithm('Frozen') lives}
+        sub { $sorter->inherited_Algorithm('Frozen') },
+        q{TOOIN30 inherited_Algorithm('Frozen') lives}
     );
 
     can_ok( 'RPerl::Algorithm::Sort', 'get_foo' );
     can_ok( 'RPerl::Algorithm::Sort', 'set_foo' );
-    can_ok( 'RPerl::Algorithm::Sort', 'inherited__Sort_foo_get' );
+    can_ok( 'RPerl::Algorithm::Sort', 'inherited_Sort_foo_get' );
     lives_and(    # TOOIN31 - TOOIN35
         sub {
             is( $sorter->get_foo(),
                 '<<< DEFAULT, ALGORITHM >>>',
                 q{TOOIN31 get_foo() returns correct value}
             );
-            is( $sorter->inherited__Sort_foo_get(),
+            is( $sorter->inherited_Sort_foo_get(),
                 '<<< DEFAULT, ALGORITHM >>>',
-                q{TOOIN32 inherited__Sort_foo_get() returns correct value}
+                q{TOOIN32 inherited_Sort_foo_get() returns correct value}
             );
             $sorter->set_foo('Alpha Flight');
             is( $sorter->get_foo(),
                 'Alpha Flight',
                 q{TOOIN33 set_foo('Alpha Flight') sets correct value}
             );
-            is( $sorter->inherited__Sort_foo_get(),
+            is( $sorter->inherited_Sort_foo_get(),
                 'Alpha Flight',
-                q{TOOIN34 inherited__Sort_foo_get() returns correct value}
+                q{TOOIN34 inherited_Sort_foo_get() returns correct value}
             );
         },
         q{TOOIN35 set_foo('Alpha Flight') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Sort', 'inherited__Sort_foo_set' );
+    can_ok( 'RPerl::Algorithm::Sort', 'inherited_Sort_foo_set' );
     lives_and(    # TOOIN36 - TOOIN40
         sub {
             is( $sorter->get_foo(),
                 'Alpha Flight',
                 q{TOOIN36 get_foo() returns correct value}
             );
-            is( $sorter->inherited__Sort_foo_get(),
+            is( $sorter->inherited_Sort_foo_get(),
                 'Alpha Flight',
-                q{TOOIN37 inherited__Sort_foo_get() returns correct value}
+                q{TOOIN37 inherited_Sort_foo_get() returns correct value}
             );
-            $sorter->inherited__Sort_foo_set('Avengers');
+            $sorter->inherited_Sort_foo_set('Avengers');
             is( $sorter->get_foo(),
                 'Avengers',
-                q{TOOIN38 inherited__Sort_foo_set('Avengers') sets correct value}
+                q{TOOIN38 inherited_Sort_foo_set('Avengers') sets correct value}
             );
-            is( $sorter->inherited__Sort_foo_get(),
+            is( $sorter->inherited_Sort_foo_get(),
                 'Avengers',
-                q{TOOIN39 inherited__Sort_foo_get() returns correct value}
+                q{TOOIN39 inherited_Sort_foo_get() returns correct value}
             );
         },
-        q{TOOIN40 inherited__Sort_foo_set('Avengers') lives}
+        q{TOOIN40 inherited_Sort_foo_set('Avengers') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Sort', 'inherited__Algorithm_foo_get' );
-    can_ok( 'RPerl::Algorithm::Sort', 'inherited__Algorithm_foo_set' );
+    can_ok( 'RPerl::Algorithm::Sort', 'inherited_Algorithm_foo_get' );
+    can_ok( 'RPerl::Algorithm::Sort', 'inherited_Algorithm_foo_set' );
     lives_and(    # TOOIN41 - TOOIN45
         sub {
             is( $sorter->get_foo(),
                 'Avengers',
                 q{TOOIN41 get_foo() returns correct value}
             );
-            is( $sorter->inherited__Algorithm_foo_get(),
+            is( $sorter->inherited_Algorithm_foo_get(),
                 'Avengers',
-                q{TOOIN42 inherited__Algorithm_foo_get() returns correct value}
+                q{TOOIN42 inherited_Algorithm_foo_get() returns correct value}
             );
-            $sorter->inherited__Algorithm_foo_set('X-Men');
+            $sorter->inherited_Algorithm_foo_set('X-Men');
             is( $sorter->get_foo(),
                 'X-Men',
-                q{TOOIN43 inherited__Algorithm_foo_set('X-Men') sets correct value}
+                q{TOOIN43 inherited_Algorithm_foo_set('X-Men') sets correct value}
             );
-            is( $sorter->inherited__Algorithm_foo_get(),
+            is( $sorter->inherited_Algorithm_foo_get(),
                 'X-Men',
-                q{TOOIN44 inherited__Algorithm_foo_get() returns correct value}
+                q{TOOIN44 inherited_Algorithm_foo_get() returns correct value}
             );
         },
-        q{TOOIN45 inherited__Algorithm_foo_set('X-Men') lives}
+        q{TOOIN45 inherited_Algorithm_foo_set('X-Men') lives}
     );
 
 
@@ -596,16 +596,16 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     can_ok( 'RPerl::Algorithm::Inefficient', 'new' );
     my $inefficient = new_ok('RPerl::Algorithm::Inefficient');
 
-    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited__Inefficient' );
+    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited_Inefficient' );
     lives_ok(    # TOOIN47
-        sub { $inefficient->inherited__Inefficient('Frozen') },
-        q{TOOIN47 inherited__Inefficient('Frozen') lives}
+        sub { $inefficient->inherited_Inefficient('Frozen') },
+        q{TOOIN47 inherited_Inefficient('Frozen') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited__Algorithm' );
+    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited_Algorithm' );
     lives_ok(    # TOOIN48
-        sub { $inefficient->inherited__Algorithm('Frozen') },
-        q{TOOIN48 inherited__Algorithm('Frozen') lives}
+        sub { $inefficient->inherited_Algorithm('Frozen') },
+        q{TOOIN48 inherited_Algorithm('Frozen') lives}
     );
 
     can_ok( 'RPerl::Algorithm::Inefficient', 'inherited' );
@@ -627,127 +627,127 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     can_ok( 'RPerl::Algorithm::Inefficient', 'get_foo' );
     can_ok( 'RPerl::Algorithm::Inefficient', 'set_foo' );
-    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited__Inefficient_foo_get' );
+    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited_Inefficient_foo_get' );
     lives_and(    # TOOIN51 - TOOIN55
         sub {
             is( $inefficient->get_foo(),
                 '<<< DEFAULT, ALGORITHM >>>',
                 q{TOOIN51 get_foo() returns correct value}
             );
-            is( $inefficient->inherited__Inefficient_foo_get(),
+            is( $inefficient->inherited_Inefficient_foo_get(),
                 '<<< DEFAULT, ALGORITHM >>>',
-                q{TOOIN52 inherited__Inefficient_foo_get() returns correct value}
+                q{TOOIN52 inherited_Inefficient_foo_get() returns correct value}
             );
             $inefficient->set_foo('Alpha Flight');
             is( $inefficient->get_foo(),
                 'Alpha Flight',
                 q{TOOIN53 set_foo('Alpha Flight') sets correct value}
             );
-            is( $inefficient->inherited__Inefficient_foo_get(),
+            is( $inefficient->inherited_Inefficient_foo_get(),
                 'Alpha Flight',
-                q{TOOIN54 inherited__Inefficient_foo_get() returns correct value}
+                q{TOOIN54 inherited_Inefficient_foo_get() returns correct value}
             );
         },
         q{TOOIN55 set_foo('Alpha Flight') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited__Inefficient_foo_set' );
+    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited_Inefficient_foo_set' );
     lives_and(    # TOOIN56 - TOOIN60
         sub {
             is( $inefficient->get_foo(),
                 'Alpha Flight',
                 q{TOOIN56 get_foo() returns correct value}
             );
-            is( $inefficient->inherited__Inefficient_foo_get(),
+            is( $inefficient->inherited_Inefficient_foo_get(),
                 'Alpha Flight',
-                q{TOOIN57 inherited__Inefficient_foo_get() returns correct value}
+                q{TOOIN57 inherited_Inefficient_foo_get() returns correct value}
             );
-            $inefficient->inherited__Inefficient_foo_set('Avengers');
+            $inefficient->inherited_Inefficient_foo_set('Avengers');
             is( $inefficient->get_foo(),
                 'Avengers',
-                q{TOOIN58 inherited__Inefficient_foo_set('Avengers') sets correct value}
+                q{TOOIN58 inherited_Inefficient_foo_set('Avengers') sets correct value}
             );
-            is( $inefficient->inherited__Inefficient_foo_get(),
+            is( $inefficient->inherited_Inefficient_foo_get(),
                 'Avengers',
-                q{TOOIN59 inherited__Inefficient_foo_get() returns correct value}
+                q{TOOIN59 inherited_Inefficient_foo_get() returns correct value}
             );
         },
-        q{TOOIN60 inherited__Inefficient_foo_set('Avengers') lives}
+        q{TOOIN60 inherited_Inefficient_foo_set('Avengers') lives}
     );
 
     can_ok( 'RPerl::Algorithm::Inefficient', 'get_bar' );
     can_ok( 'RPerl::Algorithm::Inefficient', 'set_bar' );
-    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited__Inefficient_bar_get' );
+    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited_Inefficient_bar_get' );
     lives_and(    # TOOIN61 - TOOIN65
         sub {
             is( $inefficient->get_bar(),
                 '<<< DEFAULT, INEFFICIENT >>>',
                 q{TOOIN61 get_bar() returns correct value}
             );
-            is( $inefficient->inherited__Inefficient_bar_get(),
+            is( $inefficient->inherited_Inefficient_bar_get(),
                 '<<< DEFAULT, INEFFICIENT >>>',
-                q{TOOIN62 inherited__Inefficient_bar_get() returns correct value}
+                q{TOOIN62 inherited_Inefficient_bar_get() returns correct value}
             );
             $inefficient->set_bar('Alpha Flight');
             is( $inefficient->get_bar(),
                 'Alpha Flight',
                 q{TOOIN63 set_bar('Alpha Flight') sets correct value}
             );
-            is( $inefficient->inherited__Inefficient_bar_get(),
+            is( $inefficient->inherited_Inefficient_bar_get(),
                 'Alpha Flight',
-                q{TOOIN64 inherited__Inefficient_bar_get() returns correct value}
+                q{TOOIN64 inherited_Inefficient_bar_get() returns correct value}
             );
         },
-        q{TOOIN65 inherited__Inefficient_bar_set('Alpha Flight') lives}
+        q{TOOIN65 inherited_Inefficient_bar_set('Alpha Flight') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited__Inefficient_bar_set' );
+    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited_Inefficient_bar_set' );
     lives_and(    # TOOIN66 - TOOIN70
         sub {
             is( $inefficient->get_bar(),
                 'Alpha Flight',
                 q{TOOIN66 get_bar() returns correct value}
             );
-            is( $inefficient->inherited__Inefficient_bar_get(),
+            is( $inefficient->inherited_Inefficient_bar_get(),
                 'Alpha Flight',
-                q{TOOIN67 inherited__Inefficient_bar_get() returns correct value}
+                q{TOOIN67 inherited_Inefficient_bar_get() returns correct value}
             );
-            $inefficient->inherited__Inefficient_bar_set('Avengers');
+            $inefficient->inherited_Inefficient_bar_set('Avengers');
             is( $inefficient->get_bar(),
                 'Avengers',
-                q{TOOIN68 inherited__Inefficient_bar_set('Avengers') sets correct value}
+                q{TOOIN68 inherited_Inefficient_bar_set('Avengers') sets correct value}
             );
-            is( $inefficient->inherited__Inefficient_bar_get(),
+            is( $inefficient->inherited_Inefficient_bar_get(),
                 'Avengers',
-                q{TOOIN69 inherited__Inefficient_bar_get() returns correct value}
+                q{TOOIN69 inherited_Inefficient_bar_get() returns correct value}
             );
         },
-        q{TOOIN70 inherited__Inefficient_bar_set('Avengers') lives}
+        q{TOOIN70 inherited_Inefficient_bar_set('Avengers') lives}
     );
 
-    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited__Algorithm_foo_get' );
-    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited__Algorithm_foo_set' );
+    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited_Algorithm_foo_get' );
+    can_ok( 'RPerl::Algorithm::Inefficient', 'inherited_Algorithm_foo_set' );
     lives_and(    # TOOIN71 - TOOIN75
         sub {
             is( $inefficient->get_foo(),
                 'Avengers',
                 q{TOOIN71 get_foo() returns correct value}
             );
-            is( $inefficient->inherited__Algorithm_foo_get(),
+            is( $inefficient->inherited_Algorithm_foo_get(),
                 'Avengers',
-                q{TOOIN72 inherited__Algorithm_foo_get() returns correct value}
+                q{TOOIN72 inherited_Algorithm_foo_get() returns correct value}
             );
-            $inefficient->inherited__Algorithm_foo_set('X-Men');
+            $inefficient->inherited_Algorithm_foo_set('X-Men');
             is( $inefficient->get_foo(),
                 'X-Men',
-                q{TOOIN73 inherited__Algorithm_foo_set('X-Men') sets correct value}
+                q{TOOIN73 inherited_Algorithm_foo_set('X-Men') sets correct value}
             );
-            is( $inefficient->inherited__Algorithm_foo_get(),
+            is( $inefficient->inherited_Algorithm_foo_get(),
                 'X-Men',
-                q{TOOIN74 inherited__Algorithm_foo_get() returns correct value}
+                q{TOOIN74 inherited_Algorithm_foo_get() returns correct value}
             );
         },
-        q{TOOIN75 inherited__Algorithm_foo_set('X-Men') lives}
+        q{TOOIN75 inherited_Algorithm_foo_set('X-Men') lives}
     );
 
 
@@ -770,52 +770,52 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
     can_ok( 'RPerl::Algorithm', 'get_foo' );
     can_ok( 'RPerl::Algorithm', 'set_foo' );
-    can_ok( 'RPerl::Algorithm', 'inherited__Algorithm_foo_get' );
+    can_ok( 'RPerl::Algorithm', 'inherited_Algorithm_foo_get' );
     lives_and(    # TOOIN78 - TOOIN82
         sub {
             is( $algorithm->get_foo(),
                 '<<< DEFAULT, ALGORITHM >>>',
                 q{TOOIN78 get_foo() returns correct value}
             );
-            is( $algorithm->inherited__Algorithm_foo_get(),
+            is( $algorithm->inherited_Algorithm_foo_get(),
                 '<<< DEFAULT, ALGORITHM >>>',
-                q{TOOIN79 inherited__Algorithm_foo_get() returns correct value}
+                q{TOOIN79 inherited_Algorithm_foo_get() returns correct value}
             );
             $algorithm->set_foo('Alpha Flight');
             is( $algorithm->get_foo(),
                 'Alpha Flight',
                 q{TOOIN80 set_foo('Alpha Flight') sets correct value}
             );
-            is( $algorithm->inherited__Algorithm_foo_get(),
+            is( $algorithm->inherited_Algorithm_foo_get(),
                 'Alpha Flight',
-                q{TOOIN81 inherited__Algorithm_foo_get() returns correct value}
+                q{TOOIN81 inherited_Algorithm_foo_get() returns correct value}
             );
         },
         q{TOOIN82 set_foo('Alpha Flight') lives}
     );
 
-    can_ok( 'RPerl::Algorithm', 'inherited__Algorithm_foo_set' );
+    can_ok( 'RPerl::Algorithm', 'inherited_Algorithm_foo_set' );
     lives_and(    # TOOIN83 - TOOIN87
         sub {
             is( $algorithm->get_foo(),
                 'Alpha Flight',
                 q{TOOIN83 get_foo() returns correct value}
             );
-            is( $algorithm->inherited__Algorithm_foo_get(),
+            is( $algorithm->inherited_Algorithm_foo_get(),
                 'Alpha Flight',
-                q{TOOIN84 inherited__Algorithm_foo_get() returns correct value}
+                q{TOOIN84 inherited_Algorithm_foo_get() returns correct value}
             );
-            $algorithm->inherited__Algorithm_foo_set('Avengers');
+            $algorithm->inherited_Algorithm_foo_set('Avengers');
             is( $algorithm->get_foo(),
                 'Avengers',
-                q{TOOIN85 inherited__Algorithm_foo_set('Avengers') sets correct value}
+                q{TOOIN85 inherited_Algorithm_foo_set('Avengers') sets correct value}
             );
-            is( $algorithm->inherited__Algorithm_foo_get(),
+            is( $algorithm->inherited_Algorithm_foo_get(),
                 'Avengers',
-                q{TOOIN86 inherited__Algorithm_foo_get() returns correct value}
+                q{TOOIN86 inherited_Algorithm_foo_get() returns correct value}
             );
         },
-        q{TOOIN87 inherited__Algorithm_foo_set('Avengers') lives}
+        q{TOOIN87 inherited_Algorithm_foo_set('Avengers') lives}
     );
 
    # DEV NOTE, CORRELATION #rp004: inheritance testing, manually enable uninherited() in exactly one of Algorithm.*, Inefficient.*, Sort.*, or Bubble.*

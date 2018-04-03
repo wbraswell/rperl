@@ -19,7 +19,7 @@ class RPerl__Algorithm__Inefficient : public RPerl__Algorithm
 {
 public:
 // [[[ OO METHODS ]]]
-    void inherited__Inefficient(SV* person);
+    void inherited_Inefficient(SV* person);
     void inherited(SV* person);
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
@@ -54,7 +54,7 @@ SV* RPerl__Algorithm__Inefficient__MODE_ID() { return newSViv(1); }  // CPPOPS_P
 class RPerl__Algorithm__Inefficient : public RPerl__Algorithm {
 public:
 // [[[ OO METHODS ]]]
-    void inherited__Inefficient(string person);
+    void inherited_Inefficient(string person);
     void inherited(string person);
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>

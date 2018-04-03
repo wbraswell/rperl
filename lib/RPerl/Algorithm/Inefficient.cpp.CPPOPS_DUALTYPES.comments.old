@@ -15,8 +15,8 @@ using std::cout;  using std::cerr;  using std::endl;
 
 // [[[ SUBROUTINES & OO METHODS ]]]
 
-void RPerl__Algorithm__Inefficient::inherited__Inefficient(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Inefficient->inherited__Inefficient(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FLUFFY" << "\n";
+void RPerl__Algorithm__Inefficient::inherited_Inefficient(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Inefficient->inherited_Inefficient(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FLUFFY" << "\n";
 }
 
 void RPerl__Algorithm__Inefficient::inherited(SV* person) {
@@ -46,8 +46,8 @@ SV* uninherited_Inefficient(SV* person) {
 
 // [[[ SUBROUTINES & OO METHODS ]]]
 
-void RPerl__Algorithm__Inefficient::inherited__Inefficient(string person) {
-    RPerl::diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited__Inefficient(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FLUFFY" + (const string) "\n");
+void RPerl__Algorithm__Inefficient::inherited_Inefficient(string person) {
+    RPerl::diag((const string) "in CPPOPS_CPPTYPES Inefficient->inherited_Inefficient(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FLUFFY" + (const string) "\n");
 }
 
 void RPerl__Algorithm__Inefficient::inherited(string person) {

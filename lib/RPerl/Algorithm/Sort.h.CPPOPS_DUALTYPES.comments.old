@@ -18,7 +18,7 @@ using std::cout;  using std::cerr;  using std::endl;
 class RPerl__Algorithm__Sort : public RPerl__Algorithm {
 public:
 // [[[ OO METHODS ]]]
-	void inherited__Sort(SV* person);
+	void inherited_Sort(SV* person);
 //    void inherited(SV* person);
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
@@ -52,7 +52,7 @@ SV* RPerl__Algorithm__Sort__MODE_ID() { return newSViv(1); }  // CPPOPS_PERLTYPE
 class RPerl__Algorithm__Sort : public RPerl__Algorithm {
 public:
 // [[[ OO METHODS ]]]
-    void inherited__Sort(string person);
+    void inherited_Sort(string person);
 //  void inherited(string person);
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>

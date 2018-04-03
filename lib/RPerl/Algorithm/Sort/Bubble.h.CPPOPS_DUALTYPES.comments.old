@@ -30,7 +30,7 @@ public:
     void number_sort();
 
     // OO INHERITANCE TESTING
-    void inherited__Bubble(SV* person);
+    void inherited_Bubble(SV* person);
     void inherited(SV* person);
 
     // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
@@ -95,7 +95,7 @@ public:
     void number_sort();
 
 // OO INHERITANCE TESTING
-    void inherited__Bubble(string person);
+    void inherited_Bubble(string person);
     void inherited(string person);
 
     // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>

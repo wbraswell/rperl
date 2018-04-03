@@ -37,10 +37,10 @@ for my integer $i ( 0 .. $i_MAX ) {
     print "in oo_test.pl, have \$i = $i and pre-data \$sorter =\n",
         Dumper($sorter), "\n";
 
-    $sorter->inherited__Bubble('Frozen');         # RPerl yes, C++ yes
-    $sorter->inherited__Sort('Frozen');           # RPerl yes, C++ yes
-#    $sorter->inherited__Inefficient('Frozen');    # RPerl yes, C++ yes  # NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
-    $sorter->inherited__Algorithm('Frozen');      # RPerl yes, C++ yes
+    $sorter->inherited_Bubble('Frozen');         # RPerl yes, C++ yes
+    $sorter->inherited_Sort('Frozen');           # RPerl yes, C++ yes
+#    $sorter->inherited_Inefficient('Frozen');    # RPerl yes, C++ yes  # NEED UPGRADE, CORRELATION #rp023: Inline::CPP support for multiple inheritance
+    $sorter->inherited_Algorithm('Frozen');      # RPerl yes, C++ yes
     print "\n";
 
 #	RPerl::Algorithm::Sort::inherited($sorter, 'Jean Gray');  # RPerl yes, C++ no

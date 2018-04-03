@@ -27,17 +27,17 @@ void RPerl__Algorithm__Sort__Bubble::number_sort() {
     SvREFCNT_dec(this->number_data);
 }
 
-void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FRIED\n";
+void RPerl__Algorithm__Sort__Bubble::inherited_Bubble(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Bubble->inherited_Bubble(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FRIED\n";
 }
 
-SV* RPerl__Algorithm__Sort__Bubble::inherited__Bubble_foo_get() {
-//    cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FRIED\n";
+SV* RPerl__Algorithm__Sort__Bubble::inherited_Bubble_foo_get() {
+//    cout << "in CPPOPS_PERLTYPES Bubble->inherited_Bubble_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FRIED\n";
     return SvREFCNT_inc(this->foo);
 }
 
-void RPerl__Algorithm__Sort__Bubble::inherited__Bubble_foo_set(SV* foo_new) {
-//    cout << "in CPPOPS_PERLTYPES Bubble->inherited__Bubble_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FRIED\n";
+void RPerl__Algorithm__Sort__Bubble::inherited_Bubble_foo_set(SV* foo_new) {
+//    cout << "in CPPOPS_PERLTYPES Bubble->inherited_Bubble_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FRIED\n";
     this->foo = foo_new;
 }
 
@@ -135,17 +135,17 @@ void RPerl__Algorithm__Sort__Bubble::number_sort() {
     this->number_data = RPerl__Algorithm__Sort__Bubble__number_bubblesort(this->number_data);
 }
 
-void RPerl__Algorithm__Sort__Bubble::inherited__Bubble(string person) {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited__Bubble(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FRIED" + (const string) "\n");
+void RPerl__Algorithm__Sort__Bubble::inherited_Bubble(string person) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited_Bubble(), have ::class($self) = " + classname(this) + (const string) " and $person = " + person + (const string) ", FRIED" + (const string) "\n");
 }
 
-string RPerl__Algorithm__Sort__Bubble::inherited__Bubble_foo_get() {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited__Bubble_foo_get(), have ::class($self) = " + classname(this) + (const string) ", FRIED" + (const string) "\n");
+string RPerl__Algorithm__Sort__Bubble::inherited_Bubble_foo_get() {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited_Bubble_foo_get(), have ::class($self) = " + classname(this) + (const string) ", FRIED" + (const string) "\n");
     return this->foo;
 }
 
-void RPerl__Algorithm__Sort__Bubble::inherited__Bubble_foo_set(string foo_new) {
-    RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited__Bubble_foo_set(), have ::class($self) = " + classname(this) + (const string) " and $foo_new = " + foo_new + (const string) ", FRIED" + (const string) "\n");
+void RPerl__Algorithm__Sort__Bubble::inherited_Bubble_foo_set(string foo_new) {
+    RPerl__diag((const string) "in CPPOPS_CPPTYPES Bubble->inherited_Bubble_foo_set(), have ::class($self) = " + classname(this) + (const string) " and $foo_new = " + foo_new + (const string) ", FRIED" + (const string) "\n");
     this->foo = foo_new;
 }
 

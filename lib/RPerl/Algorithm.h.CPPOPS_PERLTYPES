@@ -46,9 +46,9 @@ public:
     const SV* SPACE_WORST() { return RPerl__Algorithm__SPACE_WORST; }
 
     // <<< USER-DEFINED METHODS >>>
-    void inherited__Algorithm(SV* person);
-    SV* inherited__Algorithm_foo_get();
-    void inherited__Algorithm_foo_set(SV* foo_new);
+    void inherited_Algorithm(SV* person);
+    SV* inherited_Algorithm_foo_get();
+    void inherited_Algorithm_foo_set(SV* foo_new);
 };  // end of class
 
 // [[[ OO SUBCLASSES ]]]

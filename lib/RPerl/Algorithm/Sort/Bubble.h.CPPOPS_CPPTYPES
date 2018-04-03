@@ -57,9 +57,9 @@ public:
     // <<< USER-DEFINED METHODS >>>
     void integer_sort();
     void number_sort();
-    void inherited__Bubble(string person);
-    string inherited__Bubble_foo_get();
-    void inherited__Bubble_foo_set(string foo_new);
+    void inherited_Bubble(string person);
+    string inherited_Bubble_foo_get();
+    void inherited_Bubble_foo_set(string foo_new);
     void inherited(string person);
 };  // end of class
 

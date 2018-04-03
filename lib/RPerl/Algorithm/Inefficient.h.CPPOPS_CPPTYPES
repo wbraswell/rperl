@@ -46,11 +46,11 @@ public:
     const string USEFULNESS() { return RPerl__Algorithm__Inefficient__USEFULNESS; }
 
     // <<< USER-DEFINED METHODS >>>
-    void inherited__Inefficient(string person);
-    string inherited__Inefficient_bar_get();
-    void inherited__Inefficient_bar_set(string bar_new);
-    string inherited__Inefficient_foo_get();
-    void inherited__Inefficient_foo_set(string foo_new);
+    void inherited_Inefficient(string person);
+    string inherited_Inefficient_bar_get();
+    void inherited_Inefficient_bar_set(string bar_new);
+    string inherited_Inefficient_foo_get();
+    void inherited_Inefficient_foo_set(string foo_new);
     void inherited(string person);
 };  // end of class
 

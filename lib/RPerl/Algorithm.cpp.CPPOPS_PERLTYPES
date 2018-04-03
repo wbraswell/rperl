@@ -15,17 +15,17 @@ using std::cout;  using std::cerr;  using std::endl;
 
 // [[[ SUBROUTINES & OO METHODS ]]]
 
-void RPerl__Algorithm::inherited__Algorithm(SV* person) {
-    cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FNORD" << "\n";
+void RPerl__Algorithm::inherited_Algorithm(SV* person) {
+    cout << "in CPPOPS_PERLTYPES Algorithm->inherited_Algorithm(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $person = " << SvPV_nolen(person) << ", FNORD" << "\n";
 }
 
-SV* RPerl__Algorithm::inherited__Algorithm_foo_get() {
-    cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FNORD" << "\n";
+SV* RPerl__Algorithm::inherited_Algorithm_foo_get() {
+    cout << "in CPPOPS_PERLTYPES Algorithm->inherited_Algorithm_foo_get(), have ::class($self) = " << SvPV_nolen(classname(this)) << ", FNORD" << "\n";
     return SvREFCNT_inc(this->foo);
 }
 
-void RPerl__Algorithm::inherited__Algorithm_foo_set(SV* foo_new) {
-    cout << "in CPPOPS_PERLTYPES Algorithm->inherited__Algorithm_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FNORD" << "\n";
+void RPerl__Algorithm::inherited_Algorithm_foo_set(SV* foo_new) {
+    cout << "in CPPOPS_PERLTYPES Algorithm->inherited_Algorithm_foo_set(), have ::class($self) = " << SvPV_nolen(classname(this)) << " and $foo_new = " << SvPV_nolen(foo_new) << ", FNORD" << "\n";
     this->foo = foo_new;
 }
 
