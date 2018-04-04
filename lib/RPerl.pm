@@ -137,11 +137,24 @@ sub filter {
 
 #    print {*STDERR} "\n" . 'in RPerl::filter(), have pre-modification $input = ' . "\n" . '<<<<<<<<<<<<<<<<================ BEGIN INPUT FILE ================>>>>>>>>>>>>>>' . "\n" . $input . "\n" . '<<<<<<<<<<<<<<<<================ END INPUT FILE ================>>>>>>>>>>>>>>' . "\n\n";
 
+    # 'package' statement may be split across 2 lines
+    my $input_line_partial = q{};
+
     # look for all user-defined classes, create subclasses
     foreach my $input_line ( split /\n/, $input ) {
 #        print {*STDERR} 'in RPerl::filter(), have $input_line = ' . $input_line . "\n";
+#        print {*STDERR} 'in RPerl::filter(), have $input_line_partial = ' . $input_line_partial . "\n";
+
+        if ($input_line_partial ne q{}) {
+            $input_line = $input_line_partial . q{ } . $input_line;
+            $input_line_partial = q{};
+        }
         
-        if ( $input_line =~ /^\s*package\s+(.*)\s*;/xms ) {
+        # partial package line, allow to be split over 2 lines to disable CPAN indexing, discard comments
+        if ( $input_line =~ /^\s*(package\s+)(?:\#.*)?\s*$/xms ) {
+            $input_line_partial = $1;
+        }
+        elsif ( $input_line =~ /^\s*package\s+(.*)\s*;/xms ) {
             if ($package ne q{}) {
                 # multiple packages in one module file
                 $output .= $post_package_lines;
