@@ -44,6 +44,7 @@ our $SUPPORTED_ALL = [
         integer_hashref
         number_hashref
         string_hashref
+        integer_arrayref_hashref
         )
 ];
 #our string_arrayref $SUPPORTED_SPECIAL = [

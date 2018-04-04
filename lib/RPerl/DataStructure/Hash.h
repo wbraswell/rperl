@@ -6,8 +6,16 @@ using std::cout;  using std::cerr;  using std::endl;
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
+
+
+// UNCOMMENT LINE BELOW TO ENABLE NEW C++ SUBTYPE CODE
+// UNCOMMENT LINE BELOW TO ENABLE NEW C++ SUBTYPE CODE
+// UNCOMMENT LINE BELOW TO ENABLE NEW C++ SUBTYPE CODE
+
 // [[[ SUB-TYPES BEFORE INCLUDES ]]]
 //#include <RPerl/DataStructure/Hash/SubTypes.cpp>   // -> SubTypes.h
+
+
 
 // for type-checking subroutines & macros
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h

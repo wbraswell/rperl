@@ -92,9 +92,9 @@ our @EXPORT_OK = (
 use RPerl::Object;
 use RPerl::CodeBlock::Subroutine::Method;    # Method is the only item that is both a Data Type & a Grammar Rule???
 
+# DEV NOTE, CORRELATION #rp051: hard-coded list of RPerl data types and data structures
 # these types are currently implemented for the 2 primary RPerl modes: PERLOPS_PERLTYPES, CPPOPS_CPPTYPES
 # MISSING: boolean, unsigned_integer, character, *_arrayref, *_hashref
-# DEV NOTE, CORRELATION #rp051: hard-coded list of RPerl data types and data structures
 our string_arrayref $SUPPORTED = [
     qw(
         void
@@ -109,6 +109,7 @@ our string_arrayref $SUPPORTED = [
         integer_hashref
         number_hashref
         string_hashref
+        integer_arrayref_hashref
         )
 ];
 our string_arrayref $SUPPORTED_SPECIAL = [

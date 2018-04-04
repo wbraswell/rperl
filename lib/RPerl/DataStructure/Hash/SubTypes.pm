@@ -12,6 +12,7 @@ our $VERSION = 0.015_000;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ EXPORTS ]]]
+# DEV NOTE, CORRELATION #rp051: hard-coded list of RPerl data types and data structures
 use RPerl::Exporter 'import';
 our @EXPORT = qw(
     hashref_CHECK
@@ -28,6 +29,9 @@ our @EXPORT = qw(
     integer_arrayref_hashref_CHECK
     integer_arrayref_hashref_CHECKTRACE
     integer_arrayref_hashref_to_string
+    integer_arrayref_hashref_to_string_pretty
+    integer_arrayref_hashref_to_string_expand
+    integer_arrayref_hashref_to_string_format
 );
 our @EXPORT_OK = qw(
     integer_hashref_typetest0
@@ -228,7 +232,7 @@ sub integer_hashref_to_string {
     #	my integer $input_hv_length;
     my integer $input_hv_entry_value;
     my string $output_sv;
-    my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
+    my boolean $i_is_0 = 1;
 
     %input_hv = %{$input_hv_ref};
 
@@ -425,7 +429,7 @@ sub number_hashref_to_string {
     #	my integer $input_hv_length;
     my number $input_hv_entry_value;
     my string $output_sv;
-    my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
+    my boolean $i_is_0 = 1;
 
     %input_hv = %{$input_hv_ref};
 
@@ -617,10 +621,10 @@ sub string_hashref_to_string {
 
     my %input_hv;
 
-    #	my integer $input_hv_length;
+#	my integer $input_hv_length;
     my string $input_hv_entry_value;
     my string $output_sv;
-    my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
+    my boolean $i_is_0 = 1;
 
     %input_hv = %{$input_hv_ref};
 
@@ -739,27 +743,16 @@ sub integer_arrayref_hashref_CHECK {
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with integer-specific error codes
     if ( not( defined $possible_integer_arrayref_hashref ) ) {
-        croak(
-            "\nERROR EIVAVRVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref value expected but undefined/null value found,\ncroaking"
-        );
+        croak( "\nERROR EIVAVRVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref value expected but undefined/null value found,\ncroaking" );
     }
 
     if ( not( main::RPerl_SvHROKp($possible_integer_arrayref_hashref) ) ) {
-        croak(
-            "\nERROR EIVAVRVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref value expected but non-hashref value found,\ncroaking"
-        );
+        croak( "\nERROR EIVAVRVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref value expected but non-hashref value found,\ncroaking" );
     }
-
 
     my integer_arrayref $possible_integer_arrayref;
     foreach my string $key ( sort keys %{$possible_integer_arrayref_hashref} ) {
         $possible_integer_arrayref = $possible_integer_arrayref_hashref->{$key};
-
-
-
-
-
-
 
         # DEV NOTE: the following two if() statements are functionally equivalent to the arrayref_CHECK() subroutine, but with integer-specific error codes
         if ( not( defined $possible_integer_arrayref ) ) {
@@ -791,42 +784,54 @@ sub integer_arrayref_hashref_CHECK {
     return;
 }
 
+
+# START HERE: test CHECK code above, copy CHECK above to replace old CHECKTRACE below, test CHECKTRACE, update & test to_string() below, update & test typetest*() below
+# START HERE: test CHECK code above, copy CHECK above to replace old CHECKTRACE below, test CHECKTRACE, update & test to_string() below, update & test typetest*() below
+# START HERE: test CHECK code above, copy CHECK above to replace old CHECKTRACE below, test CHECKTRACE, update & test to_string() below, update & test typetest*() below
+
+
 sub integer_arrayref_hashref_CHECKTRACE {
     { my void $RETURN_TYPE };
-    ( my $possible_integer_arrayref_hashref, my $variable_name, my $subroutine_name )
-        = @ARG;
+    ( my $possible_integer_arrayref_hashref, my $variable_name, my $subroutine_name ) = @ARG;
 
-# DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECKTRACE() subroutine, but with integer-specific error codes
+# DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with integer-specific error codes
     if ( not( defined $possible_integer_arrayref_hashref ) ) {
-        croak(
-            "\nERROR EIVAVRVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR EIVAVRVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
 
     if ( not( main::RPerl_SvHROKp($possible_integer_arrayref_hashref) ) ) {
-        croak(
-            "\nERROR EIVAVRVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref value expected but non-hashref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR EIVAVRVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref value expected but non-hashref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
 
-    my integer $possible_integer;
+    my integer_arrayref $possible_integer_arrayref;
     foreach my string $key ( sort keys %{$possible_integer_arrayref_hashref} ) {
-        $possible_integer = $possible_integer_arrayref_hashref->{$key};
+        $possible_integer_arrayref = $possible_integer_arrayref_hashref->{$key};
 
-# DEV NOTE: the following two if() statements are functionally equivalent to the integer_CHECKTRACE() subroutine, but with hash-specific error codes
-        if ( not( defined $possible_integer ) ) {
-            $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
-            $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-            croak(
-                "\nERROR EIVAVRVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref element value expected but undefined/null value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-            );
+        # DEV NOTE: the following two if() statements are functionally equivalent to the arrayref_CHECK() subroutine, but with integer-specific error codes
+        if ( not( defined $possible_integer_arrayref ) ) {
+            croak( "\nERROR EIVAVRVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref element value, integer_arrayref, expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
-        if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
-            $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
-            $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-            croak(
-                "\nERROR EIVAVRVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref element value expected but non-integer value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-            );
+
+        if ( not( main::RPerl_SvAROKp($possible_integer_arrayref) ) ) {
+            croak( "\nERROR EIVAVRVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref element value, integer_arrayref, expected but non-arrayref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+        }
+
+        my integer $possible_integer;
+        for my integer $i ( 0 .. ( ( scalar @{$possible_integer_arrayref} ) - 1 ) )
+        {
+            $possible_integer = $possible_integer_arrayref->[$i];
+
+            # DEV NOTE: the following two if() statements are functionally equivalent to the integer_CHECK() subroutine, but with arrayref_hashref-specific error codes
+            if ( not( defined $possible_integer ) ) {
+                $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+                $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+                croak( "\nERROR EIVAVRVHVRV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref sub-element value, integer, expected but undefined/null value found at key '$key', index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+            }
+            if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
+                $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+                $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
+                croak( "\nERROR EIVAVRVHVRV05, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref sub-element value, integer, expected but non-integer value found at key '$key', index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+            }
         }
     }
     return;
@@ -834,52 +839,83 @@ sub integer_arrayref_hashref_CHECKTRACE {
 
 # [[[ STRINGIFY ]]]
 
-# convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
+# call actual stringify routine, default to format level 0 (compact), indent level 0
 sub integer_arrayref_hashref_to_string {
     { my string $RETURN_TYPE };
-    ( my $input_hv_ref ) = @ARG;
+    ( my $input_av_ref_hv_ref ) = @ARG;
+    return integer_arrayref_hashref_to_string_format($input_av_ref_hv_ref, 0, 0);
+}
 
-#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string(), top of subroutine\n");
+# call actual stringify routine, format level 1 (pretty), indent level 0
+sub integer_arrayref_hashref_to_string_pretty {
+    { my string $RETURN_TYPE };
+    ( my $input_av_ref_hv_ref ) = @ARG;
+    return integer_arrayref_hashref_to_string_format($input_av_ref_hv_ref, 1, 0);
+}
 
-    #    integer_arrayref_hashref_CHECK($input_hv_ref);
-    integer_arrayref_hashref_CHECKTRACE( $input_hv_ref, '$input_hv_ref',
-        'integer_arrayref_hashref_to_string()' );
+# call actual stringify routine, format level 2 (expanded), indent level 0
+sub integer_arrayref_hashref_to_string_expand {
+    { my string $RETURN_TYPE };
+    ( my $input_av_ref_hv_ref ) = @ARG;
+    return integer_arrayref_hashref_to_string_format($input_av_ref_hv_ref, 2, 0);
+}
 
-    my %input_hv;
+# convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
+sub integer_arrayref_hashref_to_string_format {
+    { my string $RETURN_TYPE };
+    ( my $input_av_ref_hv_ref, my integer $format_level, my integer $indent_level ) = @ARG;
 
-    #   my integer $input_hv_length;
-    my integer $input_hv_entry_value;
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string_format(), top of subroutine\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string_format(), received $format_level = ', $format_level, "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string_format(), received $indent_level = ', $indent_level, "\n");
+
+#    integer_arrayref_hashref_CHECK($input_av_ref_hv_ref);
+    integer_arrayref_hashref_CHECKTRACE( $input_av_ref_hv_ref, '$input_av_ref_hv_ref', 'integer_arrayref_hashref_to_string_format()' );
+
+    my %input_av_ref_hv;
+
+    #   my integer $input_av_ref_hv_length;
+    my integer $input_av_ref_hv_entry_value;
     my string $output_sv;
-    my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
+    my boolean $i_is_0 = 1;
+    my string $indent = q{    } x $indent_level;
 
-    %input_hv = %{$input_hv_ref};
+    %input_av_ref_hv = %{$input_av_ref_hv_ref};
 
-#   $input_hv_length = scalar keys %input_hv;
-#   RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string(), have \$input_hv_length = $input_hv_length\n");
+#   $input_av_ref_hv_length = scalar keys %input_av_ref_hv;
+#   RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string_format(), have \$input_av_ref_hv_length = $input_av_ref_hv_length\n");
 
-    $output_sv = '{';
+    if ($format_level >= 1) { $output_sv = $indent . '{'; }
+    else                    { $output_sv = '{'; }
 
-    foreach my string $key ( sort keys %input_hv ) {
+    foreach my string $key ( sort keys %input_av_ref_hv ) {
 
-        $input_hv_entry_value = $input_hv{$key};
+        $input_av_ref_hv_entry_value = $input_av_ref_hv{$key};
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
         $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
 # DEV NOTE: integer type-checking already done as part of integer_arrayref_hashref_CHECKTRACE()
-#        integer_CHECK($input_hv_entry_value);
-#        integer_CHECKTRACE( $input_hv_entry_value, "\$input_hv_entry_value at key '$key'", 'integer_arrayref_hashref_to_string()' );
+#        integer_CHECK($input_av_ref_hv_entry_value);
+#        integer_CHECKTRACE( $input_av_ref_hv_entry_value, "\$input_av_ref_hv_entry_value at key '$key'", 'integer_arrayref_hashref_to_string_format()' );
 
         if ($i_is_0) { $i_is_0 = 0; }
-        else         { $output_sv .= ', '; }
+        else         { $output_sv .= ','; }
+
+        if ($format_level >= 1) { $output_sv .=  "\n" . $indent . q{    }; }
+        else                    { $output_sv .= q{ }; }
+
         # DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
-#        $output_sv .= "'$key' => $input_hv_entry_value";  # NO UNDERSCORES
-        $output_sv .= "'$key' => " . ::integer_to_string($input_hv_entry_value);  # NO UNDERSCORES
+        $output_sv .= q{'} . $key . q{' => };
+        if ($format_level >= 2) { $output_sv .= "\n"; }
+        $output_sv .= ::integer_arrayref_to_string_format($input_av_ref_hv_entry_value, ($format_level - 1), ($indent_level + 1));  # YES UNDERSCORES???  [ WAS THIS COMMENT WRONG?  FIX IN ORIGINAL! ]
     }
 
+    if ($format_level >= 1) { $output_sv .= "\n" . $indent; }
+    else                    { $output_sv .= q{ }; }
     $output_sv .= '}';
 
-#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n");
-#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string(), bottom of subroutine\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string_format(), after for() loop, have \$output_sv =\n$output_sv\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string_format(), bottom of subroutine\n");
     return ($output_sv);
 }
 
@@ -890,8 +926,7 @@ sub integer_arrayref_hashref_typetest0 {
     ( my integer_arrayref_hashref $lucky_integers) = @ARG;
 
     #    integer_arrayref_hashref_CHECK($lucky_integers);
-    integer_arrayref_hashref_CHECKTRACE( $lucky_integers, '$lucky_integers',
-        'integer_arrayref_hashref_typetest0()' );
+    integer_arrayref_hashref_CHECKTRACE( $lucky_integers, '$lucky_integers', 'integer_arrayref_hashref_typetest0()' );
 
 #    foreach my string $key ( sort keys %{$lucky_integers} ) {
 #        my $lucky_integer = $lucky_integers->{$key};
@@ -901,8 +936,7 @@ sub integer_arrayref_hashref_typetest0 {
 #        RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_typetest0(), have lucky integer '$key' => " . $lucky_integer . ", BARSTOOL\n");
 #    }
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_typetest0(), bottom of subroutine\n");
-    return (
-        integer_arrayref_hashref_to_string($lucky_integers) . 'PERLOPS_PERLTYPES' );
+    return ( integer_arrayref_hashref_to_string($lucky_integers) . 'PERLOPS_PERLTYPES' );
 }
 
 sub integer_arrayref_hashref_typetest1 {
@@ -910,8 +944,7 @@ sub integer_arrayref_hashref_typetest1 {
     ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
-    integer_CHECKTRACE( $my_size, '$my_size',
-        'integer_arrayref_hashref_typetest1()' );
+    integer_CHECKTRACE( $my_size, '$my_size', 'integer_arrayref_hashref_typetest1()' );
     my integer_arrayref_hashref $new_hash = {};
     my string $temp_key;
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {

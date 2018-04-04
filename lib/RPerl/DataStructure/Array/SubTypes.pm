@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.013_000;
+our $VERSION = 0.015_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -12,9 +12,38 @@ our $VERSION = 0.013_000;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ EXPORTS ]]]
+# DEV NOTE, CORRELATION #rp051: hard-coded list of RPerl data types and data structures
 use RPerl::Exporter 'import';
-our @EXPORT = qw(arrayref_CHECK arrayref_CHECKTRACE integer_arrayref_CHECK integer_arrayref_CHECKTRACE number_arrayref_CHECK number_arrayref_CHECKTRACE string_arrayref_CHECK string_arrayref_CHECKTRACE integer_arrayref_to_string number_arrayref_to_string string_arrayref_to_string);
-our @EXPORT_OK = qw(integer_arrayref_typetest0 integer_arrayref_typetest1 number_arrayref_typetest0 number_arrayref_typetest1 string_arrayref_typetest0 string_arrayref_typetest1);
+our @EXPORT = qw(
+    arrayref_CHECK
+    arrayref_CHECKTRACE
+    integer_arrayref_CHECK
+    integer_arrayref_CHECKTRACE
+    number_arrayref_CHECK
+    number_arrayref_CHECKTRACE
+    string_arrayref_CHECK
+    string_arrayref_CHECKTRACE
+    integer_arrayref_to_string
+    integer_arrayref_to_string_pretty
+    integer_arrayref_to_string_expand
+    integer_arrayref_to_string_format
+    number_arrayref_to_string
+    number_arrayref_to_string_pretty
+    number_arrayref_to_string_expand
+    number_arrayref_to_string_format
+    string_arrayref_to_string
+    string_arrayref_to_string_pretty
+    string_arrayref_to_string_expand
+    string_arrayref_to_string_format
+);
+our @EXPORT_OK = qw(
+    integer_arrayref_typetest0
+    integer_arrayref_typetest1
+    number_arrayref_typetest0
+    number_arrayref_typetest1
+    string_arrayref_typetest0
+    string_arrayref_typetest1
+);
 
 # [[[ INCLUDES ]]]
 use RPerl::DataType::Integer;  # integer_CHECKTRACE
@@ -78,7 +107,6 @@ sub arrayref_CHECK {
     return;
 }
 
-
 sub arrayref_CHECKTRACE {
     { my void $RETURN_TYPE };
     ( my $possible_arrayref, my $variable_name, my $subroutine_name ) = @ARG;
@@ -139,7 +167,6 @@ sub integer_arrayref_CHECK {
     return;
 };
 
-
 sub integer_arrayref_CHECKTRACE {
     { my void $RETURN_TYPE };
     ( my $possible_integer_arrayref, my $variable_name, my $subroutine_name ) = @ARG;
@@ -166,17 +193,39 @@ sub integer_arrayref_CHECKTRACE {
 
 # [[[ STRINGIFY ]]]
 
-# convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
-# stringify an integer_arrayref
+# call actual stringify routine, default to format level 0 (compact), indent level 0
 sub integer_arrayref_to_string {
     { my string $RETURN_TYPE };
-    # require exactly one integer_arrayref as input, store in variable $input_avref
-    ( my integer_arrayref $input_avref ) = @ARG;
+    ( my $input_av_ref ) = @ARG;
+    return integer_arrayref_to_string_format($input_av_ref, 0, 0);
+}
 
-#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), top of subroutine\n");
+# call actual stringify routine, format level 1 (pretty), indent level 0
+sub integer_arrayref_to_string_pretty {
+    { my string $RETURN_TYPE };
+    ( my $input_av_ref ) = @ARG;
+    return integer_arrayref_to_string_format($input_av_ref, 1, 0);
+}
 
-    #    integer_arrayref_CHECK($input_avref);
-    integer_arrayref_CHECKTRACE( $input_avref, '$input_avref', 'integer_arrayref_to_string()' );
+# call actual stringify routine, format level 2 (expanded), indent level 0
+sub integer_arrayref_to_string_expand {
+    { my string $RETURN_TYPE };
+    ( my $input_av_ref ) = @ARG;
+    return integer_arrayref_to_string_format($input_av_ref, 2, 0);
+}
+
+# convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
+# stringify an integer_arrayref
+sub integer_arrayref_to_string_format {
+    { my string $RETURN_TYPE };
+    ( my integer_arrayref $input_avref, my integer $format_level, my integer $indent_level ) = @ARG;
+
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string_format(), top of subroutine\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES integer_arrayref_to_string_format(), received $format_level = ', $format_level, "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES integer_arrayref_to_string_format(), received $indent_level = ', $indent_level, "\n");
+
+#    integer_arrayref_CHECK($input_avref);
+    integer_arrayref_CHECKTRACE( $input_avref, '$input_avref', 'integer_arrayref_to_string_format()' );
 
     # declare local variables, av & sv mean "array value" & "scalar value" as used in Perl core
 #    my @input_av;  # DEV NOTE: match CPPOPS_*TYPES code
@@ -184,16 +233,18 @@ sub integer_arrayref_to_string {
     my integer $input_av_element;
     my string $output_sv;
     my boolean $i_is_0 = 1;
+    my string $indent = q{    } x $indent_level;
 
     # compute length of (number of elements in) input array
 #    @input_av        = @{$input_avref};  # DEV NOTE: match CPPOPS_*TYPES code
 #    $input_av_length = scalar @input_av;  # DEV NOTE: match CPPOPS_*TYPES code
     $input_av_length = scalar @{$input_avref};
 
-#	RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), have \$input_av_length = $input_av_length\n");
+#	RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string_format(), have \$input_av_length = $input_av_length\n");
 
     # begin output string with left-square-bracket, as required for all RPerl arrays
-    $output_sv = '[';
+    if ($format_level >= 1) { $output_sv = $indent . '['; }
+    else                    { $output_sv = '['; }
 
     # loop through all valid values of $i for use as index to input array
     for my integer $i ( 0 .. ( $input_av_length - 1 ) ) {
@@ -202,23 +253,28 @@ sub integer_arrayref_to_string {
 #        $input_av_element = $input_av[$i];  # DEV NOTE: match CPPOPS_*TYPES code
         $input_av_element = $input_avref->[$i];
 
-# DEV NOTE: integer type-checking already done as part of integer_arrayref_CHECKTRACE()
+# DEV NOTE: type-checking already done as part of integer_arrayref_CHECKTRACE()
 #        integer_CHECK($input_av_element);
-#integer_CHECKTRACE( $input_av_element, "\$input_av_element at index $i", 'integer_arrayref_to_string()' );
+#integer_CHECKTRACE( $input_av_element, "\$input_av_element at index $i", 'integer_arrayref_to_string_format()' );
 
         # append comma & space to output string for all elements except index 0
         if ($i_is_0) { $i_is_0 = 0; }
-        else         { $output_sv .= ', '; }
+        else         { $output_sv .= ','; }
 
-        # stringify individual integer element, append to output string
+        if ($format_level >= 1) { $output_sv .= "\n" . $indent . q{    }; }
+        else                    { $output_sv .= q{ }; }
+
+        # stringify individual element, append to output string
         $output_sv .= ::integer_to_string($input_av_element);
     }
 
     # end output string with right-square-bracket, as required for all RPerl arrays
+    if ($format_level >= 1) { $output_sv .= "\n" . $indent; }
+    else                    { $output_sv .= q{ }; }
     $output_sv .= ']';
 
-#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n");
-#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string(), bottom of subroutine\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string_format(), after for() loop, have \$output_sv =\n$output_sv\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string_format(), bottom of subroutine\n");
 
     # return output string, containing stringified input array
     return $output_sv;
@@ -333,43 +389,91 @@ sub number_arrayref_CHECKTRACE {
 
 # [[[ STRINGIFY ]]]
 
-# convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
+# call actual stringify routine, default to format level 0 (compact), indent level 0
 sub number_arrayref_to_string {
     { my string $RETURN_TYPE };
-    ( my $input_avref ) = @ARG;
+    ( my $input_av_ref ) = @ARG;
+    return number_arrayref_to_string_format($input_av_ref, 0, 0);
+}
 
-#    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), top of subroutine\n");
+# call actual stringify routine, format level 1 (pretty), indent level 0
+sub number_arrayref_to_string_pretty {
+    { my string $RETURN_TYPE };
+    ( my $input_av_ref ) = @ARG;
+    return number_arrayref_to_string_format($input_av_ref, 1, 0);
+}
 
-    #    number_arrayref_CHECK($input_avref);
-    number_arrayref_CHECKTRACE( $input_avref, '$input_avref', 'number_arrayref_to_string()' );
+# call actual stringify routine, format level 2 (expanded), indent level 0
+sub number_arrayref_to_string_expand {
+    { my string $RETURN_TYPE };
+    ( my $input_av_ref ) = @ARG;
+    return number_arrayref_to_string_format($input_av_ref, 2, 0);
+}
 
-    my @input_av;
+# convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
+# stringify an number_arrayref
+sub number_arrayref_to_string_format {
+    { my string $RETURN_TYPE };
+    ( my number_arrayref $input_avref, my integer $format_level, my integer $indent_level ) = @ARG;
+
+#    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string_format(), top of subroutine\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES number_arrayref_to_string_format(), received $format_level = ', $format_level, "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES number_arrayref_to_string_format(), received $indent_level = ', $indent_level, "\n");
+
+#    number_arrayref_CHECK($input_avref);
+    number_arrayref_CHECKTRACE( $input_avref, '$input_avref', 'number_arrayref_to_string_format()' );
+
+    # declare local variables, av & sv mean "array value" & "scalar value" as used in Perl core
+#    my @input_av;  # DEV NOTE: match CPPOPS_*TYPES code
     my integer $input_av_length;
-    my number $input_av_element;
+    my integer $input_av_element;
     my string $output_sv;
-    my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
+    my boolean $i_is_0 = 1;
+    my string $indent = q{    } x $indent_level;
 
-    @input_av        = @{$input_avref};
-    $input_av_length = scalar @input_av;
+    # compute length of (number of elements in) input array
+#    @input_av        = @{$input_avref};  # DEV NOTE: match CPPOPS_*TYPES code
+#    $input_av_length = scalar @input_av;  # DEV NOTE: match CPPOPS_*TYPES code
+    $input_av_length = scalar @{$input_avref};
 
-#	RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), have \$input_av_length = $input_av_length\n");
+#   RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string_format(), have \$input_av_length = $input_av_length\n");
 
-    $output_sv = '[';
+    # begin output string with left-square-bracket, as required for all RPerl arrays
+    if ($format_level >= 1) { $output_sv = $indent . '['; }
+    else                    { $output_sv = '['; }
 
+    # loop through all valid values of $i for use as index to input array
     for my integer $i ( 0 .. ( $input_av_length - 1 ) ) {
 
-        $input_av_element = $input_av[$i];
+        # retrieve input array's element at index $i
+#        $input_av_element = $input_av[$i];  # DEV NOTE: match CPPOPS_*TYPES code
+        $input_av_element = $input_avref->[$i];
 
+# DEV NOTE: type-checking already done as part of number_arrayref_CHECKTRACE()
+#        number_CHECK($input_av_element);
+#number_CHECKTRACE( $input_av_element, "\$input_av_element at index $i", 'number_arrayref_to_string_format()' );
+
+        # append comma & space to output string for all elements except index 0
         if ($i_is_0) { $i_is_0 = 0; }
-        else         { $output_sv .= ', '; }
+        else         { $output_sv .= ','; }
+
+        if ($format_level >= 1) { $output_sv .= "\n" . $indent . q{    }; }
+        else                    { $output_sv .= q{ }; }
+
+        # stringify individual element, append to output string
         $output_sv .= RPerl::DataType::Number::number_to_string($input_av_element);
     }
 
+    # end output string with right-square-bracket, as required for all RPerl arrays
+    if ($format_level >= 1) { $output_sv .= "\n" . $indent; }
+    else                    { $output_sv .= q{ }; }
     $output_sv .= ']';
 
-#    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n");
-#    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), bottom of subroutine\n");
-    return ($output_sv);
+#    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string_format(), after for() loop, have \$output_sv =\n$output_sv\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string_format(), bottom of subroutine\n");
+
+    # return output string, containing stringified input array
+    return $output_sv;
 }
 
 # [[[ TYPE TESTING ]]]
@@ -460,7 +564,6 @@ sub string_arrayref_CHECK {
     return;
 }
 
-
 sub string_arrayref_CHECKTRACE {
     { my void $RETURN_TYPE };
     ( my $possible_string_arrayref, my $variable_name, my $subroutine_name ) = @ARG;
@@ -487,45 +590,93 @@ sub string_arrayref_CHECKTRACE {
 
 # [[[ STRINGIFY ]]]
 
-# convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
+# call actual stringify routine, default to format level 0 (compact), indent level 0
 sub string_arrayref_to_string {
     { my string $RETURN_TYPE };
-    ( my $input_avref ) = @ARG;
+    ( my $input_av_ref ) = @ARG;
+    return string_arrayref_to_string_format($input_av_ref, 0, 0);
+}
 
-#    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), top of subroutine\n");
+# call actual stringify routine, format level 1 (pretty), indent level 0
+sub string_arrayref_to_string_pretty {
+    { my string $RETURN_TYPE };
+    ( my $input_av_ref ) = @ARG;
+    return string_arrayref_to_string_format($input_av_ref, 1, 0);
+}
 
-    #    string_arrayref_CHECK($input_avref);
-    string_arrayref_CHECKTRACE( $input_avref, '$input_avref', 'string_arrayref_to_string()' );
+# call actual stringify routine, format level 2 (expanded), indent level 0
+sub string_arrayref_to_string_expand {
+    { my string $RETURN_TYPE };
+    ( my $input_av_ref ) = @ARG;
+    return string_arrayref_to_string_format($input_av_ref, 2, 0);
+}
 
-    my @input_av;
+# convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
+# stringify an string_arrayref
+sub string_arrayref_to_string_format {
+    { my string $RETURN_TYPE };
+    ( my string_arrayref $input_avref, my integer $format_level, my integer $indent_level ) = @ARG;
+
+#    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string_format(), top of subroutine\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES string_arrayref_to_string_format(), received $format_level = ', $format_level, "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES string_arrayref_to_string_format(), received $indent_level = ', $indent_level, "\n");
+
+#    string_arrayref_CHECK($input_avref);
+    string_arrayref_CHECKTRACE( $input_avref, '$input_avref', 'string_arrayref_to_string_format()' );
+
+    # declare local variables, av & sv mean "array value" & "scalar value" as used in Perl core
+#    my @input_av;  # DEV NOTE: match CPPOPS_*TYPES code
     my integer $input_av_length;
-    my string $input_av_element;
+    my integer $input_av_element;
     my string $output_sv;
-    my integer $i_is_0 = 1;   # NEED UPGRADE: should be boolean type, not integer
+    my boolean $i_is_0 = 1;
+    my string $indent = q{    } x $indent_level;
 
-    @input_av        = @{$input_avref};
-    $input_av_length = scalar @input_av;
+    # compute length of (number of elements in) input array
+#    @input_av        = @{$input_avref};  # DEV NOTE: match CPPOPS_*TYPES code
+#    $input_av_length = scalar @input_av;  # DEV NOTE: match CPPOPS_*TYPES code
+    $input_av_length = scalar @{$input_avref};
 
-#	RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), have \$input_av_length = $input_av_length\n");
+#   RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string_format(), have \$input_av_length = $input_av_length\n");
 
-    $output_sv = '[';
+    # begin output string with left-square-bracket, as required for all RPerl arrays
+    if ($format_level >= 1) { $output_sv = $indent . '['; }
+    else                    { $output_sv = '['; }
 
+    # loop through all valid values of $i for use as index to input array
     for my integer $i ( 0 .. ( $input_av_length - 1 ) ) {
 
-        $input_av_element = $input_av[$i];
+        # retrieve input array's element at index $i
+#        $input_av_element = $input_av[$i];  # DEV NOTE: match CPPOPS_*TYPES code
+        $input_av_element = $input_avref->[$i];
 
+# DEV NOTE: type-checking already done as part of string_arrayref_CHECKTRACE()
+#        number_CHECK($input_av_element);
+#number_CHECKTRACE( $input_av_element, "\$input_av_element at index $i", 'string_arrayref_to_string_format()' );
+
+        # append comma & space to output string for all elements except index 0
         if ($i_is_0) { $i_is_0 = 0; }
-        else         { $output_sv .= ', '; }
+        else         { $output_sv .= ','; }
+
+        if ($format_level >= 1) { $output_sv .= "\n" . $indent . q{    }; }
+        else                    { $output_sv .= q{ }; }
+
+        # stringify individual element, append to output string
         $input_av_element =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
         $input_av_element =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
         $output_sv .= "'$input_av_element'";
     }
 
+    # end output string with right-square-bracket, as required for all RPerl arrays
+    if ($format_level >= 1) { $output_sv .= "\n" . $indent; }
+    else                    { $output_sv .= q{ }; }
     $output_sv .= ']';
 
-#    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), after for() loop, have \$output_sv =\n$output_sv\n");
-#    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), bottom of subroutine\n");
-    return ($output_sv);
+#    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string_format(), after for() loop, have \$output_sv =\n$output_sv\n");
+#    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string_format(), bottom of subroutine\n");
+
+    # return output string, containing stringified input array
+    return $output_sv;
 }
 
 # [[[ TYPE TESTING ]]]
@@ -567,7 +718,9 @@ it's purpose is to keep from triggering the UselessNoCritic rule,
 so we can keep the no critic sections at the top of the file for reference
 =cut
 
-# [[[ SCALAR ARRAYS ]]]
+# [[[ SCALAR ARRAY REF ]]]
+# [[[ SCALAR ARRAY REF ]]]
+# [[[ SCALAR ARRAY REF ]]]
 
 # (ref to array) of scalartypes
 package  # hide from PAUSE indexing
@@ -576,7 +729,9 @@ use strict;
 use warnings;
 use parent -norequire, qw(arrayref);
 
-# [[[ ARRAY ARRAYS (2-dimensional) ]]]
+# [[[ ARRAY REF ARRAY REF (2-dimensional) ]]]
+# [[[ ARRAY REF ARRAY REF (2-dimensional) ]]]
+# [[[ ARRAY REF ARRAY REF (2-dimensional) ]]]
 
 # (ref to array) of (refs to arrays)
 package  # hide from PAUSE indexing
@@ -585,7 +740,9 @@ use strict;
 use warnings;
 use parent -norequire, qw(arrayref);
 
-# [ HOMOGENEOUS ARRAY ARRAYS (2-dimensional) ]
+# [[[ HOMOGENEOUS ARRAY REF ARRAY REF (2-dimensional) ]]] 
+# [[[ HOMOGENEOUS ARRAY REF ARRAY REF (2-dimensional) ]]] 
+# [[[ HOMOGENEOUS ARRAY REF ARRAY REF (2-dimensional) ]]] 
 
 # method returning (ref to array) of (refs to (arrays of integers))
 package  # hide from PAUSE indexing
@@ -602,6 +759,16 @@ use warnings;
 use parent -norequire, qw(arrayref_arrayref);
 
 use RPerl::Config;  # for 'use English;' etc.
+
+
+
+
+# START HERE: implement integer_arrayref_arrayref_CHECK*() & integer_arrayref_arrayref_to_string() & integer_arrayref_arrayref_typetest*() as in Hash/SubTypes.pm, then *_arrayref_arrayref, then *_hashref_arrayref
+# START HERE: implement integer_arrayref_arrayref_CHECK*() & integer_arrayref_arrayref_to_string() & integer_arrayref_arrayref_typetest*() as in Hash/SubTypes.pm, then *_arrayref_arrayref, then *_hashref_arrayref
+# START HERE: implement integer_arrayref_arrayref_CHECK*() & integer_arrayref_arrayref_to_string() & integer_arrayref_arrayref_typetest*() as in Hash/SubTypes.pm, then *_arrayref_arrayref, then *_hashref_arrayref
+
+
+
 
 # emulate C++ behavior by actually creating arrays (and presumably allocating memory) at initialization time
 sub new {
