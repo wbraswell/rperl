@@ -151,7 +151,7 @@ sub filter {
         }
         
         # partial package line, allow to be split over 2 lines to disable CPAN indexing, discard comments
-        if ( $input_line =~ /^\s*(package\s+)(?:\#.*)?\s*$/xms ) {
+        if ( $input_line =~ /^\s*(package)\s*(?:\#.*)?\s*$/xms ) {
             $input_line_partial = $1;
         }
         elsif ( $input_line =~ /^\s*package\s+(.*)\s*;/xms ) {

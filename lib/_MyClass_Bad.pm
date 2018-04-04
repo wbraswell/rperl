@@ -4,7 +4,8 @@
 
 # [[[ HEADER ]]]
 use RPerl;
-package  # hide from PAUSE indexing
+# hide from PAUSE indexing; comment must not be on 'package' line below due to Perl::Tidy format mismatch
+package
     _MyClass_Bad;
 use strict;
 use warnings;
