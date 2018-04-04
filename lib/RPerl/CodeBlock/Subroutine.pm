@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.021_000;
+our $VERSION = 0.022_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -221,25 +221,6 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my string $return_type             = $self->{children}->[5]->{children}->[0];
     my object $arguments_optional      = $self->{children}->[9];
     my object $operations_star         = $self->{children}->[10];
-
-
-
-# START HERE: Travis tests pass; move list below to dev_notes.txt
-# START HERE: Travis tests pass; move list below to dev_notes.txt
-# START HERE: Travis tests pass; move list below to dev_notes.txt
-
-=LIST_OF_UNDERSCORE_CHECKS
-ECOGEASxP 180x: variable          DONE
-ECOGEASxP 181x: subroutine def    DONE
-ECOGEASxP 182x: subroutine call   DONE
-ECOGEASxP 183x: subroutine arg    DONE
-ECOGEASxP 184x: package or class  DONE
-ECOGEASxP 185x: include           DONE
-ECOGEASxP 186x: method def        DONE
-ECOGEASxP 187x: method call       DONE
-ECOGEASxP 188x: method arg        DONE
-ECOGEASxP 189x: property          DONE
-=cut
 
 # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 # as of March 2018, the latest draft of the C++ standard, section 5.10 on pages 13-14, states:

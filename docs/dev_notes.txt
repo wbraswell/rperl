@@ -1,4 +1,4 @@
-# RPerl Developer Notes 20180402 2018.092
+# RPerl Developer Notes 20180403 2018.093
 
 ##########################################################################################
 # WARNING & ERROR CODES
@@ -56,8 +56,18 @@ BU: Bubble
 
 ERROR CODE RANGES
 
-ECOGEASxP 0xx - 4xx: misc codes which match between PERLOPS_PERLTYPES & CPPOPS_CPPTYPES (& CPPOPS_PERLTYPES eventually)
-          18x      : DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++ 
+ECOGEASxP 0xx - 4xx : misc codes which match between PERLOPS_PERLTYPES & CPPOPS_CPPTYPES (& CPPOPS_PERLTYPES eventually)
+          18x       : DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++ 
+ECOGEASxP 180x      : variable
+ECOGEASxP 181x      : subroutine def
+ECOGEASxP 182x      : subroutine call
+ECOGEASxP 183x      : subroutine arg
+ECOGEASxP 184x      : package or class
+ECOGEASxP 185x      : include
+ECOGEASxP 186x      : method def
+ECOGEASxP 187x      : method call
+ECOGEASxP 188x      : method arg
+ECOGEASxP 189x      : property
 
 ECOGEASxP 5xx:       PERLOPS_PERLTYPES only codes
 

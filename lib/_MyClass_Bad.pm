@@ -4,7 +4,8 @@
 
 # [[[ HEADER ]]]
 use RPerl;
-package _MyClass_Bad;
+package  # hide from PAUSE indexing
+    _MyClass_Bad;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;

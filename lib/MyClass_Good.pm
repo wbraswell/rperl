@@ -1,6 +1,7 @@
 # [[[ HEADER ]]]
 use RPerl;
-package MyClass_Good;
+package  # hide from PAUSE indexing
+    MyClass_Good;
 use strict;
 use warnings;
 our $VERSION = 0.001_000;
