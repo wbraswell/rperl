@@ -414,6 +414,9 @@ DATA TYPES & STRUCTURES
             for :const I added the MODIFY_SCALAR_ATTRIBUTE function (into xsutils.c?)
             also MODIFY_HASH_ATTRIBUTE and so on, for every reftype, _ARRAY_, _CODE_, …
 
+VARIABLES
+    allow block-scoped variables; currently supported for unique variable names, triggers false error ECOGEASCP012 "already declared in this scope" for non-unique variable names in the same subroutine
+
 PERL::CRITIC BUGS
     Eclipse EPIC Integration, Silent Failure    https://github.com/Perl-Critic/Perl-Critic/issues/582
     ProhibitMagicNumbers False Positive    https://github.com/Perl-Critic/Perl-Critic/issues/631

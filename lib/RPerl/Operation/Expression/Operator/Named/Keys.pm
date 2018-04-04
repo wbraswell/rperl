@@ -32,8 +32,7 @@ our hashref $properties = {};
 
 sub ast_to_rperl__generate {
     { my string_hashref::method $RETURN_TYPE };
-    ( my object $self, my object $operator_named, my string_hashref $modes)
-        = @ARG;
+    ( my object $self, my object $operator_named, my string_hashref $modes) = @ARG;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
 #    RPerl::diag( 'in Operator::Named::Keys->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
@@ -43,38 +42,27 @@ sub ast_to_rperl__generate {
     if ( $operator_named_class eq 'Operation_96' ) { # Operation -> OP01_NAMED_SCOLON
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP016, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
-                . $operator_named->{children}->[0]
-                . ' requires exactly one argument, dying' )
-            . "\n";
+                . $operator_named->{children}->[0] . ' requires exactly one argument, dying' ) . "\n";
     }
     elsif ( $operator_named_class eq 'Operator_100' ) { # Operator -> OP01_NAMED SubExpression
         $rperl_source_group->{PMC} .= $operator_named->{children}->[0] . q{ };
-        my string_hashref $rperl_source_subgroup
-            = $operator_named->{children}->[1]
-            ->ast_to_rperl__generate( $modes, $self );
-        RPerl::Generator::source_group_append( $rperl_source_group,
-            $rperl_source_subgroup );
+        my string_hashref $rperl_source_subgroup = $operator_named->{children}->[1]->ast_to_rperl__generate( $modes, $self );
+        RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
     elsif ( $operator_named_class eq 'Operator_101' ) { # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP014, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
-                . $operator_named->{children}->[1]
-                . ' does not accept multiple arguments, dying' )
-            . "\n";
+                . $operator_named->{children}->[1] . ' does not accept multiple arguments, dying' ) . "\n";
     }
     elsif ( $operator_named_class eq 'OperatorVoid_140' ) { # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP014, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Named operator '
-                . $operator_named->{children}->[0]
-                . ' does not accept multiple arguments, dying' )
-            . "\n";
+                . $operator_named->{children}->[0] . ' does not accept multiple arguments, dying' ) . "\n";
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
-                . ($operator_named_class)
-                . ' found where Operation_96, Operator_100, Operator_101, or OperatorVoid_140 expected, dying'
-        ) . "\n";
+                . ($operator_named_class) . ' found where Operation_96, Operator_100, Operator_101, or OperatorVoid_140 expected, dying' ) . "\n";
     }
     return $rperl_source_group;
 }
@@ -83,9 +71,7 @@ sub ast_to_cpp__generate__CPPOPS_PERLTYPES {
     { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group
-        = { CPP =>
-            q{// <<< RP::O::E::O::N::K __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
-            . "\n" };
+        = { CPP => q{// <<< RP::O::E::O::N::K __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n" };
 
     #...
     return $cpp_source_group;
@@ -95,9 +81,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group
-        = { CPP =>
-            q{// <<< RP::O::E::O::N::K __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+        = { CPP => q{// <<< RP::O::E::O::N::K __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
 
     #...
     return $cpp_source_group;

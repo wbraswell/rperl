@@ -4,7 +4,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< COMPILE_ERROR: 'P012, CODE GENERATOR, ABSTRACT SYNTAX TO' >>>
-# <<< COMPILE_ERROR: 'variable i already declared in this scope, namespace main::, subroutine/method main(), dying' >>>
+# <<< COMPILE_ERROR: "variable 'i' already declared in this scope, namespace main::, subroutine/method main(), dying" >>>
 
 # [[[ HEADER ]]]
 use RPerl;

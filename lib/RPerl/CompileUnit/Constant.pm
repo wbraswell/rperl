@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Constant;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit);
@@ -53,7 +53,7 @@ sub ast_to_rperl__generate {
     # CREATE SYMBOL TABLE ENTRY
     if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_global}->{$name} ) {
         die 'ERROR ECOGEASRP012, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
-            . $name
+            . q{'} . $name . q{'}
             . ' already declared in this scope, namespace '
             . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
             . ', subroutine/method '
@@ -112,7 +112,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     # CREATE SYMBOL TABLE ENTRY
     if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_global}->{$name} ) {
         die 'ERROR ECOGEASCP012, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
-            . $name
+            . q{'} . $name . q{'}
             . ' already declared in this scope, namespace '
             . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
             . ', subroutine/method '

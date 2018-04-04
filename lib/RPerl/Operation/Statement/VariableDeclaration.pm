@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.012_000;
+our $VERSION = 0.013_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -67,7 +67,7 @@ sub ast_to_rperl__generate {
         # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
             die 'ERROR ECOGEASRP012, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
-                . $symbol
+                . q{'} . $symbol . q{'}
                 . ' already declared in this scope, namespace '
                 . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
@@ -191,7 +191,7 @@ sub ast_to_rperl__generate {
 
             if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
                 die 'ERROR ECOGEASRP012, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
-                    . $symbol
+                    . q{'} . $symbol . q{'}
                     . ' already declared in this scope, namespace '
                     . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                     . ', subroutine/method '
@@ -241,7 +241,7 @@ sub ast_to_rperl__generate {
         # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
             die 'ERROR ECOGEASRP012, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
-                . $symbol
+                . q{'} . $symbol . q{'}
                 . ' already declared in this scope, namespace '
                 . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
@@ -278,7 +278,7 @@ sub ast_to_rperl__generate {
         # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref} ) {
             die 'ERROR ECOGEASRP012, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
-                . $symbol_fhref
+                . q{'} . $symbol_fhref . q{'}
                 . ' already declared in this scope, namespace '
                 . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
@@ -368,7 +368,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
             die 'ERROR ECOGEASCP012, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
-                . $symbol
+                . q{'} . $symbol . q{'}
                 . ' already declared in this scope, namespace '
                 . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
@@ -540,7 +540,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
             if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
                  die 'ERROR ECOGEASCP012, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
-                    . $symbol
+                    . q{'} . $symbol . q{'} 
                     . ' already declared in this scope, namespace '
                     . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                     . ', subroutine/method '
@@ -699,7 +699,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} ) {
             die 'ERROR ECOGEASCP012, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
-                . $symbol
+                . q{'} . $symbol . q{'} 
                 . ' already declared in this scope, namespace '
                 . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
@@ -749,7 +749,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         # CREATE SYMBOL TABLE ENTRY
         if ( exists $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol_fhref} ) {
             die 'ERROR ECOGEASCP012, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
-                . $symbol_fhref
+                . q{'} . $symbol_fhref . q{'} 
                 . ' already declared in this scope, namespace '
                 . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '

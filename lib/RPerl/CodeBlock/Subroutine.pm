@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.022_000;
+our $VERSION = 0.023_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -256,14 +256,18 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             . ' is the same as a protected function or variable name in the Perl API, please choose a different name, dying' . "\n";
     }
 
+    # SYMBOL TABLE ENTRY ALREADY CREATED in ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES() above, must set current subroutine/method name to avoid false errors
+    # ERROR ECOGEASCP012, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable 'foo' already declared in this scope, namespace '', subroutine/method '()'
+    $modes->{_symbol_table}->{_subroutine} = $name;  # set current subroutine/method
+
     my string_arrayref $arguments = [];
     my object $cpp_source_subgroup;
- 
+
 #RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $arguments_optional = ' . "\n" . RPerl::Parser::rperl_ast__dump($arguments_optional) . "\n" );
 #RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $return_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($return_type) . "\n" );
 
     $return_type = RPerl::Generator::type_convert_perl_to_cpp($return_type, 1);  # $pointerify_classes = 1
-    
+
     # DEV NOTE: must prefix subroutine names with namespace-underscores to simulate Perl's behavior of not exporting subroutines by default
     my string $namespace_underscores = q{};
     if ((exists $modes->{_symbol_table}->{_namespace}) and (defined $modes->{_symbol_table}->{_namespace})) {

@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::Loop::For;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_100;
+our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement::Loop);
@@ -56,7 +56,7 @@ sub ast_to_rperl__generate {
             )
         {
             die 'ERROR ECOGEASRP012, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
-                . $variable_symbol
+                . q{'} . $variable_symbol . q{'}
                 . ' already declared in this scope, namespace '
                 . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
@@ -107,7 +107,7 @@ sub ast_to_rperl__generate {
             )
         {
             die 'ERROR ECOGEASRP012, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: variable '
-                . $variable_symbol0
+                . q{'} . $variable_symbol0 . q{'}
                 . ' already declared in this scope, namespace '
                 . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
@@ -251,7 +251,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             )
         {
             die 'ERROR ECOGEASCP012, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
-                . $variable_symbol
+                . q{'} . $variable_symbol . q{'}
                 . ' already declared in this scope, namespace '
                 . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
@@ -348,7 +348,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             )
         {
             die 'ERROR ECOGEASCP012, CODE GENERATOR, ABSTRACT SYNTAX TO C++: variable '
-                . $variable_symbol0
+                . q{'} . $variable_symbol0 . q{'}
                 . ' already declared in this scope, namespace '
                 . q{'} . $modes->{_symbol_table}->{_namespace} . q{'}
                 . ', subroutine/method '
