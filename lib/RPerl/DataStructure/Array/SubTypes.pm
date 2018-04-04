@@ -68,16 +68,12 @@ sub arrayref_CHECK {
     { my void $RETURN_TYPE };
     ( my $possible_arrayref ) = @ARG;
     if ( not( defined $possible_arrayref ) ) {
-        croak(
-            "\nERROR EAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\narrayref value expected but undefined/null value found,\ncroaking"
-        );
+        croak( "\nERROR EAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\narrayref value expected but undefined/null value found,\ncroaking" );
     }
 
 #    if ( UNIVERSAL::isa( $possible_arrayref, 'ARRAY' ) ) {  # DEV NOTE: I believe these 2 lines are equivalent?
     if ( not( main::RPerl_SvAROKp($possible_arrayref) ) ) {
-        croak(
-            "\nERROR EAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\narrayref value expected but non-arrayref value found,\ncroaking"
-        );
+        croak( "\nERROR EAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\narrayref value expected but non-arrayref value found,\ncroaking" );
     }
     return;
 }
@@ -87,14 +83,10 @@ sub arrayref_CHECKTRACE {
     { my void $RETURN_TYPE };
     ( my $possible_arrayref, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_arrayref ) ) {
-        croak(
-            "\nERROR EAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\narrayref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR EAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\narrayref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
     if ( not( main::RPerl_SvAROKp($possible_arrayref) ) ) {
-        croak(
-            "\nERROR EAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\narrayref value expected but non-arrayref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR EAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\narrayref value expected but non-arrayref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
     return;
 }
@@ -124,33 +116,24 @@ sub integer_arrayref_CHECK {
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the arrayref_CHECK() subroutine, but with integer-specific error codes
     if ( not( defined $possible_integer_arrayref ) ) {
-        croak(
-            "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref value expected but undefined/null value found,\ncroaking"
-        );
+        croak( "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref value expected but undefined/null value found,\ncroaking" );
     }
 
     if ( not( main::RPerl_SvAROKp($possible_integer_arrayref) ) ) {
-        croak(
-            "\nERROR EIVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref value expected but non-arrayref value found,\ncroaking"
-        );
+        croak( "\nERROR EIVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref value expected but non-arrayref value found,\ncroaking" );
     }
 
     my integer $possible_integer;
-    for my integer $i (
-        0 .. ( ( scalar @{$possible_integer_arrayref} ) - 1 ) )
+    for my integer $i ( 0 .. ( ( scalar @{$possible_integer_arrayref} ) - 1 ) )
     {
         $possible_integer = $possible_integer_arrayref->[$i];
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the integer_CHECK() subroutine, but with array-specific error codes
         if ( not( defined $possible_integer ) ) {
-            croak(
-                "\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref element value expected but undefined/null value found at index $i,\ncroaking"
-            );
+            croak( "\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref element value expected but undefined/null value found at index $i,\ncroaking" );
         }
         if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
-            croak(
-                "\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref element value expected but non-integer value found at index $i,\ncroaking"
-            );
+            croak( "\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref element value expected but non-integer value found at index $i,\ncroaking" );
         }
     }
     return;
@@ -159,33 +142,23 @@ sub integer_arrayref_CHECK {
 
 sub integer_arrayref_CHECKTRACE {
     { my void $RETURN_TYPE };
-    ( my $possible_integer_arrayref, my $variable_name, my $subroutine_name )
-        = @ARG;
+    ( my $possible_integer_arrayref, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_integer_arrayref ) ) {
-        croak(
-            "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
     if ( not( main::RPerl_SvAROKp($possible_integer_arrayref) ) ) {
-        croak(
-            "\nERROR EIVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref value expected but non-arrayref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR EIVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref value expected but non-arrayref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
 
     my integer $possible_integer;
-    for my integer $i (
-        0 .. ( ( scalar @{$possible_integer_arrayref} ) - 1 ) )
+    for my integer $i ( 0 .. ( ( scalar @{$possible_integer_arrayref} ) - 1 ) )
     {
         $possible_integer = $possible_integer_arrayref->[$i];
         if ( not( defined $possible_integer ) ) {
-            croak(
-                "\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref element value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-            );
+            croak( "\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref element value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
         if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
-            croak(
-                "\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref element value expected but non-integer value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-            );
+            croak( "\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref element value expected but non-integer value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
     }
     return;
@@ -258,8 +231,7 @@ sub integer_arrayref_typetest0 {
     ( my integer_arrayref $lucky_integers) = @ARG;
 
     #    integer_arrayref_CHECK($lucky_integers);
-    integer_arrayref_CHECKTRACE( $lucky_integers, '$lucky_integers',
-        'integer_arrayref_typetest0()' );
+    integer_arrayref_CHECKTRACE( $lucky_integers, '$lucky_integers', 'integer_arrayref_typetest0()' );
 
 #    my integer $how_lucky = scalar @{$lucky_integers};
 #    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
@@ -267,8 +239,7 @@ sub integer_arrayref_typetest0 {
 #        RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_typetest0(), have lucky integer $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_integers->[$i] . ", BARBAT\n");
 #    }
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_typetest0(), bottom of subroutine\n");
-    return (
-        integer_arrayref_to_string($lucky_integers) . 'PERLOPS_PERLTYPES' );
+    return ( integer_arrayref_to_string($lucky_integers) . 'PERLOPS_PERLTYPES' );
 }
 
 sub integer_arrayref_typetest1 {
@@ -276,8 +247,7 @@ sub integer_arrayref_typetest1 {
     ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
-    integer_CHECKTRACE( $my_size, '$my_size',
-        'integer_arrayref_typetest1()' );
+    integer_CHECKTRACE( $my_size, '$my_size', 'integer_arrayref_typetest1()' );
     my integer_arrayref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i] = $i * 5;
@@ -310,15 +280,11 @@ sub number_arrayref_CHECK {
     { my void $RETURN_TYPE };
     ( my $possible_number_arrayref ) = @ARG;
     if ( not( defined $possible_number_arrayref ) ) {
-        croak(
-            "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref value expected but undefined/null value found,\ncroaking"
-        );
+        croak( "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref value expected but undefined/null value found,\ncroaking" );
     }
 
     if ( not( main::RPerl_SvAROKp($possible_number_arrayref) ) ) {
-        croak(
-            "\nERROR ENVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref value expected but non-arrayref value found,\ncroaking"
-        );
+        croak( "\nERROR ENVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref value expected but non-arrayref value found,\ncroaking" );
     }
 
     my number $possible_number;
@@ -326,36 +292,26 @@ sub number_arrayref_CHECK {
     {
         $possible_number = $possible_number_arrayref->[$i];
         if ( not( defined $possible_number ) ) {
-            croak(
-                "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref element value expected but undefined/null value found at index $i,\ncroaking"
-            );
+            croak( "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref element value expected but undefined/null value found at index $i,\ncroaking" );
         }
         if (not(   main::RPerl_SvNOKp($possible_number)
                 || main::RPerl_SvIOKp($possible_number) )
             )
         {
-            croak(
-                "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref element value expected but non-number value found at index $i,\ncroaking"
-            );
+            croak( "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref element value expected but non-number value found at index $i,\ncroaking" );
         }
     }
     return;
 }
 
-
 sub number_arrayref_CHECKTRACE {
     { my void $RETURN_TYPE };
-    ( my $possible_number_arrayref, my $variable_name, my $subroutine_name )
-        = @ARG;
+    ( my $possible_number_arrayref, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_number_arrayref ) ) {
-        croak(
-            "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
     if ( not( main::RPerl_SvAROKp($possible_number_arrayref) ) ) {
-        croak(
-            "\nERROR ENVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref value expected but non-arrayref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR ENVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref value expected but non-arrayref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
 
     my number $possible_number;
@@ -363,17 +319,13 @@ sub number_arrayref_CHECKTRACE {
     {
         $possible_number = $possible_number_arrayref->[$i];
         if ( not( defined $possible_number ) ) {
-            croak(
-                "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref element value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-            );
+            croak( "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref element value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
         if (not(   main::RPerl_SvNOKp($possible_number)
                 || main::RPerl_SvIOKp($possible_number) )
             )
         {
-            croak(
-                "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref element value expected but non-number value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-            );
+            croak( "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref element value expected but non-number value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
     }
     return;
@@ -389,8 +341,7 @@ sub number_arrayref_to_string {
 #    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string(), top of subroutine\n");
 
     #    number_arrayref_CHECK($input_avref);
-    number_arrayref_CHECKTRACE( $input_avref, '$input_avref',
-        'number_arrayref_to_string()' );
+    number_arrayref_CHECKTRACE( $input_avref, '$input_avref', 'number_arrayref_to_string()' );
 
     my @input_av;
     my integer $input_av_length;
@@ -428,8 +379,7 @@ sub number_arrayref_typetest0 {
     ( my number_arrayref $lucky_numbers) = @ARG;
 
     #    number_arrayref_CHECK($lucky_numbers);
-    number_arrayref_CHECKTRACE( $lucky_numbers, '$lucky_numbers',
-        'number_arrayref_typetest0()' );
+    number_arrayref_CHECKTRACE( $lucky_numbers, '$lucky_numbers', 'number_arrayref_typetest0()' );
 
 #    my integer $how_lucky = scalar @{$lucky_numbers};
 #    for my integer $i ( 0 .. ( $how_lucky - 1 ) ) {
@@ -437,8 +387,7 @@ sub number_arrayref_typetest0 {
 #        RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_typetest0(), have lucky number $i/" . ( $how_lucky - 1 ) . ' = ' . $lucky_numbers->[$i] . ", BARBAZ\n");
 #    }
 #    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_typetest0(), bottom of subroutine\n");
-    return (
-        number_arrayref_to_string($lucky_numbers) . 'PERLOPS_PERLTYPES' );
+    return ( number_arrayref_to_string($lucky_numbers) . 'PERLOPS_PERLTYPES' );
 }
 
 sub number_arrayref_typetest1 {
@@ -446,8 +395,7 @@ sub number_arrayref_typetest1 {
     ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
-    integer_CHECKTRACE( $my_size, '$my_size',
-        'number_arrayref_typetest1()' );
+    integer_CHECKTRACE( $my_size, '$my_size', 'number_arrayref_typetest1()' );
     my number_arrayref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $new_array->[$i] = $i * 5.123456789;
@@ -491,15 +439,11 @@ sub string_arrayref_CHECK {
     { my void $RETURN_TYPE };
     ( my $possible_string_arrayref ) = @ARG;
     if ( not( defined $possible_string_arrayref ) ) {
-        croak(
-            "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref value expected but undefined/null value found,\ncroaking"
-        );
+        croak( "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref value expected but undefined/null value found,\ncroaking" );
     }
 
     if ( not( main::RPerl_SvAROKp($possible_string_arrayref) ) ) {
-        croak(
-            "\nERROR EPVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref value expected but non-arrayref value found,\ncroaking"
-        );
+        croak( "\nERROR EPVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref value expected but non-arrayref value found,\ncroaking" );
     }
 
     my string $possible_string;
@@ -507,14 +451,10 @@ sub string_arrayref_CHECK {
     {
         $possible_string = $possible_string_arrayref->[$i];
         if ( not( defined $possible_string ) ) {
-            croak(
-                "\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref element value expected but undefined/null value found at index $i,\ncroaking"
-            );
+            croak( "\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref element value expected but undefined/null value found at index $i,\ncroaking" );
         }
         if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
-            croak(
-                "\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref element value expected but non-string value found at index $i,\ncroaking"
-            );
+            croak( "\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref element value expected but non-string value found at index $i,\ncroaking" );
         }
     }
     return;
@@ -523,17 +463,12 @@ sub string_arrayref_CHECK {
 
 sub string_arrayref_CHECKTRACE {
     { my void $RETURN_TYPE };
-    ( my $possible_string_arrayref, my $variable_name, my $subroutine_name )
-        = @ARG;
+    ( my $possible_string_arrayref, my $variable_name, my $subroutine_name ) = @ARG;
     if ( not( defined $possible_string_arrayref ) ) {
-        croak(
-            "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
     if ( not( main::RPerl_SvAROKp($possible_string_arrayref) ) ) {
-        croak(
-            "\nERROR EPVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref value expected but non-arrayref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR EPVAVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref value expected but non-arrayref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
 
     my string $possible_string;
@@ -541,14 +476,10 @@ sub string_arrayref_CHECKTRACE {
     {
         $possible_string = $possible_string_arrayref->[$i];
         if ( not( defined $possible_string ) ) {
-            croak(
-                "\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref element value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-            );
+            croak( "\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref element value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
         if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
-            croak(
-                "\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref element value expected but non-string value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-            );
+            croak( "\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref element value expected but non-string value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
     }
     return;
@@ -564,8 +495,7 @@ sub string_arrayref_to_string {
 #    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string(), top of subroutine\n");
 
     #    string_arrayref_CHECK($input_avref);
-    string_arrayref_CHECKTRACE( $input_avref, '$input_avref',
-        'string_arrayref_to_string()' );
+    string_arrayref_CHECKTRACE( $input_avref, '$input_avref', 'string_arrayref_to_string()' );
 
     my @input_av;
     my integer $input_av_length;
@@ -605,8 +535,7 @@ sub string_arrayref_typetest0 {
     ( my string_arrayref $people) = @ARG;
 
     #    string_arrayref_CHECK($people);
-    string_arrayref_CHECKTRACE( $people, '$people',
-        'string_arrayref_typetest0()' );
+    string_arrayref_CHECKTRACE( $people, '$people', 'string_arrayref_typetest0()' );
 
 #    my integer $how_crowded = scalar @{$people};
 #    for my integer $i ( 0 .. ( $how_crowded - 1 ) ) {
@@ -622,12 +551,10 @@ sub string_arrayref_typetest1 {
     ( my integer $my_size) = @ARG;
 
     #    integer_CHECK($my_size);
-    integer_CHECKTRACE( $my_size, '$my_size',
-        'string_arrayref_typetest1()' );
+    integer_CHECKTRACE( $my_size, '$my_size', 'string_arrayref_typetest1()' );
     my string_arrayref $new_array = [];
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
-        $new_array->[$i]
-            = "Jeffy Ten! $i/" . ( $my_size - 1 ) . ' PERLOPS_PERLTYPES';
+        $new_array->[$i] = "Jeffy Ten! $i/" . ( $my_size - 1 ) . ' PERLOPS_PERLTYPES';
 
 #        RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_typetest1(), bottom of for() loop, have i = $i, just set another Jeffy, BARBAR\n");
     }

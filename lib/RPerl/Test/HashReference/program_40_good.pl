@@ -1,4 +1,8 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< TYPE_CHECKING: TRACE >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -13,7 +17,9 @@ our $VERSION = 0.001_000;
 
 sub pretty_print {
     { my void $RETURN_TYPE };
+#    ( my integer_arrayref $input ) = @ARG;
     ( my integer_arrayref_hashref $input ) = @ARG;
+#    integer_arrayref_hashref_CHECK($input);
 
     print '{', "\n";
     my string_arrayref $input_keys = [ sort keys %{$input} ];
@@ -23,16 +29,12 @@ sub pretty_print {
         my integer_arrayref $input_value = $input->{$input_key};
         my integer $input_value_count = scalar @{$input_value};
 
-        if ($i > 0) {
-            print ',', "\n";
-        }
+        if ($i > 0) { print ',', "\n"; }  # DEV NOTE: must be on single one to match auto-generated Perl::Tidy output code
         print q{    }, $input_key, ' => ';
 
         print '[ ';
         for (my integer $j = 0; $j < $input_value_count; $j++) {
-            if ($j > 0) {
-                print ', ';
-            }
+            if ($j > 0) { print ', '; }  # DEV NOTE: must be on single one to match auto-generated Perl::Tidy output code
             print $input_value->[$j];
         }
         print ' ]';
@@ -54,16 +56,12 @@ sub pretty_return {
         my integer_arrayref $input_value = $input->{$input_key};
         my integer $input_value_count = scalar @{$input_value};
 
-        if ($i > 0) {
-            $retval .= ',' . "\n";
-        }
+        if ($i > 0) { $retval .= ',' . "\n"; }  # DEV NOTE: must be on single one to match auto-generated Perl::Tidy output code
         $retval .= q{    } . $input_key . ' => ';
 
         $retval .= '[ ';
         for (my integer $j = 0; $j < $input_value_count; $j++) {
-            if ($j > 0) {
-                $retval .= ', ';
-            }
+            if ($j > 0) { $retval .= ', '; }  # DEV NOTE: must be on single one to match auto-generated Perl::Tidy output code
             $retval .= $input_value->[$j];
         }
         $retval .= ' ]';
@@ -75,12 +73,8 @@ sub pretty_return {
 # [[[ OPERATIONS ]]]
 
 # homogeneous 2-dimensional hash of arrays of integers
-my integer_arrayref_hashref $foo = {
-    key_0 => [  0,  1,  2,  3,  4 ],
-    key_1 => [  5,  6,  7,  8,  9 ],
-    key_2 => [  0, -1, -2, -3, -4 ],
-    key_3 => [ -5, -6, -7, -8, -9 ]
-};
+# DEV NOTE: must be on single one to match auto-generated Perl::Tidy output code
+my integer_arrayref_hashref $foo = { key_0 => [  0,  1,  2,  3,  4 ], key_1 => [  5,  6,  7,  8,  9 ], key_2 => [  0, -1, -2, -3, -4 ], key_3 => [ -5, -6, -7, -8, -9 ] };
 
 print 'have printed  $foo = ';
 pretty_print($foo);
