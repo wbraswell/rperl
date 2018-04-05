@@ -370,9 +370,9 @@ void XS_pack_string_arrayref(SV* output_avref, string_arrayref input_vector)
 // [[[ STRINGIFY ]]]
 
 
-// START HERE: Failing Travis tests, upgrade *arrayref_to_string() below, add *_compact() etc variations, write tests
-// START HERE: Failing Travis tests, upgrade *arrayref_to_string() below, add *_compact() etc variations, write tests
-// START HERE: Failing Travis tests, upgrade *arrayref_to_string() below, add *_compact() etc variations, write tests
+// START HERE: Failing Travis tests, upgrade *arrayref_to_string() below, add *_compact() etc variations, re-enable t/05 tests, write new tests?
+// START HERE: Failing Travis tests, upgrade *arrayref_to_string() below, add *_compact() etc variations, re-enable t/05 tests, write new tests?
+// START HERE: Failing Travis tests, upgrade *arrayref_to_string() below, add *_compact() etc variations, re-enable t/05 tests, write new tests?
 
 
 
