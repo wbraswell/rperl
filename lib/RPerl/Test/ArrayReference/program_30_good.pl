@@ -3,7 +3,7 @@
 # Learning RPerl, Section 3.1: Lists vs Arrays
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: "$variable_storing_array_by_reference = ['list', 'enclosed', 'within', 'square', 'brackets']" >>>
+# <<< EXECUTE_SUCCESS: "$variable_storing_array_by_reference = [ 'list', 'enclosed', 'within', 'square', 'brackets' ]" >>>
 
 # [[[ HEADER ]]]
 use RPerl;

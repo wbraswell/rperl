@@ -4,27 +4,27 @@
 # <<< EXECUTE_SUCCESS: "in Class_A_Exporter_20_NotBad::exported_ok(), received $arg = 17" >>>
 # <<< EXECUTE_SUCCESS: "after exported_ok(17), received $exported_ok_retval = 714" >>>
 # <<< EXECUTE_SUCCESS: "have $RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_scalar = 2112" >>>
-# <<< EXECUTE_SUCCESS: "have @RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_array = [10, 20, 30, 40]" >>>
+# <<< EXECUTE_SUCCESS: "have @RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_array = [ 10, 20, 30, 40 ]" >>>
 # <<< EXECUTE_SUCCESS: "have %RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_hash = {'a' => 15, 'b' => 25, 'c' => 35}" >>>
 # <<< EXECUTE_SUCCESS: "have *RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_typeglob execution... I am an anonymous subroutine inside an exported ok typeglob." >>>
 # <<< EXECUTE_SUCCESS: "have $exported_ok_scalar = 2112" >>>
-# <<< EXECUTE_SUCCESS: "have @exported_ok_array = [10, 20, 30, 40]" >>>
+# <<< EXECUTE_SUCCESS: "have @exported_ok_array = [ 10, 20, 30, 40 ]" >>>
 # <<< EXECUTE_SUCCESS: "have %exported_ok_hash = {'a' => 15, 'b' => 25, 'c' => 35}" >>>
 # <<< EXECUTE_SUCCESS: "have *exported_ok_typeglob execution... I am an anonymous subroutine inside an exported ok typeglob." >>>
 # <<< EXECUTE_SUCCESS: "have $RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_scalar = 4224" >>>
-# <<< EXECUTE_SUCCESS: "have @RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_array = [20, 20, 30, 40]" >>>
+# <<< EXECUTE_SUCCESS: "have @RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_array = [ 20, 20, 30, 40 ]" >>>
 # <<< EXECUTE_SUCCESS: "have %RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_hash = {'a' => 30, 'b' => 25, 'c' => 35}" >>>
 # <<< EXECUTE_SUCCESS: "have *RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_typeglob execution... I am another different anonymous subroutine." >>>
 # <<< EXECUTE_SUCCESS: "have $exported_ok_scalar = 4224" >>>
-# <<< EXECUTE_SUCCESS: "have @exported_ok_array = [20, 20, 30, 40]" >>>
+# <<< EXECUTE_SUCCESS: "have @exported_ok_array = [ 20, 20, 30, 40 ]" >>>
 # <<< EXECUTE_SUCCESS: "have %exported_ok_hash = {'a' => 30, 'b' => 25, 'c' => 35}" >>>
 # <<< EXECUTE_SUCCESS: "have *exported_ok_typeglob execution... I am another different anonymous subroutine." >>>
 # <<< EXECUTE_SUCCESS: "have $RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_scalar = 8448" >>>
-# <<< EXECUTE_SUCCESS: "have @RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_array = [40, 20, 30, 40]" >>>
+# <<< EXECUTE_SUCCESS: "have @RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_array = [ 40, 20, 30, 40 ]" >>>
 # <<< EXECUTE_SUCCESS: "have %RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_hash = {'a' => 60, 'b' => 25, 'c' => 35}" >>>
 # <<< EXECUTE_SUCCESS: "have *RPerl::Test::Exporter::Class_A_Exporter_20_NotBad::exported_ok_typeglob execution... I am yet another different anonymous subroutine." >>>
 # <<< EXECUTE_SUCCESS: "have $exported_ok_scalar = 8448" >>>
-# <<< EXECUTE_SUCCESS: "have @exported_ok_array = [40, 20, 30, 40]" >>>
+# <<< EXECUTE_SUCCESS: "have @exported_ok_array = [ 40, 20, 30, 40 ]" >>>
 # <<< EXECUTE_SUCCESS: "have %exported_ok_hash = {'a' => 60, 'b' => 25, 'c' => 35}" >>>
 # <<< EXECUTE_SUCCESS: "have *exported_ok_typeglob execution... I am yet another different anonymous subroutine." >>>
 

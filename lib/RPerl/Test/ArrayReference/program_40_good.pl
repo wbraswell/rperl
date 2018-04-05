@@ -4,7 +4,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_SUCCESS: "have $row_3_column_0_combined = 9" >>>
-# <<< EXECUTE_SUCCESS: "have $row_3 = [9, 8, 7, 6, 5]" >>>
+# <<< EXECUTE_SUCCESS: "have $row_3 = [ 9, 8, 7, 6, 5 ]" >>>
 # <<< EXECUTE_SUCCESS: "have $row_3_column_0_separated = 9" >>>
 
 # [[[ HEADER ]]]

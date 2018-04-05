@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'have $foo = [23]' >>>
+# <<< EXECUTE_SUCCESS: 'have $foo = [ 23 ]' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

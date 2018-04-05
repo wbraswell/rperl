@@ -369,6 +369,13 @@ void XS_pack_string_arrayref(SV* output_avref, string_arrayref input_vector)
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]
 
+
+// START HERE: Failing Travis tests, upgrade *arrayref_to_string() below, add *_compact() etc variations, write tests
+// START HERE: Failing Travis tests, upgrade *arrayref_to_string() below, add *_compact() etc variations, write tests
+// START HERE: Failing Travis tests, upgrade *arrayref_to_string() below, add *_compact() etc variations, write tests
+
+
+
 # ifdef __PERL__TYPES
 
 // DEV NOTE: direct manipulation of the Perl Stack shown in /* block comments */

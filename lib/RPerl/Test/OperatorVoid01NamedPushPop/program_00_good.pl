@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'have $frob = [21, 12, 23]' >>>
+# <<< EXECUTE_SUCCESS: 'have $frob = [ 21, 12, 23 ]' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

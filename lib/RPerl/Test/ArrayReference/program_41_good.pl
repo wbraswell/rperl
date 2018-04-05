@@ -3,7 +3,7 @@
 # Learning RPerl, Section 3.5: 2-D Array Data Types & Nested Arrays
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: "have $column_3 = [6, 7, 1, 6, 5]" >>>
+# <<< EXECUTE_SUCCESS: "have $column_3 = [ 6, 7, 1, 6, 5 ]" >>>
 
 # [[[ HEADER ]]]
 use RPerl;

@@ -64,6 +64,8 @@ our $VERSION = 0.001_000;
 # DEV NOTE: must be on single one to match auto-generated Perl::Tidy output code
 my integer_arrayref_hashref $foo = { key_0 => [  0,  1,  2,  3,  4 ], key_1 => [  5,  6,  7,  8,  9 ], key_2 => [  0, -1, -2, -3, -4 ], key_3 => [ -5, -6, -7, -8, -9 ] };
 
+print 'have integer_arrayref_hashref_to_string_compact($foo) = ', "\n", integer_arrayref_hashref_to_string_compact($foo), "\n";
+
 print 'have integer_arrayref_hashref_to_string($foo) = ', "\n", integer_arrayref_hashref_to_string($foo), "\n";
 
 print 'have integer_arrayref_hashref_to_string_pretty($foo) = ', "\n", integer_arrayref_hashref_to_string_pretty($foo), "\n";

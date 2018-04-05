@@ -3,12 +3,12 @@
 # Learning RPerl, Section 3.6: qw() Operator
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: "have $foo_1 = ['a', 'c', 'e']" >>>
-# <<< EXECUTE_SUCCESS: "have $bar_1 = ['a', 'c', 'e']" >>>
-# <<< EXECUTE_SUCCESS: "have $foo_2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g']" >>>
-# <<< EXECUTE_SUCCESS: "have $bar_2 = ['a', 'b', 'c', 'd', 'e', 'f', 'g']" >>>
-# <<< EXECUTE_SUCCESS: "have $foo_3 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']" >>>
-# <<< EXECUTE_SUCCESS: "have $bar_3 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']" >>>
+# <<< EXECUTE_SUCCESS: "have $foo_1 = [ 'a', 'c', 'e' ]" >>>
+# <<< EXECUTE_SUCCESS: "have $bar_1 = [ 'a', 'c', 'e' ]" >>>
+# <<< EXECUTE_SUCCESS: "have $foo_2 = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g' ]" >>>
+# <<< EXECUTE_SUCCESS: "have $bar_2 = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g' ]" >>>
+# <<< EXECUTE_SUCCESS: "have $foo_3 = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm' ]" >>>
+# <<< EXECUTE_SUCCESS: "have $bar_3 = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm' ]" >>>
 
 # [[[ HEADER ]]]
 use RPerl;

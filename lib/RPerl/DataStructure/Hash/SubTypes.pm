@@ -28,6 +28,7 @@ our @EXPORT = qw(
     string_hashref_to_string
     integer_arrayref_hashref_CHECK
     integer_arrayref_hashref_CHECKTRACE
+    integer_arrayref_hashref_to_string_compact
     integer_arrayref_hashref_to_string
     integer_arrayref_hashref_to_string_pretty
     integer_arrayref_hashref_to_string_expand
@@ -785,9 +786,9 @@ sub integer_arrayref_hashref_CHECK {
 }
 
 
-# START HERE: test CHECK code above, copy CHECK above to replace old CHECKTRACE below, test CHECKTRACE, update & test to_string() below, update & test typetest*() below
-# START HERE: test CHECK code above, copy CHECK above to replace old CHECKTRACE below, test CHECKTRACE, update & test to_string() below, update & test typetest*() below
-# START HERE: test CHECK code above, copy CHECK above to replace old CHECKTRACE below, test CHECKTRACE, update & test to_string() below, update & test typetest*() below
+# START HERE: Travis tests pass, test CHECK* code above & below, test to_string() below, update & test typetest*() below
+# START HERE: Travis tests pass, test CHECK* code above & below, test to_string() below, update & test typetest*() below
+# START HERE: Travis tests pass, test CHECK* code above & below, test to_string() below, update & test typetest*() below
 
 
 sub integer_arrayref_hashref_CHECKTRACE {
@@ -839,7 +840,14 @@ sub integer_arrayref_hashref_CHECKTRACE {
 
 # [[[ STRINGIFY ]]]
 
-# call actual stringify routine, default to format level 0 (compact), indent level 0
+# call actual stringify routine, format level -1 (compact), indent level 0
+sub integer_arrayref_hashref_to_string_compact {
+    { my string $RETURN_TYPE };
+    ( my $input_av_ref_hv_ref ) = @ARG;
+    return integer_arrayref_hashref_to_string_format($input_av_ref_hv_ref, -1, 0);
+}
+
+# call actual stringify routine, format level 0 (normal), indent level 0, DEFAULT
 sub integer_arrayref_hashref_to_string {
     { my string $RETURN_TYPE };
     ( my $input_av_ref_hv_ref ) = @ARG;
@@ -853,7 +861,7 @@ sub integer_arrayref_hashref_to_string_pretty {
     return integer_arrayref_hashref_to_string_format($input_av_ref_hv_ref, 1, 0);
 }
 
-# call actual stringify routine, format level 2 (expanded), indent level 0
+# call actual stringify routine, format level 2 (expand), indent level 0
 sub integer_arrayref_hashref_to_string_expand {
     { my string $RETURN_TYPE };
     ( my $input_av_ref_hv_ref ) = @ARG;
@@ -901,17 +909,20 @@ sub integer_arrayref_hashref_to_string_format {
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ','; }
 
-        if ($format_level >= 1) { $output_sv .=  "\n" . $indent . q{    }; }
-        else                    { $output_sv .= q{ }; }
+        if    ($format_level >= 1) { $output_sv .=  "\n" . $indent . q{    }; }
+        elsif ($format_level >= 0) { $output_sv .= q{ }; }
 
         # DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
-        $output_sv .= q{'} . $key . q{' => };
+        $output_sv .= q{'} . $key . q{'};
+        if ($format_level >= 0)  { $output_sv .= q{ }; }
+        $output_sv .= '=>';
+        if ($format_level >= 0)  { $output_sv .= q{ }; }
         if ($format_level >= 2) { $output_sv .= "\n"; }
         $output_sv .= ::integer_arrayref_to_string_format($input_av_ref_hv_entry_value, ($format_level - 1), ($indent_level + 1));  # YES UNDERSCORES???  [ WAS THIS COMMENT WRONG?  FIX IN ORIGINAL! ]
     }
 
-    if ($format_level >= 1) { $output_sv .= "\n" . $indent; }
-    else                    { $output_sv .= q{ }; }
+    if    ($format_level >= 1) { $output_sv .= "\n" . $indent; }
+    elsif ($format_level >= 0) { $output_sv .= q{ }; }
     $output_sv .= '}';
 
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string_format(), after for() loop, have \$output_sv =\n$output_sv\n");

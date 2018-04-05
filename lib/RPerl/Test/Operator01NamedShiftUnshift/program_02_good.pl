@@ -3,7 +3,7 @@
 # Learning RPerl, Section 3.9: shift & unshift Operators
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'have $foo = [21, 12, 23]' >>>
+# <<< EXECUTE_SUCCESS: 'have $foo = [ 21, 12, 23 ]' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

@@ -15,3 +15,12 @@ my integer_arrayref $i_array = [ 17, 23, 42, 1_701, 2_112 ];
 foreach my integer $i ( @{$i_array} ) {
     print '$i = ', $i, "\n";
 }
+
+print 'have integer_arrayref_to_string_compact($i_array) = ', "\n", integer_arrayref_to_string_compact($i_array), "\n";
+
+print 'have integer_arrayref_to_string($i_array) = ', "\n", integer_arrayref_to_string($i_array), "\n";
+
+print 'have integer_arrayref_to_string_pretty($i_array) = ', "\n", integer_arrayref_to_string_pretty($i_array), "\n";
+
+print 'have integer_arrayref_to_string_expand($i_array) = ', "\n", integer_arrayref_to_string_expand($i_array), "\n";
+

@@ -3,7 +3,7 @@
 # Learning RPerl, Section 3.1: Lists vs Arrays
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: "['a', 'c', 'e']" >>>
+# <<< EXECUTE_SUCCESS: "[ 'a', 'c', 'e' ]" >>>
 
 # [[[ HEADER ]]]
 use RPerl;

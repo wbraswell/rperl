@@ -3,8 +3,8 @@
 # Learning RPerl, Section 3.14: reverse Operator
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'have $forward  = [2, 8, 24, 76, 238, 748]' >>>
-# <<< EXECUTE_SUCCESS: 'have $reversed = [748, 238, 76, 24, 8, 2]' >>>
+# <<< EXECUTE_SUCCESS: 'have $forward  = [ 2, 8, 24, 76, 238, 748 ]' >>>
+# <<< EXECUTE_SUCCESS: 'have $reversed = [ 748, 238, 76, 24, 8, 2 ]' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

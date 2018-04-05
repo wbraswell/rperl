@@ -3,7 +3,7 @@
 # Learning RPerl, Section 3.8: push & pop Operators
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'have $foo = [17, 21, 12]' >>>
+# <<< EXECUTE_SUCCESS: 'have $foo = [ 17, 21, 12 ]' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

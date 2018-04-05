@@ -3,10 +3,10 @@
 # Learning RPerl, Section 3.9: shift & unshift Operators
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'have $frob = [21, 12, 23]' >>>
+# <<< EXECUTE_SUCCESS: 'have $frob = [ 21, 12, 23 ]' >>>
 # <<< EXECUTE_SUCCESS: 'have $frob_length = 3' >>>
 # <<< EXECUTE_SUCCESS: 'have $frob_shift = 21' >>>
-# <<< EXECUTE_SUCCESS: 'have $frob = [12, 23]' >>>
+# <<< EXECUTE_SUCCESS: 'have $frob = [ 12, 23 ]' >>>
 # <<< EXECUTE_SUCCESS: 'have $frob_length = 2' >>>
 
 # [[[ HEADER ]]]

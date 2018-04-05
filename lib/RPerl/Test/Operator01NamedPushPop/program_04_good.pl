@@ -3,10 +3,10 @@
 # Learning RPerl, Section 3.8: push & pop Operators
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'have $frob = [21, 12, 23]' >>>
+# <<< EXECUTE_SUCCESS: 'have $frob = [ 21, 12, 23 ]' >>>
 # <<< EXECUTE_SUCCESS: 'have $frob_length = 3' >>>
 # <<< EXECUTE_SUCCESS: 'have $frob_pop = 23' >>>
-# <<< EXECUTE_SUCCESS: 'have $frob = [21, 12]' >>>
+# <<< EXECUTE_SUCCESS: 'have $frob = [ 21, 12 ]' >>>
 # <<< EXECUTE_SUCCESS: 'have $frob_length = 2' >>>
 
 # [[[ HEADER ]]]

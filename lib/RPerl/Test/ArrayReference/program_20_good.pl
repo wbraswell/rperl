@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: '$foo = [23, 42, 2_112]' >>>
+# <<< EXECUTE_SUCCESS: '$foo = [ 23, 42, 2_112 ]' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
