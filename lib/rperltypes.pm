@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.012_000;
+our $VERSION = 0.013_000;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -72,6 +72,9 @@ our @EXPORT = (
     @RPerl::DataType::Scalar::EXPORT,
     @RPerl::DataType::Unknown::EXPORT,
     @RPerl::DataStructure::Array::SubTypes::EXPORT,
+    @RPerl::DataStructure::Array::SubTypes1D::EXPORT,
+    @RPerl::DataStructure::Array::SubTypes2D::EXPORT,
+    @RPerl::DataStructure::Array::SubTypes3D::EXPORT,
     @RPerl::DataStructure::Hash::SubTypes::EXPORT
 );
 our @EXPORT_OK = (
@@ -85,6 +88,9 @@ our @EXPORT_OK = (
     @RPerl::DataType::Scalar::EXPORT_OK,
     @RPerl::DataType::Unknown::EXPORT_OK,
     @RPerl::DataStructure::Array::SubTypes::EXPORT_OK,
+    @RPerl::DataStructure::Array::SubTypes1D::EXPORT_OK,
+    @RPerl::DataStructure::Array::SubTypes2D::EXPORT_OK,
+    @RPerl::DataStructure::Array::SubTypes3D::EXPORT_OK,
     @RPerl::DataStructure::Hash::SubTypes::EXPORT_OK
 );
 

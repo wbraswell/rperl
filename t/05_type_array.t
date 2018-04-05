@@ -21,7 +21,7 @@ use RPerl::Test;
 use Test::More tests => 78;
 use Test::Exception;
 use Test::Number::Delta;
-use RPerl::DataStructure::Array::SubTypes qw(integer_arrayref_typetest0 integer_arrayref_typetest1 number_arrayref_typetest0 number_arrayref_typetest1 string_arrayref_typetest0 string_arrayref_typetest1);
+use RPerl::DataStructure::Array::SubTypes1D qw(integer_arrayref_typetest0 integer_arrayref_typetest1 number_arrayref_typetest0 number_arrayref_typetest1 string_arrayref_typetest0 string_arrayref_typetest1);
 
 # [[[ OPERATIONS ]]]
 
@@ -41,6 +41,7 @@ BEGIN {
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
 #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
+#for my $mode_id ( 2 .. 2 ) {  # TEMPORARY DEBUGGING CPPOPS_CPPTYPES ONLY
 
     # [[[ MODE SETUP ]]]
     #    RPerl::diag("in 05_type_array.t, top of for() loop, have \$mode_id = $mode_id\n");

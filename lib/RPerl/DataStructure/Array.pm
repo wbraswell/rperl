@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.009_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataStructure);
@@ -13,6 +13,9 @@ use Carp;
 
 # [[[ SUB-TYPES BEFORE INCLUDES ]]]
 use RPerl::DataStructure::Array::SubTypes;
+use RPerl::DataStructure::Array::SubTypes1D;
+use RPerl::DataStructure::Array::SubTypes2D;
+use RPerl::DataStructure::Array::SubTypes3D;
 
 # [[[ INCLUDES ]]]
 # for type-checking via SvIOKp(), SvNOKp(), and SvPOKp(); inside INIT to delay until after 'use MyConfig'
