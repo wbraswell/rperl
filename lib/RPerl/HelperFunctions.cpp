@@ -11,7 +11,7 @@ int RPerl_SvNOKp(SV* input_sv) { return(SvNOKp(input_sv)); }
 int RPerl_SvCOKp(SV* input_sv) { return(SvCOKp(input_sv)); }
 int RPerl_SvPOKp(SV* input_sv) { return(SvPOKp(input_sv)); }
 int RPerl_SvAROKp(SV* input_avref) { return(SvAROKp(input_avref)); }
-int RPerl_SvHROKp(SV* input_hv_ref) { return(SvHROKp(input_hv_ref)); }
+int RPerl_SvHROKp(SV* input_hvref) { return(SvHROKp(input_hvref)); }
 
 SV * RPerl_AV_ELEMENT(pTHX_ AV * av, SSize_t index) {
 	SV ** svp = av_fetch(av,index,0);

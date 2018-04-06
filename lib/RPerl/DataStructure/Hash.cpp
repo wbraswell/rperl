@@ -434,11 +434,11 @@ void string_hashref_CHECKTRACE(SV* possible_string_hashref, const char* variable
 # ifdef __CPP__TYPES
 
 // convert from (Perl SV containing reference to (Perl HV of (Perl SVs containing IVs))) to (C++ std::unordered_map of integers)
-integer_hashref XS_unpack_integer_hashref(SV* input_hv_ref)
+integer_hashref XS_unpack_integer_hashref(SV* input_hvref)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_hashref(), top of subroutine\n");
-//	integer_hashref_CHECK(input_hv_ref);
-	integer_hashref_CHECKTRACE(input_hv_ref, "input_hv_ref", "XS_unpack_integer_hashref()");
+//	integer_hashref_CHECK(input_hvref);
+	integer_hashref_CHECKTRACE(input_hvref, "input_hvref", "XS_unpack_integer_hashref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -448,7 +448,7 @@ integer_hashref XS_unpack_integer_hashref(SV* input_hv_ref)
     SV* input_hv_entry_value;
     integer_hashref output_unordered_map;
 
-	input_hv = (HV*)SvRV(input_hv_ref);
+	input_hv = (HV*)SvRV(input_hvref);
 
 	input_hv_num_keys = hv_iterinit(input_hv);
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_hashref(), have input_hv_num_keys = %"INTEGER"\n", input_hv_num_keys);
@@ -482,7 +482,7 @@ integer_hashref XS_unpack_integer_hashref(SV* input_hv_ref)
 }
 
 // convert from (C++ std::unordered_map of integers) to (Perl SV containing reference to (Perl HV of (Perl SVs containing IVs)))
-void XS_pack_integer_hashref(SV* output_hv_ref, integer_hashref input_unordered_map)
+void XS_pack_integer_hashref(SV* output_hvref, integer_hashref input_unordered_map)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_hashref(), top of subroutine\n");
 
@@ -500,19 +500,19 @@ void XS_pack_integer_hashref(SV* output_hv_ref, integer_hashref input_unordered_
 	}
 //	else warn("in CPPOPS_CPPTYPES XS_pack_integer_hashref(), hash was empty, returning empty hash via newHV()");
 
-	temp_sv_pointer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
+	temp_sv_pointer = newSVrv(output_hvref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
-	SvRV(output_hv_ref) = (SV*)output_hv;	   // make output stack RV pointer at our output HV
+	SvRV(output_hvref) = (SV*)output_hv;	   // make output stack RV pointer at our output HV
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_hashref(), bottom of subroutine\n");
 }
 
 // convert from (Perl SV containing reference to (Perl HV of (Perl SVs containing NVs))) to (C++ std::unordered_map of doubles)
-number_hashref XS_unpack_number_hashref(SV* input_hv_ref)
+number_hashref XS_unpack_number_hashref(SV* input_hvref)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number_hashref(), top of subroutine\n");
-//	number_hashref_CHECK(input_hv_ref);
-	number_hashref_CHECKTRACE(input_hv_ref, "input_hv_ref", "XS_unpack_number_hashref()");
+//	number_hashref_CHECK(input_hvref);
+	number_hashref_CHECKTRACE(input_hvref, "input_hvref", "XS_unpack_number_hashref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -522,7 +522,7 @@ number_hashref XS_unpack_number_hashref(SV* input_hv_ref)
     SV* input_hv_entry_value;
     number_hashref output_unordered_map;
 
-	input_hv = (HV*)SvRV(input_hv_ref);
+	input_hv = (HV*)SvRV(input_hvref);
 
 	input_hv_num_keys = hv_iterinit(input_hv);
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number_hashref(), have input_hv_num_keys = %"INTEGER"\n", input_hv_num_keys);
@@ -549,7 +549,7 @@ number_hashref XS_unpack_number_hashref(SV* input_hv_ref)
 }
 
 // convert from (C++ std::unordered_map of doubles) to (Perl SV containing reference to (Perl HV of (Perl SVs containing NVs)))
-void XS_pack_number_hashref(SV* output_hv_ref, number_hashref input_unordered_map)
+void XS_pack_number_hashref(SV* output_hvref, number_hashref input_unordered_map)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_hashref(), top of subroutine\n");
 
@@ -567,19 +567,19 @@ void XS_pack_number_hashref(SV* output_hv_ref, number_hashref input_unordered_ma
 	}
 //	else warn("in CPPOPS_CPPTYPES XS_pack_number_hashref(), hash was empty, returning empty hash via newHV()");
 
-	temp_sv_pointer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
+	temp_sv_pointer = newSVrv(output_hvref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
-	SvRV(output_hv_ref) = (SV*)output_hv;	   // make output stack RV pointer at our output HV
+	SvRV(output_hvref) = (SV*)output_hv;	   // make output stack RV pointer at our output HV
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_hashref(), bottom of subroutine\n");
 }
 
 // convert from (Perl SV containing reference to (Perl HV of (Perl SVs containing PVs))) to (C++ std::unordered_map of strings)
-string_hashref XS_unpack_string_hashref(SV* input_hv_ref)
+string_hashref XS_unpack_string_hashref(SV* input_hvref)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string_hashref(), top of subroutine\n");
-//	string_hashref_CHECK(input_hv_ref);
-	string_hashref_CHECKTRACE(input_hv_ref, "input_hv_ref", "XS_unpack_string_hashref()");
+//	string_hashref_CHECK(input_hvref);
+	string_hashref_CHECKTRACE(input_hvref, "input_hvref", "XS_unpack_string_hashref()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -589,7 +589,7 @@ string_hashref XS_unpack_string_hashref(SV* input_hv_ref)
     SV* input_hv_entry_value;
     string_hashref output_unordered_map;
 
-	input_hv = (HV*)SvRV(input_hv_ref);
+	input_hv = (HV*)SvRV(input_hvref);
 
 	input_hv_num_keys = hv_iterinit(input_hv);
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string_hashref(), have input_hv_num_keys = %"INTEGER"\n", input_hv_num_keys);
@@ -616,7 +616,7 @@ string_hashref XS_unpack_string_hashref(SV* input_hv_ref)
 }
 
 // convert from (C++ std::unordered_map of strings) to (Perl SV containing reference to (Perl HV of (Perl SVs containing PVs)))
-void XS_pack_string_hashref(SV* output_hv_ref, string_hashref input_unordered_map)
+void XS_pack_string_hashref(SV* output_hvref, string_hashref input_unordered_map)
 {
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_hashref(), top of subroutine\n");
 
@@ -634,9 +634,9 @@ void XS_pack_string_hashref(SV* output_hv_ref, string_hashref input_unordered_ma
 	}
 //	else warn("in CPPOPS_CPPTYPES XS_pack_string_hashref(), hash was empty, returning empty hash via newHV()");
 
-	temp_sv_pointer = newSVrv(output_hv_ref, NULL);	  // upgrade output stack SV to an RV
+	temp_sv_pointer = newSVrv(output_hvref, NULL);	  // upgrade output stack SV to an RV
 	SvREFCNT_dec(temp_sv_pointer);		 // discard temporary pointer
-	SvRV(output_hv_ref) = (SV*)output_hv;	   // make output stack RV pointer at our output HV
+	SvRV(output_hvref) = (SV*)output_hv;	   // make output stack RV pointer at our output HV
 
 //	fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_hashref(), bottom of subroutine\n");
 }
@@ -650,11 +650,11 @@ void XS_pack_string_hashref(SV* output_hv_ref, string_hashref input_unordered_ma
 # ifdef __PERL__TYPES
 
 // convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
-SV* integer_hashref_to_string(SV* input_hv_ref)
+SV* integer_hashref_to_string(SV* input_hvref)
 {
 //	fprintf(stderr, "in CPPOPS_PERLTYPES integer_hashref_to_string(), top of subroutine\n");
-//	integer_hashref_CHECK(input_hv_ref);
-	integer_hashref_CHECKTRACE(input_hv_ref, "input_hv_ref", "integer_hashref_to_string()");
+//	integer_hashref_CHECK(input_hvref);
+	integer_hashref_CHECKTRACE(input_hvref, "input_hvref", "integer_hashref_to_string()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -667,7 +667,7 @@ SV* integer_hashref_to_string(SV* input_hv_ref)
     SV* input_hv_entry_value;
     SV* output_sv = newSV(0);
 
-	input_hv = (HV*)SvRV(input_hv_ref);
+	input_hv = (HV*)SvRV(input_hvref);
 	input_hv_num_keys = hv_iterinit(input_hv);
 //	fprintf(stderr, "in CPPOPS_PERLTYPES integer_hashref_to_string(), have input_hv_num_keys = %"INTEGER"\n", input_hv_num_keys);
 
@@ -721,11 +721,11 @@ SV* integer_hashref_to_string(SV* input_hv_ref)
 }
 
 // convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
-SV* number_hashref_to_string(SV* input_hv_ref)
+SV* number_hashref_to_string(SV* input_hvref)
 {
 //	fprintf(stderr, "in CPPOPS_PERLTYPES number_hashref_to_string(), top of subroutine\n");
-//	number_hashref_CHECK(input_hv_ref);
-	number_hashref_CHECKTRACE(input_hv_ref, "input_hv_ref", "number_hashref_to_string()");
+//	number_hashref_CHECK(input_hvref);
+	number_hashref_CHECKTRACE(input_hvref, "input_hvref", "number_hashref_to_string()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -740,7 +740,7 @@ SV* number_hashref_to_string(SV* input_hv_ref)
 	ostringstream temp_stream;
 	temp_stream.precision(std::numeric_limits<double>::digits10);
 
-	input_hv = (HV*)SvRV(input_hv_ref);
+	input_hv = (HV*)SvRV(input_hvref);
 	input_hv_num_keys = hv_iterinit(input_hv);
 //	fprintf(stderr, "in CPPOPS_PERLTYPES number_hashref_to_string(), have input_hv_num_keys = %"INTEGER"\n", input_hv_num_keys);
 
@@ -784,11 +784,11 @@ SV* number_hashref_to_string(SV* input_hv_ref)
 }
 
 // convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
-SV* string_hashref_to_string(SV* input_hv_ref)
+SV* string_hashref_to_string(SV* input_hvref)
 {
 //	fprintf(stderr, "in CPPOPS_PERLTYPES string_hashref_to_string(), top of subroutine\n");
-//	string_hashref_CHECK(input_hv_ref);
-	string_hashref_CHECKTRACE(input_hv_ref, "input_hv_ref", "string_hashref_to_string()");
+//	string_hashref_CHECK(input_hvref);
+	string_hashref_CHECKTRACE(input_hvref, "input_hvref", "string_hashref_to_string()");
 
     HV* input_hv;
     integer input_hv_num_keys;
@@ -803,7 +803,7 @@ SV* string_hashref_to_string(SV* input_hv_ref)
     size_t input_hv_entry_value_string_pos;
     SV* output_sv = newSV(0);
 
-	input_hv = (HV*)SvRV(input_hv_ref);
+	input_hv = (HV*)SvRV(input_hvref);
 	input_hv_num_keys = hv_iterinit(input_hv);
 //	fprintf(stderr, "in CPPOPS_PERLTYPES string_hashref_to_string(), have input_hv_num_keys = %"INTEGER"\n", input_hv_num_keys);
 

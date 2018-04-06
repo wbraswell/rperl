@@ -55,9 +55,21 @@ void XS_pack_string_arrayref(SV* output_avref, string_arrayref input_vector);
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
 //void integer_arrayref_to_string(SV* input_avref);
+SV* integer_arrayref_to_string_compact(SV* input_avref);
 SV* integer_arrayref_to_string(SV* input_avref);
+SV* integer_arrayref_to_string_pretty(SV* input_avref);
+SV* integer_arrayref_to_string_extend(SV* input_avref);
+SV* integer_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level);
+SV* number_arrayref_to_string_compact(SV* input_avref);
 SV* number_arrayref_to_string(SV* input_avref);
+SV* number_arrayref_to_string_pretty(SV* input_avref);
+SV* number_arrayref_to_string_extend(SV* input_avref);
+SV* number_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level);
+SV* string_arrayref_to_string_compact(SV* input_avref);
 SV* string_arrayref_to_string(SV* input_avref);
+SV* string_arrayref_to_string_pretty(SV* input_avref);
+SV* string_arrayref_to_string_extend(SV* input_avref);
+SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level);
 # elif defined __CPP__TYPES
 string integer_arrayref_to_string(integer_arrayref input_vector);
 string number_arrayref_to_string(number_arrayref input_vector);

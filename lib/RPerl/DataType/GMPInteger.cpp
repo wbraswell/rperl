@@ -67,9 +67,9 @@ void gmp_integer_CHECKTRACE(SV* possible_gmp_integer, const char* variable_name,
 # ifdef __CPP__TYPES
 
 // convert from (Perl SV containing reference to (Perl HV containing reference to C gmp_integer)) to (C gmp_integer_retval)
-gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_hv_ref) {
-//    gmp_integer_CHECK(input_hv_ref);
-    gmp_integer_CHECKTRACE(input_hv_ref, "input_hv_ref", "XS_unpack_gmp_integer_retval()");
+gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_hvref) {
+//    gmp_integer_CHECK(input_hvref);
+    gmp_integer_CHECKTRACE(input_hvref, "input_hvref", "XS_unpack_gmp_integer_retval()");
 
     // DEV NOTE: PERLTYPES gmp_integer is AKA RPerl::DataType::GMPInteger,
     // which is a wrapper around PERLTYPES Math::BigInt,
@@ -79,7 +79,7 @@ gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_hv_ref) {
 
 /*     // LONG FORM
      cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), top of subroutine" << endl;
-     HV* input_hv = (HV*)SvRV(input_hv_ref);
+     HV* input_hv = (HV*)SvRV(input_hvref);
      SV** input_hv_value_ptr = hv_fetch(input_hv, (const char*) "value", (U32) 5, (I32) 0);
      SV** input_hv_sign_ptr = hv_fetch(input_hv, (const char*) "sign", (U32) 4, (I32) 0);
 
@@ -105,13 +105,13 @@ gmp_integer_retval XS_unpack_gmp_integer_retval(SV* input_hv_ref) {
 */
 
     // SHORT FORM
-    return (gmp_integer_retval) *((gmp_integer_rawptr) SvMAGIC(SvRV(*(hv_fetch((HV*)SvRV(input_hv_ref), (const char*) "value", (U32) 5, (I32) 0))))->mg_ptr)
-            * pow(-1, (SvPV_nolen(*hv_fetch((HV*)SvRV(input_hv_ref), (const char*) "sign", (U32) 4, (I32) 0))[0] == '-'));
+    return (gmp_integer_retval) *((gmp_integer_rawptr) SvMAGIC(SvRV(*(hv_fetch((HV*)SvRV(input_hvref), (const char*) "value", (U32) 5, (I32) 0))))->mg_ptr)
+            * pow(-1, (SvPV_nolen(*hv_fetch((HV*)SvRV(input_hvref), (const char*) "sign", (U32) 4, (I32) 0))[0] == '-'));
 }
 
 // convert from (C gmp_integer_retval) to (Perl SV containing reference to (Perl HV containing reference to C gmp_integer))
-void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_integer_retval) {
-//    cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), top of subroutine, received output_hv_ref = " << output_hv_ref << endl;
+void XS_pack_gmp_integer_retval(SV* output_hvref, gmp_integer_retval input_gmp_integer_retval) {
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), top of subroutine, received output_hvref = " << output_hvref << endl;
 
     dSP;
     ENTER;
@@ -131,21 +131,21 @@ void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_
         croak("\nERROR EMPV10, CONSTRUCTOR RETURN VALUE MISMATCH, CPPOPS_CPPTYPES:\nexactly 1 return value expected but %"INTEGER" return value(s) found,\ncroaking", callback_retval_count);
     }
 
-    SV* gmp_integer_hv_ref = POPs;
-//    cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), have gmp_integer_hv_ref = " << gmp_integer_hv_ref << endl;
-//    cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), have class(gmp_integer_hv_ref) = " << class(gmp_integer_hv_ref) << endl;
+    SV* gmp_integer_hvref = POPs;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), have gmp_integer_hvref = " << gmp_integer_hvref << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), have class(gmp_integer_hvref) = " << class(gmp_integer_hvref) << endl;
 
-//    gmp_integer_CHECK(gmp_integer_hv_ref);
-    gmp_integer_CHECKTRACE(gmp_integer_hv_ref, "gmp_integer_hv_ref", "XS_pack_gmp_integer_retval()");
+//    gmp_integer_CHECK(gmp_integer_hvref);
+    gmp_integer_CHECKTRACE(gmp_integer_hvref, "gmp_integer_hvref", "XS_pack_gmp_integer_retval()");
 
     PUTBACK;
 
     // METHOD A
     SV* temp_sv_pointer;
-    temp_sv_pointer = newSVrv(output_hv_ref, NULL);   // upgrade output stack SV to an RV
+    temp_sv_pointer = newSVrv(output_hvref, NULL);   // upgrade output stack SV to an RV
     SvREFCNT_dec(temp_sv_pointer);       // discard temporary pointer
-    SvRV(output_hv_ref) = SvRV(gmp_integer_hv_ref);      // make output stack RV pointer at our output gmp_integer
-    SvREFCNT_inc(SvRV(output_hv_ref));  // avoid segfaults and attempts to free unreferenced scalars by increasing retval's ref count, seems to work on either output_hv_ref or gmp_integer_hv_ref
+    SvRV(output_hvref) = SvRV(gmp_integer_hvref);      // make output stack RV pointer at our output gmp_integer
+    SvREFCNT_inc(SvRV(output_hvref));  // avoid segfaults and attempts to free unreferenced scalars by increasing retval's ref count, seems to work on either output_hvref or gmp_integer_hvref
 
     // METHOD B
 /*
@@ -153,14 +153,14 @@ void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_
     SV* temp_sv_pointer;
 
     // SUB-METHOD B1
-    hv_store(output_hv, (const char*) "value", (U32) 5, SvREFCNT_inc(*hv_fetch((HV*)SvRV(gmp_integer_hv_ref), (const char*) "value", (U32) 5, (I32) 0)), (U32)0);
-    hv_store(output_hv, (const char*) "sign", (U32) 4, SvREFCNT_inc(*hv_fetch((HV*)SvRV(gmp_integer_hv_ref), (const char*) "sign", (U32) 4, (I32) 0)), (U32)0);
-    hv_store(output_hv, (const char*) "_a", (U32) 2, SvREFCNT_inc(*hv_fetch((HV*)SvRV(gmp_integer_hv_ref), (const char*) "_a", (U32) 2, (I32) 0)), (U32)0);
-    hv_store(output_hv, (const char*) "_p", (U32) 2, SvREFCNT_inc(*hv_fetch((HV*)SvRV(gmp_integer_hv_ref), (const char*) "_p", (U32) 2, (I32) 0)), (U32)0);
+    hv_store(output_hv, (const char*) "value", (U32) 5, SvREFCNT_inc(*hv_fetch((HV*)SvRV(gmp_integer_hvref), (const char*) "value", (U32) 5, (I32) 0)), (U32)0);
+    hv_store(output_hv, (const char*) "sign", (U32) 4, SvREFCNT_inc(*hv_fetch((HV*)SvRV(gmp_integer_hvref), (const char*) "sign", (U32) 4, (I32) 0)), (U32)0);
+    hv_store(output_hv, (const char*) "_a", (U32) 2, SvREFCNT_inc(*hv_fetch((HV*)SvRV(gmp_integer_hvref), (const char*) "_a", (U32) 2, (I32) 0)), (U32)0);
+    hv_store(output_hv, (const char*) "_p", (U32) 2, SvREFCNT_inc(*hv_fetch((HV*)SvRV(gmp_integer_hvref), (const char*) "_p", (U32) 2, (I32) 0)), (U32)0);
 
-//     SV* gmp_integer_hv_ref_value_value = *hv_fetch((HV*)SvRV(gmp_integer_hv_ref), (const char*) "value", (U32) 5, (I32) 0);
-//     SV* gmp_integer_hv_ref_value_value = *hv_fetch(gmp_integer_hv, (const char*) "value", (U32) 5, (I32) 0);
-//     cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), have gmp_integer_hv_ref_value_value = " << gmp_integer_hv_ref_value_value << endl;
+//     SV* gmp_integer_hvref_value_value = *hv_fetch((HV*)SvRV(gmp_integer_hvref), (const char*) "value", (U32) 5, (I32) 0);
+//     SV* gmp_integer_hvref_value_value = *hv_fetch(gmp_integer_hv, (const char*) "value", (U32) 5, (I32) 0);
+//     cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), have gmp_integer_hvref_value_value = " << gmp_integer_hvref_value_value << endl;
 
     // SUB-METHOD B2
 / *
@@ -170,7 +170,7 @@ void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_
      SV* gmp_integer_hv_entry_key;
      SV* gmp_integer_hv_entry_value;
 
-     HV* gmp_integer_hv = (HV*)SvRV(gmp_integer_hv_ref);
+     HV* gmp_integer_hv = (HV*)SvRV(gmp_integer_hvref);
      cerr << "in CPPOPS_CPPTYPES XS_pack_gmp_integer_retval(), have gmp_integer_hv = " << gmp_integer_hv << endl;
 
      gmp_integer_hv_num_keys = hv_iterinit(gmp_integer_hv);
@@ -191,20 +191,20 @@ void XS_pack_gmp_integer_retval(SV* output_hv_ref, gmp_integer_retval input_gmp_
      }
 * /
 
-    temp_sv_pointer = newSVrv(output_hv_ref, NULL);   // upgrade output stack SV to an RV
+    temp_sv_pointer = newSVrv(output_hvref, NULL);   // upgrade output stack SV to an RV
     SvREFCNT_dec(temp_sv_pointer);       // discard temporary pointer
-    SvRV(output_hv_ref) = (SV*)output_hv;      // make output stack RV pointer at our output HV
-    sv_bless(output_hv_ref, gv_stashpv("gmp_integer", (I32) 0));
+    SvRV(output_hvref) = (SV*)output_hv;      // make output stack RV pointer at our output HV
+    sv_bless(output_hvref, gv_stashpv("gmp_integer", (I32) 0));
 */
 
-    SV* gmp_integer_hv_ref_value_value = *hv_fetch((HV*)SvRV(gmp_integer_hv_ref), (const char*) "value", (U32) 5, (I32) 0);
-    MAGIC* gmp_integer_hv_ref_value_value_magic = SvMAGIC(SvRV(gmp_integer_hv_ref_value_value));
-//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have gmp_integer_hv_ref_value_value = " << gmp_integer_hv_ref_value_value << endl;
-//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have gmp_integer_hv_ref_value_value_magic = " << gmp_integer_hv_ref_value_value_magic << endl;
-//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have pre-set (gmp_integer_rawptr)gmp_integer_hv_ref_value_value_magic->mg_ptr = " << (gmp_integer_rawptr)gmp_integer_hv_ref_value_value_magic->mg_ptr << endl;
-//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have pre-set gmp_get_signed_integer(*(gmp_integer_rawptr)gmp_integer_hv_ref_value_value_magic->mg_ptr) = " << gmp_get_signed_integer(*(gmp_integer_rawptr)gmp_integer_hv_ref_value_value_magic->mg_ptr) << endl;
+    SV* gmp_integer_hvref_value_value = *hv_fetch((HV*)SvRV(gmp_integer_hvref), (const char*) "value", (U32) 5, (I32) 0);
+    MAGIC* gmp_integer_hvref_value_value_magic = SvMAGIC(SvRV(gmp_integer_hvref_value_value));
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have gmp_integer_hvref_value_value = " << gmp_integer_hvref_value_value << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have gmp_integer_hvref_value_value_magic = " << gmp_integer_hvref_value_value_magic << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have pre-set (gmp_integer_rawptr)gmp_integer_hvref_value_value_magic->mg_ptr = " << (gmp_integer_rawptr)gmp_integer_hvref_value_value_magic->mg_ptr << endl;
+//    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have pre-set gmp_get_signed_integer(*(gmp_integer_rawptr)gmp_integer_hvref_value_value_magic->mg_ptr) = " << gmp_get_signed_integer(*(gmp_integer_rawptr)gmp_integer_hvref_value_value_magic->mg_ptr) << endl;
 
-    gmp_integer_rawptr gmp_integer_tmp = (gmp_integer_rawptr) gmp_integer_hv_ref_value_value_magic->mg_ptr;
+    gmp_integer_rawptr gmp_integer_tmp = (gmp_integer_rawptr) gmp_integer_hvref_value_value_magic->mg_ptr;
 //    cerr << "in CPPOPS_CPPTYPES XS_unpack_gmp_integer_retval(), have post-set gmp_integer_tmp = " << gmp_integer_tmp << endl;
     gmp_set(*gmp_integer_tmp, input_gmp_integer_retval.gmp_integer_unretval());
 

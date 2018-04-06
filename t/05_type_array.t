@@ -18,7 +18,7 @@ our $VERSION = 0.008_000;
 # [[[ INCLUDES ]]]
 use RPerl::Test;
 #use Test::More tests => 232;
-use Test::More tests => 78;
+use Test::More tests => 155;
 use Test::Exception;
 use Test::Number::Delta;
 use RPerl::DataStructure::Array::SubTypes1D qw(integer_arrayref_typetest0 integer_arrayref_typetest1 number_arrayref_typetest0 number_arrayref_typetest1 string_arrayref_typetest0 string_arrayref_typetest1);
@@ -39,8 +39,9 @@ BEGIN {
 
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 #foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
+#for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
 #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
+for my $mode_id ( 0 .. 1 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES & CPPOPS_PERLTYPES ONLY
 #for my $mode_id ( 2 .. 2 ) {  # TEMPORARY DEBUGGING CPPOPS_CPPTYPES ONLY
 
     # [[[ MODE SETUP ]]]
@@ -144,10 +145,10 @@ for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
     );
     throws_ok(                                                                 # TIVAVRV13
         sub {
-            integer_arrayref_to_string( [ 2, 2_112, 42, [23], -877, -33, 1_701 ] );
+            integer_arrayref_to_string( [ 2, 2_112, 42, [ 23 ], -877, -33, 1_701 ] );
         },
         "/EIVAVRV03.*$mode_tagline/",
-        q{TIVAVRV13 integer_arrayref_to_string([ 2, 2_112, 42, [23], -877, -33, 1_701 ]) throws correct exception}
+        q{TIVAVRV13 integer_arrayref_to_string([ 2, 2_112, 42, [ 23 ], -877, -33, 1_701 ]) throws correct exception}
     );
     throws_ok(                                                                 # TIVAVRV14
         sub {
@@ -158,7 +159,7 @@ for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
     );
     lives_and(                                                                 # TIVAVRV20
         sub {
-            is( integer_arrayref_to_string( [ 23 ] ), '[ 23 ]', q{TIVAVRV20 integer_arrayref_to_string([23]) returns correct value} );
+            is( integer_arrayref_to_string( [ 23 ] ), '[ 23 ]', q{TIVAVRV20 integer_arrayref_to_string([ 23 ]) returns correct value} );
         },
         q{TIVAVRV20 integer_arrayref_to_string([ 23 ]) lives}
     );
@@ -186,14 +187,14 @@ for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
             integer_arrayref_typetest0( [ 2, 2_112, undef, 23, -877, -33, 1_701 ] );
         },
         "/EIVAVRV02.*$mode_tagline/",
-        q{TIVAVRV32 integer_arrayref_typetest0([2, 2_112, undef, 23, -877, -33, 1_701]) throws correct exception}
+        q{TIVAVRV32 integer_arrayref_typetest0([ 2, 2_112, undef, 23, -877, -33, 1_701 ]) throws correct exception}
     );
     throws_ok(                                                                  # TIVAVRV33
         sub {
             integer_arrayref_typetest0( [ 2, 2_112, 42, 'abcdefg', -877, -33, 1_701 ] );
         },
         "/EIVAVRV03.*$mode_tagline/",
-        q{TIVAVRV33 integer_arrayref_typetest0([2, 2_112, 42, 'abcdefg', -877, -33, 1_701]) throws correct exception}
+        q{TIVAVRV33 integer_arrayref_typetest0([ 2, 2_112, 42, 'abcdefg', -877, -33, 1_701 ]) throws correct exception}
     );
     lives_and(                                                                  # TIVAVRV34
         sub {
@@ -257,14 +258,14 @@ for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
             number_arrayref_to_string( [ 2, 2_112, 42, '23', -877, -33, 1_701 ] );
         },
         "/ENVAVRV03.*$mode_tagline/",
-        q{TNVAVRV11 number_arrayref_to_string([2, 2_112, 42, '23', -877, -33, 1_701]) throws correct exception}
+        q{TNVAVRV11 number_arrayref_to_string([ 2, 2_112, 42, '23', -877, -33, 1_701 ]) throws correct exception}
     );
     throws_ok(                                                                # TNVAVRV12
         sub {
-            number_arrayref_to_string( [ 2, 2_112, 42, [23], -877, -33, 1_701 ] );
+            number_arrayref_to_string( [ 2, 2_112, 42, [ 23 ], -877, -33, 1_701 ] );
         },
         "/ENVAVRV03.*$mode_tagline/",
-        q{TNVAVRV12 number_arrayref_to_string([ 2, 2_112, 42, [23], -877, -33, 1_701 ]) throws correct exception}
+        q{TNVAVRV12 number_arrayref_to_string([ 2, 2_112, 42, [ 23 ], -877, -33, 1_701 ]) throws correct exception}
     );
     throws_ok(                                                                # TNVAVRV13
         sub {

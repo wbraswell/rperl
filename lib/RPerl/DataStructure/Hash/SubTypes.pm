@@ -220,12 +220,12 @@ sub integer_hashref_CHECKTRACE {
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
 sub integer_hashref_to_string {
     { my string $RETURN_TYPE };
-    ( my $input_hv_ref ) = @ARG;
+    ( my $input_hvref ) = @ARG;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_hashref_to_string(), top of subroutine\n");
 
-    #    integer_hashref_CHECK($input_hv_ref);
-    integer_hashref_CHECKTRACE( $input_hv_ref, '$input_hv_ref',
+    #    integer_hashref_CHECK($input_hvref);
+    integer_hashref_CHECKTRACE( $input_hvref, '$input_hvref',
         'integer_hashref_to_string()' );
 
     my %input_hv;
@@ -235,7 +235,7 @@ sub integer_hashref_to_string {
     my string $output_sv;
     my boolean $i_is_0 = 1;
 
-    %input_hv = %{$input_hv_ref};
+    %input_hv = %{$input_hvref};
 
 #	$input_hv_length = scalar keys %input_hv;
 #	RPerl::diag("in PERLOPS_PERLTYPES integer_hashref_to_string(), have \$input_hv_length = $input_hv_length\n");
@@ -417,12 +417,12 @@ sub number_hashref_CHECKTRACE {
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
 sub number_hashref_to_string {
     { my string $RETURN_TYPE };
-    ( my $input_hv_ref ) = @ARG;
+    ( my $input_hvref ) = @ARG;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES number_hashref_to_string(), top of subroutine\n");
 
-    #    number_hashref_CHECK($input_hv_ref);
-    number_hashref_CHECKTRACE( $input_hv_ref, '$input_hv_ref',
+    #    number_hashref_CHECK($input_hvref);
+    number_hashref_CHECKTRACE( $input_hvref, '$input_hvref',
         'number_hashref_to_string()' );
 
     my %input_hv;
@@ -432,7 +432,7 @@ sub number_hashref_to_string {
     my string $output_sv;
     my boolean $i_is_0 = 1;
 
-    %input_hv = %{$input_hv_ref};
+    %input_hv = %{$input_hvref};
 
 #	$input_hv_length = scalar keys %input_hv;
 #	RPerl::diag("in PERLOPS_PERLTYPES number_hashref_to_string(), have \$input_hv_length = $input_hv_length\n");
@@ -612,12 +612,12 @@ sub string_hashref_CHECKTRACE {
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
 sub string_hashref_to_string {
     { my string $RETURN_TYPE };
-    ( my $input_hv_ref ) = @ARG;
+    ( my $input_hvref ) = @ARG;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string_hashref_to_string(), top of subroutine\n");
 
-    #    string_hashref_CHECK($input_hv_ref);
-    string_hashref_CHECKTRACE( $input_hv_ref, '$input_hv_ref',
+    #    string_hashref_CHECK($input_hvref);
+    string_hashref_CHECKTRACE( $input_hvref, '$input_hvref',
         'string_hashref_to_string()' );
 
     my %input_hv;
@@ -627,7 +627,7 @@ sub string_hashref_to_string {
     my string $output_sv;
     my boolean $i_is_0 = 1;
 
-    %input_hv = %{$input_hv_ref};
+    %input_hv = %{$input_hvref};
 
 #	$input_hv_length = scalar keys %input_hv;
 #	RPerl::diag("in PERLOPS_PERLTYPES string_hashref_to_string(), have \$input_hv_length = $input_hv_length\n");
@@ -843,68 +843,68 @@ sub integer_arrayref_hashref_CHECKTRACE {
 # call actual stringify routine, format level -1 (compact), indent level 0
 sub integer_arrayref_hashref_to_string_compact {
     { my string $RETURN_TYPE };
-    ( my $input_av_ref_hv_ref ) = @ARG;
-    return integer_arrayref_hashref_to_string_format($input_av_ref_hv_ref, -1, 0);
+    ( my $input_avref_hvref ) = @ARG;
+    return integer_arrayref_hashref_to_string_format($input_avref_hvref, -1, 0);
 }
 
 # call actual stringify routine, format level 0 (normal), indent level 0, DEFAULT
 sub integer_arrayref_hashref_to_string {
     { my string $RETURN_TYPE };
-    ( my $input_av_ref_hv_ref ) = @ARG;
-    return integer_arrayref_hashref_to_string_format($input_av_ref_hv_ref, 0, 0);
+    ( my $input_avref_hvref ) = @ARG;
+    return integer_arrayref_hashref_to_string_format($input_avref_hvref, 0, 0);
 }
 
 # call actual stringify routine, format level 1 (pretty), indent level 0
 sub integer_arrayref_hashref_to_string_pretty {
     { my string $RETURN_TYPE };
-    ( my $input_av_ref_hv_ref ) = @ARG;
-    return integer_arrayref_hashref_to_string_format($input_av_ref_hv_ref, 1, 0);
+    ( my $input_avref_hvref ) = @ARG;
+    return integer_arrayref_hashref_to_string_format($input_avref_hvref, 1, 0);
 }
 
 # call actual stringify routine, format level 2 (expand), indent level 0
 sub integer_arrayref_hashref_to_string_expand {
     { my string $RETURN_TYPE };
-    ( my $input_av_ref_hv_ref ) = @ARG;
-    return integer_arrayref_hashref_to_string_format($input_av_ref_hv_ref, 2, 0);
+    ( my $input_avref_hvref ) = @ARG;
+    return integer_arrayref_hashref_to_string_format($input_avref_hvref, 2, 0);
 }
 
 # convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
 sub integer_arrayref_hashref_to_string_format {
     { my string $RETURN_TYPE };
-    ( my $input_av_ref_hv_ref, my integer $format_level, my integer $indent_level ) = @ARG;
+    ( my $input_avref_hvref, my integer $format_level, my integer $indent_level ) = @ARG;
 
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string_format(), top of subroutine\n");
 #    RPerl::diag('in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string_format(), received $format_level = ', $format_level, "\n");
 #    RPerl::diag('in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string_format(), received $indent_level = ', $indent_level, "\n");
 
-#    integer_arrayref_hashref_CHECK($input_av_ref_hv_ref);
-    integer_arrayref_hashref_CHECKTRACE( $input_av_ref_hv_ref, '$input_av_ref_hv_ref', 'integer_arrayref_hashref_to_string_format()' );
+#    integer_arrayref_hashref_CHECK($input_avref_hvref);
+    integer_arrayref_hashref_CHECKTRACE( $input_avref_hvref, '$input_avref_hvref', 'integer_arrayref_hashref_to_string_format()' );
 
-    my %input_av_ref_hv;
+    my %input_avref_hv;
 
-    #   my integer $input_av_ref_hv_length;
-    my integer $input_av_ref_hv_entry_value;
+    #   my integer $input_avref_hv_length;
+    my integer $input_avref_hv_entry_value;
     my string $output_sv;
     my boolean $i_is_0 = 1;
     my string $indent = q{    } x $indent_level;
 
-    %input_av_ref_hv = %{$input_av_ref_hv_ref};
+    %input_avref_hv = %{$input_avref_hvref};
 
-#   $input_av_ref_hv_length = scalar keys %input_av_ref_hv;
-#   RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string_format(), have \$input_av_ref_hv_length = $input_av_ref_hv_length\n");
+#   $input_avref_hv_length = scalar keys %input_avref_hv;
+#   RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string_format(), have \$input_avref_hv_length = $input_avref_hv_length\n");
 
     if ($format_level >= 1) { $output_sv = $indent . '{'; }
     else                    { $output_sv = '{'; }
 
-    foreach my string $key ( sort keys %input_av_ref_hv ) {
+    foreach my string $key ( sort keys %input_avref_hv ) {
 
-        $input_av_ref_hv_entry_value = $input_av_ref_hv{$key};
+        $input_avref_hv_entry_value = $input_avref_hv{$key};
         $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
         $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
 # DEV NOTE: integer type-checking already done as part of integer_arrayref_hashref_CHECKTRACE()
-#        integer_CHECK($input_av_ref_hv_entry_value);
-#        integer_CHECKTRACE( $input_av_ref_hv_entry_value, "\$input_av_ref_hv_entry_value at key '$key'", 'integer_arrayref_hashref_to_string_format()' );
+#        integer_CHECK($input_avref_hv_entry_value);
+#        integer_CHECKTRACE( $input_avref_hv_entry_value, "\$input_avref_hv_entry_value at key '$key'", 'integer_arrayref_hashref_to_string_format()' );
 
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ','; }
@@ -918,7 +918,7 @@ sub integer_arrayref_hashref_to_string_format {
         $output_sv .= '=>';
         if ($format_level >= 0)  { $output_sv .= q{ }; }
         if ($format_level >= 2) { $output_sv .= "\n"; }
-        $output_sv .= ::integer_arrayref_to_string_format($input_av_ref_hv_entry_value, ($format_level - 1), ($indent_level + 1));  # YES UNDERSCORES???  [ WAS THIS COMMENT WRONG?  FIX IN ORIGINAL! ]
+        $output_sv .= ::integer_arrayref_to_string_format($input_avref_hv_entry_value, ($format_level - 1), ($indent_level + 1));  # YES UNDERSCORES???  [ WAS THIS COMMENT WRONG?  FIX IN ORIGINAL! ]
     }
 
     if    ($format_level >= 1) { $output_sv .= "\n" . $indent; }

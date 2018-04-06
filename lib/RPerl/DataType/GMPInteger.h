@@ -5,7 +5,7 @@ using std::cout;  using std::cerr;  using std::endl;
 
 // NEED FIX: remove duplicate code
 // DEV NOTE, CORRELATION #rp026: can't figure out how to get GMPInteger.cpp to include HelperFunctions.cpp without redefining errors
-#define SvHROKp(input_hv_ref) (SvROK(input_hv_ref) && (SvTYPE(SvRV(input_hv_ref)) == SVt_PVHV))
+#define SvHROKp(input_hvref) (SvROK(input_hvref) && (SvTYPE(SvRV(input_hvref)) == SVt_PVHV))
 
 # ifndef __CPP__INCLUDED__RPerl__DataType__GMPInteger_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__GMPInteger_h__typedefs 1
