@@ -105,9 +105,9 @@ sub integer_arrayref_hashref_CHECK {
 }
 
 
-# START HERE: test CHECK* code above & below, test to_string() below, update & test typetest*() below; refactor hashes by dimensionality; refactor *hashref_to_string(); write new 1-D *_hashref_to_string() tests like done w/ array
-# START HERE: test CHECK* code above & below, test to_string() below, update & test typetest*() below; refactor hashes by dimensionality; refactor *hashref_to_string(); write new 1-D *_hashref_to_string() tests like done w/ array
-# START HERE: test CHECK* code above & below, test to_string() below, update & test typetest*() below; refactor hashes by dimensionality; refactor *hashref_to_string(); write new 1-D *_hashref_to_string() tests like done w/ array
+# START HERE: refactor hash CPP/H by dimensionality; refactor *hashref_to_string(); write new 1-D *_*ref_hashref_to_string() as w/ array; test CHECK* code above & below, test to_string() below, update & test typetest*() below;
+# START HERE: refactor hash CPP/H by dimensionality; refactor *hashref_to_string(); write new 1-D *_*ref_hashref_to_string() as w/ array; test CHECK* code above & below, test to_string() below, update & test typetest*() below;
+# START HERE: refactor hash CPP/H by dimensionality; refactor *hashref_to_string(); write new 1-D *_*ref_hashref_to_string() as w/ array; test CHECK* code above & below, test to_string() below, update & test typetest*() below;
 
 
 sub integer_arrayref_hashref_CHECKTRACE {

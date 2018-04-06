@@ -3,7 +3,7 @@ using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp
 #define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp 0.020_000
 
-#include <RPerl/DataStructure/Array/SubTypes1D.h>		// -> ???
+#include <RPerl/DataStructure/Array/SubTypes1D.h>  // -> ??? (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
 /*
 * NEED FIX, CORRELATION #rp002: bug, possibly in Inline, causing inability to declare 3rd count_FOO argument to T_PACKEDARRAY;
@@ -394,7 +394,7 @@ SV* integer_arrayref_to_string_expand(SV* input_avref) {
 }
 
 // DEV NOTE: direct manipulation of the Perl Stack shown in /* block comments */
-// TODO: use Perl stack manipulation to enable support for variable number of arguments, multiple return values, not setting var to retval in Perl, etc.
+// NEED UPGRADE: use Perl stack manipulation to enable support for variable number of arguments, multiple return values, not setting var to retval in Perl, etc.
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
 //void integer_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level)
 SV* integer_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level)

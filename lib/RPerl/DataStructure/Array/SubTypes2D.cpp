@@ -3,7 +3,7 @@ using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes2D_cpp
 #define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes2D_cpp 0.003_000
 
-#include <RPerl/DataStructure/Array/SubTypes2D.h>		// -> ???
+#include <RPerl/DataStructure/Array/SubTypes2D.h>  // -> ??? (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]

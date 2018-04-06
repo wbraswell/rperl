@@ -10,17 +10,10 @@ using std::cout;  using std::cerr;  using std::endl;
 #include <RPerl/DataStructure/Array/SubTypes.cpp>	// -> SubTypes.h
 #include <RPerl/DataStructure/Array/SubTypes1D.cpp>	// -> SubTypes1D.h
 #include <RPerl/DataStructure/Array/SubTypes2D.cpp>	// -> SubTypes2D.h
-//#include <RPerl/DataStructure/Array/SubTypes3D.cpp>	// -> SubTypes3D.h
+#include <RPerl/DataStructure/Array/SubTypes3D.cpp>	// -> SubTypes3D.h
 
 // for type-checking subroutines & macros
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
-
-/* NEED REMOVE IF NOT NECESSARY
-// [[[ DATA TYPES ]]]
-#include <RPerl/DataType/Integer.cpp>
-#include <RPerl/DataType/Number.cpp>
-#include <RPerl/DataType/String.cpp>
-*/
 
 // [[[ GENERAL MACROS ]]]
 #define VECTOR_RESIZE_NOSHRINK(my_vector, my_size) ((my_vector.size() < my_size) ? my_vector.resize((size_t)(my_size)) : (void)0)  // do grow but don't shrink

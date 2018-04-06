@@ -54,7 +54,6 @@ void XS_pack_string_arrayref(SV* output_avref, string_arrayref input_vector);
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
-//void integer_arrayref_to_string(SV* input_avref);
 SV* integer_arrayref_to_string_compact(SV* input_avref);
 SV* integer_arrayref_to_string(SV* input_avref);
 SV* integer_arrayref_to_string_pretty(SV* input_avref);
@@ -90,9 +89,7 @@ string string_arrayref_to_string_format(string_arrayref input_vector, integer fo
 
 // [[[ TYPE TESTING ]]]
 # ifdef __PERL__TYPES
-//void integer_arrayref_typetest0(SV* lucky_integers);
 SV* integer_arrayref_typetest0(SV* lucky_integers);
-//void integer_arrayref_typetest1(SV* my_size);
 SV* integer_arrayref_typetest1(SV* my_size);
 SV* number_arrayref_typetest0(SV* lucky_numbers);
 SV* number_arrayref_typetest1(SV* my_size);

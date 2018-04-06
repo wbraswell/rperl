@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes_h
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes_h 0.002_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes_h 0.003_000
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
@@ -10,40 +10,29 @@ using std::cout;  using std::cerr;  using std::endl;
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
 
 // [[[ DATA TYPES ]]]
-#include <RPerl/DataType/Integer.cpp>
-#include <RPerl/DataType/Number.cpp>
-#include <RPerl/DataType/String.cpp>
+#include <RPerl/DataType/Integer.cpp>  // for integer type used in OPS & TYPES REPORTER
 
-// [[[ TYPEDEFS, REPEATED ]]]
-typedef std::unordered_map<string, integer> integer_hashref;
-typedef std::unordered_map<string, integer>::iterator integer_hashref_iterator;
-typedef std::unordered_map<string, integer>::const_iterator integer_hashref_const_iterator;
-typedef std::unordered_map<string, number> number_hashref;
-typedef std::unordered_map<string, number>::iterator number_hashref_iterator;
-typedef std::unordered_map<string, number>::const_iterator number_hashref_const_iterator;
-typedef std::unordered_map<string, string> string_hashref;
-typedef std::unordered_map<string, string>::iterator string_hashref_iterator;
-typedef std::unordered_map<string, string>::const_iterator string_hashref_const_iterator;
-
-// [[[ TYPEDEFS ]]]
-typedef std::unordered_map<string, std::vector<integer>> integer_arrayref_hashref;
-typedef std::unordered_map<string, std::vector<integer>>::iterator integer_arrayref_hashref_iterator;
-typedef std::unordered_map<string, std::vector<integer>>::const_iterator integer_arrayref_hashref_const_iterator;
-typedef std::unordered_map<string, std::vector<number>> number_arrayref_hashref;
-typedef std::unordered_map<string, std::vector<number>>::iterator number_arrayref_hashref_iterator;
-typedef std::unordered_map<string, std::vector<number>>::const_iterator number_arrayref_hashref_const_iterator;
-typedef std::unordered_map<string, std::vector<string>> string_arrayref_hashref;
-typedef std::unordered_map<string, std::vector<string>>::iterator string_arrayref_hashref_iterator;
-typedef std::unordered_map<string, std::vector<string>>::const_iterator string_arrayref_hashref_const_iterator;
-
-// [[[ TYPE-CHECKING SUBROUTINES ]]]
-// NEED ENABLE, implement remaining function definitions in SubTypes.h
-void integer_arrayref_hashref_CHECK(SV* possible_integer_arrayref_hashref);
-void integer_arrayref_hashref_CHECKTRACE(SV* possible_integer_arrayref_hashref, const char* variable_name, const char* subroutine_name);
-//void number_arrayref_hashref_CHECK(SV* possible_number_arrayref_hashref);
-//void number_arrayref_hashref_CHECKTRACE(SV* possible_number_arrayref_hashref, const char* variable_name, const char* subroutine_name);
-//void string_arrayref_hashref_CHECK(SV* possible_string_arrayref_hashref);
-//void string_arrayref_hashref_CHECKTRACE(SV* possible_string_arrayref_hashref, const char* variable_name, const char* subroutine_name);
+// [[[ TYPE-CHECKING MACROS ]]]
+#define hashref_CHECK(possible_hashref) \
+    (not(SvOK(possible_hashref)) ? \
+            croak("\nERROR EHVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhashref value expected but undefined/null value found,\ncroaking") : \
+            (not(SvHROKp(possible_hashref)) ? \
+                    croak("\nERROR EHVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhashref value expected but non-hashref value found,\ncroaking") : \
+                    (void)0))
+#define hashref_CHECKTRACE(possible_hashref, variable_name, subroutine_name) \
+    (not(SvOK(possible_hashref)) ? \
+            croak("\nERROR EHVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhashref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
+            (not(SvHROKp(possible_hashref)) ? \
+                    croak("\nERROR EHVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhashref value expected but non-hashref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
+                    (void)0))
+#define hashentry_CHECK(possible_hashentry) \
+    ((possible_hashentry == NULL) ? \
+            croak("\nERROR EHE00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhashentry value expected but undefined/null value found,\ncroaking") : \
+                    (void)0)
+#define hashentry_CHECKTRACE(possible_hashentry, variable_name, subroutine_name) \
+    ((possible_hashentry == NULL) ? \
+            croak("\nERROR EHE00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nhashentry value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
+                    (void)0)
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 # ifdef __PERL__TYPES
@@ -52,46 +41,6 @@ SV* RPerl__DataStructure__Hash__SubTypes__MODE_ID() { return(newSViv(1)); }  // 
 integer RPerl__DataStructure__Hash__SubTypes__MODE_ID() { return 2; }  // CPPOPS_CPPTYPES is 2
 # else
 Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_exactly_one!
-# endif
-
-// [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
-# ifdef __CPP__TYPES
-integer_arrayref_hashref XS_unpack_integer_arrayref_hashref(SV* input_avref_hvref);
-void XS_pack_integer_arrayref_hashref(SV* output_avref_hvref, integer_arrayref_hashref input_vector_unordered_map);
-number_arrayref_hashref XS_unpack_number_arrayref_hashref(SV* input_avref_hvref);
-void XS_pack_number_arrayref_hashref(SV* output_avref_hvref, number_arrayref_hashref input_vector_unordered_map);
-string_arrayref_hashref XS_unpack_string_arrayref_hashref(SV* input_avref_hvref);
-void XS_pack_string_arrayref_hashref(SV* output_avref_hvref, string_arrayref_hashref input_vector_unordered_map);
-# endif
-
-// [[[ STRINGIFY ]]]
-// NEED ENABLE, implement function definitions in SubTypes.h
-# ifdef __PERL__TYPES
-//SV* integer_arrayref_hashref_to_string(SV* input_avref_hvref);
-//SV* number_arrayref_hashref_to_string(SV* input_avref_hvref);
-//SV* string_arrayref_hashref_to_string(SV* input_avref_hvref);
-# elif defined __CPP__TYPES
-//string integer_arrayref_hashref_to_string(integer_arrayref_hashref input_vector_unordered_map);
-//string number_arrayref_hashref_to_string(number_arrayref_hashref input_vector_unordered_map);
-//string string_arrayref_hashref_to_string(string_arrayref_hashref input_vector_unordered_map);
-# endif
-
-// [[[ TYPE TESTING ]]]
-// NEED ENABLE, implement function definitions in SubTypes.h
-# ifdef __PERL__TYPES
-//SV* integer_arrayref_hashref_typetest0(SV* lucky_integers);
-//SV* integer_arrayref_hashref_typetest1(SV* my_size);
-//SV* number_arrayref_hashref_typetest0(SV* lucky_numbers);
-//SV* number_arrayref_hashref_typetest1(SV* my_size);
-//SV* string_arrayref_hashref_typetest0(SV* people);
-//SV* string_arrayref_hashref_typetest1(SV* my_size);
-# elif defined __CPP__TYPES
-//string integer_arrayref_hashref_typetest0(integer_arrayref_hashref lucky_integers);
-//integer_arrayref_hashref integer_arrayref_hashref_typetest1(integer my_size);
-//string number_arrayref_hashref_typetest0(number_arrayref_hashref lucky_numbers);
-//number_arrayref_hashref number_arrayref_hashref_typetest1(integer my_size);
-//string string_arrayref_hashref_typetest0(string_arrayref_hashref people);
-//string_arrayref_hashref string_arrayref_hashref_typetest1(integer my_size);
 # endif
 
 #endif

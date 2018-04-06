@@ -38,8 +38,7 @@ BEGIN {
 
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
 foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-
-    #for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
+#for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
 
     # [[[ MODE SETUP ]]]
     #    RPerl::diag("in 06_type_hash.t, top of for() loop, have \$mode_id = $mode_id\n");
