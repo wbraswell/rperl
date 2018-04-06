@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.014_000;
+our $VERSION = 0.015_000;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -51,6 +51,9 @@ use RPerl::DataStructure::Array::SubTypes3D;
 use RPerl::DataStructure::Array::Reference;
 use RPerl::DataStructure::Hash;
 use RPerl::DataStructure::Hash::SubTypes;
+use RPerl::DataStructure::Hash::SubTypes1D;
+use RPerl::DataStructure::Hash::SubTypes2D;
+use RPerl::DataStructure::Hash::SubTypes3D;
 use RPerl::DataStructure::Hash::Reference;
 
 #use RPerl::DataStructure::LinkedList;
@@ -78,7 +81,10 @@ our @EXPORT = (
     @RPerl::DataStructure::Array::SubTypes1D::EXPORT,
     @RPerl::DataStructure::Array::SubTypes2D::EXPORT,
     @RPerl::DataStructure::Array::SubTypes3D::EXPORT,
-    @RPerl::DataStructure::Hash::SubTypes::EXPORT
+    @RPerl::DataStructure::Hash::SubTypes::EXPORT,
+    @RPerl::DataStructure::Hash::SubTypes1D::EXPORT,
+    @RPerl::DataStructure::Hash::SubTypes2D::EXPORT,
+    @RPerl::DataStructure::Hash::SubTypes3D::EXPORT
 );
 our @EXPORT_OK = (
     @RPerl::DataType::Void::EXPORT_OK,
@@ -94,7 +100,10 @@ our @EXPORT_OK = (
     @RPerl::DataStructure::Array::SubTypes1D::EXPORT_OK,
     @RPerl::DataStructure::Array::SubTypes2D::EXPORT_OK,
     @RPerl::DataStructure::Array::SubTypes3D::EXPORT_OK,
-    @RPerl::DataStructure::Hash::SubTypes::EXPORT_OK
+    @RPerl::DataStructure::Hash::SubTypes::EXPORT_OK,
+    @RPerl::DataStructure::Hash::SubTypes1D::EXPORT_OK,
+    @RPerl::DataStructure::Hash::SubTypes2D::EXPORT_OK,
+    @RPerl::DataStructure::Hash::SubTypes3D::EXPORT_OK
 );
 
 # [[[ OBJECT-ORIENTED ]]]
