@@ -786,9 +786,9 @@ sub integer_arrayref_hashref_CHECK {
 }
 
 
-# START HERE: Travis tests pass, test CHECK* code above & below, test to_string() below, update & test typetest*() below
-# START HERE: Travis tests pass, test CHECK* code above & below, test to_string() below, update & test typetest*() below
-# START HERE: Travis tests pass, test CHECK* code above & below, test to_string() below, update & test typetest*() below
+# START HERE: Travis tests pass, test CHECK* code above & below, test to_string() below, update & test typetest*() below; refactor hashes by dimensionality; refactor *hashref_to_string()
+# START HERE: Travis tests pass, test CHECK* code above & below, test to_string() below, update & test typetest*() below; refactor hashes by dimensionality; refactor *hashref_to_string()
+# START HERE: Travis tests pass, test CHECK* code above & below, test to_string() below, update & test typetest*() below; refactor hashes by dimensionality; refactor *hashref_to_string()
 
 
 sub integer_arrayref_hashref_CHECKTRACE {

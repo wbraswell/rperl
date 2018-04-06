@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp 0.003_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp 0.020_000
 
 #include <RPerl/DataStructure/Array/SubTypes1D.h>		// -> ???
 
@@ -369,24 +369,7 @@ void XS_pack_string_arrayref(SV* output_avref, string_arrayref input_vector)
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]
 
-
-
-
-
-
-
-
-
-// START HERE: Failing Travis tests, upgrade *arrayref_to_string() below, add *_compact() etc variations, re-enable t/05 tests, write new tests?
-// START HERE: Failing Travis tests, upgrade *arrayref_to_string() below, add *_compact() etc variations, re-enable t/05 tests, write new tests?
-// START HERE: Failing Travis tests, upgrade *arrayref_to_string() below, add *_compact() etc variations, re-enable t/05 tests, write new tests?
-
-
 # ifdef __PERL__TYPES
-
-
-
-
 
 // DEV NOTE: 1-D format levels are 1 less than 2-D format levels
 
@@ -435,6 +418,8 @@ SV* integer_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* ind
     SV** input_av_element;
     SV* output_sv = newSVpv("", 0);
     boolean i_is_0 = 1;
+
+    // generate indent
     SV* indent = newSVpv("", 0);
     for (i = 0; i < SvIV(indent_level); i++) { sv_catpvn(indent, "    ", 4); }
 
@@ -463,7 +448,7 @@ SV* integer_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* ind
         else        { sv_catpvn(output_sv, ",", 1); }
 
         // append newline-indent-tab or space, depending on format level
-        if      (SvIV(format_level) >= 1)  { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent);  sv_catpvn(output_sv, "    ", 4); }
+        if      (SvIV(format_level) >=  1) { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent);  sv_catpvn(output_sv, "    ", 4); }
         else if (SvIV(format_level) >= -1) { sv_catpvn(output_sv, " ", 1); }
 
 //      sv_catpvf(output_sv, "%"INTEGER"", (integer)SvIV(*input_av_element));  // NO UNDERSCORES
@@ -471,7 +456,7 @@ SV* integer_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* ind
     }
 
     // append newline-indent or space, depending on format level
-    if      (SvIV(format_level) >= 1)  { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent); }
+    if      (SvIV(format_level) >=  1) { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent); }
     else if (SvIV(format_level) >= -1) { sv_catpvn(output_sv, " ", 1); }
 
     // end output string with right-square-bracket, as required for all RPerl arrays
@@ -534,6 +519,8 @@ SV* number_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
     SV** input_av_element;
     SV* output_sv = newSVpv("", 0);
     boolean i_is_0 = 1;
+
+    // generate indent
     SV* indent = newSVpv("", 0);
     for (i = 0; i < SvIV(indent_level); i++) { sv_catpvn(indent, "    ", 4); }
 
@@ -565,9 +552,9 @@ SV* number_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
         else        { temp_stream << ","; }
 
         // append newline-indent-tab or space, depending on format level
-//        if      (SvIV(format_level) >= 1)  { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent);  sv_catpvn(output_sv, "    ", 4); }
+//        if      (SvIV(format_level) >=  1) { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent);  sv_catpvn(output_sv, "    ", 4); }
 //        else if (SvIV(format_level) >= -1) { sv_catpvn(output_sv, " ", 1); }
-        if      (SvIV(format_level) >= 1)  { temp_stream << "\n" << SvPV_nolen(indent) << "    "; }
+        if      (SvIV(format_level) >=  1) { temp_stream << "\n" << SvPV_nolen(indent) << "    "; }
         else if (SvIV(format_level) >= -1) { temp_stream << " "; }
 
         temp_stream << (string)SvPV_nolen(number_to_string(*input_av_element));
@@ -575,9 +562,9 @@ SV* number_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
     }
 
     // append newline-indent or space, depending on format level
-//    if      (SvIV(format_level) >= 1)  { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent); }
+//    if      (SvIV(format_level) >=  1) { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent); }
 //    else if (SvIV(format_level) >= -1) { sv_catpvn(output_sv, " ", 1); }
-    if      (SvIV(format_level) >= 1)  { temp_stream << "\n" << SvPV_nolen(indent); }
+    if      (SvIV(format_level) >=  1) { temp_stream << "\n" << SvPV_nolen(indent); }
     else if (SvIV(format_level) >= -1) { temp_stream << " "; }
 
     // end output string with right-square-bracket, as required for all RPerl arrays
@@ -629,6 +616,8 @@ SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
     size_t input_av_element_string_pos;
     SV* output_sv = newSV(0);
     boolean i_is_0 = 1;
+
+    // generate indent
     SV* indent = newSVpv("", 0);
     for (i = 0; i < SvIV(indent_level); i++) { sv_catpvn(indent, "    ", 4); }
 
@@ -658,7 +647,7 @@ SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
         else        { sv_catpvn(output_sv, ",", 1); }
 
         // append newline-indent-tab or space, depending on format level
-        if      (SvIV(format_level) >= 1)  { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent);  sv_catpvn(output_sv, "    ", 4); }
+        if      (SvIV(format_level) >=  1) { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent);  sv_catpvn(output_sv, "    ", 4); }
         else if (SvIV(format_level) >= -1) { sv_catpvn(output_sv, " ", 1); }
 
         // escape all back-slash \ and single-quote ' characters with a back-slash \ character
@@ -682,9 +671,9 @@ SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
     }
 
     // append newline-indent or space, depending on format level
-//    if      (SvIV(format_level) >= 1)  { temp_stream << "\n" << SvPV_nolen(indent); }
+//    if      (SvIV(format_level) >=  1) { temp_stream << "\n" << SvPV_nolen(indent); }
 //    else if (SvIV(format_level) >= -1) { temp_stream << " "; }
-    if      (SvIV(format_level) >= 1)  { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent); }
+    if      (SvIV(format_level) >=  1) { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent); }
     else if (SvIV(format_level) >= -1) { sv_catpvn(output_sv, " ", 1); }
 
     // end output string with right-square-bracket, as required for all RPerl arrays
@@ -698,23 +687,7 @@ SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
     return(output_sv);
 }
 
-
-
-
-
-
-
-
-
 # elif defined __CPP__TYPES
-
-
-
-
-
-
-
-
 
 // DEV NOTE: 1-D format levels are 1 less than 2-D format levels
 
@@ -742,40 +715,53 @@ string integer_arrayref_to_string_expand(integer_arrayref input_vector)
     return integer_arrayref_to_string_format(input_vector, 1, 0);
 }
 
-
-
-
-
-
-
-
-
-
-
 // convert from (C++ std::vector of integers) to Perl-parsable (C++ std::string)
-string integer_arrayref_to_string(integer_arrayref input_vector)
+string integer_arrayref_to_string_format(integer_arrayref input_vector, integer format_level, integer indent_level)
 {
 //  fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), top of subroutine\n");
 
+    // declare local variables
     ostringstream output_stream;
-    integer input_vector_length = input_vector.size();
+    integer input_vector_length = input_vector.size();  // compute length of (number of elements in) input array
     integer i;
     integer input_vector_element;
     boolean i_is_0 = 1;
 
+    // generate indent
+    string indent = "";
+    for (i = 0; i < indent_level; i++) { indent += "    "; }
+
 //  fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), have input_vector_length = %"INTEGER"\n", input_vector_length);
 
+    // pre-begin with optional indent, depending on format level
+    if (format_level >= 1) { output_stream << indent; }
+
+    // begin output string with left-square-bracket, as required for all RPerl arrays
     output_stream << '[';
 
+    // loop through all valid values of i for use as index to input array
     for (i = 0;  i < input_vector_length;  ++i)
     {
         // utilizes i in element retrieval
         input_vector_element = input_vector[i];
-        if (i_is_0) { i_is_0 = 0; } else { output_stream << ", "; }
+
+        // append comma to output string for all elements except index 0
+        if (i_is_0) { i_is_0 = 0; }
+        else        { output_stream << ','; }
+
+        // append newline-indent-tab or space, depending on format level
+        if      (format_level >=  1) { output_stream << endl << indent << "    "; }
+        else if (format_level >= -1) { output_stream << ' '; }
+
 //      output_stream << input_vector_element;  // NO UNDERSCORES
         output_stream << integer_to_string(input_vector_element);  // YES UNDERSCORES
     }
 
+    // append newline-indent or space, depending on format level
+    if      (format_level >=  1) { output_stream << endl << indent; }
+    else if (format_level >= -1) { output_stream << ' '; }
+
+    // end output string with right-square-bracket, as required for all RPerl arrays
     output_stream << ']';
 
 //  fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
@@ -784,31 +770,82 @@ string integer_arrayref_to_string(integer_arrayref input_vector)
     return(output_stream.str());
 }
 
-// convert from (C++ std::vector of numbers) to Perl-parsable (C++ std::string)
+// DEV NOTE: 1-D format levels are 1 less than 2-D format levels
+
+// call actual stringify routine, format level -1 (compact), indent level 0
+string number_arrayref_to_string_compact(number_arrayref input_vector)
+{
+    return number_arrayref_to_string_format(input_vector, -2, 0);
+}
+
+// call actual stringify routine, format level 0 (normal), indent level 0, DEFAULT
 string number_arrayref_to_string(number_arrayref input_vector)
+{
+    return number_arrayref_to_string_format(input_vector, -1, 0);
+}
+
+// call actual stringify routine, format level 1 (pretty), indent level 0
+string number_arrayref_to_string_pretty(number_arrayref input_vector)
+{
+    return number_arrayref_to_string_format(input_vector, 0, 0);
+}
+
+// call actual stringify routine, format level 2 (expand), indent level 0
+string number_arrayref_to_string_expand(number_arrayref input_vector)
+{
+    return number_arrayref_to_string_format(input_vector, 1, 0);
+}
+
+// convert from (C++ std::vector of numbers) to Perl-parsable (C++ std::string)
+string number_arrayref_to_string_format(number_arrayref input_vector, integer format_level, integer indent_level)
 {
 //  fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_to_string(), top of subroutine\n");
 
+    // declare local variables
     ostringstream output_stream;
-    integer input_vector_length = input_vector.size();
+    integer input_vector_length = input_vector.size();  // compute length of (number of elements in) input array
     integer i;
     number input_vector_element;
     boolean i_is_0 = 1;
 
+    // generate indent
+    string indent = "";
+    for (i = 0; i < indent_level; i++) { indent += "    "; }
+
 //  fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_to_string(), have input_vector_length = %"INTEGER"\n", input_vector_length);
 
+    // pre-begin with optional indent, depending on format level
+    if (format_level >= 1) { output_stream << indent; }
+
+    // NEED ANSWER: do we actually need to be using ostringstream here for precision, since the actual numbers are being stringified by number_to_string() below???
     output_stream.precision(std::numeric_limits<double>::digits10);
+
+    // begin output string with left-square-bracket, as required for all RPerl arrays
     output_stream << '[';
 
+    // loop through all valid values of i for use as index to input array
     for (i = 0;  i < input_vector_length;  ++i)
     {
         // utilizes i in element retrieval
         input_vector_element = input_vector[i];
-        if (i_is_0) { i_is_0 = 0; } else { output_stream << ", "; }
+
+        // append comma to output string for all elements except index 0
+        if (i_is_0) { i_is_0 = 0; }
+        else        { output_stream << ','; }
+
+        // append newline-indent-tab or space, depending on format level
+        if      (format_level >=  1) { output_stream << endl << indent << "    "; }
+        else if (format_level >= -1) { output_stream << ' '; }
+
 //      output_stream << input_vector_element;
         output_stream << number_to_string(input_vector_element);
     }
 
+    // append newline-indent or space, depending on format level
+    if      (format_level >=  1) { output_stream << endl << indent; }
+    else if (format_level >= -1) { output_stream << ' '; }
+
+    // end output string with right-square-bracket, as required for all RPerl arrays
     output_stream << ']';
 
 //  fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_to_string(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
@@ -817,29 +854,75 @@ string number_arrayref_to_string(number_arrayref input_vector)
     return(output_stream.str());
 }
 
-// convert from (C++ std::vector of std::strings) to Perl-parsable (C++ std::string)
+// DEV NOTE: 1-D format levels are 1 less than 2-D format levels
+
+// call actual stringify routine, format level -1 (compact), indent level 0
+string string_arrayref_to_string_compact(string_arrayref input_vector)
+{
+    return string_arrayref_to_string_format(input_vector, -2, 0);
+}
+
+// call actual stringify routine, format level 0 (normal), indent level 0, DEFAULT
 string string_arrayref_to_string(string_arrayref input_vector)
+{
+    return string_arrayref_to_string_format(input_vector, -1, 0);
+}
+
+// call actual stringify routine, format level 1 (pretty), indent level 0
+string string_arrayref_to_string_pretty(string_arrayref input_vector)
+{
+    return string_arrayref_to_string_format(input_vector, 0, 0);
+}
+
+// call actual stringify routine, format level 2 (expand), indent level 0
+string string_arrayref_to_string_expand(string_arrayref input_vector)
+{
+    return string_arrayref_to_string_format(input_vector, 1, 0);
+}
+
+// convert from (C++ std::vector of std::strings) to Perl-parsable (C++ std::string)
+string string_arrayref_to_string_format(string_arrayref input_vector, integer format_level, integer indent_level)
 {
 //  fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_to_string(), top of subroutine\n");
 
+    // declare local variables
 //  ostringstream output_stream;
-    string output_string;
-    integer input_vector_length = input_vector.size();
+    string output_string = "";
+    integer input_vector_length = input_vector.size();  // compute length of (number of elements in) input array
     integer i;
     string input_vector_element;
     size_t input_vector_element_pos;
     boolean i_is_0 = 1;
 
+    // generate indent
+    string indent = "";
+    for (i = 0; i < indent_level; i++) { indent += "    "; }
+
 //  fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_to_string(), have input_vector_length = %"INTEGER"\n", input_vector_length);
 
-//  output_stream << '[';
-    output_string = "[";
+    // pre-begin with optional indent, depending on format level
+    if (format_level >= 1) { output_string += indent; }
 
+    // begin output string with left-square-bracket, as required for all RPerl arrays
+//  output_stream << '[';
+    output_string += "[";
+
+    // loop through all valid values of i for use as index to input array
     for (i = 0;  i < input_vector_length;  ++i)
     {
         // utilizes i in element retrieval
         input_vector_element = input_vector[i];
-        if (i_is_0) { i_is_0 = 0; } else { output_string += ", "; }
+
+        // append comma to output string for all elements except index 0
+        if (i_is_0) { i_is_0 = 0; }
+//      else        { output_stream << ','; }
+        else        { output_string += ','; }
+
+        // append newline-indent-tab or space, depending on format level
+//      if      (format_level >=  1) { output_stream << endl << indent << "    "; }
+//      else if (format_level >= -1) { output_stream << ' '; }
+        if      (format_level >=  1) { output_string += "\n" + indent + "    "; }
+        else if (format_level >= -1) { output_string += " "; }
 
         // escape all back-slash \ and single-quote ' characters with a back-slash \ character
         input_vector_element_pos = 0;
@@ -859,6 +942,13 @@ string string_arrayref_to_string(string_arrayref input_vector)
         output_string += "'" + input_vector_element + "'";
     }
 
+    // append newline-indent or space, depending on format level
+//  if      (format_level >=  1) { output_stream << endl << indent; }
+//  else if (format_level >= -1) { output_stream << ' '; }
+    if      (format_level >=  1) { output_string += "\n" + indent; }
+    else if (format_level >= -1) { output_string += " "; }
+
+    // end output string with right-square-bracket, as required for all RPerl arrays
 //  output_stream << ']';
     output_string += "]";
 

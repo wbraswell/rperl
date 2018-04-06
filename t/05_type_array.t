@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.010_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -17,8 +17,9 @@ our $VERSION = 0.008_000;
 
 # [[[ INCLUDES ]]]
 use RPerl::Test;
-#use Test::More tests => 232;
-use Test::More tests => 155;
+use Test::More tests => 232;
+#use Test::More tests => 155;  # TMP DEBUG PERLOPS_PERLTYPES & CPPOPS_PERLTYPES
+#use Test::More tests => 78;    # TMP DEBUG, ONE MODE ONLY
 use Test::Exception;
 use Test::Number::Delta;
 use RPerl::DataStructure::Array::SubTypes1D qw(integer_arrayref_typetest0 integer_arrayref_typetest1 number_arrayref_typetest0 number_arrayref_typetest1 string_arrayref_typetest0 string_arrayref_typetest1);
@@ -38,11 +39,11 @@ BEGIN {
 # [[[ PRIMARY RUNLOOP ]]]
 
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
-#foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-#for my $mode_id ( 0 .. 0 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES ONLY
-#for my $mode_id ( 1 .. 1 ) {  # TEMPORARY DEBUGGING CPPOPS_PERLTYPES ONLY
-for my $mode_id ( 0 .. 1 ) {  # TEMPORARY DEBUGGING PERLOPS_PERLTYPES & CPPOPS_PERLTYPES ONLY
-#for my $mode_id ( 2 .. 2 ) {  # TEMPORARY DEBUGGING CPPOPS_CPPTYPES ONLY
+foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
+#for my $mode_id ( 0 .. 0 ) {  # TMP DEBUG, PERLOPS_PERLTYPES ONLY
+#for my $mode_id ( 1 .. 1 ) {  # TMP DEBUG, CPPOPS_PERLTYPES ONLY
+#for my $mode_id ( 0 .. 1 ) {  # TMP DEBUG, PERLOPS_PERLTYPES & CPPOPS_PERLTYPES
+#for my $mode_id ( 2 .. 2 ) {  # TMP DEBUG, CPPOPS_CPPTYPES ONLY
 
     # [[[ MODE SETUP ]]]
     #    RPerl::diag("in 05_type_array.t, top of for() loop, have \$mode_id = $mode_id\n");

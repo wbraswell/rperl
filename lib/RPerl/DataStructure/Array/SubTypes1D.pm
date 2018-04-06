@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes1D;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.017_000;
+our $VERSION = 0.020_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -186,6 +186,8 @@ sub integer_arrayref_to_string_format {
     my integer $input_av_element;
     my string $output_sv = q{};
     my boolean $i_is_0 = 1;
+
+    # generate indent
     my string $indent = q{    } x $indent_level;
 
     # compute length of (number of elements in) input array
@@ -217,7 +219,7 @@ sub integer_arrayref_to_string_format {
         else         { $output_sv .= ','; }
 
         # append newline-indent-tab or space, depending on format level
-        if    ($format_level >= 1) { $output_sv .= "\n" . $indent . q{    }; }
+        if    ($format_level >=  1) { $output_sv .= "\n" . $indent . q{    }; }
         elsif ($format_level >= -1) { $output_sv .= q{ }; }
 
         # stringify individual element, append to output string
@@ -226,7 +228,7 @@ sub integer_arrayref_to_string_format {
     }
 
     # append newline-indent or space, depending on format level
-    if    ($format_level >= 1) { $output_sv .= "\n" . $indent; }
+    if    ($format_level >=  1) { $output_sv .= "\n" . $indent; }
     elsif ($format_level >= -1) { $output_sv .= q{ }; }
 
     # end output string with right-square-bracket, as required for all RPerl arrays
@@ -397,6 +399,8 @@ sub number_arrayref_to_string_format {
     my integer $input_av_element;
     my string $output_sv = q{};
     my boolean $i_is_0 = 1;
+
+    # generate indent
     my string $indent = q{    } x $indent_level;
 
     # compute length of (number of elements in) input array
@@ -428,7 +432,7 @@ sub number_arrayref_to_string_format {
         else         { $output_sv .= ','; }
 
         # append newline-indent-tab or space, depending on format level
-        if    ($format_level >= 1) { $output_sv .= "\n" . $indent . q{    }; }
+        if    ($format_level >=  1) { $output_sv .= "\n" . $indent . q{    }; }
         elsif ($format_level >= -1) { $output_sv .= q{ }; }
 
         # stringify individual element, append to output string
@@ -437,7 +441,7 @@ sub number_arrayref_to_string_format {
     }
 
     # append newline-indent or space, depending on format level
-    if    ($format_level >= 1) { $output_sv .= "\n" . $indent; }
+    if    ($format_level >=  1) { $output_sv .= "\n" . $indent; }
     elsif ($format_level >= -1) { $output_sv .= q{ }; }
 
     # end output string with right-square-bracket, as required for all RPerl arrays
@@ -613,6 +617,8 @@ sub string_arrayref_to_string_format {
     my integer $input_av_element;
     my string $output_sv = q{};
     my boolean $i_is_0 = 1;
+
+    # generate indent
     my string $indent = q{    } x $indent_level;
 
     # compute length of (number of elements in) input array
@@ -644,7 +650,7 @@ sub string_arrayref_to_string_format {
         else         { $output_sv .= ','; }
 
         # append newline-indent-tab or space, depending on format level
-        if    ($format_level >= 1) { $output_sv .= "\n" . $indent . q{    }; }
+        if    ($format_level >=  1) { $output_sv .= "\n" . $indent . q{    }; }
         elsif ($format_level >= -1) { $output_sv .= q{ }; }
 
         # stringify individual element, append to output string
@@ -654,7 +660,7 @@ sub string_arrayref_to_string_format {
     }
 
     # append newline-indent or space, depending on format level
-    if    ($format_level >= 1) { $output_sv .= "\n" . $indent; }
+    if    ($format_level >=  1) { $output_sv .= "\n" . $indent; }
     elsif ($format_level >= -1) { $output_sv .= q{ }; }
 
     # end output string with right-square-bracket, as required for all RPerl arrays
