@@ -5,27 +5,27 @@
 # <<< EXECUTE_SUCCESS: "after exported(17), received $exported_retval = 2040" >>>
 # <<< EXECUTE_SUCCESS: "have $RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_scalar = -2112" >>>
 # <<< EXECUTE_SUCCESS: "have @RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_array = [ -10, -20, -30, -40 ]" >>>
-# <<< EXECUTE_SUCCESS: "have %RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_hash = {'a' => -15, 'b' => -25, 'c' => -35}" >>>
+# <<< EXECUTE_SUCCESS: "have %RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_hash = { 'a' => -15, 'b' => -25, 'c' => -35 }" >>>
 # <<< EXECUTE_SUCCESS: "have *RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_typeglob execution... I am an anonymous subroutine inside an exported typeglob." >>>
 # <<< EXECUTE_SUCCESS: "have $exported_scalar = -2112" >>>
 # <<< EXECUTE_SUCCESS: "have @exported_array = [ -10, -20, -30, -40 ]" >>>
-# <<< EXECUTE_SUCCESS: "have %exported_hash = {'a' => -15, 'b' => -25, 'c' => -35}" >>>
+# <<< EXECUTE_SUCCESS: "have %exported_hash = { 'a' => -15, 'b' => -25, 'c' => -35 }" >>>
 # <<< EXECUTE_SUCCESS: "have *exported_typeglob execution... I am an anonymous subroutine inside an exported typeglob." >>>
 # <<< EXECUTE_SUCCESS: "have $RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_scalar = -4224" >>>
 # <<< EXECUTE_SUCCESS: "have @RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_array = [ -20, -20, -30, -40 ]" >>>
-# <<< EXECUTE_SUCCESS: "have %RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_hash = {'a' => -30, 'b' => -25, 'c' => -35}" >>>
+# <<< EXECUTE_SUCCESS: "have %RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_hash = { 'a' => -30, 'b' => -25, 'c' => -35 }" >>>
 # <<< EXECUTE_SUCCESS: "have *RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_typeglob execution... I am another different anonymous subroutine." >>>
 # <<< EXECUTE_SUCCESS: "have $exported_scalar = -4224" >>>
 # <<< EXECUTE_SUCCESS: "have @exported_array = [ -20, -20, -30, -40 ]" >>>
-# <<< EXECUTE_SUCCESS: "have %exported_hash = {'a' => -30, 'b' => -25, 'c' => -35}" >>>
+# <<< EXECUTE_SUCCESS: "have %exported_hash = { 'a' => -30, 'b' => -25, 'c' => -35 }" >>>
 # <<< EXECUTE_SUCCESS: "have *exported_typeglob execution... I am another different anonymous subroutine." >>>
 # <<< EXECUTE_SUCCESS: "have $RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_scalar = -8448" >>>
 # <<< EXECUTE_SUCCESS: "have @RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_array = [ -40, -20, -30, -40 ]" >>>
-# <<< EXECUTE_SUCCESS: "have %RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_hash = {'a' => -60, 'b' => -25, 'c' => -35}" >>>
+# <<< EXECUTE_SUCCESS: "have %RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_hash = { 'a' => -60, 'b' => -25, 'c' => -35 }" >>>
 # <<< EXECUTE_SUCCESS: "have *RPerl::Test::Exporter::Class_C_Exporter_20_NotBad::exported_typeglob execution... I am yet another different anonymous subroutine." >>>
 # <<< EXECUTE_SUCCESS: "have $exported_scalar = -8448" >>>
 # <<< EXECUTE_SUCCESS: "have @exported_array = [ -40, -20, -30, -40 ]" >>>
-# <<< EXECUTE_SUCCESS: "have %exported_hash = {'a' => -60, 'b' => -25, 'c' => -35}" >>>
+# <<< EXECUTE_SUCCESS: "have %exported_hash = { 'a' => -60, 'b' => -25, 'c' => -35 }" >>>
 # <<< EXECUTE_SUCCESS: "have *exported_typeglob execution... I am yet another different anonymous subroutine." >>>
 
 # DEV NOTE: medium magic grammar required to parse etc.
