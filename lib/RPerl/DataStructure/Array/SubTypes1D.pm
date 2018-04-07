@@ -139,28 +139,28 @@ sub integer_arrayref_CHECKTRACE {
 
 # DEV NOTE: 1-D format levels are 1 less than 2-D format levels
 
-# call actual stringify routine, format level -1 (compact), indent level 0
+# call actual stringify routine, format level -2 (compact), indent level 0
 sub integer_arrayref_to_string_compact {
     { my string $RETURN_TYPE };
     ( my $input_avref ) = @ARG;
     return integer_arrayref_to_string_format($input_avref, -2, 0);
 }
 
-# call actual stringify routine, format level 0 (normal), indent level 0, DEFAULT
+# call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
 sub integer_arrayref_to_string {
     { my string $RETURN_TYPE };
     ( my $input_avref ) = @ARG;
     return integer_arrayref_to_string_format($input_avref, -1, 0);
 }
 
-# call actual stringify routine, format level 1 (pretty), indent level 0
+# call actual stringify routine, format level 0 (pretty), indent level 0
 sub integer_arrayref_to_string_pretty {
     { my string $RETURN_TYPE };
     ( my $input_avref ) = @ARG;
     return integer_arrayref_to_string_format($input_avref, 0, 0);
 }
 
-# call actual stringify routine, format level 2 (expand), indent level 0
+# call actual stringify routine, format level 1 (expand), indent level 0
 sub integer_arrayref_to_string_expand {
     { my string $RETURN_TYPE };
     ( my $input_avref ) = @ARG;
@@ -352,28 +352,28 @@ sub number_arrayref_CHECKTRACE {
 
 # DEV NOTE: 1-D format levels are 1 less than 2-D format levels
 
-# call actual stringify routine, format level -1 (compact), indent level 0
+# call actual stringify routine, format level -2 (compact), indent level 0
 sub number_arrayref_to_string_compact {
     { my string $RETURN_TYPE };
     ( my $input_avref ) = @ARG;
     return number_arrayref_to_string_format($input_avref, -2, 0);
 }
 
-# call actual stringify routine, format level 0 (normal), indent level 0, DEFAULT
+# call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
 sub number_arrayref_to_string {
     { my string $RETURN_TYPE };
     ( my $input_avref ) = @ARG;
     return number_arrayref_to_string_format($input_avref, -1, 0);
 }
 
-# call actual stringify routine, format level 1 (pretty), indent level 0
+# call actual stringify routine, format level 0 (pretty), indent level 0
 sub number_arrayref_to_string_pretty {
     { my string $RETURN_TYPE };
     ( my $input_avref ) = @ARG;
     return number_arrayref_to_string_format($input_avref, 0, 0);
 }
 
-# call actual stringify routine, format level 2 (expand), indent level 0
+# call actual stringify routine, format level 1 (expand), indent level 0
 sub number_arrayref_to_string_expand {
     { my string $RETURN_TYPE };
     ( my $input_avref ) = @ARG;
@@ -570,28 +570,28 @@ sub string_arrayref_CHECKTRACE {
 
 # DEV NOTE: 1-D format levels are 1 less than 2-D format levels
 
-# call actual stringify routine, format level -1 (compact), indent level 0
+# call actual stringify routine, format level -2 (compact), indent level 0
 sub string_arrayref_to_string_compact {
     { my string $RETURN_TYPE };
     ( my $input_avref ) = @ARG;
     return string_arrayref_to_string_format($input_avref, -2, 0);
 }
 
-# call actual stringify routine, format level 0 (normal), indent level 0, DEFAULT
+# call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
 sub string_arrayref_to_string {
     { my string $RETURN_TYPE };
     ( my $input_avref ) = @ARG;
     return string_arrayref_to_string_format($input_avref, -1, 0);
 }
 
-# call actual stringify routine, format level 1 (pretty), indent level 0
+# call actual stringify routine, format level 0 (pretty), indent level 0
 sub string_arrayref_to_string_pretty {
     { my string $RETURN_TYPE };
     ( my $input_avref ) = @ARG;
     return string_arrayref_to_string_format($input_avref, 0, 0);
 }
 
-# call actual stringify routine, format level 2 (expand), indent level 0
+# call actual stringify routine, format level 1 (expand), indent level 0
 sub string_arrayref_to_string_expand {
     { my string $RETURN_TYPE };
     ( my $input_avref ) = @ARG;
