@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.009_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -17,8 +17,8 @@ our $VERSION = 0.008_000;
 
 # [[[ INCLUDES ]]]
 use RPerl::Test;
-#use Test::More tests => 247;
-use Test::More tests => 83;  # TMP DEBUG ONE MODE ONLY
+use Test::More tests => 247;
+#use Test::More tests => 83;  # TMP DEBUG ONE MODE ONLY
 use Test::Exception;
 use Test::Number::Delta;
 use RPerl::DataStructure::Hash::SubTypes1D qw(integer_hashref_typetest0 integer_hashref_typetest1 number_hashref_typetest0 number_hashref_typetest1 string_hashref_typetest0 string_hashref_typetest1);
@@ -38,9 +38,10 @@ BEGIN {
 # [[[ PRIMARY RUNLOOP ]]]
 
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
-#foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-for my $mode_id ( 0 .. 0 ) {  # TMP DEBUG PERLOPS_PERLTYPES ONLY
+foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
+#for my $mode_id ( 0 .. 0 ) {  # TMP DEBUG PERLOPS_PERLTYPES ONLY
 #for my $mode_id ( 1 .. 1 ) {  # TMP DEBUG CPPOPS_PERLTYPES ONLY
+#for my $mode_id ( 2 .. 2 ) {  # TMP DEBUG CPPOPS_CPPTYPES ONLY
 
     # [[[ MODE SETUP ]]]
     #    RPerl::diag("in 06_type_hash.t, top of for() loop, have \$mode_id = $mode_id\n");
@@ -174,7 +175,7 @@ for my $mode_id ( 0 .. 0 ) {  # TMP DEBUG PERLOPS_PERLTYPES ONLY
                 {   a_key => 2,
                     b_key => 2_112,
                     c_key => 42,
-                    d_key => [23],
+                    d_key => [ 23 ],
                     e_key => -877,
                     f_key => -33,
                     g_key => 1_701
@@ -182,7 +183,7 @@ for my $mode_id ( 0 .. 0 ) {  # TMP DEBUG PERLOPS_PERLTYPES ONLY
             );
         },
         "/EIVHVRV03.*$mode_tagline/",
-        q{TIVHVRV13 integer_hashref_to_string({ a_key => 2, b_key => 2_112, c_key => 42, d_key => [23], e_key => -877, f_key => -33, g_key => 1_701 }) throws correct exception}
+        q{TIVHVRV13 integer_hashref_to_string({ a_key => 2, b_key => 2_112, c_key => 42, d_key => [ 23 ], e_key => -877, f_key => -33, g_key => 1_701 }) throws correct exception}
     );
     throws_ok(    # TIVHVRV14
         sub {
@@ -383,7 +384,7 @@ for my $mode_id ( 0 .. 0 ) {  # TMP DEBUG PERLOPS_PERLTYPES ONLY
                 {   a_key => 2,
                     b_key => 2_112,
                     c_key => 42.3,
-                    d_key => [23],
+                    d_key => [ 23 ],
                     e_key => -877,
                     f_key => -33,
                     g_key => 1_701
@@ -391,7 +392,7 @@ for my $mode_id ( 0 .. 0 ) {  # TMP DEBUG PERLOPS_PERLTYPES ONLY
             );
         },
         "/ENVHVRV03.*$mode_tagline/",
-        q{TNVHVRV12 number_hashref_to_string({ a_key => 2, b_key => 2_112, c_key => 42.3, d_key => [23], e_key => -877, f_key => -33, g_key => 1_701 }) throws correct exception}
+        q{TNVHVRV12 number_hashref_to_string({ a_key => 2, b_key => 2_112, c_key => 42.3, d_key => [ 23 ], e_key => -877, f_key => -33, g_key => 1_701 }) throws correct exception}
     );
     throws_ok(    # TNVHVRV13
         sub {
@@ -797,7 +798,7 @@ for my $mode_id ( 0 .. 0 ) {  # TMP DEBUG PERLOPS_PERLTYPES ONLY
             );
         },
         "/EPVHVRV03.*$mode_tagline/",
-        q{TPVHVRV33 string_hashref_typetest0({ 'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'ARRAY_NOT_STRING' => [ 23, -42. 3] }) throws correct exception}
+        q{TPVHVRV33 string_hashref_typetest0({ 'kryptonian_manofsteel_clarkkent' => 'Superman', ..., 'ARRAY_NOT_STRING' => [ 23, -42. 3 ] }) throws correct exception}
     );
     lives_and(    # TPVHVRV34
         sub {

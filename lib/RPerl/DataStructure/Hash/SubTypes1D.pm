@@ -216,8 +216,7 @@ sub integer_hashref_to_string_format {
 
     # loop through all hash keys
     foreach my string $key ( sort keys %input_hv ) {
-
-        # retrieve input hash's entry value at key $key
+        # retrieve input hash's entry value at key
         $input_hv_entry_value = $input_hv{$key};
 
 # DEV NOTE: integer type-checking already done as part of integer_hashref_CHECKTRACE()
@@ -471,7 +470,7 @@ sub number_hashref_to_string_format {
 
     # loop through all hash keys
     foreach my string $key ( sort keys %input_hv ) {
-        # retrieve input hash's entry value at key $key
+        # retrieve input hash's entry value at key
         $input_hv_entry_value = $input_hv{$key};
 
 # DEV NOTE: number type-checking already done as part of number_hashref_CHECKTRACE()
@@ -728,7 +727,7 @@ sub string_hashref_to_string_format {
 
     # loop through all hash keys
     foreach my string $key ( sort keys %input_hv ) {
-        # retrieve input hash's entry value at key $key
+        # retrieve input hash's entry value at key
         $input_hv_entry_value = $input_hv{$key};
 
 # DEV NOTE: string type-checking already done as part of string_hashref_CHECKTRACE()

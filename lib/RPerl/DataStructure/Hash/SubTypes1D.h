@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_h
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_h 0.002_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_h 0.004_000
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
@@ -54,13 +54,37 @@ void XS_pack_string_hashref(SV* output_hvref, string_hashref input_unordered_map
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
+SV* integer_hashref_to_string_compact(SV* input_hvref);
 SV* integer_hashref_to_string(SV* input_hvref);
+SV* integer_hashref_to_string_pretty(SV* input_hvref);
+SV* integer_hashref_to_string_expand(SV* input_hvref);
+SV* integer_hashref_to_string_format(SV* input_hvref, SV* format_level, SV* indent_level);
+SV* number_hashref_to_string_compact(SV* input_hvref);
 SV* number_hashref_to_string(SV* input_hvref);
+SV* number_hashref_to_string_pretty(SV* input_hvref);
+SV* number_hashref_to_string_expand(SV* input_hvref);
+SV* number_hashref_to_string_format(SV* input_hvref, SV* format_level, SV* indent_level);
+SV* string_hashref_to_string_compact(SV* input_hvref);
 SV* string_hashref_to_string(SV* input_hvref);
+SV* string_hashref_to_string_pretty(SV* input_hvref);
+SV* string_hashref_to_string_expand(SV* input_hvref);
+SV* string_hashref_to_string_format(SV* input_hvref, SV* format_level, SV* indent_level);
 # elif defined __CPP__TYPES
+string integer_hashref_to_string_compact(integer_hashref input_unordered_map);
 string integer_hashref_to_string(integer_hashref input_unordered_map);
+string integer_hashref_to_string_pretty(integer_hashref input_unordered_map);
+string integer_hashref_to_string_expand(integer_hashref input_unordered_map);
+string integer_hashref_to_string_format(integer_hashref input_unordered_map, integer format_level, integer indent_level);
+string number_hashref_to_string_compact(number_hashref input_unordered_map);
 string number_hashref_to_string(number_hashref input_unordered_map);
+string number_hashref_to_string_pretty(number_hashref input_unordered_map);
+string number_hashref_to_string_expand(number_hashref input_unordered_map);
+string number_hashref_to_string_format(number_hashref input_unordered_map, integer format_level, integer indent_level);
+string string_hashref_to_string_compact(string_hashref input_unordered_map);
 string string_hashref_to_string(string_hashref input_unordered_map);
+string string_hashref_to_string_pretty(string_hashref input_unordered_map);
+string string_hashref_to_string_expand(string_hashref input_unordered_map);
+string string_hashref_to_string_format(string_hashref input_unordered_map, integer format_level, integer indent_level);
 # endif
 
 // [[[ TYPE TESTING ]]]

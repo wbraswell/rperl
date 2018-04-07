@@ -373,22 +373,22 @@ void XS_pack_string_arrayref(SV* output_avref, string_arrayref input_vector)
 
 // DEV NOTE: 1-D format levels are 1 less than 2-D format levels
 
-// call actual stringify routine, format level -1 (compact), indent level 0
+// call actual stringify routine, format level -2 (compact), indent level 0
 SV* integer_arrayref_to_string_compact(SV* input_avref) {
     return integer_arrayref_to_string_format(input_avref, newSViv(-2), newSViv(0));
 }
 
-// call actual stringify routine, format level 0 (normal), indent level 0, DEFAULT
+// call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
 SV* integer_arrayref_to_string(SV* input_avref) {
     return integer_arrayref_to_string_format(input_avref, newSViv(-1), newSViv(0));
 }
 
-// call actual stringify routine, format level 1 (pretty), indent level 0
+// call actual stringify routine, format level 0 (pretty), indent level 0
 SV* integer_arrayref_to_string_pretty(SV* input_avref) {
     return integer_arrayref_to_string_format(input_avref, newSViv(0), newSViv(0));
 }
 
-// call actual stringify routine, format level 2 (expand), indent level 0
+// call actual stringify routine, format level 1 (expand), indent level 0
 SV* integer_arrayref_to_string_expand(SV* input_avref) {
     return integer_arrayref_to_string_format(input_avref, newSViv(1), newSViv(0));
 }
@@ -485,22 +485,22 @@ SV* integer_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* ind
 
 // DEV NOTE: 1-D format levels are 1 less than 2-D format levels
 
-// call actual stringify routine, format level -1 (compact), indent level 0
+// call actual stringify routine, format level -2 (compact), indent level 0
 SV* number_arrayref_to_string_compact(SV* input_avref) {
     return number_arrayref_to_string_format(input_avref, newSViv(-2), newSViv(0));
 }
 
-// call actual stringify routine, format level 0 (normal), indent level 0, DEFAULT
+// call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
 SV* number_arrayref_to_string(SV* input_avref) {
     return number_arrayref_to_string_format(input_avref, newSViv(-1), newSViv(0));
 }
 
-// call actual stringify routine, format level 1 (pretty), indent level 0
+// call actual stringify routine, format level 0 (pretty), indent level 0
 SV* number_arrayref_to_string_pretty(SV* input_avref) {
     return number_arrayref_to_string_format(input_avref, newSViv(0), newSViv(0));
 }
 
-// call actual stringify routine, format level 2 (expand), indent level 0
+// call actual stringify routine, format level 1 (expand), indent level 0
 SV* number_arrayref_to_string_expand(SV* input_avref) {
     return number_arrayref_to_string_format(input_avref, newSViv(1), newSViv(0));
 }
@@ -580,22 +580,22 @@ SV* number_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
 
 // DEV NOTE: 1-D format levels are 1 less than 2-D format levels
 
-// call actual stringify routine, format level -1 (compact), indent level 0
+// call actual stringify routine, format level -2 (compact), indent level 0
 SV* string_arrayref_to_string_compact(SV* input_avref) {
     return string_arrayref_to_string_format(input_avref, newSViv(-2), newSViv(0));
 }
 
-// call actual stringify routine, format level 0 (normal), indent level 0, DEFAULT
+// call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
 SV* string_arrayref_to_string(SV* input_avref) {
     return string_arrayref_to_string_format(input_avref, newSViv(-1), newSViv(0));
 }
 
-// call actual stringify routine, format level 1 (pretty), indent level 0
+// call actual stringify routine, format level 0 (pretty), indent level 0
 SV* string_arrayref_to_string_pretty(SV* input_avref) {
     return string_arrayref_to_string_format(input_avref, newSViv(0), newSViv(0));
 }
 
-// call actual stringify routine, format level 2 (expand), indent level 0
+// call actual stringify routine, format level 1 (expand), indent level 0
 SV* string_arrayref_to_string_expand(SV* input_avref) {
     return string_arrayref_to_string_format(input_avref, newSViv(1), newSViv(0));
 }
@@ -691,25 +691,25 @@ SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
 
 // DEV NOTE: 1-D format levels are 1 less than 2-D format levels
 
-// call actual stringify routine, format level -1 (compact), indent level 0
+// call actual stringify routine, format level -2 (compact), indent level 0
 string integer_arrayref_to_string_compact(integer_arrayref input_vector)
 {
     return integer_arrayref_to_string_format(input_vector, -2, 0);
 }
 
-// call actual stringify routine, format level 0 (normal), indent level 0, DEFAULT
+// call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
 string integer_arrayref_to_string(integer_arrayref input_vector)
 {
     return integer_arrayref_to_string_format(input_vector, -1, 0);
 }
 
-// call actual stringify routine, format level 1 (pretty), indent level 0
+// call actual stringify routine, format level 0 (pretty), indent level 0
 string integer_arrayref_to_string_pretty(integer_arrayref input_vector)
 {
     return integer_arrayref_to_string_format(input_vector, 0, 0);
 }
 
-// call actual stringify routine, format level 2 (expand), indent level 0
+// call actual stringify routine, format level 1 (expand), indent level 0
 string integer_arrayref_to_string_expand(integer_arrayref input_vector)
 {
     return integer_arrayref_to_string_format(input_vector, 1, 0);
@@ -772,25 +772,25 @@ string integer_arrayref_to_string_format(integer_arrayref input_vector, integer 
 
 // DEV NOTE: 1-D format levels are 1 less than 2-D format levels
 
-// call actual stringify routine, format level -1 (compact), indent level 0
+// call actual stringify routine, format level -2 (compact), indent level 0
 string number_arrayref_to_string_compact(number_arrayref input_vector)
 {
     return number_arrayref_to_string_format(input_vector, -2, 0);
 }
 
-// call actual stringify routine, format level 0 (normal), indent level 0, DEFAULT
+// call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
 string number_arrayref_to_string(number_arrayref input_vector)
 {
     return number_arrayref_to_string_format(input_vector, -1, 0);
 }
 
-// call actual stringify routine, format level 1 (pretty), indent level 0
+// call actual stringify routine, format level 0 (pretty), indent level 0
 string number_arrayref_to_string_pretty(number_arrayref input_vector)
 {
     return number_arrayref_to_string_format(input_vector, 0, 0);
 }
 
-// call actual stringify routine, format level 2 (expand), indent level 0
+// call actual stringify routine, format level 1 (expand), indent level 0
 string number_arrayref_to_string_expand(number_arrayref input_vector)
 {
     return number_arrayref_to_string_format(input_vector, 1, 0);
@@ -856,25 +856,25 @@ string number_arrayref_to_string_format(number_arrayref input_vector, integer fo
 
 // DEV NOTE: 1-D format levels are 1 less than 2-D format levels
 
-// call actual stringify routine, format level -1 (compact), indent level 0
+// call actual stringify routine, format level -2 (compact), indent level 0
 string string_arrayref_to_string_compact(string_arrayref input_vector)
 {
     return string_arrayref_to_string_format(input_vector, -2, 0);
 }
 
-// call actual stringify routine, format level 0 (normal), indent level 0, DEFAULT
+// call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
 string string_arrayref_to_string(string_arrayref input_vector)
 {
     return string_arrayref_to_string_format(input_vector, -1, 0);
 }
 
-// call actual stringify routine, format level 1 (pretty), indent level 0
+// call actual stringify routine, format level 0 (pretty), indent level 0
 string string_arrayref_to_string_pretty(string_arrayref input_vector)
 {
     return string_arrayref_to_string_format(input_vector, 0, 0);
 }
 
-// call actual stringify routine, format level 2 (expand), indent level 0
+// call actual stringify routine, format level 1 (expand), indent level 0
 string string_arrayref_to_string_expand(string_arrayref input_vector)
 {
     return string_arrayref_to_string_format(input_vector, 1, 0);

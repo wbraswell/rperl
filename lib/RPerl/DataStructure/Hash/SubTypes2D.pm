@@ -105,9 +105,9 @@ sub integer_arrayref_hashref_CHECK {
 }
 
 
-# START HERE: refactor 1D *hashref_to_string() w/ newline/indent/space; write new 2D *_*ref_hashref_to_string() as w/ array; test CHECK* code above & below; test to_string() below; update & test typetest*() below; continue SubTypes2D.cpp
-# START HERE: refactor 1D *hashref_to_string() w/ newline/indent/space; write new 2D *_*ref_hashref_to_string() as w/ array; test CHECK* code above & below; test to_string() below; update & test typetest*() below; continue SubTypes2D.cpp
-# START HERE: refactor 1D *hashref_to_string() w/ newline/indent/space; write new 2D *_*ref_hashref_to_string() as w/ array; test CHECK* code above & below; test to_string() below; update & test typetest*() below; continue SubTypes2D.cpp
+# START HERE: write new 2D *_*ref_hashref_to_string() as w/ array; test CHECK* code above & below; test to_string() below; update & test typetest*() below; continue SubTypes2D.cpp
+# START HERE: write new 2D *_*ref_hashref_to_string() as w/ array; test CHECK* code above & below; test to_string() below; update & test typetest*() below; continue SubTypes2D.cpp
+# START HERE: write new 2D *_*ref_hashref_to_string() as w/ array; test CHECK* code above & below; test to_string() below; update & test typetest*() below; continue SubTypes2D.cpp
 
 
 sub integer_arrayref_hashref_CHECKTRACE {

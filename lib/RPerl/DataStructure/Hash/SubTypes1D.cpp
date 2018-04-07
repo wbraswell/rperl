@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_cpp 0.003_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_cpp 0.004_000
 
 #include <RPerl/DataStructure/Hash/SubTypes1D.h>  // -> ??? (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
@@ -649,13 +649,36 @@ void XS_pack_string_hashref(SV* output_hvref, string_hashref input_unordered_map
 
 # ifdef __PERL__TYPES
 
+// DEV NOTE: 1-D format levels are 1 less than 2-D format levels
+
+// call actual stringify routine, format level -2 (compact), indent level 0
+SV* integer_hashref_to_string_compact(SV* input_hvref) {
+    return integer_hashref_to_string_format(input_hvref, newSViv(-2), newSViv(0));
+}
+
+// call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
+SV* integer_hashref_to_string(SV* input_hvref) {
+    return integer_hashref_to_string_format(input_hvref, newSViv(-1), newSViv(0));
+}
+
+// call actual stringify routine, format level 0 (pretty), indent level 0
+SV* integer_hashref_to_string_pretty(SV* input_hvref) {
+    return integer_hashref_to_string_format(input_hvref, newSViv(0), newSViv(0));
+}
+
+// call actual stringify routine, format level 1 (expand), indent level 0
+SV* integer_hashref_to_string_expand(SV* input_hvref) {
+    return integer_hashref_to_string_format(input_hvref, newSViv(1), newSViv(0));
+}
+
 // convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
-SV* integer_hashref_to_string(SV* input_hvref)
+SV* integer_hashref_to_string_format(SV* input_hvref, SV* format_level, SV* indent_level)
 {
 //  fprintf(stderr, "in CPPOPS_PERLTYPES integer_hashref_to_string(), top of subroutine\n");
 //  integer_hashref_CHECK(input_hvref);
     integer_hashref_CHECKTRACE(input_hvref, "input_hvref", "integer_hashref_to_string()");
 
+    // declare local variables
     HV* input_hv;
     integer input_hv_num_keys;
     integer i;
@@ -665,14 +688,24 @@ SV* integer_hashref_to_string(SV* input_hvref)
     string input_hv_entry_key_string;
     size_t input_hv_entry_key_string_pos;
     SV* input_hv_entry_value;
-    SV* output_sv = newSV(0);
+    SV* output_sv = newSVpv("", 0);
 
+    // generate indent
+    SV* indent = newSVpv("", 0);
+    for (i = 0; i < SvIV(indent_level); i++) { sv_catpvn(indent, "    ", 4); }
+
+    // compute length of (number of keys in) input hash
     input_hv = (HV*)SvRV(input_hvref);
     input_hv_num_keys = hv_iterinit(input_hv);
 //  fprintf(stderr, "in CPPOPS_PERLTYPES integer_hashref_to_string(), have input_hv_num_keys = %"INTEGER"\n", input_hv_num_keys);
 
+    // pre-begin with optional indent, depending on format level
+    if (SvIV(format_level) >= 1) { sv_catsv(output_sv, indent); }
+
+    // begin output string with left-curly-brace, as required for all RPerl hashes
     sv_setpvn(output_sv, "{", 1);
 
+    // loop through all hash keys
     for (i = 0;  i < input_hv_num_keys;  ++i)  // incrementing iteration, iterator i not actually used in loop body
     {
 //      fprintf(stderr, "in CPPOPS_PERLTYPES integer_hashref_to_string(), top of loop i = %"INTEGER"\n", i);
@@ -683,13 +716,20 @@ SV* integer_hashref_to_string(SV* input_hvref)
 //      hashentry_CHECK(input_hv_entry);
 //      hashentry_CHECKTRACE(input_hv_entry, "input_hv_entry", "integer_hashref_to_string()");
 
+        // retrieve input hash's entry value at key
         input_hv_entry_key = hv_iterkeysv(input_hv_entry);
         input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
         // DEV NOTE: integer type-checking already done as part of integer_hashref_CHECKTRACE()
 //      integer_CHECK(input_hv_entry_value);
 //      integer_CHECKTRACE(input_hv_entry_value, (char*)((string)"input_hv_entry_value at key '" + (string)SvPV_nolen(input_hv_entry_key) + "'").c_str(), "integer_hashref_to_string()");
 
-        if (i_is_0) { i_is_0 = 0; } else { sv_catpvn(output_sv, ", ", 2); }
+        // append comma to output string for all elements except index 0
+        if (i_is_0) { i_is_0 = 0; }
+        else        { sv_catpvn(output_sv, ",", 1); }
+
+        // append newline-indent-tab or space, depending on format level
+        if      (SvIV(format_level) >=  1) { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent);  sv_catpvn(output_sv, "    ", 4); }
+        else if (SvIV(format_level) >= -1) { sv_catpvn(output_sv, " ", 1); }
 
         // escape all back-slash \ and single-quote ' characters with a back-slash \ character
         input_hv_entry_key_string = string(SvPV_nolen(input_hv_entry_key));
@@ -706,12 +746,23 @@ SV* integer_hashref_to_string(SV* input_hvref)
             input_hv_entry_key_string_pos += 2;
         }
 
-//      sv_catpvf(output_sv, "'%s' => %"INTEGER"", SvPV_nolen(input_hv_entry_key), (integer)SvIV(input_hv_entry_value));
-//      sv_catpvf(output_sv, "'%s' => %"INTEGER"", input_hv_entry_key_string.c_str(), (integer)SvIV(input_hv_entry_value));  // NO UNDERSCORES
-        sv_catpvf(output_sv, "'%s' => ", input_hv_entry_key_string.c_str());  // YES UNDERSCORES
+        // DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
+//        sv_catpvf(output_sv, "'%s'", SvPV_nolen(input_hv_entry_key));  // alternative form
+        sv_catpvf(output_sv, "'%s'", input_hv_entry_key_string.c_str());
+
+        // append spaces before and after fat arrow AKA fat comma, depending on format level
+        if      (SvIV(format_level) >= -1) { sv_catpvn(output_sv, " => ", 4); }
+        else                               { sv_catpvn(output_sv, "=>", 2); }
+
+//        sv_catpvf(output_sv, "%"INTEGER"", (integer)SvIV(input_hv_entry_value));  // NO UNDERSCORES
         sv_catsv(output_sv, integer_to_string(input_hv_entry_value));  // YES UNDERSCORES
     }
 
+    // append newline-indent or space, depending on format level
+    if      (SvIV(format_level) >=  1) { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent); }
+    else if (SvIV(format_level) >= -1) { sv_catpvn(output_sv, " ", 1); }
+
+    // end output string with right-curly-brace, as required for all RPerl hashes
     sv_catpvn(output_sv, "}", 1);
 
 //  fprintf(stderr, "in CPPOPS_PERLTYPES integer_hashref_to_string(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
@@ -720,13 +771,36 @@ SV* integer_hashref_to_string(SV* input_hvref)
     return(output_sv);
 }
 
+// DEV NOTE: 1-D format levels are 1 less than 2-D format levels
+
+// call actual stringify routine, format level -2 (compact), indent level 0
+SV* number_hashref_to_string_compact(SV* input_hvref) {
+    return number_hashref_to_string_format(input_hvref, newSViv(-2), newSViv(0));
+}
+
+// call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
+SV* number_hashref_to_string(SV* input_hvref) {
+    return number_hashref_to_string_format(input_hvref, newSViv(-1), newSViv(0));
+}
+
+// call actual stringify routine, format level 0 (pretty), indent level 0
+SV* number_hashref_to_string_pretty(SV* input_hvref) {
+    return number_hashref_to_string_format(input_hvref, newSViv(0), newSViv(0));
+}
+
+// call actual stringify routine, format level 1 (expand), indent level 0
+SV* number_hashref_to_string_expand(SV* input_hvref) {
+    return number_hashref_to_string_format(input_hvref, newSViv(1), newSViv(0));
+}
+
 // convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
-SV* number_hashref_to_string(SV* input_hvref)
+SV* number_hashref_to_string_format(SV* input_hvref, SV* format_level, SV* indent_level)
 {
 //  fprintf(stderr, "in CPPOPS_PERLTYPES number_hashref_to_string(), top of subroutine\n");
 //  number_hashref_CHECK(input_hvref);
     number_hashref_CHECKTRACE(input_hvref, "input_hvref", "number_hashref_to_string()");
 
+    // declare local variables
     HV* input_hv;
     integer input_hv_num_keys;
     integer i;
@@ -737,15 +811,27 @@ SV* number_hashref_to_string(SV* input_hvref)
     size_t input_hv_entry_key_string_pos;
     SV* input_hv_entry_value;
     SV* output_sv = newSV(0);
+
+    // NEED ANSWER: do we actually need to be using ostringstream here for precision, since the actual numbers are being stringified by number_to_string() below???
     ostringstream temp_stream;
     temp_stream.precision(std::numeric_limits<double>::digits10);
 
+    // generate indent
+    SV* indent = newSVpv("", 0);
+    for (i = 0; i < SvIV(indent_level); i++) { sv_catpvn(indent, "    ", 4); }
+
+    // compute length of (number of keys in) input hash
     input_hv = (HV*)SvRV(input_hvref);
     input_hv_num_keys = hv_iterinit(input_hv);
 //  fprintf(stderr, "in CPPOPS_PERLTYPES number_hashref_to_string(), have input_hv_num_keys = %"INTEGER"\n", input_hv_num_keys);
 
+    // pre-begin with optional indent, depending on format level
+    if (SvIV(format_level) >= 1) { temp_stream << SvPV_nolen(indent); }
+
+    // begin output string with left-curly-brace, as required for all RPerl hashes
     temp_stream << "{";
 
+    // loop through all hash keys
     for (i = 0;  i < input_hv_num_keys;  ++i)  // incrementing iteration, iterator i not actually used in loop body
     {
         // does not utilize i in entry retrieval
@@ -753,7 +839,13 @@ SV* number_hashref_to_string(SV* input_hvref)
         input_hv_entry_key = hv_iterkeysv(input_hv_entry);
         input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
 
-        if (i_is_0) { i_is_0 = 0; } else { temp_stream << ", "; }
+        // append comma to output string for all elements except index 0
+        if (i_is_0) { i_is_0 = 0; }
+        else        { temp_stream << ","; }
+
+        // append newline-indent-tab or space, depending on format level
+        if      (SvIV(format_level) >=  1) { temp_stream << "\n" << SvPV_nolen(indent) << "    "; }
+        else if (SvIV(format_level) >= -1) { temp_stream << " "; }
 
         // escape all back-slash \ and single-quote ' characters with a back-slash \ character
         input_hv_entry_key_string = string(SvPV_nolen(input_hv_entry_key));
@@ -770,10 +862,23 @@ SV* number_hashref_to_string(SV* input_hvref)
             input_hv_entry_key_string_pos += 2;
         }
 
-//      temp_stream << "'" << SvPV_nolen(input_hv_entry_key) << "' => " << (double)SvNV(input_hv_entry_value);
-        temp_stream << "'" << input_hv_entry_key_string << "' => " << (string)SvPV_nolen(number_to_string(input_hv_entry_value));
+        // DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
+//        temp_stream << "'" << SvPV_nolen(input_hv_entry_key) << "'";  // alternative form
+        temp_stream << "'" << input_hv_entry_key_string.c_str() << "'";
+
+        // append spaces before and after fat arrow AKA fat comma, depending on format level
+        if      (SvIV(format_level) >= -1) { temp_stream << " => "; }
+        else                               { temp_stream << "=>"; }
+
+//      temp_stream << (double)SvNV(input_hv_entry_value);  // NO UNDERSCORES
+        temp_stream << (string)SvPV_nolen(number_to_string(input_hv_entry_value));  // YES UNDERSCORES
     }
 
+    // append newline-indent or space, depending on format level
+    if      (SvIV(format_level) >=  1) { temp_stream << "\n" << SvPV_nolen(indent); }
+    else if (SvIV(format_level) >= -1) { temp_stream << " "; }
+
+    // end output string with right-curly-brace, as required for all RPerl hashes
     temp_stream << "}";
     sv_setpv(output_sv, (char*)(temp_stream.str().c_str()));
 
@@ -783,13 +888,36 @@ SV* number_hashref_to_string(SV* input_hvref)
     return(output_sv);
 }
 
+// DEV NOTE: 1-D format levels are 1 less than 2-D format levels
+
+// call actual stringify routine, format level -2 (compact), indent level 0
+SV* string_hashref_to_string_compact(SV* input_hvref) {
+    return string_hashref_to_string_format(input_hvref, newSViv(-2), newSViv(0));
+}
+
+// call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
+SV* string_hashref_to_string(SV* input_hvref) {
+    return string_hashref_to_string_format(input_hvref, newSViv(-1), newSViv(0));
+}
+
+// call actual stringify routine, format level 0 (pretty), indent level 0
+SV* string_hashref_to_string_pretty(SV* input_hvref) {
+    return string_hashref_to_string_format(input_hvref, newSViv(0), newSViv(0));
+}
+
+// call actual stringify routine, format level 1 (expand), indent level 0
+SV* string_hashref_to_string_expand(SV* input_hvref) {
+    return string_hashref_to_string_format(input_hvref, newSViv(1), newSViv(0));
+}
+
 // convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
-SV* string_hashref_to_string(SV* input_hvref)
+SV* string_hashref_to_string_format(SV* input_hvref, SV* format_level, SV* indent_level)
 {
 //  fprintf(stderr, "in CPPOPS_PERLTYPES string_hashref_to_string(), top of subroutine\n");
 //  string_hashref_CHECK(input_hvref);
     string_hashref_CHECKTRACE(input_hvref, "input_hvref", "string_hashref_to_string()");
 
+    // declare local variables
     HV* input_hv;
     integer input_hv_num_keys;
     integer i;
@@ -801,14 +929,24 @@ SV* string_hashref_to_string(SV* input_hvref)
     SV* input_hv_entry_value;
     string input_hv_entry_value_string;
     size_t input_hv_entry_value_string_pos;
-    SV* output_sv = newSV(0);
+    SV* output_sv = newSVpv("", 0);
 
+    // generate indent
+    SV* indent = newSVpv("", 0);
+    for (i = 0; i < SvIV(indent_level); i++) { sv_catpvn(indent, "    ", 4); }
+
+    // compute length of (number of keys in) input hash
     input_hv = (HV*)SvRV(input_hvref);
     input_hv_num_keys = hv_iterinit(input_hv);
 //  fprintf(stderr, "in CPPOPS_PERLTYPES string_hashref_to_string(), have input_hv_num_keys = %"INTEGER"\n", input_hv_num_keys);
 
+    // pre-begin with optional indent, depending on format level
+    if (SvIV(format_level) >= 1) { sv_catsv(output_sv, indent); }
+
+    // begin output string with left-curly-brace, as required for all RPerl hashes
     sv_setpvn(output_sv, "{", 1);
 
+    // loop through all hash keys
     for (i = 0;  i < input_hv_num_keys;  ++i)  // incrementing iteration, iterator i not actually used in loop body
     {
         // does not utilize i in entry retrieval
@@ -816,7 +954,13 @@ SV* string_hashref_to_string(SV* input_hvref)
         input_hv_entry_key = hv_iterkeysv(input_hv_entry);
         input_hv_entry_value = hv_iterval(input_hv, input_hv_entry);
 
-        if (i_is_0) { i_is_0 = 0; } else { sv_catpvn(output_sv, ", ", 2); }
+        // append comma to output string for all elements except index 0
+        if (i_is_0) { i_is_0 = 0; }
+        else        { sv_catpvn(output_sv, ",", 1); }
+
+        // append newline-indent-tab or space, depending on format level
+        if      (SvIV(format_level) >=  1) { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent);  sv_catpvn(output_sv, "    ", 4); }
+        else if (SvIV(format_level) >= -1) { sv_catpvn(output_sv, " ", 1); }
 
         // escape all back-slash \ and single-quote ' characters with a back-slash \ character
         input_hv_entry_key_string = string(SvPV_nolen(input_hv_entry_key));
@@ -848,10 +992,23 @@ SV* string_hashref_to_string(SV* input_hvref)
             input_hv_entry_value_string_pos += 2;
         }
 
-//      sv_catpvf(output_sv, "'%s' => '%s'", SvPV_nolen(input_hv_entry_key), SvPV_nolen(input_hv_entry_value));
-        sv_catpvf(output_sv, "'%s' => '%s'", input_hv_entry_key_string.c_str(), input_hv_entry_value_string.c_str());
+        // DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
+//        sv_catpvf(output_sv, "'%s'", SvPV_nolen(input_hv_entry_key));  // alternative form
+        sv_catpvf(output_sv, "'%s'", input_hv_entry_key_string.c_str());
+
+        // append spaces before and after fat arrow AKA fat comma, depending on format level
+        if      (SvIV(format_level) >= -1) { sv_catpvn(output_sv, " => ", 4); }
+        else                               { sv_catpvn(output_sv, "=>", 2); }
+
+//      sv_catpvf(output_sv, "'%s'", SvPV_nolen(input_hv_entry_value));  // alternative form
+        sv_catpvf(output_sv, "'%s'", input_hv_entry_value_string.c_str());
     }
 
+    // append newline-indent or space, depending on format level
+    if      (SvIV(format_level) >=  1) { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent); }
+    else if (SvIV(format_level) >= -1) { sv_catpvn(output_sv, " ", 1); }
+
+    // end output string with right-curly-brace, as required for all RPerl hashes
     sv_catpvn(output_sv, "}", 1);
 
 //  fprintf(stderr, "in CPPOPS_PERLTYPES string_hashref_to_string(), after for() loop, have output_sv =\n%s\n", SvPV_nolen(output_sv));
@@ -862,22 +1019,64 @@ SV* string_hashref_to_string(SV* input_hvref)
 
 # elif defined __CPP__TYPES
 
-// convert from (C++ std::unordered_map of integers) to Perl-parsable (C++ std::string)
+// DEV NOTE: 1-D format levels are 1 less than 2-D format levels
+
+// call actual stringify routine, format level -2 (compact), indent level 0
+string integer_hashref_to_string_compact(integer_hashref input_unordered_map)
+{
+    return integer_hashref_to_string_format(input_unordered_map, -2, 0);
+}
+
+// call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
 string integer_hashref_to_string(integer_hashref input_unordered_map)
+{
+    return integer_hashref_to_string_format(input_unordered_map, -1, 0);
+}
+
+// call actual stringify routine, format level 0 (pretty), indent level 0
+string integer_hashref_to_string_pretty(integer_hashref input_unordered_map)
+{
+    return integer_hashref_to_string_format(input_unordered_map, 0, 0);
+}
+
+// call actual stringify routine, format level 1 (expand), indent level 0
+string integer_hashref_to_string_expand(integer_hashref input_unordered_map)
+{
+    return integer_hashref_to_string_format(input_unordered_map, 1, 0);
+}
+
+// convert from (C++ std::unordered_map of integers) to Perl-parsable (C++ std::string)
+string integer_hashref_to_string_format(integer_hashref input_unordered_map, integer format_level, integer indent_level)
 {
 //  fprintf(stderr, "in CPPOPS_CPPTYPES integer_hashref_to_string(), top of subroutine\n");
 
+    // declare local variables
     ostringstream output_stream;
     integer_hashref_const_iterator i;
     boolean i_is_0 = 1;
     string key_string;
     size_t key_string_pos;
 
+    // generate indent
+    string indent = "";
+    for (integer indent_i = 0; indent_i < indent_level; indent_i++) { indent += "    "; }
+
+    // pre-begin with optional indent, depending on format level
+    if (format_level >= 1) { output_stream << indent; }
+
+    // begin output string with left-curly-brace, as required for all RPerl hashes
     output_stream << '{';
 
+    // loop through all hash keys
     for (i = input_unordered_map.begin();  i != input_unordered_map.end();  ++i)
     {
-        if (i_is_0) { i_is_0 = 0; } else { output_stream << ", "; }
+        // append comma to output string for all elements except index 0
+        if (i_is_0) { i_is_0 = 0; }
+        else        { output_stream << ','; }
+
+        // append newline-indent-tab or space, depending on format level
+        if      (format_level >=  1) { output_stream << endl << indent << "    "; }
+        else if (format_level >= -1) { output_stream << ' '; }
 
         // escape all back-slash \ and single-quote ' characters with a back-slash \ character
         key_string = i->first;
@@ -894,11 +1093,23 @@ string integer_hashref_to_string(integer_hashref input_unordered_map)
             key_string_pos += 2;
         }
 
-//      output_stream << "'" << (i->first).c_str() << "' => " << i->second;
-//      output_stream << "'" << key_string.c_str() << "' => " << i->second;  // NO UNDERSCORES
-        output_stream << "'" << key_string.c_str() << "' => " << integer_to_string(i->second);  // YES UNDERSCORES
+        // DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
+//        output_stream << "'" << (i->first).c_str() << "'";  // alternative format
+        output_stream << "'" << key_string.c_str() << "'";
+
+        // append spaces before and after fat arrow AKA fat comma, depending on format level
+        if (format_level >= -1) { output_stream << " => "; }
+        else                    { output_stream << "=>"; }
+
+//        output_stream << i->second;  // NO UNDERSCORES
+        output_stream << integer_to_string(i->second);  // YES UNDERSCORES
     }
 
+    // append newline-indent or space, depending on format level
+    if      (format_level >=  1) { output_stream << endl << indent; }
+    else if (format_level >= -1) { output_stream << ' '; }
+
+    // end output string with right-curly-brace, as required for all RPerl hashes
     output_stream << '}';
 
 //  fprintf(stderr, "in CPPOPS_CPPTYPES integer_hashref_to_string(), after for() loop, have output_stream =\n%s\n", (char*)(output_stream.str().c_str()));
@@ -907,23 +1118,67 @@ string integer_hashref_to_string(integer_hashref input_unordered_map)
     return(output_stream.str());
 }
 
-// convert from (C++ std::unordered_map of doubles) to Perl-parsable (C++ std::string)
+// DEV NOTE: 1-D format levels are 1 less than 2-D format levels
+
+// call actual stringify routine, format level -2 (compact), indent level 0
+string number_hashref_to_string_compact(number_hashref input_unordered_map)
+{
+    return number_hashref_to_string_format(input_unordered_map, -2, 0);
+}
+
+// call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
 string number_hashref_to_string(number_hashref input_unordered_map)
+{
+    return number_hashref_to_string_format(input_unordered_map, -1, 0);
+}
+
+// call actual stringify routine, format level 0 (pretty), indent level 0
+string number_hashref_to_string_pretty(number_hashref input_unordered_map)
+{
+    return number_hashref_to_string_format(input_unordered_map, 0, 0);
+}
+
+// call actual stringify routine, format level 1 (expand), indent level 0
+string number_hashref_to_string_expand(number_hashref input_unordered_map)
+{
+    return number_hashref_to_string_format(input_unordered_map, 1, 0);
+}
+
+// convert from (C++ std::unordered_map of doubles) to Perl-parsable (C++ std::string)
+string number_hashref_to_string_format(number_hashref input_unordered_map, integer format_level, integer indent_level)
 {
 //  fprintf(stderr, "in CPPOPS_CPPTYPES number_hashref_to_string(), top of subroutine\n");
 
+    // declare local variables
     ostringstream output_stream;
     number_hashref_const_iterator i;
     boolean i_is_0 = 1;
     string key_string;
     size_t key_string_pos;
 
+    // NEED ANSWER: do we actually need to be using ostringstream here for precision, since the actual numbers are being stringified by number_to_string() below???
     output_stream.precision(std::numeric_limits<double>::digits10);
+
+    // generate indent
+    string indent = "";
+    for (integer indent_i = 0; indent_i < indent_level; indent_i++) { indent += "    "; }
+
+    // pre-begin with optional indent, depending on format level
+    if (format_level >= 1) { output_stream << indent; }
+
+    // begin output string with left-curly-brace, as required for all RPerl hashes
     output_stream << '{';
 
+    // loop through all hash keys
     for (i = input_unordered_map.begin();  i != input_unordered_map.end();  ++i)
     {
-        if (i_is_0) { i_is_0 = 0; } else { output_stream << ", "; }
+        // append comma to output string for all elements except index 0
+        if (i_is_0) { i_is_0 = 0; }
+        else        { output_stream << ','; }
+
+        // append newline-indent-tab or space, depending on format level
+        if      (format_level >=  1) { output_stream << endl << indent << "    "; }
+        else if (format_level >= -1) { output_stream << ' '; }
 
         // escape all back-slash \ and single-quote ' characters with a back-slash \ character
         key_string = i->first;
@@ -940,10 +1195,23 @@ string number_hashref_to_string(number_hashref input_unordered_map)
             key_string_pos += 2;
         }
 
-//      output_stream << "'" << (i->first).c_str() << "' => " << i->second;
-        output_stream << "'" << key_string.c_str() << "' => " << number_to_string(i->second);
+        // DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
+//        output_stream << "'" << (i->first).c_str() << "'";  // alternative format
+        output_stream << "'" << key_string.c_str() << "'";
+
+        // append spaces before and after fat arrow AKA fat comma, depending on format level
+        if (format_level >= -1) { output_stream << " => "; }
+        else                    { output_stream << "=>"; }
+
+//        output_stream << i->second;  // NO UNDERSCORES
+        output_stream << number_to_string(i->second);  // YES UNDERSCORES
     }
 
+    // append newline-indent or space, depending on format level
+    if      (format_level >=  1) { output_stream << endl << indent; }
+    else if (format_level >= -1) { output_stream << ' '; }
+
+    // end output string with right-curly-brace, as required for all RPerl hashes
     output_stream << '}';
 
 //  fprintf(stderr, "in CPPOPS_CPPTYPES number_hashref_to_string(), after for() loop, have output_stream =\n%s\n", (char*)(output_stream.str().c_str()));
@@ -952,11 +1220,38 @@ string number_hashref_to_string(number_hashref input_unordered_map)
     return(output_stream.str());
 }
 
-// convert from (C++ std::unordered_map of std::strings) to Perl-parsable (C++ std::string)
+// DEV NOTE: 1-D format levels are 1 less than 2-D format levels
+
+// call actual stringify routine, format level -2 (compact), indent level 0
+string string_hashref_to_string_compact(string_hashref input_unordered_map)
+{
+    return string_hashref_to_string_format(input_unordered_map, -2, 0);
+}
+
+// call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
 string string_hashref_to_string(string_hashref input_unordered_map)
+{
+    return string_hashref_to_string_format(input_unordered_map, -1, 0);
+}
+
+// call actual stringify routine, format level 0 (pretty), indent level 0
+string string_hashref_to_string_pretty(string_hashref input_unordered_map)
+{
+    return string_hashref_to_string_format(input_unordered_map, 0, 0);
+}
+
+// call actual stringify routine, format level 1 (expand), indent level 0
+string string_hashref_to_string_expand(string_hashref input_unordered_map)
+{
+    return string_hashref_to_string_format(input_unordered_map, 1, 0);
+}
+
+// convert from (C++ std::unordered_map of std::strings) to Perl-parsable (C++ std::string)
+string string_hashref_to_string_format(string_hashref input_unordered_map, integer format_level, integer indent_level)
 {
 //  fprintf(stderr, "in CPPOPS_CPPTYPES string_hashref_to_string(), top of subroutine\n");
 
+    // declare local variables
     string output_string;
     string_hashref_const_iterator i;
     boolean i_is_0 = 1;
@@ -965,11 +1260,26 @@ string string_hashref_to_string(string_hashref input_unordered_map)
     string value_string;
     size_t value_string_pos;
 
+    // generate indent
+    string indent = "";
+    for (integer indent_i = 0; indent_i < indent_level; indent_i++) { indent += "    "; }
+
+    // pre-begin with optional indent, depending on format level
+    if (format_level >= 1) { output_string += indent; }
+
+    // begin output string with left-curly-brace, as required for all RPerl hashes
     output_string = "{";
 
+    // loop through all hash keys
     for (i = input_unordered_map.begin();  i != input_unordered_map.end();  ++i)
     {
-        if (i_is_0) { i_is_0 = 0; } else { output_string += ", "; }
+        // append comma to output string for all elements except index 0
+        if (i_is_0) { i_is_0 = 0; }
+        else        { output_string += ","; }
+
+        // append newline-indent-tab or space, depending on format level
+        if      (format_level >=  1) { output_string += "\n" + indent + "    "; }
+        else if (format_level >= -1) { output_string += " "; }
 
         // escape all back-slash \ and single-quote ' characters with a back-slash \ character
         key_string = i->first;
@@ -1001,10 +1311,23 @@ string string_hashref_to_string(string_hashref input_unordered_map)
             value_string_pos += 2;
         }
 
-//      output_string += "'" + (string)(i->first).c_str() + "' => '" + (string)(i->second) + "'";
-        output_string += "'" + key_string + "' => '" + value_string + "'";
+        // DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
+//      output_string += "'" + (string)(i->first).c_str() + "'";  // alternative format
+        output_string += "'" + key_string + "'";
+
+        // append spaces before and after fat arrow AKA fat comma, depending on format level
+        if (format_level >= -1) { output_string += " => "; }
+        else                    { output_string += "=>"; }
+
+//      output_string += "'" + (string)(i->second) + "'";  // alternative format
+        output_string += "'" + value_string + "'";
     }
 
+    // append newline-indent or space, depending on format level
+    if      (format_level >=  1) { output_string += "\n" + indent; }
+    else if (format_level >= -1) { output_string += " "; }
+
+    // end output string with right-curly-brace, as required for all RPerl hashes
     output_string += "}";
 
 //  fprintf(stderr, "in CPPOPS_CPPTYPES string_hashref_to_string(), after for() loop, have output_string =\n%s\n", output_string.c_str());
