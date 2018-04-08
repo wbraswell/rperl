@@ -55,19 +55,30 @@ package RPerl::DataStructure::Hash::SubTypes2D;
 use strict;
 use warnings;
 
+
+
+
+# START HERE: update & test typetest*() below; continue SubTypes2D.cpp
+# START HERE: update & test typetest*() below; continue SubTypes2D.cpp
+# START HERE: update & test typetest*() below; continue SubTypes2D.cpp
+
+
+
 # [[[ TYPE-CHECKING ]]]
 
 sub integer_arrayref_hashref_CHECK {
     { my void $RETURN_TYPE };
     ( my $possible_integer_arrayref_hashref ) = @ARG;
 
-# DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with integer-specific error codes
+#    RPerl::diag('in PERLOPS_PERLTYPES integer_arrayref_hashref_CHECK(), top of subroutine', "\n");
+
+    # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with integer-specific error codes
     if ( not( defined $possible_integer_arrayref_hashref ) ) {
-        croak( "\nERROR EIVAVRVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref value expected but undefined/null value found,\ncroaking" );
+        croak( "\n" . 'ERROR EIVAVRVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' . "\n" . 'integer_arrayref_hashref value expected but undefined/null value found,' . "\n" . 'croaking' );
     }
 
     if ( not( main::RPerl_SvHROKp($possible_integer_arrayref_hashref) ) ) {
-        croak( "\nERROR EIVAVRVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref value expected but non-hashref value found,\ncroaking" );
+        croak( "\n" . 'ERROR EIVAVRVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' . "\n" . 'integer_arrayref_hashref value expected but non-hashref value found,' . "\n" . 'croaking' );
     }
 
     my integer_arrayref $possible_integer_arrayref;
@@ -76,11 +87,13 @@ sub integer_arrayref_hashref_CHECK {
 
         # DEV NOTE: the following two if() statements are functionally equivalent to the arrayref_CHECK() subroutine, but with integer-specific error codes
         if ( not( defined $possible_integer_arrayref ) ) {
-            croak( "\nERROR EIVAVRVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref element value, integer_arrayref, expected but undefined/null value found,\ncroaking" );
+            croak( "\n" . 'ERROR EIVAVRVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
+                    "\n" . 'integer_arrayref_hashref element value, integer_arrayref, expected but undefined/null value found at key ' . q{'} . $key . q{',} . "\n" . 'croaking' );
         }
 
         if ( not( main::RPerl_SvAROKp($possible_integer_arrayref) ) ) {
-            croak( "\nERROR EIVAVRVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref element value, integer_arrayref, expected but non-arrayref value found,\ncroaking" );
+            croak( "\n" . 'ERROR EIVAVRVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
+                    "\n" . 'integer_arrayref_hashref element value, integer_arrayref, expected but non-arrayref value found at key ' . q{'} . $key . q{',} . "\n" . 'croaking' );
         }
 
         my integer $possible_integer;
@@ -92,35 +105,35 @@ sub integer_arrayref_hashref_CHECK {
             if ( not( defined $possible_integer ) ) {
                 $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
                 $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-                croak( "\nERROR EIVAVRVHVRV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref sub-element value, integer, expected but undefined/null value found at key '$key', index $i,\ncroaking" );
+                croak( "\n" . 'ERROR EIVAVRVHVRV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
+                        "\n" . 'integer_arrayref_hashref sub-element value, integer, expected but undefined/null value found at key ' . q{'} . $key . q{'} . ', index ' . $i . ',' . "\n" . 'croaking' );
             }
             if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
                 $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
                 $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-                croak( "\nERROR EIVAVRVHVRV05, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref sub-element value, integer, expected but non-integer value found at key '$key', index $i,\ncroaking" );
+                croak( "\n" . 'ERROR EIVAVRVHVRV05, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
+                        "\n" . 'integer_arrayref_hashref sub-element value, integer, expected but non-integer value found at key ' . q{'} . $key . q{'} . ', index ' . $i . ',' . "\n" . 'croaking' );
             }
         }
     }
     return;
 }
 
-
-# START HERE: write new 2D *_*ref_hashref_to_string() as w/ array; test CHECK* code above & below; test to_string() below; update & test typetest*() below; continue SubTypes2D.cpp
-# START HERE: write new 2D *_*ref_hashref_to_string() as w/ array; test CHECK* code above & below; test to_string() below; update & test typetest*() below; continue SubTypes2D.cpp
-# START HERE: write new 2D *_*ref_hashref_to_string() as w/ array; test CHECK* code above & below; test to_string() below; update & test typetest*() below; continue SubTypes2D.cpp
-
-
 sub integer_arrayref_hashref_CHECKTRACE {
     { my void $RETURN_TYPE };
     ( my $possible_integer_arrayref_hashref, my $variable_name, my $subroutine_name ) = @ARG;
 
-# DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with integer-specific error codes
+#    RPerl::diag('in PERLOPS_PERLTYPES integer_arrayref_hashref_CHECKTRACE(), top of subroutine', "\n");
+
+    # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with integer-specific error codes
     if ( not( defined $possible_integer_arrayref_hashref ) ) {
-        croak( "\nERROR EIVAVRVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+        croak( "\n" . 'ERROR EIVAVRVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' . "\n" . 'integer_arrayref_hashref value expected but undefined/null value found,' . 
+                "\n" . 'in variable ' . q{'} . $variable_name . q{'} . ' from subroutine ' . q{'} . $subroutine_name . q{',} . "\n" . 'croaking' );
     }
 
     if ( not( main::RPerl_SvHROKp($possible_integer_arrayref_hashref) ) ) {
-        croak( "\nERROR EIVAVRVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref value expected but non-hashref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+        croak( "\n" . 'ERROR EIVAVRVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' . "\n" . 'integer_arrayref_hashref value expected but non-hashref value found,' . 
+                "\n" . 'in variable ' . q{'} . $variable_name . q{'} . ' from subroutine ' . q{'} . $subroutine_name . q{',} . "\n" . 'croaking' );
     }
 
     my integer_arrayref $possible_integer_arrayref;
@@ -129,11 +142,15 @@ sub integer_arrayref_hashref_CHECKTRACE {
 
         # DEV NOTE: the following two if() statements are functionally equivalent to the arrayref_CHECK() subroutine, but with integer-specific error codes
         if ( not( defined $possible_integer_arrayref ) ) {
-            croak( "\nERROR EIVAVRVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref element value, integer_arrayref, expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+            croak( "\n" . 'ERROR EIVAVRVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
+                    "\n" . 'integer_arrayref_hashref element value, integer_arrayref, expected but undefined/null value found at key ' . q{'} . $key . q{',} . 
+                    "\n" . 'in variable ' . q{'} . $variable_name . q{'} . ' from subroutine ' . q{'} . $subroutine_name . q{',} . "\n" . 'croaking' );
         }
 
         if ( not( main::RPerl_SvAROKp($possible_integer_arrayref) ) ) {
-            croak( "\nERROR EIVAVRVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref element value, integer_arrayref, expected but non-arrayref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+            croak( "\n" . 'ERROR EIVAVRVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
+                    "\n" . 'integer_arrayref_hashref element value, integer_arrayref, expected but non-arrayref value found at key ' . q{'} . $key . q{',} .
+                    "\n" . 'in variable ' . q{'} . $variable_name . q{'} . ' from subroutine ' . q{'} . $subroutine_name . q{',} . "\n" . 'croaking' );
         }
 
         my integer $possible_integer;
@@ -145,12 +162,16 @@ sub integer_arrayref_hashref_CHECKTRACE {
             if ( not( defined $possible_integer ) ) {
                 $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
                 $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-                croak( "\nERROR EIVAVRVHVRV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref sub-element value, integer, expected but undefined/null value found at key '$key', index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+                croak( "\n" . 'ERROR EIVAVRVHVRV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
+                        "\n" . 'integer_arrayref_hashref sub-element value, integer, expected but undefined/null value found at key ' . q{'} . $key . q{'} . ', index ' . $i . ',' .
+                        "\n" . 'in variable ' . q{'} . $variable_name . q{'} . ' from subroutine ' . q{'} . $subroutine_name . q{',} . "\n" . 'croaking' );
             }
             if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
                 $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
                 $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-                croak( "\nERROR EIVAVRVHVRV05, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref_hashref sub-element value, integer, expected but non-integer value found at key '$key', index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+                croak( "\n" . 'ERROR EIVAVRVHVRV05, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
+                        "\n" . 'integer_arrayref_hashref sub-element value, integer, expected but non-integer value found at key ' . q{'} . $key . q{'} . ', index ' . $i . ',' .
+                        "\n" . 'in variable ' . q{'} . $variable_name . q{'} . ' from subroutine ' . q{'} . $subroutine_name . q{',} . "\n" . 'croaking' );
             }
         }
     }

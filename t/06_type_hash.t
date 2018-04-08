@@ -17,8 +17,8 @@ our $VERSION = 0.009_000;
 
 # [[[ INCLUDES ]]]
 use RPerl::Test;
-use Test::More tests => 247;
-#use Test::More tests => 83;  # TMP DEBUG ONE MODE ONLY
+#use Test::More tests => 247;
+use Test::More;  # TMP DEBUG
 use Test::Exception;
 use Test::Number::Delta;
 use RPerl::DataStructure::Hash::SubTypes1D qw(integer_hashref_typetest0 integer_hashref_typetest1 number_hashref_typetest0 number_hashref_typetest1 string_hashref_typetest0 string_hashref_typetest1);
@@ -38,10 +38,10 @@ BEGIN {
 # [[[ PRIMARY RUNLOOP ]]]
 
 # loop 3 times, once for each mode: PERLOPS_PERLTYPES, PERLOPS_CPPTYPES, CPPOPS_CPPTYPES
-foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
-#for my $mode_id ( 0 .. 0 ) {  # TMP DEBUG PERLOPS_PERLTYPES ONLY
-#for my $mode_id ( 1 .. 1 ) {  # TMP DEBUG CPPOPS_PERLTYPES ONLY
-#for my $mode_id ( 2 .. 2 ) {  # TMP DEBUG CPPOPS_CPPTYPES ONLY
+#foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
+for my $mode_id ( 0 .. 0 ) {  # TMP DEBUG, PERLOPS_PERLTYPES ONLY
+#for my $mode_id ( 1 .. 1 ) {  # TMP DEBUG, CPPOPS_PERLTYPES ONLY
+#for my $mode_id ( 2 .. 2 ) {  # TMP DEBUG, CPPOPS_CPPTYPES ONLY
 
     # [[[ MODE SETUP ]]]
     #    RPerl::diag("in 06_type_hash.t, top of for() loop, have \$mode_id = $mode_id\n");
@@ -87,9 +87,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         );
     }
 
-    # [[[ INTEGER HASH TESTS ]]]
-    # [[[ INTEGER HASH TESTS ]]]
-    # [[[ INTEGER HASH TESTS ]]]
+    # [[[ INTEGER HASH REF TESTS ]]]
+    # [[[ INTEGER HASH REF TESTS ]]]
+    # [[[ INTEGER HASH REF TESTS ]]]
 
     throws_ok(    # TIVHVRV00
         sub { integer_hashref_to_string() },
@@ -199,7 +199,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             );
         },
         "/EIVHVRV03.*$mode_tagline/",
-
 #        q{TIVHVRV14 integer_hashref_to_string({ a_key => 2, b_key => 2_112, c_key => 42, d_key => {a_subkey => 23}, e_key => -877, f_key => -33, g_key => 1_701 }) throws correct exception}
         q{TIVHVRV14 integer_hashref_to_string({ a_key => 2, b_key => 2_112, c_key => 42, d_key => {a_subkey => 23}, ..., g_key => 1_701 }) throws correct exception}
     );
@@ -312,9 +311,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TIVHVRV40 integer_hashref_typetest1(5) lives}
     );
 
-    # [[[ NUMBER HASH TESTS ]]]
-    # [[[ NUMBER HASH TESTS ]]]
-    # [[[ NUMBER HASH TESTS ]]]
+    # [[[ NUMBER HASH REF TESTS ]]]
+    # [[[ NUMBER HASH REF TESTS ]]]
+    # [[[ NUMBER HASH REF TESTS ]]]
 
     throws_ok(    # TNVHVRV00
         sub { number_hashref_to_string() },
@@ -558,9 +557,9 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TNVHVRV40 number_hashref_typetest1(5) lives}
     );
 
-    # [[[ STRING HASH TESTS ]]]
-    # [[[ STRING HASH TESTS ]]]
-    # [[[ STRING HASH TESTS ]]]
+    # [[[ STRING HASH REF TESTS ]]]
+    # [[[ STRING HASH REF TESTS ]]]
+    # [[[ STRING HASH REF TESTS ]]]
 
     throws_ok(    # TPVHVRV00
         sub { string_hashref_to_string() },
@@ -830,6 +829,326 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TPVHVRV40 string_hashref_typetest1(5) lives}
     );
+
+
+
+
+
+    # START HERE: continue adding all arrayref_hashref tests below
+    # START HERE: continue adding all arrayref_hashref tests below
+    # START HERE: continue adding all arrayref_hashref tests below
+
+# { key_0 => [ 0, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, -2 ] }
+
+
+    # [[[ INTEGER ARRAY REF HASH REF TESTS ]]]
+    # [[[ INTEGER ARRAY REF HASH REF TESTS ]]]
+    # [[[ INTEGER ARRAY REF HASH REF TESTS ]]]
+
+    throws_ok(    # TIVAVRVHVRV00
+        sub { integer_arrayref_hashref_to_string() },
+        "/(EIVAVRVHVRV00.*$mode_tagline)|(Usage.*integer_arrayref_hashref_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        q{TIVAVRVHVRV00 integer_arrayref_hashref_to_string() throws correct exception}
+    );
+    throws_ok(                                                                # TIVAVRVHVRV01
+        sub { integer_arrayref_hashref_to_string(undef) },
+        "/EIVAVRVHVRV00.*$mode_tagline/",
+        q{TIVAVRVHVRV01 integer_arrayref_hashref_to_string(undef) throws correct exception}
+    );
+    throws_ok(                                                                # TIVAVRVHVRV02
+        sub { integer_arrayref_hashref_to_string(2) },
+        "/EIVAVRVHVRV01.*$mode_tagline/",
+        q{TIVAVRVHVRV02 integer_arrayref_hashref_to_string(2) throws correct exception}
+    );
+    throws_ok(                                                                # TIVAVRVHVRV03
+        sub { integer_arrayref_hashref_to_string(2.3) },
+        "/EIVAVRVHVRV01.*$mode_tagline/",
+        q{TIVAVRVHVRV03 integer_arrayref_hashref_to_string(2.3) throws correct exception}
+    );
+    throws_ok(                                                                # TIVAVRVHVRV04
+        sub { integer_arrayref_hashref_to_string('2') },
+        "/EIVAVRVHVRV01.*$mode_tagline/",
+        q{TIVAVRVHVRV04 integer_arrayref_hashref_to_string('2') throws correct exception}
+    );
+    throws_ok(                                                                # TIVAVRVHVRV05
+        sub { integer_arrayref_hashref_to_string([ 2 ]) },
+        "/EIVAVRVHVRV01.*$mode_tagline/",
+        q{TIVAVRVHVRV05 integer_arrayref_hashref_to_string([ 2 ]) throws correct exception}
+    );
+
+    throws_ok(    # TIVAVRVHVRV10
+        sub {
+            integer_arrayref_hashref_to_string({
+                key_0 => [  0,  1,  2 ],
+                key_1 => undef,
+                key_2 => [  0, -1, -2 ]
+            });
+        },
+        "/EIVAVRVHVRV02.*$mode_tagline/",
+        q{TIVAVRVHVRV10 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ], key_1 => undef, key_2 => [ 0, -1, -2 ] }) throws correct exception}
+    );
+    throws_ok(    # TIVAVRVHVRV11
+        sub {
+            integer_arrayref_hashref_to_string({
+                key_0 => [  0,  1,  2 ],
+                key_1 => 23,
+                key_2 => [  0, -1, -2 ]
+            });
+        },
+        "/EIVAVRVHVRV03.*$mode_tagline/",
+        q{TIVAVRVHVRV11 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ], key_1 => 23, key_2 => [ 0, -1, -2 ] }) throws correct exception}
+    );
+    throws_ok(    # TIVAVRVHVRV12
+        sub {
+            integer_arrayref_hashref_to_string({
+                key_0 => [  0,  1,  2 ],
+                key_1 => 23.4,
+                key_2 => [  0, -1, -2 ]
+            });
+        },
+        "/EIVAVRVHVRV03.*$mode_tagline/",
+        q{TIVAVRVHVRV12 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ], key_1 => 23.4, key_2 => [ 0, -1, -2 ] }) throws correct exception}
+    );
+    throws_ok(    # TIVAVRVHVRV13
+        sub {
+            integer_arrayref_hashref_to_string({
+                key_0 => [  0,  1,  2 ],
+                key_1 => 'howdy',
+                key_2 => [  0, -1, -2 ]
+            });
+        },
+        "/EIVAVRVHVRV03.*$mode_tagline/",
+        q{TIVAVRVHVRV13 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ], key_1 => 'howdy', key_2 => [ 0, -1, -2 ] }) throws correct exception}
+    );
+    throws_ok(    # TIVAVRVHVRV14
+        sub {
+            integer_arrayref_hashref_to_string({
+                key_0 => [  0,  1,  2 ],
+                key_1 => { subkey_10 => 23 },
+                key_2 => [  0, -1, -2 ]
+            });
+        },
+        "/EIVAVRVHVRV03.*$mode_tagline/",
+        q{TIVAVRVHVRV14 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ], key_1 => { subkey_10 => 23 }, key_2 => [ 0, -1, -2 ] }) throws correct exception}
+    );
+
+    throws_ok(    # TIVAVRVHVRV20
+        sub {
+            integer_arrayref_hashref_to_string({
+                key_0 => [  0,  1,  undef ],
+                key_1 => [  5,  6,  7 ],
+                key_2 => [  0, -1, -2 ]
+            });
+        },
+        "/EIVAVRVHVRV04.*$mode_tagline/",
+        q{TIVAVRVHVRV20 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, undef ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, -2 ] }) throws correct exception}
+    );
+    throws_ok(    # TIVAVRVHVRV21
+        sub {
+            integer_arrayref_hashref_to_string({
+                key_0 => [  0,  1,  2 ],
+                key_1 => [  5,  undef,  7 ],
+                key_2 => [  0, -1, -2 ]
+            });
+        },
+        "/EIVAVRVHVRV04.*$mode_tagline/",
+        q{TIVAVRVHVRV21 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ], key_1 => [ 5, undef, 7 ], key_2 => [ 0, -1, -2 ] }) throws correct exception}
+    );
+    throws_ok(    # TIVAVRVHVRV22
+        sub {
+            integer_arrayref_hashref_to_string({
+                key_0 => [  0,  1,  2 ],
+                key_1 => [  5,  6,  7 ],
+                key_2 => [  undef, -1, -2 ]
+            });
+        },
+        "/EIVAVRVHVRV04.*$mode_tagline/",
+        q{TIVAVRVHVRV22 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [  undef, -1, -2 ] }) throws correct exception}
+    );
+    
+
+    throws_ok(    # TIVAVRVHVRV30
+        sub {
+            integer_arrayref_hashref_to_string({
+                key_0 => [  0.1,  1,  2 ],
+                key_1 => [  5,  6,  7 ],
+                key_2 => [  0, -1, -2 ]
+            });
+        },
+        "/EIVAVRVHVRV05.*$mode_tagline/",
+        q{TIVAVRVHVRV30 integer_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, -2 ] }) throws correct exception}
+    );
+    throws_ok(    # TIVAVRVHVRV31
+        sub {
+            integer_arrayref_hashref_to_string({
+                key_0 => [  0,  1,  2 ],
+                key_1 => [  5,  '6',  7 ],
+                key_2 => [  0, -1, -2 ]
+            });
+        },
+        "/EIVAVRVHVRV05.*$mode_tagline/",
+        q{TIVAVRVHVRV31 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ], key_1 => [ 5, '6', 7 ], key_2 => [ 0, -1, -2 ] }) throws correct exception}
+    );
+    throws_ok(    # TIVAVRVHVRV32
+        sub {
+            integer_arrayref_hashref_to_string({
+                key_0 => [  0,  1,  2 ],
+                key_1 => [  5,  6,  7 ],
+                key_2 => [  0, -1, [ -2 ] ]
+            });
+        },
+        "/EIVAVRVHVRV05.*$mode_tagline/",
+        q{TIVAVRVHVRV32 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, [ -2 ] ] }) throws correct exception}
+    );
+    throws_ok(    # TIVAVRVHVRV33
+        sub {
+            integer_arrayref_hashref_to_string({
+                key_0 => [  0,  1,  2 ],
+                key_1 => [  5,  { subkey_11 => 6 },  7 ],
+                key_2 => [  0, -1, -2 ]
+            });
+        },
+        "/EIVAVRVHVRV05.*$mode_tagline/",
+        q{TIVAVRVHVRV33 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ], key_1 => [ 5, { subkey_11 => 6 }, 7 ], key_2 => [ 0, -1, -2 ] }) throws correct exception}
+    );
+
+    lives_and(    # TIVAVRVHVRV40
+        sub {
+            is( integer_arrayref_hashref_to_string( { key_0 => [ 0, 1, 2 ] } ), q{{ 'key_0' => [ 0, 1, 2 ] }}, q{TIVAVRVHVRV40 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ] }) returns correct value} );
+        },
+        q{TIVAVRVHVRV40 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ] }) lives}
+    );
+    lives_and(    # TIVAVRVHVRV51
+        sub { like(
+            integer_arrayref_hashref_to_string({
+                key_0 => [  0,  1,  2 ],
+                key_1 => [  5,  6,  7 ],
+                key_2 => [  0, -1, -2 ]
+            }),
+
+             # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
+            q{/^\\\{\s(?=.*'key_0' => \[ 0, 1, 2 \])(?=.*'key_1' => \[ 5, 6, 7 \])(?=.*'key_2' => \[ 0, -1, -2 \]).*\s\}$/m},
+            q{TIVAVRVHVRV51 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, -2 ] }) returns correct value}
+        ); },
+        q{TIVAVRVHVRV51 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, -2 ] }) lives}
+    );
+    lives_and(    # TIVAVRVHVRV52
+        sub { like(
+            integer_arrayref_hashref_to_string_compact({
+                key_0 => [  0,  1,  2 ],
+                key_1 => [  5,  6,  7 ],
+                key_2 => [  0, -1, -2 ]
+            }),
+
+             # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
+            q{/^\\\{(?=.*'key_0'=>\[0,1,2\])(?=.*'key_1'=>\[5,6,7\])(?=.*'key_2'=>\[0,-1,-2\]).*\}$/m},
+            q{TIVAVRVHVRV52 integer_arrayref_hashref_to_string_compact({ key_0 => [ 0, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, -2 ] }) returns correct value}
+        ); },
+        q{TIVAVRVHVRV52 integer_arrayref_hashref_to_string_compact({ key_0 => [ 0, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, -2 ] }) lives}
+    );
+    lives_and(    # TIVAVRVHVRV53
+        sub { like(
+            integer_arrayref_hashref_to_string_pretty({
+                key_0 => [  0,  1,  2 ],
+                key_1 => [  5,  6,  7 ],
+                key_2 => [  0, -1, -2 ]
+            }),
+
+            # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
+            # DEV NOTE: must have 's' regex modifier to treat multi-line string as single line
+            q{/^\{(?=.*    'key_0' => \[ 0, 1, 2 \])(?=.*    'key_1' => \[ 5, 6, 7 \])(?=.*    'key_2' => \[ 0, -1, -2 \]).*\}$/ms},
+            q{TIVAVRVHVRV53 integer_arrayref_hashref_to_string_pretty({ key_0 => [ 0, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, -2 ] }) returns correct value}
+        ); },
+        q{TIVAVRVHVRV53 integer_arrayref_hashref_to_string_pretty({ key_0 => [ 0, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, -2 ] }) lives}
+    );
+
+
+
+
+=DISABLE
+    throws_ok(    # TIVAVRVHVRV60
+        sub { integer_arrayref_hashref_typetest0() },
+        "/(EIVAVRVHVRV00.*$mode_tagline)|(Usage.*integer_arrayref_hashref_typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        q{TIVAVRVHVRV60 integer_arrayref_hashref_typetest0() throws correct exception}
+    );
+    throws_ok(                                                                 # TIVAVRVHVRV61
+        sub { integer_arrayref_hashref_typetest0(2) },
+        "/EIVAVRVHVRV01.*$mode_tagline/",
+        q{TIVAVRVHVRV61 integer_arrayref_hashref_typetest0(2) throws correct exception}
+    );
+    throws_ok(                                                                 # TIVAVRVHVRV62
+        sub {
+            integer_arrayref_hashref_typetest0(
+                {   'binary'       => 2,
+                    'rush'         => 2_112,
+                    'ERROR_FUNKEY' => undef,
+                    'answer'       => 42,
+                    'fnord'        => 23,
+                    'units'        => -877,
+                    'degree'       => -33,
+                    'ncc'          => 1_701
+                }
+            );
+        },
+        "/EIVAVRVHVRV02.*$mode_tagline/",
+        q{TIVAVRVHVRV62 integer_arrayref_hashref_typetest0({ 'binary' => 2, 'rush' => 2_112, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1_701 }) throws correct exception}
+    );
+    throws_ok(    # TIVAVRVHVRV63
+        sub {
+            integer_arrayref_hashref_typetest0(
+                {   'binary'       => 2,
+                    'rush'         => 2_112,
+                    'ERROR_FUNKEY' => 'abcdefg',
+                    'answer'       => 42,
+                    'fnord'        => 23,
+                    'units'        => -877,
+                    'degree'       => -33,
+                    'ncc'          => 1_701
+                }
+            );
+        },
+        "/EIVAVRVHVRV03.*$mode_tagline/",
+        q{TIVAVRVHVRV63 integer_arrayref_hashref_typetest0({ 'binary' => 2, 'rush' => 2_112, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1_701 }) throws correct exception}
+    );
+    lives_and(    # TIVAVRVHVRV64
+        sub {
+            like(
+                integer_arrayref_hashref_typetest0(
+                    {   'binary' => 2,
+                        'rush'   => 2_112,
+                        'answer' => 42,
+                        'fnord'  => 23,
+                        'units'  => -877,
+                        'degree' => -33,
+                        'ncc'    => 1_701
+                    }
+                ),
+                q{/^\\\{\s(?=.*'binary' => 2\b)(?=.*'rush' => 2_112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => -33\b)(?=.*'ncc' => 1_701\b).*\s\}}
+                    . $mode_tagline . q{$/m},
+                q{TIVAVRVHVRV64 integer_arrayref_hashref_typetest0({ 'binary' => 2, 'rush' => 2_112, ..., 'ncc' => 1_701 }) returns correct value}
+            );
+        },
+        q{TIVAVRVHVRV64 integer_arrayref_hashref_typetest0({ 'binary' => 2, 'rush' => 2_112, ..., 'ncc' => 1_701 }) lives}
+    );
+    lives_and(    # TIVAVRVHVRV70
+        sub {
+            is_deeply(
+                integer_arrayref_hashref_typetest1(5),
+                {   "$mode_tagline\_funkey2" => 10,
+                    "$mode_tagline\_funkey3" => 15,
+                    "$mode_tagline\_funkey4" => 20,
+                    "$mode_tagline\_funkey1" => 5,
+                    "$mode_tagline\_funkey0" => 0
+                },
+                q{TIVAVRVHVRV70 integer_arrayref_hashref_typetest1(5) returns correct value}
+            );
+        },
+        q{TIVAVRVHVRV70 integer_arrayref_hashref_typetest1(5) lives}
+    );
+
+
+=cut
+
 }
 
 done_testing();
