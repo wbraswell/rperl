@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes2D;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.016_000;
+our $VERSION = 0.020_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -24,9 +24,12 @@ our @EXPORT = qw(
     integer_arrayref_hashref_to_string_format
 );
 our @EXPORT_OK = qw(
-    integer_array_hashref_typetest0
-    integer_array_hashref_typetest1
+    integer_arrayref_hashref_typetest0
+    integer_arrayref_hashref_typetest1
 );
+
+# [[[ INCLUDES ]]]
+use RPerl::DataType::Integer;  # for integer_CHECK*() used in integer_arrayref_hashref_typetest*()
 
 # [[[ ARRAY REF HASH REF ]]]
 # [[[ ARRAY REF HASH REF ]]]
@@ -54,15 +57,6 @@ use parent -norequire, qw(arrayref_hashref);
 package RPerl::DataStructure::Hash::SubTypes2D;
 use strict;
 use warnings;
-
-
-
-
-# START HERE: update & test typetest*() below; continue SubTypes2D.cpp
-# START HERE: update & test typetest*() below; continue SubTypes2D.cpp
-# START HERE: update & test typetest*() below; continue SubTypes2D.cpp
-
-
 
 # [[[ TYPE-CHECKING ]]]
 
@@ -276,7 +270,7 @@ sub integer_arrayref_hashref_typetest0 {
     { my string $RETURN_TYPE };
     ( my integer_arrayref_hashref $lucky_integers) = @ARG;
 
-    #    integer_arrayref_hashref_CHECK($lucky_integers);
+#    integer_arrayref_hashref_CHECK($lucky_integers);
     integer_arrayref_hashref_CHECKTRACE( $lucky_integers, '$lucky_integers', 'integer_arrayref_hashref_typetest0()' );
 
 #    foreach my string $key ( sort keys %{$lucky_integers} ) {
@@ -294,15 +288,20 @@ sub integer_arrayref_hashref_typetest1 {
     { my integer_arrayref_hashref $RETURN_TYPE };
     ( my integer $my_size) = @ARG;
 
-    #    integer_CHECK($my_size);
+#    integer_CHECK($my_size);
     integer_CHECKTRACE( $my_size, '$my_size', 'integer_arrayref_hashref_typetest1()' );
+
+    # create a square 2-D data structure
     my integer_arrayref_hashref $new_hash = {};
     my string $temp_key;
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
-        $new_hash->{$temp_key} = $i * 5;
+        $new_hash->{$temp_key} = [];
+        for my integer $j ( 0 .. ( $my_size - 1)) {
+            $new_hash->{$temp_key}->[$j] = $i * $j;
+        }
 
-#        RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_typetest1(), setting entry '$temp_key' => " . $new_hash->{$temp_key} . ", BARSTOOL\n");
+#        RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_typetest1(), setting entry '$temp_key' => " . Dumper($new_hash->{$temp_key}) . ", BARSTOOL\n");
     }
     return ($new_hash);
 }

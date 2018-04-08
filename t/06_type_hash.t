@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.009_000;
+our $VERSION = 0.010_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -22,6 +22,8 @@ use Test::More;  # TMP DEBUG
 use Test::Exception;
 use Test::Number::Delta;
 use RPerl::DataStructure::Hash::SubTypes1D qw(integer_hashref_typetest0 integer_hashref_typetest1 number_hashref_typetest0 number_hashref_typetest1 string_hashref_typetest0 string_hashref_typetest1);
+#use RPerl::DataStructure::Hash::SubTypes2D qw(integer_arrayref_hashref_typetest0 integer_arrayref_hashref_typetest1 number_arrayref_hashref_typetest0 number_arrayref_hashref_typetest1 string_arrayref_hashref_typetest0 string_arrayref_hashref_typetest1);
+use RPerl::DataStructure::Hash::SubTypes2D qw(integer_arrayref_hashref_typetest0 integer_arrayref_hashref_typetest1);
 
 # [[[ OPERATIONS ]]]
 
@@ -1056,89 +1058,69 @@ for my $mode_id ( 0 .. 0 ) {  # TMP DEBUG, PERLOPS_PERLTYPES ONLY
 
             # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
             # DEV NOTE: must have 's' regex modifier to treat multi-line string as single line
-            q{/^\{(?=.*    'key_0' => \[ 0, 1, 2 \])(?=.*    'key_1' => \[ 5, 6, 7 \])(?=.*    'key_2' => \[ 0, -1, -2 \]).*\}$/ms},
+            q{/^\{(?=.*\n    'key_0' => \[ 0, 1, 2 \])(?=.*\n    'key_1' => \[ 5, 6, 7 \])(?=.*\n    'key_2' => \[ 0, -1, -2 \]).*\}$/ms},
             q{TIVAVRVHVRV53 integer_arrayref_hashref_to_string_pretty({ key_0 => [ 0, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, -2 ] }) returns correct value}
         ); },
         q{TIVAVRVHVRV53 integer_arrayref_hashref_to_string_pretty({ key_0 => [ 0, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, -2 ] }) lives}
     );
 
-
-
-
-=DISABLE
     throws_ok(    # TIVAVRVHVRV60
         sub { integer_arrayref_hashref_typetest0() },
         "/(EIVAVRVHVRV00.*$mode_tagline)|(Usage.*integer_arrayref_hashref_typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
         q{TIVAVRVHVRV60 integer_arrayref_hashref_typetest0() throws correct exception}
     );
-    throws_ok(                                                                 # TIVAVRVHVRV61
+    throws_ok(    # TIVAVRVHVRV61
         sub { integer_arrayref_hashref_typetest0(2) },
         "/EIVAVRVHVRV01.*$mode_tagline/",
         q{TIVAVRVHVRV61 integer_arrayref_hashref_typetest0(2) throws correct exception}
     );
-    throws_ok(                                                                 # TIVAVRVHVRV62
+    throws_ok(    # TIVAVRVHVRV62
         sub {
-            integer_arrayref_hashref_typetest0(
-                {   'binary'       => 2,
-                    'rush'         => 2_112,
-                    'ERROR_FUNKEY' => undef,
-                    'answer'       => 42,
-                    'fnord'        => 23,
-                    'units'        => -877,
-                    'degree'       => -33,
-                    'ncc'          => 1_701
-                }
-            );
+            integer_arrayref_hashref_typetest0({
+                key_0 => [  0,  1,  2 ],
+                key_1 => undef,
+                key_2 => [  0, -1, -2 ]
+            });
         },
         "/EIVAVRVHVRV02.*$mode_tagline/",
-        q{TIVAVRVHVRV62 integer_arrayref_hashref_typetest0({ 'binary' => 2, 'rush' => 2_112, 'ERROR_FUNKEY' => undef, ..., 'ncc' => 1_701 }) throws correct exception}
+        q{TIVAVRVHVRV62 integer_arrayref_hashref_typetest0({ key_0 => [ 0, 1, 2 ], key_1 => undef, key_2 => [ 0, -1, -2 ] }) throws correct exception}
     );
     throws_ok(    # TIVAVRVHVRV63
         sub {
-            integer_arrayref_hashref_typetest0(
-                {   'binary'       => 2,
-                    'rush'         => 2_112,
-                    'ERROR_FUNKEY' => 'abcdefg',
-                    'answer'       => 42,
-                    'fnord'        => 23,
-                    'units'        => -877,
-                    'degree'       => -33,
-                    'ncc'          => 1_701
-                }
-            );
+            integer_arrayref_hashref_typetest0({
+                key_0 => [  0,  1,  2 ],
+                key_1 => 5,
+                key_2 => [  0, -1, -2 ]
+            });
         },
         "/EIVAVRVHVRV03.*$mode_tagline/",
-        q{TIVAVRVHVRV63 integer_arrayref_hashref_typetest0({ 'binary' => 2, 'rush' => 2_112, 'ERROR_FUNKEY' => 'abcdefg', ..., 'ncc' => 1_701 }) throws correct exception}
+        q{TIVAVRVHVRV63 integer_arrayref_hashref_typetest0({ key_0 => [ 0, 1, 2 ], key_1 => 5, key_2 => [ 0, -1, -2 ] }) throws correct exception}
     );
     lives_and(    # TIVAVRVHVRV64
         sub {
             like(
-                integer_arrayref_hashref_typetest0(
-                    {   'binary' => 2,
-                        'rush'   => 2_112,
-                        'answer' => 42,
-                        'fnord'  => 23,
-                        'units'  => -877,
-                        'degree' => -33,
-                        'ncc'    => 1_701
-                    }
-                ),
-                q{/^\\\{\s(?=.*'binary' => 2\b)(?=.*'rush' => 2_112\b)(?=.*'answer' => 42\b)(?=.*'fnord' => 23\b)(?=.*'units' => -877\b)(?=.*'degree' => -33\b)(?=.*'ncc' => 1_701\b).*\s\}}
-                    . $mode_tagline . q{$/m},
-                q{TIVAVRVHVRV64 integer_arrayref_hashref_typetest0({ 'binary' => 2, 'rush' => 2_112, ..., 'ncc' => 1_701 }) returns correct value}
+                integer_arrayref_hashref_typetest0({
+                    key_0 => [  0,  1,  2 ],
+                    key_1 => [  5,  6,  7 ],
+                    key_2 => [  0, -1, -2 ]
+                }
+            ),
+                q{/^\{(?=.*'key_0' => \[ 0, 1, 2 \])(?=.*'key_1' => \[ 5, 6, 7 \])(?=.*'key_2' => \[ 0, -1, -2 \]).*\}} . $mode_tagline . q{$/ms},
+                q{TIVAVRVHVRV64 integer_arrayref_hashref_typetest0({ key_0 => [ 0, 1, 2 ], key_1 => 5, key_2 => [ 0, -1, -2 ] }) returns correct value}
             );
         },
-        q{TIVAVRVHVRV64 integer_arrayref_hashref_typetest0({ 'binary' => 2, 'rush' => 2_112, ..., 'ncc' => 1_701 }) lives}
+        q{TIVAVRVHVRV64 integer_arrayref_hashref_typetest0({ key_0 => [ 0, 1, 2 ], key_1 => 5, key_2 => [ 0, -1, -2 ] }) lives}
     );
     lives_and(    # TIVAVRVHVRV70
         sub {
             is_deeply(
                 integer_arrayref_hashref_typetest1(5),
-                {   "$mode_tagline\_funkey2" => 10,
-                    "$mode_tagline\_funkey3" => 15,
-                    "$mode_tagline\_funkey4" => 20,
-                    "$mode_tagline\_funkey1" => 5,
-                    "$mode_tagline\_funkey0" => 0
+                {   
+                    "$mode_tagline\_funkey0" => [0, 0, 0, 0, 0],
+                    "$mode_tagline\_funkey1" => [0, 1, 2, 3, 4],
+                    "$mode_tagline\_funkey2" => [0, 2, 4, 6, 8],
+                    "$mode_tagline\_funkey3" => [0, 3, 6, 9, 12],
+                    "$mode_tagline\_funkey4" => [0, 4, 8, 12, 16]
                 },
                 q{TIVAVRVHVRV70 integer_arrayref_hashref_typetest1(5) returns correct value}
             );
@@ -1146,8 +1128,6 @@ for my $mode_id ( 0 .. 0 ) {  # TMP DEBUG, PERLOPS_PERLTYPES ONLY
         q{TIVAVRVHVRV70 integer_arrayref_hashref_typetest1(5) lives}
     );
 
-
-=cut
 
 }
 

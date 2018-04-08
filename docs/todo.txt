@@ -285,6 +285,7 @@ TESTS
     fix RPerl/Test/Expression/program_*_good.pl.DISABLED_NEED_FIX
     fix lib/RPerl/Test/OperatorVoid01NamedVoidReturn/*.DISABLED_NEED_FIX
     	https://github.com/wbraswell/rperl/issues/25
+    t/04 t/05 t/06 directly test *_CHECKTRACE() and *_CHECK() 
 
 KICKSTARTER
     determine remaining items
