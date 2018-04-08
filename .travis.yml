@@ -1,6 +1,6 @@
 # NEED UPDATE, CORRELATION #rp037: all changes made to this file MUST be propagated to the corresponding .travis.yml files for all other RPerl Family software suites 
 language: perl
-# v0.101_000
+# v0.102_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -85,17 +85,14 @@ before_script:
 
     # DEV NOTE: verbose install to debug specific CPAN failures
 #    - cpanm --verbose SOME::BUGGY::DISTRIBUTION
-    - cpanm --verbose App::Pod2CpanHtml
-    - cpanm --verbose Pod::PseudoPod
-    - cpanm --verbose Time::HiRes
 
     # DEV NOTE: after adding multiple Alien dependencies with build times, we exceeded Travis' ~40-minute time limit;
     # disable CPAN tests for now to shorten non-RPerl build times
-#    - cpanm --verbose --installdeps --notest .
+    - cpanm --verbose --installdeps --notest .
 
     # DEV NOTE: after adding multiple Alien dependencies with build times, we exceeded Travis' ~4MB log data limit;
     # disable verbose CPAN output for now to shorten non-RPerl log output
-    - cpanm --installdeps --notest .
+#    - cpanm --installdeps --notest .
 
 # replace default build command "perl Makefile.PL && make test"
 # DEV NOTE: TEST_VERBOSE variable for ExtUtils::MakeMaker 'make' command disables suppression of stdout;
