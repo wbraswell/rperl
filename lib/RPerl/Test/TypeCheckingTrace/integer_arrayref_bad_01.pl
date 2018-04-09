@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_ERROR: 'ERROR EIVAVRV03, TYPE-CHECKING MISMATCH' >>>
-# <<< EXECUTE_ERROR: 'integer_arrayref element value expected but non-integer value found at index 2' >>>
+# <<< EXECUTE_ERROR: 'integer value expected but non-integer value found at index 2' >>>
 # <<< EXECUTE_ERROR: 'in variable $input_1 from subroutine check_integer_arrayref()' >>>
 
 # [[[ HEADER ]]]

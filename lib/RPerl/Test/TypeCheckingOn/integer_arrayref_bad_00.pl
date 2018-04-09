@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_ERROR: 'ERROR EIVAVRV03, TYPE-CHECKING MISMATCH' >>>
-# <<< EXECUTE_ERROR: 'integer_arrayref element value expected but non-integer value found at index 3' >>>
+# <<< EXECUTE_ERROR: 'integer value expected but non-integer value found at index 3' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

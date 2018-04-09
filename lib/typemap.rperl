@@ -1,6 +1,7 @@
-# VERSION 0.004_100
+# VERSION 0.005_000
 # NEED FIX, CORRELATION #rp002: bug, possibly in Inline, causing inability to declare 3rd count_FOO argument to T_PACKEDARRAY; temporarily solved here
 # DEV NOTE: all comments must be on their own line or typemapping will silently fail and typemapped subroutines will fail to bind from Inline to Perl
+# DEV NOTE, CORRELATION #rp051: hard-coded list of RPerl data types and data structures
 
 # SCALAR TYPES
 boolean				T_PACKED
@@ -20,6 +21,7 @@ integer_arrayref_arrayref	T_PACKED
 integer_hashref	    T_PACKED
 number_hashref	    T_PACKED
 string_hashref	    T_PACKED
+integer_arrayref_hashref	T_PACKED
 
 # GMP TYPES
 gmp_integer_retval  T_PACKED

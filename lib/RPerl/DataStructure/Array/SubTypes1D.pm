@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes1D;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.020_000;
+our $VERSION = 0.021_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -102,10 +102,10 @@ sub integer_arrayref_CHECK {
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the integer_CHECK() subroutine, but with array-specific error codes
         if ( not( defined $possible_integer ) ) {
-            croak( "\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref element value expected but undefined/null value found at index $i,\ncroaking" );
+            croak( "\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but undefined/null value found at index $i,\ncroaking" );
         }
         if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
-            croak( "\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref element value expected but non-integer value found at index $i,\ncroaking" );
+            croak( "\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found at index $i,\ncroaking" );
         }
     }
     return;
@@ -126,10 +126,10 @@ sub integer_arrayref_CHECKTRACE {
     {
         $possible_integer = $possible_integer_arrayref->[$i];
         if ( not( defined $possible_integer ) ) {
-            croak( "\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref element value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+            croak( "\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
         if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
-            croak( "\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_arrayref element value expected but non-integer value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+            croak( "\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
     }
     return;
@@ -309,13 +309,13 @@ sub number_arrayref_CHECK {
     {
         $possible_number = $possible_number_arrayref->[$i];
         if ( not( defined $possible_number ) ) {
-            croak( "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref element value expected but undefined/null value found at index $i,\ncroaking" );
+            croak( "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found at index $i,\ncroaking" );
         }
         if (not(   main::RPerl_SvNOKp($possible_number)
                 || main::RPerl_SvIOKp($possible_number) )
             )
         {
-            croak( "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref element value expected but non-number value found at index $i,\ncroaking" );
+            croak( "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found at index $i,\ncroaking" );
         }
     }
     return;
@@ -336,13 +336,13 @@ sub number_arrayref_CHECKTRACE {
     {
         $possible_number = $possible_number_arrayref->[$i];
         if ( not( defined $possible_number ) ) {
-            croak( "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref element value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+            croak( "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
         if (not(   main::RPerl_SvNOKp($possible_number)
                 || main::RPerl_SvIOKp($possible_number) )
             )
         {
-            croak( "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_arrayref element value expected but non-number value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+            croak( "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
     }
     return;
@@ -533,10 +533,10 @@ sub string_arrayref_CHECK {
     {
         $possible_string = $possible_string_arrayref->[$i];
         if ( not( defined $possible_string ) ) {
-            croak( "\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref element value expected but undefined/null value found at index $i,\ncroaking" );
+            croak( "\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but undefined/null value found at index $i,\ncroaking" );
         }
         if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
-            croak( "\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref element value expected but non-string value found at index $i,\ncroaking" );
+            croak( "\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found at index $i,\ncroaking" );
         }
     }
     return;
@@ -557,10 +557,10 @@ sub string_arrayref_CHECKTRACE {
     {
         $possible_string = $possible_string_arrayref->[$i];
         if ( not( defined $possible_string ) ) {
-            croak( "\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref element value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+            croak( "\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
         if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
-            croak( "\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_arrayref element value expected but non-string value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
+            croak( "\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
     }
     return;

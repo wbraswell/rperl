@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_cpp 0.004_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_cpp 0.005_000
 
 #include <RPerl/DataStructure/Hash/SubTypes1D.h>  // -> ??? (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
@@ -40,44 +40,14 @@ void integer_hashref_CHECK(SV* possible_integer_hashref)
         if (not(SvOK(possible_integer_hashentry_value)))
         {
             possible_integer_hashentry_key = hv_iterkeysv(possible_integer_hashentry);
-
-            // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-            possible_integer_hashentry_key_string = string(SvPV_nolen(possible_integer_hashentry_key));
-            possible_integer_hashentry_key_string_pos = 0;
-            while((possible_integer_hashentry_key_string_pos = possible_integer_hashentry_key_string.find("\\", possible_integer_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_integer_hashentry_key_string.replace(possible_integer_hashentry_key_string_pos, 1, "\\\\");
-                possible_integer_hashentry_key_string_pos += 2;
-            }
-            possible_integer_hashentry_key_string_pos = 0;
-            while((possible_integer_hashentry_key_string_pos = possible_integer_hashentry_key_string.find("'", possible_integer_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_integer_hashentry_key_string.replace(possible_integer_hashentry_key_string_pos, 1, "\\'");
-                possible_integer_hashentry_key_string_pos += 2;
-            }
-
-            croak("\nERROR EIVHVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_hashref element value expected but undefined/null value found at key '%s',\ncroaking", possible_integer_hashentry_key_string.c_str());
+            possible_integer_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_integer_hashentry_key)));  // escape key string for error message
+            croak("\nERROR EIVHVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found at key '%s',\ncroaking", possible_integer_hashentry_key_string.c_str());
         }
         if (not(SvIOKp(possible_integer_hashentry_value)))
         {
             possible_integer_hashentry_key = hv_iterkeysv(possible_integer_hashentry);
-
-            // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-            possible_integer_hashentry_key_string = string(SvPV_nolen(possible_integer_hashentry_key));
-            possible_integer_hashentry_key_string_pos = 0;
-            while((possible_integer_hashentry_key_string_pos = possible_integer_hashentry_key_string.find("\\", possible_integer_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_integer_hashentry_key_string.replace(possible_integer_hashentry_key_string_pos, 1, "\\\\");
-                possible_integer_hashentry_key_string_pos += 2;
-            }
-            possible_integer_hashentry_key_string_pos = 0;
-            while((possible_integer_hashentry_key_string_pos = possible_integer_hashentry_key_string.find("'", possible_integer_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_integer_hashentry_key_string.replace(possible_integer_hashentry_key_string_pos, 1, "\\'");
-                possible_integer_hashentry_key_string_pos += 2;
-            }
-
-            croak("\nERROR EIVHVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_hashref element value expected but non-integer value found at key '%s',\ncroaking", possible_integer_hashentry_key_string.c_str());
+            possible_integer_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_integer_hashentry_key)));  // escape key string for error message
+            croak("\nERROR EIVHVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found at key '%s',\ncroaking", possible_integer_hashentry_key_string.c_str());
         }
     }
 }
@@ -109,44 +79,14 @@ void integer_hashref_CHECKTRACE(SV* possible_integer_hashref, const char* variab
         if (not(SvOK(possible_integer_hashentry_value)))
         {
             possible_integer_hashentry_key = hv_iterkeysv(possible_integer_hashentry);
-
-            // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-            possible_integer_hashentry_key_string = string(SvPV_nolen(possible_integer_hashentry_key));
-            possible_integer_hashentry_key_string_pos = 0;
-            while((possible_integer_hashentry_key_string_pos = possible_integer_hashentry_key_string.find("\\", possible_integer_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_integer_hashentry_key_string.replace(possible_integer_hashentry_key_string_pos, 1, "\\\\");
-                possible_integer_hashentry_key_string_pos += 2;
-            }
-            possible_integer_hashentry_key_string_pos = 0;
-            while((possible_integer_hashentry_key_string_pos = possible_integer_hashentry_key_string.find("'", possible_integer_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_integer_hashentry_key_string.replace(possible_integer_hashentry_key_string_pos, 1, "\\'");
-                possible_integer_hashentry_key_string_pos += 2;
-            }
-
-            croak("\nERROR EIVHVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_hashref element value expected but undefined/null value found at key '%s',\nin variable %s from subroutine %s,\ncroaking", possible_integer_hashentry_key_string.c_str(), variable_name, subroutine_name);
+            possible_integer_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_integer_hashentry_key)));  // escape key string for error message
+            croak("\nERROR EIVHVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found at key '%s',\nin variable %s from subroutine %s,\ncroaking", possible_integer_hashentry_key_string.c_str(), variable_name, subroutine_name);
         }
         if (not(SvIOKp(possible_integer_hashentry_value)))
         {
             possible_integer_hashentry_key = hv_iterkeysv(possible_integer_hashentry);
-
-            // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-            possible_integer_hashentry_key_string = string(SvPV_nolen(possible_integer_hashentry_key));
-            possible_integer_hashentry_key_string_pos = 0;
-            while((possible_integer_hashentry_key_string_pos = possible_integer_hashentry_key_string.find("\\", possible_integer_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_integer_hashentry_key_string.replace(possible_integer_hashentry_key_string_pos, 1, "\\\\");
-                possible_integer_hashentry_key_string_pos += 2;
-            }
-            possible_integer_hashentry_key_string_pos = 0;
-            while((possible_integer_hashentry_key_string_pos = possible_integer_hashentry_key_string.find("'", possible_integer_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_integer_hashentry_key_string.replace(possible_integer_hashentry_key_string_pos, 1, "\\'");
-                possible_integer_hashentry_key_string_pos += 2;
-            }
-
-            croak("\nERROR EIVHVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_hashref element value expected but non-integer value found at key '%s',\nin variable %s from subroutine %s,\ncroaking", possible_integer_hashentry_key_string.c_str(), variable_name, subroutine_name);
+            possible_integer_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_integer_hashentry_key)));  // escape key string for error message
+            croak("\nERROR EIVHVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found at key '%s',\nin variable %s from subroutine %s,\ncroaking", possible_integer_hashentry_key_string.c_str(), variable_name, subroutine_name);
         }
     }
 }
@@ -178,44 +118,14 @@ void number_hashref_CHECK(SV* possible_number_hashref)
         if (not(SvOK(possible_number_hashentry_value)))
         {
             possible_number_hashentry_key = hv_iterkeysv(possible_number_hashentry);
-
-            // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-            possible_number_hashentry_key_string = string(SvPV_nolen(possible_number_hashentry_key));
-            possible_number_hashentry_key_string_pos = 0;
-            while((possible_number_hashentry_key_string_pos = possible_number_hashentry_key_string.find("\\", possible_number_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_number_hashentry_key_string.replace(possible_number_hashentry_key_string_pos, 1, "\\\\");
-                possible_number_hashentry_key_string_pos += 2;
-            }
-            possible_number_hashentry_key_string_pos = 0;
-            while((possible_number_hashentry_key_string_pos = possible_number_hashentry_key_string.find("'", possible_number_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_number_hashentry_key_string.replace(possible_number_hashentry_key_string_pos, 1, "\\'");
-                possible_number_hashentry_key_string_pos += 2;
-            }
-
-            croak("\nERROR ENVHVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_hashref element value expected but undefined/null value found at key '%s',\ncroaking", possible_number_hashentry_key_string.c_str());
+            possible_number_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_number_hashentry_key)));  // escape key string for error message
+            croak("\nERROR ENVHVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found at key '%s',\ncroaking", possible_number_hashentry_key_string.c_str());
         }
         if (not(SvNOKp(possible_number_hashentry_value) || SvIOKp(possible_number_hashentry_value)))
         {
             possible_number_hashentry_key = hv_iterkeysv(possible_number_hashentry);
-
-            // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-            possible_number_hashentry_key_string = string(SvPV_nolen(possible_number_hashentry_key));
-            possible_number_hashentry_key_string_pos = 0;
-            while((possible_number_hashentry_key_string_pos = possible_number_hashentry_key_string.find("\\", possible_number_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_number_hashentry_key_string.replace(possible_number_hashentry_key_string_pos, 1, "\\\\");
-                possible_number_hashentry_key_string_pos += 2;
-            }
-            possible_number_hashentry_key_string_pos = 0;
-            while((possible_number_hashentry_key_string_pos = possible_number_hashentry_key_string.find("'", possible_number_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_number_hashentry_key_string.replace(possible_number_hashentry_key_string_pos, 1, "\\'");
-                possible_number_hashentry_key_string_pos += 2;
-            }
-
-            croak("\nERROR ENVHVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_hashref element value expected but non-number value found at key '%s',\ncroaking", possible_number_hashentry_key_string.c_str());
+            possible_number_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_number_hashentry_key)));  // escape key string for error message
+            croak("\nERROR ENVHVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found at key '%s',\ncroaking", possible_number_hashentry_key_string.c_str());
         }
     }
 }
@@ -247,44 +157,14 @@ void number_hashref_CHECKTRACE(SV* possible_number_hashref, const char* variable
         if (not(SvOK(possible_number_hashentry_value)))
         {
             possible_number_hashentry_key = hv_iterkeysv(possible_number_hashentry);
-
-            // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-            possible_number_hashentry_key_string = string(SvPV_nolen(possible_number_hashentry_key));
-            possible_number_hashentry_key_string_pos = 0;
-            while((possible_number_hashentry_key_string_pos = possible_number_hashentry_key_string.find("\\", possible_number_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_number_hashentry_key_string.replace(possible_number_hashentry_key_string_pos, 1, "\\\\");
-                possible_number_hashentry_key_string_pos += 2;
-            }
-            possible_number_hashentry_key_string_pos = 0;
-            while((possible_number_hashentry_key_string_pos = possible_number_hashentry_key_string.find("'", possible_number_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_number_hashentry_key_string.replace(possible_number_hashentry_key_string_pos, 1, "\\'");
-                possible_number_hashentry_key_string_pos += 2;
-            }
-
-            croak("\nERROR ENVHVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_hashref element value expected but undefined/null value found at key '%s',\nin variable %s from subroutine %s,\ncroaking", possible_number_hashentry_key_string.c_str(), variable_name, subroutine_name);
+            possible_number_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_number_hashentry_key)));  // escape key string for error message
+            croak("\nERROR ENVHVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found at key '%s',\nin variable %s from subroutine %s,\ncroaking", possible_number_hashentry_key_string.c_str(), variable_name, subroutine_name);
         }
         if (not(SvNOKp(possible_number_hashentry_value) || SvIOKp(possible_number_hashentry_value)))
         {
             possible_number_hashentry_key = hv_iterkeysv(possible_number_hashentry);
-
-            // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-            possible_number_hashentry_key_string = string(SvPV_nolen(possible_number_hashentry_key));
-            possible_number_hashentry_key_string_pos = 0;
-            while((possible_number_hashentry_key_string_pos = possible_number_hashentry_key_string.find("\\", possible_number_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_number_hashentry_key_string.replace(possible_number_hashentry_key_string_pos, 1, "\\\\");
-                possible_number_hashentry_key_string_pos += 2;
-            }
-            possible_number_hashentry_key_string_pos = 0;
-            while((possible_number_hashentry_key_string_pos = possible_number_hashentry_key_string.find("'", possible_number_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_number_hashentry_key_string.replace(possible_number_hashentry_key_string_pos, 1, "\\'");
-                possible_number_hashentry_key_string_pos += 2;
-            }
-
-            croak("\nERROR ENVHVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_hashref element value expected but non-number value found at key '%s',\nin variable %s from subroutine %s,\ncroaking", possible_number_hashentry_key_string.c_str(), variable_name, subroutine_name);
+            possible_number_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_number_hashentry_key)));  // escape key string for error message
+            croak("\nERROR ENVHVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found at key '%s',\nin variable %s from subroutine %s,\ncroaking", possible_number_hashentry_key_string.c_str(), variable_name, subroutine_name);
         }
     }
 }
@@ -316,44 +196,14 @@ void string_hashref_CHECK(SV* possible_string_hashref)
         if (not(SvOK(possible_string_hashentry_value)))
         {
             possible_string_hashentry_key = hv_iterkeysv(possible_string_hashentry);
-
-            // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-            possible_string_hashentry_key_string = string(SvPV_nolen(possible_string_hashentry_key));
-            possible_string_hashentry_key_string_pos = 0;
-            while((possible_string_hashentry_key_string_pos = possible_string_hashentry_key_string.find("\\", possible_string_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_string_hashentry_key_string.replace(possible_string_hashentry_key_string_pos, 1, "\\\\");
-                possible_string_hashentry_key_string_pos += 2;
-            }
-            possible_string_hashentry_key_string_pos = 0;
-            while((possible_string_hashentry_key_string_pos = possible_string_hashentry_key_string.find("'", possible_string_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_string_hashentry_key_string.replace(possible_string_hashentry_key_string_pos, 1, "\\'");
-                possible_string_hashentry_key_string_pos += 2;
-            }
-
-            croak("\nERROR EPVHVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_hashref element value expected but undefined/null value found at key '%s',\ncroaking", possible_string_hashentry_key_string.c_str());
+            possible_string_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_string_hashentry_key)));  // escape key string for error message
+            croak("\nERROR EPVHVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found at key '%s',\ncroaking", possible_string_hashentry_key_string.c_str());
         }
         if (not(SvPOKp(possible_string_hashentry_value)))
         {
             possible_string_hashentry_key = hv_iterkeysv(possible_string_hashentry);
-
-            // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-            possible_string_hashentry_key_string = string(SvPV_nolen(possible_string_hashentry_key));
-            possible_string_hashentry_key_string_pos = 0;
-            while((possible_string_hashentry_key_string_pos = possible_string_hashentry_key_string.find("\\", possible_string_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_string_hashentry_key_string.replace(possible_string_hashentry_key_string_pos, 1, "\\\\");
-                possible_string_hashentry_key_string_pos += 2;
-            }
-            possible_string_hashentry_key_string_pos = 0;
-            while((possible_string_hashentry_key_string_pos = possible_string_hashentry_key_string.find("'", possible_string_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_string_hashentry_key_string.replace(possible_string_hashentry_key_string_pos, 1, "\\'");
-                possible_string_hashentry_key_string_pos += 2;
-            }
-
-            croak("\nERROR EPVHVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_hashref element value expected but non-string value found at key '%s',\ncroaking", possible_string_hashentry_key_string.c_str());
+            possible_string_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_string_hashentry_key)));  // escape key string for error message
+            croak("\nERROR EPVHVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found at key '%s',\ncroaking", possible_string_hashentry_key_string.c_str());
         }
     }
 }
@@ -385,44 +235,14 @@ void string_hashref_CHECKTRACE(SV* possible_string_hashref, const char* variable
         if (not(SvOK(possible_string_hashentry_value)))
         {
             possible_string_hashentry_key = hv_iterkeysv(possible_string_hashentry);
-
-            // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-            possible_string_hashentry_key_string = string(SvPV_nolen(possible_string_hashentry_key));
-            possible_string_hashentry_key_string_pos = 0;
-            while((possible_string_hashentry_key_string_pos = possible_string_hashentry_key_string.find("\\", possible_string_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_string_hashentry_key_string.replace(possible_string_hashentry_key_string_pos, 1, "\\\\");
-                possible_string_hashentry_key_string_pos += 2;
-            }
-            possible_string_hashentry_key_string_pos = 0;
-            while((possible_string_hashentry_key_string_pos = possible_string_hashentry_key_string.find("'", possible_string_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_string_hashentry_key_string.replace(possible_string_hashentry_key_string_pos, 1, "\\'");
-                possible_string_hashentry_key_string_pos += 2;
-            }
-
-            croak("\nERROR EPVHVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_hashref element value expected but undefined/null value found at key '%s',\nin variable %s from subroutine %s,\ncroaking", possible_string_hashentry_key_string.c_str(), variable_name, subroutine_name);
+            possible_string_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_string_hashentry_key)));  // escape key string for error message
+            croak("\nERROR EPVHVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found at key '%s',\nin variable %s from subroutine %s,\ncroaking", possible_string_hashentry_key_string.c_str(), variable_name, subroutine_name);
         }
         if (not(SvPOKp(possible_string_hashentry_value)))
         {
             possible_string_hashentry_key = hv_iterkeysv(possible_string_hashentry);
-
-            // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-            possible_string_hashentry_key_string = string(SvPV_nolen(possible_string_hashentry_key));
-            possible_string_hashentry_key_string_pos = 0;
-            while((possible_string_hashentry_key_string_pos = possible_string_hashentry_key_string.find("\\", possible_string_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_string_hashentry_key_string.replace(possible_string_hashentry_key_string_pos, 1, "\\\\");
-                possible_string_hashentry_key_string_pos += 2;
-            }
-            possible_string_hashentry_key_string_pos = 0;
-            while((possible_string_hashentry_key_string_pos = possible_string_hashentry_key_string.find("'", possible_string_hashentry_key_string_pos)) != string::npos)
-            {
-                possible_string_hashentry_key_string.replace(possible_string_hashentry_key_string_pos, 1, "\\'");
-                possible_string_hashentry_key_string_pos += 2;
-            }
-
-            croak("\nERROR EPVHVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_hashref element value expected but non-string value found at key '%s',\nin variable %s from subroutine %s,\ncroaking", possible_string_hashentry_key_string.c_str(), variable_name, subroutine_name);
+            possible_string_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_string_hashentry_key)));  // escape key string for error message
+            croak("\nERROR EPVHVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found at key '%s',\nin variable %s from subroutine %s,\ncroaking", possible_string_hashentry_key_string.c_str(), variable_name, subroutine_name);
         }
     }
 }

@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_cpp
-#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.007_000
+#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.011_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/String.h>		// -> NULL (relies on native C type)
@@ -11,9 +11,30 @@ using std::cout;  using std::cerr;  using std::endl;
 #include <RPerl/DataType/Number.cpp>  // -> Number.h
 #include <RPerl/DataType/Character.cpp>  // -> Character.h
 
+// [[[ GENERAL FUNCTIONS ]]]
+
 // [[[ TYPE CHECKING ]]]
 // [[[ TYPE CHECKING ]]]
 // [[[ TYPE CHECKING ]]]
+
+// NEED ANSWER: does this change the original string via move semantics, or make a copy?
+// escape all back-slash \ and single-quote ' characters with a back-slash \ character
+string escape_backslash_singlequote(string unescaped_string) {
+    string escaped_string = unescaped_string;
+    size_t escaped_string_pos = 0;
+    while((escaped_string_pos = escaped_string.find("\\", escaped_string_pos)) != string::npos)
+    {
+        escaped_string.replace(escaped_string_pos, 1, "\\\\");
+        escaped_string_pos += 2;
+    }
+    escaped_string_pos = 0;
+    while((escaped_string_pos = escaped_string.find("'", escaped_string_pos)) != string::npos)
+    {
+        escaped_string.replace(escaped_string_pos, 1, "\\'");
+        escaped_string_pos += 2;
+    }
+    return escaped_string;
+}
 
 // TYPE-CHECKING SUBROUTINES DEPRECATED IN FAVOR OF EQUIVALENT MACROS
 /*

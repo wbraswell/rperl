@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes2D_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes2D_cpp 0.003_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes2D_cpp 0.004_000
 
 #include <RPerl/DataStructure/Array/SubTypes2D.h>  // -> ??? (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
@@ -27,8 +27,8 @@ void integer_arrayref_arrayref_CHECK(SV* possible_integer_arrayref_arrayref)
 	for (i = 0;  i < possible_integer_arrayref_array_length;  ++i)  // incrementing iteration
 	{
 		possible_integer_arrayref_array_element = av_fetch(possible_integer_arrayref_array, i, 0);
-		if ( not( SvOK(*possible_integer_arrayref_array_element) ) ) { croak( "\nERROR EIVAVRVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref_arrayref sub-arrayref value expected but undefined/null value found at index %"INTEGER",\ncroaking", i ); }
-		if ( not( SvAROKp(*possible_integer_arrayref_array_element) ) ) { croak( "\nERROR EIVAVRVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref_arrayref sub-arrayref value expected but non-arrayref value found at index %"INTEGER",\ncroaking", i ); }
+		if ( not( SvOK(*possible_integer_arrayref_array_element) ) ) { croak( "\nERROR EIVAVRVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref value expected but undefined/null value found at index %"INTEGER",\ncroaking", i ); }
+		if ( not( SvAROKp(*possible_integer_arrayref_array_element) ) ) { croak( "\nERROR EIVAVRVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref value expected but non-arrayref value found at index %"INTEGER",\ncroaking", i ); }
 
 		SV* possible_integer_arrayref = *possible_integer_arrayref_array_element;
 
@@ -43,8 +43,8 @@ void integer_arrayref_arrayref_CHECK(SV* possible_integer_arrayref_arrayref)
 	    for (j = 0;  j < possible_integer_array_length;  ++j)  // incrementing iteration
 	    {
 	        possible_integer_array_element = av_fetch(possible_integer_array, j, 0);
-	        if (not(SvOK(*possible_integer_array_element))) { croak("\nERROR EIVAVRVAVRV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but undefined/null value found at index (%"INTEGER", %"INTEGER"),\ncroaking", i, j); }
-	        if (not(SvIOKp(*possible_integer_array_element))) { croak("\nERROR EIVAVRVAVRV05, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but non-integer value found at index (%"INTEGER", %"INTEGER"),\ncroaking", i, j); }
+	        if (not(SvOK(*possible_integer_array_element))) { croak("\nERROR EIVAVRVAVRV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found at index (%"INTEGER", %"INTEGER"),\ncroaking", i, j); }
+	        if (not(SvIOKp(*possible_integer_array_element))) { croak("\nERROR EIVAVRVAVRV05, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found at index (%"INTEGER", %"INTEGER"),\ncroaking", i, j); }
 	    }
 	}
 	fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_arrayref_CHECK(), bottom of subroutine\n");
@@ -69,8 +69,8 @@ void integer_arrayref_arrayref_CHECKTRACE(SV* possible_integer_arrayref_arrayref
     for (i = 0;  i < possible_integer_arrayref_array_length;  ++i)  // incrementing iteration
     {
         possible_integer_arrayref_array_element = av_fetch(possible_integer_arrayref_array, i, 0);
-        if ( not( SvOK(*possible_integer_arrayref_array_element) ) ) { croak( "\nERROR EIVAVRVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref_arrayref sub-arrayref value expected but undefined/null value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name ); }
-        if ( not( SvAROKp(*possible_integer_arrayref_array_element) ) ) { croak( "\nERROR EIVAVRVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref_arrayref sub-arrayref value expected but non-arrayref value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name ); }
+        if ( not( SvOK(*possible_integer_arrayref_array_element) ) ) { croak( "\nERROR EIVAVRVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref value expected but undefined/null value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name ); }
+        if ( not( SvAROKp(*possible_integer_arrayref_array_element) ) ) { croak( "\nERROR EIVAVRVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref value expected but non-arrayref value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name ); }
 
         SV* possible_integer_arrayref = *possible_integer_arrayref_array_element;
 
@@ -85,8 +85,8 @@ void integer_arrayref_arrayref_CHECKTRACE(SV* possible_integer_arrayref_arrayref
         for (j = 0;  j < possible_integer_array_length;  ++j)  // incrementing iteration
         {
             possible_integer_array_element = av_fetch(possible_integer_array, j, 0);
-            if (not(SvOK(*possible_integer_array_element))) { croak("\nERROR EIVAVRVAVRV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but undefined/null value found at index (%"INTEGER", %"INTEGER"),\nin variable %s from subroutine %s,\ncroaking", i, j, variable_name, subroutine_name ); }
-            if (not(SvIOKp(*possible_integer_array_element))) { croak("\nERROR EIVAVRVAVRV05, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref element value expected but non-integer value found at index (%"INTEGER", %"INTEGER"),\nin variable %s from subroutine %s,\ncroaking", i, j, variable_name, subroutine_name ); }
+            if (not(SvOK(*possible_integer_array_element))) { croak("\nERROR EIVAVRVAVRV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found at index (%"INTEGER", %"INTEGER"),\nin variable %s from subroutine %s,\ncroaking", i, j, variable_name, subroutine_name ); }
+            if (not(SvIOKp(*possible_integer_array_element))) { croak("\nERROR EIVAVRVAVRV05, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found at index (%"INTEGER", %"INTEGER"),\nin variable %s from subroutine %s,\ncroaking", i, j, variable_name, subroutine_name ); }
         }
     }
 	fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_arrayref_CHECKTRACE(), bottom of subroutine\n");

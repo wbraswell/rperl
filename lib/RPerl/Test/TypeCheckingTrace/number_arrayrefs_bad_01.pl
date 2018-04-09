@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_ERROR: 'ERROR ENVAVRV03, TYPE-CHECKING MISMATCH' >>>
-# <<< EXECUTE_ERROR: 'number_arrayref element value expected but non-number value found at index 1' >>>
+# <<< EXECUTE_ERROR: 'number value expected but non-number value found at index 1' >>>
 # <<< EXECUTE_ERROR: 'in variable $input_3 from subroutine check_number_arrayrefs()' >>>
 
 # [[[ HEADER ]]]

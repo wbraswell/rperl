@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_h
-#define __CPP__INCLUDED__RPerl__DataType__String_h 0.010_000
+#define __CPP__INCLUDED__RPerl__DataType__String_h 0.011_000
 
 // [[[ TYPEDEFS ]]]
 # ifndef __CPP__INCLUDED__RPerl__DataType__String_h__typedefs
@@ -144,6 +144,9 @@ typedef char character;
 			(not(SvPOKp(possible_string)) ? \
 					croak("\nERROR EPV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) : \
 					(void)0))
+
+// [[[ GENERAL FUNCTIONS ]]]
+string escape_backslash_singlequote(string unescaped_string);
 
 // [[[ TYPE CHECKING ]]]
 // DEPRECATED, SEE MACROS ABOVE

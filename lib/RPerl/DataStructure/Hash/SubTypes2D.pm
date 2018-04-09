@@ -82,12 +82,12 @@ sub integer_arrayref_hashref_CHECK {
         # DEV NOTE: the following two if() statements are functionally equivalent to the arrayref_CHECK() subroutine, but with integer-specific error codes
         if ( not( defined $possible_integer_arrayref ) ) {
             croak( "\n" . 'ERROR EIVAVRVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
-                    "\n" . 'integer_arrayref_hashref element value, integer_arrayref, expected but undefined/null value found at key ' . q{'} . $key . q{',} . "\n" . 'croaking' );
+                    "\n" . 'integer_arrayref value expected but undefined/null value found at key ' . q{'} . $key . q{',} . "\n" . 'croaking' );
         }
 
         if ( not( main::RPerl_SvAROKp($possible_integer_arrayref) ) ) {
             croak( "\n" . 'ERROR EIVAVRVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
-                    "\n" . 'integer_arrayref_hashref element value, integer_arrayref, expected but non-arrayref value found at key ' . q{'} . $key . q{',} . "\n" . 'croaking' );
+                    "\n" . 'integer_arrayref value expected but non-arrayref value found at key ' . q{'} . $key . q{',} . "\n" . 'croaking' );
         }
 
         my integer $possible_integer;
@@ -100,13 +100,13 @@ sub integer_arrayref_hashref_CHECK {
                 $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
                 $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
                 croak( "\n" . 'ERROR EIVAVRVHVRV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
-                        "\n" . 'integer_arrayref_hashref sub-element value, integer, expected but undefined/null value found at key ' . q{'} . $key . q{'} . ', index ' . $i . ',' . "\n" . 'croaking' );
+                        "\n" . 'integer value expected but undefined/null value found at index ' . $i . ', key ' .  q{'} . $key . q{'} . ',' . "\n" . 'croaking' );
             }
             if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
                 $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
                 $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
                 croak( "\n" . 'ERROR EIVAVRVHVRV05, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
-                        "\n" . 'integer_arrayref_hashref sub-element value, integer, expected but non-integer value found at key ' . q{'} . $key . q{'} . ', index ' . $i . ',' . "\n" . 'croaking' );
+                        "\n" . 'integer value expected but non-integer value found at index ' . $i . ', key ' .  q{'} . $key . q{'} . ',' . "\n" . 'croaking' );
             }
         }
     }
@@ -137,13 +137,13 @@ sub integer_arrayref_hashref_CHECKTRACE {
         # DEV NOTE: the following two if() statements are functionally equivalent to the arrayref_CHECK() subroutine, but with integer-specific error codes
         if ( not( defined $possible_integer_arrayref ) ) {
             croak( "\n" . 'ERROR EIVAVRVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
-                    "\n" . 'integer_arrayref_hashref element value, integer_arrayref, expected but undefined/null value found at key ' . q{'} . $key . q{',} . 
+                    "\n" . 'integer_arrayref value expected but undefined/null value found at key ' . q{'} . $key . q{',} . 
                     "\n" . 'in variable ' . q{'} . $variable_name . q{'} . ' from subroutine ' . q{'} . $subroutine_name . q{',} . "\n" . 'croaking' );
         }
 
         if ( not( main::RPerl_SvAROKp($possible_integer_arrayref) ) ) {
             croak( "\n" . 'ERROR EIVAVRVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
-                    "\n" . 'integer_arrayref_hashref element value, integer_arrayref, expected but non-arrayref value found at key ' . q{'} . $key . q{',} .
+                    "\n" . 'integer_arrayref value expected but non-arrayref value found at key ' . q{'} . $key . q{',} .
                     "\n" . 'in variable ' . q{'} . $variable_name . q{'} . ' from subroutine ' . q{'} . $subroutine_name . q{',} . "\n" . 'croaking' );
         }
 
@@ -157,14 +157,14 @@ sub integer_arrayref_hashref_CHECKTRACE {
                 $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
                 $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
                 croak( "\n" . 'ERROR EIVAVRVHVRV04, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
-                        "\n" . 'integer_arrayref_hashref sub-element value, integer, expected but undefined/null value found at key ' . q{'} . $key . q{'} . ', index ' . $i . ',' .
+                        "\n" . 'integer value expected but undefined/null value found at index ' . $i . ', key ' .  q{'} . $key . q{'} . ',' .
                         "\n" . 'in variable ' . q{'} . $variable_name . q{'} . ' from subroutine ' . q{'} . $subroutine_name . q{',} . "\n" . 'croaking' );
             }
             if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
                 $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
                 $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
                 croak( "\n" . 'ERROR EIVAVRVHVRV05, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:' .
-                        "\n" . 'integer_arrayref_hashref sub-element value, integer, expected but non-integer value found at key ' . q{'} . $key . q{'} . ', index ' . $i . ',' .
+                        "\n" . 'integer value expected but non-integer value found at index ' . $i . ', key ' .  q{'} . $key . q{'} . ',' .
                         "\n" . 'in variable ' . q{'} . $variable_name . q{'} . ' from subroutine ' . q{'} . $subroutine_name . q{',} . "\n" . 'croaking' );
             }
         }
@@ -214,49 +214,68 @@ sub integer_arrayref_hashref_to_string_format {
 #    integer_arrayref_hashref_CHECK($input_avref_hvref);
     integer_arrayref_hashref_CHECKTRACE( $input_avref_hvref, '$input_avref_hvref', 'integer_arrayref_hashref_to_string_format()' );
 
+    # declare local variables, av & sv mean "array value" & "scalar value" as used in Perl core
     my %input_avref_hv;
-
-    #   my integer $input_avref_hv_length;
+#   my integer $input_avref_hv_length;
     my integer $input_avref_hv_entry_value;
     my string $output_sv;
     my boolean $i_is_0 = 1;
-    my string $indent = q{    } x $indent_level;
 
+    # dereference input hash reference
     %input_avref_hv = %{$input_avref_hvref};
 
+    # generate indent
+    my string $indent = q{    } x $indent_level;
+
+    # compute length of (number of keys in) input hash
 #   $input_avref_hv_length = scalar keys %input_avref_hv;
 #   RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string_format(), have \$input_avref_hv_length = $input_avref_hv_length\n");
 
-    if ($format_level >= 1) { $output_sv = $indent . '{'; }
-    else                    { $output_sv = '{'; }
+    # pre-begin with optional indent, depending on format level
+    if ($format_level >= 1) { $output_sv .= $indent; }  # pretty
 
+    # begin output string with left-curly-brace, as required for all RPerl hashes
+    $output_sv .= '{';
+
+    # loop through all hash keys
     foreach my string $key ( sort keys %input_avref_hv ) {
-
+        # retrieve input hash's entry value at key
         $input_avref_hv_entry_value = $input_avref_hv{$key};
-        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
-        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
 # DEV NOTE: integer type-checking already done as part of integer_arrayref_hashref_CHECKTRACE()
 #        integer_CHECK($input_avref_hv_entry_value);
 #        integer_CHECKTRACE( $input_avref_hv_entry_value, "\$input_avref_hv_entry_value at key '$key'", 'integer_arrayref_hashref_to_string_format()' );
 
+        # append comma to output string for all elements except index 0
         if ($i_is_0) { $i_is_0 = 0; }
         else         { $output_sv .= ','; }
 
-        if    ($format_level >= 1) { $output_sv .=  "\n" . $indent . q{    }; }
-        elsif ($format_level >= 0) { $output_sv .= q{ }; }
+        # append newline-indent-tab or space, depending on format level
+        if    ($format_level >= 1) { $output_sv .=  "\n" . $indent . q{    }; }  # pretty & expand
+        elsif ($format_level >= 0) { $output_sv .= q{ }; }  # normal
+
+        $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
+        $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
 
         # DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
         $output_sv .= q{'} . $key . q{'};
-        if ($format_level >= 0)  { $output_sv .= q{ }; }
-        $output_sv .= '=>';
-        if ($format_level >= 0)  { $output_sv .= q{ }; }
-        if ($format_level >= 2) { $output_sv .= "\n"; }
-        $output_sv .= ::integer_arrayref_to_string_format($input_avref_hv_entry_value, ($format_level - 1), ($indent_level + 1));  # YES UNDERSCORES???  [ WAS THIS COMMENT WRONG?  FIX IN ORIGINAL! ]
+
+        # append spaces before and after fat arrow AKA fat comma, depending on format level
+        if ($format_level >= 0) { $output_sv .= ' => '; }  # normal & pretty & expand
+        else                    { $output_sv .= '=>'; }    # compact
+
+        # append newline after fat arrow AKA fat comma, depending on format level
+        if ($format_level >= 2) { $output_sv .= "\n"; }  # expand
+
+        # call *_to_string_format() for data sub-structure
+        $output_sv .= ::integer_arrayref_to_string_format($input_avref_hv_entry_value, ($format_level - 1), ($indent_level + 1));  # YES UNDERSCORES
     }
 
-    if    ($format_level >= 1) { $output_sv .= "\n" . $indent; }
-    elsif ($format_level >= 0) { $output_sv .= q{ }; }
+    # append newline-indent or space, depending on format level
+    if    ($format_level >= 1) { $output_sv .= "\n" . $indent; }  # pretty & expand
+    elsif ($format_level >= 0) { $output_sv .= q{ }; }  # normal
+
+    # end output string with right-curly-brace, as required for all RPerl hashes
     $output_sv .= '}';
 
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_to_string_format(), after for() loop, have \$output_sv =\n$output_sv\n");

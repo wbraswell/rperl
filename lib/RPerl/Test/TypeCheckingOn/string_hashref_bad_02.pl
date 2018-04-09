@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_ERROR: 'ERROR EPVHVRV03, TYPE-CHECKING MISMATCH' >>>
-# <<< EXECUTE_ERROR: "string_hashref element value expected but non-string value found at key 'd'" >>>
+# <<< EXECUTE_ERROR: "string value expected but non-string value found at key 'd'" >>>
 
 # [[[ HEADER ]]]
 use RPerl;

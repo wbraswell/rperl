@@ -13,6 +13,7 @@ using std::cout;  using std::cerr;  using std::endl;
 #include <RPerl/DataType/Integer.cpp>
 #include <RPerl/DataType/Number.cpp>
 #include <RPerl/DataType/String.cpp>
+#include <RPerl/DataStructure/Array.cpp>  // -> ???    for integer_arrayref_to_string_format() used in integer_arrayref_hashref_to_string_format()
 
 // [[[ TYPEDEFS, 1D REPEATED ]]]
 typedef std::unordered_map<string, integer> integer_hashref;
@@ -120,9 +121,15 @@ void XS_pack_string_arrayref_hashref(SV* output_avref_hvref, string_arrayref_has
 SV* integer_hashref_hashref_to_string(SV* input_hvref_hvref);
 SV* number_hashref_hashref_to_string(SV* input_hvref_hvref);
 SV* string_hashref_hashref_to_string(SV* input_hvref_hvref);
+*/
 
 // [[[ ARRAY REF HASH REF ]]]
+SV* integer_arrayref_hashref_to_string_compact(SV* input_avref_hvref);
 SV* integer_arrayref_hashref_to_string(SV* input_avref_hvref);
+SV* integer_arrayref_hashref_to_string_pretty(SV* input_avref_hvref);
+SV* integer_arrayref_hashref_to_string_extend(SV* input_avref_hvref);
+SV* integer_arrayref_hashref_to_string_format(SV* input_avref_hvref, SV* format_level, SV* indent_level);
+/* NEED IMPLEMENT IN SubTypes2D.cpp
 SV* number_arrayref_hashref_to_string(SV* input_avref_hvref);
 SV* string_arrayref_hashref_to_string(SV* input_avref_hvref);
 */

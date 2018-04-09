@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes1D;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.016_000;
+our $VERSION = 0.017_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -74,15 +74,11 @@ sub integer_hashref_CHECK {
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with integer-specific error codes
     if ( not( defined $possible_integer_hashref ) ) {
-        croak(
-            "\nERROR EIVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_hashref value expected but undefined/null value found,\ncroaking"
-        );
+        croak( "\nERROR EIVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_hashref value expected but undefined/null value found,\ncroaking" );
     }
 
     if ( not( main::RPerl_SvHROKp($possible_integer_hashref) ) ) {
-        croak(
-            "\nERROR EIVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_hashref value expected but non-hashref value found,\ncroaking"
-        );
+        croak( "\nERROR EIVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_hashref value expected but non-hashref value found,\ncroaking" );
     }
 
     my integer $possible_integer;
@@ -93,16 +89,12 @@ sub integer_hashref_CHECK {
         if ( not( defined $possible_integer ) ) {
             $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
             $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-            croak(
-                "\nERROR EIVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_hashref element value expected but undefined/null value found at key '$key',\ncroaking"
-            );
+            croak( "\nERROR EIVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but undefined/null value found at key '$key',\ncroaking" );
         }
         if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
             $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
             $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-            croak(
-                "\nERROR EIVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_hashref element value expected but non-integer value found at key '$key',\ncroaking"
-            );
+            croak( "\nERROR EIVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found at key '$key',\ncroaking" );
         }
     }
     return;
@@ -115,16 +107,12 @@ sub integer_hashref_CHECKTRACE {
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECKTRACE() subroutine, but with integer-specific error codes
     if ( not( defined $possible_integer_hashref ) ) {
-        croak(
-            "\nERROR EIVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_hashref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR EIVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_hashref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
 
     if ( not( main::RPerl_SvHROKp($possible_integer_hashref) ) ) {
         croak(
-            "\nERROR EIVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_hashref value expected but non-hashref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
-    }
+            "\nERROR EIVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_hashref value expected but non-hashref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" ); }
 
     my integer $possible_integer;
     foreach my string $key ( sort keys %{$possible_integer_hashref} ) {
@@ -134,16 +122,12 @@ sub integer_hashref_CHECKTRACE {
         if ( not( defined $possible_integer ) ) {
             $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
             $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-            croak(
-                "\nERROR EIVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_hashref element value expected but undefined/null value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-            );
+            croak( "\nERROR EIVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but undefined/null value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
         if ( not( main::RPerl_SvIOKp($possible_integer) ) ) {
             $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
             $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-            croak(
-                "\nERROR EIVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger_hashref element value expected but non-integer value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-            );
+            croak( "\nERROR EIVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\ninteger value expected but non-integer value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
     }
     return;
@@ -322,15 +306,11 @@ sub number_hashref_CHECK {
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with number-specific error codes
     if ( not( defined $possible_number_hashref ) ) {
-        croak(
-            "\nERROR ENVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_hashref value expected but undefined/null value found,\ncroaking"
-        );
+        croak( "\nERROR ENVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_hashref value expected but undefined/null value found,\ncroaking" );
     }
 
     if ( not( main::RPerl_SvHROKp($possible_number_hashref) ) ) {
-        croak(
-            "\nERROR ENVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_hashref value expected but non-hashref value found,\ncroaking"
-        );
+        croak( "\nERROR ENVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_hashref value expected but non-hashref value found,\ncroaking" );
     }
 
     my number $possible_number;
@@ -341,9 +321,7 @@ sub number_hashref_CHECK {
         if ( not( defined $possible_number ) ) {
             $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
             $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-            croak(
-                "\nERROR ENVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_hashref element value expected but undefined/null value found at key '$key',\ncroaking"
-            );
+            croak( "\nERROR ENVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found at key '$key',\ncroaking" );
         }
         if (not(   main::RPerl_SvNOKp($possible_number)
                 || main::RPerl_SvIOKp($possible_number) )
@@ -351,9 +329,7 @@ sub number_hashref_CHECK {
         {
             $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
             $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-            croak(
-                "\nERROR ENVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_hashref element value expected but non-number value found at key '$key',\ncroaking"
-            );
+            croak( "\nERROR ENVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found at key '$key',\ncroaking" );
         }
     }
     return;
@@ -366,15 +342,11 @@ sub number_hashref_CHECKTRACE {
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECKTRACE() subroutine, but with number-specific error codes
     if ( not( defined $possible_number_hashref ) ) {
-        croak(
-            "\nERROR ENVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_hashref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR ENVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_hashref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
 
     if ( not( main::RPerl_SvHROKp($possible_number_hashref) ) ) {
-        croak(
-            "\nERROR ENVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_hashref value expected but non-hashref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR ENVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_hashref value expected but non-hashref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
 
     my number $possible_number;
@@ -385,9 +357,7 @@ sub number_hashref_CHECKTRACE {
         if ( not( defined $possible_number ) ) {
             $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
             $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-            croak(
-                "\nERROR ENVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_hashref element value expected but undefined/null value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-            );
+            croak( "\nERROR ENVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
         if (not(   main::RPerl_SvNOKp($possible_number)
                 || main::RPerl_SvIOKp($possible_number) )
@@ -395,9 +365,7 @@ sub number_hashref_CHECKTRACE {
         {
             $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
             $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-            croak(
-                "\nERROR ENVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber_hashref element value expected but non-number value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-            );
+            croak( "\nERROR ENVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
     }
     return;
@@ -585,15 +553,11 @@ sub string_hashref_CHECK {
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() subroutine, but with string-specific error codes
     if ( not( defined $possible_string_hashref ) ) {
-        croak(
-            "\nERROR EPVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_hashref value expected but undefined/null value found,\ncroaking"
-        );
+        croak( "\nERROR EPVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_hashref value expected but undefined/null value found,\ncroaking" );
     }
 
     if ( not( main::RPerl_SvHROKp($possible_string_hashref) ) ) {
-        croak(
-            "\nERROR EPVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_hashref value expected but non-hashref value found,\ncroaking"
-        );
+        croak( "\nERROR EPVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_hashref value expected but non-hashref value found,\ncroaking" );
     }
 
     my string $possible_string;
@@ -604,16 +568,12 @@ sub string_hashref_CHECK {
         if ( not( defined $possible_string ) ) {
             $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
             $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-            croak(
-                "\nERROR EPVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_hashref element value expected but undefined/null value found at key '$key',\ncroaking"
-            );
+            croak( "\nERROR EPVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but undefined/null value found at key '$key',\ncroaking" );
         }
         if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
             $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
             $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-            croak(
-                "\nERROR EPVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_hashref element value expected but non-string value found at key '$key',\ncroaking"
-            );
+            croak( "\nERROR EPVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found at key '$key',\ncroaking" );
         }
     }
     return;
@@ -626,15 +586,11 @@ sub string_hashref_CHECKTRACE {
 
 # DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECKTRACE() subroutine, but with string-specific error codes
     if ( not( defined $possible_string_hashref ) ) {
-        croak(
-            "\nERROR EPVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_hashref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR EPVHVRV00, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_hashref value expected but undefined/null value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
 
     if ( not( main::RPerl_SvHROKp($possible_string_hashref) ) ) {
-        croak(
-            "\nERROR EPVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_hashref value expected but non-hashref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-        );
+        croak( "\nERROR EPVHVRV01, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_hashref value expected but non-hashref value found,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
     }
 
     my string $possible_string;
@@ -645,16 +601,12 @@ sub string_hashref_CHECKTRACE {
         if ( not( defined $possible_string ) ) {
             $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
             $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-            croak(
-                "\nERROR EPVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_hashref element value expected but undefined/null value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-            );
+            croak( "\nERROR EPVHVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but undefined/null value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
         if ( not( main::RPerl_SvPOKp($possible_string) ) ) {
             $key =~ s/\\/\\\\/gxms; # escape all back-slash \ characters with another back-slash \ character
             $key =~ s/\'/\\\'/gxms; # escape all single-quote ' characters with a back-slash \ character
-            croak(
-                "\nERROR EPVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring_hashref element value expected but non-string value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking"
-            );
+            croak( "\nERROR EPVHVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nstring value expected but non-string value found at key '$key',\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
     }
     return;

@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_ERROR: 'ERROR ENVHVRV03, TYPE-CHECKING MISMATCH' >>>
-# <<< EXECUTE_ERROR: "number_hashref element value expected but non-number value found at key 'b'" >>>
+# <<< EXECUTE_ERROR: "number value expected but non-number value found at key 'b'" >>>
 # <<< EXECUTE_ERROR: 'in variable $input_3 from subroutine check_number_hashrefs()' >>>
 
 # [[[ HEADER ]]]

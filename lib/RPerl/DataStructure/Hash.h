@@ -2,14 +2,14 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash_h
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash_h 0.008_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash_h 0.009_000
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
 // [[[ SUB-TYPES BEFORE INCLUDES ]]]
 #include <RPerl/DataStructure/Hash/SubTypes.cpp>   // -> SubTypes.h
 #include <RPerl/DataStructure/Hash/SubTypes1D.cpp> // -> SubTypes1D.h
-//#include <RPerl/DataStructure/Hash/SubTypes2D.cpp> // -> SubTypes2D.h
+#include <RPerl/DataStructure/Hash/SubTypes2D.cpp> // -> SubTypes2D.h
 #include <RPerl/DataStructure/Hash/SubTypes3D.cpp> // -> SubTypes3D.h
 
 // for type-checking subroutines & macros
