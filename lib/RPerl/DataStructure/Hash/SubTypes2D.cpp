@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp 0.003_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp 0.004_000
 
 #include <RPerl/DataStructure/Hash/SubTypes2D.h>  // -> ??? (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
@@ -154,18 +154,13 @@ void integer_arrayref_hashref_CHECKTRACE(SV* possible_integer_arrayref_hashref, 
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_CHECKTRACE(), bottom of subroutine\n");
 }
 
-
-// START HERE: finish converting from arrayref_arrayref to arrayref_hashref, identifiers have been converted but not actual data types or algorithms
-// START HERE: finish converting from arrayref_arrayref to arrayref_hashref, identifiers have been converted but not actual data types or algorithms
-// START HERE: finish converting from arrayref_arrayref to arrayref_hashref, identifiers have been converted but not actual data types or algorithms
-
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
 
 # ifdef __CPP__TYPES
 
-/* TMP DISABLE
+/* IDENTIFIERS CONVERTED, BUT NOT TYPES OR ALGORITHMS
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))))) to (C++ std::vector of (C++ std::vector of integers))
 integer_arrayref_hashref XS_unpack_integer_arrayref_hashref(SV* input_avref_hvref)
@@ -420,6 +415,72 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 // [[[ TYPE TESTING ]]]
 
 # ifdef __PERL__TYPES
+
+SV* integer_arrayref_hashref_typetest0(SV* lucky_integer_arrayrefs)
+{
+//  integer_arrayref_hashref_CHECK(lucky_integer_arrayrefs);
+    integer_arrayref_hashref_CHECKTRACE(lucky_integer_arrayrefs, "lucky_integer_arrayrefs", "integer_arrayref_hashref_typetest0()");
+
+    // DEBUG USE ONLY
+    HV* lucky_integer_arrayrefs_deref = (HV*)SvRV(lucky_integer_arrayrefs);
+    integer how_lucky = hv_iterinit(lucky_integer_arrayrefs_deref);
+    integer i;
+
+    for (i = 0;  i < how_lucky;  ++i)
+    {
+        HE* lucky_integer_arrayref_entry = hv_iternext(lucky_integer_arrayrefs_deref);
+        // DEV NOTE: hash entry type-checking already done as part of integer_arrayref_hashref_CHECKTRACE()
+//      hashentry_CHECK(lucky_integer_arrayref_entry);
+//      hashentry_CHECKTRACE(lucky_integer_arrayref_entry, "lucky_integer_arrayref_entry", "integer_arrayref_hashref_typetest0()");
+
+        // DEV NOTE: not using lucky_number variable as in Hash.pm
+        // DEV NOTE: integer type-checking already done as part of integer_arrayref_hashref_CHECKTRACE()
+//      integer_CHECK(hv_iterval(lucky_integer_arrayrefs_deref, lucky_integer_arrayref_entry));
+//      integer_CHECKTRACE(hv_iterval(lucky_integer_arrayrefs_deref, lucky_integer_arrayref_entry), (char*)((string)"hv_iterval(lucky_integer_arrayrefs_deref, lucky_integer_arrayref_entry) at key '" + (string)SvPV_nolen(hv_iterkeysv(lucky_integer_arrayref_entry)) + "'").c_str(), "integer_arrayref_hashref_typetest0()");
+
+        SV* lucky_integer_arrayref_key = hv_iterkeysv(lucky_integer_arrayref_entry);
+        SV* lucky_integer_arrayref_value = hv_iterval(lucky_integer_arrayrefs_deref, lucky_integer_arrayref_entry);
+
+        AV* lucky_integer_array = (AV*)SvRV(lucky_integer_arrayref_value);
+        integer how_luckier = av_len(lucky_integer_array) + 1;
+        integer j;
+
+        for (j = 0;  j < how_luckier;  ++j)
+        {
+            integer_CHECK(*av_fetch(lucky_integer_array, j, 0));
+            integer_CHECKTRACE(*av_fetch(lucky_integer_array, j, 0), (char*)((string)"*av_fetch(lucky_integer_array, j, 0) at index " + to_string(j)).c_str() + (string)", key '" + (string)SvPV_nolen(lucky_integer_arrayref_key) + (string)"'", "integer_arrayref_hashref_typetest0()");
+            fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_hashref_typetest0(), have lucky integer %"INTEGER"/%"INTEGER" = %"INTEGER", key '%s', BARSTEP\n", j, (how_luckier - 1), (integer)SvNV(*av_fetch(lucky_integer_array, j, 0)), SvPV_nolen(lucky_integer_arrayref_key));
+        }
+    }
+
+    return(newSVpvf("%s%s", SvPV_nolen(integer_arrayref_hashref_to_string(lucky_integer_arrayrefs)), "CPPOPS_PERLTYPES"));
+}
+
+
+// START HERE: convert typetest1 below; CPPOPS_CPPTYPES; number & string variations, w/ new t/06 tests
+// START HERE: convert typetest1 below; CPPOPS_CPPTYPES; number & string variations, w/ new t/06 tests
+// START HERE: convert typetest1 below; CPPOPS_CPPTYPES; number & string variations, w/ new t/06 tests
+
+
+/*
+SV* integer_hashref_typetest1(SV* my_size)
+{
+//  integer_CHECK(my_size);
+    integer_CHECKTRACE(my_size, "my_size", "integer_hashref_typetest1()");
+    HV* output_hv = newHV();
+    integer i;
+    char temp_key[30];
+
+    for (i = 0;  i < SvIV(my_size);  ++i)
+    {
+        sprintf(temp_key, "CPPOPS_PERLTYPES_funkey%"INTEGER"", i);
+        hv_store(output_hv, (const char*)temp_key, (U32)strlen(temp_key), newSViv(i * 5), (U32)0);
+//      fprintf(stderr, "in CPPOPS_PERLTYPES integer_hashref_typetest1(), setting entry '%s' => %"INTEGER", BARBAT\n", temp_key, (integer)SvIV(*hv_fetch(output_hv, (const char*)temp_key, (U32)strlen(temp_key), (I32)0)));
+    }
+
+    return(newRV_noinc((SV*) output_hv));
+}
+*/
 
 // NEED CODE
 

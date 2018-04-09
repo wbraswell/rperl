@@ -1065,7 +1065,6 @@ for my $mode_id ( 0 .. 1 ) {  # TMP DEBUG, PERLOPS_PERLTYPES & CPPOPS_PERLTYPES
         q{TIVAVRVHVRV53 integer_arrayref_hashref_to_string_pretty({ key_0 => [ 0, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, -2 ] }) lives}
     );
 
-=DISABLE_TMP_WORKING
 
     throws_ok(    # TIVAVRVHVRV60
         sub { integer_arrayref_hashref_typetest0() },
@@ -1114,6 +1113,8 @@ for my $mode_id ( 0 .. 1 ) {  # TMP DEBUG, PERLOPS_PERLTYPES & CPPOPS_PERLTYPES
         },
         q{TIVAVRVHVRV64 integer_arrayref_hashref_typetest0({ key_0 => [ 0, 1, 2 ], key_1 => 5, key_2 => [ 0, -1, -2 ] }) lives}
     );
+
+=DISABLE_TMP_WORKING
     lives_and(    # TIVAVRVHVRV70
         sub {
             is_deeply(

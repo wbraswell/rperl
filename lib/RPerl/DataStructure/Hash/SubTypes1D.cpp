@@ -1172,6 +1172,8 @@ SV* integer_hashref_typetest0(SV* lucky_integers)
 {
 //  integer_hashref_CHECK(lucky_integers);
     integer_hashref_CHECKTRACE(lucky_integers, "lucky_integers", "integer_hashref_typetest0()");
+
+/*
     HV* lucky_integers_deref = (HV*)SvRV(lucky_integers);
     integer how_lucky = hv_iterinit(lucky_integers_deref);
     integer i;
@@ -1190,6 +1192,7 @@ SV* integer_hashref_typetest0(SV* lucky_integers)
 
 //      fprintf(stderr, "in CPPOPS_PERLTYPES integer_hashref_typetest0(), have lucky integer '%s' => %"INTEGER", BARSTOOL\n", SvPV_nolen(hv_iterkeysv(lucky_integer_entry)), (integer)SvIV(hv_iterval(lucky_integers_deref, lucky_integer_entry)));
     }
+*/
 
     return(newSVpvf("%s%s", SvPV_nolen(integer_hashref_to_string(lucky_integers)), "CPPOPS_PERLTYPES"));
 }
@@ -1216,7 +1219,8 @@ SV* number_hashref_typetest0(SV* lucky_numbers)
 {
 //  number_hashref_CHECK(lucky_numbers);
     number_hashref_CHECKTRACE(lucky_numbers, "lucky_numbers", "number_hashref_typetest0()");
-    /*
+
+/*
     HV* lucky_numbers_deref = (HV*)SvRV(lucky_numbers);
     integer how_lucky = hv_iterinit(lucky_numbers_deref);
     integer i;
@@ -1226,7 +1230,7 @@ SV* number_hashref_typetest0(SV* lucky_numbers)
         HE* lucky_number_entry = hv_iternext(lucky_numbers_deref);
 //      fprintf(stderr, "in CPPOPS_PERLTYPES number_hashref_typetest0(), have lucky number '%s' => %Lf, BARSTOOP\n", SvPV_nolen(hv_iterkeysv(lucky_number_entry)), (double)SvNV(hv_iterval(lucky_numbers_deref, lucky_number_entry)));
     }
-    */
+*/
 
     return(newSVpvf("%s%s", SvPV_nolen(number_hashref_to_string(lucky_numbers)), "CPPOPS_PERLTYPES"));
 }
@@ -1253,7 +1257,8 @@ SV* string_hashref_typetest0(SV* people)
 {
 //  string_hashref_CHECK(people);
     string_hashref_CHECKTRACE(people, "people", "string_hashref_typetest0()");
-    /*
+
+/*
     HV* people_deref = (HV*)SvRV(people);
     integer how_crowded = hv_iterinit(people_deref);
     integer i;
@@ -1263,7 +1268,7 @@ SV* string_hashref_typetest0(SV* people)
         HE* person_entry = hv_iternext(people_deref);
 //      fprintf(stderr, "in CPPOPS_PERLTYPES string_hashref_typetest0(), have person '%s' => '%s', BARSPOON\n", (char*)SvPV_nolen(hv_iterkeysv(person_entry)), (char*)SvPV_nolen(hv_iterval(people_deref, person_entry)));
     }
-    */
+*/
 
     return(newSVpvf("%s%s", SvPV_nolen(string_hashref_to_string(people)), "CPPOPS_PERLTYPES"));
 }
