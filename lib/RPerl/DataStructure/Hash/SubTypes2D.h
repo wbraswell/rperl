@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_h
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_h 0.003_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_h 0.005_000
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
@@ -139,9 +139,15 @@ SV* string_arrayref_hashref_to_string(SV* input_avref_hvref);
 string integer_hashref_hashref_to_string(integer_hashref_hashref input_unordered_map_unordered_map);
 string number_hashref_hashref_to_string(number_hashref_hashref input_unordered_map_unordered_map);
 string string_hashref_hashref_to_string(string_hashref_hashref input_unordered_map_unordered_map);
+*/
 
 // [[[ ARRAY REF HASH REF ]]]
+string integer_arrayref_hashref_to_string_compact(integer_arrayref_hashref input_vector_unordered_map);
 string integer_arrayref_hashref_to_string(integer_arrayref_hashref input_vector_unordered_map);
+string integer_arrayref_hashref_to_string_pretty(integer_arrayref_hashref input_vector_unordered_map);
+string integer_arrayref_hashref_to_string_expand(integer_arrayref_hashref input_vector_unordered_map);
+string integer_arrayref_hashref_to_string_format(integer_arrayref_hashref input_vector_unordered_map, integer format_level, integer indent_level);
+/* NEED IMPLEMENT IN SubTypes2D.cpp
 string number_arrayref_hashref_to_string(number_arrayref_hashref input_vector_unordered_map);
 string string_arrayref_hashref_to_string(string_arrayref_hashref input_vector_unordered_map);
 */
@@ -154,37 +160,41 @@ string string_arrayref_hashref_to_string(string_arrayref_hashref input_vector_un
 # ifdef __PERL__TYPES
 /* NEED IMPLEMENT IN SubTypes2D.cpp
 // [[[ HASH REF HASH REF ]]]
-SV* integer_hashref_hashref_typetest0(SV* lucky_integers);
+SV* integer_hashref_hashref_typetest0(SV* lucky_integer_arrayrefs);
 SV* integer_hashref_hashref_typetest1(SV* my_size);
-SV* number_hashref_hashref_typetest0(SV* lucky_numbers);
+SV* number_hashref_hashref_typetest0(SV* lucky_number_arrayrefs);
 SV* number_hashref_hashref_typetest1(SV* my_size);
-SV* string_hashref_hashref_typetest0(SV* people);
+SV* string_hashref_hashref_typetest0(SV* people_arrayrefs);
 SV* string_hashref_hashref_typetest1(SV* my_size);
+*/
 
 // [[[ ARRAY REF HASH REF ]]]
-SV* integer_arrayref_hashref_typetest0(SV* lucky_integers);
+SV* integer_arrayref_hashref_typetest0(SV* lucky_integer_arrayrefs);
 SV* integer_arrayref_hashref_typetest1(SV* my_size);
-SV* number_arrayref_hashref_typetest0(SV* lucky_numbers);
+/* NEED IMPLEMENT IN SubTypes2D.cpp
+SV* number_arrayref_hashref_typetest0(SV* lucky_number_arrayrefs);
 SV* number_arrayref_hashref_typetest1(SV* my_size);
-SV* string_arrayref_hashref_typetest0(SV* people);
+SV* string_arrayref_hashref_typetest0(SV* people_arrayrefs);
 SV* string_arrayref_hashref_typetest1(SV* my_size);
 */
 # elif defined __CPP__TYPES
 /* NEED IMPLEMENT IN SubTypes2D.cpp
 // [[[ HASH REF HASH REF ]]]
-string integer_hashref_hashref_typetest0(integer_hashref_hashref lucky_integers);
+string integer_hashref_hashref_typetest0(integer_hashref_hashref lucky_integer_arrayrefs);
 integer_hashref_hashref integer_hashref_hashref_typetest1(integer my_size);
-string number_hashref_hashref_typetest0(number_hashref_hashref lucky_numbers);
+string number_hashref_hashref_typetest0(number_hashref_hashref lucky_number_arrayrefs);
 number_hashref_hashref number_hashref_hashref_typetest1(integer my_size);
-string string_hashref_hashref_typetest0(string_hashref_hashref people);
+string string_hashref_hashref_typetest0(string_hashref_hashref people_arrayrefs);
 string_hashref_hashref string_hashref_hashref_typetest1(integer my_size);
+*/
 
 // [[[ ARRAY REF HASH REF ]]]
-string integer_arrayref_hashref_typetest0(integer_arrayref_hashref lucky_integers);
+string integer_arrayref_hashref_typetest0(integer_arrayref_hashref lucky_integer_arrayrefs);
 integer_arrayref_hashref integer_arrayref_hashref_typetest1(integer my_size);
-string number_arrayref_hashref_typetest0(number_arrayref_hashref lucky_numbers);
+/* NEED IMPLEMENT IN SubTypes2D.cpp
+string number_arrayref_hashref_typetest0(number_arrayref_hashref lucky_number_arrayrefs);
 number_arrayref_hashref number_arrayref_hashref_typetest1(integer my_size);
-string string_arrayref_hashref_typetest0(string_arrayref_hashref people);
+string string_arrayref_hashref_typetest0(string_arrayref_hashref people_arrayrefs);
 string_arrayref_hashref string_arrayref_hashref_typetest1(integer my_size);
 */
 # endif

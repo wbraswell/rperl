@@ -551,20 +551,8 @@ SV* integer_hashref_to_string_format(SV* input_hvref, SV* format_level, SV* inde
         if      (SvIV(format_level) >=  1) { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent);  sv_catpvn(output_sv, "    ", 4); }
         else if (SvIV(format_level) >= -1) { sv_catpvn(output_sv, " ", 1); }
 
-        // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-        input_hv_entry_key_string = string(SvPV_nolen(input_hv_entry_key));
-        input_hv_entry_key_string_pos = 0;
-        while((input_hv_entry_key_string_pos = input_hv_entry_key_string.find("\\", input_hv_entry_key_string_pos)) != string::npos)
-        {
-            input_hv_entry_key_string.replace(input_hv_entry_key_string_pos, 1, "\\\\");
-            input_hv_entry_key_string_pos += 2;
-        }
-        input_hv_entry_key_string_pos = 0;
-        while((input_hv_entry_key_string_pos = input_hv_entry_key_string.find("'", input_hv_entry_key_string_pos)) != string::npos)
-        {
-            input_hv_entry_key_string.replace(input_hv_entry_key_string_pos, 1, "\\'");
-            input_hv_entry_key_string_pos += 2;
-        }
+        // escape key string
+        input_hv_entry_key_string = escape_backslash_singlequote(string(SvPV_nolen(input_hv_entry_key)));
 
         // DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
 //        sv_catpvf(output_sv, "'%s'", SvPV_nolen(input_hv_entry_key));  // alternative form
@@ -667,20 +655,8 @@ SV* number_hashref_to_string_format(SV* input_hvref, SV* format_level, SV* inden
         if      (SvIV(format_level) >=  1) { temp_stream << "\n" << SvPV_nolen(indent) << "    "; }
         else if (SvIV(format_level) >= -1) { temp_stream << " "; }
 
-        // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-        input_hv_entry_key_string = string(SvPV_nolen(input_hv_entry_key));
-        input_hv_entry_key_string_pos = 0;
-        while((input_hv_entry_key_string_pos = input_hv_entry_key_string.find("\\", input_hv_entry_key_string_pos)) != string::npos)
-        {
-            input_hv_entry_key_string.replace(input_hv_entry_key_string_pos, 1, "\\\\");
-            input_hv_entry_key_string_pos += 2;
-        }
-        input_hv_entry_key_string_pos = 0;
-        while((input_hv_entry_key_string_pos = input_hv_entry_key_string.find("'", input_hv_entry_key_string_pos)) != string::npos)
-        {
-            input_hv_entry_key_string.replace(input_hv_entry_key_string_pos, 1, "\\'");
-            input_hv_entry_key_string_pos += 2;
-        }
+        // escape key string
+        input_hv_entry_key_string = escape_backslash_singlequote(string(SvPV_nolen(input_hv_entry_key)));
 
         // DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
 //        temp_stream << "'" << SvPV_nolen(input_hv_entry_key) << "'";  // alternative form
@@ -782,35 +758,11 @@ SV* string_hashref_to_string_format(SV* input_hvref, SV* format_level, SV* inden
         if      (SvIV(format_level) >=  1) { sv_catpvn(output_sv, "\n", 1);  sv_catsv(output_sv, indent);  sv_catpvn(output_sv, "    ", 4); }
         else if (SvIV(format_level) >= -1) { sv_catpvn(output_sv, " ", 1); }
 
-        // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-        input_hv_entry_key_string = string(SvPV_nolen(input_hv_entry_key));
-        input_hv_entry_key_string_pos = 0;
-        while((input_hv_entry_key_string_pos = input_hv_entry_key_string.find("\\", input_hv_entry_key_string_pos)) != string::npos)
-        {
-            input_hv_entry_key_string.replace(input_hv_entry_key_string_pos, 1, "\\\\");
-            input_hv_entry_key_string_pos += 2;
-        }
-        input_hv_entry_key_string_pos = 0;
-        while((input_hv_entry_key_string_pos = input_hv_entry_key_string.find("'", input_hv_entry_key_string_pos)) != string::npos)
-        {
-            input_hv_entry_key_string.replace(input_hv_entry_key_string_pos, 1, "\\'");
-            input_hv_entry_key_string_pos += 2;
-        }
+        // escape key string
+        input_hv_entry_key_string = escape_backslash_singlequote(string(SvPV_nolen(input_hv_entry_key)));
 
-        // and again
-        input_hv_entry_value_string = string(SvPV_nolen(input_hv_entry_value));
-        input_hv_entry_value_string_pos = 0;
-        while((input_hv_entry_value_string_pos = input_hv_entry_value_string.find("\\", input_hv_entry_value_string_pos)) != string::npos)
-        {
-            input_hv_entry_value_string.replace(input_hv_entry_value_string_pos, 1, "\\\\");
-            input_hv_entry_value_string_pos += 2;
-        }
-        input_hv_entry_value_string_pos = 0;
-        while((input_hv_entry_value_string_pos = input_hv_entry_value_string.find("'", input_hv_entry_value_string_pos)) != string::npos)
-        {
-            input_hv_entry_value_string.replace(input_hv_entry_value_string_pos, 1, "\\'");
-            input_hv_entry_value_string_pos += 2;
-        }
+        // escape value string
+        input_hv_entry_value_string = escape_backslash_singlequote(string(SvPV_nolen(input_hv_entry_value)));
 
         // DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
 //        sv_catpvf(output_sv, "'%s'", SvPV_nolen(input_hv_entry_key));  // alternative form
@@ -898,20 +850,8 @@ string integer_hashref_to_string_format(integer_hashref input_unordered_map, int
         if      (format_level >=  1) { output_stream << endl << indent << "    "; }
         else if (format_level >= -1) { output_stream << ' '; }
 
-        // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-        key_string = i->first;
-        key_string_pos = 0;
-        while((key_string_pos = key_string.find("\\", key_string_pos)) != string::npos)
-        {
-            key_string.replace(key_string_pos, 1, "\\\\");
-            key_string_pos += 2;
-        }
-        key_string_pos = 0;
-        while((key_string_pos = key_string.find("'", key_string_pos)) != string::npos)
-        {
-            key_string.replace(key_string_pos, 1, "\\'");
-            key_string_pos += 2;
-        }
+        // escape key string
+        key_string = escape_backslash_singlequote(i->first);
 
         // DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
 //        output_stream << "'" << (i->first).c_str() << "'";  // alternative format
@@ -1000,20 +940,8 @@ string number_hashref_to_string_format(number_hashref input_unordered_map, integ
         if      (format_level >=  1) { output_stream << endl << indent << "    "; }
         else if (format_level >= -1) { output_stream << ' '; }
 
-        // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-        key_string = i->first;
-        key_string_pos = 0;
-        while((key_string_pos = key_string.find("\\", key_string_pos)) != string::npos)
-        {
-            key_string.replace(key_string_pos, 1, "\\\\");
-            key_string_pos += 2;
-        }
-        key_string_pos = 0;
-        while((key_string_pos = key_string.find("'", key_string_pos)) != string::npos)
-        {
-            key_string.replace(key_string_pos, 1, "\\'");
-            key_string_pos += 2;
-        }
+        // escape key string
+        key_string = escape_backslash_singlequote(i->first);
 
         // DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
 //        output_stream << "'" << (i->first).c_str() << "'";  // alternative format
@@ -1101,35 +1029,11 @@ string string_hashref_to_string_format(string_hashref input_unordered_map, integ
         if      (format_level >=  1) { output_string += "\n" + indent + "    "; }
         else if (format_level >= -1) { output_string += " "; }
 
-        // escape all back-slash \ and single-quote ' characters with a back-slash \ character
-        key_string = i->first;
-        key_string_pos = 0;
-        while((key_string_pos = key_string.find("\\", key_string_pos)) != string::npos)
-        {
-            key_string.replace(key_string_pos, 1, "\\\\");
-            key_string_pos += 2;
-        }
-        key_string_pos = 0;
-        while((key_string_pos = key_string.find("'", key_string_pos)) != string::npos)
-        {
-            key_string.replace(key_string_pos, 1, "\\'");
-            key_string_pos += 2;
-        }
+        // escape key string
+        key_string = escape_backslash_singlequote(i->first);
 
-        // and again
-        value_string = i->second;
-        value_string_pos = 0;
-        while((value_string_pos = value_string.find("\\", value_string_pos)) != string::npos)
-        {
-            value_string.replace(value_string_pos, 1, "\\\\");
-            value_string_pos += 2;
-        }
-        value_string_pos = 0;
-        while((value_string_pos = value_string.find("'", value_string_pos)) != string::npos)
-        {
-            value_string.replace(value_string_pos, 1, "\\'");
-            value_string_pos += 2;
-        }
+        // escape value string
+        value_string = escape_backslash_singlequote(i->second);
 
         // DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
 //      output_string += "'" + (string)(i->first).c_str() + "'";  // alternative format

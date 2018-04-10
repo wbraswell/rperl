@@ -407,7 +407,9 @@ SV* integer_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* ind
    dAXMARK; */
 //  dITEMS;
 
-//  fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_to_string(), top of subroutine\n");
+//    fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_to_string(), top of subroutine...\n");
+//    fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_to_string(), received format_level = %"INTEGER", indent_level = %"INTEGER"\n", SvIV(format_level), SvIV(indent_level));
+
 //  integer_arrayref_CHECK(input_avref);
     integer_arrayref_CHECKTRACE(input_avref, "input_avref", "integer_arrayref_to_string()");
 
@@ -718,7 +720,8 @@ string integer_arrayref_to_string_expand(integer_arrayref input_vector)
 // convert from (C++ std::vector of integers) to Perl-parsable (C++ std::string)
 string integer_arrayref_to_string_format(integer_arrayref input_vector, integer format_level, integer indent_level)
 {
-//  fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), top of subroutine\n");
+//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), top of subroutine...\n");
+//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), received format_level = %"INTEGER", indent_level = %"INTEGER"\n", format_level, indent_level);
 
     // declare local variables
     ostringstream output_stream;
@@ -1156,7 +1159,7 @@ number_arrayref number_arrayref_typetest1(integer my_size)
     for (i = 0;  i < my_size;  ++i)
     {
         new_vec[i] = i * 5.123456789;
-//      fprintf(stderr, "in CPPOPS_CPPTYPES typetest__number_in__number_arrayref_out(), setting element %"INTEGER"/%"INTEGER" = %Lf, BARBAZ\n", i, (my_size - 1), new_vec[i]);
+//      fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_typetest1(), setting element %"INTEGER"/%"INTEGER" = %Lf, BARBAZ\n", i, (my_size - 1), new_vec[i]);
     }
     return(new_vec);
 }
