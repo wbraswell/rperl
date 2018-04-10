@@ -160,6 +160,12 @@ void integer_arrayref_hashref_CHECKTRACE(SV* possible_integer_arrayref_hashref, 
 
 # ifdef __CPP__TYPES
 
+
+// START HERE: pack, unpack, stringify, typetest0, typetest1; number & string variations, w/ new t/06 tests
+// START HERE: pack, unpack, stringify, typetest0, typetest1; number & string variations, w/ new t/06 tests
+// START HERE: pack, unpack, stringify, typetest0, typetest1; number & string variations, w/ new t/06 tests
+
+
 /* IDENTIFIERS CONVERTED, BUT NOT TYPES OR ALGORITHMS
 
 // convert from (Perl SV containing RV to (Perl AV of (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))))) to (C++ std::vector of (C++ std::vector of integers))
@@ -449,38 +455,47 @@ SV* integer_arrayref_hashref_typetest0(SV* lucky_integer_arrayrefs)
         {
             integer_CHECK(*av_fetch(lucky_integer_array, j, 0));
             integer_CHECKTRACE(*av_fetch(lucky_integer_array, j, 0), (char*)((string)"*av_fetch(lucky_integer_array, j, 0) at index " + to_string(j)).c_str() + (string)", key '" + (string)SvPV_nolen(lucky_integer_arrayref_key) + (string)"'", "integer_arrayref_hashref_typetest0()");
-            fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_hashref_typetest0(), have lucky integer %"INTEGER"/%"INTEGER" = %"INTEGER", key '%s', BARSTEP\n", j, (how_luckier - 1), (integer)SvNV(*av_fetch(lucky_integer_array, j, 0)), SvPV_nolen(lucky_integer_arrayref_key));
+//            fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_hashref_typetest0(), have lucky integer %"INTEGER"/%"INTEGER" = %"INTEGER", key '%s', BARSTEP\n", j, (how_luckier - 1), (integer)SvNV(*av_fetch(lucky_integer_array, j, 0)), SvPV_nolen(lucky_integer_arrayref_key));
         }
     }
 
     return(newSVpvf("%s%s", SvPV_nolen(integer_arrayref_hashref_to_string(lucky_integer_arrayrefs)), "CPPOPS_PERLTYPES"));
 }
 
-
-// START HERE: convert typetest1 below; CPPOPS_CPPTYPES; number & string variations, w/ new t/06 tests
-// START HERE: convert typetest1 below; CPPOPS_CPPTYPES; number & string variations, w/ new t/06 tests
-// START HERE: convert typetest1 below; CPPOPS_CPPTYPES; number & string variations, w/ new t/06 tests
-
-
-/*
-SV* integer_hashref_typetest1(SV* my_size)
+SV* integer_arrayref_hashref_typetest1(SV* my_size)
 {
 //  integer_CHECK(my_size);
-    integer_CHECKTRACE(my_size, "my_size", "integer_hashref_typetest1()");
+    integer_CHECKTRACE(my_size, "my_size", "integer_arrayref_hashref_typetest1()");
     HV* output_hv = newHV();
     integer i;
     char temp_key[30];
 
     for (i = 0;  i < SvIV(my_size);  ++i)
     {
+        // set key up here so it can be used by the debugging print statement inside the inner loop
         sprintf(temp_key, "CPPOPS_PERLTYPES_funkey%"INTEGER"", i);
-        hv_store(output_hv, (const char*)temp_key, (U32)strlen(temp_key), newSViv(i * 5), (U32)0);
-//      fprintf(stderr, "in CPPOPS_PERLTYPES integer_hashref_typetest1(), setting entry '%s' => %"INTEGER", BARBAT\n", temp_key, (integer)SvIV(*hv_fetch(output_hv, (const char*)temp_key, (U32)strlen(temp_key), (I32)0)));
+
+        // BEGIN ARRAY CODE
+        AV* temp_av = newAV();
+        integer j;
+
+        av_extend(temp_av, (I32)(SvIV(my_size) - 1));
+
+        for (j = 0;  j < SvIV(my_size);  ++j)
+        {
+            av_store(temp_av, (I32)j, newSViv(i * j));
+//            fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_hashref_typetest1(), setting element at key '%s', at index %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", temp_key, j, (integer)(SvIV(my_size) - 1), (integer)SvIV(*av_fetch(temp_av, (I32)j, 0)));
+        }
+        // END ARRAY CODE
+
+        hv_store(output_hv, (const char*)temp_key, (U32)strlen(temp_key), newRV_noinc((SV*) temp_av), (U32)0);
+
+        // the following print statement does not work, it tries to retrieve a single integer instead of an integer_arrayref
+//      fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_hashref_typetest1(), setting entry '%s' => %"INTEGER", BARBAT\n", temp_key, (integer)SvIV(*hv_fetch(output_hv, (const char*)temp_key, (U32)strlen(temp_key), (I32)0)));
     }
 
     return(newRV_noinc((SV*) output_hv));
 }
-*/
 
 // NEED CODE
 

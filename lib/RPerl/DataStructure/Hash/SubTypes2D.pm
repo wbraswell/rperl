@@ -315,10 +315,11 @@ sub integer_arrayref_hashref_typetest1 {
     my string $temp_key;
     for my integer $i ( 0 .. ( $my_size - 1 ) ) {
         $temp_key = 'PERLOPS_PERLTYPES_funkey' . $i;
-        $new_hash->{$temp_key} = [];
+        my integer_arrayref $temp_array = [];
         for my integer $j ( 0 .. ( $my_size - 1)) {
-            $new_hash->{$temp_key}->[$j] = $i * $j;
+            $temp_array->[$j] = $i * $j;
         }
+        $new_hash->{$temp_key} = $temp_array;
 
 #        RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_hashref_typetest1(), setting entry '$temp_key' => " . Dumper($new_hash->{$temp_key}) . ", BARSTOOL\n");
     }

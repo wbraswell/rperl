@@ -1114,7 +1114,6 @@ for my $mode_id ( 0 .. 1 ) {  # TMP DEBUG, PERLOPS_PERLTYPES & CPPOPS_PERLTYPES
         q{TIVAVRVHVRV64 integer_arrayref_hashref_typetest0({ key_0 => [ 0, 1, 2 ], key_1 => 5, key_2 => [ 0, -1, -2 ] }) lives}
     );
 
-=DISABLE_TMP_WORKING
     lives_and(    # TIVAVRVHVRV70
         sub {
             is_deeply(
@@ -1131,7 +1130,6 @@ for my $mode_id ( 0 .. 1 ) {  # TMP DEBUG, PERLOPS_PERLTYPES & CPPOPS_PERLTYPES
         },
         q{TIVAVRVHVRV70 integer_arrayref_hashref_typetest1(5) lives}
     );
-=cut
 
 }
 
