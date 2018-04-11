@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp 0.021_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp 0.022_000
 
 #include <RPerl/DataStructure/Array/SubTypes1D.h>  // -> ??? (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
@@ -560,7 +560,7 @@ SV* number_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
         else if (SvIV(format_level) >= -1) { temp_stream << " "; }
 
         temp_stream << (string)SvPV_nolen(number_to_string(*input_av_element));
-//      sv_catpvf(output_sv, "%Lf", (number)SvNV(*input_av_element));  // NEED ANSWER: can we make fprintf(stderr, )-like "%Lf" act like ostringstream's precision?
+//      sv_catpvf(output_sv, "%"NUMBER"", (number)SvNV(*input_av_element));  // NEED ANSWER: can we make fprintf(stderr, )-like %"NUMBER" (AKA %Lf or %f) act like ostringstream's precision?  probably not...
     }
 
     // append newline-indent or space, depending on format level
@@ -1060,7 +1060,7 @@ SV* number_arrayref_typetest0(SV* lucky_numbers)
     {
         number_CHECK(*av_fetch(lucky_numbers_deref, i, 0));
         number_CHECKTRACE(*av_fetch(lucky_numbers_deref, i, 0), (char*)((string)"*av_fetch(lucky_numbers_deref, i, 0) at index " + to_string(i)).c_str(), "number_arrayref_typetest0()");
-        fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref_typetest0(), have lucky number %"INTEGER"/%"INTEGER" = %Lf, BARBAT\n", i, (how_lucky - 1), (number)SvNV(*av_fetch(lucky_numbers_deref, i, 0)));
+        fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref_typetest0(), have lucky number %"INTEGER"/%"INTEGER" = %"NUMBER", BARBAT\n", i, (how_lucky - 1), (number)SvNV(*av_fetch(lucky_numbers_deref, i, 0)));
     }
 */
     return(newSVpvf("%s%s", SvPV_nolen(number_arrayref_to_string(lucky_numbers)), "CPPOPS_PERLTYPES"));
@@ -1076,7 +1076,7 @@ SV* number_arrayref_typetest1(SV* my_size)
     for (i = 0;  i < SvIV(my_size);  ++i)
     {
         av_store(output_av, (I32)i, newSVnv(i * 5.123456789));
-//      fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref_typetest1(), setting element %"INTEGER"/%"INTEGER" = %Lf, BARBAT\n", i, (integer)(SvIV(my_size) - 1), (number)SvNV(*av_fetch(output_av, (I32)i, 0)));
+//      fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref_typetest1(), setting element %"INTEGER"/%"INTEGER" = %"NUMBER", BARBAT\n", i, (integer)(SvIV(my_size) - 1), (number)SvNV(*av_fetch(output_av, (I32)i, 0)));
     }
     return(newRV_noinc((SV*) output_av));
 }
@@ -1147,7 +1147,7 @@ string number_arrayref_typetest0(number_arrayref lucky_numbers)
     integer i;
     for (i = 0;  i < how_lucky;  ++i)
     {
-        fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_typetest0(), have lucky number %"INTEGER"/%"INTEGER" = %Lf, BARBAZ\n", i, (how_lucky - 1), lucky_numbers[i]);
+        fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_typetest0(), have lucky number %"INTEGER"/%"INTEGER" = %"NUMBER", BARBAZ\n", i, (how_lucky - 1), lucky_numbers[i]);
     }
 */
     return(number_arrayref_to_string(lucky_numbers) + "CPPOPS_CPPTYPES");
@@ -1159,7 +1159,7 @@ number_arrayref number_arrayref_typetest1(integer my_size)
     for (i = 0;  i < my_size;  ++i)
     {
         new_vec[i] = i * 5.123456789;
-//      fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_typetest1(), setting element %"INTEGER"/%"INTEGER" = %Lf, BARBAZ\n", i, (my_size - 1), new_vec[i]);
+//      fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_typetest1(), setting element %"INTEGER"/%"INTEGER" = %"NUMBER", BARBAZ\n", i, (my_size - 1), new_vec[i]);
     }
     return(new_vec);
 }

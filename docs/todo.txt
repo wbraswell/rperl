@@ -6,10 +6,13 @@ DONE
     fix bug in auto-generated accessors "get_PROPERTY_size()", in RPerl::CompileUnit::Module::Class::create_symtab_entries_and_accessors_mutators()
     allow identifiers beginning with underscore where not conflicting w/ C++ reserved identifiers
     allow 'package' statement to be split across 2 lines, in order to disable CPAN indexing
+    implement %"NUMBER" format, automatically selects either %Lf or %f depending on "number" C++ data type
 
 DOING
 
     implement string_arrayref_hashref
+    implement *_*ref_*ref remaining 2-D data structures 
+    add To_string() for each data structure in C++, to_string() in Perl
 
     .travis.yml, disable dev version of Alien::Base::ModuleBuild v1.01_01, update min version required in Makefile.PL
     .travis.yml, disable Alien::GSL testing, update min version required in Makefile.PL

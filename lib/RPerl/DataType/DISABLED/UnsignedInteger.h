@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h
-#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h 0.006_000
+#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h 0.007_000
 
 // [[[ TYPEDEFS ]]]
 # ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_h__typedefs
@@ -110,14 +110,15 @@ typedef long integer;  // default
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs 1
-
-
 #  ifdef __TYPE__NUMBER__DOUBLE
 typedef double number;
+#define NUMBER "f"
 #  elif defined __TYPE__NUMBER__LONG__DOUBLE
 typedef long double number;
+#define NUMBER "Lf"  // assume format code 'Lf' exists if type 'long double' exists
 #  else
 typedef double number;  // default
+#define NUMBER "f"
 #  endif
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__Character_h__typedefs

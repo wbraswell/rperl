@@ -1,17 +1,20 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_h
-#define __CPP__INCLUDED__RPerl__DataType__Number_h 0.008_000
+#define __CPP__INCLUDED__RPerl__DataType__Number_h 0.009_000
 
 // [[[ TYPEDEFS ]]]
 # ifndef __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs 1
 #  ifdef __TYPE__NUMBER__DOUBLE
 typedef double number;
+#define NUMBER "f"
 #  elif defined __TYPE__NUMBER__LONG__DOUBLE
 typedef long double number;
+#define NUMBER "Lf"  // assume format code 'Lf' exists if type 'long double' exists
 #  else
 typedef double number;  // default
+#define NUMBER "f"
 #  endif
 # endif
 

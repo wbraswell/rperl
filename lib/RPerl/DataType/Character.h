@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Character_h
-#define __CPP__INCLUDED__RPerl__DataType__Character_h 0.003_000
+#define __CPP__INCLUDED__RPerl__DataType__Character_h 0.004_000
 
 // [[[ TYPEDEFS ]]]
 // DEV NOTE: must use "character" typedef because "bool" is already defined by Inline's default typemap, even if we put our own character entry into typemap.rperl;
@@ -118,10 +118,13 @@ typedef long integer;  // default
 #define __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs 1
 #  ifdef __TYPE__NUMBER__DOUBLE
 typedef double number;
+#define NUMBER "f"
 #  elif defined __TYPE__NUMBER__LONG__DOUBLE
 typedef long double number;
+#define NUMBER "Lf"  // assume format code 'Lf' exists if type 'long double' exists
 #  else
 typedef double number;  // default
+#define NUMBER "f"
 #  endif
 # endif
 # ifndef __CPP__INCLUDED__RPerl__DataType__String_h__typedefs

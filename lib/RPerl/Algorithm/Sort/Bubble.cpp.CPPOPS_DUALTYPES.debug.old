@@ -264,7 +264,7 @@ SV* number_bubblesort_typetest0(SV* lucky_numbers)
     integer i;
     for (i = 0;  i < how_lucky;  ++i)
     {
-        fprintf(stderr, "in CPPOPS_PERLTYPES number_bubblesort_typetest0(), have lucky_number %"INTEGER"/%"INTEGER" = %Lf, BATBAR\n", i, (how_lucky - 1), (number)SvNV(*av_fetch(lucky_numbers_deref, i, 0)));
+        fprintf(stderr, "in CPPOPS_PERLTYPES number_bubblesort_typetest0(), have lucky_number %"INTEGER"/%"INTEGER" = %"NUMBER", BATBAR\n", i, (how_lucky - 1), (number)SvNV(*av_fetch(lucky_numbers_deref, i, 0)));
     }
     */
 
@@ -489,7 +489,7 @@ string number_bubblesort_typetest0(number_arrayref lucky_numbers)
     integer i;
     for (i = 0;  i < how_lucky;  ++i)
     {
-        fprintf(stderr, "in CPPOPS_CPPTYPES number_bubblesort_typetest0(), have lucky_number %"INTEGER"/%"INTEGER" = %Lf, BATBAR\n", i, (how_lucky - 1), lucky_numbers[i]);
+        fprintf(stderr, "in CPPOPS_CPPTYPES number_bubblesort_typetest0(), have lucky_number %"INTEGER"/%"INTEGER" = %"NUMBER", BATBAR\n", i, (how_lucky - 1), lucky_numbers[i]);
     }
     */
     return (number_arrayref_to_string(number_bubblesort(lucky_numbers)) + (const string) "CPPOPS_CPPTYPES");

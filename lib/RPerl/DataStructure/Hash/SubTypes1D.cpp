@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_cpp 0.005_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_cpp 0.006_000
 
 #include <RPerl/DataStructure/Hash/SubTypes1D.h>  // -> ??? (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
@@ -1132,7 +1132,7 @@ SV* number_hashref_typetest0(SV* lucky_numbers)
     for (i = 0;  i < how_lucky;  ++i)
     {
         HE* lucky_number_entry = hv_iternext(lucky_numbers_deref);
-//      fprintf(stderr, "in CPPOPS_PERLTYPES number_hashref_typetest0(), have lucky number '%s' => %Lf, BARSTOOP\n", SvPV_nolen(hv_iterkeysv(lucky_number_entry)), (double)SvNV(hv_iterval(lucky_numbers_deref, lucky_number_entry)));
+//      fprintf(stderr, "in CPPOPS_PERLTYPES number_hashref_typetest0(), have lucky number '%s' => %"NUMBER", BARSTOOP\n", SvPV_nolen(hv_iterkeysv(lucky_number_entry)), (number)SvNV(hv_iterval(lucky_numbers_deref, lucky_number_entry)));
     }
 */
 
@@ -1151,7 +1151,7 @@ SV* number_hashref_typetest1(SV* my_size)
     {
         sprintf(temp_key, "CPPOPS_PERLTYPES_funkey%"INTEGER"", i);
         hv_store(output_hv, (const char*)temp_key, (U32)strlen(temp_key), newSVnv(i * 5.123456789), (U32)0);
-//      fprintf(stderr, "in CPPOPS_PERLTYPES number_hashref_typetest1(), setting entry '%s' => %Lf, BARTAB\n", temp_key, (double)SvNV(*hv_fetch(output_hv, (const char*)temp_key, (U32)strlen(temp_key), (I32)0)));
+//      fprintf(stderr, "in CPPOPS_PERLTYPES number_hashref_typetest1(), setting entry '%s' => %"NUMBER", BARTAB\n", temp_key, (number)SvNV(*hv_fetch(output_hv, (const char*)temp_key, (U32)strlen(temp_key), (I32)0)));
     }
 
     return(newRV_noinc((SV*) output_hv));
@@ -1229,7 +1229,7 @@ string number_hashref_typetest0(number_hashref lucky_numbers)
     number_hashref_const_iterator i;
     for (i = lucky_numbers.begin();  i != lucky_numbers.end();  ++i)
     {
-        fprintf(stderr, "in CPPOPS_CPPTYPES number_hashref_typetest0(), have lucky number '%s' => %Lf, BARSTOOL\n", (i->first).c_str(), i->second);
+        fprintf(stderr, "in CPPOPS_CPPTYPES number_hashref_typetest0(), have lucky number '%s' => %"NUMBER", BARSTOOL\n", (i->first).c_str(), i->second);
     }
     */
     return(number_hashref_to_string(lucky_numbers) + "CPPOPS_CPPTYPES");
@@ -1244,7 +1244,7 @@ number_hashref number_hashref_typetest1(integer my_size)
     {
         temp_key = "CPPOPS_CPPTYPES_funkey" + std::to_string(i);
         new_unordered_map[temp_key] = i * 5.123456789;
-//      fprintf(stderr, "in CPPOPS_CPPTYPES number_hashref_typetest1(), setting entry '%s' => %Lf, BARSTOOL\n", temp_key.c_str(), new_unordered_map[temp_key]);
+//      fprintf(stderr, "in CPPOPS_CPPTYPES number_hashref_typetest1(), setting entry '%s' => %"NUMBER", BARSTOOL\n", temp_key.c_str(), new_unordered_map[temp_key]);
     }
     return(new_unordered_map);
 }
