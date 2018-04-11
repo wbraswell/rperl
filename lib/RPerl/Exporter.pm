@@ -3,7 +3,7 @@ package RPerl::Exporter;
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.006_000;
+our $VERSION = 0.007_000;
 
 # [[[ OO INHERITANCE ]]]
 #use parent qw(RPerl::CompileUnit::Module::Class);
@@ -45,7 +45,9 @@ our $SUPPORTED_ALL = [
         number_hashref
         string_hashref
         integer_arrayref_hashref
-        )
+        number_arrayref_hashref
+        string_arrayref_hashref
+    )
 ];
 #our string_arrayref $SUPPORTED_SPECIAL = [
 our $SUPPORTED_SPECIAL = [
@@ -53,7 +55,7 @@ our $SUPPORTED_SPECIAL = [
         sse_number_pair
         gmp_integer
         gsl_matrix
-        )
+    )
 ];
 
 # [[[ SUBROUTINES & OO METHODS ]]]

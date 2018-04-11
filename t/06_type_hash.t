@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.010_000;
+our $VERSION = 0.011_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -22,8 +22,7 @@ use Test::More;  # TMP DEBUG
 use Test::Exception;
 use Test::Number::Delta;
 use RPerl::DataStructure::Hash::SubTypes1D qw(integer_hashref_typetest0 integer_hashref_typetest1 number_hashref_typetest0 number_hashref_typetest1 string_hashref_typetest0 string_hashref_typetest1);
-#use RPerl::DataStructure::Hash::SubTypes2D qw(integer_arrayref_hashref_typetest0 integer_arrayref_hashref_typetest1 number_arrayref_hashref_typetest0 number_arrayref_hashref_typetest1 string_arrayref_hashref_typetest0 string_arrayref_hashref_typetest1);
-use RPerl::DataStructure::Hash::SubTypes2D qw(integer_arrayref_hashref_typetest0 integer_arrayref_hashref_typetest1);
+use RPerl::DataStructure::Hash::SubTypes2D qw(integer_arrayref_hashref_typetest0 integer_arrayref_hashref_typetest1 number_arrayref_hashref_typetest0 number_arrayref_hashref_typetest1 string_arrayref_hashref_typetest0 string_arrayref_hashref_typetest1);
 
 # [[[ OPERATIONS ]]]
 
@@ -833,17 +832,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TPVHVRV40 string_hashref_typetest1(5) lives}
     );
 
-
-
-
-
-    # START HERE: continue adding all arrayref_hashref tests below
-    # START HERE: continue adding all arrayref_hashref tests below
-    # START HERE: continue adding all arrayref_hashref tests below
-
-# { key_0 => [ 0, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, -2 ] }
-
-
     # [[[ INTEGER ARRAY REF HASH REF TESTS ]]]
     # [[[ INTEGER ARRAY REF HASH REF TESTS ]]]
     # [[[ INTEGER ARRAY REF HASH REF TESTS ]]]
@@ -1107,10 +1095,10 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 }
             ),
                 q{/^\{(?=.*'key_0' => \[ 0, 1, 2 \])(?=.*'key_1' => \[ 5, 6, 7 \])(?=.*'key_2' => \[ 0, -1, -2 \]).*\}} . $mode_tagline . q{$/ms},
-                q{TIVAVRVHVRV64 integer_arrayref_hashref_typetest0({ key_0 => [ 0, 1, 2 ], key_1 => 5, key_2 => [ 0, -1, -2 ] }) returns correct value}
+                q{TIVAVRVHVRV64 integer_arrayref_hashref_typetest0({ key_0 => [ 0, 1, 2 ], key_1 => [ 5,  6,  7 ], key_2 => [ 0, -1, -2 ] }) returns correct value}
             );
         },
-        q{TIVAVRVHVRV64 integer_arrayref_hashref_typetest0({ key_0 => [ 0, 1, 2 ], key_1 => 5, key_2 => [ 0, -1, -2 ] }) lives}
+        q{TIVAVRVHVRV64 integer_arrayref_hashref_typetest0({ key_0 => [ 0, 1, 2 ], key_1 => [ 5,  6,  7 ], key_2 => [ 0, -1, -2 ] }) lives}
     );
 
     lives_and(    # TIVAVRVHVRV70
@@ -1129,6 +1117,303 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TIVAVRVHVRV70 integer_arrayref_hashref_typetest1(5) lives}
     );
+
+    # [[[ NUMBER ARRAY REF HASH REF TESTS ]]]
+    # [[[ NUMBER ARRAY REF HASH REF TESTS ]]]
+    # [[[ NUMBER ARRAY REF HASH REF TESTS ]]]
+
+# DEV NOTE: must include at least one normal integer ('1') in our floating-point test data, in order to trigger *SvIOKp() in number_arrayref_hashref_CHECK*()
+=DISABLE_TEST_DATA
+{ key_0 => [ 0.1, 1, 2.3 ], key_1 => [ 5.67, 6.78, 7.89 ], key_2 => [ 0.123, -1.234, -2.345 ] }
+{
+    key_0 => [ 0.1,    1,      2.3   ],
+    key_1 => [ 5.67,   6.78,   7.89  ],
+    key_2 => [ 0.123, -1.234, -2.345 ]
+}
+=cut
+
+    throws_ok(    # TNVAVRVHVRV00
+        sub { number_arrayref_hashref_to_string() },
+        "/(ENVAVRVHVRV00.*$mode_tagline)|(Usage.*number_arrayref_hashref_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        q{TNVAVRVHVRV00 number_arrayref_hashref_to_string() throws correct exception}
+    );
+    throws_ok(                                                                # TNVAVRVHVRV01
+        sub { number_arrayref_hashref_to_string(undef) },
+        "/ENVAVRVHVRV00.*$mode_tagline/",
+        q{TNVAVRVHVRV01 number_arrayref_hashref_to_string(undef) throws correct exception}
+    );
+    throws_ok(                                                                # TNVAVRVHVRV02
+        sub { number_arrayref_hashref_to_string(2) },
+        "/ENVAVRVHVRV01.*$mode_tagline/",
+        q{TNVAVRVHVRV02 number_arrayref_hashref_to_string(2) throws correct exception}
+    );
+    throws_ok(                                                                # TNVAVRVHVRV03
+        sub { number_arrayref_hashref_to_string(2.3) },
+        "/ENVAVRVHVRV01.*$mode_tagline/",
+        q{TNVAVRVHVRV03 number_arrayref_hashref_to_string(2.3) throws correct exception}
+    );
+    throws_ok(                                                                # TNVAVRVHVRV04
+        sub { number_arrayref_hashref_to_string('2') },
+        "/ENVAVRVHVRV01.*$mode_tagline/",
+        q{TNVAVRVHVRV04 number_arrayref_hashref_to_string('2') throws correct exception}
+    );
+    throws_ok(                                                                # TNVAVRVHVRV05
+        sub { number_arrayref_hashref_to_string([ 2 ]) },
+        "/ENVAVRVHVRV01.*$mode_tagline/",
+        q{TNVAVRVHVRV05 number_arrayref_hashref_to_string([ 2 ]) throws correct exception}
+    );
+
+    throws_ok(    # TNVAVRVHVRV10
+        sub {
+            number_arrayref_hashref_to_string({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => undef,
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            });
+        },
+        "/ENVAVRVHVRV02.*$mode_tagline/",
+        q{TNVAVRVHVRV10 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ], key_1 => undef, key_2 => [ 0.123, -1.234, -2.345 ] }) throws correct exception}
+    );
+    throws_ok(    # TNVAVRVHVRV11
+        sub {
+            number_arrayref_hashref_to_string({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => 23,
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            });
+        },
+        "/ENVAVRVHVRV03.*$mode_tagline/",
+        q{TNVAVRVHVRV11 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ], key_1 => 23, key_2 => [ 0.123, -1.234, -2.345 ] }) throws correct exception}
+    );
+    throws_ok(    # TNVAVRVHVRV12
+        sub {
+            number_arrayref_hashref_to_string({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => 23.42,
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            });
+        },
+        "/ENVAVRVHVRV03.*$mode_tagline/",
+        q{TNVAVRVHVRV12 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ], key_1 => 23.4, key_2 => [ 0.123, -1.234, -2.345 ] }) throws correct exception}
+    );
+    throws_ok(    # TNVAVRVHVRV13
+        sub {
+            number_arrayref_hashref_to_string({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => 'howdy',
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            });
+        },
+        "/ENVAVRVHVRV03.*$mode_tagline/",
+        q{TNVAVRVHVRV13 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ], key_1 => 'howdy', key_2 => [ 0.123, -1.234, -2.345 ] }) throws correct exception}
+    );
+    throws_ok(    # TNVAVRVHVRV14
+        sub {
+            number_arrayref_hashref_to_string({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => { subkey_10 => 23.42 },
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            });
+        },
+        "/ENVAVRVHVRV03.*$mode_tagline/",
+        q{TNVAVRVHVRV14 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ], key_1 => { subkey_10 => 23.42 }, key_2 => [ 0.123, -1.234, -2.345 ] }) throws correct exception}
+    );
+
+    throws_ok(    # TNVAVRVHVRV20
+        sub {
+            number_arrayref_hashref_to_string({
+                key_0 => [ 0.1,    1,      undef ],
+                key_1 => [ 5.67,   6.78,   7.89  ],
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            });
+        },
+        "/ENVAVRVHVRV04.*$mode_tagline/",
+        q{TNVAVRVHVRV20 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, undef ], key_1 => [ 5.67, 6.78, 7.89 ], key_2 => [ 0.123, -1.234, -2.345 ] }) throws correct exception}
+    );
+    throws_ok(    # TNVAVRVHVRV21
+        sub {
+            number_arrayref_hashref_to_string({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => [ 5.67,   undef,  7.89  ],
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            });
+        },
+        "/ENVAVRVHVRV04.*$mode_tagline/",
+        q{TNVAVRVHVRV21 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ], key_1 => [ 5.67, undef, 7.89 ], key_2 => [ 0.123, -1.234, -2.345 ] }) throws correct exception}
+    );
+    throws_ok(    # TNVAVRVHVRV22
+        sub {
+            number_arrayref_hashref_to_string({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => [ 5.67,   6.78,   7.89  ],
+                key_2 => [ undef, -1.234, -2.345 ]
+            });
+        },
+        "/ENVAVRVHVRV04.*$mode_tagline/",
+        q{TNVAVRVHVRV22 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ], key_1 => [ 5.67, 6.78, 7.89 ], key_2 => [  undef, -1.234, -2.345 ] }) throws correct exception}
+    );
+
+    throws_ok(    # TNVAVRVHVRV30
+        sub {
+            number_arrayref_hashref_to_string({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => [ 5.67,  '6.78',  7.89  ],
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            });
+        },
+        "/ENVAVRVHVRV05.*$mode_tagline/",
+        q{TNVAVRVHVRV30 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ], key_1 => [ 5.67,  '6.78',  7.89 ], key_2 => [ 0.123, -1.234, -2.345 ] }) throws correct exception}
+    );
+    throws_ok(    # TNVAVRVHVRV31
+        sub {
+            number_arrayref_hashref_to_string({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => [ 5.67,   6.78,   7.89  ],
+                key_2 => [ 0.123, -1.234, [ -2.345 ] ]
+            });
+        },
+        "/ENVAVRVHVRV05.*$mode_tagline/",
+        q{TNVAVRVHVRV31 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ], key_1 => [ 5.67, 6.78, 7.89 ], key_2 => [ 0.123, -1.234, [ -2.345 ] ] }) throws correct exception}
+    );
+    throws_ok(    # TNVAVRVHVRV32
+        sub {
+            number_arrayref_hashref_to_string({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => [ 5.67,   { subkey_11 => 6.78 },   7.89  ],
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            });
+        },
+        "/ENVAVRVHVRV05.*$mode_tagline/",
+        q{TNVAVRVHVRV32 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ], key_1 => [ 5.67, { subkey_11 => 6.78 }, 7.89 ], key_2 => [ 0.123, -1.234, -2.345 ] }) throws correct exception}
+    );
+
+    lives_and(    # TNVAVRVHVRV40
+        sub {
+            is( number_arrayref_hashref_to_string( { key_0 => [ 0.1, 1, 2.3 ] } ), q{{ 'key_0' => [ 0.1, 1, 2.3 ] }}, q{TNVAVRVHVRV40 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1,   2.3 ] }) returns correct value} );
+        },
+        q{TNVAVRVHVRV40 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ] }) lives}
+    );
+    lives_and(    # TNVAVRVHVRV51
+        sub { like(
+            number_arrayref_hashref_to_string({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => [ 5.67,   6.78,   7.89  ],
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            }),
+
+             # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
+            q{/^\\\{\s(?=.*'key_0' => \[ 0.1, 1, 2.3 \])(?=.*'key_1' => \[ 5.67, 6.78, 7.89 \])(?=.*'key_2' => \[ 0.123, -1.234, -2.345 \]).*\s\}$/m},
+            q{TNVAVRVHVRV51 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ], key_1 => [ 5.67, 6.78, 7.89 ], key_2 => [ 0.123, -1.234, -2.345 ] }) returns correct value}
+        ); },
+        q{TNVAVRVHVRV51 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ], key_1 => [ 5.67, 6.78, 7.89 ], key_2 => [ 0.123, -1.234, -2.345 ] }) lives}
+    );
+    lives_and(    # TNVAVRVHVRV52
+        sub { like(
+            number_arrayref_hashref_to_string_compact({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => [ 5.67,   6.78,   7.89  ],
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            }),
+
+             # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
+            q{/^\\\{(?=.*'key_0'=>\[0.1,1,2.3\])(?=.*'key_1'=>\[5.67,6.78,7.89\])(?=.*'key_2'=>\[0.123,-1.234,-2.345\]).*\}$/m},
+            q{TNVAVRVHVRV52 number_arrayref_hashref_to_string_compact({ key_0 => [ 0.1, 1, 2.3 ], key_1 => [ 5.67, 6.78, 7.89 ], key_2 => [ 0.123, -1.234, -2.345 ] }) returns correct value}
+        ); },
+        q{TNVAVRVHVRV52 number_arrayref_hashref_to_string_compact({ key_0 => [ 0.1, 1, 2.3 ], key_1 => [ 5.67, 6.78, 7.89 ], key_2 => [ 0.123, -1.234, -2.345 ] }) lives}
+    );
+    lives_and(    # TNVAVRVHVRV53
+        sub { like(
+            number_arrayref_hashref_to_string_pretty({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => [ 5.67,   6.78,   7.89  ],
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            }),
+
+            # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
+            # DEV NOTE: must have 's' regex modifier to treat multi-line string as single line
+            q{/^\{(?=.*\n    'key_0' => \[ 0.1, 1, 2.3 \])(?=.*\n    'key_1' => \[ 5.67, 6.78, 7.89 \])(?=.*\n    'key_2' => \[ 0.123, -1.234, -2.345 \]).*\}$/ms},
+            q{TNVAVRVHVRV53 number_arrayref_hashref_to_string_pretty({ key_0 => [ 0.1, 1, 2.3 ], key_1 => [ 5.67, 6.78, 7.89 ], key_2 => [ 0.123, -1.234, -2.345 ] }) returns correct value}
+        ); },
+        q{TNVAVRVHVRV53 number_arrayref_hashref_to_string_pretty({ key_0 => [ 0.1, 1, 2.3 ], key_1 => [ 5.67, 6.78, 7.89 ], key_2 => [ 0.123, -1.234, -2.345 ] }) lives}
+    );
+
+    throws_ok(    # TNVAVRVHVRV60
+        sub { number_arrayref_hashref_typetest0() },
+        "/(ENVAVRVHVRV00.*$mode_tagline)|(Usage.*number_arrayref_hashref_typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        q{TNVAVRVHVRV60 number_arrayref_hashref_typetest0() throws correct exception}
+    );
+    throws_ok(    # TNVAVRVHVRV61
+        sub { number_arrayref_hashref_typetest0(2) },
+        "/ENVAVRVHVRV01.*$mode_tagline/",
+        q{TNVAVRVHVRV61 number_arrayref_hashref_typetest0(2) throws correct exception}
+    );
+    throws_ok(    # TNVAVRVHVRV62
+        sub {
+            number_arrayref_hashref_typetest0({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => undef,
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            });
+        },
+        "/ENVAVRVHVRV02.*$mode_tagline/",
+        q{TNVAVRVHVRV62 number_arrayref_hashref_typetest0({ key_0 => [ 0.1, 1, 2.3 ], key_1 => undef, key_2 => [ 0.123, -1.234, -2.345 ] }) throws correct exception}
+    );
+    throws_ok(    # TNVAVRVHVRV63
+        sub {
+            number_arrayref_hashref_typetest0({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => 5.67,
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            });
+        },
+        "/ENVAVRVHVRV03.*$mode_tagline/",
+        q{TNVAVRVHVRV63 number_arrayref_hashref_typetest0({ key_0 => [ 0.1, 1, 2.3 ], key_1 => 5.67, key_2 => [ 0.123, -1.234, -2.345 ] }) throws correct exception}
+    );
+    lives_and(    # TNVAVRVHVRV64
+        sub {
+            like( number_arrayref_hashref_typetest0({
+                key_0 => [ 0.1,    1,      2.3   ],
+                key_1 => [ 5.67,   6.78,   7.89  ],
+                key_2 => [ 0.123, -1.234, -2.345 ]
+            }),
+                q{/^\{(?=.*'key_0' => \[ 0.1, 1, 2.3 \])(?=.*'key_1' => \[ 5.67, 6.78, 7.89 \])(?=.*'key_2' => \[ 0.123, -1.234, -2.345 \]).*\}} . $mode_tagline . q{$/ms},
+                q{TNVAVRVHVRV64 number_arrayref_hashref_typetest0({ key_0 => [ 0.1, 1, 2.3 ], key_1 => [ 5.67, 6.78, 7.89  ], key_2 => [ 0.123, -1.234, -2.345 ] }) returns correct value}
+            );
+        },
+        q{TNVAVRVHVRV64 number_arrayref_hashref_typetest0({ key_0 => [ 0.1, 1, 2.3 ], key_1 => [ 5.67, 6.78, 7.89 ], key_2 => [ 0.123, -1.234, -2.345 ] }) lives}
+    );
+
+    # perl -e 'use RPerl; use RPerl::DataStructure::Hash::SubTypes2D qw(number_arrayref_hashref_typetest1); print number_arrayref_hashref_to_string_pretty(number_arrayref_hashref_typetest1(5)), "\n";'
+    lives_and(    # TNVAVRVHVRV70
+        sub {
+            is_deeply(
+                number_arrayref_hashref_typetest1(5),
+                {   
+                    "$mode_tagline\_funkey0" => [ 0, 0, 0, 0, 0 ],
+                    "$mode_tagline\_funkey1" => [ 0, 5.123_456_789, 10.246_913_578, 15.370_370_367, 20.493_827_156 ],
+                    "$mode_tagline\_funkey2" => [ 0, 10.246_913_578, 20.493_827_156, 30.740_740_734, 40.987_654_312 ],
+                    "$mode_tagline\_funkey3" => [ 0, 15.370_370_367, 30.740_740_734, 46.111_111_101, 61.481_481_468 ],
+                    "$mode_tagline\_funkey4" => [ 0, 20.493_827_156, 40.987_654_312, 61.481_481_468, 81.975_308_624 ]
+                },
+                q{TNVAVRVHVRV70 number_arrayref_hashref_typetest1(5) returns correct value}
+            );
+        },
+        q{TNVAVRVHVRV70 number_arrayref_hashref_typetest1(5) lives}
+    );
+
+
+
+
+
+    # [[[ STRING ARRAY REF HASH REF TESTS ]]]
+    # [[[ STRING ARRAY REF HASH REF TESTS ]]]
+    # [[[ STRING ARRAY REF HASH REF TESTS ]]]
+
+# START HERE: create string_arrayref_hashref tests here; all tests passing PERLOPS_PERLTYPES & CPPOPS_PERLTYPES & CPPOPS_CPPTYPES; new Test/ArrayReferenceHashReference tests
+# START HERE: create string_arrayref_hashref tests here; all tests passing PERLOPS_PERLTYPES & CPPOPS_PERLTYPES & CPPOPS_CPPTYPES; new Test/ArrayReferenceHashReference tests
+# START HERE: create string_arrayref_hashref tests here; all tests passing PERLOPS_PERLTYPES & CPPOPS_PERLTYPES & CPPOPS_CPPTYPES; new Test/ArrayReferenceHashReference tests
+
+
 
 }
 

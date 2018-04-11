@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.015_000;
+our $VERSION = 0.016_000;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -128,14 +128,16 @@ our string_arrayref $SUPPORTED = [
         number_hashref
         string_hashref
         integer_arrayref_hashref
-        )
+        number_arrayref_hashref
+        string_arrayref_hashref
+    )
 ];
 our string_arrayref $SUPPORTED_SPECIAL = [
     qw(
         sse_number_pair
         gmp_integer
         gsl_matrix
-        )
+    )
 ];
 
 # DEV NOTE, CORRELATION #rp008: export to_string(), class(), type() and types() to main:: namespace;

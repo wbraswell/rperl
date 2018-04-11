@@ -339,9 +339,7 @@ sub number_arrayref_CHECKTRACE {
             croak( "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but undefined/null value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
         if (not(   main::RPerl_SvNOKp($possible_number)
-                || main::RPerl_SvIOKp($possible_number) )
-            )
-        {
+                || main::RPerl_SvIOKp($possible_number) ) ) {
             croak( "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, PERLOPS_PERLTYPES:\nnumber value expected but non-number value found at index $i,\nin variable $variable_name from subroutine $subroutine_name,\ncroaking" );
         }
     }

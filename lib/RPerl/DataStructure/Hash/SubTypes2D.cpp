@@ -1,19 +1,13 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp 0.007_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp 0.008_000
 
 #include <RPerl/DataStructure/Hash/SubTypes2D.h>  // -> ??? (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]
-
-
-// START HERE: update SubTypes2D.h; update SubTypes.pm; new t/06 tests
-// START HERE: update SubTypes2D.h; update SubTypes.pm; new t/06 tests
-// START HERE: update SubTypes2D.h; update SubTypes.pm; new t/06 tests
-
 
 void integer_arrayref_hashref_CHECK(SV* possible_integer_arrayref_hashref, const char* variable_name, const char* subroutine_name) {
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_CHECK(), top of subroutine\n");
@@ -208,7 +202,8 @@ void number_arrayref_hashref_CHECK(SV* possible_number_arrayref_hashref, const c
                 possible_number_arrayref_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_number_arrayref_hashentry_key)));  // escape key string for error message
                 croak("\nERROR ENVAVRVHVRV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found at index %"INTEGER", key '%s',\ncroaking", j, possible_number_arrayref_hashentry_key_string.c_str());
             }
-            if (not(SvNOKp(*possible_number_array_element))) {
+            if (not(SvNOKp(*possible_number_array_element) or
+                    SvIOKp(*possible_number_array_element))) {
                 possible_number_arrayref_hashentry_key = hv_iterkeysv(possible_number_arrayref_hashentry);
                 possible_number_arrayref_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_number_arrayref_hashentry_key)));  // escape key string for error message
                 croak("\nERROR ENVAVRVHVRV05, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found at index %"INTEGER", key '%s',\ncroaking", j, possible_number_arrayref_hashentry_key_string.c_str());
@@ -276,7 +271,8 @@ void number_arrayref_hashref_CHECKTRACE(SV* possible_number_arrayref_hashref, co
                 possible_number_arrayref_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_number_arrayref_hashentry_key)));  // escape key string for error message
                 croak("\nERROR ENVAVRVHVRV04, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found at index %"INTEGER", key '%s',\nin variable '%s' from subroutine '%s',\ncroaking", j, possible_number_arrayref_hashentry_key_string.c_str(), variable_name, subroutine_name);
             }
-            if (not(SvNOKp(*possible_number_array_element))) {
+            if (not(SvNOKp(*possible_number_array_element) or
+                    SvIOKp(*possible_number_array_element))) {
                 possible_number_arrayref_hashentry_key = hv_iterkeysv(possible_number_arrayref_hashentry);
                 possible_number_arrayref_hashentry_key_string = escape_backslash_singlequote(string(SvPV_nolen(possible_number_arrayref_hashentry_key)));  // escape key string for error message
                 croak("\nERROR ENVAVRVHVRV05, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found at index %"INTEGER", key '%s',\nin variable '%s' from subroutine '%s',\ncroaking", j, possible_number_arrayref_hashentry_key_string.c_str(), variable_name, subroutine_name);
@@ -506,18 +502,18 @@ integer_arrayref_hashref XS_unpack_integer_arrayref_hashref(SV* input_avref_hvre
 
 // convert from (C++ std::unordered_map of (C++ std::vector of integers)) to (Perl SV containing RV to (Perl HV of (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs)))))
 void XS_pack_integer_arrayref_hashref(SV* output_avref_hvref, integer_arrayref_hashref input_vector_unordered_map) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), top of subroutine\n");
+//    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), top of subroutine\n");
 
     HV* output_avref_hv = newHV();  // initialize output hash-of-arrays to empty
     integer input_vector_unordered_map_num_keys = input_vector_unordered_map.size();
     integer_arrayref_hashref_const_iterator i;
     SV* temp_sv_pointer;
 
-    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), have input_vector_unordered_map_num_keys = %"INTEGER"\n", input_vector_unordered_map_num_keys);
+//    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), have input_vector_unordered_map_num_keys = %"INTEGER"\n", input_vector_unordered_map_num_keys);
 
     if (input_vector_unordered_map_num_keys > 0) {
         for (i = input_vector_unordered_map.begin();  i != input_vector_unordered_map.end();  ++i) {
-            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), top of outer loop, have i->first AKA key = '%s'\n", (i->first).c_str());
+//            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), top of outer loop, have i->first AKA key = '%s'\n", (i->first).c_str());
             integer_arrayref input_vector = i->second;
 
             // BEGIN ARRAY CODE
@@ -525,14 +521,14 @@ void XS_pack_integer_arrayref_hashref(SV* output_avref_hvref, integer_arrayref_h
             integer input_vector_length = input_vector.size();
             integer j;
 
-            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), have input_vector_length = %"INTEGER"\n", input_vector_length);
+//            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), have input_vector_length = %"INTEGER"\n", input_vector_length);
 
             if (input_vector_length > 0) {
                 for (j = 0;  j < input_vector_length;  ++j) {
-                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), top of inner loop, have (i->first, j) = ('%s', %"INTEGER")\n", (i->first).c_str(), j);
-                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), have input_vector_unordered_map['%s'][%"INTEGER"] = %"INTEGER"\n", (i->first).c_str(), j, input_vector[j]);
+//                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), top of inner loop, have (i->first, j) = ('%s', %"INTEGER")\n", (i->first).c_str(), j);
+//                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), have input_vector_unordered_map['%s'][%"INTEGER"] = %"INTEGER"\n", (i->first).c_str(), j, input_vector[j]);
                     av_push(output_av, newSViv(input_vector[j]));
-                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), bottom of inner loop, have (i->first, j) = ('%s', %"INTEGER")\n", (i->first).c_str(), j);
+//                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), bottom of inner loop, have (i->first, j) = ('%s', %"INTEGER")\n", (i->first).c_str(), j);
                 }
             }
             else warn("in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), sub-array was empty, returning empty sub-array via newAV()");
@@ -542,7 +538,7 @@ void XS_pack_integer_arrayref_hashref(SV* output_avref_hvref, integer_arrayref_h
             hv_store(output_avref_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newRV_noinc((SV*)output_av), (U32)0);  // reference, do not increase reference count
 //            hv_store(output_avref_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newRV_inc((SV*)output_av), (U32)0);  // reference, do increase reference count
 
-            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), bottom of outer loop, have i->first = '%s'\n", (i->first).c_str());
+//            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), bottom of outer loop, have i->first = '%s'\n", (i->first).c_str());
         }
     }
     else warn("in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), hash was empty, returning empty hash via newHV()");
@@ -633,18 +629,18 @@ number_arrayref_hashref XS_unpack_number_arrayref_hashref(SV* input_avref_hvref)
 
 // convert from (C++ std::unordered_map of (C++ std::vector of numbers)) to (Perl SV containing RV to (Perl HV of (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs)))))
 void XS_pack_number_arrayref_hashref(SV* output_avref_hvref, number_arrayref_hashref input_vector_unordered_map) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), top of subroutine\n");
+//    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), top of subroutine\n");
 
     HV* output_avref_hv = newHV();  // initialize output hash-of-arrays to empty
     integer input_vector_unordered_map_num_keys = input_vector_unordered_map.size();
     number_arrayref_hashref_const_iterator i;
     SV* temp_sv_pointer;
 
-    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), have input_vector_unordered_map_num_keys = %"INTEGER"\n", input_vector_unordered_map_num_keys);
+//    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), have input_vector_unordered_map_num_keys = %"INTEGER"\n", input_vector_unordered_map_num_keys);
 
     if (input_vector_unordered_map_num_keys > 0) {
         for (i = input_vector_unordered_map.begin();  i != input_vector_unordered_map.end();  ++i) {
-            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), top of outer loop, have i->first AKA key = '%s'\n", (i->first).c_str());
+//            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), top of outer loop, have i->first AKA key = '%s'\n", (i->first).c_str());
             number_arrayref input_vector = i->second;
 
             // BEGIN ARRAY CODE
@@ -652,14 +648,14 @@ void XS_pack_number_arrayref_hashref(SV* output_avref_hvref, number_arrayref_has
             integer input_vector_length = input_vector.size();
             integer j;
 
-            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), have input_vector_length = %"INTEGER"\n", input_vector_length);
+//            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), have input_vector_length = %"INTEGER"\n", input_vector_length);
 
             if (input_vector_length > 0) {
                 for (j = 0;  j < input_vector_length;  ++j) {
-                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), top of inner loop, have (i->first, j) = ('%s', %"INTEGER")\n", (i->first).c_str(), j);
-                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), have input_vector_unordered_map['%s'][%"INTEGER"] = %"NUMBER"\n", (i->first).c_str(), j, input_vector[j]);
+//                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), top of inner loop, have (i->first, j) = ('%s', %"INTEGER")\n", (i->first).c_str(), j);
+//                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), have input_vector_unordered_map['%s'][%"INTEGER"] = %"NUMBER"\n", (i->first).c_str(), j, input_vector[j]);
                     av_push(output_av, newSVnv(input_vector[j]));
-                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), bottom of inner loop, have (i->first, j) = ('%s', %"INTEGER")\n", (i->first).c_str(), j);
+//                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), bottom of inner loop, have (i->first, j) = ('%s', %"INTEGER")\n", (i->first).c_str(), j);
                 }
             }
             else warn("in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), sub-array was empty, returning empty sub-array via newAV()");
@@ -669,7 +665,7 @@ void XS_pack_number_arrayref_hashref(SV* output_avref_hvref, number_arrayref_has
             hv_store(output_avref_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newRV_noinc((SV*)output_av), (U32)0);  // reference, do not increase reference count
 //            hv_store(output_avref_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newRV_inc((SV*)output_av), (U32)0);  // reference, do increase reference count
 
-            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), bottom of outer loop, have i->first = '%s'\n", (i->first).c_str());
+//            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), bottom of outer loop, have i->first = '%s'\n", (i->first).c_str());
         }
     }
     else warn("in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), hash was empty, returning empty hash via newHV()");
@@ -1622,8 +1618,9 @@ SV* string_arrayref_hashref_typetest1(SV* my_size) {
 # elif defined __CPP__TYPES
 
 string integer_arrayref_hashref_typetest0(integer_arrayref_hashref lucky_integer_arrayrefs) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_typetest0(), top of subroutine...\n");
+//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_typetest0(), top of subroutine...\n");
 
+/*
     // BEGIN DEBUG CODE
     integer_arrayref_hashref_const_iterator i;
     for (i = lucky_integer_arrayrefs.begin();  i != lucky_integer_arrayrefs.end();  ++i) {
@@ -1638,12 +1635,13 @@ string integer_arrayref_hashref_typetest0(integer_arrayref_hashref lucky_integer
         // END ARRAY CODE
     }
     // END DEBUG CODE
+*/
 
     return(integer_arrayref_hashref_to_string(lucky_integer_arrayrefs) + "CPPOPS_CPPTYPES");
 }
 
 integer_arrayref_hashref integer_arrayref_hashref_typetest1(integer my_size) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_typetest1(), top of subroutine...\n");
+//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_typetest1(), top of subroutine...\n");
 
     integer_arrayref_hashref new_vector_unordered_map(my_size);
     integer i;
@@ -1657,7 +1655,7 @@ integer_arrayref_hashref integer_arrayref_hashref_typetest1(integer my_size) {
         for (j = 0;  j < my_size;  ++j)
         {
             temp_vec[j] = i * j;
-            fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_typetest1(), setting element at key '%s', at index %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAZ\n", temp_key.c_str(), j, (my_size - 1), temp_vec[j]);
+//            fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_typetest1(), setting element at key '%s', at index %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAZ\n", temp_key.c_str(), j, (my_size - 1), temp_vec[j]);
         }
         // END ARRAY CODE
 
@@ -1667,8 +1665,9 @@ integer_arrayref_hashref integer_arrayref_hashref_typetest1(integer my_size) {
 }
 
 string number_arrayref_hashref_typetest0(number_arrayref_hashref lucky_number_arrayrefs) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_hashref_typetest0(), top of subroutine...\n");
+//    fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_hashref_typetest0(), top of subroutine...\n");
 
+/*
     // BEGIN DEBUG CODE
     number_arrayref_hashref_const_iterator i;
     for (i = lucky_number_arrayrefs.begin();  i != lucky_number_arrayrefs.end();  ++i) {
@@ -1683,12 +1682,13 @@ string number_arrayref_hashref_typetest0(number_arrayref_hashref lucky_number_ar
         // END ARRAY CODE
     }
     // END DEBUG CODE
+*/
 
     return(number_arrayref_hashref_to_string(lucky_number_arrayrefs) + "CPPOPS_CPPTYPES");
 }
 
 number_arrayref_hashref number_arrayref_hashref_typetest1(integer my_size) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_hashref_typetest1(), top of subroutine...\n");
+//    fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_hashref_typetest1(), top of subroutine...\n");
 
     number_arrayref_hashref new_vector_unordered_map(my_size);
     integer i;
@@ -1702,7 +1702,7 @@ number_arrayref_hashref number_arrayref_hashref_typetest1(integer my_size) {
         for (j = 0;  j < my_size;  ++j)
         {
             temp_vec[j] = i * j * 5.123456789;
-            fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_hashref_typetest1(), setting element at key '%s', at index %"INTEGER"/%"INTEGER" = %"NUMBER", BARBAZ\n", temp_key.c_str(), j, (my_size - 1), temp_vec[j]);
+//            fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_hashref_typetest1(), setting element at key '%s', at index %"INTEGER"/%"INTEGER" = %"NUMBER", BARBAZ\n", temp_key.c_str(), j, (my_size - 1), temp_vec[j]);
         }
         // END ARRAY CODE
 
