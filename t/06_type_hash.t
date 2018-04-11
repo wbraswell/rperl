@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.011_000;
+our $VERSION = 0.014_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -17,8 +17,7 @@ our $VERSION = 0.011_000;
 
 # [[[ INCLUDES ]]]
 use RPerl::Test;
-#use Test::More tests => 247;
-use Test::More;  # TMP DEBUG
+use Test::More tests => 496;
 use Test::Exception;
 use Test::Number::Delta;
 use RPerl::DataStructure::Hash::SubTypes1D qw(integer_hashref_typetest0 integer_hashref_typetest1 number_hashref_typetest0 number_hashref_typetest1 string_hashref_typetest0 string_hashref_typetest1);
@@ -836,6 +835,15 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     # [[[ INTEGER ARRAY REF HASH REF TESTS ]]]
     # [[[ INTEGER ARRAY REF HASH REF TESTS ]]]
 
+=DISABLE_TEST_DATA
+{ key_0 => [ 0, 1, 2 ], key_1 => [ 5, 6, 7 ], key_2 => [ 0, -1, -2 ] }
+{
+    key_0 => [ 0,  1,  2 ],
+    key_1 => [ 5,  6,  7 ],
+    key_2 => [ 0, -1, -2 ]
+}
+=cut
+
     throws_ok(    # TIVAVRVHVRV00
         sub { integer_arrayref_hashref_to_string() },
         "/(EIVAVRVHVRV00.*$mode_tagline)|(Usage.*integer_arrayref_hashref_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
@@ -893,12 +901,12 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         sub {
             integer_arrayref_hashref_to_string({
                 key_0 => [  0,  1,  2 ],
-                key_1 => 23.4,
+                key_1 => 23.42,
                 key_2 => [  0, -1, -2 ]
             });
         },
         "/EIVAVRVHVRV03.*$mode_tagline/",
-        q{TIVAVRVHVRV12 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ], key_1 => 23.4, key_2 => [ 0, -1, -2 ] }) throws correct exception}
+        q{TIVAVRVHVRV12 integer_arrayref_hashref_to_string({ key_0 => [ 0, 1, 2 ], key_1 => 23.42, key_2 => [ 0, -1, -2 ] }) throws correct exception}
     );
     throws_ok(    # TIVAVRVHVRV13
         sub {
@@ -1087,13 +1095,11 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     lives_and(    # TIVAVRVHVRV64
         sub {
-            like(
-                integer_arrayref_hashref_typetest0({
-                    key_0 => [  0,  1,  2 ],
-                    key_1 => [  5,  6,  7 ],
-                    key_2 => [  0, -1, -2 ]
-                }
-            ),
+            like( integer_arrayref_hashref_typetest0({
+                key_0 => [  0,  1,  2 ],
+                key_1 => [  5,  6,  7 ],
+                key_2 => [  0, -1, -2 ]
+            } ),
                 q{/^\{(?=.*'key_0' => \[ 0, 1, 2 \])(?=.*'key_1' => \[ 5, 6, 7 \])(?=.*'key_2' => \[ 0, -1, -2 \]).*\}} . $mode_tagline . q{$/ms},
                 q{TIVAVRVHVRV64 integer_arrayref_hashref_typetest0({ key_0 => [ 0, 1, 2 ], key_1 => [ 5,  6,  7 ], key_2 => [ 0, -1, -2 ] }) returns correct value}
             );
@@ -1194,7 +1200,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             });
         },
         "/ENVAVRVHVRV03.*$mode_tagline/",
-        q{TNVAVRVHVRV12 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ], key_1 => 23.4, key_2 => [ 0.123, -1.234, -2.345 ] }) throws correct exception}
+        q{TNVAVRVHVRV12 number_arrayref_hashref_to_string({ key_0 => [ 0.1, 1, 2.3 ], key_1 => 23.42, key_2 => [ 0.123, -1.234, -2.345 ] }) throws correct exception}
     );
     throws_ok(    # TNVAVRVHVRV13
         sub {
@@ -1390,7 +1396,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 number_arrayref_hashref_typetest1(5),
                 {   
                     "$mode_tagline\_funkey0" => [ 0, 0, 0, 0, 0 ],
-                    "$mode_tagline\_funkey1" => [ 0, 5.123_456_789, 10.246_913_578, 15.370_370_367, 20.493_827_156 ],
+                    "$mode_tagline\_funkey1" => [ 0,  5.123_456_789, 10.246_913_578, 15.370_370_367, 20.493_827_156 ],
                     "$mode_tagline\_funkey2" => [ 0, 10.246_913_578, 20.493_827_156, 30.740_740_734, 40.987_654_312 ],
                     "$mode_tagline\_funkey3" => [ 0, 15.370_370_367, 30.740_740_734, 46.111_111_101, 61.481_481_468 ],
                     "$mode_tagline\_funkey4" => [ 0, 20.493_827_156, 40.987_654_312, 61.481_481_468, 81.975_308_624 ]
@@ -1401,20 +1407,307 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TNVAVRVHVRV70 number_arrayref_hashref_typetest1(5) lives}
     );
 
-
-
-
-
     # [[[ STRING ARRAY REF HASH REF TESTS ]]]
     # [[[ STRING ARRAY REF HASH REF TESTS ]]]
     # [[[ STRING ARRAY REF HASH REF TESTS ]]]
 
-# START HERE: create string_arrayref_hashref tests here; all tests passing PERLOPS_PERLTYPES & CPPOPS_PERLTYPES & CPPOPS_CPPTYPES; new Test/ArrayReferenceHashReference tests
-# START HERE: create string_arrayref_hashref tests here; all tests passing PERLOPS_PERLTYPES & CPPOPS_PERLTYPES & CPPOPS_CPPTYPES; new Test/ArrayReferenceHashReference tests
-# START HERE: create string_arrayref_hashref tests here; all tests passing PERLOPS_PERLTYPES & CPPOPS_PERLTYPES & CPPOPS_CPPTYPES; new Test/ArrayReferenceHashReference tests
+=DISABLE_TEST_DATA
+{ key_0 => [ '0', '1', '2' ], key_1 => [ 'a', 'b', 'c' ], key_2 => [ 'h i', '', "\n" ] }
+{
+    key_0 => [ '0', '1', '2'  ],
+    key_1 => [ 'a', 'b', 'c'  ],
+    key_2 => [ 'h i', '', "\n" ]
+}
+            {
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => [ 'a', 'b', 'c'  ],
+                key_2 => [ 'h i', '', "\n" ]
+            }
+=cut
 
+    throws_ok(    # TPVAVRVHVRV00
+        sub { string_arrayref_hashref_to_string() },
+        "/(EPVAVRVHVRV00.*$mode_tagline)|(Usage.*string_arrayref_hashref_to_string)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        q{TPVAVRVHVRV00 string_arrayref_hashref_to_string() throws correct exception}
+    );
+    throws_ok(                                                                # TPVAVRVHVRV01
+        sub { string_arrayref_hashref_to_string(undef) },
+        "/EPVAVRVHVRV00.*$mode_tagline/",
+        q{TPVAVRVHVRV01 string_arrayref_hashref_to_string(undef) throws correct exception}
+    );
+    throws_ok(                                                                # TPVAVRVHVRV02
+        sub { string_arrayref_hashref_to_string(2) },
+        "/EPVAVRVHVRV01.*$mode_tagline/",
+        q{TPVAVRVHVRV02 string_arrayref_hashref_to_string(2) throws correct exception}
+    );
+    throws_ok(                                                                # TPVAVRVHVRV03
+        sub { string_arrayref_hashref_to_string(2.3) },
+        "/EPVAVRVHVRV01.*$mode_tagline/",
+        q{TPVAVRVHVRV03 string_arrayref_hashref_to_string(2.3) throws correct exception}
+    );
+    throws_ok(                                                                # TPVAVRVHVRV04
+        sub { string_arrayref_hashref_to_string('2') },
+        "/EPVAVRVHVRV01.*$mode_tagline/",
+        q{TPVAVRVHVRV04 string_arrayref_hashref_to_string('2') throws correct exception}
+    );
+    throws_ok(                                                                # TPVAVRVHVRV05
+        sub { string_arrayref_hashref_to_string([ 2 ]) },
+        "/EPVAVRVHVRV01.*$mode_tagline/",
+        q{TPVAVRVHVRV05 string_arrayref_hashref_to_string([ 2 ]) throws correct exception}
+    );
 
+    throws_ok(    # TPVAVRVHVRV10
+        sub {
+            string_arrayref_hashref_to_string({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => undef,
+                key_2 => [ 'h i', '', "\n" ]
+            });
+        },
+        "/EPVAVRVHVRV02.*$mode_tagline/",
+        q{TPVAVRVHVRV10 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', '2' ], key_1 => undef, key_2 => [ 'h i', '', "\n" ] }) throws correct exception}
+    );
+    throws_ok(    # TPVAVRVHVRV11
+        sub {
+            string_arrayref_hashref_to_string({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => 23,
+                key_2 => [ 'h i', '', "\n" ]
+            });
+        },
+        "/EPVAVRVHVRV03.*$mode_tagline/",
+        q{TPVAVRVHVRV11 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', '2' ], key_1 => 23, key_2 => [ 'h i', '', "\n" ] }) throws correct exception}
+    );
+    throws_ok(    # TPVAVRVHVRV12
+        sub {
+            string_arrayref_hashref_to_string({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => 23.42,
+                key_2 => [ 'h i', '', "\n" ]
+            });
+        },
+        "/EPVAVRVHVRV03.*$mode_tagline/",
+        q{TPVAVRVHVRV12 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', '2' ], key_1 => 23.42, key_2 => [ 'h i', '', "\n" ] }) throws correct exception}
+    );
+    throws_ok(    # TPVAVRVHVRV13
+        sub {
+            string_arrayref_hashref_to_string({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => 'h i',
+                key_2 => [ 'h i', '', "\n" ]
+            });
+        },
+        "/EPVAVRVHVRV03.*$mode_tagline/",
+        q{TPVAVRVHVRV13 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', '2' ], key_1 => 'h i', key_2 => [ 'h i', '', "\n" ] }) throws correct exception}
+    );
+    throws_ok(    # TPVAVRVHVRV14
+        sub {
+            string_arrayref_hashref_to_string({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => { subkey_10 => 'h i' },
+                key_2 => [ 'h i', '', "\n" ]
+            });
+        },
+        "/EPVAVRVHVRV03.*$mode_tagline/",
+        q{TPVAVRVHVRV14 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', '2' ], key_1 => { subkey_10 => 'h i' }, key_2 => [ 'h i', '', "\n" ] }) throws correct exception}
+    );
 
+    throws_ok(    # TPVAVRVHVRV20
+        sub {
+            string_arrayref_hashref_to_string({
+                key_0 => [ '0', '1', undef  ],
+                key_1 => [ 'a', 'b', 'c'  ],
+                key_2 => [ 'h i', '', "\n" ]
+            });
+        },
+        "/EPVAVRVHVRV04.*$mode_tagline/",
+        q{TPVAVRVHVRV20 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', undef ], key_1 => [ 'a', 'b', 'c' ], key_2 => [ 'h i', '', "\n" ] }) throws correct exception}
+    );
+    throws_ok(    # TPVAVRVHVRV21
+        sub {
+            string_arrayref_hashref_to_string({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => [ 'a', undef, 'c' ],
+                key_2 => [ 'h i', '', "\n" ]
+            });
+        },
+        "/EPVAVRVHVRV04.*$mode_tagline/",
+        q{TPVAVRVHVRV21 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', '2' ], key_1 => [ 'a', undef, 'c' ], key_2 => [ 'h i', '', "\n" ] }) throws correct exception}
+    );
+    throws_ok(    # TPVAVRVHVRV22
+        sub {
+            string_arrayref_hashref_to_string({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => [ 'a', 'b', 'c'  ],
+                key_2 => [ undef, '', "\n" ]
+            });
+        },
+        "/EPVAVRVHVRV04.*$mode_tagline/",
+        q{TPVAVRVHVRV22 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', '2' ], key_1 => [ 'a', 'b', 'c' ], key_2 => [  undef, '', "\n" ] }) throws correct exception}
+    );
+    
+
+    throws_ok(    # TPVAVRVHVRV30
+        sub {
+            string_arrayref_hashref_to_string({
+                key_0 => [ 0, '1', '2'  ],
+                key_1 => [ 'a', 'b', 'c'  ],
+                key_2 => [ 'h i', '', "\n" ]
+            });
+        },
+        "/EPVAVRVHVRV05.*$mode_tagline/",
+        q{TPVAVRVHVRV30 string_arrayref_hashref_to_string({ key_0 => [ 0, '1', '2' ], key_1 => [ 'a', 'b', 'c' ], key_2 => [ 'h i', '', "\n" ] }) throws correct exception}
+    );
+    throws_ok(    # TPVAVRVHVRV31
+        sub {
+            string_arrayref_hashref_to_string({
+                key_0 => [ '0',  '1', '2' ],
+                key_1 => [ 'a', 6.78, 'c' ],
+                key_2 => [ 'h i', '', "\n" ]
+            });
+        },
+        "/EPVAVRVHVRV05.*$mode_tagline/",
+        q{TPVAVRVHVRV31 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', '2' ], key_1 => [ 'a', 6.78, 'c' ], key_2 => [ 'h i', '', "\n" ] }) throws correct exception}
+    );
+    throws_ok(    # TPVAVRVHVRV32
+        sub {
+            string_arrayref_hashref_to_string({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => [ 'a', 'b', 'c'  ],
+                key_2 => [ 'h i', '', [ "\n" ] ]
+            });
+        },
+        "/EPVAVRVHVRV05.*$mode_tagline/",
+        q{TPVAVRVHVRV32 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', '2' ], key_1 => [ 'a', 'b', 'c' ], key_2 => [ 'h i', '', [ "\n" ] ] }) throws correct exception}
+    );
+    throws_ok(    # TPVAVRVHVRV33
+        sub {
+            string_arrayref_hashref_to_string({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => [ 'a', { subkey_11 => 'b' }, 'c'  ],
+                key_2 => [ 'h i', '', "\n" ]
+            });
+        },
+        "/EPVAVRVHVRV05.*$mode_tagline/",
+        q{TPVAVRVHVRV33 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', '2' ], key_1 => [ 'a', { subkey_11 => 'b' }, 'c' ], key_2 => [ 'h i', '', "\n" ] }) throws correct exception}
+    );
+
+    lives_and(    # TPVAVRVHVRV40
+        sub {
+            is( string_arrayref_hashref_to_string( { key_0 => [ '0', '1', '2' ] } ), q{{ 'key_0' => [ '0', '1', '2' ] }}, q{TPVAVRVHVRV40 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', '2' ] }) returns correct value} );
+        },
+        q{TPVAVRVHVRV40 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', '2' ] }) lives}
+    );
+    lives_and(    # TPVAVRVHVRV51
+        sub { like(
+            string_arrayref_hashref_to_string({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => [ 'a', 'b', 'c'  ],
+                key_2 => [ 'h i', '', "\n" ]
+            }),
+
+            # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
+            # DEV NOTE: must have 's' regex modifier to treat multi-line string as single line, and must replace double-quotes w/ single-quotes per RPerl's string output default
+            q{/^\\\{\s(?=.*'key_0' => \[ '0', '1', '2' \])(?=.*'key_1' => \[ 'a', 'b', 'c' \])(?=.*'key_2' => \[ 'h i', '', '\n' \]).*\s\}$/ms},
+            q{TPVAVRVHVRV51 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', '2' ], key_1 => [ 'a', 'b', 'c' ], key_2 => [ 'h i', '', "\n" ] }) returns correct value}
+        ); },
+        q{TPVAVRVHVRV51 string_arrayref_hashref_to_string({ key_0 => [ '0', '1', '2' ], key_1 => [ 'a', 'b', 'c' ], key_2 => [ 'h i', '', "\n" ] }) lives}
+    );
+    lives_and(    # TPVAVRVHVRV52
+        sub { like(
+            string_arrayref_hashref_to_string_compact({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => [ 'a', 'b', 'c'  ],
+                key_2 => [ 'h i', '', "\n" ]
+            }),
+
+            # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
+            # DEV NOTE: must have 's' regex modifier to treat multi-line string as single line, and must replace double-quotes w/ single-quotes per RPerl's string output default
+            q{/^\\\{(?=.*'key_0'=>\['0','1','2'\])(?=.*'key_1'=>\['a','b','c'\])(?=.*'key_2'=>\['h i','','\n'\]).*\}$/ms},
+            q{TPVAVRVHVRV52 string_arrayref_hashref_to_string_compact({ key_0 => [ '0', '1', '2' ], key_1 => [ 'a', 'b', 'c' ], key_2 => [ 'h i', '', "\n" ] }) returns correct value}
+        ); },
+        q{TPVAVRVHVRV52 string_arrayref_hashref_to_string_compact({ key_0 => [ '0', '1', '2' ], key_1 => [ 'a', 'b', 'c' ], key_2 => [ 'h i', '', "\n" ] }) lives}
+    );
+    lives_and(    # TPVAVRVHVRV53
+        sub { like(
+            string_arrayref_hashref_to_string_pretty({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => [ 'a', 'b', 'c'  ],
+                key_2 => [ 'h i', '', "\n" ]
+            }),
+
+            # NEED FIX: replace ".*" near end of this & following regexes with syntax to match exactly 6 occurrences of ", "; (,\s)* and variations don't work?
+            # DEV NOTE: must have 's' regex modifier to treat multi-line string as single line, and must replace double-quotes w/ single-quotes per RPerl's string output default
+            q{/^\{(?=.*\n    'key_0' => \[ '0', '1', '2' \])(?=.*\n    'key_1' => \[ 'a', 'b', 'c' \])(?=.*\n    'key_2' => \[ 'h i', '', '\n' \]).*\}$/ms},
+            q{TPVAVRVHVRV53 string_arrayref_hashref_to_string_pretty({ key_0 => [ '0', '1', '2' ], key_1 => [ 'a', 'b', 'c' ], key_2 => [ 'h i', '', "\n" ] }) returns correct value}
+        ); },
+        q{TPVAVRVHVRV53 string_arrayref_hashref_to_string_pretty({ key_0 => [ '0', '1', '2' ], key_1 => [ 'a', 'b', 'c' ], key_2 => [ 'h i', '', "\n" ] }) lives}
+    );
+
+    throws_ok(    # TPVAVRVHVRV60
+        sub { string_arrayref_hashref_typetest0() },
+        "/(EPVAVRVHVRV00.*$mode_tagline)|(Usage.*string_arrayref_hashref_typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
+        q{TPVAVRVHVRV60 string_arrayref_hashref_typetest0() throws correct exception}
+    );
+    throws_ok(    # TPVAVRVHVRV61
+        sub { string_arrayref_hashref_typetest0(2) },
+        "/EPVAVRVHVRV01.*$mode_tagline/",
+        q{TPVAVRVHVRV61 string_arrayref_hashref_typetest0(2) throws correct exception}
+    );
+    throws_ok(    # TPVAVRVHVRV62
+        sub {
+            string_arrayref_hashref_typetest0({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => undef,
+                key_2 => [ 'h i', '', "\n" ]
+            });
+        },
+        "/EPVAVRVHVRV02.*$mode_tagline/",
+        q{TPVAVRVHVRV62 string_arrayref_hashref_typetest0({ key_0 => [ '0', '1', '2' ], key_1 => undef, key_2 => [ 'h i', '', "\n" ] }) throws correct exception}
+    );
+    throws_ok(    # TPVAVRVHVRV63
+        sub {
+            string_arrayref_hashref_typetest0({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => 'b',
+                key_2 => [ 'h i', '', "\n" ]
+            });
+        },
+        "/EPVAVRVHVRV03.*$mode_tagline/",
+        q{TPVAVRVHVRV63 string_arrayref_hashref_typetest0({ key_0 => [ '0', '1', '2' ], key_1 => 'b', key_2 => [ 'h i', '', "\n" ] }) throws correct exception}
+    );
+    lives_and(    # TPVAVRVHVRV64
+        sub {
+            like( string_arrayref_hashref_typetest0({
+                key_0 => [ '0', '1', '2'  ],
+                key_1 => [ 'a', 'b', 'c'  ],
+                key_2 => [ 'h i', '', "\n" ]
+            } ),
+                # DEV NOTE: must have 's' regex modifier to treat multi-line string as single line, and must replace double-quotes w/ single-quotes per RPerl's string output default
+                q{/^\{(?=.*'key_0' => \[ '0', '1', '2' \])(?=.*'key_1' => \[ 'a', 'b', 'c' \])(?=.*'key_2' => \[ 'h i', '', '\n' \]).*\}} . $mode_tagline . q{$/ms},
+                q{TPVAVRVHVRV64 string_arrayref_hashref_typetest0({ key_0 => [ '0', '1', '2' ], key_1 => [ 'a', 'b', 'c' ], key_2 => [ 'h i', '', "\n" ] }) returns correct value}
+            );
+        },
+        q{TPVAVRVHVRV64 string_arrayref_hashref_typetest0({ key_0 => [ '0', '1', '2' ], key_1 => [ 'a', 'b', 'c' ], key_2 => [ 'h i', '', "\n" ] }) lives}
+    );
+
+    # perl -e 'use RPerl; use RPerl::DataStructure::Hash::SubTypes2D qw(string_arrayref_hashref_typetest1); print string_arrayref_hashref_to_string_pretty(string_arrayref_hashref_typetest1(5)), "\n";'
+    lives_and(    # TPVAVRVHVRV70
+        sub {
+            is_deeply(
+                string_arrayref_hashref_typetest1(5),
+                {   
+                    "$mode_tagline\_funkey0" => [ 'Jeffy Ten! (0, 0)/4', 'Jeffy Ten! (0, 1)/4', 'Jeffy Ten! (0, 2)/4', 'Jeffy Ten! (0, 3)/4', 'Jeffy Ten! (0, 4)/4' ],
+                    "$mode_tagline\_funkey1" => [ 'Jeffy Ten! (1, 0)/4', 'Jeffy Ten! (1, 1)/4', 'Jeffy Ten! (1, 2)/4', 'Jeffy Ten! (1, 3)/4', 'Jeffy Ten! (1, 4)/4' ],
+                    "$mode_tagline\_funkey2" => [ 'Jeffy Ten! (2, 0)/4', 'Jeffy Ten! (2, 1)/4', 'Jeffy Ten! (2, 2)/4', 'Jeffy Ten! (2, 3)/4', 'Jeffy Ten! (2, 4)/4' ],
+                    "$mode_tagline\_funkey3" => [ 'Jeffy Ten! (3, 0)/4', 'Jeffy Ten! (3, 1)/4', 'Jeffy Ten! (3, 2)/4', 'Jeffy Ten! (3, 3)/4', 'Jeffy Ten! (3, 4)/4' ],
+                    "$mode_tagline\_funkey4" => [ 'Jeffy Ten! (4, 0)/4', 'Jeffy Ten! (4, 1)/4', 'Jeffy Ten! (4, 2)/4', 'Jeffy Ten! (4, 3)/4', 'Jeffy Ten! (4, 4)/4' ]
+                },
+                q{TPVAVRVHVRV70 string_arrayref_hashref_typetest1(5) returns correct value}
+            );
+        },
+        q{TPVAVRVHVRV70 string_arrayref_hashref_typetest1(5) lives}
+    );
 }
 
 done_testing();

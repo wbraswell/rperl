@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes2D;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.021_000;
+our $VERSION = 0.022_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -618,8 +618,8 @@ sub number_arrayref_hashref_typetest1 {
     { my number_arrayref_hashref $RETURN_TYPE };
     ( my integer $my_size) = @ARG;
 
-#    number_CHECK($my_size);
-    number_CHECKTRACE( $my_size, '$my_size', 'number_arrayref_hashref_typetest1()' );
+#    integer_CHECK($my_size);
+    integer_CHECKTRACE( $my_size, '$my_size', 'number_arrayref_hashref_typetest1()' );
 
     # create a square 2-D data structure
     my number_arrayref_hashref $new_hash = {};
@@ -902,8 +902,8 @@ sub string_arrayref_hashref_typetest1 {
     { my string_arrayref_hashref $RETURN_TYPE };
     ( my integer $my_size) = @ARG;
 
-#    string_CHECK($my_size);
-    string_CHECKTRACE( $my_size, '$my_size', 'string_arrayref_hashref_typetest1()' );
+#    integer_CHECK($my_size);
+    integer_CHECKTRACE( $my_size, '$my_size', 'string_arrayref_hashref_typetest1()' );
 
     # create a square 2-D data structure
     my string_arrayref_hashref $new_hash = {};

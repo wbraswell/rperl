@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp 0.008_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp 0.009_000
 
 #include <RPerl/DataStructure/Hash/SubTypes2D.h>  // -> ??? (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
@@ -756,18 +756,18 @@ string_arrayref_hashref XS_unpack_string_arrayref_hashref(SV* input_avref_hvref)
 
 // convert from (C++ std::unordered_map of (C++ std::vector of strings)) to (Perl SV containing RV to (Perl HV of (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs)))))
 void XS_pack_string_arrayref_hashref(SV* output_avref_hvref, string_arrayref_hashref input_vector_unordered_map) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), top of subroutine\n");
+//    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), top of subroutine\n");
 
     HV* output_avref_hv = newHV();  // initialize output hash-of-arrays to empty
     integer input_vector_unordered_map_num_keys = input_vector_unordered_map.size();
     string_arrayref_hashref_const_iterator i;
     SV* temp_sv_pointer;
 
-    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), have input_vector_unordered_map_num_keys = %"INTEGER"\n", input_vector_unordered_map_num_keys);
+//    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), have input_vector_unordered_map_num_keys = %"INTEGER"\n", input_vector_unordered_map_num_keys);
 
     if (input_vector_unordered_map_num_keys > 0) {
         for (i = input_vector_unordered_map.begin();  i != input_vector_unordered_map.end();  ++i) {
-            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), top of outer loop, have i->first AKA key = '%s'\n", (i->first).c_str());
+//            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), top of outer loop, have i->first AKA key = '%s'\n", (i->first).c_str());
             string_arrayref input_vector = i->second;
 
             // BEGIN ARRAY CODE
@@ -775,14 +775,14 @@ void XS_pack_string_arrayref_hashref(SV* output_avref_hvref, string_arrayref_has
             integer input_vector_length = input_vector.size();
             integer j;
 
-            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), have input_vector_length = %"INTEGER"\n", input_vector_length);
+//            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), have input_vector_length = %"INTEGER"\n", input_vector_length);
 
             if (input_vector_length > 0) {
                 for (j = 0;  j < input_vector_length;  ++j) {
-                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), top of inner loop, have (i->first, j) = ('%s', %"INTEGER")\n", (i->first).c_str(), j);
-                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), have input_vector_unordered_map['%s'][%"INTEGER"] = '%s'\n", (i->first).c_str(), j, input_vector[j].c_str());
+//                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), top of inner loop, have (i->first, j) = ('%s', %"INTEGER")\n", (i->first).c_str(), j);
+//                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), have input_vector_unordered_map['%s'][%"INTEGER"] = '%s'\n", (i->first).c_str(), j, input_vector[j].c_str());
                     av_push(output_av, newSVpv(input_vector[j].c_str(), 0));
-                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), bottom of inner loop, have (i->first, j) = ('%s', %"INTEGER")\n", (i->first).c_str(), j);
+//                    fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), bottom of inner loop, have (i->first, j) = ('%s', %"INTEGER")\n", (i->first).c_str(), j);
                 }
             }
             else warn("in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), sub-array was empty, returning empty sub-array via newAV()");
@@ -792,7 +792,7 @@ void XS_pack_string_arrayref_hashref(SV* output_avref_hvref, string_arrayref_has
             hv_store(output_avref_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newRV_noinc((SV*)output_av), (U32)0);  // reference, do not increase reference count
 //            hv_store(output_avref_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newRV_inc((SV*)output_av), (U32)0);  // reference, do increase reference count
 
-            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), bottom of outer loop, have i->first = '%s'\n", (i->first).c_str());
+//            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), bottom of outer loop, have i->first = '%s'\n", (i->first).c_str());
         }
     }
     else warn("in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), hash was empty, returning empty hash via newHV()");
@@ -1418,6 +1418,7 @@ SV* integer_arrayref_hashref_typetest0(SV* lucky_integer_arrayrefs) {
 //  integer_arrayref_hashref_CHECK(lucky_integer_arrayrefs);
     integer_arrayref_hashref_CHECKTRACE(lucky_integer_arrayrefs, "lucky_integer_arrayrefs", "integer_arrayref_hashref_typetest0()");
 
+/*
     // BEGIN DEBUG CODE
     HV* lucky_integer_arrayrefs_deref = (HV*)SvRV(lucky_integer_arrayrefs);
     integer how_lucky = hv_iterinit(lucky_integer_arrayrefs_deref);
@@ -1448,6 +1449,7 @@ SV* integer_arrayref_hashref_typetest0(SV* lucky_integer_arrayrefs) {
         }
     }
     // END DEBUG CODE
+*/
 
     return(newSVpvf("%s%s", SvPV_nolen(integer_arrayref_hashref_to_string(lucky_integer_arrayrefs)), "CPPOPS_PERLTYPES"));
 }
@@ -1485,6 +1487,7 @@ SV* number_arrayref_hashref_typetest0(SV* lucky_number_arrayrefs) {
 //  number_arrayref_hashref_CHECK(lucky_number_arrayrefs);
     number_arrayref_hashref_CHECKTRACE(lucky_number_arrayrefs, "lucky_number_arrayrefs", "number_arrayref_hashref_typetest0()");
 
+/*
     // BEGIN DEBUG CODE
     HV* lucky_number_arrayrefs_deref = (HV*)SvRV(lucky_number_arrayrefs);
     integer how_lucky = hv_iterinit(lucky_number_arrayrefs_deref);
@@ -1515,13 +1518,14 @@ SV* number_arrayref_hashref_typetest0(SV* lucky_number_arrayrefs) {
         }
     }
     // END DEBUG CODE
+*/
 
     return(newSVpvf("%s%s", SvPV_nolen(number_arrayref_hashref_to_string(lucky_number_arrayrefs)), "CPPOPS_PERLTYPES"));
 }
 
 SV* number_arrayref_hashref_typetest1(SV* my_size) {
-//  number_CHECK(my_size);
-    number_CHECKTRACE(my_size, "my_size", "number_arrayref_hashref_typetest1()");
+//  integer_CHECK(my_size);
+    integer_CHECKTRACE(my_size, "my_size", "number_arrayref_hashref_typetest1()");
     HV* output_hv = newHV();
     integer i;
     char temp_key[30];
@@ -1552,6 +1556,7 @@ SV* string_arrayref_hashref_typetest0(SV* lucky_string_arrayrefs) {
 //  string_arrayref_hashref_CHECK(lucky_string_arrayrefs);
     string_arrayref_hashref_CHECKTRACE(lucky_string_arrayrefs, "lucky_string_arrayrefs", "string_arrayref_hashref_typetest0()");
 
+/*
     // BEGIN DEBUG CODE
     HV* lucky_string_arrayrefs_deref = (HV*)SvRV(lucky_string_arrayrefs);
     integer how_lucky = hv_iterinit(lucky_string_arrayrefs_deref);
@@ -1582,13 +1587,14 @@ SV* string_arrayref_hashref_typetest0(SV* lucky_string_arrayrefs) {
         }
     }
     // END DEBUG CODE
+*/
 
     return(newSVpvf("%s%s", SvPV_nolen(string_arrayref_hashref_to_string(lucky_string_arrayrefs)), "CPPOPS_PERLTYPES"));
 }
 
 SV* string_arrayref_hashref_typetest1(SV* my_size) {
-//  string_CHECK(my_size);
-    string_CHECKTRACE(my_size, "my_size", "string_arrayref_hashref_typetest1()");
+//  integer_CHECK(my_size);
+    integer_CHECKTRACE(my_size, "my_size", "string_arrayref_hashref_typetest1()");
     HV* output_hv = newHV();
     integer i;
     char temp_key[30];
@@ -1712,8 +1718,9 @@ number_arrayref_hashref number_arrayref_hashref_typetest1(integer my_size) {
 }
 
 string string_arrayref_hashref_typetest0(string_arrayref_hashref lucky_string_arrayrefs) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_hashref_typetest0(), top of subroutine...\n");
+//    fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_hashref_typetest0(), top of subroutine...\n");
 
+/*
     // BEGIN DEBUG CODE
     string_arrayref_hashref_const_iterator i;
     for (i = lucky_string_arrayrefs.begin();  i != lucky_string_arrayrefs.end();  ++i) {
@@ -1728,12 +1735,13 @@ string string_arrayref_hashref_typetest0(string_arrayref_hashref lucky_string_ar
         // END ARRAY CODE
     }
     // END DEBUG CODE
+*/
 
     return(string_arrayref_hashref_to_string(lucky_string_arrayrefs) + "CPPOPS_CPPTYPES");
 }
 
 string_arrayref_hashref string_arrayref_hashref_typetest1(integer my_size) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_hashref_typetest1(), top of subroutine...\n");
+//    fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_hashref_typetest1(), top of subroutine...\n");
 
     string_arrayref_hashref new_vector_unordered_map(my_size);
     integer i;
@@ -1752,7 +1760,7 @@ string_arrayref_hashref string_arrayref_hashref_typetest1(integer my_size) {
             // fall back to data conversion and string concatenation instead
 //            "Jeffy Ten! (%"INTEGER", %"INTEGER")/%"INTEGER"", i, j, (my_size - 1)
 
-            fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_hashref_typetest1(), setting element at key '%s', at index %"INTEGER"/%"INTEGER" = '%s', BARBAZ\n", temp_key.c_str(), j, (my_size - 1), temp_vec[j].c_str());
+//            fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_hashref_typetest1(), setting element at key '%s', at index %"INTEGER"/%"INTEGER" = '%s', BARBAZ\n", temp_key.c_str(), j, (my_size - 1), temp_vec[j].c_str());
         }
         // END ARRAY CODE
 
