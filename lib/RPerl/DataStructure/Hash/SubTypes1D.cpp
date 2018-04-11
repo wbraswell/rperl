@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_cpp 0.006_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes1D_cpp 0.007_000
 
 #include <RPerl/DataStructure/Hash/SubTypes1D.h>  // -> ??? (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
@@ -23,7 +23,6 @@ void integer_hashref_CHECK(SV* possible_integer_hashref)
     SV* possible_integer_hashentry_value;
     SV* possible_integer_hashentry_key;
     string possible_integer_hashentry_key_string;
-    size_t possible_integer_hashentry_key_string_pos;
 
     possible_integer_hash = (HV*)SvRV(possible_integer_hashref);
     possible_integer_hash_num_keys = hv_iterinit(possible_integer_hash);
@@ -64,7 +63,6 @@ void integer_hashref_CHECKTRACE(SV* possible_integer_hashref, const char* variab
     SV* possible_integer_hashentry_value;
     SV* possible_integer_hashentry_key;
     string possible_integer_hashentry_key_string;
-    size_t possible_integer_hashentry_key_string_pos;
 
     possible_integer_hash = (HV*)SvRV(possible_integer_hashref);
     possible_integer_hash_num_keys = hv_iterinit(possible_integer_hash);
@@ -103,7 +101,6 @@ void number_hashref_CHECK(SV* possible_number_hashref)
     SV* possible_number_hashentry_value;
     SV* possible_number_hashentry_key;
     string possible_number_hashentry_key_string;
-    size_t possible_number_hashentry_key_string_pos;
 
     possible_number_hash = (HV*)SvRV(possible_number_hashref);
     possible_number_hash_num_keys = hv_iterinit(possible_number_hash);
@@ -142,7 +139,6 @@ void number_hashref_CHECKTRACE(SV* possible_number_hashref, const char* variable
     SV* possible_number_hashentry_value;
     SV* possible_number_hashentry_key;
     string possible_number_hashentry_key_string;
-    size_t possible_number_hashentry_key_string_pos;
 
     possible_number_hash = (HV*)SvRV(possible_number_hashref);
     possible_number_hash_num_keys = hv_iterinit(possible_number_hash);
@@ -181,7 +177,6 @@ void string_hashref_CHECK(SV* possible_string_hashref)
     SV* possible_string_hashentry_value;
     SV* possible_string_hashentry_key;
     string possible_string_hashentry_key_string;
-    size_t possible_string_hashentry_key_string_pos;
 
     possible_string_hash = (HV*)SvRV(possible_string_hashref);
     possible_string_hash_num_keys = hv_iterinit(possible_string_hash);
@@ -220,7 +215,6 @@ void string_hashref_CHECKTRACE(SV* possible_string_hashref, const char* variable
     SV* possible_string_hashentry_value;
     SV* possible_string_hashentry_key;
     string possible_string_hashentry_key_string;
-    size_t possible_string_hashentry_key_string_pos;
 
     possible_string_hash = (HV*)SvRV(possible_string_hashref);
     possible_string_hash_num_keys = hv_iterinit(possible_string_hash);
@@ -506,7 +500,6 @@ SV* integer_hashref_to_string_format(SV* input_hvref, SV* format_level, SV* inde
     HE* input_hv_entry;
     SV* input_hv_entry_key;
     string input_hv_entry_key_string;
-    size_t input_hv_entry_key_string_pos;
     SV* input_hv_entry_value;
     SV* output_sv = newSVpv("", 0);
 
@@ -616,7 +609,6 @@ SV* number_hashref_to_string_format(SV* input_hvref, SV* format_level, SV* inden
     HE* input_hv_entry;
     SV* input_hv_entry_key;
     string input_hv_entry_key_string;
-    size_t input_hv_entry_key_string_pos;
     SV* input_hv_entry_value;
     SV* output_sv = newSV(0);
 
@@ -721,10 +713,8 @@ SV* string_hashref_to_string_format(SV* input_hvref, SV* format_level, SV* inden
     HE* input_hv_entry;
     SV* input_hv_entry_key;
     string input_hv_entry_key_string;
-    size_t input_hv_entry_key_string_pos;
     SV* input_hv_entry_value;
     string input_hv_entry_value_string;
-    size_t input_hv_entry_value_string_pos;
     SV* output_sv = newSVpv("", 0);
 
     // generate indent
@@ -827,7 +817,6 @@ string integer_hashref_to_string_format(integer_hashref input_unordered_map, int
     integer_hashref_const_iterator i;
     boolean i_is_0 = 1;
     string key_string;
-    size_t key_string_pos;
 
     // generate indent
     string indent = "";
@@ -914,7 +903,6 @@ string number_hashref_to_string_format(number_hashref input_unordered_map, integ
     number_hashref_const_iterator i;
     boolean i_is_0 = 1;
     string key_string;
-    size_t key_string_pos;
 
     // NEED ANSWER: do we actually need to be using ostringstream here for precision, since the actual numbers are being stringified by number_to_string() below???
     output_stream.precision(std::numeric_limits<double>::digits10);
@@ -1004,9 +992,7 @@ string string_hashref_to_string_format(string_hashref input_unordered_map, integ
     string_hashref_const_iterator i;
     boolean i_is_0 = 1;
     string key_string;
-    size_t key_string_pos;
     string value_string;
-    size_t value_string_pos;
 
     // generate indent
     string indent = "";

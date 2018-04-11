@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp 0.009_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp 0.010_000
 
 #include <RPerl/DataStructure/Hash/SubTypes2D.h>  // -> ??? (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
@@ -832,7 +832,7 @@ SV* integer_arrayref_hashref_to_string_expand(SV* input_hvref) {
     return integer_arrayref_hashref_to_string_format(input_hvref, newSViv(2), newSViv(0));
 }
 
-// convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
+// convert from (Perl SV containing RV to (Perl HV of (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))))) to Perl-parsable (Perl SV containing PV)
 SV* integer_arrayref_hashref_to_string_format(SV* input_avref_hvref, SV* format_level, SV* indent_level) {
 //    fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_hashref_to_string(), top of subroutine...\n");
 //    fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_hashref_to_string(), received format_level = %"INTEGER", indent_level = %"INTEGER"\n", SvIV(format_level), SvIV(indent_level));
@@ -848,7 +848,6 @@ SV* integer_arrayref_hashref_to_string_format(SV* input_avref_hvref, SV* format_
     HE* input_avref_hv_entry;
     SV* input_avref_hv_entry_key;
     string input_avref_hv_entry_key_string;
-    size_t input_avref_hv_entry_key_string_pos;
     SV* input_avref_hv_entry_value;
     SV* output_sv = newSVpv("", 0);
 
@@ -945,7 +944,7 @@ SV* number_arrayref_hashref_to_string_expand(SV* input_hvref) {
     return number_arrayref_hashref_to_string_format(input_hvref, newSViv(2), newSViv(0));
 }
 
-// convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing NVs))) to Perl-parsable (Perl SV containing PV)
+// convert from (Perl SV containing RV to (Perl HV of (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))))) to Perl-parsable (Perl SV containing PV)
 SV* number_arrayref_hashref_to_string_format(SV* input_avref_hvref, SV* format_level, SV* indent_level) {
 //    fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref_hashref_to_string(), top of subroutine...\n");
 //    fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref_hashref_to_string(), received format_level = %"INTEGER", indent_level = %"INTEGER"\n", SvIV(format_level), SvIV(indent_level));
@@ -961,7 +960,6 @@ SV* number_arrayref_hashref_to_string_format(SV* input_avref_hvref, SV* format_l
     HE* input_avref_hv_entry;
     SV* input_avref_hv_entry_key;
     string input_avref_hv_entry_key_string;
-    size_t input_avref_hv_entry_key_string_pos;
     SV* input_avref_hv_entry_value;
     SV* output_sv = newSVpv("", 0);
 
@@ -1058,7 +1056,7 @@ SV* string_arrayref_hashref_to_string_expand(SV* input_hvref) {
     return string_arrayref_hashref_to_string_format(input_hvref, newSViv(2), newSViv(0));
 }
 
-// convert from (Perl SV containing RV to (Perl HV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
+// convert from (Perl SV containing RV to (Perl HV of (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))))) to Perl-parsable (Perl SV containing PV)
 SV* string_arrayref_hashref_to_string_format(SV* input_avref_hvref, SV* format_level, SV* indent_level) {
 //    fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref_hashref_to_string(), top of subroutine...\n");
 //    fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref_hashref_to_string(), received format_level = %"INTEGER", indent_level = %"INTEGER"\n", SvIV(format_level), SvIV(indent_level));
@@ -1074,7 +1072,6 @@ SV* string_arrayref_hashref_to_string_format(SV* input_avref_hvref, SV* format_l
     HE* input_avref_hv_entry;
     SV* input_avref_hv_entry_key;
     string input_avref_hv_entry_key_string;
-    size_t input_avref_hv_entry_key_string_pos;
     SV* input_avref_hv_entry_value;
     SV* output_sv = newSVpv("", 0);
 
@@ -1183,7 +1180,6 @@ string integer_arrayref_hashref_to_string_format(integer_arrayref_hashref input_
     integer_arrayref_hashref_const_iterator i;
     boolean i_is_0 = 1;
     string key_string;
-    size_t key_string_pos;
 
     // generate indent
     string indent = "";
@@ -1266,7 +1262,6 @@ string number_arrayref_hashref_to_string_format(number_arrayref_hashref input_ve
     number_arrayref_hashref_const_iterator i;
     boolean i_is_0 = 1;
     string key_string;
-    size_t key_string_pos;
 
     // generate indent
     string indent = "";
@@ -1349,7 +1344,6 @@ string string_arrayref_hashref_to_string_format(string_arrayref_hashref input_ve
     string_arrayref_hashref_const_iterator i;
     boolean i_is_0 = 1;
     string key_string;
-    size_t key_string_pos;
 
     // generate indent
     string indent = "";
