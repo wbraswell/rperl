@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'syntax error' >>>
+# <<< PARSE_ERROR_PERL_5_22_AND_NEWER: 'syntax error' >>>  # DEV NOTE: disabled this part of the error message which is only generated in Perl v5.22 and newer
 
 # [[[ HEADER ]]]
 use RPerl;
