@@ -2,7 +2,11 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< TYPE_CHECKING: ON >>>
-# <<< EXECUTE_SUCCESS: "" >>>
+# <<< EXECUTE_SUCCESS: "have string_arrayref_to_string($foo_keys) = [ 'key_" >>>
+# <<< EXECUTE_SUCCESS: "have integer_arrayref_hashref_to_string_pretty($foo) =" >>>
+# <<< EXECUTE_SUCCESS: "{" >>>
+# <<< EXECUTE_SUCCESS: "    'key_0' => [ 0, 1, 2, 3, 4 ]" >>>
+# <<< EXECUTE_SUCCESS: "}" >>>
 
 # [[[ HEADER ]]]
 use RPerl;

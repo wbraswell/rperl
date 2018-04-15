@@ -1,9 +1,7 @@
 #!/usr/bin/perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: "Production rule Loop matched by LoopForEach, iteration item at $my_key = 'c_key', $my_hash->{$my_key} = 'clarabell'" >>>
 # <<< EXECUTE_SUCCESS: "Production rule Loop matched by LoopForEach, iteration item at $my_key = 'a_key', $my_hash->{$my_key} = 'howdy'" >>>
-# <<< EXECUTE_SUCCESS: "Production rule Loop matched by LoopForEach, iteration item at $my_key = 'b_key', $my_hash->{$my_key} = 'doody'" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
