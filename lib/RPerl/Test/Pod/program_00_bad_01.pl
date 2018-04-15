@@ -2,8 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'near "="' >>>
-# <<< PARSE_ERROR: 'near "1pod"' >>>
+# <<< PARSE_ERROR: 'Bareword found where operator expected' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

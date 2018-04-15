@@ -2,7 +2,7 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
-# <<< PARSE_ERROR: 'near "="' >>>
+# <<< PARSE_ERROR: 'syntax error' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
