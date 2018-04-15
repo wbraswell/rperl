@@ -11621,7 +11621,7 @@ X<ENABLE_LIST_SPACING>
 
     ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                     . ( ref $self )
-                    . ' found where TypeInnerProperties_244 or TypeInnerProperties_245 expected, dying
+                    . ' found where TypeInnerProperties_245 or TypeInnerProperties_246 expected, dying
 
 =for rperl X</noncode>
 

@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.023_000;
+our $VERSION = 0.024_000;
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
@@ -290,10 +290,22 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     foreach my object $operation ( @{ $operations_star->{children} } ) {
 
 #        RPerl::diag( 'in Subroutine->ast_to_cpp__generate_declaration__CPPOPS_CPPTYPES(), have $operation = ' . "\n" . RPerl::Parser::rperl_ast__dump($operation) . "\n" );
-# disable *_CHECK() and *_CHECKTRACE() data checking routines in CPPOPS_CPPTYPES mode, this is instead handled in xs_unpack_*() called by typemap.rperl
-        if (( exists $operation->{children}->[0]->{children}->[0]->{children}->[0] )
-            and (  ( ( substr $operation->{children}->[0]->{children}->[0]->{children}->[0], -6, 6 ) eq '_CHECK' )
-                or ( ( substr $operation->{children}->[0]->{children}->[0]->{children}->[0], -11, 11 ) eq '_CHECKTRACE' ) )
+
+        # disable *_CHECK() and *_CHECKTRACE() data checking routines in CPPOPS_CPPTYPES mode, this is instead handled in xs_unpack_*() called by typemap.rperl
+        if ((exists  $operation->{children}) and
+            (defined $operation->{children}) and
+            (defined $operation->{children}->[0]) and
+            ((ref    $operation->{children}->[0]) eq 'HASH') and
+            (exists  $operation->{children}->[0]->{children}) and
+            (defined $operation->{children}->[0]->{children}) and
+            (defined $operation->{children}->[0]->{children}->[0]) and
+            ((ref    $operation->{children}->[0]->{children}->[0]) eq 'HASH') and
+            (exists  $operation->{children}->[0]->{children}->[0]->{children}) and
+            (defined $operation->{children}->[0]->{children}->[0]->{children}) and
+            (defined $operation->{children}->[0]->{children}->[0]->{children}->[0]) and
+            ((ref    $operation->{children}->[0]->{children}->[0]->{children}->[0]) eq 'HASH') and
+                ( ( ( substr $operation->{children}->[0]->{children}->[0]->{children}->[0], -6, 6 ) eq '_CHECK' ) or
+                   ( ( substr $operation->{children}->[0]->{children}->[0]->{children}->[0], -11, 11 ) eq '_CHECKTRACE' ) )
             )
         {
             next;

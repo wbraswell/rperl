@@ -8,6 +8,7 @@ DONE
     allow 'package' statement to be split across 2 lines, in order to disable CPAN indexing
     implement %"NUMBER" format, automatically selects either %Lf or %f depending on "number" C++ data type
     implement *_arrayref_hashref
+    allow Pod as valid statement, ignore for now; this enables block comments
 
 DOING
 

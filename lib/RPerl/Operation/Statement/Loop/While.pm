@@ -27,13 +27,13 @@ sub ast_to_rperl__generate {
 
     my string $self_class = ref $self;
 
-    # unwrap LoopWhile_190 and LoopWhile_191 from Loop_186
-    if ( $self_class eq 'Loop_186' ) {    # Loop -> LoopWhile
+    # unwrap LoopWhile_191 and LoopWhile_192 from Loop_187
+    if ( $self_class eq 'Loop_187' ) {    # Loop -> LoopWhile
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( $self_class eq 'LoopWhile_190' ) {  # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
+    if ( $self_class eq 'LoopWhile_191' ) {  # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
         my string $while         = $self->{children}->[0];
         my string $left_paren    = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -47,7 +47,7 @@ sub ast_to_rperl__generate {
         $rperl_source_subgroup = $codeblock->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
-    elsif ( $self_class eq 'LoopWhile_191' ) {  # LoopWhile -> 'while' LPAREN_MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrInput ')' CodeBlock
+    elsif ( $self_class eq 'LoopWhile_192' ) {  # LoopWhile -> 'while' LPAREN_MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrInput ')' CodeBlock
         my string $while         = $self->{children}->[0];
         my string $left_paren_my    = $self->{children}->[1];
         my string $type = $self->{children}->[2]->{children}->[0];
@@ -70,7 +70,7 @@ sub ast_to_rperl__generate {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where LoopWhile_190 or LoopWhile_191 expected, dying' )
+                . ' found where LoopWhile_191 or LoopWhile_192 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -78,7 +78,7 @@ sub ast_to_rperl__generate {
 
 sub ast_to_cpp__generate__CPPOPS_PERLTYPES {
     { my string_hashref::method $RETURN_TYPE };
-    ( my object $self, my string_hashref $modes) = @ARG;
+    ( my object $self, my string $loop_label, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group
         = { CPP =>
             q{// <<< RP::O::S::L::W __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
@@ -98,13 +98,13 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     my string $self_class = ref $self;
 
-    # unwrap LoopWhile_190 from Loop_186
-    if ( $self_class eq 'Loop_186' ) {    # Loop -> LoopWhile
+    # unwrap LoopWhile_191 from Loop_187
+    if ( $self_class eq 'Loop_187' ) {    # Loop -> LoopWhile
         $self = $self->{children}->[0];
         $self_class = ref $self;
     }
 
-    if ( $self_class eq 'LoopWhile_190' ) {  # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
+    if ( $self_class eq 'LoopWhile_191' ) {  # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
         my string $while         = $self->{children}->[0];
         my string $left_paren    = $self->{children}->[1];
         my object $subexpression = $self->{children}->[2];
@@ -118,14 +118,14 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         $cpp_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($loop_label, $modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
-    elsif ( $self_class eq 'LoopWhile_191' ) {  # LoopWhile -> 'while' LPAREN_MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrInput ')' CodeBlock
+    elsif ( $self_class eq 'LoopWhile_192' ) {  # LoopWhile -> 'while' LPAREN_MY Type VARIABLE_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrInput ')' CodeBlock
         $cpp_source_group = { CPP => q{// <<< RP::O::S::L::W __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where LoopWhile_190 or LoopWhile_191 expected, dying' )
+                . ' found where LoopWhile_191 or LoopWhile_192 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;

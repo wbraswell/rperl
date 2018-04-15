@@ -28,14 +28,14 @@ sub ast_to_rperl__generate {
 
     my string $self_class = ref $self;
 
-    # unwrap HashDereference_235 and HashDereference_236 from SubExpression_162 and HashEntry_225
+    # unwrap HashDereference_236 and HashDereference_237 from SubExpression_162 and HashEntry_226
     if (   ( $self_class eq 'SubExpression_162' )  # SubExpression -> HashDereference
-        or ( $self_class eq 'HashEntry_225' ) ) {  # HashEntry -> HashDereference
+        or ( $self_class eq 'HashEntry_226' ) ) {  # HashEntry -> HashDereference
         $self = $self->{children}->[0];
     }
 
     $self_class = ref $self;
-    if ( $self_class eq 'HashDereference_235' ) {  # HashDereference -> '%{' Variable '}'
+    if ( $self_class eq 'HashDereference_236' ) {  # HashDereference -> '%{' Variable '}'
         my string $percent_left_brace = $self->{children}->[0];
         my object $variable      = $self->{children}->[1];
         my string $right_brace   = $self->{children}->[2];
@@ -45,7 +45,7 @@ sub ast_to_rperl__generate {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         $rperl_source_group->{PMC} .= q{ } . $right_brace;
     }
-    elsif ( $self_class eq 'HashDereference_236' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
+    elsif ( $self_class eq 'HashDereference_237' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
         my string $percent_left_brace       = $self->{children}->[0];
         my object $type_inner_optional = $self->{children}->[1];
         my object $hash_reference     = $self->{children}->[2];
@@ -63,7 +63,7 @@ sub ast_to_rperl__generate {
         $rperl_source_group->{PMC} .= q{ } . $right_brace;
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . $self_class . ' found where HashDereference_235 or HashDereference_236 expected, dying' ) . "\n";
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . $self_class . ' found where HashDereference_236 or HashDereference_237 expected, dying' ) . "\n";
     }
     return $rperl_source_group;
 }
@@ -87,17 +87,18 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my object $cpp_source_subgroup;
 
 #    RPerl::diag( 'in HashDereference->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in HashDereference->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
 
     my string $self_class = ref $self;
 
-    # unwrap HashDereference_235 and HashDereference_236 from SubExpression_162 and HashEntry_225
+    # unwrap HashDereference_236 and HashDereference_237 from SubExpression_162 and HashEntry_226
     if (   ( $self_class eq 'SubExpression_162' )  # SubExpression -> HashDereference
-        or ( $self_class eq 'HashEntry_225' ) ) {  # HashEntry -> HashDereference
+        or ( $self_class eq 'HashEntry_226' ) ) {  # HashEntry -> HashDereference
         $self = $self->{children}->[0];
     }
 
     $self_class = ref $self;
-    if ( $self_class eq 'HashDereference_235' ) {  # HashDereference -> '%{' Variable '}'
+    if ( $self_class eq 'HashDereference_236' ) {  # HashDereference -> '%{' Variable '}'
         my string $percent_left_brace = $self->{children}->[0];
         my object $variable      = $self->{children}->[1];
         my string $right_brace   = $self->{children}->[2];
@@ -112,7 +113,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
 #        $cpp_source_group->{CPP} .= q{ } . $right_brace;
     }
-    elsif ( $self_class eq 'HashDereference_236' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
+    elsif ( $self_class eq 'HashDereference_237' ) {  # HashDereference -> '%{' OPTIONAL-51 HashReference '}'
         my string $percent_left_brace       = $self->{children}->[0];
         my object $type_inner_optional = $self->{children}->[1];
         my object $hash_reference     = $self->{children}->[2];
@@ -134,7 +135,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #        $cpp_source_group->{CPP} .= q{ } . $right_brace;
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . $self_class . ' found where HashDereference_235 or HashDereference_236 expected, dying' ) . "\n";
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . $self_class . ' found where HashDereference_236 or HashDereference_237 expected, dying' ) . "\n";
     }
     return $cpp_source_group;
 }

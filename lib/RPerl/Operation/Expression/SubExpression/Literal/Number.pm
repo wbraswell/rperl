@@ -21,11 +21,11 @@ sub ast_to_rperl__generate {
 
 #    RPerl::diag( 'in Literal::Number->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'Literal_254' ) {
+    if ( ( ref $self ) ne 'Literal_255' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . ( ref $self )
-                . ' found where Literal_254 expected, dying' )
+                . ' found where Literal_255 expected, dying' )
             . "\n";
     }
  
@@ -62,11 +62,11 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
 #    RPerl::diag( 'in Literal::Number->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
-    if ( ( ref $self ) ne 'Literal_254' ) {
+    if ( ( ref $self ) ne 'Literal_255' ) {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . ( ref $self )
-                . ' found where Literal_254 expected, dying' )
+                . ' found where Literal_255 expected, dying' )
             . "\n";
     }
  

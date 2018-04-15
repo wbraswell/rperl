@@ -3,7 +3,7 @@ package RPerl::CodeBlock;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.004_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::GrammarRule);
@@ -28,7 +28,7 @@ sub ast_to_rperl__generate {
 
     my string $self_class = ref $self;
 
-    if ( $self_class eq 'CodeBlock_194' ) {    # CodeBlock -> LBRACE PLUS-41 '}'
+    if ( $self_class eq 'CodeBlock_195' ) {    # CodeBlock -> LBRACE PLUS-41 '}'
         my string $left_brace     = $self->{children}->[0];
         my object $operation_plus = $self->{children}->[1];
         my string $right_brace    = $self->{children}->[2];
@@ -46,7 +46,7 @@ sub ast_to_rperl__generate {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . $self_class . ' found where CodeBlock_194 expected, dying' )
+            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . $self_class . ' found where CodeBlock_195 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -66,14 +66,15 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     ( my object $self, my string $loop_label, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group = { CPP => q{} };
 
-    #    RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-    #    RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $loop_label = ' . "\n" . RPerl::Parser::rperl_ast__dump($loop_label) . "\n" );
+#    RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $loop_label = ' . "\n" . RPerl::Parser::rperl_ast__dump($loop_label) . "\n" );
 #    RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes->{_inside_parallel_loop} = ' . "\n" . $modes->{_inside_parallel_loop} . "\n" );
 #    RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes->{_current_parallel_loop} = ' . "\n" . Dumper($modes->{_current_parallel_loop}) . "\n" );
+#    RPerl::diag( 'in CodeBlock->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
     
     my string $self_class = ref $self;
 
-    if ( $self_class eq 'CodeBlock_194' ) {    # CodeBlock -> LBRACE PLUS-41 '}'
+    if ( $self_class eq 'CodeBlock_195' ) {    # CodeBlock -> LBRACE PLUS-41 '}'
         my string $left_brace     = $self->{children}->[0];
         my object $operation_plus = $self->{children}->[1];
         my string $right_brace    = $self->{children}->[2];
@@ -112,7 +113,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
     else {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . $self_class . ' found where CodeBlock_194 expected, dying' )
+            'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . $self_class . ' found where CodeBlock_195 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;

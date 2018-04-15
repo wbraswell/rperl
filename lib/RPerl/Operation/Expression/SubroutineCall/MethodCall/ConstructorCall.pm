@@ -109,7 +109,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #            RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), MongoDB constructor, have $properties_init_optional->{children}->[0] = ' . "\n" . RPerl::Parser::rperl_ast__dump($properties_init_optional->{children}->[0]) . "\n" );
             my $properties_init = $properties_init_optional->{children}->[0];
 
-            if ((ref $properties_init) ne 'HashReference_231') {
+            if ((ref $properties_init) ne 'HashReference_232') {
                 die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP097a, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In constructor call for package '
                     . q{'} . $type . q{()'} . ', invalid arguments found, must be exactly 1 non-empty hashref, only ' . q{'host'} . ' key with ' . q{'mongodb://HOST:PORT'} . ' value currently supported, dying' ) . "\n";
             }
@@ -133,7 +133,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             }
 
             elsif ((not defined $properties_init->{children}->[1]) or
-                ((ref $properties_init->{children}->[1]) ne 'HashEntry_224')) {
+                ((ref $properties_init->{children}->[1]) ne 'HashEntry_225')) {
                 die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP097c, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In constructor call for package '
                     . q{'} . $type . q{()'} . ', invalid or no arguments found, must be exactly 1 non-empty hashref, only ' . q{'host'} . ' key with ' . q{'mongodb://HOST:PORT'} . ' value currently supported, dying' ) . "\n";
             }
@@ -146,7 +146,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             }
 
             elsif ((not defined $properties_init->{children}->[1]->{children}->[0]) or
-                ((ref $properties_init->{children}->[1]->{children}->[0]) ne 'VarOrLitOrOpStrOrWord_251')) {
+                ((ref $properties_init->{children}->[1]->{children}->[0]) ne 'VarOrLitOrOpStrOrWord_252')) {
                 die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP097d, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In constructor call for package '
                     . q{'} . $type . q{()'} . ', invalid or no arguments found, must be exactly 1 non-empty hashref, only ' . q{'host'} . ' key with ' . q{'mongodb://HOST:PORT'} . ' value currently supported, dying' ) . "\n";
             }
@@ -158,7 +158,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             }
 
             elsif ((not defined $properties_init->{children}->[1]->{children}->[0]->{children}->[0]) or
-                ((ref $properties_init->{children}->[1]->{children}->[0]->{children}->[0]) ne 'OpStringOrWord_278')) {
+                ((ref $properties_init->{children}->[1]->{children}->[0]->{children}->[0]) ne 'OpStringOrWord_279')) {
                 die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP097e, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In constructor call for package '
                     . q{'} . $type . q{()'} . ', invalid or no arguments found, must be exactly 1 non-empty hashref, only ' . q{'host'} . ' key with ' . q{'mongodb://HOST:PORT'} . ' value currently supported, dying' ) . "\n";
             }
@@ -189,7 +189,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             }
 
             elsif ((not defined $properties_init->{children}->[1]->{children}->[3]->{children}->[0]) or
-                ((ref $properties_init->{children}->[1]->{children}->[3]->{children}->[0]) ne 'Literal_255')) {
+                ((ref $properties_init->{children}->[1]->{children}->[3]->{children}->[0]) ne 'Literal_256')) {
                 die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP097h, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In constructor call for package '
                     . q{'} . $type . q{()'} . ', invalid or no arguments found, must be exactly 1 non-empty hashref, only ' . q{'host'} . ' key with ' . q{'mongodb://HOST:PORT'} . ' value currently supported, dying' ) . "\n";
             }
@@ -241,9 +241,9 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         my object $property_0 = $properties_init_optional->{children}->[1];
 #        RPerl::diag( 'in ConstructorCall->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $property_0 = ' . "\n" . RPerl::Parser::rperl_ast__dump($property_0) . "\n" );
 
-        if ( ( ref $property_0 ) ne 'HashEntry_224' ) {
+        if ( ( ref $property_0 ) ne 'HashEntry_225' ) {
             die RPerl::Parser::rperl_rule__replace(
-                'ERROR ECOGEASCP036, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $property_0 ) . ' found where HashEntry_224 expected, object property value initialization hashref must contain normal key/value pairs only, dying' ) . "\n";
+                'ERROR ECOGEASCP036, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $property_0 ) . ' found where HashEntry_225 expected, object property value initialization hashref must contain normal key/value pairs only, dying' ) . "\n";
         }
 
         $cpp_source_subgroup = $self->ast_to_cpp__generate__CPPOPS_CPPTYPES__property_init($modes, $property_0);
@@ -288,18 +288,18 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES__property_init {
     my object $property_type_inner_optional = $property->{children}->[2];
     my object $property_value               = $property->{children}->[3];
 
-    if ( ( ref $property_name ) ne 'VarOrLitOrOpStrOrWord_251' ) {
+    if ( ( ref $property_name ) ne 'VarOrLitOrOpStrOrWord_252' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP036, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $property_name ) . ' found where VarOrLitOrOpStrOrWord_251 expected, object property value initialization hashref must contain normal key/value pairs only, dying' ) . "\n";
+            'ERROR ECOGEASCP036, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $property_name ) . ' found where VarOrLitOrOpStrOrWord_252 expected, object property value initialization hashref must contain normal key/value pairs only, dying' ) . "\n";
     }
 
-    $property_name = $property_name->{children}->[0];  # unwrap OpStringOrWord_278 from VarOrLitOrOpStrOrWord_251
-    if ( ( ref $property_name ) ne 'OpStringOrWord_278' ) {
+    $property_name = $property_name->{children}->[0];  # unwrap OpStringOrWord_279 from VarOrLitOrOpStrOrWord_252
+    if ( ( ref $property_name ) ne 'OpStringOrWord_279' ) {
         die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASCP037, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $property_name ) . ' found where OpStringOrWord_278 expected, object property value initialization hashref must contain bareword keys only, dying' ) . "\n";
+            'ERROR ECOGEASCP037, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . ( ref $property_name ) . ' found where OpStringOrWord_279 expected, object property value initialization hashref must contain bareword keys only, dying' ) . "\n";
     }
 
-    $property_name = $property_name->{children}->[0];  # unwrap bareword from OpStringOrWord_278
+    $property_name = $property_name->{children}->[0];  # unwrap bareword from OpStringOrWord_279
 
     if ( exists $property_type_inner_optional->{children}->[0] ) {
         die RPerl::Parser::rperl_rule__replace(

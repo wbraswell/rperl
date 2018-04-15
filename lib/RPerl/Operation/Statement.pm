@@ -3,7 +3,7 @@ package RPerl::Operation::Statement;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_010;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation);
@@ -39,7 +39,6 @@ sub ast_to_rperl__generate {
         RPerl::Generator::source_group_append( $rperl_source_group,
             $rperl_source_subgroup );
     }
-
     # Loop
     elsif ( $child0_class eq 'Statement_173' ) {
         my $optional_loop_label = $child0->{children}->[0];
@@ -51,11 +50,17 @@ sub ast_to_rperl__generate {
         $rperl_source_subgroup = $loop->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
+    # Pod
+    elsif ( $child0_class eq 'Statement_177' ) {
+        # START HERE: handle Pod somehow???
+        # START HERE: handle Pod somehow???
+        # START HERE: handle Pod somehow???
+    }
     else {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $child0_class
-                . ' found where Statement_172, Statement_173, Statement_174, Statement_175, or Statement_176 expected, dying'
+                . ' found where Statement_172, Statement_173, Statement_174, Statement_175, Statement_176, or Statement_177 expected, dying'
         ) . "\n";
     }
     return $rperl_source_group;
@@ -94,7 +99,6 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #        RPerl::diag( 'in Statement->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
-
     # Loop
     elsif ( $child0_class eq 'Statement_173' ) {
         my object $optional_loop_label = $child0->{children}->[0];
@@ -110,11 +114,17 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         $cpp_source_subgroup = $loop->ast_to_cpp__generate__CPPOPS_CPPTYPES($loop_label, $modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
+    # Pod
+    elsif ( $child0_class eq 'Statement_177' ) {
+        # START HERE: handle Pod somehow???
+        # START HERE: handle Pod somehow???
+        # START HERE: handle Pod somehow???
+    }
     else {
         die RPerl::Parser::rperl_rule__replace(
             'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $child0_class
-                . ' found where Statement_172, Statement_173, Statement_174, Statement_175, or Statement_176 expected, dying'
+                . ' found where Statement_172, Statement_173, Statement_174, Statement_175, Statement_176, or Statement_177 expected, dying'
         ) . "\n";
     }
     return $cpp_source_group;

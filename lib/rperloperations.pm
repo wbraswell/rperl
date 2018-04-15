@@ -28,21 +28,21 @@ our $BUILTINS_PERL_NAMED = {
 #our $POSSIBLE_ARRAY_OR_HASH_RETURN_VALUE = {  # alternative naming
     # token: OP10_NAMED_UNARY_SCOLON
     Operation_97 => 'RPerl::Operation::Expression::Operator::NamedUnary',       # Operation -> OP10_NAMED_UNARY_SCOLON
-    OpNamedScolonOrSubExp_257 => 'RPerl::NonGenerator',                         # OpNamedScolonOrSubExp -> OP10_NAMED_UNARY_SCOLON
-    OpNamedScolonOrSubExpIn_260 => 'RPerl::NonGenerator',                       # OpNamedScolonOrSubExpIn -> OP10_NAMED_UNARY_SCOLON
+    OpNamedScolonOrSubExp_258 => 'RPerl::NonGenerator',                         # OpNamedScolonOrSubExp -> OP10_NAMED_UNARY_SCOLON
+    OpNamedScolonOrSubExpIn_261 => 'RPerl::NonGenerator',                       # OpNamedScolonOrSubExpIn -> OP10_NAMED_UNARY_SCOLON
 
     # token: OP10_NAMED_UNARY
     Operator_116 => 'RPerl::Operation::Expression::Operator::NamedUnary',       # Operator -> OP10_NAMED_UNARY SubExpression
     Operator_117 => 'RPerl::Operation::Expression::Operator::NamedUnary',       # Operator -> OP10_NAMED_UNARY
-    OpStringOrWord_269 => 'RPerl::NonGenerator',                                # OpStringOrWord -> OP10_NAMED_UNARY
+    OpStringOrWord_270 => 'RPerl::NonGenerator',                                # OpStringOrWord -> OP10_NAMED_UNARY
 
     # token: OP01_QW
-    ListElement_213 => 'RPerl::DataStructure::Array::ListElement',              # ListElement -> OP01_QW
+    ListElement_214 => 'RPerl::DataStructure::Array::ListElement',              # ListElement -> OP01_QW
 
     # token: OP01_NAMED_SCOLON
     Operation_96 => 'RPerl::Operation::Expression::Operator::Named',            # Operation -> OP01_NAMED_SCOLON
-    OpNamedScolonOrSubExp_256 => 'RPerl::NonGenerator',                         # OpNamedScolonOrSubExp -> OP01_NAMED_SCOLON
-    OpNamedScolonOrSubExpIn_259 => 'RPerl::NonGenerator',                       # OpNamedScolonOrSubExpIn -> OP01_NAMED_SCOLON
+    OpNamedScolonOrSubExp_257 => 'RPerl::NonGenerator',                         # OpNamedScolonOrSubExp -> OP01_NAMED_SCOLON
+    OpNamedScolonOrSubExpIn_260 => 'RPerl::NonGenerator',                       # OpNamedScolonOrSubExpIn -> OP01_NAMED_SCOLON
 
     # token: OP01_NAMED
     Operator_100 => 'RPerl::Operation::Expression::Operator::Named',            # Operator -> OP01_NAMED SubExpression

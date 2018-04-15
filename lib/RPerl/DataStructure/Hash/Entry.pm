@@ -27,20 +27,20 @@ sub ast_to_rperl__generate {
     #    RPerl::diag( 'in Hash::Entry->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'HashEntry_224' ) {    # HashEntry -> VarOrLitOrOpStrOrWord OP20_HASH_FATARROW OPTIONAL-48 SubExpression
+    if ( $self_class eq 'HashEntry_225' ) {    # HashEntry -> VarOrLitOrOpStrOrWord OP20_HASH_FATARROW OPTIONAL-48 SubExpression
         my string $key                 = $self->{children}->[0];
         my string $key_class           = ref $key;
         my string $fat_arrow           = $self->{children}->[1];
         my object $type_inner_optional = $self->{children}->[2];
         my string $key_name            = undef;
 
-        if (   ( $key_class eq 'VarOrLitOrOpStrOrWord_249' )
-            or ( $key_class eq 'VarOrLitOrOpStrOrWord_250' ) )
+        if (   ( $key_class eq 'VarOrLitOrOpStrOrWord_250' )
+            or ( $key_class eq 'VarOrLitOrOpStrOrWord_251' ) )
         {                                      # Variable or Literal
             $rperl_source_subgroup = $key->ast_to_rperl__generate($modes);
             RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
         }
-        elsif ( $key_class eq 'VarOrLitOrOpStrOrWord_251' ) {    # OpStringOrWord
+        elsif ( $key_class eq 'VarOrLitOrOpStrOrWord_252' ) {    # OpStringOrWord
             $key_name = $key->{children}->[0]->{children}->[0];
             $key_name =~ s/^(\w+)\s*$/$1/gxms;  # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ($key_name !~ /^[a-z]/) {
@@ -53,7 +53,7 @@ sub ast_to_rperl__generate {
         else {
             die RPerl::Parser::rperl_rule__replace( q{ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '}
                     . ($key_class)
-                    . q{' found where VarOrLitOrOpStrOrWord_249, VarOrLitOrOpStrOrWord_250, or VarOrLitOrOpStrOrWord_251 expected, dying} )
+                    . q{' found where VarOrLitOrOpStrOrWord_250, VarOrLitOrOpStrOrWord_251, or VarOrLitOrOpStrOrWord_252 expected, dying} )
                 . "\n";
         }
 
@@ -81,14 +81,14 @@ sub ast_to_rperl__generate {
         $rperl_source_subgroup = $subexpression->ast_to_rperl__generate($modes);
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
-    elsif ( $self_class eq 'HashEntry_226' ) {    # HashEntry -> ENV
+    elsif ( $self_class eq 'HashEntry_227' ) {    # HashEntry -> ENV
         my string $env = $self->{children}->[0];
         $rperl_source_group->{PMC} .= $env . "\n";
     }
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule '
                 . $self_class
-                . ' found where HashEntry_224 or HashEntry_226 expected, dying' )
+                . ' found where HashEntry_225 or HashEntry_227 expected, dying' )
             . "\n";
     }
     return $rperl_source_group;
@@ -112,7 +112,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     #    RPerl::diag( 'in Hash::Entry->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'HashEntry_224' ) {    # HashEntry -> VarOrLitOrOpStrOrWord OP20_HASH_FATARROW OPTIONAL-48 SubExpression
+    if ( $self_class eq 'HashEntry_225' ) {    # HashEntry -> VarOrLitOrOpStrOrWord OP20_HASH_FATARROW OPTIONAL-48 SubExpression
 
         my string $key                 = $self->{children}->[0];
         my string $key_class           = ref $key;
@@ -121,13 +121,13 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
         $cpp_source_group->{CPP} .= '{';
 
-        if (   ( $key_class eq 'VarOrLitOrOpStrOrWord_249' )
-            or ( $key_class eq 'VarOrLitOrOpStrOrWord_250' ) )
+        if (   ( $key_class eq 'VarOrLitOrOpStrOrWord_250' )
+            or ( $key_class eq 'VarOrLitOrOpStrOrWord_251' ) )
         {                                      # Variable or Literal
             $cpp_source_subgroup = $key->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         }
-        elsif ( $key_class eq 'VarOrLitOrOpStrOrWord_251' ) {    # OpStringOrWord
+        elsif ( $key_class eq 'VarOrLitOrOpStrOrWord_252' ) {    # OpStringOrWord
             $key_name = $key->{children}->[0]->{children}->[0];
             $key_name =~ s/^(\w+)\s*$/$1/gxms;  # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ($key_name !~ /^[a-z]/) {
@@ -140,7 +140,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         else {
             die RPerl::Parser::rperl_rule__replace( q{ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '}
                     . ($key_class)
-                    . q{' found where VarOrLitOrOpStrOrWord_249, VarOrLitOrOpStrOrWord_250, or VarOrLitOrOpStrOrWord_251 expected, dying} )
+                    . q{' found where VarOrLitOrOpStrOrWord_250, VarOrLitOrOpStrOrWord_251, or VarOrLitOrOpStrOrWord_252 expected, dying} )
                 . "\n";
         }
 
@@ -165,14 +165,14 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
         $cpp_source_group->{CPP} .= '}';
     }
-    elsif ( $self_class eq 'HashEntry_226' ) {    # HashEntry -> ENV
+    elsif ( $self_class eq 'HashEntry_227' ) {    # HashEntry -> ENV
         my string $env = $self->{children}->[0];
         $cpp_source_group->{CPP} .= q{// <<< RP::DS::H::E __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n";
     }
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
-                . ' found where HashEntry_224 or HashEntry_226 expected, dying' )
+                . ' found where HashEntry_225 or HashEntry_227 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;
@@ -187,7 +187,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build {
     #    RPerl::diag( 'in Hash::Entry->ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
-    if ( $self_class eq 'HashEntry_224' ) {    # HashEntry -> VarOrLitOrOpStrOrWord OP20_HASH_FATARROW OPTIONAL-48 SubExpression
+    if ( $self_class eq 'HashEntry_225' ) {    # HashEntry -> VarOrLitOrOpStrOrWord OP20_HASH_FATARROW OPTIONAL-48 SubExpression
 
         my string $key                 = $self->{children}->[0];
         my string $key_class           = ref $key;
@@ -197,14 +197,14 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build {
 #        $cpp_source_group->{CPP} .= '{';
         $cpp_source_group->{CPP} .= ' << ';
 
-        if (   ( $key_class eq 'VarOrLitOrOpStrOrWord_249' )
-            or ( $key_class eq 'VarOrLitOrOpStrOrWord_250' ) )
+        if (   ( $key_class eq 'VarOrLitOrOpStrOrWord_250' )
+            or ( $key_class eq 'VarOrLitOrOpStrOrWord_251' ) )
         {                                      # Variable or Literal
             # DEV NOTE: hash entry key will never need to call ..._bson_build() generator
             $cpp_source_subgroup = $key->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         }
-        elsif ( $key_class eq 'VarOrLitOrOpStrOrWord_251' ) {    # OpStringOrWord
+        elsif ( $key_class eq 'VarOrLitOrOpStrOrWord_252' ) {    # OpStringOrWord
             $key_name = $key->{children}->[0]->{children}->[0];
             $key_name =~ s/^(\w+)\s*$/$1/gxms;  # strip trailing whitespace, caused by grammar matching operator names with trailing spaces
             if ($key_name !~ /^[a-z]/) {
@@ -217,7 +217,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build {
         else {
             die RPerl::Parser::rperl_rule__replace( q{ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '}
                     . ($key_class)
-                    . q{' found where VarOrLitOrOpStrOrWord_249, VarOrLitOrOpStrOrWord_250, or VarOrLitOrOpStrOrWord_251 expected, dying} )
+                    . q{' found where VarOrLitOrOpStrOrWord_250, VarOrLitOrOpStrOrWord_251, or VarOrLitOrOpStrOrWord_252 expected, dying} )
                 . "\n";
         }
 
@@ -250,14 +250,14 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES__bson_build {
 #        $cpp_source_group->{CPP} .= '}';
 #        $cpp_source_group->{CPP} .= '<<';
     }
-    elsif ( $self_class eq 'HashEntry_226' ) {    # HashEntry -> ENV
+    elsif ( $self_class eq 'HashEntry_227' ) {    # HashEntry -> ENV
         my string $env = $self->{children}->[0];
         $cpp_source_group->{CPP} .= q{// <<< RP::DS::H::E __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES__bson_build >>>} . "\n";
     }
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '
                 . $self_class
-                . ' found where HashEntry_224 or HashEntry_226 expected, dying' )
+                . ' found where HashEntry_225 or HashEntry_227 expected, dying' )
             . "\n";
     }
     return $cpp_source_group;

@@ -163,7 +163,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         }
 
         elsif ((not defined $arguments_optional->{children}->[0]) or
-            ((ref $arguments_optional->{children}->[0]) ne 'ListElements_210')) {
+            ((ref $arguments_optional->{children}->[0]) ne 'ListElements_211')) {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP095b, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
                 . q{'} . $name_string . q{()'} . ', invalid or no arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
         }
@@ -187,7 +187,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         }
 
         elsif ((not defined $arguments_optional->{children}->[0]->{children}->[0]) or
-            ((ref $arguments_optional->{children}->[0]->{children}->[0]) ne 'ListElement_211')) {
+            ((ref $arguments_optional->{children}->[0]->{children}->[0]) ne 'ListElement_212')) {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP095d, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
                 . q{'} . $name_string . q{()'} . ', invalid or no arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
         }
@@ -212,7 +212,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         }
 
         elsif ((not defined $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]) or
-            ((ref $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]) ne 'HashReference_231')) {
+            ((ref $arguments_optional->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]) ne 'HashReference_232')) {
             die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP095f, CODE GENERATOR, ABSTRACT SYNTAX TO C++: In subroutine call to '
                 . q{'} . $name_string . q{()'} . ', invalid or no arguments found, must be exactly 1 non-empty hashref, dying' ) . "\n";
         }

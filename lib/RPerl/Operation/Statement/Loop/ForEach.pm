@@ -23,18 +23,18 @@ sub ast_to_rperl__generate {
     ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
-    #    RPerl::diag( 'in Loop::ForEach->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Loop::ForEach->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
 
-    # unwrap LoopForEach_189 from Loop_185
-    if ( $self_class eq 'Loop_185' ) {    # Loop -> LoopForEach
+    # unwrap LoopForEach_190 from Loop_186
+    if ( $self_class eq 'Loop_186' ) {    # Loop -> LoopForEach
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
     # LoopForEach -> 'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock
-    if ( $self_class eq 'LoopForEach_189' ) {
+    if ( $self_class eq 'LoopForEach_190' ) {
         my string $foreach         = $self->{children}->[0];
         my string $my              = $self->{children}->[1];
         my string $type            = $self->{children}->[2]->{children}->[0];
@@ -61,14 +61,14 @@ sub ast_to_rperl__generate {
         RPerl::Generator::source_group_append( $rperl_source_group, $rperl_source_subgroup );
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . $self_class . ' found where LoopForEach_189 expected, dying' ) . "\n";
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . $self_class . ' found where LoopForEach_190 expected, dying' ) . "\n";
     }
     return $rperl_source_group;
 }
 
 sub ast_to_cpp__generate__CPPOPS_PERLTYPES {
     { my string_hashref::method $RETURN_TYPE };
-    ( my object $self, my string_hashref $modes) = @ARG;
+    ( my object $self, my string $loop_label, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group = { CPP => q{// <<< RP::O::S::L::FE __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>} . "\n" };
 
     #...
@@ -77,26 +77,23 @@ sub ast_to_cpp__generate__CPPOPS_PERLTYPES {
 
 sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     { my string_hashref::method $RETURN_TYPE };
-    ( my object $self, my string_hashref $modes) = @ARG;
-
-    # START HERE: implement CPPOPS_CPPTYPES, with shortcut optimization for: foreach my string $key (keys %{$foo}) {...}
-    # START HERE: implement CPPOPS_CPPTYPES, with shortcut optimization for: foreach my string $key (keys %{$foo}) {...}
-    # START HERE: implement CPPOPS_CPPTYPES, with shortcut optimization for: foreach my string $key (keys %{$foo}) {...}
+    ( my object $self, my string $loop_label, my string_hashref $modes) = @ARG;
 
     my string_hashref $cpp_source_group = { CPP => q{} };
 
 #    RPerl::diag( 'in Loop::ForEach->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Loop::ForEach->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
 
     my string $self_class = ref $self;
 
-    # unwrap LoopForEach_189 from Loop_185
-    if ( $self_class eq 'Loop_185' ) {    # Loop -> LoopForEach
+    # unwrap LoopForEach_190 from Loop_186
+    if ( $self_class eq 'Loop_186' ) {    # Loop -> LoopForEach
         $self       = $self->{children}->[0];
         $self_class = ref $self;
     }
 
     # LoopForEach -> 'foreach' MY Type VARIABLE_SYMBOL LPAREN ListElements ')' CodeBlock
-    if ( $self_class eq 'LoopForEach_189' ) {
+    if ( $self_class eq 'LoopForEach_190' ) {
         my string $foreach         = $self->{children}->[0];
         my string $my              = $self->{children}->[1];
         my string $type            = $self->{children}->[2]->{children}->[0];
@@ -113,12 +110,12 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 #        RPerl::diag( 'in Loop::ForEach->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $list_elements = ' . "\n" . RPerl::Parser::rperl_ast__dump($list_elements) . "\n" );
 #        die 'TMP DEBUG';
 
-        # THEN START HERE: add error checking from PERLOPS_PERLTYPES
-        # THEN START HERE: add error checking from PERLOPS_PERLTYPES
-        # THEN START HERE: add error checking from PERLOPS_PERLTYPES
+        # THEN START HERE: add error checking from PERLOPS_PERLTYPES; determine how to utilize $loop_label
+        # THEN START HERE: add error checking from PERLOPS_PERLTYPES; determine how to utilize $loop_label
+        # THEN START HERE: add error checking from PERLOPS_PERLTYPES; determine how to utilize $loop_label
+
 #        if ((scalar @{$list_elements->{children}->[1]->{children}}) > 0) {  # non-empty _STAR_LIST, meaning 2 or more total elements in ListElements
 #        }
-
 
         # COMPILE-TIME OPTIMIZATION #04: detect Perl foreach() loop over hash entries, implement as C++17 range-based for() loop
     my $HARD_CODED_EXAMPLES = sub {
@@ -169,7 +166,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                 (defined $list_elements->{children}->[0]->{children}->[0]->{children}->[0]->{children}) and
                 (defined $list_elements->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0])) {
             my object $possible_operator_named = $list_elements->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0];
-            RPerl::diag( 'in Loop::ForEach->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $possible_operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($possible_operator_named) . "\n" );
+#            RPerl::diag( 'in Loop::ForEach->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $possible_operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($possible_operator_named) . "\n" );
 
             # Operator -> OP01_NAMED SubExpression
             my string $possible_operator_named_class = ref $possible_operator_named;
@@ -182,7 +179,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                             ($possible_operator_named->{children}->[0] eq 'keys ')) {
                         $is_keys = 1;
                         $keys_args = $possible_operator_named->{children}->[1];
-                        RPerl::diag( 'in Loop::ForEach->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $is_keys = 1, $keys_args = ' . "\n" . RPerl::Parser::rperl_ast__dump($keys_args) . "\n" );
+#                        RPerl::diag( 'in Loop::ForEach->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $is_keys = 1, $keys_args = ' . "\n" . RPerl::Parser::rperl_ast__dump($keys_args) . "\n" );
                     }
                 }
             }
@@ -212,7 +209,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             $cpp_source_group->{CPP} .= q{) };
 =cut
 
-            $rperl_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+            $rperl_source_subgroup = $codeblock->ast_to_cpp__generate__CPPOPS_CPPTYPES($loop_label, $modes);
 #            RPerl::diag( 'in Loop::ForEach->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $is_keys = 1, $rperl_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($rperl_source_subgroup) . "\n" );
             if ((not exists $rperl_source_subgroup->{CPP}) or
                 (not defined $rperl_source_subgroup->{CPP}) or
@@ -252,7 +249,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         }
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . $self_class . ' found where LoopForEach_189 expected, dying' ) . "\n";
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . $self_class . ' found where LoopForEach_190 expected, dying' ) . "\n";
     }
 
     return $cpp_source_group;
