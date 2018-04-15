@@ -3,7 +3,7 @@ package  # hide from PAUSE indexing
     rperloperations; ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 use strict;
 use warnings;
-our $VERSION = 0.001_700;
+our $VERSION = 0.003_000;
 use Carp;
 
 # NEED UPGRADE: make Grammars first-class citizens for full Perl 6 compatibility, we should have it done by Christmas  XD
@@ -19,6 +19,35 @@ our $BUILTINS = {
     'sse_number_pair::new_from_pair' => 'sse_number_pair__new_from_pair',
     'constant_sse_number_pair::new_from_singleton_duplicate' => 'constant_sse_number_pair__new_from_singleton_duplicate',
     'constant_sse_number_pair::new_from_pair' => 'constant_sse_number_pair__new_from_pair'
+};
+
+# Perl system builtin named operators (AKA named functions);
+# the following tokens and their associated rules represent Perl builtin functions which may return-by-value an array or hash data structure,
+# instead of an arrayref or hashref as with all user-defined RPerl subroutines and variables
+our $BUILTINS_PERL_NAMED = {
+#our $POSSIBLE_ARRAY_OR_HASH_RETURN_VALUE = {  # alternative naming
+    # token: OP10_NAMED_UNARY_SCOLON
+    Operation_97 => 'RPerl::Operation::Expression::Operator::NamedUnary',       # Operation -> OP10_NAMED_UNARY_SCOLON
+    OpNamedScolonOrSubExp_257 => 'RPerl::NonGenerator',                         # OpNamedScolonOrSubExp -> OP10_NAMED_UNARY_SCOLON
+    OpNamedScolonOrSubExpIn_260 => 'RPerl::NonGenerator',                       # OpNamedScolonOrSubExpIn -> OP10_NAMED_UNARY_SCOLON
+
+    # token: OP10_NAMED_UNARY
+    Operator_116 => 'RPerl::Operation::Expression::Operator::NamedUnary',       # Operator -> OP10_NAMED_UNARY SubExpression
+    Operator_117 => 'RPerl::Operation::Expression::Operator::NamedUnary',       # Operator -> OP10_NAMED_UNARY
+    OpStringOrWord_269 => 'RPerl::NonGenerator',                                # OpStringOrWord -> OP10_NAMED_UNARY
+
+    # token: OP01_QW
+    ListElement_213 => 'RPerl::DataStructure::Array::ListElement',              # ListElement -> OP01_QW
+
+    # token: OP01_NAMED_SCOLON
+    Operation_96 => 'RPerl::Operation::Expression::Operator::Named',            # Operation -> OP01_NAMED_SCOLON
+    OpNamedScolonOrSubExp_256 => 'RPerl::NonGenerator',                         # OpNamedScolonOrSubExp -> OP01_NAMED_SCOLON
+    OpNamedScolonOrSubExpIn_259 => 'RPerl::NonGenerator',                       # OpNamedScolonOrSubExpIn -> OP01_NAMED_SCOLON
+
+    # token: OP01_NAMED
+    Operator_100 => 'RPerl::Operation::Expression::Operator::Named',            # Operator -> OP01_NAMED SubExpression
+    Operator_101 => 'RPerl::Operation::Expression::Operator::Named',            # Operator -> LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')'
+    OperatorVoid_140 => 'RPerl::Operation::Expression::Operator::Named',        # OperatorVoid -> OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';'
 };
 
 # [[[ EXPRESSIONS ]]]
@@ -38,6 +67,7 @@ use RPerl::Operation::Expression::Operator::IncrementDecrement;
 use RPerl::Operation::Expression::Operator::Arithmetic::MultiplyDivideModulo;
 use RPerl::Operation::Expression::Operator::Arithmetic::Negative;
 use RPerl::Operation::Expression::Operator::Arithmetic::Power;
+
 # DEV NOTE, CORRELATION #rp020: upon adding new named op file lib/RPerl/Operation/Expression/Operator/Named*/* also add in Named*.pm and rperloperations.*
 use RPerl::Operation::Expression::Operator::Named;
 use RPerl::Operation::Expression::Operator::Named::AbsoluteValue;

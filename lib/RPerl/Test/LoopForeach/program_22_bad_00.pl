@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
+# <<< PARSE_ERROR: 'Unexpected Token:  }' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -11,9 +16,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string_hashref $my_hash
-    = { a_key => 'howdy', b_key => 'doody', c_key => 'clarabell' };
-foreach my string $my_key ( keys %{$my_hash} ) {
-    print 'Production rule Loop matched by LoopForEach, iteration item ',
-        $my_key, "\n";
-}
+my string_hashref $my_hash = { a_key => 'howdy', b_key => 'doody', c_key => 'clarabell' };
+foreach my string $my_key ( keys %{$my_hash} ) { }

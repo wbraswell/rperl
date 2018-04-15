@@ -26,7 +26,10 @@ SV* integer_arrayref_hashref_keys(SV* input_avref_hvref) {
 //  integer_arrayref_hashref_CHECK(input_avref_hvref);
     integer_arrayref_hashref_CHECKTRACE(input_avref_hvref, "input_avref_hvref", "integer_arrayref_hashref_to_string()");
 
-/* START HERE, CONVERT FROM STRINGIFY TO KEYS
+/*
+ * START HERE, CONVERT FROM STRINGIFY TO KEYS
+ * START HERE, CONVERT FROM STRINGIFY TO KEYS
+ * START HERE, CONVERT FROM STRINGIFY TO KEYS
 
     // declare local variables
     HV* input_avref_hv;
@@ -122,63 +125,31 @@ string_arrayref keys(integer_arrayref_hashref input_vector_unordered_map) {
 
 // convert from (C++ std::unordered_map of (C++ std::vector of integers)) to (C++ std::vector of strings)
 string_arrayref integer_arrayref_hashref_keys(integer_arrayref_hashref input_vector_unordered_map) {
-//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_keys(), top of subroutine\n");
-//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_keys(), received format_level = %"INTEGER", indent_level = %"INTEGER"\n", format_level, indent_level);
+    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_keys(), top of subroutine\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_keys(), received format_level = %"INTEGER", indent_level = %"INTEGER"\n", format_level, indent_level);
 
     // declare local variables
     string_arrayref output_keys;
     integer_arrayref_hashref_const_iterator i;
     string key_string;
 
-    // generate indent
-    string indent = "";
-    for (integer indent_i = 0; indent_i < indent_level; indent_i++) { indent += "    "; }
-
-    // pre-begin with optional indent, depending on format level
-    if (format_level >= 1) { output_stream << indent; }  // pretty
-
-    // begin output string with left-curly-brace, as required for all RPerl hashes
-    output_stream << '{';
-
     // loop through all hash keys
     for (i = input_vector_unordered_map.begin();  i != input_vector_unordered_map.end();  ++i) {
-        // append comma to output string for all elements except index 0
-        if (i_is_0) { i_is_0 = 0; }
-        else        { output_stream << ','; }
-
-        // append newline-indent-tab or space, depending on format level
-        if      (format_level >= 1) { output_stream << endl << indent << "    "; }  // pretty & expand
-        else if (format_level >= 0) { output_stream << ' '; }                       // normal
 
         // escape key string
         key_string = escape_backslash_singlequote(i->first);
 
         // DEV NOTE: emulate Data::Dumper & follow PBP by using single quotes for key strings
-//        output_stream << "'" << (i->first).c_str() << "'";  // alternative format
-        output_stream << "'" << key_string.c_str() << "'";
+        key_string = (const string)"'" + key_string << (const string)"'";
 
-        // append spaces before and after fat arrow AKA fat comma, depending on format level
-        if (format_level >= 0) { output_stream << " => "; }  // normal & pretty & expand
-        else                   { output_stream << "=>"; }    // compact
-
-        // append newline after fat arrow AKA fat comma, depending on format level
-        if (format_level >= 2) { output_stream << "\n"; }    // expand
-
-        // call *_to_string_format() for data sub-structure
-        output_stream << integer_arrayref_to_string_format(i->second, format_level - 1, indent_level + 1);  // YES UNDERSCORES
+        // append key string to output vector
+        output_keys.push_back(key_string);
     }
 
-    // append newline-indent or space, depending on format level
-    if      (format_level >= 1) { output_stream << endl << indent; }  // pretty & expand
-    else if (format_level >= 0) { output_stream << ' '; }             // normal
+    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_keys(), after for() loop, have output_keys =\n%s\n", (char*)(integer_arrayref_hashref_to_string(output_keys).c_str()));
+    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_keys(), bottom of subroutine\n");
 
-    // end output string with right-curly-brace, as required for all RPerl hashes
-    output_stream << '}';
-
-//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_keys(), after for() loop, have output_stream =\n%s\n", (char*)(output_stream.str().c_str()));
-//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_keys(), bottom of subroutine\n");
-
-    return(output_stream.str());
+    return(output_keys);
 }
 
 # else

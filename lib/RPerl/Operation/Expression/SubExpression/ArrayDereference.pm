@@ -84,8 +84,8 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my string_hashref $cpp_source_group = { CPP => q{// <<< RP::O::E::SE::AD __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
 
 #    RPerl::diag( 'in ArrayDereference->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-    # DEV NOTE, CORRELATION #rp031: NEED ANSWER: are array dereferences allowed in CPPOPS or not???
-#    die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP0xe, CODE GENERATOR, ABSTRACT SYNTAX TO C++: array dereference not supported in CPPOPS_CPPTYPES mode, dying' ) . "\n";
+    # DEV NOTE, CORRELATION #rp031: NEED UPGRADE: implement proper @array vs $arrayref, %hash vs $hashref, dereferencing, etc.
+
     return $cpp_source_group;
 }
 

@@ -7,10 +7,19 @@ DONE
     allow identifiers beginning with underscore where not conflicting w/ C++ reserved identifiers
     allow 'package' statement to be split across 2 lines, in order to disable CPAN indexing
     implement %"NUMBER" format, automatically selects either %Lf or %f depending on "number" C++ data type
+    implement *_arrayref_hashref
 
 DOING
 
-    implement string_arrayref_hashref
+    # DEV NOTE, CORRELATION #rp031: NEED UPGRADE: implement proper @array vs $arrayref, %hash vs $hashref, dereferencing, etc.
+    Scalar.pm, ArrayDereference.pm, Keys.pm, HashDereference.pm, etc.
+    add support for non-reference @arrays and %hashes
+        re-align PERLOPS_PERLTYPES w/ CPPOPS_CPPTYPES behavior for pass-by-value vs pass-by-reference
+        figure out how to add data types to PERLOPS_PERLTYPES @array and %hash variable declarations
+        std::vector should be array and std::unique_ptr<std::vector> should be arrayref, etc.
+        ArrayDereference & HashDerefence operators should actually dereference (unwrap) std::unique_ptr in CPPOPS_CPPTYPES, deref AVRV to AV in CPPOPS_PERLTYPES, etc. 
+        implement pertinent operators: scalar, keys, values
+
     implement *_*ref_*ref remaining 2-D data structures 
     add To_string() for each data structure in C++, to_string() in Perl
 

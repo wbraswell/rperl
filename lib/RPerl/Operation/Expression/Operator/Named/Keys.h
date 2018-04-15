@@ -20,13 +20,13 @@ using std::cout;  using std::cerr;  using std::endl;
 
 # ifdef __PERL__TYPES
 
-SV* keys(SV* input_hvref);  // short-hand, type-independent
+SV*                          keys(SV* input_hvref);        // short-hand, type-independent
 
-SV* integer_arrayref_hashref_keys(SV* input_avref_hvref);
+SV* integer_arrayref_hashref_keys(SV* input_avref_hvref);  //  long-hand, type-dependent
 
 # elif defined __CPP__TYPES
 
-string_arrayref integer_arrayref_hashref_keys(integer_arrayref_hashref input_vector_unordered_map);
+string_arrayref integer_arrayref_hashref_keys(integer_arrayref_hashref input_vector_unordered_map);  //  long-hand, type-dependent
                                          keys(integer_arrayref_hashref input_vector_unordered_map);  // short-hand, type-dependent
 
 # endif

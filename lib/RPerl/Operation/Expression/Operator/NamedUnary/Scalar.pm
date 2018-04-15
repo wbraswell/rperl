@@ -89,20 +89,31 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             . "\n";
     }
     elsif ( $operator_named_class eq 'Operator_116' ) {    # Operator -> OP10_NAMED_UNARY SubExpression
-        # must have ArrayDereference as only argument
+
+
+
+
+        # DEV NOTE, CORRELATION #rp031: NEED UPGRADE: implement proper @array vs $arrayref, %hash vs $hashref, dereferencing, etc.
+
+# UPGRADE START HERE: do not require named operator or ArrayDereference below, once we allow RPerl variables/subroutines to store/return non-reference @arrays; sync w/ PERLOPS_PERLTYPES above; create tests
+# UPGRADE START HERE: do not require named operator or ArrayDereference below, once we allow RPerl variables/subroutines to store/return non-reference @arrays; sync w/ PERLOPS_PERLTYPES above; create tests
+# UPGRADE START HERE: do not require named operator or ArrayDereference below, once we allow RPerl variables/subroutines to store/return non-reference @arrays; sync w/ PERLOPS_PERLTYPES above; create tests
+        
+        # must have Perl named operator (AKA named function) or ArrayDereference as only argument, because this operator requires non-reference array input
         my object $subexpression       = $operator_named->{children}->[1];
         my string $subexpression_class = ref $subexpression;
-        if (    ( $subexpression_class ne 'SubExpression_160' )
+        if (    (not exists $rperloperations::BUILTINS_PERL_NAMED->{$subexpression_class})
+            and ( $subexpression_class ne 'SubExpression_160' )
             and ( $subexpression_class ne 'ArrayDereference_220' )
             and ( $subexpression_class ne 'ArrayDereference_221' ) )
         {
-            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP870, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator '
-                . q{'} . $operator_named->{children}->[0] . q{'}
-                . ' requires ArrayDereference argument, received '
-                . $subexpression_class
-                    . ' instead, dying' )
-                . "\n";
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP870, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator ' . q{'} . $operator_named->{children}->[0] . q{'}
+                . ' requires Perl named operator (AKA named function) or ArrayDereference argument, received ' . $subexpression_class . ' instead, dying' ) . "\n";
         }
+
+
+
+
 
         # unwrap ArrayDereference_220 and ArrayDereference_221 from SubExpression_160
         if ( $subexpression_class eq 'SubExpression_160' ) {    # SubExpression -> ArrayDereference
@@ -111,28 +122,43 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
         $subexpression_class = ref $subexpression;
         my string_hashref $cpp_source_subgroup;
-        if ( $subexpression_class eq 'ArrayDereference_220' ) {    # ArrayDereference -> '@{' Variable '}'
+
+
+
+        # NEED REMOVE OR MODIFY DURING UPGRADE
+        if ( exists $rperloperations::BUILTINS_PERL_NAMED->{$subexpression_class} ) {
+            die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP8xx, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Named operator ' . q{'} . $operator_named->{children}->[0] . q{'}
+                . ' received Perl named operator (AKA named function) argument ' . $subexpression_class . '; this feature is not yet supported, dying' ) . "\n";
+        }
+
+
+
+        # DEV NOTE, CORRELATION #rp031: NEED UPGRADE: implement proper @array vs $arrayref, %hash vs $hashref, dereferencing, etc.
+
+# UPGRADE START HERE: do not unwrap and disregard ArrayDereference @{...} operator below, must actually perform dereference by unwrapping std::vector from std::unique_ptr<std::vector>
+# UPGRADE START HERE: do not unwrap and disregard ArrayDereference @{...} operator below, must actually perform dereference by unwrapping std::vector from std::unique_ptr<std::vector>
+# UPGRADE START HERE: do not unwrap and disregard ArrayDereference @{...} operator below, must actually perform dereference by unwrapping std::vector from std::unique_ptr<std::vector>
+
+        elsif ( $subexpression_class eq 'ArrayDereference_220' ) {    # ArrayDereference -> '@{' Variable '}'
             $cpp_source_subgroup = $subexpression->{children}->[1]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
             RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         }
-        elsif ( $subexpression_class eq 'ArrayDereference_221' ) {    # ArrayDereference -> '@{' OPTIONAL-47 ArrayReference '}'
+        elsif ( $subexpression_class eq 'ArrayDereference_221' ) {    # ArrayDereference -> '@{' TypeInner? ArrayReference '}'
             my object $type_inner_optional = $subexpression->{children}->[1];
             my object $array_reference     = $subexpression->{children}->[2];
 
+            # DEV NOTE: in CPPOPS_CPPTYPES, must cast arrayref data to proper type as provided by TypeInner 
             if ( exists $type_inner_optional->{children}->[0] ) {
                 $cpp_source_group->{CPP} .= '((';
                 $cpp_source_subgroup = $type_inner_optional->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
 
-#            RPerl::diag( 'in NamedUnary::Scalar->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
+#                RPerl::diag( 'in NamedUnary::Scalar->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n" );
                 RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
                 $cpp_source_group->{CPP} .= ') ';
                 $cpp_source_subgroup = $array_reference->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
                 RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
                 $cpp_source_group->{CPP} .= ')';
             }
-
-            # DEV NOTE: I think we don't have to die here in CPPOPS_PERLTYPES mode???
-            # DEV NOTE, CORRELATION #rp031: NEED ANSWER: are array dereferences allowed in CPPOPS or not???
             else {
                 die RPerl::Parser::rperl_rule__replace(
                     'ERROR ECOGEASCP879, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying'
