@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes3D;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -17,8 +17,174 @@ use RPerl::Exporter 'import';
 our @EXPORT = qw();
 our @EXPORT_OK = qw();
 
-# NEED ADD CODE HERE
-# NEED ADD CODE HERE
-# NEED ADD CODE HERE
+# [[[ PRE-DECLARED TYPES ]]]
+package    # hide from PAUSE indexing
+    boolean;
+package    # hide from PAUSE indexing
+    unsigned_integer;
+#package     # hide from PAUSE indexing
+#    integer;
+package    # hide from PAUSE indexing
+    number;
+package    # hide from PAUSE indexing
+    character;
+package    # hide from PAUSE indexing
+    string;
+
+# [[[ HASH REF HASH REF HASH REF ]]]
+# [[[ HASH REF HASH REF HASH REF ]]]
+# [[[ HASH REF HASH REF HASH REF ]]]
+
+# (ref to hash) of (refs to hashes) of (refs to hashes)
+package  # hide from PAUSE indexing
+    hashref_hashref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(hashref);
+
+# (ref to hash) of (refs to hashes) of (refs to (hashes of integers))
+package  # hide from PAUSE indexing
+    integer_hashref_hashref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(hashref_hashref_hashref);
+
+# (ref to hash) of (refs to hashes) of (refs to (hashes of numbers))
+package  # hide from PAUSE indexing
+    number_hashref_hashref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(hashref_hashref_hashref);
+
+# (ref to hash) of (refs to hashes) of (refs to (hashes of strings))
+package  # hide from PAUSE indexing
+    string_hashref_hashref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(hashref_hashref_hashref);
+
+# (ref to hash) of (refs to hashes) of (refs to (hashes of scalars))
+package  # hide from PAUSE indexing
+    scalartype_hashref_hashref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(hashref_hashref_hashref);
+
+# [[[ ARRAY REF HASH REF HASH REF ]]]
+# [[[ ARRAY REF HASH REF HASH REF ]]]
+# [[[ ARRAY REF HASH REF HASH REF ]]]
+
+# (ref to hash) of (refs to hashes) of (refs to arrays)
+package  # hide from PAUSE indexing
+    arrayref_hashref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(hashref);
+
+# (ref to hash) of (refs to hashes) of (refs to (arrays of integers))
+package  # hide from PAUSE indexing
+    integer_arrayref_hashref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_hashref_hashref);
+
+# (ref to hash) of (refs to hashes) of (refs to (arrays of numbers))
+package  # hide from PAUSE indexing
+    number_arrayref_hashref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_hashref_hashref);
+
+# (ref to hash) of (refs to hashes) of (refs to (arrays of strings))
+package  # hide from PAUSE indexing
+    string_arrayref_hashref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_hashref_hashref);
+
+# (ref to hash) of (refs to hashes) of (refs to (arrays of scalars))
+package  # hide from PAUSE indexing
+    scalartype_arrayref_hashref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_hashref_hashref);
+
+# [[[ HASH REF ARRAY REF HASH REF ]]]
+# [[[ HASH REF ARRAY REF HASH REF ]]]
+# [[[ HASH REF ARRAY REF HASH REF ]]]
+
+# (ref to hash) of (refs to arrays) of (refs to hashes)
+package  # hide from PAUSE indexing
+    hashref_arrayref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(hashref);
+
+# (ref to hash) of (refs to arrays) of (refs to (hashes of integers))
+package  # hide from PAUSE indexing
+    integer_hashref_arrayref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(hashref_arrayref_hashref);
+
+# (ref to hash) of (refs to arrays) of (refs to (hashes of numbers))
+package  # hide from PAUSE indexing
+    number_hashref_arrayref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(hashref_arrayref_hashref);
+
+# (ref to hash) of (refs to arrays) of (refs to (hashes of strings))
+package  # hide from PAUSE indexing
+    string_hashref_arrayref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(hashref_arrayref_hashref);
+
+# (ref to hash) of (refs to arrays) of (refs to (hashes of scalars))
+package  # hide from PAUSE indexing
+    scalartype_hashref_arrayref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(hashref_arrayref_hashref);
+
+# [[[ ARRAY REF ARRAY REF HASH REF ]]]
+# [[[ ARRAY REF ARRAY REF HASH REF ]]]
+# [[[ ARRAY REF ARRAY REF HASH REF ]]]
+
+# (ref to hash) of (refs to arrays) of (refs to arrays)
+package  # hide from PAUSE indexing
+    arrayref_arrayref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(hashref);
+
+# (ref to hash) of (refs to arrays) of (refs to (arrays of integers))
+package  # hide from PAUSE indexing
+    integer_arrayref_arrayref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_arrayref_hashref);
+
+# (ref to hash) of (refs to arrays) of (refs to (arrays of numbers))
+package  # hide from PAUSE indexing
+    number_arrayref_arrayref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_arrayref_hashref);
+
+# (ref to hash) of (refs to arrays) of (refs to (arrays of strings))
+package  # hide from PAUSE indexing
+    string_arrayref_arrayref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_arrayref_hashref);
+
+# (ref to hash) of (refs to arrays) of (refs to (arrays of scalars))
+package  # hide from PAUSE indexing
+    scalartype_arrayref_arrayref_hashref;
+use strict;
+use warnings;
+use parent -norequire, qw(arrayref_arrayref_hashref);
 
 1;  # end of package

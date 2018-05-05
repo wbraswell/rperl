@@ -12,6 +12,18 @@ DONE
 
 DOING
 
+    manual IS file changes
+
+    3D data types
+        *_arrayref_hashref_hashref
+            stringify
+            typetest
+            t/06_hash
+        *_*ref_*ref_hashref
+        *_*ref_*ref_arrayref
+
+    foreach() loop and keys() operator in CPPOPS_CPPTYPES
+
     # DEV NOTE, CORRELATION #rp031: NEED UPGRADE: implement proper @array vs $arrayref, %hash vs $hashref, dereferencing, etc.
     Scalar.pm, ArrayDereference.pm, Keys.pm, HashDereference.pm, etc.
     add support for non-reference @arrays and %hashes

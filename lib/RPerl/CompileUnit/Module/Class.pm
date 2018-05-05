@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get @ARG, Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.052_000;
+our $VERSION = 0.052_100;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -229,7 +229,7 @@ sub create_symtab_entries_and_accessors_mutators {
 #    RPerl::diag(q{in Class.pm INIT block, have $TYPES_SUPPORTED = } . Dumper($TYPES_SUPPORTED) . "\n");
 
     foreach my $module_filename_short ( sort keys %{$INC_ref} ) {
-        RPerl::diag('in Class.pm INIT block, have $module_filename_short = ', q{'}, $module_filename_short, q{'}, "\n");
+#        RPerl::diag('in Class.pm INIT block, have $module_filename_short = ', q{'}, $module_filename_short, q{'}, "\n");
 
         # skip special entry created by Filter::Util::Call
         if ( $module_filename_short eq '-e' ) {
@@ -243,11 +243,6 @@ sub create_symtab_entries_and_accessors_mutators {
         elsif (( substr $module_filename_short, -2, 2 ) eq '.t') {
             next;
         }
-
-
-
-
-
 
         $module_filename_long = $INC{$module_filename_short};
 #        RPerl::diag( 'in Class.pm INIT block, have $module_filename_long = ' . $module_filename_long . "\n" );
@@ -316,9 +311,9 @@ sub create_symtab_entries_and_accessors_mutators {
                 ( not exists $rperlnamespaces_generated::RPERL_DEPS->{$namespace_root} ) and
                 ( not exists $rperlnamespaces_generated::RPERL_FILES->{$module_filename_short}) )
         {
-            RPerl::diag("\n\n", '=' x 50, "\n" );
-            RPerl::diag( 'in Class.pm INIT block, not skipping due to CORE & RPERL_DEPS namespaces, $module_filename_long = ' . $module_filename_long . "\n" );
-            RPerl::diag(q{in Class.pm INIT block, have $namespace_root = '} . $namespace_root . "'\n");
+#            RPerl::diag("\n\n", '=' x 50, "\n" );
+#            RPerl::diag( 'in Class.pm INIT block, not skipping due to CORE & RPERL_DEPS namespaces, $module_filename_long = ' . $module_filename_long . "\n" );
+#            RPerl::diag(q{in Class.pm INIT block, have $namespace_root = '} . $namespace_root . "'\n");
 
             open my $MODULE_FILE, '<', $module_filename_long or croak $OS_ERROR;
         MODULE_FILE_LINE_LOOP:
