@@ -188,3 +188,4 @@ use warnings;
 use parent -norequire, qw(arrayref_arrayref_hashref);
 
 1;  # end of package
+

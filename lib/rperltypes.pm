@@ -589,7 +589,7 @@ sub types_enable {
     { my void $RETURN_TYPE };
     ( my $types_input ) = @ARG;
 
-#	RPerl::diag('in rperltypes::types_enable(), received $types_input = ' . $types_input . "\n");
+#    RPerl::diag('in rperltypes::types_enable(), received $types_input = ' . $types_input . "\n");
 
     if (($types_input ne 'PERL') and ($types_input ne 'CPP')) {
         croak q{ERROR ERPTY00: Invalid RPerl types '} . $types_input . q{' specified where PERL or CPP expected, croaking};
@@ -597,8 +597,9 @@ sub types_enable {
 
     $RPerl::TYPES_CCFLAG = ' -D__' . $types_input . '__TYPES';
 
-#	RPerl::diag('in rperltypes::types_enable(), set $RPerl::TYPES_CCFLAG = ' . $RPerl::TYPES_CCFLAG . "\n");
+#    RPerl::diag('in rperltypes::types_enable(), set $RPerl::TYPES_CCFLAG = ' . $RPerl::TYPES_CCFLAG . "\n");
     return;
 }
 
 1;  # end of package
+

@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use rperlnamespaces;
-our $VERSION = 0.014_000;
+our $VERSION = 0.016_000;
 
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 
@@ -26,6 +26,58 @@ package main;
 #print 'in namespaces_regenerate.pl main::, about to call rperlnamespaces::hash()...', "\n";
 my $namespaces_core = rperlnamespaces::hash();
 #print 'in namespaces_regenerate.pl main::, ret from rperlnamespaces::hash(), have $namespaces_core = ', Dumper($namespaces_core), "\n";
+
+# do not call Module::ScanDeps in RPerl.pm on files in the following namespaces
+# DEV NOTE, CORRELATION #rp050: hard-coded list of RPerl files/packages/namespaces
+my $namespaces_noncompiled = {
+    'Acme::' => 1,
+    'Algorithm::' => 1,
+    'Archive::' => 1,
+    'Array::' => 1,
+    'Attribute::' => 1,
+    'Authen::' => 1,
+    'Benchmark::' => 1,
+    'CGI::' => 1,
+    'Compress::' => 1,
+    'Cookie::' => 1,
+    'Cpanel::' => 1,
+    'Crypt::' => 1,
+    'DBD::' => 1,
+    'DBI::' => 1,
+    'Date::' => 1,
+    'Excel::' => 1,
+    'FFI::' => 1,
+    'Geo::' => 1,
+    'HTTP::' => 1,
+    'Hash::' => 1,
+    'Hook::' => 1,
+    'Import::' => 1,
+    'IS::' => 1,
+    'LWP::' => 1,
+    'Mail::' => 1,
+    'MooX::' => 1,
+    'MooseX::' => 1,
+    'Net::' => 1,
+    'Number::' => 1,
+    'Opcode::' => 1,
+    'Plack::' => 1,
+    'RPC::' => 1,
+    'Sereal::' => 1,
+    'StackTrace::' => 1,
+    'Statistics::' => 1,
+    'Stream::' => 1,
+    'TAP::' => 1,
+    'Throwable::' => 1,
+    'Tree::' => 1,
+    'URI::' => 1,
+    'Unicode::' => 1,
+    'WWW::' => 1,
+    'XML::' => 1,
+    'ZMQ::' => 1,
+    'autouse::' => 1,
+    'metaclass::' => 1,
+    'subs::' => 1,
+};
 
 # DEV NOTE, CORRELATION #rp050: hard-coded list of RPerl files/packages/namespaces
 # DEV NOTE, CORRELATION #rp003: some RPerl packages are missed due to BEGIN{} or INIT{} blocks, etc.
@@ -91,6 +143,32 @@ my $filenames_rperl = {
 # DEV NOTE, CORRELATION #rp050: hard-coded list of RPerl files/packages/namespaces
 # NEED UPDATE: some of these should be in core
 my $namespaces_rperl_deps = {
+    # BEGIN DEPENDENCY BLOCK, all subdependencies of MongoDB?
+    'Authen::'                                => 1,
+    'Cross::'                                 => 1,
+    'Does::'                                  => 1,
+    'Error::'                                 => 1,
+    'FFI::'                                   => 1,
+    'FakeLocale::'                            => 1,
+    'MM::'                                    => 1,
+    'MY::'                                    => 1,
+    'Mango::'                                 => 1,
+    'Mouse::'                                 => 1,
+    'Mozilla::'                               => 1,
+    'Net::'                                   => 1,
+    'Object::'                                => 1,
+    'Ref::'                                   => 1,
+    'Unicode::'                               => 1,
+    'Validation::'                            => 1,
+    'f845a9c1ac41be33::'                      => 1,
+    'flock::'                                 => 1,
+    'isn::'                                   => 1,
+    'maybe::'                                 => 1,
+    'next::'                                  => 1,
+    'strictures::'                            => 1,
+    'swig_runtime_data::'                     => 1,
+    # END DEPENDENCY BLOCK
+
     'Alien::'    => 1,
     'AutoSplit::'    => 1,
     'AutoLoader::'    => 1,
@@ -239,6 +317,8 @@ foreach my $namespace_rperl_dep ( keys %{$namespaces_rperl_deps} ) {
     }
 }
 
+my $namespaces_noncompiled_string = Dumper($namespaces_noncompiled);
+$namespaces_noncompiled_string =~ s/\$VAR1/\$rperlnamespaces_generated::NONCOMPILED/gxms;
 my $namespaces_core_string = Dumper($namespaces_core);
 $namespaces_core_string =~ s/\$VAR1/\$rperlnamespaces_generated::CORE/gxms;
 my $namespaces_rperl_deps_string = Dumper($namespaces_rperl_deps);
@@ -262,9 +342,11 @@ our $VERSION = 0.001_000;
 
 ## no critic qw(ProhibitParensWithBuiltins ProhibitNoisyQuotes)  # SYSTEM SPECIAL 3: allow auto-generated code
 
-$rperlnamespaces_generated::CORE = undef;
 EOF
 
+$namespaces_generated .= q{$rperlnamespaces_generated::NONCOMPILED = undef;} . "\n";
+$namespaces_generated .= $namespaces_noncompiled_string . "\n";
+$namespaces_generated .= q{$rperlnamespaces_generated::CORE = undef;} . "\n";
 $namespaces_generated .= $namespaces_core_string . "\n";
 $namespaces_generated .= q{$rperlnamespaces_generated::RPERL_DEPS = undef;} . "\n";
 $namespaces_generated .= $namespaces_rperl_deps_string . "\n";

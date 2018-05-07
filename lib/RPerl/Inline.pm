@@ -2,7 +2,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.015_000;
+our $VERSION = 0.016_000;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -177,6 +177,12 @@ our %ARGS = (
         '#include <vector>',
         '#include <math.h>',
         '#include <unordered_map>', # DEV NOTE: unordered_map may require '-std=c++0x' in CCFLAGS above
+
+        # NEED UPGRADE: only include when actually benchmarking
+        # benchmarking, for std::chrono::high_resolution_clock::now
+        '#include <ctime>',
+        '#include <ratio>',
+        '#include <chrono>',
 
         # for regex support
         # DEV NOTE, CORRELATION #rp024: sync include files & other preprocessor directives in both RPerl/Inline.pm and rperlstandalone.h

@@ -9,7 +9,7 @@ using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]
 
-void integer_arrayref_hashref_CHECK(SV* possible_integer_arrayref_hashref) {
+void integer_arrayref_hashref_CHECK(SV* possible_integer_arrayref_hashref, const char* variable_name, const char* subroutine_name) {
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_CHECK(), top of subroutine\n");
 
     // DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() macro, but with integer-specific error codes
@@ -76,7 +76,8 @@ void integer_arrayref_hashref_CHECK(SV* possible_integer_arrayref_hashref) {
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_CHECK(), bottom of subroutine\n");
 }
 
-void integer_arrayref_hashref_CHECKTRACE(SV* possible_integer_arrayref_hashref, const char* variable_name, const char* subroutine_name) {
+void integer_arrayref_hashref_CHECKTRACE(SV* possible_integer_arrayref_hashref, const char* variable_name, const char* subroutine_name)
+{
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_CHECKTRACE(), top of subroutine, received variable_name = %s\n", variable_name);
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_CHECKTRACE(), top of subroutine, received subroutine_name = %s\n", subroutine_name);
 
@@ -144,7 +145,7 @@ void integer_arrayref_hashref_CHECKTRACE(SV* possible_integer_arrayref_hashref, 
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_CHECKTRACE(), bottom of subroutine\n");
 }
 
-void number_arrayref_hashref_CHECK(SV* possible_number_arrayref_hashref) {
+void number_arrayref_hashref_CHECK(SV* possible_number_arrayref_hashref, const char* variable_name, const char* subroutine_name) {
 //    fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_hashref_CHECK(), top of subroutine\n");
 
     // DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() macro, but with number-specific error codes
@@ -281,7 +282,7 @@ void number_arrayref_hashref_CHECKTRACE(SV* possible_number_arrayref_hashref, co
 //    fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_hashref_CHECKTRACE(), bottom of subroutine\n");
 }
 
-void string_arrayref_hashref_CHECK(SV* possible_string_arrayref_hashref) {
+void string_arrayref_hashref_CHECK(SV* possible_string_arrayref_hashref, const char* variable_name, const char* subroutine_name) {
 //    fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_hashref_CHECK(), top of subroutine\n");
 
     // DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() macro, but with string-specific error codes
@@ -460,7 +461,7 @@ integer_arrayref_hashref XS_unpack_integer_arrayref_hashref(SV* input_avref_hvre
 //      integer_CHECK(input_avref_hv_entry_value);
 //      integer_CHECKTRACE(input_avref_hv_entry_value, (char*)((string)"input_avref_hv_entry_value at key '" + (string)SvPV_nolen(input_avref_hv_entry_key) + "'").c_str(), "XS_unpack_integer_arrayref_hashref()");
 
-        // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // BEGIN ARRAY CODE
         AV* input_av;
         integer input_av_length;
         integer j;
@@ -487,7 +488,7 @@ integer_arrayref_hashref XS_unpack_integer_arrayref_hashref(SV* input_avref_hvre
         }
 
 //        fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_arrayref_hashref(), bottom of inner for() loop j = %"INTEGER", have output_vector.size() = %"INTEGER"\n", j, (integer) output_vector.size());
-        // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // END ARRAY CODE
 
         // UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
         output_vector_unordered_map[SvPV_nolen(input_avref_hv_entry_key)] = output_vector;
@@ -515,7 +516,7 @@ void XS_pack_integer_arrayref_hashref(SV* output_avref_hvref, integer_arrayref_h
 //            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), top of outer loop, have i->first AKA key = '%s'\n", (i->first).c_str());
             integer_arrayref input_vector = i->second;
 
-            // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+            // BEGIN ARRAY CODE
             AV* output_av = newAV();  // initialize output sub-array to empty
             integer input_vector_length = input_vector.size();
             integer j;
@@ -531,7 +532,7 @@ void XS_pack_integer_arrayref_hashref(SV* output_avref_hvref, integer_arrayref_h
                 }
             }
             else warn("in CPPOPS_CPPTYPES XS_pack_integer_arrayref_hashref(), sub-array was empty, returning empty sub-array via newAV()");
-            // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+            // END ARRAY CODE
 
             // NEED ANSWER: is it really okay to NOT increase the reference count below???
             hv_store(output_avref_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newRV_noinc((SV*)output_av), (U32)0);  // reference, do not increase reference count
@@ -587,7 +588,7 @@ number_arrayref_hashref XS_unpack_number_arrayref_hashref(SV* input_avref_hvref)
 //      number_CHECK(input_avref_hv_entry_value);
 //      number_CHECKTRACE(input_avref_hv_entry_value, (char*)((string)"input_avref_hv_entry_value at key '" + (string)SvPV_nolen(input_avref_hv_entry_key) + "'").c_str(), "XS_unpack_number_arrayref_hashref()");
 
-        // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // BEGIN ARRAY CODE
         AV* input_av;
         integer input_av_length;
         integer j;
@@ -614,7 +615,7 @@ number_arrayref_hashref XS_unpack_number_arrayref_hashref(SV* input_avref_hvref)
         }
 
 //        fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number_arrayref_hashref(), bottom of inner for() loop j = %"INTEGER", have output_vector.size() = %"INTEGER"\n", j, (integer) output_vector.size());
-        // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // END ARRAY CODE
 
         // UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
         output_vector_unordered_map[SvPV_nolen(input_avref_hv_entry_key)] = output_vector;
@@ -642,7 +643,7 @@ void XS_pack_number_arrayref_hashref(SV* output_avref_hvref, number_arrayref_has
 //            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), top of outer loop, have i->first AKA key = '%s'\n", (i->first).c_str());
             number_arrayref input_vector = i->second;
 
-            // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+            // BEGIN ARRAY CODE
             AV* output_av = newAV();  // initialize output sub-array to empty
             integer input_vector_length = input_vector.size();
             integer j;
@@ -658,7 +659,7 @@ void XS_pack_number_arrayref_hashref(SV* output_avref_hvref, number_arrayref_has
                 }
             }
             else warn("in CPPOPS_CPPTYPES XS_pack_number_arrayref_hashref(), sub-array was empty, returning empty sub-array via newAV()");
-            // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+            // END ARRAY CODE
 
             // NEED ANSWER: is it really okay to NOT increase the reference count below???
             hv_store(output_avref_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newRV_noinc((SV*)output_av), (U32)0);  // reference, do not increase reference count
@@ -714,7 +715,7 @@ string_arrayref_hashref XS_unpack_string_arrayref_hashref(SV* input_avref_hvref)
 //      string_CHECK(input_avref_hv_entry_value);
 //      string_CHECKTRACE(input_avref_hv_entry_value, (char*)((string)"input_avref_hv_entry_value at key '" + (string)SvPV_nolen(input_avref_hv_entry_key) + "'").c_str(), "XS_unpack_string_arrayref_hashref()");
 
-        // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // BEGIN ARRAY CODE
         AV* input_av;
         integer input_av_length;
         integer j;
@@ -741,7 +742,7 @@ string_arrayref_hashref XS_unpack_string_arrayref_hashref(SV* input_avref_hvref)
         }
 
 //        fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string_arrayref_hashref(), bottom of inner for() loop j = %"INTEGER", have output_vector.size() = %"INTEGER"\n", j, (integer) output_vector.size());
-        // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // END ARRAY CODE
 
         // UNORDERED MAP ENTRY ASSIGNMENT, OPTION A, SUBSCRIPT, KNOWN SIZE: l-value subscript notation with no further reserve(); does not utilize i in assignment
         output_vector_unordered_map[SvPV_nolen(input_avref_hv_entry_key)] = output_vector;
@@ -769,7 +770,7 @@ void XS_pack_string_arrayref_hashref(SV* output_avref_hvref, string_arrayref_has
 //            fprintf(stderr, "in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), top of outer loop, have i->first AKA key = '%s'\n", (i->first).c_str());
             string_arrayref input_vector = i->second;
 
-            // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+            // BEGIN ARRAY CODE
             AV* output_av = newAV();  // initialize output sub-array to empty
             integer input_vector_length = input_vector.size();
             integer j;
@@ -785,7 +786,7 @@ void XS_pack_string_arrayref_hashref(SV* output_avref_hvref, string_arrayref_has
                 }
             }
             else warn("in CPPOPS_CPPTYPES XS_pack_string_arrayref_hashref(), sub-array was empty, returning empty sub-array via newAV()");
-            // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+            // END ARRAY CODE
 
             // NEED ANSWER: is it really okay to NOT increase the reference count below???
             hv_store(output_avref_hv, (const char*)((i->first).c_str()), (U32)((i->first).size()), newRV_noinc((SV*)output_av), (U32)0);  // reference, do not increase reference count
@@ -1458,7 +1459,7 @@ SV* integer_arrayref_hashref_typetest1(SV* my_size) {
         // set key up here so it can be used by the debugging print statement inside the inner loop
         sprintf(temp_key, "CPPOPS_PERLTYPES_funkey%"INTEGER"", i);
 
-        // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // BEGIN ARRAY CODE
         AV* temp_av = newAV();
         integer j;
 
@@ -1468,7 +1469,7 @@ SV* integer_arrayref_hashref_typetest1(SV* my_size) {
             av_store(temp_av, (I32)j, newSViv(i * j));
 //            fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_hashref_typetest1(), setting element at key '%s', at index %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", temp_key, j, (integer)(SvIV(my_size) - 1), (integer)SvIV(*av_fetch(temp_av, (I32)j, 0)));
         }
-        // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // END ARRAY CODE
 
         hv_store(output_hv, (const char*)temp_key, (U32)strlen(temp_key), newRV_noinc((SV*) temp_av), (U32)0);
     }
@@ -1527,7 +1528,7 @@ SV* number_arrayref_hashref_typetest1(SV* my_size) {
         // set key up here so it can be used by the debugging print statement inside the inner loop
         sprintf(temp_key, "CPPOPS_PERLTYPES_funkey%"INTEGER"", i);
 
-        // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // BEGIN ARRAY CODE
         AV* temp_av = newAV();
         integer j;
 
@@ -1537,7 +1538,7 @@ SV* number_arrayref_hashref_typetest1(SV* my_size) {
             av_store(temp_av, (I32)j, newSVnv(i * j * 5.123456789));
 //            fprintf(stderr, "in CPPOPS_PERLTYPES number_arrayref_hashref_typetest1(), setting element at key '%s', at index %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", temp_key, j, (integer)(SvIV(my_size) - 1), (number)SvNV(*av_fetch(temp_av, (I32)j, 0)));
         }
-        // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // END ARRAY CODE
 
         hv_store(output_hv, (const char*)temp_key, (U32)strlen(temp_key), newRV_noinc((SV*) temp_av), (U32)0);
     }
@@ -1596,7 +1597,7 @@ SV* string_arrayref_hashref_typetest1(SV* my_size) {
         // set key up here so it can be used by the debugging print statement inside the inner loop
         sprintf(temp_key, "CPPOPS_PERLTYPES_funkey%"INTEGER"", i);
 
-        // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // BEGIN ARRAY CODE
         AV* temp_av = newAV();
         integer j;
 
@@ -1606,7 +1607,7 @@ SV* string_arrayref_hashref_typetest1(SV* my_size) {
             av_store( temp_av, (I32)j, newSVpvf( "Jeffy Ten! (%"INTEGER", %"INTEGER")/%"INTEGER"", i, j, (integer)(SvIV(my_size) - 1) ) );
 //            fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref_hashref_typetest1(), setting element at key '%s', at index %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAT\n", temp_key, j, (integer)(SvIV(my_size) - 1), (string)SvPV(*av_fetch(temp_av, (I32)j, 0)));
         }
-        // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // END ARRAY CODE
 
         hv_store(output_hv, (const char*)temp_key, (U32)strlen(temp_key), newRV_noinc((SV*) temp_av), (U32)0);
     }
@@ -1623,7 +1624,7 @@ string integer_arrayref_hashref_typetest0(integer_arrayref_hashref lucky_integer
     // BEGIN DEBUG CODE
     integer_arrayref_hashref_const_iterator i;
     for (i = lucky_integer_arrayrefs.begin();  i != lucky_integer_arrayrefs.end();  ++i) {
-        // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // BEGIN ARRAY CODE
         integer_arrayref lucky_integer_arrayref = i->second;
         integer how_luckier = lucky_integer_arrayref.size();
         integer j;
@@ -1631,7 +1632,7 @@ string integer_arrayref_hashref_typetest0(integer_arrayref_hashref lucky_integer
         for (j = 0;  j < how_luckier;  ++j) {
             fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_typetest0(), have lucky integer %"INTEGER"/%"INTEGER" = %"INTEGER", key '%s', BARSTEP\n", j, (how_luckier - 1), lucky_integer_arrayref[j], (i->first).c_str());
         }
-        // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // END ARRAY CODE
     }
     // END DEBUG CODE
 */
@@ -1648,7 +1649,7 @@ integer_arrayref_hashref integer_arrayref_hashref_typetest1(integer my_size) {
     for (i = 0;  i < my_size;  ++i) {
         temp_key = "CPPOPS_CPPTYPES_funkey" + std::to_string(i);
 
-        // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // BEGIN ARRAY CODE
         integer_arrayref temp_vec(my_size);
         integer j;
         for (j = 0;  j < my_size;  ++j)
@@ -1656,7 +1657,7 @@ integer_arrayref_hashref integer_arrayref_hashref_typetest1(integer my_size) {
             temp_vec[j] = i * j;
 //            fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_typetest1(), setting element at key '%s', at index %"INTEGER"/%"INTEGER" = %"INTEGER", BARBAZ\n", temp_key.c_str(), j, (my_size - 1), temp_vec[j]);
         }
-        // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // END ARRAY CODE
 
         new_vector_unordered_map[temp_key] = temp_vec;
     }
@@ -1670,7 +1671,7 @@ string number_arrayref_hashref_typetest0(number_arrayref_hashref lucky_number_ar
     // BEGIN DEBUG CODE
     number_arrayref_hashref_const_iterator i;
     for (i = lucky_number_arrayrefs.begin();  i != lucky_number_arrayrefs.end();  ++i) {
-        // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // BEGIN ARRAY CODE
         number_arrayref lucky_number_arrayref = i->second;
         integer how_luckier = lucky_number_arrayref.size();
         integer j;
@@ -1678,7 +1679,7 @@ string number_arrayref_hashref_typetest0(number_arrayref_hashref lucky_number_ar
         for (j = 0;  j < how_luckier;  ++j) {
             fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_hashref_typetest0(), have lucky number %"INTEGER"/%"INTEGER" = %"NUMBER", key '%s', BARSTEP\n", j, (how_luckier - 1), lucky_number_arrayref[j], (i->first).c_str());
         }
-        // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // END ARRAY CODE
     }
     // END DEBUG CODE
 */
@@ -1695,7 +1696,7 @@ number_arrayref_hashref number_arrayref_hashref_typetest1(integer my_size) {
     for (i = 0;  i < my_size;  ++i) {
         temp_key = "CPPOPS_CPPTYPES_funkey" + std::to_string(i);
 
-        // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // BEGIN ARRAY CODE
         number_arrayref temp_vec(my_size);
         integer j;
         for (j = 0;  j < my_size;  ++j)
@@ -1703,7 +1704,7 @@ number_arrayref_hashref number_arrayref_hashref_typetest1(integer my_size) {
             temp_vec[j] = i * j * 5.123456789;
 //            fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_hashref_typetest1(), setting element at key '%s', at index %"INTEGER"/%"INTEGER" = %"NUMBER", BARBAZ\n", temp_key.c_str(), j, (my_size - 1), temp_vec[j]);
         }
-        // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // END ARRAY CODE
 
         new_vector_unordered_map[temp_key] = temp_vec;
     }
@@ -1717,7 +1718,7 @@ string string_arrayref_hashref_typetest0(string_arrayref_hashref lucky_string_ar
     // BEGIN DEBUG CODE
     string_arrayref_hashref_const_iterator i;
     for (i = lucky_string_arrayrefs.begin();  i != lucky_string_arrayrefs.end();  ++i) {
-        // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // BEGIN ARRAY CODE
         string_arrayref lucky_string_arrayref = i->second;
         integer how_luckier = lucky_string_arrayref.size();
         integer j;
@@ -1725,7 +1726,7 @@ string string_arrayref_hashref_typetest0(string_arrayref_hashref lucky_string_ar
         for (j = 0;  j < how_luckier;  ++j) {
             fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_hashref_typetest0(), have lucky string %"INTEGER"/%"INTEGER" = '%s', key '%s', BARSTEP\n", j, (how_luckier - 1), lucky_string_arrayref[j].c_str(), (i->first).c_str());
         }
-        // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // END ARRAY CODE
     }
     // END DEBUG CODE
 */
@@ -1742,7 +1743,7 @@ string_arrayref_hashref string_arrayref_hashref_typetest1(integer my_size) {
     for (i = 0;  i < my_size;  ++i) {
         temp_key = "CPPOPS_CPPTYPES_funkey" + std::to_string(i);
 
-        // [[[ BEGIN PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // BEGIN ARRAY CODE
         string_arrayref temp_vec(my_size);
         integer j;
         for (j = 0;  j < my_size;  ++j)
@@ -1755,7 +1756,7 @@ string_arrayref_hashref string_arrayref_hashref_typetest1(integer my_size) {
 
 //            fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_hashref_typetest1(), setting element at key '%s', at index %"INTEGER"/%"INTEGER" = '%s', BARBAZ\n", temp_key.c_str(), j, (my_size - 1), temp_vec[j].c_str());
         }
-        // [[[ END PASTED-AND-CONVERTED 1D ARRAY CODE ]]]
+        // END ARRAY CODE
 
         new_vector_unordered_map[temp_key] = temp_vec;
     }

@@ -1,5 +1,4 @@
 DONE
-    Installer, CentOS 7 Support
     Subcompile Dynamic Linking To libperl.so Using $Config::Config{ccdlflags}
     Grammar, Shebang Support, "/usr/bin/env perl" & Other Special Formats
     allow building in current directory "." as well as "lib/" directory
@@ -9,12 +8,15 @@ DONE
     implement %"NUMBER" format, automatically selects either %Lf or %f depending on "number" C++ data type
     implement *_arrayref_hashref
     allow Pod as valid statement, ignore for now; this enables block comments
+    enable RPerl processing of otherwise-skipped files when explicitly named as FooCompilable.pm
 
 DOING
 
+    Installer, CentOS 7 Support, copy from LAMP Installer to RPerl Installer
+
     manual IS file changes
 
-    3D data types
+    3D data structures
         *_arrayref_hashref_hashref
             stringify
             typetest
@@ -22,7 +24,9 @@ DOING
         *_*ref_*ref_hashref
         *_*ref_*ref_arrayref
 
-    foreach() loop and keys() operator in CPPOPS_CPPTYPES
+    2D data structures
+        *_*ref_*ref
+        To_string() for each data structure in C++, to_string() in Perl
 
     # DEV NOTE, CORRELATION #rp031: NEED UPGRADE: implement proper @array vs $arrayref, %hash vs $hashref, dereferencing, etc.
     Scalar.pm, ArrayDereference.pm, Keys.pm, HashDereference.pm, etc.
@@ -33,8 +37,7 @@ DOING
         ArrayDereference & HashDerefence operators should actually dereference (unwrap) std::unique_ptr in CPPOPS_CPPTYPES, deref AVRV to AV in CPPOPS_PERLTYPES, etc. 
         implement pertinent operators: scalar, keys, values
 
-    implement *_*ref_*ref remaining 2-D data structures 
-    add To_string() for each data structure in C++, to_string() in Perl
+    foreach() loop and keys() operator in CPPOPS_CPPTYPES
 
     .travis.yml, disable dev version of Alien::Base::ModuleBuild v1.01_01, update min version required in Makefile.PL
     .travis.yml, disable Alien::GSL testing, update min version required in Makefile.PL

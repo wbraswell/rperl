@@ -4,26 +4,26 @@
 # DEV NOTE, CORRELATION #rp051: hard-coded list of RPerl data types and data structures
 
 # SCALAR TYPES
-boolean				T_PACKED
-unsigned_integer	T_PACKED
-integer				T_PACKED
-number				T_PACKED
-character			T_PACKED
-string				T_PACKED
+boolean             T_PACKED
+unsigned_integer    T_PACKED
+integer             T_PACKED
+number              T_PACKED
+character           T_PACKED
+string              T_PACKED
 
 # ARRAY TYPES
-integer_arrayref	T_PACKED
-number_arrayref	    T_PACKED
-string_arrayref	    T_PACKED
-integer_arrayref_arrayref	T_PACKED
+integer_arrayref    T_PACKED
+number_arrayref     T_PACKED
+string_arrayref     T_PACKED
+integer_arrayref_arrayref   T_PACKED
 
 # HASH TYPES
-integer_hashref	    T_PACKED
-number_hashref	    T_PACKED
-string_hashref	    T_PACKED
-integer_arrayref_hashref	T_PACKED
-number_arrayref_hashref 	T_PACKED
-string_arrayref_hashref	    T_PACKED
+integer_hashref     T_PACKED
+number_hashref      T_PACKED
+string_hashref      T_PACKED
+integer_arrayref_hashref    T_PACKED
+number_arrayref_hashref     T_PACKED
+string_arrayref_hashref     T_PACKED
 integer_arrayref_hashref_hashref    T_PACKED
 number_arrayref_hashref_hashref     T_PACKED
 string_arrayref_hashref_hashref     T_PACKED
@@ -37,3 +37,4 @@ gsl_matrix*       T_PACKED
 # CORRELATION #pp04: attempt to manually define pack/unpack for object return type
 # USER TYPES
 #PhysicsPerl__Astro__Body T_PACKED
+
