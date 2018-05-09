@@ -15,7 +15,7 @@ our hashref $properties
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 sub test_method {
-    { my void::method $RETURN_TYPE };
+    { my integer::method $RETURN_TYPE };
     ( my object $self, my integer $input_integer ) = @ARG;
     $self->{test_property} *= $input_integer;
     return $self->{test_property};

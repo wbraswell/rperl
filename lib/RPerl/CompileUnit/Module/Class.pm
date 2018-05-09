@@ -755,12 +755,16 @@ sub create_symtab_entries_and_accessors_mutators {
         # sub get_foo_size { { my integer::method $RETURN_TYPE }; ( my Foo::Bar $self ) = @ARG; return (scalar @{$self->{foo}}); }
         # sub get_foo_element { { my Foo::Quux::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i ) = @ARG; return $self->{foo}->[$i]; }
         # sub set_foo_element { { my void::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @ARG; $self->{foo}->[$i] = $foo_element; }
+                        # DEV NOTE, CORRELATION #rp054: auto-generation of OO property accessors/mutators checks the auto-generated RPerl type list for base data types to determine if the entire data structure can be returned by setting ($return_whole = 1)
                         my $property_element_type = substr $property_type, 0, ( ( length $property_type ) - 9 );    # strip trailing '_arrayref'
                         if ( exists $rperlnamespaces_generated::RPERL->{ $property_element_type . '::' } ) {
 #                            RPerl::diag('in Class::INIT() block, about to create accessors/mutators, have RPerl arrayref type, setting $return_whole flag' . "\n");
                             $return_whole = 1;
                         }
-                        else {
+                        # DEV NOTE: do not enable "else" below, because we always want to enable special array accessors/mutators for all array types, not just for user-defined types;
+                        # use of these special accessors/mutators provide additional OO encapsulation for RPerl types, which is purely optional;
+                        # since RPerl types set ($return_whole = 1) above, you can bypass getting/setting individual array elements and simply access the entire data structure directly
+#                        else {
                             $eval_string
                                 = '*{'
                                 . $package_name
@@ -802,7 +806,7 @@ sub create_symtab_entries_and_accessors_mutators {
 #                            RPerl::diag( 'in Class::INIT() block, have user-defined object array element accessor $eval_string = ' . "\n" . $eval_string . "\n" );
                             eval($eval_string) or croak($EVAL_ERROR);
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
-                        }
+#                        }
                     }
 
                     # hash value accessor/mutator
@@ -814,6 +818,7 @@ sub create_symtab_entries_and_accessors_mutators {
             # sub get_foo_keys { { my string_arrayref::method $RETURN_TYPE }; ( my Foo::Bar $self ) = @ARG; return [sort keys %{$self->{foo}}]; }
             # sub get_foo_element { { my Foo::Quux::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i ) = @ARG; return $self->{foo}->{$i}; }
             # sub set_foo_element { { my void::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @ARG; $self->{foo}->{$i} = $foo_element; }
+                        # DEV NOTE, CORRELATION #rp054: auto-generation of OO property accessors/mutators checks the auto-generated RPerl type list for base data types to determine if the entire data structure can be returned by setting ($return_whole = 1)
                         my $property_value_type = substr $property_type, 0, ( ( length $property_type ) - 8 );    # strip trailing '_hashref'
 #                        RPerl::diag('in Class::INIT() block, about to create accessors/mutators, have $property_value_type = ' . q{'} . $property_value_type . q{'} . "\n");
 #                        RPerl::diag('in Class::INIT() block, about to create accessors/mutators, have $rperlnamespaces_generated::RPERL = ' . Dumper($rperlnamespaces_generated::RPERL) . "\n");
@@ -822,7 +827,10 @@ sub create_symtab_entries_and_accessors_mutators {
 #                            RPerl::diag('in Class::INIT() block, about to create accessors/mutators, have RPerl hashref type, setting $return_whole flag' . "\n");
                             $return_whole = 1;
                         }
-                        else {
+                        # DEV NOTE: do not enable "else" below, because we always want to enable special array accessors/mutators for all array types, not just for user-defined types;
+                        # use of these special accessors/mutators provide additional OO encapsulation for RPerl types, which is purely optional;
+                        # since RPerl types set ($return_whole = 1) above, you can bypass getting/setting individual array elements and simply access the entire data structure directly
+#                        else {
                             $eval_string
                                 = '*{'
                                 . $package_name
@@ -864,7 +872,7 @@ sub create_symtab_entries_and_accessors_mutators {
 #                            RPerl::diag( 'in Class::INIT() block, have user-defined object hash value accessor $eval_string = ' . "\n" . $eval_string . "\n" );
                             eval($eval_string) or croak($EVAL_ERROR);
                             if ($EVAL_ERROR) { croak($EVAL_ERROR); }
-                        }
+#                        }
                     }
 
                     # scalar accessor/mutator

@@ -12,6 +12,9 @@ DONE
 
 DOING
 
+    test $return_whole_value accessors & mutators for RPerl-defined data types in Class INIT block
+    test $return_whole_value accessors & mutators for  user-defined data types in Class INIT block
+
     Installer, CentOS 7 Support, copy from LAMP Installer to RPerl Installer
 
     manual IS file changes
