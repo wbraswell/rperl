@@ -12,10 +12,7 @@ use RPerl::Test;
 # DEV NOTE, CORRELATION #rp054: auto-generation of OO property accessors/mutators checks the auto-generated RPerl type list for base data types to determine if the entire data structure can be returned by setting ($return_whole = 1)
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties = {
-    # no initial size, no initial values 
-    test_property => my integer_arrayref $TYPED_test_property = undef
-};
+our hashref $properties = { test_property => my integer_arrayref $TYPED_test_property = undef };  # no initial size, no initial values 
 
 # [[[ SUBROUTINES & OO METHODS ]]]
 sub test_method {
