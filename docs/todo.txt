@@ -16,6 +16,8 @@ DOING
     test $return_whole_value accessors & mutators for  user-defined data types in Class INIT block
 
     Installer, CentOS 7 Support, copy from LAMP Installer to RPerl Installer
+    MongoDB C++ driver in installer
+    MongoDB documentation
 
     manual IS file changes
 
@@ -45,8 +47,6 @@ DOING
     .travis.yml, disable dev version of Alien::Base::ModuleBuild v1.01_01, update min version required in Makefile.PL
     .travis.yml, disable Alien::GSL testing, update min version required in Makefile.PL
 
-    MongoDB C++ driver in installer 
-    MongoDB documentation
 
     META files in MANIFEST.SKIP???
 
