@@ -2,7 +2,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.016_000;
+our $VERSION = 0.017_000;
 
 #use RPerl;  # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -110,6 +110,7 @@ my $is_msvc_compiler = ($Config::Config{cc} =~ /cl/);
 our $CCFLAGSEX = $is_msvc_compiler ? '-DNO_XSLOCKS'
     : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
 
+# DEV NOTE, POSSIBLE ALTERNATIVE STRATEGY:  '-L' . $Config{archlibexp} . '/CORE'
 # for support of dynamic linking to libperl.so
 if (defined $Config::Config{ccdlflags}) {
     my $ccdlflags = $Config::Config{ccdlflags};
