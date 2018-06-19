@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.018_000;
+    our $VERSION = 0.019_000;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -39,7 +39,7 @@
 # but this only affects WORD-like tokens which can be found inside other legitimate WORD tokens?
 
 %token POD                   = /(\=[a-zA-Z].*?\n(?:.|\n)*?\n\=cut\s*)/   # =identifier\nANYTHING\n=cut
-%token SHEBANG               = /(^#!\/(?:\w[\w-]*\/)*[\w-]*\s*[\w-]*perl[\w-]*)/          # begin line, hash (octothorpe), bang, *NIX path to Perl dir w/out spaces, optional space or other chars, perl executable; ex. '#!/usr/bin/perl' or '#!/usr/bin/env perl' or '#!/home/foo-bar/myperl-5.55'
+%token SHEBANG               = /(^#!\/(?:\w[\w.-]*\/)*[\w.-]*\s*[\w.-]*perl[\w.-]*)/          # begin line, hash (octothorpe), bang, *NIX path to Perl dir w/out spaces, optional space or other chars, perl executable; ex. '#!/usr/bin/perl' or '#!/usr/bin/env perl' or '#!/home/foo-bar/myperl-5.55'
 %token USE_RPERL             = /(\s*use\s+RPerl\s*;\s*)/                 # 'use RPerl;'
 %token USE_RPERL_AFTER       = /(\s*use\s+RPerl::AfterSubclass\s*;\s*)/  # 'use RPerl::AfterSubclass;'
 %token USE_EXPORTER          = /(\s*use\s+RPerl::Exporter\s+qw\(\s*import\s*\)\s*;\s*)/  # 'use RPerl::Exporter qw(import);'
