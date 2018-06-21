@@ -3,7 +3,7 @@ package RPerl::DataType::String;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.013_000;
+our $VERSION = 0.014_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -43,11 +43,11 @@ use POSIX qw(floor);
 
 # DEV NOTE: do not put inside INIT{} block, because it will be "too late to run INIT block" in some cases, such as inside Catalyst
 # DEV NOTE, CORRELATION #rp040: fix recursive dependencies of String.pm & HelperFunctions_cpp.pm, as triggered by ingy's Inline::create_config_file() system() call
-# NEED REMOVE: this code no longer appears to be necessary?
+# DEV NOTE, DO NOT REMOVE!  [error] Caught exception in ShinyCMS::Controller::Code->run_command "Undefined subroutine &main::RPerl_SvPOKp called at /home/wbraswell/github_repos/rperl-latest/lib/RPerl/DataType/String.pm line 82."
 #if (not ((exists $ARGV[0]) and (defined $ARGV[0]) and ((substr $ARGV[0], -7, 7) eq '_Inline'))) {
 #if (0) {
-#    use RPerl::HelperFunctions_cpp;  # main::RPerl_SvPOKp
-#    RPerl::HelperFunctions_cpp::cpp_load();
+    use RPerl::HelperFunctions_cpp;  # main::RPerl_SvPOKp
+    RPerl::HelperFunctions_cpp::cpp_load();
 #}
 
 # [[[ EXPORTS ]]]

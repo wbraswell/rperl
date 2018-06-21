@@ -1,11 +1,12 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__MongoDBBSON_h
-#define __CPP__INCLUDED__RPerl__DataStructure__MongoDBBSON_h 0.001_000
+#define __CPP__INCLUDED__RPerl__DataStructure__MongoDBBSON_h 0.002_000
 
 // [[[ INCLUDES ]]]
-/* DISABLED: the following #include directive is set in $RPerl::Inline::ARGS{auto_include} in Compiler.pm
+/* DISABLED: the following #include directives are set in $RPerl::Inline::ARGS{auto_include} in Compiler.pm
 #include <bsoncxx/json.hpp>
+#include <bsoncxx/builder/stream/document.hpp>
 */
 
 # ifndef __CPP__INCLUDED__RPerl__DataStructure__MongoDBBSON_h__typedefs

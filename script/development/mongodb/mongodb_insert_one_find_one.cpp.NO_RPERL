@@ -6,6 +6,7 @@
 #include <mongocxx/stdx.hpp>      // in RPerl::Support::MongoDB.h
 #include <mongocxx/uri.hpp>       // in RPerl::Support::MongoDB.h
 #include <mongocxx/instance.hpp>  // in RPerl::Support::MongoDB.h
+#include <bsoncxx/builder/stream/document.hpp>
 
 using std::cout;  using std::cerr;  using std::endl;  // in rperlstandalone.h
 

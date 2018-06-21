@@ -3,7 +3,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__Support__MongoDBStandAlone_h
-#define __CPP__INCLUDED__RPerl__Support__MongoDBStandAlone_h 0.001_000
+#define __CPP__INCLUDED__RPerl__Support__MongoDBStandAlone_h 0.002_000
 
 // [[[ INCLUDES ]]]
 
@@ -15,7 +15,7 @@ using std::cout;  using std::cerr;  using std::endl;
 #include <mongocxx/uri.hpp>
 #include <mongocxx/instance.hpp>
 
-#include <RPerl/DataStructure/MongoDBBSONStandAlone.h> // -> bsoncxx/json.hpp
+#include <RPerl/DataStructure/MongoDBBSONStandAlone.h> // -> bsoncxx/json.hpp, bsoncxx/builder/stream/document.hpp
 #include <RPerl/Operation/Expression/Operator/MongoDBFunctions.h> // -> NULL
 
 # ifndef __CPP__INCLUDED__RPerl__Support__MongoDBStandAlone_h__typedefs
