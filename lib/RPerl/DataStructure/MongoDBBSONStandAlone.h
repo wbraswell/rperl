@@ -1,10 +1,11 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__MongoDBBSONStandAlone_h
-#define __CPP__INCLUDED__RPerl__DataStructure__MongoDBBSONStandAlone_h 0.001_000
+#define __CPP__INCLUDED__RPerl__DataStructure__MongoDBBSONStandAlone_h 0.002_000
 
 // [[[ INCLUDES ]]]
 #include <bsoncxx/json.hpp>
+#include <bsoncxx/builder/stream/document.hpp>
 
 # ifndef __CPP__INCLUDED__RPerl__DataStructure__MongoDBBSONStandAlone_h__typedefs
 #define __CPP__INCLUDED__RPerl__DataStructure__MongoDBBSONStandAlone_h__typedefs 1

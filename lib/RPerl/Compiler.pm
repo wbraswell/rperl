@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.037_000;
+our $VERSION = 0.038_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -1729,7 +1729,7 @@ EOF
                         # error: expected ‘,’ or ‘...’    AND    note: in expansion of macro ‘exp’
                         $file_line .= q(        $RPerl::Inline::ARGS{auto_include} = [ @{ $RPerl::Inline::ARGS{auto_include} }, ) .
                                       q('#undef exp', '#include <mongocxx/client.hpp>', '#include <mongocxx/stdx.hpp>', '#include <mongocxx/uri.hpp>', ) .
-                                      q('#include <mongocxx/instance.hpp>', '#include <<bsoncxx/json.hpp>' ];    # enable MongoDB support) . "\n";
+                                      q('#include <mongocxx/instance.hpp>', '#include <bsoncxx/json.hpp>', '#include <bsoncxx/builder/stream/document.hpp>' ];    # enable MongoDB support) . "\n";
                     }
                     else { $file_line = undef; }
                 }
