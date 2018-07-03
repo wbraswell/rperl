@@ -4,11 +4,13 @@
 use strict;
 use warnings;
 #use RPerl::AfterSubclass;  # disable RPerl itself
-our $VERSION = 0.001_000;
+our $VERSION = 0.002_000;
 
 # disable RPerl itself
+package number;
 package string;
 package string_arrayref;
+package string_hashref;
 package string_hashref_hashref;
 package integer;
 package filehandle;
@@ -23,6 +25,8 @@ package main;
 use English;
 use Data::Dumper;
 use IPC::Run3 qw(run3);
+use Module::CoreList;
+use CPAN;
 
 # [[[ OPERATIONS ]]]
 
@@ -41,7 +45,7 @@ if ((not defined $ARGV[1]) or ($ARGV[1] eq q{})) {
 my string $output_format = $ARGV[1];
 
 # NEED REMOVE HARD-CODED DIRECTORY
-my string $work_dir = $ENV{'HOME'} . '/rperl_build_tmp';
+my string $work_dir = $ENV{'HOME'} . '/rperl_builder_tmp';
 
 if ((not -e $work_dir) or (not -d $work_dir)) {
     die 'Work directory does not exist: ', $work_dir, "\n", 'dying', "\n";
@@ -50,8 +54,10 @@ if ((not -e $work_dir) or (not -d $work_dir)) {
 # BEGIN RECURSIVE SUBROUTINE CALLS
 # BEGIN RECURSIVE SUBROUTINE CALLS
 # BEGIN RECURSIVE SUBROUTINE CALLS
-my string_hashref_hashref $dependencies = recurse($input_module, $output_format, $work_dir);
+my string_hashref $distributions_processed = {};
+my string_hashref_hashref $dependencies = recurse($input_module, $output_format, $work_dir, $distributions_processed);
 print {*STDERR} 'have outer-most $dependencies = ', "\n", Dumper($dependencies), "\n";
+print {*STDERR} 'have outer-most $distributions_processed = ', "\n", Dumper($distributions_processed), "\n";
 
 
 # [[[ SUBROUTINES ]]]
@@ -61,25 +67,119 @@ print {*STDERR} 'have outer-most $dependencies = ', "\n", Dumper($dependencies),
 # RECURSIVELY BUILD PACKAGES
 sub recurse {
     { my string_hashref_hashref $RETURN_TYPE };  # output return value copied from last nested subroutine, determine_dependencies()
-    ( my string $input_module, my string $output_format, my string $work_dir ) = @ARG;  # input parameters copied from first nested subroutine, run_fpm()
-    
-    my string_hashref_hashref $dependencies = determine_dependencies(determine_spec_file(run_fpm($input_module, $output_format, $work_dir)));
-    
-# START HERE: add global flat hash of all searched modules to avoid dependency loops
-# START HERE: add global flat hash of all searched modules to avoid dependency loops
-# START HERE: add global flat hash of all searched modules to avoid dependency loops
-    
-    foreach my string $dependency_module (keys %{$dependencies}) {
-        if (not exists $dependencies->{$dependency_module}->{_min_version}) {
-            my string_hashref_hashref $subdependencies = recurse($dependency_module, $output_format, $work_dir);
-            $dependencies->{$dependency_module} = {%{$dependencies->{$dependency_module}}, %{$subdependencies}};  # merge subdeps into existing deps
+    ( my string $input_module, my string $output_format, my string $work_dir, my string_hashref $distributions_processed ) = @ARG;  # input parameters copied from first nested subroutine, run_fpm()
+ 
+print {*STDERR} "\n\n", '=' x 150, "\n\n";
+print {*STDERR} 'in recurse(), received $input_module = ', $input_module, "\n";
+print {*STDERR} 'in recurse(), received $distributions_processed = ', "\n", Dumper($distributions_processed), "\n";
+
+    # skip dependencies already in the flattened hash, to avoid dependency loops
+    if (exists $distributions_processed->{$input_module}) {
+print {*STDERR} "\n", 'SKIPPING MODULE, ALREADY PROCESSED: ', $input_module, "\n\n";
+        return {};  # return empty $dependencies
+    }
+
+    # DEV NOTE: process dependencies by distribution, not by module
+    my string $distribution;
+
+    # skip dependencies contained in the Perl core, to avoid FPM error:
+    # /usr/local/share/gems/gems/fpm-1.10.0/lib/fpm/package/cpan.rb:341:in `download': undefined method `[]' for nil:NilClass (NoMethodError)
+
+    # CPAN::Shell methodology
+    # HARD-CODED EXAMPLE:
+    # X/XS/XSAWYERX/perl-5.28.0.tar.gz
+#    CPAN::Shell->m($input_module);  # useless, prints results, returns undef
+#    my $distribution_cpan_file = CPAN::Shell->expand('Module', $input_module)->cpan_file();  # error on module 'Config', can't call cpan_file() on undefined reference
+    my $module_object = CPAN::Shell->expand('Module', $input_module);
+    if (defined $module_object) {
+        my string $distribution_cpan_file = $module_object->cpan_file();
+
+        # determine CPAN distribution name from module name (may be the same)
+        # HARD-CODED EXAMPLE:
+        # E/ET/ETHER/File-Temp-0.2306.tar.gz
+        if ($distribution_cpan_file =~ m/^[A-Z]\/[A-Z][A-Z]\/[A-Z]+\/([-+\w]+)-[.\d]+\.tar\.gz$/) {
+            $distribution = $1;            
+        }
+        # HARD-CODED EXAMPLE:
+        # M/MU/MUIR/modules/Text-Tabs+Wrap-2013.0523.tar.gz
+        elsif ($distribution_cpan_file =~ m/^[A-Z]\/[A-Z][A-Z]\/[A-Z]+\/modules\/([-+\w]+)-[.\d]+\.tar\.gz$/) {
+            $distribution = $1;            
         }
         else {
-            # THEN START HERE: NEED ADD MIN VERSION HANDLING
-            # THEN START HERE: NEED ADD MIN VERSION HANDLING
-            # THEN START HERE: NEED ADD MIN VERSION HANDLING
-print {*STDERR} 'SKIPPING MIN VERSION, NEED ADD MIN VERSION HANDLING', "\n";
+            die 'ERROR, CPAN DISTRIBUTION FORMAT NOT RECOGNIZED: ', $distribution_cpan_file, "\n", 'dying';
         }
+        $distribution =~ s/-/::/gxms;
+
+print {*STDERR} 'in recurse(), have $distribution = ', $distribution, "\n";
+
+        # skip dependencies already in the flattened hash, to avoid dependency loops
+        if (exists $distributions_processed->{$distribution}) {
+print {*STDERR} "\n", 'SKIPPING DISTRIBUTION, ALREADY PROCESSED: ', $distribution, "\n\n";
+            return {};  # return empty $dependencies
+        }
+
+print {*STDERR} 'in recurse(), have $distribution_cpan_file = ', $distribution_cpan_file, "\n";
+
+        # DEV NOTE: this identifies "dual life" (in Perl core and on CPAN) core modules, 
+        # which SHOULD be processed in order to get the newest version from CPAN, as well as be present in the OS package management dependency system
+        if ($distribution_cpan_file =~ m/^.*\/perl-[.\d]+\.tar\.gz$/) {
+print {*STDERR} "\n", 'SKIPPING MODULE, ALREADY IN PERL CORE (via CPAN::Shell): ', $input_module, "\n\n";
+            return {};  # return empty $dependencies
+        }
+    }
+    else {
+        # Module::CoreList methodology
+        # DEV NOTE: only use as fall-back when CPAN::Shell returns undef; this identifies "single life" (in Perl core only, not on CPAN) core modules like 'Config',
+        # which should NOT be processed because they do not exist on CPAN independent of the latest perl-X.X.X.tar.gz distribution
+        if (Module::CoreList::is_core($input_module)) {
+print {*STDERR} "\n", 'SKIPPING MODULE, ALREADY IN PERL CORE (via Module::CoreList): ', $input_module, "\n\n";
+            return {};  # return empty $dependencies
+        }
+    }
+
+print {*STDERR} 'in recurse(), about to call determine_dependencies(determine_spec_file(run_fpm()))...', "\n";
+
+    my string_hashref_hashref $dependencies = determine_dependencies(determine_spec_file(run_fpm($input_module, $output_format, $work_dir)));
+
+print {*STDERR} 'in recurse(), ret from call to determine_dependencies(determine_spec_file(run_fpm()))', "\n";
+print {*STDERR} 'in recurse(), have $dependencies = ', "\n", Dumper($dependencies), "\n";
+
+    # add just-processed dependency into flattened dependencies before recursing, to avoid dependency loops
+    # DEV NOTE: process dependencies by distribution, not by module
+#    if (not exists $dependencies_processed->{$input_module}) {
+#        $dependencies_processed->{$input_module} = 0;
+#    }
+#    $dependencies_processed->{$input_module} += 1;
+    if (not exists $distributions_processed->{$distribution}) {
+        $distributions_processed->{$distribution} = 0;
+    }
+    $distributions_processed->{$distribution} += 1;
+
+print {*STDERR} 'in recurse(), have updated $distributions_processed = ', "\n", Dumper($distributions_processed), "\n";
+
+    # recurse for each dependency, in order to process subdependencies
+    foreach my string $dependency_module (keys %{$dependencies}) {
+        # skip dependencies already in the flattened hash, to avoid dependency loops
+        if (exists $distributions_processed->{$dependency_module}) {
+print {*STDERR} "\n", 'SKIPPING DEPENDENCY MODULE, ALREADY PROCESSED: ', $dependency_module, "\n\n";
+            next;
+        }
+        if (exists $dependencies->{$dependency_module}->{_min_version}) {
+            my $module_object = CPAN::Shell->expand('Module', $dependency_module);
+            if (defined $module_object) {
+                my number $cpan_version = $module_object->cpan_version();
+                if ($cpan_version < $dependencies->{$dependency_module}->{_min_version}) {
+                    die 'ERROR, MINIMUM VERSION NOT FOUND: ', $dependency_module, ' v', $dependencies->{$dependency_module}->{_min_version},
+                        ' required, but v', $cpan_version, ' found on CPAN, dying';
+                }
+            }
+            else {
+                    die 'ERROR, MINIMUM VERSION NOT FOUND: ', $dependency_module, ' v', $dependencies->{$dependency_module}->{_min_version},
+                        ' required, but no version found on CPAN, dying';
+            }
+        }
+        my string_hashref_hashref $subdependencies = recurse($dependency_module, $output_format, $work_dir, $distributions_processed);
+        $dependencies->{$dependency_module} = {%{$dependencies->{$dependency_module}}, %{$subdependencies}};  # merge subdeps into existing deps
     }
 
     return $dependencies;
@@ -112,10 +212,10 @@ print {*STDERR} 'in run_fpm(), have $stderr_generated = ', "\n", '<<<=== BEGIN S
     my integer $test_exit_status = $CHILD_ERROR >> 8;
 
     if ( $test_exit_status == 0 ) {    # UNIX process return code 0, success
-        print 'Success!', "\n";
+        print '[[[=== SUCCESS!', $input_module, ' ===]]]', "\n";
     }
     else {    # UNIX process return code not 0, error
-        die 'Error: ', $OS_ERROR, "\n", 'dying';
+        die '[[[== ERROR! ===]]]', "\n", 'dying';
     }
     return $stdout_generated;
 }
@@ -195,4 +295,3 @@ print {*STDERR} 'in determine_dependencies(), have $dependencies = ', "\n", Dump
 
     return $dependencies;
 }
-
