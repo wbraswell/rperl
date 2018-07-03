@@ -244,7 +244,7 @@ print {*STDERR} 'in run_fpm(), have $execute_command = ' . $execute_command . "\
 print {*STDERR} 'in run_fpm(), about to call run3()...' . "\n";
 
 #    run3( $execute_command, \undef, \$stdout_generated, \$stderr_generated );  # no simultaneous view & capture; child STDIN from /dev/null, child STDOUT & STDERR to variables
-    run3( $execute_command, \undef, undef, \$stderr_generated );  # yes simultaneous view & capture w/ tee; child STDIN from /dev/null, child STDOUT to parent STDOUT, child STDERR to variable
+    run3( $execute_command, undef, undef, \$stderr_generated );  # yes simultaneous view & capture w/ tee; child STDIN from parent STDIN, child STDOUT to parent STDOUT, child STDERR to variable
 #    run3( $execute_command, \undef, \&stdout_print, \&stderr_print );  # no simultaneous view & capture; child STDOUT & STDERR to subroutines
 
     #  yes simultaneous view & capture w/ tee; read STDOUT contents from file saved by `tee` command
