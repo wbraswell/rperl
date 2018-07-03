@@ -4,9 +4,10 @@
 use strict;
 use warnings;
 #use RPerl::AfterSubclass;  # disable RPerl itself
-our $VERSION = 0.002_000;
+our $VERSION = 0.003_000;
 
 # disable RPerl itself
+package void;
 package number;
 package string;
 package string_arrayref;
@@ -23,10 +24,13 @@ package main;
 
 # [[[ INCLUDES ]]]
 use English;
-use Data::Dumper;
 use IPC::Run3 qw(run3);
 use Module::CoreList;
 use CPAN;
+use version 0.77;  # for comparing version strings
+
+use Data::Dumper;
+$Data::Dumper::Sortkeys = 1;
 
 # [[[ OPERATIONS ]]]
 
@@ -35,20 +39,20 @@ use CPAN;
 # CHECK INPUT ARGUMENTS & WORK DIRECTORY
 
 if ((not defined $ARGV[0]) or ($ARGV[0] eq q{})) {
-    die 'No input Perl module specified, dying', "\n";
+    die 'ERROR, No input Perl module specified, dying', "\n";
 }
 my string $input_module = $ARGV[0];
 
 if ((not defined $ARGV[1]) or ($ARGV[1] eq q{})) {
-    die 'No output package format specified, dying', "\n";
+    die 'ERROR, No output package format specified, dying', "\n";
 }
 my string $output_format = $ARGV[1];
 
 # NEED REMOVE HARD-CODED DIRECTORY
-my string $work_dir = $ENV{'HOME'} . '/rperl_builder_tmp';
+my string $work_dir = $ENV{'HOME'} . '/rperl_packager_tmp';
 
 if ((not -e $work_dir) or (not -d $work_dir)) {
-    die 'Work directory does not exist: ', $work_dir, "\n", 'dying', "\n";
+    die 'ERROR, Work directory does not exist: ', $work_dir, "\n", 'dying', "\n";
 }
 
 # BEGIN RECURSIVE SUBROUTINE CALLS
@@ -58,6 +62,17 @@ my string_hashref $distributions_processed = {};
 my string_hashref_hashref $dependencies = recurse($input_module, $output_format, $work_dir, $distributions_processed);
 print {*STDERR} 'have outer-most $dependencies = ', "\n", Dumper($dependencies), "\n";
 print {*STDERR} 'have outer-most $distributions_processed = ', "\n", Dumper($distributions_processed), "\n";
+print {*STDERR} 'have outer-most scalar keys %{$distributions_processed} = ', scalar keys %{$distributions_processed}, "\n";
+
+# save dependencies & distributions processed
+my string $dependencies_file = $work_dir . '/' . $input_module . '.deps';
+open(my filehandle $DEPENDENCIES_FH, '>', $dependencies_file)
+    or die 'ERROR, Can Not Open Dependencies File For Writing: ', $dependencies_file, "\n", 'dying';
+print $DEPENDENCIES_FH '$dependencies = ', "\n", Dumper($dependencies), "\n\n";
+print $DEPENDENCIES_FH '$distributions_processed = ', "\n", Dumper($distributions_processed), "\n";
+print $DEPENDENCIES_FH 'scalar keys %{$distributions_processed} = ', scalar keys %{$distributions_processed}, ';', "\n";
+close $DEPENDENCIES_FH
+    or die 'ERROR, Can Not Close Dependencies File After Writing: ', $dependencies_file, "\n", 'dying';
 
 
 # [[[ SUBROUTINES ]]]
@@ -71,7 +86,8 @@ sub recurse {
  
 print {*STDERR} "\n\n", '=' x 150, "\n\n";
 print {*STDERR} 'in recurse(), received $input_module = ', $input_module, "\n";
-print {*STDERR} 'in recurse(), received $distributions_processed = ', "\n", Dumper($distributions_processed), "\n";
+print {*STDERR} 'in recurse(), received $distributions_processed = ', "\n", Dumper($distributions_processed);
+print {*STDERR} 'in recurse(), have scalar keys %{$distributions_processed} = ', scalar keys %{$distributions_processed}, "\n\n";
 
     # skip dependencies already in the flattened hash, to avoid dependency loops
     if (exists $distributions_processed->{$input_module}) {
@@ -106,7 +122,7 @@ print {*STDERR} "\n", 'SKIPPING MODULE, ALREADY PROCESSED: ', $input_module, "\n
             $distribution = $1;            
         }
         else {
-            die 'ERROR, CPAN DISTRIBUTION FORMAT NOT RECOGNIZED: ', $distribution_cpan_file, "\n", 'dying';
+            die 'ERROR, CPAN Distribution Format Not Recognized: ', $distribution_cpan_file, "\n", 'dying';
         }
         $distribution =~ s/-/::/gxms;
 
@@ -155,26 +171,46 @@ print {*STDERR} 'in recurse(), have $dependencies = ', "\n", Dumper($dependencie
     }
     $distributions_processed->{$distribution} += 1;
 
-print {*STDERR} 'in recurse(), have updated $distributions_processed = ', "\n", Dumper($distributions_processed), "\n";
+print {*STDERR} 'in recurse(), have updated $distributions_processed = ', "\n", Dumper($distributions_processed);
+print {*STDERR} 'in recurse(), have updated scalar keys %{$distributions_processed} = ', scalar keys %{$distributions_processed}, "\n\n";
 
-    # recurse for each dependency, in order to process subdependencies
-    foreach my string $dependency_module (keys %{$dependencies}) {
+    # depth-first recurse for each dependency, in order to process subdependencies
+    foreach my string $dependency_module (sort keys %{$dependencies}) {
         # skip dependencies already in the flattened hash, to avoid dependency loops
         if (exists $distributions_processed->{$dependency_module}) {
 print {*STDERR} "\n", 'SKIPPING DEPENDENCY MODULE, ALREADY PROCESSED: ', $dependency_module, "\n\n";
             next;
         }
-        if (exists $dependencies->{$dependency_module}->{_min_version}) {
+        if (exists $dependencies->{$dependency_module}->{_version}) {
             my $module_object = CPAN::Shell->expand('Module', $dependency_module);
             if (defined $module_object) {
                 my number $cpan_version = $module_object->cpan_version();
-                if ($cpan_version < $dependencies->{$dependency_module}->{_min_version}) {
-                    die 'ERROR, MINIMUM VERSION NOT FOUND: ', $dependency_module, ' v', $dependencies->{$dependency_module}->{_min_version},
-                        ' required, but v', $cpan_version, ' found on CPAN, dying';
+                
+                # NEED UPGRADE: handle check for the existence of a specific prior version of a module
+#                if ($cpan_version != $dependencies->{$dependency_module}->{_version}) {  # possibly wrong, numeric comparison instead of version
+                if (version->parse($cpan_version) != version->parse($dependencies->{$dependency_module}->{_version})) {
+                    die 'ERROR, Exact Version Not Found: ', $dependency_module, ' ', $dependencies->{$dependency_module}->{_version},
+                        ' required, but ', $cpan_version, ' found on CPAN, NEED UPGRADE TO HANDLE EXACT VERSIONS, dying';
                 }
             }
             else {
-                    die 'ERROR, MINIMUM VERSION NOT FOUND: ', $dependency_module, ' v', $dependencies->{$dependency_module}->{_min_version},
+                    die 'ERROR, Exact Version Not Found: ', $dependency_module, ' ', $dependencies->{$dependency_module}->{_version},
+                        ' required, but no version found on CPAN, dying';
+            }
+        }
+        elsif (exists $dependencies->{$dependency_module}->{_min_version}) {
+            my $module_object = CPAN::Shell->expand('Module', $dependency_module);
+            if (defined $module_object) {
+                my number $cpan_version = $module_object->cpan_version();
+                
+#                if ($cpan_version < $dependencies->{$dependency_module}->{_min_version}) {  # possibly wrong, numeric comparison instead of version
+                if (version->parse($cpan_version) < version->parse($dependencies->{$dependency_module}->{_min_version})) {
+                    die 'ERROR, Minimum Version Not Found: ', $dependency_module, ' ', $dependencies->{$dependency_module}->{_min_version},
+                        ' required, but ', $cpan_version, ' found on CPAN, dying';
+                }
+            }
+            else {
+                    die 'ERROR, Minimum Version Not Found: ', $dependency_module, ' ', $dependencies->{$dependency_module}->{_min_version},
                         ' required, but no version found on CPAN, dying';
             }
         }
@@ -192,19 +228,33 @@ sub run_fpm {
     { my string $RETURN_TYPE };
     ( my string $input_module, my string $output_format, my string $work_dir ) = @ARG;
 
+    my string $stdout_file = $work_dir . '/' . $input_module . '.stdout';
     my string $stdout_generated = q{};
     my string $stderr_generated = q{};
 
+    # NEED UPGRADE: handle installation of a specific prior version of a module
     # HARD-CODED EXAMPLE:
     # fpm --verbose --debug-workspace --workdir /home/USERNAME/rpmbuild.fpm/ -t rpm -s cpan ExtUtils::MakeMaker
     # NEED RE-ENABLE TESTS
-    #my string $execute_command = 'fpm --cpan-test --verbose --debug-workspace --workdir ' . $work_dir . ' -t ' . $output_format . ' -s cpan ' . $input_module;
-    my string $execute_command = 'fpm --no-cpan-test --verbose --debug-workspace --workdir ' . $work_dir . ' -t ' . $output_format . ' -s cpan ' . $input_module;
+#    my string $execute_command = 'fpm --cpan-test --verbose --debug-workspace --workdir ' . $work_dir . ' -t ' . $output_format . ' -s cpan ' . $input_module;
+#    my string $execute_command = 'fpm --no-cpan-test --verbose --debug-workspace --workdir ' . $work_dir . ' -t ' . $output_format . ' -s cpan ' . $input_module;
+    my string $execute_command = 'fpm --no-cpan-test --verbose --debug-workspace --workdir ' . $work_dir . ' -t ' . $output_format . ' -s cpan ' . $input_module . ' | tee ' . $stdout_file;  # yes simultaneous view & capture w/ tee; 
 
 print {*STDERR} 'in run_fpm(), have $execute_command = ' . $execute_command . "\n";
-print {*STDERR} 'in run_fpm(), about to call open3()...' . "\n";
+print {*STDERR} 'in run_fpm(), about to call run3()...' . "\n";
 
-    run3( $execute_command, \undef, \$stdout_generated, \$stderr_generated );
+#    run3( $execute_command, \undef, \$stdout_generated, \$stderr_generated );  # no simultaneous view & capture; child STDIN from /dev/null, child STDOUT & STDERR to variables
+    run3( $execute_command, \undef, undef, \$stderr_generated );  # yes simultaneous view & capture w/ tee; child STDIN from /dev/null, child STDOUT to parent STDOUT, child STDERR to variable
+#    run3( $execute_command, \undef, \&stdout_print, \&stderr_print );  # no simultaneous view & capture; child STDOUT & STDERR to subroutines
+
+    #  yes simultaneous view & capture w/ tee; read STDOUT contents from file saved by `tee` command
+    open(my filehandle $STDOUT_FILE_FH, '<', $stdout_file)
+        or die 'ERROR, Could not open STDOUT file: ', q{'}, $stdout_file, q{'}, "\n", $OS_ERROR, "\n", 'dying';
+    while (my string $stdout_file_line = <$STDOUT_FILE_FH>) {
+        $stdout_generated .= $stdout_file_line;
+    }
+    close $STDOUT_FILE_FH
+        or die 'ERROR, Could not close STDOUT file: ', q{'}, $stdout_file, q{'}, "\n", $OS_ERROR, "\n", 'dying';    
 
 print {*STDERR} 'in run_fpm(), have $stdout_generated = ', "\n", '<<<=== BEGIN STDOUT ===>>>', $stdout_generated, '<<<=== END STDOUT ===>>>', "\n\n";
 print {*STDERR} 'in run_fpm(), have $stderr_generated = ', "\n", '<<<=== BEGIN STDERR ===>>>', $stderr_generated, '<<<=== END STDERR ===>>>', "\n\n";
@@ -212,10 +262,10 @@ print {*STDERR} 'in run_fpm(), have $stderr_generated = ', "\n", '<<<=== BEGIN S
     my integer $test_exit_status = $CHILD_ERROR >> 8;
 
     if ( $test_exit_status == 0 ) {    # UNIX process return code 0, success
-        print '[[[=== SUCCESS!', $input_module, ' ===]]]', "\n";
+        print "\n", ('[[[[[=====  SUCCESS!  ', $input_module, '  =====]]]]]' . "\n") x 3, "\n";
     }
     else {    # UNIX process return code not 0, error
-        die '[[[== ERROR! ===]]]', "\n", 'dying';
+        die "\n", ('[[[[[==== ERROR!  ', $input_module, '  =====]]]]]' . "\n") x 3, 'dying', "\n";
     }
     return $stdout_generated;
 }
@@ -233,12 +283,12 @@ sub determine_spec_file {
 
     # HARD-CODED EXAMPLE:
     # {:timestamp=>"2018-07-02T14:36:03.898974-0700", :message=>"Running rpmbuild", :args=>["rpmbuild", "-bb", "--target", "noarch",
-    #    "--define", "buildroot /home/USERNAME/rperl_build_tmp/package-rpm-build-SERIALNUMBER/BUILD",
-    #    "--define", "_topdir /home/USERNAME/rperl_build_tmp/package-rpm-build-SERIALNUMBER",
-    #    "--define", "_sourcedir /home/USERNAME/rperl_build_tmp/package-rpm-build-SERIALNUMBER",
-    #    "--define", "_rpmdir /home/USERNAME/rperl_build_tmp/package-rpm-build-SERIALNUMBER/RPMS",
-    #    "--define", "_tmppath /home/USERNAME/rperl_build_tmp",
-    #    "/home/USERNAME/rperl_build_tmp/package-rpm-build-SERIALNUMBER/SPECS/perl-ExtUtils-MakeMaker.spec"],
+    #    "--define", "buildroot /home/USERNAME/rperl_packager_tmp/package-rpm-build-SERIALNUMBER/BUILD",
+    #    "--define", "_topdir /home/USERNAME/rperl_packager_tmp/package-rpm-build-SERIALNUMBER",
+    #    "--define", "_sourcedir /home/USERNAME/rperl_packager_tmp/package-rpm-build-SERIALNUMBER",
+    #    "--define", "_rpmdir /home/USERNAME/rperl_packager_tmp/package-rpm-build-SERIALNUMBER/RPMS",
+    #    "--define", "_tmppath /home/USERNAME/rperl_packager_tmp",
+    #    "/home/USERNAME/rperl_packager_tmp/package-rpm-build-SERIALNUMBER/SPECS/perl-ExtUtils-MakeMaker.spec"],
     #    :level=>:info}
     my string $spec_file = q{};
     foreach my string $stdout_generated_line (@{$stdout_generated_lines}) {
@@ -249,7 +299,7 @@ sub determine_spec_file {
     }
 
     if ($spec_file eq q{}) {
-        die 'Could not determine spec file, dying';
+        die 'ERROR, Could not determine spec file, dying';
     }
 
 print {*STDERR} 'in determine_spec_file(), have $spec_file = ', q{'}, $spec_file, q{'}, "\n";
@@ -266,32 +316,52 @@ sub determine_dependencies {
     ( my string $spec_file ) = @ARG;
 
     open(my filehandle $SPEC_FILE_FH, '<', $spec_file) 
-        or die 'Could not open spec file: ', q{'}, $spec_file, q{'}, "\n", $OS_ERROR, "\n", 'dying';
-    # HARD-CODED EXAMPLE:
-    # Requires: perl(Data::Dumper)
-    # Requires: perl(Encode)
-    # Requires: perl(File::Basename)
-    # Requires: perl(File::Spec) >= 0.8
-    # Requires: perl(Pod::Man)
+        or die 'ERROR, Could not open spec file: ', q{'}, $spec_file, q{'}, "\n", $OS_ERROR, "\n", 'dying';
     my string_hashref_hashref $dependencies = {};
     while (my string $spec_file_line = <$SPEC_FILE_FH>) {
         chomp $spec_file_line;
         if ($spec_file_line =~ m/^Requires:\ perl\(/) {
+            # HARD-CODED EXAMPLES:
+            # Requires: perl(Encode)
+            # Requires: perl(Data::Dumper)
             if ($spec_file_line =~ m/^Requires:\ perl\((.*)\)$/) {
                 $dependencies->{$1} = {};
             }
-            elsif ($spec_file_line =~ m/^Requires:\ perl\((.*)\)\s+>=\s+([.\d]+)$/) {
+            # NEED ANSWER: is single equal sign correct here?
+            # HARD-CODED EXAMPLES:
+            # Requires: perl(Foo) =  2.3.1
+            # Requires: perl(Bar) = v4.2.0
+            elsif ($spec_file_line =~ m/^Requires:\ perl\((.*)\)\s+=\s+([v.\d]+)$/) {
+                $dependencies->{$1} = { _version => $2 };
+            }
+            # HARD-CODED EXAMPLES:
+            # Requires: perl(File::Spec) >= 0.8
+            # Requires: perl(MongoDB) >= v1.8.0
+            elsif ($spec_file_line =~ m/^Requires:\ perl\((.*)\)\s+>=\s+([v.\d]+)$/) {
                 $dependencies->{$1} = { _min_version => $2 };
             }
             else {
-                die 'Spec file contains unrecognized Perl dependency line: ', q{'}, $spec_file_line, q{'}, "\n", 'dying';
+                die 'ERROR, Spec file contains unrecognized Perl dependency line: ', q{'}, $spec_file_line, q{'}, "\n", 'dying';
             }
         }
     }
     close $SPEC_FILE_FH
-        or die 'Could not close spec file: ', q{'}, $spec_file, q{'}, "\n", $OS_ERROR, "\n", 'dying';
+        or die 'ERROR, Could not close spec file: ', q{'}, $spec_file, q{'}, "\n", $OS_ERROR, "\n", 'dying';
 
 print {*STDERR} 'in determine_dependencies(), have $dependencies = ', "\n", Dumper($dependencies), "\n";
 
     return $dependencies;
 }
+
+
+# does not allow simultaneous viewing & capturing
+#sub stdout_print {
+#    { my void $RETURN_TYPE };
+#    ( my string $input_string ) = @ARG;
+#    print $input_string;
+#}
+#sub stderr_print {
+#    { my void $RETURN_TYPE };
+#    ( my string $input_string ) = @ARG;
+#    print {*STDERR} $input_string;
+#}
