@@ -4,7 +4,7 @@
 use strict;
 use warnings;
 #use RPerl::AfterSubclass;  # disable RPerl itself
-our $VERSION = 0.003_000;
+our $VERSION = 0.006_000;
 
 # disable RPerl itself
 package void;
@@ -38,18 +38,22 @@ $Data::Dumper::Sortkeys = 1;
 # CHECK INPUT ARGUMENTS & WORK DIRECTORY
 # CHECK INPUT ARGUMENTS & WORK DIRECTORY
 
-if ((not defined $ARGV[0]) or ($ARGV[0] eq q{})) {
-    die 'ERROR, No input Perl module specified, dying', "\n";
+if ( (not defined $ARGV[0]) or ( ($ARGV[0] ne q{-t}) and ($ARGV[0] ne q{--output-type}) ) ) {
+    die 'ERROR, First argument must be output package format option tag "-t" or "--output-type", dying', "\n";
 }
-my string $input_module = $ARGV[0];
-
+    
 if ((not defined $ARGV[1]) or ($ARGV[1] eq q{})) {
     die 'ERROR, No output package format specified, dying', "\n";
 }
 my string $output_format = $ARGV[1];
 
+if ((not defined $ARGV[2]) or ($ARGV[2] eq q{})) {
+    die 'ERROR, No input Perl module specified, dying', "\n";
+}
+my string $input_module = $ARGV[2];
+
 # NEED REMOVE HARD-CODED DIRECTORY
-my string $work_dir = $ENV{'HOME'} . '/rperl_packager_tmp';
+my string $work_dir = $ENV{'HOME'} . '/fpm_tmp';
 
 if ((not -e $work_dir) or (not -d $work_dir)) {
     die 'ERROR, Work directory does not exist: ', $work_dir, "\n", 'dying', "\n";
@@ -113,12 +117,26 @@ print {*STDERR} "\n", 'SKIPPING MODULE, ALREADY PROCESSED: ', $input_module, "\n
         # determine CPAN distribution name from module name (may be the same)
         # HARD-CODED EXAMPLE:
         # E/ET/ETHER/File-Temp-0.2306.tar.gz
-        if ($distribution_cpan_file =~ m/^[A-Z]\/[A-Z][A-Z]\/[A-Z]+\/([-+\w]+)-[.\d]+\.tar\.gz$/) {
+        # M/MO/MONGODB/MongoDB-v2.0.0.tar.gz
+        if ($distribution_cpan_file =~ m/^[A-Z]\/[A-Z][A-Z]\/[A-Z]+\/([-+\w]+)-[v.\d]+\.tar\.gz$/) {
             $distribution = $1;            
         }
         # HARD-CODED EXAMPLE:
         # M/MU/MUIR/modules/Text-Tabs+Wrap-2013.0523.tar.gz
-        elsif ($distribution_cpan_file =~ m/^[A-Z]\/[A-Z][A-Z]\/[A-Z]+\/modules\/([-+\w]+)-[.\d]+\.tar\.gz$/) {
+        # F/FO/FOOBAR/modules/FooBar-v1.2.3.tar.gz
+        elsif ($distribution_cpan_file =~ m/^[A-Z]\/[A-Z][A-Z]\/[A-Z]+\/modules\/([-+\w]+)-[v.\d]+\.tar\.gz$/) {
+            $distribution = $1;            
+        }
+        # HARD-CODED EXAMPLE:
+        # R/RS/RSAVAGE/Config-Tiny-2.23.tgz
+        # F/FO/FOOBAR/FooBar-v1.2.3.tgz
+        elsif ($distribution_cpan_file =~ m/^[A-Z]\/[A-Z][A-Z]\/[A-Z]+\/([-+\w]+)-[v.\d]+\.tgz$/) {
+            $distribution = $1;            
+        }
+        # HARD-CODED EXAMPLE:
+        # F/FO/FOOBAR/modules/FooBar-1.2.3.tgz
+        # F/FO/FOOBAR/modules/FooBar-v1.2.3.tgz
+        elsif ($distribution_cpan_file =~ m/^[A-Z]\/[A-Z][A-Z]\/[A-Z]+\/modules\/([-+\w]+)-[v.\d]+\.tgz$/) {
             $distribution = $1;            
         }
         else {
@@ -238,7 +256,7 @@ sub run_fpm {
     # NEED RE-ENABLE TESTS
 #    my string $execute_command = 'fpm --cpan-test --verbose --debug-workspace --workdir ' . $work_dir . ' -t ' . $output_format . ' -s cpan ' . $input_module;
 #    my string $execute_command = 'fpm --no-cpan-test --verbose --debug-workspace --workdir ' . $work_dir . ' -t ' . $output_format . ' -s cpan ' . $input_module;
-    my string $execute_command = 'fpm --no-cpan-test --verbose --debug-workspace --workdir ' . $work_dir . ' -t ' . $output_format . ' -s cpan ' . $input_module . ' | tee ' . $stdout_file;  # yes simultaneous view & capture w/ tee; 
+    my string $execute_command = 'unbuffer fpm --no-cpan-test --cpan-verbose --verbose --debug-workspace --workdir ' . $work_dir . ' -t ' . $output_format . ' -s cpan ' . $input_module . ' | tee ' . $stdout_file;  # yes simultaneous view & capture w/ tee; color w/ unbuffer
 
 print {*STDERR} 'in run_fpm(), have $execute_command = ' . $execute_command . "\n";
 print {*STDERR} 'in run_fpm(), about to call run3()...' . "\n";
@@ -283,12 +301,12 @@ sub determine_spec_file {
 
     # HARD-CODED EXAMPLE:
     # {:timestamp=>"2018-07-02T14:36:03.898974-0700", :message=>"Running rpmbuild", :args=>["rpmbuild", "-bb", "--target", "noarch",
-    #    "--define", "buildroot /home/USERNAME/rperl_packager_tmp/package-rpm-build-SERIALNUMBER/BUILD",
-    #    "--define", "_topdir /home/USERNAME/rperl_packager_tmp/package-rpm-build-SERIALNUMBER",
-    #    "--define", "_sourcedir /home/USERNAME/rperl_packager_tmp/package-rpm-build-SERIALNUMBER",
-    #    "--define", "_rpmdir /home/USERNAME/rperl_packager_tmp/package-rpm-build-SERIALNUMBER/RPMS",
-    #    "--define", "_tmppath /home/USERNAME/rperl_packager_tmp",
-    #    "/home/USERNAME/rperl_packager_tmp/package-rpm-build-SERIALNUMBER/SPECS/perl-ExtUtils-MakeMaker.spec"],
+    #    "--define", "buildroot /home/USERNAME/fpm_tmp/package-rpm-build-SERIALNUMBER/BUILD",
+    #    "--define", "_topdir /home/USERNAME/fpm_tmp/package-rpm-build-SERIALNUMBER",
+    #    "--define", "_sourcedir /home/USERNAME/fpm_tmp/package-rpm-build-SERIALNUMBER",
+    #    "--define", "_rpmdir /home/USERNAME/fpm_tmp/package-rpm-build-SERIALNUMBER/RPMS",
+    #    "--define", "_tmppath /home/USERNAME/fpm_tmp",
+    #    "/home/USERNAME/fpm_tmp/package-rpm-build-SERIALNUMBER/SPECS/perl-ExtUtils-MakeMaker.spec"],
     #    :level=>:info}
     my string $spec_file = q{};
     foreach my string $stdout_generated_line (@{$stdout_generated_lines}) {
@@ -353,15 +371,6 @@ print {*STDERR} 'in determine_dependencies(), have $dependencies = ', "\n", Dump
     return $dependencies;
 }
 
-
 # does not allow simultaneous viewing & capturing
-#sub stdout_print {
-#    { my void $RETURN_TYPE };
-#    ( my string $input_string ) = @ARG;
-#    print $input_string;
-#}
-#sub stderr_print {
-#    { my void $RETURN_TYPE };
-#    ( my string $input_string ) = @ARG;
-#    print {*STDERR} $input_string;
-#}
+#sub stdout_print { { my void $RETURN_TYPE }; ( my string $input_string ) = @ARG; print $input_string; }
+#sub stderr_print { { my void $RETURN_TYPE }; ( my string $input_string ) = @ARG; print {*STDERR} $input_string; }
