@@ -220,13 +220,13 @@ for my $test_file ( sort keys %{$test_files} ) {
     else {                                                            # Perl eval return code undefined or false, error
         print $verbose_newline;
 
-        RPerl::diag( "\n\n\n" . 'in 12_parse.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n\n\n" );
+#        RPerl::diag( "\n\n\n" . 'in 12_parse.t, have $EVAL_ERROR = ' . $EVAL_ERROR . "\n\n\n" );
         if ( ( $test_file =~ m/Bad/ms ) or ( $test_file =~ m/bad/ms ) ) {
 #            RPerl::diag( 'in 12_parse.t, have BAD $test_file = ' . $test_file . "\n" );
             my $missing_errors = [];
             if ( defined $test_files->{$test_file}->{errors} ) {
                 foreach my $error ( @{ $test_files->{$test_file}->{errors} } ) {
-                    RPerl::diag('in 12_parse.t, have $error = ' . $error . "\n" );
+#                    RPerl::diag('in 12_parse.t, have $error = ' . $error . "\n" );
                     # DEV NOTE: debug to show which tests trigger a Helpful Hint
 #                    if ( $EVAL_ERROR =~ /Helpful\ Hint/xms ) {
 #                        print '[[[ YES HELPFUL HINT ' . $test_file . ' ]]]' . "\n\n";
