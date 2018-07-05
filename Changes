@@ -1,5 +1,22 @@
 Revision history for Perl compiler RPerl.
 
+4.000000 2018-07-04 Codename Enterprise
+
+    - HOLIDAY EDITION: Happy Independence Day!
+    - Pre-Compiled Packages... Finally, Easy Installation!
+        http://rperl.org/get_rperl.html
+    - Subcompile, Enable Dynamic Linking To libperl.so Using $Config::Config{ccdlflags}
+    - Compile, Allow Building In Current Directory "." As Well As "lib/" Directory
+    - Compile, Enable RPerl Processing Of Otherwise-Skipped Source Code Input Files When Explicitly Named As FooCompilable.pm
+    - OO Accessors, Fix Bug In Auto-Generated Accessors "get_PROPERTY_size()", 
+        RPerl::CompileUnit::Module::Class::create_symtab_entries_and_accessors_mutators()
+    - Grammar, Allow Identifiers Beginning With Underscore, Where Not Conflicting With C++ Reserved Identifiers
+    - Grammar, Allow 'package' Statement To Be Split Across 2 Lines, In Order To Disable CPAN Indexing
+    - Grammar, Extended Shebang Support, "/usr/bin/env perl" & Other Special Formats
+    - Data Types, Implement %"NUMBER" Format, Automatically Selects Either %Lf Or %f Depending On "number" C++ Data Type
+    - Data Types, Implement *_arrayref_hashref
+    - Pod, Allow Pod As Valid Statement, Ignore For Now; This Enables Block Comments
+
 3.601000 2018-03-07
 
     - Bug Fix, Disable Operator05BitwiseNegation/program_00_bad_07.pl, CPAN Testers Failures
@@ -7,7 +24,7 @@ Revision history for Perl compiler RPerl.
 
 3.600000 2018-01-01 Codename Sirius
 
-    - HOLIDAY EDITION: Codename Sirius, Happy New Year!
+    - HOLIDAY EDITION: Happy New Year!
     - MongoDB, Initial Support
 
 3.402000 2017-11-29
@@ -305,7 +322,7 @@ Revision history for Perl compiler RPerl.
 
     - Fix Version Numbers
 
-1 2015-07-04 Codename Apollo
+1        2015-07-04 Codename Apollo
 
     - HOLIDAY EDITION: Happy Independence Day!
     - First Full Release

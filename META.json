@@ -51,7 +51,8 @@
       },
       "configure" : {
          "requires" : {
-            "Alien::GMP" : "1.07",
+            "Alien::Base::ModuleBuild" : "1.02",
+            "Alien::GMP" : "1.08",
             "Alien::GSL" : "1.01",
             "IO::Socket::SSL" : "2.043"
          }

@@ -1,14 +1,5 @@
 DONE
-    Subcompile Dynamic Linking To libperl.so Using $Config::Config{ccdlflags}
-    Grammar, Shebang Support, "/usr/bin/env perl" & Other Special Formats
-    allow building in current directory "." as well as "lib/" directory
-    fix bug in auto-generated accessors "get_PROPERTY_size()", in RPerl::CompileUnit::Module::Class::create_symtab_entries_and_accessors_mutators()
-    allow identifiers beginning with underscore where not conflicting w/ C++ reserved identifiers
-    allow 'package' statement to be split across 2 lines, in order to disable CPAN indexing
-    implement %"NUMBER" format, automatically selects either %Lf or %f depending on "number" C++ data type
-    implement *_arrayref_hashref
-    allow Pod as valid statement, ignore for now; this enables block comments
-    enable RPerl processing of otherwise-skipped files when explicitly named as FooCompilable.pm
+
 
 DOING
 
