@@ -66,6 +66,7 @@ DOING
     Quick-Start Guide
         finish
 
+    Alien::zlib???       for SDL dependency on zlib.h, get SDL to add Alien::zlib as CPAN dependency; Alien::zlib::Static already exists but is it applicable?
     Alien::PkgConfig???  for MongoDB driver build support
     Alien::MongoDB???
     Alien::MongoCXX???

@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.036_000;
+our $VERSION = 0.037_000;
 use 5.010;  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 
 use ExtUtils::MakeMaker;
@@ -94,13 +94,19 @@ WriteMakefile(
     MIN_PERL_VERSION => '5.10.0',  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 #    MAKE             => 'gmake',   # CORRELATION #rp200, Windows + EU::MM + GNU makef
     CONFIGURE_REQUIRES => {
-        # DEV NOTE, CORRELATION #rp061: prioritize installation of all dists which are (or may be) prerequisites for other dists or components
-        'IO::Socket::SSL'          => '2.043',     # (infamously problematic) pre-prerequisite for Alien::astyle
-        'Alien::Base::ModuleBuild' => '1.02',      # prerequisite for Alien::GSL etc, v1.02 allows setting download protocol via env var as workaround for Alien::GSL
-        'Alien::GMP'               => '1.08',      # prerequisite for Math::BigInt::GMP, v1.08 uses http intead of ftp, no env var workaround required
-        'Alien::GSL'               => '1.01',      # prerequisite for Math::GSL, set env var ALIEN_GSL_REPO_FTP_PROTOCOL=http in .travis.yml as workaround fix to avoid Travis network failures
+        # DEV NOTE, CORRELATION #rp061: prioritize installation of all dists which are (or may be) dependencies of other dists or components, CONFIGURE_REQUIRES prioritizes installation, PREREQ_PM creates runtime dependency
+        'IO::Socket::SSL'          => '2.043',     # (infamously problematic) subdependency for Alien::*
+        'Alien::Base::ModuleBuild' => '1.02',      # dependency of Alien::GSL etc, v1.02 allows setting download protocol via env var as workaround for Alien::GSL
+        'Alien::GMP'               => '1.08',      # dependency of Math::BigInt::GMP, v1.08 uses http intead of ftp, no env var workaround required
+        'Alien::GSL'               => '1.01',      # dependency of Math::GSL, set env var ALIEN_GSL_REPO_FTP_PROTOCOL=http in .travis.yml as workaround fix to avoid Travis network failures
     },
     PREREQ_PM        => {
+        # DEV NOTE, CORRELATION #rp061: prioritize installation of all dists which are (or may be) dependencies of other dists or components, CONFIGURE_REQUIRES prioritizes installation, PREREQ_PM creates runtime dependency
+        'IO::Socket::SSL'          => '2.043',     # (infamously problematic) subdependency of Alien::*
+        'Alien::Base::ModuleBuild' => '1.02',      # dependency of Alien::GSL etc, v1.02 allows setting download protocol via env var as workaround for Alien::GSL
+        'Alien::GMP'               => '1.08',      # dependency of Math::BigInt::GMP, v1.08 uses http intead of ftp, no env var workaround required
+        'Alien::GSL'               => '1.01',      # dependency of Math::GSL, set env var ALIEN_GSL_REPO_FTP_PROTOCOL=http in .travis.yml as workaround fix to avoid Travis network failures
+
         # RPERL USER DEPENDENCIES
         'ExtUtils::MakeMaker' => '7.04',      # for compatibility with Inline::C >= v0.75
         'Test::Exception'     => '0.43',      # 0.43 needed because Appveyor testing required it
@@ -126,6 +132,7 @@ WriteMakefile(
         'Alien::JPCRE2'       => '0.012',     # for regex support
 #        'Alien::Pluto'        => '0.003',
         'MongoDB'             => "v1.8.0",    # NEED FIX: EU::MM does not seem to handle v-strings properly???
+        'IPC::Run3'           => '0.048'      # for subcompile, testing, etc
 
         # RPERL SYSTEM (NON-USER) DEPENDENCIES
         'Parse::Eyapp'        => '1.21',      # RPerl Grammar; used by grammar_recompile.sh
@@ -135,7 +142,6 @@ WriteMakefile(
         'Date::Format'        => '2.24',      # Learning RPerl; used by pod2rperlhtml.pl
         'Pod::PseudoPod'      => '0.18',      # Learning RPerl; provides ppodchecker, ppod2txt, ppod2html, ppod2docbook
         'Text::ASCIITable'    => '0.20',      # Learning RPerl; used by pod2text & ppod2txt
-        'IPC::Run3'           => '0.048'      # RPerl Compiler; used for internals (subcompile, testing)
     },
     META_MERGE => {
         'meta-spec' => {
