@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.037_000;
+our $VERSION = 0.038_000;
 use 5.010;  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 
 use ExtUtils::MakeMaker;
@@ -132,7 +132,7 @@ WriteMakefile(
         'Alien::JPCRE2'       => '0.012',     # for regex support
 #        'Alien::Pluto'        => '0.003',
         'MongoDB'             => "v1.8.0",    # NEED FIX: EU::MM does not seem to handle v-strings properly???
-        'IPC::Run3'           => '0.048'      # for subcompile, testing, etc
+        'IPC::Run3'           => '0.048',      # for subcompile, testing, etc
 
         # RPERL SYSTEM (NON-USER) DEPENDENCIES
         'Parse::Eyapp'        => '1.21',      # RPerl Grammar; used by grammar_recompile.sh
