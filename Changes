@@ -1,5 +1,9 @@
 Revision history for Perl compiler RPerl.
 
+4.001000 2018-08-08
+
+    - Pre-Compiled Packages, Makefile.PL, Duplicate CONFIGURE_REQUIRES Items In PREREQ_PM For Proper Dependency Reporting
+
 4.000000 2018-07-04 Codename Enterprise
 
     - HOLIDAY EDITION: Happy Independence Day!

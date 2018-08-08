@@ -265,7 +265,7 @@ $ vi lib/RPerl.pm
     # $VERSION
 $ vi script/rperl
     # $VERSION
-    # -v option
+    # -v option, if minor version then keep codename from previous major version
 
 # CLEAN & UNINSTALL PREVIOUS DIST
 $ rm -Rf ~/perl5; curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus local::lib
@@ -275,13 +275,18 @@ $ rm -Rf ~/perl5; curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus loca
 $ script/development/rperl_locallib_uninstall.sh
 	# optionally keep ~/perl5 from previous local::lib single-user installation
 	# selectively delete only RPerl files from ~/perl5
-$ rm RPerl*.tar.gz; rm MANIFEST
+$ rm RPerl*.tar.gz; rm MANIFEST META.json META.yml MYMETA.json MYMETA.yml
 $ perl Makefile.PL; make distclean
 $ perl Makefile.PL; make realclean
 $ inline_clean.sh
 
 # MAKE MANIFEST & DIST
 $ perl Makefile.PL; make manifest
+    # generates MYMETA.json & MYMETA.yml; generates MANIFEST
+$ less MYMETA.json
+    # ensure updated version
+$ less MYMETA.yml
+    # ensure updated version
 $ less MANIFEST
 $ vi MANIFEST.SKIP
     # update with new files to exclude from CPAN
@@ -290,10 +295,10 @@ $ make manifest
 $ less MANIFEST
 $ cpanm --installdeps .; make disttest
 	# optionally install deps and test before creating tarball
-$ make dist
-    # produces tarball output
 $ cp MYMETA.json META.json
 	# DEV NOTE, CORRELATION #rp061: properly install configure-time dependencies, must have for RPerl & Alien::* 
+$ make dist
+    # produces tarball output
 
 # INSTALL & TEST DIST, LOCAL COPY
 $ cpanm ./RPerl-VERSION.tar.gz

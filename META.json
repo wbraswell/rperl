@@ -40,7 +40,9 @@
          "object",
          "ref",
          "string",
-         "unknown"
+         "unknown",
+         "MyClass_Good",
+         "_MyClass_Bad"
       ]
    },
    "prereqs" : {
@@ -59,6 +61,9 @@
       },
       "runtime" : {
          "requires" : {
+            "Alien::Base::ModuleBuild" : "1.02",
+            "Alien::GMP" : "1.08",
+            "Alien::GSL" : "1.01",
             "Alien::JPCRE2" : "0.012",
             "Alien::PCRE2" : "0.015",
             "Alien::astyle" : "0.009",
@@ -68,6 +73,7 @@
             "ExtUtils::MakeMaker" : "7.04",
             "File::Which" : "1.21",
             "Filter::Simple" : "0.91",
+            "IO::Socket::SSL" : "2.043",
             "IPC::Run3" : "0.048",
             "Inline" : "0.80",
             "Inline::C" : "0.76",
@@ -110,6 +116,6 @@
       },
       "x_IRC" : "irc://irc.perl.org/#perl11"
    },
-   "version" : "4.000000",
+   "version" : "4.001000",
    "x_serialization_backend" : "JSON::PP version 2.27300"
 }
