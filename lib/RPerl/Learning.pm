@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.190_000;
+our $VERSION = 0.191_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -406,88 +406,13 @@ RPerl v1.0 was released on US Independence Day, July 4th, 2015; 6 days later, wo
 
 L<First Learning RPerl Commit on GitHub|https://github.com/wbraswell/rperl/commit/8c3dec4448fbed6bba04f92f9f23759c5512f2e9>
 
-Significant GitHub commit dates include, but are not limited to the following:
+Significant GitHub commit dates may be viewed by forking the RPerl git repository and executing the following C<git> command:
 
 =for rperl X<noncode>
 
     $ git log --reverse --all --date=short --pretty='%cd: %s' | grep 'Learning RPerl'
     2015-07-10: Learning RPerl, Chapter 1, Exercise 1, Hello World
-    2015-07-11: Learning RPerl, Chapter 2, Exercise 1, Circumference Of Circle With Radius 12.5
-    2015-07-12: Learning RPerl, Chapter 2, Exercise 1, Circumference Of Circle With Radius 12.5, Part 2
-    2015-07-13: Learning RPerl, Chapter 2, Exercise 2, Circumference Of Circle With Any Radius
-    2015-07-14: Learning RPerl, Chapter 2, Exercise 3, Circumference Of Circle With Any Positive Radius
-    2015-07-15: Learning RPerl, Chapter 2, Exercise 4, Product Of Any Two Numbers
-    2015-07-16: Learning RPerl, Chapter 2, Exercise 5, String Repeat
-    2015-07-18: Learning RPerl, Chapter 3, Exercise 1, STDIN Strings Reverse
-    2015-07-17: Learning RPerl, Chapters 1 & 2, Add Source Comments
-    2015-07-19: Learning RPerl, Chapter 3, Exercise 2, STDIN Array Indices
-    2015-07-20: Learning RPerl, Chapters 2 & 3, Add Source Comments
-    2015-07-21: Learning RPerl, Chapter 3, Exercise 3, STDIN Strings Sort
-    2015-07-22: Learning RPerl, Chapter 4, Exercise 1, Subroutine For Stringified Numbers Total
-    2015-07-23: Learning RPerl, Chapter 4, Exercise 2, Subroutine For Total Of 1 To 1,000
-    2015-07-25: Learning RPerl, Chapter 4, Exercise 3, Subroutines For Above-Average Array Elements
-    2015-10-03: Learning RPerl, Chapter 4, Exercise 4, Subroutine To Greet User
-    2015-10-04: Learning RPerl, Chapter 4, Exercise 5, Subroutine To Greet Multiple Users
-    2015-10-05: Learning RPerl, Chapter 5, Exercise 1, Print Input File(s) Lines In Reverse, Part 1
-    2015-10-06: Learning RPerl, Chapter 5, Exercise 1, Print Input File(s) Lines In Reverse, Part 2
-    2015-10-07: Learning RPerl, Chapter 5, Exercise 2, Print Input Line(s) Right-Justified
-    2015-10-08: Learning RPerl, Chapter 5, Exercise 3, Print Input Line(s) Variable-Width Right-Justified, Part 1
-    2015-10-09: Learning RPerl, Chapter 5, Exercise 3, Print Input Line(s) Variable-Width Right-Justified, Part 2
-    2015-10-10: Learning RPerl, Chapter 6, Exercise 1, Print Family Names
-    2015-10-11: Learning RPerl, Chapter 6, Exercise 2, Unique Word Count
-    2015-10-12: Learning RPerl, Ensure All Exercises Parse, Part 1
-    2015-10-13: Learning RPerl, Ensure All Exercises Parse, Part 2
-    2015-10-19: Learning RPerl, Ensure All Exercises Parse, Part 3
-    2015-10-20: Learning RPerl, Ensure All Exercises Parse, Part 4
-    2015-10-21: Learning RPerl, Ensure All Exercises Parse, Part 5
-    2015-10-22: Learning RPerl, Ensure All Exercises Parse, Part 6
-    2015-10-23: Learning RPerl, Ensure All Exercises Parse, Part 7
-    2015-10-24: Learning RPerl, Ensure All Exercises Parse, Part 8
-    2015-10-25: Learning RPerl, Ensure All Exercises Parse, Part 9
-    2015-10-26: Learning RPerl, Ensure All Exercises Parse, Part 10
-    2015-10-27: Learning RPerl, Ensure All Exercises Parse, Part 11
-    2015-10-28: Learning RPerl, Ensure All Exercises Parse, Part 12
-    2015-10-28: Learning RPerl, Ensure All Exercises Parse, Part 13
-    2015-10-28: Learning RPerl, Ensure All Exercises Parse, Part 14
-    2015-11-07: CPAN Release, v1.200002; Temporarily Fix Macintosh Build Failures, Learning RPerl Parse Failure, Etc.
-    2015-11-10: Learning RPerl, Content, Part 1
-    2015-11-11: Learning RPerl, Content, Part 2
-    2015-11-14: Learning RPerl, Content, Part 3
-    2015-11-15: Learning RPerl, Content, Part 4
-    2015-11-16: Learning RPerl, Content, Part 5
-    2015-11-16: Learning RPerl, Content, Part 6
-    2015-11-17: Learning RPerl, Content, Part 7
-    2015-11-18: Learning RPerl, Content, Part 8
-    2015-11-18: Learning RPerl, Content, Part 9
-    2015-11-19: Learning RPerl, Content, Part 10
-    2015-11-20: Learning RPerl, Content, Part 11
-    2015-11-21: Learning RPerl, Content, Part 12
-    2015-11-22: Learning RPerl, Content, Part 13
-    2015-11-24: Learning RPerl, Content, Part 14
-    2015-12-31: Learning RPerl, Content, Part 15
-    2015-12-31: Learning RPerl, Content, Part 16
-    2016-01-01: Learning RPerl, Content, Part 17
-    2016-01-02: Learning RPerl, FontAwesome & MetaCPAN Files, Initial Commit
-    2016-01-02: News, RPerl v1.5 Release; Learning RPerl, FontAwesome & MetaCPAN Files, Move To Subdirectories
-    2016-01-02: Learning RPerl, Update pod2rperlhtml.pl Script, Correct CSS & JS Paths
-    2016-01-02: Learning RPerl, HTML Content, Initial Commit
-    2016-01-03: Learning RPerl, Content, Part 18
-    2016-01-05: Learning RPerl, Content, Part 19
-    2016-01-06: Learning RPerl, Content, Part 20
-    2016-01-07: Learning RPerl, Content, Part 21
-    2016-01-08: Learning RPerl, Content, Part 22
-    2016-01-09: Learning RPerl, Content, Part 23
-    2016-01-09: Learning RPerl, Content, Part 24
-    2016-01-10: Learning RPerl, Content, Part 25
-    2016-01-11: Learning RPerl, Content, Part 26
-    2016-01-12: Learning RPerl, Content, Part 27
-    2016-01-14: Learning RPerl, Content, Part 28
-    2016-01-15: Learning RPerl, Content, Part 29
-    2016-01-16: Learning RPerl, Content, Part 30
-    2016-01-16: Learning RPerl, Content, Part 31
-    2016-01-16: Learning RPerl, Content, Part 32
-    2016-03-03: Learning RPerl, Chapter 2 Content, Part 1
-    2016-03-03: Learning RPerl, TPF Grant #2, Part 1
+    ...
 
 =for rperl X</noncode>
 
@@ -13083,11 +13008,11 @@ The most efficient data type is C<boolean>, which is a numeric type which stores
 
 The second most efficient numeric data type is C<unsigned_integer>, which stores a single whole (non-decimal) number which must have a value of 0 or greater.  An C<unsigned_integer> may not hold a negative number, and must fit within the data size limits of the data types supported by your operating system software and computer hardware.
 
-    my integer $foo  = -23;     # error in RPerl, compiled (non-test) modes
-    my integer $bar  = 0;       # fine
-    my integer $baz  = 42_230;  # fine
-    my integer $bax  = 42.1;    # error in RPerl, compiled (non-test) modes
-    my integer $quux = 999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999;  # likely error or data corruption, outside data type limits
+    my unsigned_integer $foo  = -23;     # error in RPerl, compiled (non-test) modes
+    my unsigned_integer $bar  = 0;       # fine
+    my unsigned_integer $baz  = 42_230;  # fine
+    my unsigned_integer $bax  = 42.1;    # error in RPerl, compiled (non-test) modes
+    my unsigned_integer $quux = 999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999_999;  # likely error or data corruption, outside data type limits
 
 =head3 Section 2.4.4: Integer Data Type
 
