@@ -297,6 +297,54 @@ aside a.button_home {
   margin-bottom: 20px;
 }
 
+/* BUTTON, GET RPERL */
+a.button_get_rperl {
+  width: 250px;
+/*  height: 100px; */
+/*  line-height: 1.2; */
+  font-size: 21px;
+  color: #000;
+/*  padding-left: 10px; /* replaced by text-align:center; below */
+  text-align: center;
+  padding-top: 100px;
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+  margin-left: auto;
+  margin-right: auto;
+}
+a.button_get_rperl small {
+  display: block;
+  font-size: 11px;
+}
+aside a.button_get_rperl {
+  display: block;
+  background: transparent url(../images/button_scallions.png) 0 0 no-repeat;
+  margin-bottom: 20px;
+}
+
+/* BUTTON, USE RPERL */
+a.button_use_rperl {
+  width: 250px;
+/*  height: 100px; */
+/*  line-height: 1.2; */
+  font-size: 21px;
+  color: #000;
+/*  padding-left: 10px; /* replaced by text-align:center; below */
+  text-align: center;
+  padding-top: 100px;
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
+  margin-left: auto;
+  margin-right: auto;
+}
+a.button_use_rperl small {
+  display: block;
+  font-size: 11px;
+}
+aside a.button_use_rperl {
+  display: block; 
+  background: transparent url(../images/button_sword_wand.png) 0 0 no-repeat;
+  margin-bottom: 20px;
+}
+
 /* BUTTON, FAQ */
 a.button_faq {
   width: 250px;
@@ -345,30 +393,6 @@ aside a.button_finances {
   margin-bottom: 20px;
 }
 
-/* BUTTON, USE RPERL */
-a.button_use_rperl {
-  width: 250px;
-/*  height: 100px; */
-/*  line-height: 1.2; */
-  font-size: 21px;
-  color: #000;
-/*  padding-left: 10px; /* replaced by text-align:center; below */
-  text-align: center;
-  padding-top: 100px;
-  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
-  margin-left: auto;
-  margin-right: auto;
-}
-a.button_use_rperl small {
-  display: block;
-  font-size: 11px;
-}
-aside a.button_use_rperl {
-  display: block; 
-  background: transparent url(../images/button_scallions.png) 0 0 no-repeat;
-  margin-bottom: 20px;
-}
-
 /* BUTTON, THE BOOK OF RPERL */
 a.button_the_book_of_rperl {
   width: 250px;
@@ -389,7 +413,7 @@ a.button_the_book_of_rperl small {
 }
 aside a.button_the_book_of_rperl {
   display: block; 
-  background: transparent url(../images/button_sword_wand.png) 0 0 no-repeat;
+  background: transparent url(../images/button_book.png) 0 0 no-repeat;
   margin-bottom: 20px;
 }
 
