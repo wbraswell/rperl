@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.039_000;
+our $VERSION = 0.040_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -1291,48 +1291,48 @@ sub post_processor__INC_paths_delete {
     { my string $RETURN_TYPE };
     ( my string $input_path, my boolean $leading_slash_delete, my boolean $leading_lib_delete ) = @ARG;
 
-    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), received $input_path = ' . $input_path . "\n" );
-    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), received $leading_slash_delete = ' . $leading_slash_delete . "\n" );
-    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), received $leading_lib_delete = ' . $leading_lib_delete . "\n" );
+#    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), received $input_path = ' . $input_path . "\n" );
+#    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), received $leading_slash_delete = ' . $leading_slash_delete . "\n" );
+#    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), received $leading_lib_delete = ' . $leading_lib_delete . "\n" );
 
-    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have @INC = ' . Dumper(\@INC) . "\n" );
+#    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have @INC = ' . Dumper(\@INC) . "\n" );
 
     # DEV NOTE: do not directly use @INC itself, because 'lib' stripping will actually change values of @INC!!!
     my @INC_copy = @INC;
-    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have @INC_copy = ' . Dumper(\@INC_copy) . "\n" );
+#    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have @INC_copy = ' . Dumper(\@INC_copy) . "\n" );
 
     if ( $OSNAME eq 'MSWin32' ) {
         $input_path =~ s/\\/\//gxms;
-        RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), Windows OS detected, have possibly-reformatted $input_path = ' . $input_path . "\n" );
+#        RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), Windows OS detected, have possibly-reformatted $input_path = ' . $input_path . "\n" );
     }
 
     # strip leading INC directory if present
 #    foreach my string $INC_directory (@INC) {  # DEV NOTE: do not directly use @INC itself, because 'lib' stripping will actually change values of @INC!!!
     foreach my string $INC_directory (@INC_copy) {
-        RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have $INC_directory = ' . $INC_directory . "\n" );
+#        RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have $INC_directory = ' . $INC_directory . "\n" );
         if ((not $leading_lib_delete) and ((substr $INC_directory, -3, 3) eq 'lib')) {
             # delete trailing 'lib' in $INC_directory, so as NOT to delete leading 'lib' in $input_path
-            RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), do not delete leading lib if present' . "\n" );
+#            RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), do not delete leading lib if present' . "\n" );
             substr $INC_directory, -3, 3, q{};
         }
-        RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have possibly-lib-trimmed $INC_directory = ' . $INC_directory . "\n" );
+#        RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have possibly-lib-trimmed $INC_directory = ' . $INC_directory . "\n" );
         if ($INC_directory eq q{}) {
-            RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), skipping empty presumably-lib-trimmed $INC_directory' . "\n" );
+#            RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), skipping empty presumably-lib-trimmed $INC_directory' . "\n" );
             next;
         }
 
         if ((substr $input_path, 0, (length $INC_directory)) eq $INC_directory ) {
-            RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have matching $INC_directory, trimming dir...' . "\n" );
+#            RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have matching $INC_directory, trimming dir...' . "\n" );
             substr $input_path, 0, ( length $INC_directory ), q{};
             if ($leading_slash_delete and ((substr $input_path, 0, 1) eq '/')) {
-                RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have matching $INC_directory, trimming leading slash...' . "\n" );
+#                RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have matching $INC_directory, trimming leading slash...' . "\n" );
                 substr $input_path, 0, 1, q{};
             }
             last;
         }
     }
 
-    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), about to return $input_path = ' . $input_path . "\n" );
+#    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), about to return $input_path = ' . $input_path . "\n" );
 
     return $input_path;
 }
@@ -1343,22 +1343,22 @@ sub post_processor__absolute_path_delete {
     { my string $RETURN_TYPE };
     ( my string $input_path ) = @ARG;
 
-    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), received $input_path = ' . $input_path . "\n" );
+#    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), received $input_path = ' . $input_path . "\n" );
 
     if ( $OSNAME eq 'MSWin32' ) {
         $input_path =~ s/\\/\//gxms;
-        RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), Windows OS detected, have possibly-reformatted $input_path = ' . $input_path . "\n" );
+#        RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), Windows OS detected, have possibly-reformatted $input_path = ' . $input_path . "\n" );
     }
 
     my string $current_working_directory = getcwd;
 
-    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), have $current_working_directory = ' . $current_working_directory . "\n" );
+#    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), have $current_working_directory = ' . $current_working_directory . "\n" );
 
     if ( ( substr $input_path, 0, ( length $current_working_directory ) ) eq $current_working_directory ) {
         return substr $input_path, ( ( length $current_working_directory ) + 1 );
     }
 
-    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), about to return $input_path = ' . $input_path . "\n" );
+#    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), about to return $input_path = ' . $input_path . "\n" );
 
     return $input_path;  # this comment is a test of find_replace_old_subroutine_headers.sh
 }
