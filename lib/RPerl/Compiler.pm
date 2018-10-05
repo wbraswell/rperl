@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.038_000;
+our $VERSION = 0.039_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -54,12 +54,13 @@ our hashref_hashref $filename_suffixes_supported = {
 sub find_parents {
     { my string_arrayref $RETURN_TYPE };
     ( my string $file_name, my boolean $find_grandparents_recurse, my string_hashref $modes ) = @ARG;
-#    RPerl::diag( 'in Compiler::find_parents(), received $file_name = ' . $file_name . "\n" );
+    RPerl::diag( 'in Compiler::find_parents(), received $file_name = ' . $file_name . "\n" );
 
-    # trim unnecessary (and possibly problematic) absolute or current-directory paths from input file name
+    # trim unnecessary (and possibly problematic) @INC & absolute & current-directory paths from input file name
+    $file_name = post_processor__INC_paths_delete($file_name, 1, 0);  # $leading_slash_delete = 1, $leading_lib_delete = 0
     $file_name = post_processor__absolute_path_delete($file_name);
     $file_name = post_processor__current_directory_path_delete($file_name);
-#    RPerl::diag( 'in Compiler::find_parents(), have possibly-trimmed $file_name = ' . $file_name . "\n" );
+    RPerl::diag( 'in Compiler::find_parents(), have possibly-trimmed $file_name = ' . $file_name . "\n" );
 
     my string_arrayref $parents = [];
 
@@ -134,9 +135,10 @@ sub find_parents {
             $package_file_name .= '.pm';
 
             # find specific included dependency file in @INC
-            foreach my string $INC_directory (@INC) {
+            # DEV NOTE, CORRELATION #rp055: handle removal of current directory & all @INC directories, so as not to hard-code system-specific dirs in #include statements
+            foreach my string $INC_directory (File::Spec->catpath( '', getcwd, 'lib' ), @INC) {
 #                RPerl::diag( 'in Compiler::find_parents(), top of @INC foreach loop, have $INC_directory = ' . $INC_directory . "\n" );
-                $package_file_name_included = $INC_directory . '/' . $package_file_name;
+                $package_file_name_included = File::Spec->catpath( '', $INC_directory, $package_file_name );
 #                RPerl::diag( 'in Compiler::find_parents(), inside @INC foreach loop, have $package_file_name_included = ' . $package_file_name_included . "\n" );
                 if (-e $package_file_name_included) {
 #                    RPerl::diag( 'in Compiler::find_parents(), inside @INC foreach loop, have EXISTING $package_file_name_included = ' . $package_file_name_included . "\n" );
@@ -151,10 +153,16 @@ sub find_parents {
                     ' in @INC, included from file ', q{'}, $file_name, q{'}, ', dying', "\n";
             }
 
-#            RPerl::diag( 'in Compiler::find_parents(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
+            RPerl::diag( 'in Compiler::find_parents(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
 
-            my string $package_file_name_included_relative = post_processor__absolute_path_delete( $package_file_name_included );
+            # trim unnecessary (and possibly problematic) @INC & absolute & current-directory paths from input file name
+            my string $package_file_name_included_relative = $package_file_name_included;
+            $package_file_name_included_relative = post_processor__INC_paths_delete($package_file_name_included_relative, 1, 0);  # $leading_slash_delete = 1, $leading_lib_delete = 0
+            $package_file_name_included_relative = post_processor__absolute_path_delete( $package_file_name_included_relative );
             $package_file_name_included_relative = post_processor__current_directory_path_delete( $package_file_name_included_relative );
+
+            RPerl::diag( 'in Compiler::find_parents(), have possibly-trimmed $package_file_name_included_relative = ' . $package_file_name_included_relative . "\n" );
+
             push @{$parents}, $package_file_name_included_relative;
     
 #            RPerl::diag( 'in Compiler::find_parents(), have PRE-SUBDEPS $parents = ' . Dumper($parents) . "\n" );
@@ -189,12 +197,13 @@ sub find_parents {
 sub find_dependencies {
     { my string_arrayref $RETURN_TYPE };
     ( my string $file_name, my boolean $find_subdependencies_recurse, my string_hashref $modes ) = @ARG;
-#    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
+    RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
 
-    # trim unnecessary (and possibly problematic) absolute and current-directory paths from input file name
+    # trim unnecessary (and possibly problematic) @INC & absolute & current-directory paths from input file name
+    $file_name = post_processor__INC_paths_delete($file_name, 1, 0);  # $leading_slash_delete = 1, $leading_lib_delete = 0
     $file_name = post_processor__absolute_path_delete($file_name);
     $file_name = post_processor__current_directory_path_delete($file_name);
-#    RPerl::diag( 'in Compiler::find_dependencies(), have possibly-trimmed $file_name = ' . $file_name . "\n" );
+    RPerl::diag( 'in Compiler::find_dependencies(), have possibly-trimmed $file_name = ' . $file_name . "\n" );
 
     my string_arrayref $dependencies = [];
 #    my string_arrayref $pmc_disable_paths = [];  # DISABLE_DYNAMIC_DEPS_ANALYSIS
@@ -337,6 +346,7 @@ sub find_dependencies {
             my string $package_file_name = $package_name;
             $package_file_name =~ s/::/\//gxms;    # replace double-colon :: scope delineator with forward-slash / directory delineator
             $package_file_name .= '.pm';
+            RPerl::diag( 'in Compiler::find_dependencies(), have $package_file_name = ' . $package_file_name . "\n" );
 
             # find specific included dependency file in either %INC or @INC
 =DISABLE_DYNAMIC_DEPS_ANALYSIS
@@ -350,12 +360,14 @@ sub find_dependencies {
             }
             else {
 =cut
-                foreach my string $INC_directory (@INC) {
-#                    RPerl::diag( 'in Compiler::find_dependencies(), top of @INC foreach loop, have $INC_directory = ' . $INC_directory . "\n" );
-                    $package_file_name_included = $INC_directory . '/' . $package_file_name;
-#                    RPerl::diag( 'in Compiler::find_dependencies(), inside @INC foreach loop, have $package_file_name_included = ' . $package_file_name_included . "\n" );
+
+                # DEV NOTE, CORRELATION #rp055: handle removal of current directory & all @INC directories, so as not to hard-code system-specific dirs in #include statements
+                foreach my string $INC_directory (File::Spec->catpath( '', getcwd, 'lib' ), @INC) {
+                    RPerl::diag( 'in Compiler::find_dependencies(), top of @INC foreach loop, have $INC_directory = ' . $INC_directory . "\n" );
+                    $package_file_name_included = File::Spec->catpath( '', $INC_directory, $package_file_name );
+                    RPerl::diag( 'in Compiler::find_dependencies(), inside @INC foreach loop, have $package_file_name_included = ' . $package_file_name_included . "\n" );
                     if (-e $package_file_name_included) {
-#                        RPerl::diag( 'in Compiler::find_dependencies(), inside @INC foreach loop, have EXISTING $package_file_name_included = ' . $package_file_name_included . "\n" );
+                        RPerl::diag( 'in Compiler::find_dependencies(), inside @INC foreach loop, have EXISTING $package_file_name_included = ' . $package_file_name_included . "\n" );
                         last;
                     }
                     else {
@@ -371,12 +383,16 @@ sub find_dependencies {
             }
 =cut
 
-#            RPerl::diag( 'in Compiler::find_dependencies(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
+            RPerl::diag( 'in Compiler::find_dependencies(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
 
-            my string $package_file_name_included_relative = post_processor__absolute_path_delete( $package_file_name_included );
+            # trim unnecessary (and possibly problematic) @INC & absolute & current-directory paths from input file name
+            my string $package_file_name_included_relative = $package_file_name_included;
+            $package_file_name_included_relative = post_processor__INC_paths_delete($package_file_name_included_relative, 1, 0);  # $leading_slash_delete = 1, $leading_lib_delete = 0
+            $package_file_name_included_relative = post_processor__absolute_path_delete( $package_file_name_included_relative );
             $package_file_name_included_relative = post_processor__current_directory_path_delete( $package_file_name_included_relative );
             push @{$dependencies}, $package_file_name_included_relative;
-    
+
+            RPerl::diag( 'in Compiler::find_dependencies(), have possibly-trimmed $package_file_name_included_relative = ' . $package_file_name_included_relative . "\n" );
 #            RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
 
             if ($find_subdependencies_recurse) {
@@ -406,7 +422,7 @@ sub find_dependencies {
     }
 =cut
 
-#    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
+    RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
 #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
 #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
 #    RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
@@ -426,9 +442,10 @@ sub pmc_disable {
     $pmc_file_path_relative =~ s/::/\//gxms;    # replace double-colon :: scope delineator with forward-slash / directory delineator
     $pmc_file_path_relative .= '.pmc';
 
-    foreach my string $INC_directory (@INC) {
+    # DEV NOTE, CORRELATION #rp055: handle removal of current directory & all @INC directories, so as not to hard-code system-specific dirs in #include statements
+    foreach my string $INC_directory (File::Spec->catpath( '', getcwd, 'lib' ), @INC) {
 #        RPerl::diag( 'in Compiler::pmc_disable(), top of foreach loop, have $INC_directory = ' . $INC_directory . "\n" );
-        $pmc_file_path_absolute = $INC_directory . '/' . $pmc_file_path_relative;
+        $pmc_file_path_absolute = File::Spec->catpath( '', $INC_directory, $pmc_file_path_relative );
 #        RPerl::diag( 'in Compiler::pmc_disable(), inside foreach loop, have $pmc_file_path_absolute = ' . $pmc_file_path_absolute . "\n" );
         if (-e $pmc_file_path_absolute) {
 #            RPerl::diag( 'in Compiler::pmc_disable(), inside foreach loop, have EXISTING $pmc_file_path_absolute = ' . $pmc_file_path_absolute . "\n" );
@@ -1268,25 +1285,81 @@ sub post_processor_cpp__comments_whitespace_delete {
     return join "\n", @{$input_source_code_split_tmp};
 }
 
+# DEV NOTE, CORRELATION #rp055: handle removal of current directory & all @INC directories, so as not to hard-code system-specific dirs in #include statements
+# remove unnecessary @INC paths
+sub post_processor__INC_paths_delete {
+    { my string $RETURN_TYPE };
+    ( my string $input_path, my boolean $leading_slash_delete, my boolean $leading_lib_delete ) = @ARG;
+
+    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), received $input_path = ' . $input_path . "\n" );
+    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), received $leading_slash_delete = ' . $leading_slash_delete . "\n" );
+    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), received $leading_lib_delete = ' . $leading_lib_delete . "\n" );
+
+    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have @INC = ' . Dumper(\@INC) . "\n" );
+
+    # DEV NOTE: do not directly use @INC itself, because 'lib' stripping will actually change values of @INC!!!
+    my @INC_copy = @INC;
+    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have @INC_copy = ' . Dumper(\@INC_copy) . "\n" );
+
+    if ( $OSNAME eq 'MSWin32' ) {
+        $input_path =~ s/\\/\//gxms;
+        RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), Windows OS detected, have possibly-reformatted $input_path = ' . $input_path . "\n" );
+    }
+
+    # strip leading INC directory if present
+#    foreach my string $INC_directory (@INC) {  # DEV NOTE: do not directly use @INC itself, because 'lib' stripping will actually change values of @INC!!!
+    foreach my string $INC_directory (@INC_copy) {
+        RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have $INC_directory = ' . $INC_directory . "\n" );
+        if ((not $leading_lib_delete) and ((substr $INC_directory, -3, 3) eq 'lib')) {
+            # delete trailing 'lib' in $INC_directory, so as NOT to delete leading 'lib' in $input_path
+            RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), do not delete leading lib if present' . "\n" );
+            substr $INC_directory, -3, 3, q{};
+        }
+        RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have possibly-lib-trimmed $INC_directory = ' . $INC_directory . "\n" );
+        if ($INC_directory eq q{}) {
+            RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), skipping empty presumably-lib-trimmed $INC_directory' . "\n" );
+            next;
+        }
+
+        if ((substr $input_path, 0, (length $INC_directory)) eq $INC_directory ) {
+            RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have matching $INC_directory, trimming dir...' . "\n" );
+            substr $input_path, 0, ( length $INC_directory ), q{};
+            if ($leading_slash_delete and ((substr $input_path, 0, 1) eq '/')) {
+                RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), have matching $INC_directory, trimming leading slash...' . "\n" );
+                substr $input_path, 0, 1, q{};
+            }
+            last;
+        }
+    }
+
+    RPerl::diag( 'in Compiler::post_processor__INC_paths_delete(), about to return $input_path = ' . $input_path . "\n" );
+
+    return $input_path;
+}
+
+# DEV NOTE, CORRELATION #rp055: handle removal of current directory & all @INC directories, so as not to hard-code system-specific dirs in #include statements
 # remove unnecessary absolute paths
 sub post_processor__absolute_path_delete {
     { my string $RETURN_TYPE };
     ( my string $input_path ) = @ARG;
 
-#    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), received $input_path = ' . $input_path . "\n" );
+    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), received $input_path = ' . $input_path . "\n" );
 
     if ( $OSNAME eq 'MSWin32' ) {
         $input_path =~ s/\\/\//gxms;
-#        RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), Windows OS detected, have possibly-reformatted $input_path = ' . $input_path . "\n" );
+        RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), Windows OS detected, have possibly-reformatted $input_path = ' . $input_path . "\n" );
     }
 
     my string $current_working_directory = getcwd;
 
-#    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), have $current_working_directory = ' . $current_working_directory . "\n" );
+    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), have $current_working_directory = ' . $current_working_directory . "\n" );
 
     if ( ( substr $input_path, 0, ( length $current_working_directory ) ) eq $current_working_directory ) {
         return substr $input_path, ( ( length $current_working_directory ) + 1 );
     }
+
+    RPerl::diag( 'in Compiler::post_processor__absolute_path_delete(), about to return $input_path = ' . $input_path . "\n" );
+
     return $input_path;  # this comment is a test of find_replace_old_subroutine_headers.sh
 }
 
@@ -1641,6 +1714,7 @@ EOF
                 elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional SSE support here >>>' . "\n" ) ) {
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n" );
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), have $pm_file_path = ' . $pm_file_path . "\n" );
+                    $pm_file_path = post_processor__INC_paths_delete($pm_file_path, 1, 0);  # $leading_slash_delete = 1, $leading_lib_delete = 0
                     $pm_file_path = post_processor__absolute_path_delete($pm_file_path);
                     $pm_file_path = post_processor__current_directory_path_delete($pm_file_path);
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), have possibly-trimmed $pm_file_path = ' . $pm_file_path . "\n" );
@@ -1661,6 +1735,7 @@ EOF
                 elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional GMP support here >>>' . "\n" ) ) {
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n" );
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), have $pm_file_path = ' . $pm_file_path . "\n" );
+                    $pm_file_path = post_processor__INC_paths_delete($pm_file_path, 1, 0);  # $leading_slash_delete = 1, $leading_lib_delete = 0
                     $pm_file_path = post_processor__absolute_path_delete($pm_file_path);
                     $pm_file_path = post_processor__current_directory_path_delete($pm_file_path);
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), have possibly-trimmed $pm_file_path = ' . $pm_file_path . "\n" );
@@ -1682,6 +1757,7 @@ EOF
                 elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional GSL support here >>>' . "\n" ) ) {
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n" );
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), have $pm_file_path = ' . $pm_file_path . "\n" );
+                    $pm_file_path = post_processor__INC_paths_delete($pm_file_path, 1, 0);  # $leading_slash_delete = 1, $leading_lib_delete = 0
                     $pm_file_path = post_processor__absolute_path_delete($pm_file_path);
                     $pm_file_path = post_processor__current_directory_path_delete($pm_file_path);
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), have possibly-trimmed $pm_file_path = ' . $pm_file_path . "\n" );
@@ -1711,6 +1787,7 @@ EOF
                 elsif ( $file_line eq ( '        # <<< CHANGE_ME: enable optional MongoDB support here >>>' . "\n" ) ) {
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n" );
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), have $pm_file_path = ' . $pm_file_path . "\n" );
+                    $pm_file_path = post_processor__INC_paths_delete($pm_file_path, 1, 0);  # $leading_slash_delete = 1, $leading_lib_delete = 0
                     $pm_file_path = post_processor__absolute_path_delete($pm_file_path);
                     $pm_file_path = post_processor__current_directory_path_delete($pm_file_path);
 #                    RPerl::diag( 'in Compiler::post_processor_cpp__pmc_generate(), have possibly-trimmed $pm_file_path = ' . $pm_file_path . "\n" );
@@ -1938,6 +2015,7 @@ sub cpp_to_xsbinary__subcompile {
 #        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n" );
         my string $pl_file_path = $modes->{_input_file_name};
 #        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have $pl_file_path = ' . $pl_file_path . "\n" );
+        $pl_file_path = post_processor__INC_paths_delete($pl_file_path, 1, 0);  # $leading_slash_delete = 1, $leading_lib_delete = 0
         $pl_file_path = post_processor__absolute_path_delete($pl_file_path);
         $pl_file_path = post_processor__current_directory_path_delete($pl_file_path);
 #        RPerl::diag( 'in Compiler::cpp_to_xsbinary__subcompile(), have possibly-trimmed $pl_file_path = ' . $pl_file_path . "\n" );
@@ -2159,14 +2237,8 @@ sub cpp_to_xsbinary__subcompile {
         #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have @INC_sorted =} . "\n" . Dumper(\@INC_sorted) . "\n" );
 
         # strip leading INC directory if present
-        foreach my string $INC_directory (@INC_sorted) {
-
-            #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have $INC_directory = } . $INC_directory . "\n" );
-            if ( $directories_pmc =~ /^$INC_directory/ ) {
-                substr $directories_pmc, 0, ( length $INC_directory ), q{};
-                last;
-            }
-        }
+        # DEV NOTE, CORRELATION #rp055: handle removal of current directory & all @INC directories, so as not to hard-code system-specific dirs in #include statements
+        $directories_pmc = post_processor__INC_paths_delete($directories_pmc, 0, 1);  # $leading_slash_delete = 0, $leading_lib_delete = 1
 
         #RPerl::diag( q{in Compiler::cpp_to_xsbinary__subcompile(), have POSSIBLY-MODIFIED $directories_pmc = } . $directories_pmc . "\n" );
 

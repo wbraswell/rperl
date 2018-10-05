@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Program;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit);
@@ -245,10 +245,12 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     # DEV NOTE: must have $pl_file_path for support checking below; GMP, GSL, MongoDB 
 #    RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n" );
     my string $pl_file_path = $modes->{_input_file_name};
-#    RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $pl_file_path = ' . $pl_file_path . "\n" );
+
+    RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $pl_file_path = ' . $pl_file_path . "\n" );
+    $pl_file_path = RPerl::Compiler::post_processor__INC_paths_delete($pl_file_path, 1, 0);  # $leading_slash_delete = 1, $leading_lib_delete = 0
     $pl_file_path = RPerl::Compiler::post_processor__absolute_path_delete($pl_file_path);
     $pl_file_path = RPerl::Compiler::post_processor__current_directory_path_delete($pl_file_path);
-#    RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have possibly-trimmed $pl_file_path = ' . $pl_file_path . "\n" );
+    RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have possibly-trimmed $pl_file_path = ' . $pl_file_path . "\n" );
 
 
 

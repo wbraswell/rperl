@@ -4,7 +4,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.011_000;
+our $VERSION = 0.012_000;
 our $IS_RPERL_CONFIG = 1;  # DEV NOTE, CORRELATION #rp027: RPerl::Config, MathPerl::Config, PhysicsPerl::Config, etc
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -435,11 +435,9 @@ sub set_system_paths {
     }
     my $target_script_found = $target_scripts_found->[0];
     if ( scalar @{$target_scripts_found} > 1 ) {
-        RPerl::warning( 'WARNING WEXRP00: Found multiple `'
-                . $target_file_name_script
-                . '` executables, using first located, ' . q{`}
-                . $target_script_found . q{`}
-                . "\n" );
+        RPerl::warning( 'WARNING WEXRP00: Found multiple `' . $target_file_name_script . '` executables, using first located, ' . 
+            q{`} . $target_script_found . q{`} . '; other locations include ' . 
+            (join ', ', (map {q{`} . $_ . q{`}} @{$target_scripts_found}[1 .. ((scalar @{$target_scripts_found} - 1))])) . "\n" );
     }
 
     my $target_pm_found = undef;
