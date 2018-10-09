@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.011_000;
+our $VERSION = 0.012_000;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -183,16 +183,21 @@ sub rperl_source__criticize {
         $file_line_last = $file_line;
     }
 
-    RPerl::diag('in rperl_source__criticize(), have last $file_line = ' . q{'} . $file_line . q{'} . "\n");
+#    RPerl::diag('in rperl_source__criticize(), have last $file_line = ' . q{'} . $file_line . q{'} . "\n");  # error, uninitialized value
     RPerl::diag('in rperl_source__criticize(), have $file_line_last = ' . q{'} . $file_line_last . q{'} . "\n");
 
     close $FILE_HANDLE or die 'ERROR ECOPAPC12, RPERL PARSER, PERL CRITIC VIOLATION: Cannot close file ' . q{'} . $rperl_source__file_name . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
+
+RPerl::diag('in rperl_source__criticize(), CHECKPOINT 00' . "\n");
+#    RPerl::diag('in rperl_source__criticize(), CHECKPOINT 00' . q{'} . $file_line_last . q{'} . "\n");
 
     # DEV NOTE: the last line of all RPerl input files must either end with a newline character or be all-whitespace characters,
     # in order to avoid false positives triggered by Perl::Critic
     if (((substr $file_line_last, -1, 1) ne "\n") and ( $file_line_last !~ m/^\s+$/xms )) {
         die 'ERROR ECOPAPC13, RPERL PARSER, PERL CRITIC VIOLATION: RPerl source code input file ' . q{'} . $rperl_source__file_name . q{'} . ' does not end with newline character or line of all-whitespace characters, dying' . "\n";
     }
+
+RPerl::diag('in rperl_source__criticize(), CHECKPOINT 01' . "\n");
 
 # DEV NOTE: disable RequireTidyCode because perltidy may not be stable
 #    my object $rperl_source__critic = Perl::Critic->new( -severity => 'brutal' );
@@ -209,11 +214,13 @@ sub rperl_source__criticize {
         '-severity' => 'brutal',
         '-theme'    => 'core'
     );
-    my @rperl_source__critic_violations
-        = $rperl_source__critic->critique($rperl_source__file_name);
+RPerl::diag('in rperl_source__criticize(), CHECKPOINT 02, have $rperl_source__critic = ' . Dumper($rperl_source__critic) . "\n");
 
-    my integer $rperl_source__critic_num_violations
-        = scalar @rperl_source__critic_violations;
+    my @rperl_source__critic_violations = $rperl_source__critic->critique($rperl_source__file_name);
+RPerl::diag('in rperl_source__criticize(), CHECKPOINT 03, have @rperl_source__critic_violations = ' . Dumper(\@rperl_source__critic_violations) . "\n");
+
+    my integer $rperl_source__critic_num_violations = scalar @rperl_source__critic_violations;
+RPerl::diag('in rperl_source__criticize(), CHECKPOINT 04, have $rperl_source__critic_num_violations = ' . $rperl_source__critic_num_violations . "\n");
 
 RPerl::diag("in rperl_source__criticize(), have \$rperl_source__critic_num_violations = $rperl_source__critic_num_violations\n");
     my string $rperl_source__critic_dumperified_violations = Dumper( \@rperl_source__critic_violations );
