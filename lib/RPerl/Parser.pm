@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.012_000;
+our $VERSION = 0.013_000;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -63,10 +63,8 @@ sub rperl_source__check_syntax {
         = $EXECUTABLE_NAME . q{ -Iblib/lib -M"warnings FATAL=>q(all)" -Mstrict -cw }
 #        = $EXECUTABLE_NAME . q{ -Iblib/lib -M"warnings FATAL=>q(all)" -cw }
         . $rperl_source__file_name;
-    my string $rperl_source__perl_syntax_command__no_output
-        = $rperl_source__perl_syntax_command . ' > '.$nul.' 2> '.$nul;
-    my string $rperl_source__perl_syntax_command__all_output
-        = $rperl_source__perl_syntax_command . ' 2>&1';
+    my string $rperl_source__perl_syntax_command__no_output = $rperl_source__perl_syntax_command . ' > '.$nul.' 2> '.$nul;
+    my string $rperl_source__perl_syntax_command__all_output = $rperl_source__perl_syntax_command . ' 2>&1';
 
 #my string $rperl_source__perl_syntax_command = q{perl -Iblib/lib -cw } . $rperl_source__file_name;
 
@@ -212,7 +210,8 @@ RPerl::diag('in rperl_source__criticize(), CHECKPOINT 01' . "\n");
         # disable all non-core additional policies which may be installed, such as Perlsecret, etc.
         '-exclude'  => ['RequireTidyCode', 'PodSpelling', 'RequireExplicitPackage', 'RequirePod', 'ProhibitBitwiseOperators'],
         '-severity' => 'brutal',
-        '-theme'    => 'core'
+        '-theme'    => 'core',
+        '-verbose'  => 11
     );
 RPerl::diag('in rperl_source__criticize(), CHECKPOINT 02, have $rperl_source__critic = ' . Dumper($rperl_source__critic) . "\n");
 
