@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.014_300;
+our $VERSION = 0.014_400;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -217,7 +217,8 @@ RPerl::diag('in rperl_source__criticize(), CHECKPOINT 01' . "\n");
 RPerl::diag('in rperl_source__criticize(), CHECKPOINT 02' . "\n");
 
     my @rperl_source__critic_violations = $rperl_source__critic->critique($rperl_source__file_name);
-RPerl::diag('in rperl_source__criticize(), CHECKPOINT 03, have @rperl_source__critic_violations = ' . Dumper(\@rperl_source__critic_violations) . "\n");
+#RPerl::diag('in rperl_source__criticize(), CHECKPOINT 03, have @rperl_source__critic_violations = ' . Dumper(\@rperl_source__critic_violations) . "\n");
+RPerl::diag('in rperl_source__criticize(), CHECKPOINT 03' . "\n");
 
     my integer $rperl_source__critic_num_violations = scalar @rperl_source__critic_violations;
 RPerl::diag('in rperl_source__criticize(), CHECKPOINT 04, have $rperl_source__critic_num_violations = ' . $rperl_source__critic_num_violations . "\n");
