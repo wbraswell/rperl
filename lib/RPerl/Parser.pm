@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.014_200;
+our $VERSION = 0.014_300;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -177,12 +177,12 @@ sub rperl_source__criticize {
     my string $file_line_last = undef;
 
     while ( $file_line = <$FILE_HANDLE> ) {
-        RPerl::diag('in rperl_source__criticize(), top of while loop, have $file_line = ' . q{'} . $file_line . q{'} . "\n");
+#        RPerl::diag('in rperl_source__criticize(), top of while loop, have $file_line = ' . q{'} . $file_line . q{'} . "\n");
         $file_line_last = $file_line;
     }
 
-    RPerl::diag('in rperl_source__criticize(), have last $file_line = ' . q{'} . $file_line . q{'} . "\n");  # error, uninitialized value
-    RPerl::diag('in rperl_source__criticize(), have $file_line_last = ' . q{'} . $file_line_last . q{'} . "\n");
+#    RPerl::diag('in rperl_source__criticize(), have last $file_line = ' . q{'} . $file_line . q{'} . "\n");  # error, uninitialized value
+#    RPerl::diag('in rperl_source__criticize(), have $file_line_last = ' . q{'} . $file_line_last . q{'} . "\n");
 
     close $FILE_HANDLE or die 'ERROR ECOPAPC12, RPERL PARSER, PERL CRITIC VIOLATION: Cannot close file ' . q{'} . $rperl_source__file_name . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
 
@@ -213,8 +213,8 @@ RPerl::diag('in rperl_source__criticize(), CHECKPOINT 01' . "\n");
         '-theme'    => 'core',
         '-verbose'  => 11
     );
-RPerl::diag('in rperl_source__criticize(), CHECKPOINT 02, have $rperl_source__critic = ' . Dumper($rperl_source__critic) . "\n");
-#RPerl::diag('in rperl_source__criticize(), CHECKPOINT 02' . "\n");
+#RPerl::diag('in rperl_source__criticize(), CHECKPOINT 02, have $rperl_source__critic = ' . Dumper($rperl_source__critic) . "\n");
+RPerl::diag('in rperl_source__criticize(), CHECKPOINT 02' . "\n");
 
     my @rperl_source__critic_violations = $rperl_source__critic->critique($rperl_source__file_name);
 RPerl::diag('in rperl_source__criticize(), CHECKPOINT 03, have @rperl_source__critic_violations = ' . Dumper(\@rperl_source__critic_violations) . "\n");
