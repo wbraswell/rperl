@@ -35,14 +35,14 @@ Writing MYMETA.yml and MYMETA.json
   Starting "make" Stage
 Running Mkbootstrap for ntype_string_3_pl_bb91 ()
 chmod 644 ntype_string_3_pl_bb91.bs
-/usr/bin/perl /usr/share/perl/5.18/ExtUtils/xsubpp  -typemap "/usr/share/perl/5.18/ExtUtils/typemap" -typemap "/home/wbraswell/austin_perl_mongers/rperl/rperl-latest/blib/lib/typemap.rperl"   ntype_string_3_pl_bb91.xs > ntype_string_3_pl_bb91.xsc && mv ntype_string_3_pl_bb91.xsc ntype_string_3_pl_bb91.c
+/usr/bin/env perl /usr/share/perl/5.18/ExtUtils/xsubpp  -typemap "/usr/share/perl/5.18/ExtUtils/typemap" -typemap "/home/wbraswell/austin_perl_mongers/rperl/rperl-latest/blib/lib/typemap.rperl"   ntype_string_3_pl_bb91.xs > ntype_string_3_pl_bb91.xsc && mv ntype_string_3_pl_bb91.xsc ntype_string_3_pl_bb91.c
 g++ -c  -I"/home/wbraswell/austin_perl_mongers/rperl/rperl-latest/bin/development" -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fstack-protector -fno-strict-aliasing -pipe -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix -O2 -g   -DVERSION=\"0.00\" -DXS_VERSION=\"0.00\" -fPIC "-I/usr/lib/perl/5.18/CORE"   ntype_string_3_pl_bb91.c
 rm -f blib/arch/auto/ntype_string_3_pl_bb91/ntype_string_3_pl_bb91.so
 LD_RUN_PATH="/usr/lib/x86_64-linux-gnu" cc  -shared -L/usr/local/lib -fstack-protector ntype_string_3_pl_bb91.o  -o blib/arch/auto/ntype_string_3_pl_bb91/ntype_string_3_pl_bb91.so     \
        -lstdc++     \
       
 chmod 755 blib/arch/auto/ntype_string_3_pl_bb91/ntype_string_3_pl_bb91.so
-/usr/bin/perl -MExtUtils::Command::MM -e 'cp_nonempty' -- ntype_string_3_pl_bb91.bs blib/arch/auto/ntype_string_3_pl_bb91/ntype_string_3_pl_bb91.bs 644
+/usr/bin/env perl -MExtUtils::Command::MM -e 'cp_nonempty' -- ntype_string_3_pl_bb91.bs blib/arch/auto/ntype_string_3_pl_bb91/ntype_string_3_pl_bb91.bs 644
   Finished "make" Stage
 
   Starting "make install" Stage

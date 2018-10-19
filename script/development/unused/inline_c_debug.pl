@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 #use Inline config => build_noisy => 1;
 use Inline config => using => 'ParseRecDescent' => build_noisy => 1;

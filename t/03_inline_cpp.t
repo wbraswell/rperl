@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # suppress 'WEXRP00: Found multiple rperl executables' due to blib/ & pre-existing installation(s),
 #BEGIN { $ENV{RPERL_WARNINGS} = 0; }

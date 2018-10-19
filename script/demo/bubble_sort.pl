@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Bubble Sort, Program Source Code, Perl Implementation #1
 # Sort A List Of Out-Of-Order Integers

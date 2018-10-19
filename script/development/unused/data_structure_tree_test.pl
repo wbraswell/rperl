@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 # NEED FIX, OUTDATED
 # NEED FIX, OUTDATED
 # NEED FIX, OUTDATED

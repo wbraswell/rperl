@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 use strict;  use warnings;
 
 BEGIN { print "[[[ BEGIN 'use Inline' STAGE for 'DATA' ]]]\n"x3; }

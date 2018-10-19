@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # AUTOMATIC CLASSES OPTION
 #use Inline (CPP => 'DATA', classes => sub { join('::', split('__', shift)); } );

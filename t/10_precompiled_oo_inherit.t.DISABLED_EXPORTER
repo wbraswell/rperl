@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # NEED FIX: various bugs, including...
 # Subroutine RPerl::Algorithm::inherited_Algorithm redefined at /usr/lib/perl/5.18/DynaLoader.pm line 207.

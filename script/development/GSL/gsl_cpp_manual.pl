@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 use Data::Dumper;
 use rperlgsl;  # give us Math::GSL::Matrix
