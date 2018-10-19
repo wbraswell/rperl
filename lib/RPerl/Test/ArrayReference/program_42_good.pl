@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Section 3.5: 2-D Array Data Types & Nested Arrays
 

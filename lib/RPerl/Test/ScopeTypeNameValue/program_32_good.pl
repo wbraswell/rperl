@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_SUCCESS: "my string_hashref $foo = {'a' => '42','b' => 'is','c' => 'the','d' => 'answer'};" >>>

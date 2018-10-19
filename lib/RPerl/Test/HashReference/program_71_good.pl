@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_SUCCESS: "have number_hashref_to_string_compact($hash_1D) = {'dont_panic'=>42.315_617,'enterprise'=>1_701,'fnord'=>232_323.232_323,'least_random'=>17,'starman'=>2_112.211_2}" >>>

@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 3, Exercise 1
 # Print user-supplied list of strings in reverse order

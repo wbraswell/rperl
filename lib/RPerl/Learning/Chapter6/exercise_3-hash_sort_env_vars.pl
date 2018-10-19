@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 6, Exercise 3
 # Print sorted environmental variables

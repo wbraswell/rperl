@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 5, Exercise 1
 # Accept one or more input files, and print their contents line-by-line in reverse order

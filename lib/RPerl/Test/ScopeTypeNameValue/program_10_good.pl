@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_SUCCESS: "$VAR1 = {'string_arrayref_arrayref' => [{'string_arrayref' => ['string','string']},{'string_arrayref' => ['string','string']},{'string_arrayref' => ['string','string']}]};" >>>

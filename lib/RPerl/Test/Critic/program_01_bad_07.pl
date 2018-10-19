@@ -1,4 +1,4 @@
-#!/usr/bin/perl ## no critic qw()
+#!/usr/bin/env perl ## no critic qw()
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPC02' >>>

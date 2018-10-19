@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Section 4.2.1: Parentheses Suffix & Ampersand Prefix
 

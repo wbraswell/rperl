@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 4, Exercise 3
 # Subroutines & driver to calculate the above-average elements of hard-coded arrays

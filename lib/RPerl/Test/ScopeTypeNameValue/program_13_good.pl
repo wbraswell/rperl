@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_SUCCESS: "$VAR1 = {'string_hashref_arrayref' => [{'string_hashref' => {'g' => 'string','h' => 'string'}},{'string_hashref' => {'mm' => 'string','n' => 'string'}},{'string_hashref' => {'a' => 'string','b' => 'string'}}]};" >>>

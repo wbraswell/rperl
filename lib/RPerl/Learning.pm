@@ -3,7 +3,7 @@ use RPerl;
 package RPerl::Learning;
 use strict;
 use warnings;
-our $VERSION = 0.191_000;
+our $VERSION = 0.192_000;
 
 # [[[ OO INHERITANCE ]]]
 # NEED FIX: why does the following 'use parent' command cause $VERSION to become undefined???
@@ -862,7 +862,7 @@ L<http://komodoide.com/perl>
 
 =head2 Section 1.22: A Sample RPerl Program
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     
     # Foo Bar Arithmetic Example
     
@@ -890,7 +890,7 @@ This program is separated by blank lines into 4 sections: shebang, header, criti
 
 Other than the shebang and critics, all lines beginning with C<#> are comments and can be safely ignored or discarded without affecting the program.
 
-The I<"shebang"> section is required, always contains exactly 1 line, and is short for I<"hash bang">; referring to the two leading characters C<#!> of this line.  The I<"octothorpe"> character C<#> (tic-tac-toe symbol) is called a I<"pound-sign"> when used on a telephone, and is called a I<"hash"> (or more recently and less accurately I<"hash-tag">) when used on a computer.  The exclamation-point character C<!> is called a I<"bang"> when used on a computer.  When appearing together as the first two characters in a plain text file, the hash and bang characters tell the operating system to run the immediately-following command (in this case the Perl interpreter located at F</usr/bin/perl>) and pass the remaining contents of the text file as input to the command.  In other words, if the first line of a plain text file is C<#!/usr/bin/perl>, then that file is a Perl program.
+The I<"shebang"> section is required, always contains exactly 1 line, and is short for I<"hash bang">; referring to the two leading characters C<#!> of this line.  The I<"octothorpe"> character C<#> (tic-tac-toe symbol) is called a I<"pound-sign"> when used on a telephone, and is called a I<"hash"> (or more recently and less accurately I<"hash-tag">) when used on a computer.  The exclamation-point character C<!> is called a I<"bang"> when used on a computer.  When appearing together as the first two characters in a plain text file, the hash and bang characters tell the operating system to run the immediately-following command (in this case the Perl interpreter located at F</usr/bin/env perl>) and pass the remaining contents of the text file as input to the command.  (Traditionally, the Perl interpreter has been located at F</usr/bin/perl>, however we must practice prudence by asking the operating system environment where our Perl interpreter is actually located, in order to support those cases where Perl may be installed in a non-standard directory, such as with Perlbrew or manually-build Perl interpreters.)  In other words, if the first line of a plain text file is C<#!/usr/bin/env perl> (or C<#!/usr/bin/perl> or something similar), then that file is a Perl program.
 
 The I<"header"> section is required and always contains 4 lines for an RPerl I<"program"> file ending in F<.pl>, or 5 lines for an RPerl I<"module"> ending in F<.pm> (covered later in Chapter 11).  C<use> is recognized by Perl as a special I<"keyword"> (which is also a Perl I<"function">) which has 2 primary purposes: to load additional RPerl modules, and to enable RPerl I<"pragma"> system configuration modes.  The C<use RPerl;> line is dual-purpose, it both loads the F<RPerl.pm> module and enables the special RPerl low-magic pragma.  The C<use strict;> and C<use warnings;> lines enable basic Perl pragmas which require decent programming practices by the human programmers.  The C<our $VERSION = 0.001_000;> line sets the version number of this RPerl program.
 
@@ -13116,7 +13116,7 @@ The name and calling convention of each subroutine takes the form C<SOURCE_to_DE
 
 For example, if you want to convert from the input of a C<string> variable named C<$foo> to the output of a C<number> data type, then you simply call C<string_to_number($foo)>.  If you want to store the C<number> return value of this type conversion, then you must utilize a variable of C<number> type to do so.  Thus, if you are providing a variable as the input argument for a type conversion subroutine, and if you are also storing the type conversion's return value in a variable, then these must always be two different variables because they will always have two different data types. 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # [[[ HEADER ]]]
     use RPerl;
@@ -13327,7 +13327,7 @@ When your RPerl application is running in normal interpreted mode AKA test mode 
 
 The following source code example shows a simple C<string> variable named C<$foo> (as usual), which we then pass as an argument to the introspection subroutines and display the results:
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # [[[ HEADER ]]]
     use RPerl;
@@ -14436,7 +14436,7 @@ Constants are the opposite of variables, because constants are designed not to c
 
 Below is an example RPerl program with two constants, one containing numeric data and another containing text data:
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
  
     # [[[ HEADER ]]]
     use RPerl;
@@ -14537,7 +14537,7 @@ Your software will continue running after you call C<print> to send output to C<
 
 As mentioned above, you may also choose to use C<STDERR> to display debugging and diagnostic messages, which are neither warnings nor errors.  For example, let's say you are writing an RPerl application which primarily relies on the C<$foo> variable, so your users want to see the value of C<$foo> when the program is finished running.  Your code also utilizes the secondary variables named C<$bar>, C<$bat>, and C<$baz>, but the users don't care about the values of these variables, only you (and other software developers) care about them.  Following is an example of using C<print> for both normal output to C<STDOUT> (by default), as well as diagnostic output to C<STDERR>:
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # [[[ HEADER ]]]
     use RPerl;
@@ -14611,7 +14611,7 @@ Lastly, we run the same program a third time, now with C<2E<gt> /dev/null> appen
 
 It is easy to simply insert a hash character (AKA octothorpe) C<#> in front of each C<print {*STDERR}> operator to comment it out, thereby disabling the diagnostic output but allowing it to be re-enabled again by future developers:
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # [[[ HEADER ]]]
     use RPerl;
@@ -14683,7 +14683,7 @@ When at least one C<elsif> or C<else> statement is appended to an C<if> statemen
 
 Now let's look at the output values of some slightly less simple conditional statements.  For example, perhaps you want to increment the value of an integer stored in the variable named C<$heart>, but only until it reaches a value of 3.  You can achieve this (in a contrived manner) by executing the following RPerl program:
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # [[[ HEADER ]]]
     use RPerl;
@@ -14922,7 +14922,7 @@ Along with the two output streams C<STDOUT> and C<STDERR>, the input stream C<ST
 
 The following example asks the user for their name, then greets them by name:
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # [[[ HEADER ]]]
     use RPerl;
@@ -15515,7 +15515,7 @@ What do you think will happen if we place C<next> with C<last> or C<redo> in the
 
 Sometimes you want to accept multiple lines of user input via C<STDIN>, instead of just one line at a time as in previous examples.  To achieve this, we put the call to C<STDIN> inside the loop's condition:
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     
     # [[[ HEADER ]]]
     use RPerl;
@@ -19114,7 +19114,7 @@ Running the pseudo-state source code example above produces the following output
 
 We have already been exposed to the C<use strict;> and C<use warnings;> source code components; these are both classified as Perl I<"pragmata"> AKA I<"pragma"> statements, which are special configuration controls used to change the way Perl itself functions.  Both C<strict> and C<warnings> pragmas appear in the header section of all RPerl programs:
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # [[[ HEADER ]]]
     use RPerl;
@@ -19402,7 +19402,7 @@ The last line, in the C<OPERATIONS> section, calls the C<print> operator on a co
 All other lines beginning with C<#> are comments and, along with blank lines, may be safely ignored or removed.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 1, Exercise 1
     # Print "Hello, World!"; the classic first program for new programmers
@@ -19584,7 +19584,7 @@ The C<$foo> and C<$bar> variables receive their values from hard-coded numeric v
 The last 4 lines call the C<print> operator to display the names of each variable; followed by each variable's respective value, converted from number to underscore-formatted string via the RPerl type conversion subroutine C<to_string()>; followed by a newline character.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     
     # Learning RPerl, Chapter 1, Exercise 3
     # Foo Bar Arithmetic Example
@@ -19642,7 +19642,7 @@ The first 2 lines in the C<OPERATIONS> section each create a new number variable
 The last 3 lines call the C<print> operator to display the values of C<PI>, C<$radius>, and C<$circumference>, each followed by a newline character.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 2, Exercise 1
     # Find the circumference of a circle with hard-coded radius of 12.5 units
@@ -19695,7 +19695,7 @@ The third line in the C<OPERATIONS> section creates a number variable C<$radius>
 This exercise is otherwise identical to the previous exercise.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 2, Exercise 2
     # Find the circumference of a circle with any radius entered by the user
@@ -19750,7 +19750,7 @@ In the C<OPERATIONS> section, the line starting with C<if ($radius E<gt>= 0)> de
 This exercise is otherwise identical to the previous exercise.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 2, Exercise 3
     # Find the circumference of a circle with any positive radius entered by the user
@@ -19814,7 +19814,7 @@ In the C<OPERATIONS> section, C<E<lt>STDINE<gt>> is accessed to collect user inp
 These 2 string variables are converted from text values to numeric values by calling C<string_to_number()>, then multiplied via the C<*> multiplication operator, and the results displayed by calling C<print>.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 2, Exercise 4
     # Find the product of any two numbers entered by the user
@@ -19869,7 +19869,7 @@ The last line contains 2 operators, C<print> and the C<x> string repeat operator
 Like the C<.> (single dot) string concatenation operator, the C<x> operator has a higher precedence than C<print> and is thus executed first, generating a single string value comprised of the original string repeated 0 or more times, then the resulting string is displayed by calling C<print>.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 2, Exercise 5
     # Repeat any string any number of times, both values entered by the user
@@ -19928,7 +19928,7 @@ The C<while> loop iteratively executes as long as the integer value of C<$i> is 
 The last line calls C<print>, the C<to_string()> conversion subroutine, and the C<.> (single dot) string concatenation operator to display the final answer.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 2, Exercise 6
     # Calculate the sum of the first n integers; 1 + 2 + 3 + ... + n = ?
@@ -20001,7 +20001,7 @@ The last line calls C<print> using the value of C<$n_original>, because the valu
 It is usually faster to run an algorithm without a loop than with a loop, because you are only doing 1 thing instead of many things.  However, not all problems can be easily optimized by changing to a new algorithm, because it may be prohibitively complex or there may only be 1 known algorithm.  In this case, Gauss' algorithm should be faster than the C<while> loop algorithm, expecially for very large values of C<$n>.  It may be possible to further optimize this exercise by utilizing bitwise operators to replace the modulo and division operators.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 2, Exercise 7
     # Calculate the sum of the first n integers, without using a loop; 1 + 2 + 3 + ... + n = ?
@@ -20075,7 +20075,7 @@ As with the C<push> operator, the C<reverse> operator requires its argument to b
 Finally, the line starting with C<foreach my string $input_strings_reversed_element> denotes the beginning of another loop statement, which iterates the value of C<$input_strings_reversed_element> once for each string value contained in the C<$input_strings_reversed> array; C<print> is called inside the loop body to display the original input strings in reverse order.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 3, Exercise 1
     # Print user-supplied list of strings in reverse order
@@ -20151,7 +20151,7 @@ In Perl, all array indices start at 0 instead of 1, so we must first subtract 1 
 Thus, if a user inputs the integer 1, the array index will be 0, which is 'fred'; similarly, user input 5 will access array index 4 which is 'wilma'.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 3, Exercise 2
     # Print string array elements indexed by user-supplied integers
@@ -20232,7 +20232,7 @@ Last, a C<foreach> loop is used to print the sorted output by storing and access
 An C<if> conditional statement inside the C<foreach> loop tests the constant C<SINGLE_LINE_OUTPUT>; if the condition is true, then the C<chomp> operator is called to remove the newline character from each string element and replace it with a normal blank space character, thereby displaying all the elements on a single line of output.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 3, Exercise 3
     # Print user-supplied list of strings in ASCIIbetical order, optionally on single line of output
@@ -20321,7 +20321,7 @@ Next, a C<while> loop and C<E<lt>STDINE<gt>> are used to collect user input stri
 Finally, the subroutine C<total()> is called a second time, now with the variable C<$input_numbers> passed as the input argument, and the return value is displayed using the variable C<$user_total>.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 4, Exercise 1
     # Subroutine & driver to calculate the totals of arrays of stringified numbers, both hard-coded and user-supplied
@@ -20397,7 +20397,7 @@ The actual elements stored the array variable C<$one_to_one_thousand> start with
 Finally, the subroutine C<total()> is called with C<$one_to_one_thousand> passed as the input argument, and the return value is displayed using the variable C<$one_to_one_thousand_total>.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 4, Exercise 2
     # Subroutine & driver to calculate the total of 1 to 1,000
@@ -20454,7 +20454,7 @@ Inside C<above_average()> is a call to the subroutine C<average()>, with the ret
 In the C<OPERATIONS> section, 2 arrays are created in the C<$fred> and C<$barney> variables, which are then passed as input arguments to 2 calls to the subroutine C<above_average()>, and the results are displayed.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 4, Exercise 3
     # Subroutines & driver to calculate the above-average elements of hard-coded arrays
@@ -20546,7 +20546,7 @@ Inside C<greet()>, a personalized greeting is displayed for the virtual person r
 Finally, the string variable C<$name> is returned from C<greet()> and passed to the C<=> assignment operators in the C<OPERATIONS> section, thereby updating the program state variable C<$previous_name> to contain the value of C<$name>.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 4, Exercise 4
     # Subroutine & driver to greet users
@@ -20608,7 +20608,7 @@ In the C<SUBROUTINES> section, the subroutine C<greet()> prints the names of pre
 Finally, the current value of C<$name> is appended as the last element of the array C<$previous_names> by the C<push> operator, and C<$previous_names> is then returned by C<greet()> to update the program state.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 4, Exercise 5
     # Subroutine & driver to greet multiple users
@@ -20687,7 +20687,7 @@ Before executing this program, the non-Perl C<`printf`> program must be called t
 To begin execution of this program via the C<`rperl`> command, the program name and input file names must be enclosed in either C<'single-quotes'> or C<"double-quotes">; this tells RPerl the input file names are command-line arguments to be passed to the 1 specified program, instead of specifying additional RPerl programs.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 5, Exercise 1
     # Accept one or more input files, and print their contents line-by-line in reverse order
@@ -20792,7 +20792,7 @@ In the C<OPERATIONS> section, the only operation is a call to the C<right_justif
 X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 5, Exercise 2
     # Accept one or more input lines, and print them in a right-justified 20-column format
@@ -20875,7 +20875,7 @@ In the C<OPERATIONS> section, the only operation is a call to the C<right_justif
 This exercise is otherwise identical to the previous exercise.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 5, Exercise 3
     # Accept column width followed by one or more input lines, and print lines in a right-justified format
@@ -20968,7 +20968,7 @@ Finally, the thin-arrow syntax C<$names-E<gt>{$given_name}> is used to retrieve 
 In the C<OPERATIONS> section, the only operation is a call to the C<given_to_family_name()> subroutine.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 6, Exercise 1
     # Accept one input given (first) name, and print the corresponding family (last) name
@@ -21039,7 +21039,7 @@ Finally, a C<foreach> loop iterates through the alphabetically-sorted keys of th
 In the C<OPERATIONS> section, the only operation is a call to the C<unique_word_count()> subroutine.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 6, Exercise 2
     # Accept a list of words, and print the count of each unique word
@@ -21153,7 +21153,7 @@ Finally, there is another C<foreach> loop below the first, again iterating throu
 In the C<OPERATIONS> section, the only operation is a call to the C<sort_env_vars()> subroutine.X<br>
 
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # Learning RPerl, Chapter 6, Exercise 3
     # Print sorted environmental variables
@@ -22308,7 +22308,7 @@ C<[[[ LEXICON TOKENS, TYPES & RESERVED WORDS ]]]>
 
 =item * SHEBANG
 
-begin line, hash (octothorpe), bang, *NIX path to Perl; ex. C<#!/usr/bin/perl>
+begin line, hash (octothorpe), bang, *NIX path to Perl; ex. C<#!/usr/bin/env perl>
 
 =item * USE_RPERL
 
@@ -22738,7 +22738,7 @@ I<CompileUnit>
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Program/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -22752,7 +22752,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Module/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -22828,7 +22828,7 @@ L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test
 
 L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Critic/program_01_good.pl>
 
-    #!/usr/bin/perl ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
+    #!/usr/bin/env perl ## no critic qw(ProhibitUselessNoCritic PodSpelling ProhibitExcessMainComplexity)  # DEVELOPER DEFAULT 1a: allow unreachable & POD-commented code; SYSTEM SPECIAL 4: allow complex code outside subroutines, must be on line 1
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -22891,7 +22891,7 @@ L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Include/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -22957,7 +22957,7 @@ L<Class_00_Good.pm|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Constant/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23053,7 +23053,7 @@ I<Class>
 
 L<class_00_good_02.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Properties/class_00_good_02.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # [[[ PREPROCESSOR ]]]
     # <<< EXECUTE_SUCCESS: '92' >>>
@@ -23183,7 +23183,7 @@ I<Operation>
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Expression/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23201,7 +23201,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Expression/program_01_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23221,7 +23221,7 @@ L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_10_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Expression/program_10_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # [[[ PREPROCESSOR ]]]
     # <<< EXECUTE_SUCCESS: '1.570795' >>>
@@ -23244,7 +23244,7 @@ L<program_10_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_21_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Expression/program_21_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # [[[ PREPROCESSOR ]]]
     # <<< EXECUTE_SUCCESS: "'a' => 'twenty-threetwenty-threetwenty-threetwenty-threetwenty-threetwenty-threetwenty-three'" >>>
@@ -23275,7 +23275,7 @@ L<program_21_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_30_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Expression/program_30_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23315,7 +23315,7 @@ L<program_30_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01Named/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23341,7 +23341,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01Named/program_01_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23356,7 +23356,7 @@ L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_02_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01Named/program_02_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23373,7 +23373,7 @@ L<program_02_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator10NamedUnary/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23413,7 +23413,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator10NamedUnary/program_01_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23430,7 +23430,7 @@ L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Statement/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23449,7 +23449,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Statement/program_01_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23468,7 +23468,7 @@ L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_02_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Statement/program_02_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23487,7 +23487,7 @@ L<program_02_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_03_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Statement/program_03_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23512,7 +23512,7 @@ L<program_03_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_04_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Statement/program_04_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23529,7 +23529,7 @@ L<program_04_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_05_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Statement/program_05_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23546,7 +23546,7 @@ L<program_05_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_06_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Statement/program_06_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23572,7 +23572,7 @@ I<Operator>
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01Print/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23621,7 +23621,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01OpenClose/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23651,7 +23651,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator03IncrementDecrement/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23697,7 +23697,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator04ArithmeticPower/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23738,7 +23738,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator05LogicalNegation/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23777,7 +23777,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator05ArithmeticNegative/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23814,7 +23814,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator06RegularExpressionMatch/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23855,7 +23855,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator07StringRepeat/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # [[[ PREPROCESSOR ]]]
     # <<< EXECUTE_SUCCESS: "have $foo = ''" >>>
@@ -23892,7 +23892,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator07ArithmeticMultiplyDivideModulo/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23921,7 +23921,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator08AddSubtract/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23950,7 +23950,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator08StringCat/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -23979,7 +23979,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator09BitwiseShift/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24008,7 +24008,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator11CompareLessThanGreaterThan/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24061,7 +24061,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator12CompareEqualNotEqual/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24114,7 +24114,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator13BitwiseAnd/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24151,7 +24151,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator14BitwiseOrXor/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24188,7 +24188,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator15LogicalAnd/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24225,7 +24225,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator16LogicalOr/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24262,7 +24262,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator17ListRange/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24305,7 +24305,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator18Ternary/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24342,7 +24342,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator22LogicalNegation/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24381,7 +24381,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator23LogicalAnd/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24418,7 +24418,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator24LogicalOrXor/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24461,7 +24461,7 @@ I<OperatorVoid>
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/OperatorVoid01Print/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24521,7 +24521,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/OperatorVoid01Named/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24541,7 +24541,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/OperatorVoid01NamedVoidCroak/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24559,7 +24559,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/OperatorVoid01NamedVoidDie/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24577,7 +24577,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/OperatorVoid01NamedVoidExit/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24595,7 +24595,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/OperatorVoid01NamedVoidReturn/program_01_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24620,7 +24620,7 @@ L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator19LoopControl/program_01_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24648,7 +24648,7 @@ I<Expression>
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Constant/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24673,7 +24673,7 @@ I<SubExpression>
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/SubExpression/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24690,7 +24690,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_07_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/SubExpression/program_07_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24781,7 +24781,7 @@ L<Package_SingleQuotes_07_Good.pm|https://github.com/wbraswell/rperl/blob/master
 
 L<program_10_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/ArrayReference/program_10_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24806,7 +24806,7 @@ L<program_10_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_15_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/ArrayReference/program_15_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24828,7 +24828,7 @@ L<program_15_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/ArrayDereference/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24847,7 +24847,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/ArrayDereference/program_01_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24867,7 +24867,7 @@ L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_02_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/ArrayDereference/program_02_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24888,7 +24888,7 @@ L<program_02_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_10_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/HashReference/program_10_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24914,7 +24914,7 @@ L<program_10_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_14_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/HashReference/program_14_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24946,7 +24946,7 @@ L<program_14_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/HashDereference/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24966,7 +24966,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/HashDereference/program_01_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -24986,7 +24986,7 @@ L<program_01_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_02_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/HashDereference/program_02_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -25006,7 +25006,7 @@ L<program_02_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_03_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/HashDereference/program_03_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -25033,7 +25033,7 @@ I<SubExpressionOrInput>
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/SubExpressionOrStdin/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -25060,7 +25060,7 @@ I<Statement>
 
 L<program_03_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Conditional/program_03_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -25090,7 +25090,7 @@ L<program_03_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_04_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Loop/program_04_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -25113,7 +25113,7 @@ L<program_04_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_23_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Loop/program_23_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -25137,7 +25137,7 @@ L<program_23_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_32_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Loop/program_32_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -25165,7 +25165,7 @@ L<program_32_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_05_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableDeclaration/program_05_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -25182,7 +25182,7 @@ L<program_05_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_14_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableDeclaration/program_14_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -25200,7 +25200,7 @@ L<program_14_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_23_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableDeclaration/program_23_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # [[[ PREPROCESSOR ]]]
     # <<< EXECUTE_SUCCESS: 'size of $foo is 10' >>>
@@ -25223,7 +25223,7 @@ L<program_23_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_30_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableDeclaration/program_30_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -25236,7 +25236,7 @@ L<program_30_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_40_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableDeclaration/program_40_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -25257,7 +25257,7 @@ L<program_40_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_03_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableModification/program_03_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -25275,7 +25275,7 @@ L<program_03_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_10_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/VariableModification/program_10_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     # [[[ HEADER ]]]
     use RPerl;
     use strict;
@@ -25328,7 +25328,7 @@ I<ListElement>
 
 L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01QuoteWord/program_00_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # [[[ PREPROCESSOR ]]]
     # <<< EXECUTE_SUCCESS: 'foo' >>>
@@ -25356,7 +25356,7 @@ L<program_00_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Te
 
 L<program_06_good.pl|https://github.com/wbraswell/rperl/blob/master/lib/RPerl/Test/Operator01QuoteWord/program_06_good.pl>
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
 
     # [[[ PREPROCESSOR ]]]
     # <<< EXECUTE_SUCCESS: '-1bar-5bat' >>>

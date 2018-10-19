@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_SUCCESS: 'in Package_B_Exporter_00_Good::exported_ok(), received $arg = 17' >>>

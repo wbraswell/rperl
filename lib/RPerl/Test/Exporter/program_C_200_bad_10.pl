@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_ERROR: "ERROR ESYXP03, Subroutine & Variable Exporter: Failed to export symbol '+exported' from package 'RPerl::Test::Exporter::Class_C_Exporter_20_Bad_00' into requesting package 'main', symbol begins with unrecognized character '+'" >>>

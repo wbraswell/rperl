@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_SUCCESS: "$VAR1 = {'object_hashref' => {'a' => {'object' => {'__CLASS' => 'RPerl::Test::SimpleA','purd' => 'integer'}}}};" >>>

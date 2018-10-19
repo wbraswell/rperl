@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 3, Exercise 2
 # Print string array elements indexed by user-supplied integers

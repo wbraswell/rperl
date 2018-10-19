@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 4, Exercise 1
 # Subroutine & driver to calculate the totals of arrays of stringified numbers, both hard-coded and user-supplied

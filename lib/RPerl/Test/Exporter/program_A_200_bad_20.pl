@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_ERROR: "ERROR EVAXP00, Variable Exporter: Failed to export requested variable '$bad_name' from package 'RPerl::Test::Exporter::Class_A_Exporter_20_NotBad' into requesting package 'main', variable does not exist" >>>

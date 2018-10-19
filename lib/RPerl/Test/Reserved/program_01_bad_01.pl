@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< GENERATE_ERROR: "P181c, CODE GENERATOR, ABSTRACT SYNTAX TO" >>>

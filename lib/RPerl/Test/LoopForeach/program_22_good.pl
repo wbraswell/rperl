@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_SUCCESS: "Production rule Loop matched by LoopForEach, iteration item at $my_key = 'a_key', $my_hash->{$my_key} = 'howdy'" >>>

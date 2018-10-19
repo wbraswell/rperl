@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_ERROR: "ERROR ESYXP02, Subroutine & Variable Exporter: Failed to export symbol '=exported_ok' from package 'RPerl::Test::Exporter::Class_A_Exporter_20_NotBad' into requesting package 'main', symbol begins with unrecognized character '='" >>>

@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_SUCCESS: "have number_arrayref_to_string_compact($array_1D) = [0.001_002,2,45_676.555_444_321,6,-8.01]" >>>

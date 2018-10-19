@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_ERROR: "ERROR ESYXP01, Subroutine & Variable Exporter: Failed to process @EXPORT_OK symbol '!exported_ok' from package 'RPerl::Test::Exporter::Class_A_Exporter_20_Bad_00', symbol begins with unrecognized character '!'" >>>

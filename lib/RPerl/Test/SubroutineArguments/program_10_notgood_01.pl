@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # NEED UPGRADE: we currently have no way to test for the presence of STDERR WARNING messages in otherwise-successful programs
 

@@ -1,5 +1,5 @@
 use RPerl::Test::Foo;
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPAPC02' >>>

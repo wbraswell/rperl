@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 2, Exercise 1
 # Find the circumference of a circle with hard-coded radius of 12.5 units

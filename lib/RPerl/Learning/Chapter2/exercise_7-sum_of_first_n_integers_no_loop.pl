@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 2, Exercise 7
 # Calculate the sum of the first n integers, without using a loop; 1 + 2 + 3 + ... + n = ?

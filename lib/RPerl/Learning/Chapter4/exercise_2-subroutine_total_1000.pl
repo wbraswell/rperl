@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 4, Exercise 2
 # Subroutine & driver to calculate the total of 1 to 1,000

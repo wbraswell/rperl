@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 6, Exercise 2
 # Accept a list of words, and print the count of each unique word

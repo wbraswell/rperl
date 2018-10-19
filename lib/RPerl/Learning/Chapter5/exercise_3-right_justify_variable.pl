@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 5, Exercise 3
 # Accept column width followed by one or more input lines, and print lines in a right-justified format

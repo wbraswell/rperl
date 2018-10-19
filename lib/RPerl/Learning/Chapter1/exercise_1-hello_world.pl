@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 1, Exercise 1
 # Print "Hello, World!"; the classic first program for new programmers

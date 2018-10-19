@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_SUCCESS: "have string_arrayref_to_string_compact($array_1D) = ['hi','hello','howdy','how do you do','hey']" >>>

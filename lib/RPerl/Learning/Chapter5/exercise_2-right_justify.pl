@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 5, Exercise 2
 # Accept one or more input lines, and print them in a right-justified 20-column format

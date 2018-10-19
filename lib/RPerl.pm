@@ -345,7 +345,7 @@ L<http://rperl.org>
 
 Filename F<my_program.pl>:
 
-    #!/usr/bin/perl
+    #!/usr/bin/env perl
     
     # My Program Name
     # My Program Description

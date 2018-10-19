@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Section 4.5: Subroutine Variables, Variable Scope & Persistence
 

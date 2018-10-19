@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 2, Exercise 2
 # Find the circumference of a circle with any radius entered by the user

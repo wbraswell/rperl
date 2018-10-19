@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_ERROR: "ERROR EVAXP02, Variable Exporter: Failed to export forced variable '$not_exported_scalar' from package 'RPerl::Test::Exporter::Class_C_Exporter_20_Bad_10' into requesting package 'main', variable does not exist" >>>

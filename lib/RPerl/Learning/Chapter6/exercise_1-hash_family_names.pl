@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Learning RPerl, Chapter 6, Exercise 1
 # Accept one input given (first) name, and print the corresponding family (last) name
