@@ -3,7 +3,7 @@ package RPerl::Parser;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.014_400;
+our $VERSION = 0.015_000;
 
 # [[[ OO INHERITANCE ]]]
 #use RPerl::CompileUnit::Module::Class;
@@ -53,7 +53,7 @@ sub rperl_to_ast__parse {
 sub rperl_source__check_syntax {
     { my void $RETURN_TYPE };
     ( my string $rperl_source__file_name) = @ARG;
-    RPerl::diag('in rperl_source__check_syntax(), received $rperl_source__file_name = ' . q{'} . $rperl_source__file_name . q{'} . "\n");
+#RPerl::diag('in rperl_source__check_syntax(), received $rperl_source__file_name = ' . q{'} . $rperl_source__file_name . q{'} . "\n");
 
     RPerl::verbose('PARSE PHASE 0:      Check     Perl syntax...       ');
 
@@ -68,23 +68,21 @@ sub rperl_source__check_syntax {
 
 #my string $rperl_source__perl_syntax_command = q{perl -Iblib/lib -cw } . $rperl_source__file_name;
 
-RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command =\n$rperl_source__perl_syntax_command\n");
-RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command__no_output =\n$rperl_source__perl_syntax_command__no_output\n\n");
-RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command__all_output =\n$rperl_source__perl_syntax_command__all_output\n\n");
+#RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command =\n$rperl_source__perl_syntax_command\n");
+#RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command__no_output =\n$rperl_source__perl_syntax_command__no_output\n\n");
+#RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_command__all_output =\n$rperl_source__perl_syntax_command__all_output\n\n");
 
 #my integer $rperl_source__perl_syntax_retval = system $rperl_source__perl_syntax_command;
-    my integer $rperl_source__perl_syntax_retval
-        = system $rperl_source__perl_syntax_command__no_output; # don't want any messages printed here
+    my integer $rperl_source__perl_syntax_retval = system $rperl_source__perl_syntax_command__no_output; # don't want any messages printed here
 
 #my string $rperl_source__perl_syntax_retstring = `echo HOWDY`;
 #my string $rperl_source__perl_syntax_retstring = `$rperl_source__perl_syntax_command`;
-    my string $rperl_source__perl_syntax_retstring
-        = `$rperl_source__perl_syntax_command__all_output`;
+    my string $rperl_source__perl_syntax_retstring = `$rperl_source__perl_syntax_command__all_output`;
 
-RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_retval = $rperl_source__perl_syntax_retval\n");
-RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_retstring =\n$rperl_source__perl_syntax_retstring\n");
-RPerl::diag("in rperl_source__check_syntax(), have \$OS_ERROR = $OS_ERROR\n");  # $OS_ERROR seems to contain random error messages that I can't trace?
-RPerl::diag("in rperl_source__check_syntax(), have \$? = $?\n");
+#RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_retval = $rperl_source__perl_syntax_retval\n");
+#RPerl::diag("in rperl_source__check_syntax(), have \$rperl_source__perl_syntax_retstring =\n$rperl_source__perl_syntax_retstring\n");
+#RPerl::diag("in rperl_source__check_syntax(), have \$OS_ERROR = $OS_ERROR\n");  # $OS_ERROR seems to contain random error messages that I can't trace?
+#RPerl::diag("in rperl_source__check_syntax(), have \$? = $?\n");
 
 # NEED ADD ERROR CHECKING: ECOPAPL00 FILE DOES NOT EXIST, ECOPAPL01 FILE IS EMPTY
 
@@ -109,7 +107,7 @@ RPerl::diag("in rperl_source__check_syntax(), have \$? = $?\n");
     @{$rperl_source__perl_syntax_retstring_lines} = split /\n/xms,
         $rperl_source__perl_syntax_retstring;
 
-    RPerl::diag('in rperl_source__check_syntax(), have $rperl_source__perl_syntax_retstring_lines = ' . "\n" . Dumper($rperl_source__perl_syntax_retstring_lines) . "\n");
+#RPerl::diag('in rperl_source__check_syntax(), have $rperl_source__perl_syntax_retstring_lines = ' . "\n" . Dumper($rperl_source__perl_syntax_retstring_lines) . "\n");
     my string_arrayref $rperl_source__perl_syntax_retstring_warnings = [];
     foreach my string $rperl_source__perl_syntax_retstring_line (
         @{$rperl_source__perl_syntax_retstring_lines} )
@@ -154,14 +152,14 @@ RPerl::diag("in rperl_source__check_syntax(), have \$? = $?\n");
     }
 
     RPerl::verbose(' done.' . "\n");
-    RPerl::diag('in rperl_source__check_syntax(), about to return void...' . "\n");
+#    RPerl::diag('in rperl_source__check_syntax(), about to return void...' . "\n");
 }
 
 # Criticize Perl Syntax Using Perl::Critic
 sub rperl_source__criticize {
     { my void $RETURN_TYPE };
     ( my string $rperl_source__file_name) = @ARG;
-    RPerl::diag('in rperl_source__criticize(), received $rperl_source__file_name = ' . q{'} . $rperl_source__file_name . q{'} . "\n");
+#    RPerl::diag('in rperl_source__criticize(), received $rperl_source__file_name = ' . q{'} . $rperl_source__file_name . q{'} . "\n");
 
     RPerl::verbose('PARSE PHASE 1:      Criticize Perl syntax...       ');
 
@@ -186,7 +184,7 @@ sub rperl_source__criticize {
 
     close $FILE_HANDLE or die 'ERROR ECOPAPC12, RPERL PARSER, PERL CRITIC VIOLATION: Cannot close file ' . q{'} . $rperl_source__file_name . q{'} . ' after reading, ' . $OS_ERROR . ', dying' . "\n";
 
-RPerl::diag('in rperl_source__criticize(), CHECKPOINT 00' . "\n");
+#RPerl::diag('in rperl_source__criticize(), CHECKPOINT 00' . "\n");
 #    RPerl::diag('in rperl_source__criticize(), CHECKPOINT 00' . q{'} . $file_line_last . q{'} . "\n");
 
     # DEV NOTE: the last line of all RPerl input files must either end with a newline character or be all-whitespace characters,
@@ -195,7 +193,7 @@ RPerl::diag('in rperl_source__criticize(), CHECKPOINT 00' . "\n");
         die 'ERROR ECOPAPC13, RPERL PARSER, PERL CRITIC VIOLATION: RPerl source code input file ' . q{'} . $rperl_source__file_name . q{'} . ' does not end with newline character or line of all-whitespace characters, dying' . "\n";
     }
 
-RPerl::diag('in rperl_source__criticize(), CHECKPOINT 01' . "\n");
+#RPerl::diag('in rperl_source__criticize(), CHECKPOINT 01' . "\n");
 
 # DEV NOTE: disable RequireTidyCode because perltidy may not be stable
 #    my object $rperl_source__critic = Perl::Critic->new( -severity => 'brutal' );
@@ -214,18 +212,18 @@ RPerl::diag('in rperl_source__criticize(), CHECKPOINT 01' . "\n");
         '-verbose'  => 11
     );
 #RPerl::diag('in rperl_source__criticize(), CHECKPOINT 02, have $rperl_source__critic = ' . Dumper($rperl_source__critic) . "\n");
-RPerl::diag('in rperl_source__criticize(), CHECKPOINT 02' . "\n");
+#RPerl::diag('in rperl_source__criticize(), CHECKPOINT 02' . "\n");
 
     my @rperl_source__critic_violations = $rperl_source__critic->critique($rperl_source__file_name);
 #RPerl::diag('in rperl_source__criticize(), CHECKPOINT 03, have @rperl_source__critic_violations = ' . Dumper(\@rperl_source__critic_violations) . "\n");
-RPerl::diag('in rperl_source__criticize(), CHECKPOINT 03' . "\n");
+#RPerl::diag('in rperl_source__criticize(), CHECKPOINT 03' . "\n");
 
     my integer $rperl_source__critic_num_violations = scalar @rperl_source__critic_violations;
-RPerl::diag('in rperl_source__criticize(), CHECKPOINT 04, have $rperl_source__critic_num_violations = ' . $rperl_source__critic_num_violations . "\n");
+#RPerl::diag('in rperl_source__criticize(), CHECKPOINT 04, have $rperl_source__critic_num_violations = ' . $rperl_source__critic_num_violations . "\n");
 
-RPerl::diag("in rperl_source__criticize(), have \$rperl_source__critic_num_violations = $rperl_source__critic_num_violations\n");
-    my string $rperl_source__critic_dumperified_violations = Dumper( \@rperl_source__critic_violations );
-RPerl::diag("in rperl_source__criticize(), have Dumper(\\\@rperl_source__critic_violations) =\n" . $rperl_source__critic_dumperified_violations . "\n");
+#RPerl::diag("in rperl_source__criticize(), have \$rperl_source__critic_num_violations = $rperl_source__critic_num_violations\n");
+#    my string $rperl_source__critic_dumperified_violations = Dumper( \@rperl_source__critic_violations );
+#RPerl::diag("in rperl_source__criticize(), have Dumper(\\\@rperl_source__critic_violations) =\n" . $rperl_source__critic_dumperified_violations . "\n");
 
 # NEED ADD ERROR CHECKING: ECOPAPC00 FILE DOES NOT EXIST, ECOPAPC01 FILE IS EMPTY; or would that be redundant with ECOPAPL0x error checking when added above?
 
@@ -254,7 +252,7 @@ RPerl::diag("in rperl_source__criticize(), have Dumper(\\\@rperl_source__critic_
         RPerl::verbose(' done.' . "\n");
     }
 
-    RPerl::diag('in rperl_source__criticize(), about to return void...' . "\n");
+#    RPerl::diag('in rperl_source__criticize(), about to return void...' . "\n");
 }
 
 # Die On RPerl Grammar Error

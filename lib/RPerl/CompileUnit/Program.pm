@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Program;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.008_000;
+our $VERSION = 0.009_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit);
@@ -24,8 +24,8 @@ sub ast_to_rperl__generate {
     my string_hashref $rperl_source_group = { PMC => q{} };
     my string_hashref $rperl_source_subgroup;
 
-#    RPerl::diag( 'in Program->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-#    RPerl::diag('in Program->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
+#RPerl::diag( 'in Program->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#RPerl::diag('in Program->ast_to_rperl__generate(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 
     # all programs begin in the 'main::' Perl namespace, which is equivalent to an empty C++ namespace
     $modes->{_symbol_table}->{_namespace} = q{};
@@ -42,9 +42,7 @@ sub ast_to_rperl__generate {
     }
 
     if ( ($self_class) ne 'Program_18' ) {
-        die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ($self_class) . ' found where Program_18 expected, dying' )
-            . "\n";
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ($self_class) . ' found where Program_18 expected, dying' ) . "\n";
     }
 
     # Program -> SHEBANG Critic? USE_RPERL Header Critic* Include* Constant* Subroutine* Operation+
@@ -183,8 +181,8 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my string_hashref $cpp_source_subgroup;
     my integer $cpp_source_group_CPP_line_count = 0;
 
-#    RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n");
+#RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n");
 
     # all programs begin in the 'main::' Perl namespace, which is equivalent to an empty C++ namespace
     $modes->{_symbol_table}->{_namespace} = q{};
@@ -201,9 +199,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     }
 
     if ( ($self_class) ne 'Program_18' ) {
-        die RPerl::Parser::rperl_rule__replace(
-            'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ($self_class) . ' found where Program_18 expected, dying' )
-            . "\n";
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASRP000, CODE GENERATOR, ABSTRACT SYNTAX TO RPERL: Grammar rule ' . ($self_class) . ' found where Program_18 expected, dying' ) . "\n";
     }
 
     # Program -> SHEBANG Critic? USE_RPERL Header Critic* Include* Constant* Subroutine* Operation+
@@ -226,8 +222,8 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     my object $subroutine_star = $self->{children}->[7];
     my object $operation_plus  = $self->{children}->[8];
 
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $include_star = ' . "\n" . RPerl::Parser::rperl_ast__dump($include_star) . "\n");
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_star = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_star) . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $include_star = ' . "\n" . RPerl::Parser::rperl_ast__dump($include_star) . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine_star = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine_star) . "\n");
 
     # NEED ANSWER: should we modify the user-provided shebang as done here, or simply replace it with a hard-coded one pointing to /usr/bin?   //!/usr/bin/rperl
     substr $shebang, 0, 2, '//!';
@@ -243,14 +239,14 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     $cpp_source_group->{CPP} .= '#include <rperlstandalone.h>' . "\n";
 
     # DEV NOTE: must have $pl_file_path for support checking below; GMP, GSL, MongoDB 
-#    RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n" );
+#RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n" );
     my string $pl_file_path = $modes->{_input_file_name};
 
-    RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $pl_file_path = ' . $pl_file_path . "\n" );
+#RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $pl_file_path = ' . $pl_file_path . "\n" );
     $pl_file_path = RPerl::Compiler::post_processor__INC_paths_delete($pl_file_path, 1, 0);  # $leading_slash_delete = 1, $leading_lib_delete = 0
     $pl_file_path = RPerl::Compiler::post_processor__absolute_path_delete($pl_file_path);
     $pl_file_path = RPerl::Compiler::post_processor__current_directory_path_delete($pl_file_path);
-    RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have possibly-trimmed $pl_file_path = ' . $pl_file_path . "\n" );
+#RPerl::diag( 'in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have possibly-trimmed $pl_file_path = ' . $pl_file_path . "\n" );
 
 
 
@@ -263,7 +259,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     # START HERE: convert rperl*.h to RPerl/Support/*.h and RPerl/Support/*StandAlone.h, as in RPerl/Support/MongoDB.h
 
 
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
     if ( ( exists $modes->{_enable_sse} ) and ( defined $modes->{_enable_sse} ) ) {
         foreach my string $enabled_file_name ( keys %{ $modes->{_enable_sse} } ) {
             if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_sse}->{$enabled_file_name} ) ) {
@@ -272,7 +268,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         }
     }
 
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
     if ( ( exists $modes->{_enable_gmp} ) and ( defined $modes->{_enable_gmp} ) ) {
         foreach my string $enabled_file_name ( keys %{ $modes->{_enable_gmp} } ) {
             if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_gmp}->{$enabled_file_name} ) ) {
@@ -281,7 +277,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         }
     }
 
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");
     if ( ( exists $modes->{_enable_gsl} ) and ( defined $modes->{_enable_gsl} ) ) {
         foreach my string $enabled_file_name ( keys %{ $modes->{_enable_gsl} } ) {
             if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_gsl}->{$enabled_file_name} ) ) {
@@ -290,11 +286,11 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         }
     }
 
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_mongodb} = ' . Dumper($modes->{_enable_mongodb}) . "\n");
     if ( ( exists $modes->{_enable_mongodb} ) and ( defined $modes->{_enable_mongodb} ) ) {
         foreach my string $enabled_file_name ( keys %{ $modes->{_enable_mongodb} } ) {
             if ( ( $enabled_file_name =~ /$pl_file_path$/xms ) and ( $modes->{_enable_mongodb}->{$enabled_file_name} ) ) {
-#                RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_mongodb}->{' . $enabled_file_name . '} = TRUE' . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_enable_mongodb}->{' . $enabled_file_name . '} = TRUE' . "\n");
                 $cpp_source_group->{CPP} .= '#include <RPerl/Support/MongoDBStandAlone.h>' . "\n";  # DEV NOTE, CORRELATION #rp039: programs never have header files, append to CPP instead of H
             }
         }
@@ -327,18 +323,18 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         }
     }
     foreach my object $include ( @{ $include_star->{children} } ) { ## no critic qw(ProhibitPostfixControls)  # SYSTEM SPECIAL 6: PERL CRITIC FILED ISSUE #639, not postfix foreach or if
-#        RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $include = ' . "\n" . RPerl::Parser::rperl_ast__dump($include) . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $include = ' . "\n" . RPerl::Parser::rperl_ast__dump($include) . "\n");
         $cpp_source_subgroup = $include->ast_to_cpp__generate__CPPOPS_CPPTYPES('main', $modes);
 
         # DEV NOTE, CORRELATION #rp039: programs never have header files, due to the following reasons:
         # 1.  all Perl subroutines (C++ functions) are declared before the C++ main() function is executed, which serves the dual purpose of defining the C++ functions as well, so no C++ function prototypes are necessary, which would normall be in the header file
         # 2.  programs never contain class definitions, so again there is no class declaration or definition code which needs to go into a header file
-#        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+#RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
         if (defined $cpp_source_subgroup->{H}) {
             $cpp_source_group->{CPP} .= $cpp_source_subgroup->{H};
         }
     }
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_group = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_group) . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_group = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_group) . "\n");
 
     # DEV NOTE, CORRELATION #rp039: programs never have header files
 #    $cpp_source_group->{CPP} .= '#include "__NEED_HEADER_PATH"' . "\n";  # DEV NOTE, CORRELATION #rp033: defer setting header include path until files are saved in Compiler
@@ -365,7 +361,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         @{ $subroutine_star->{children} }
         )
     {
-#        RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine) . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subroutine = ' . "\n" . RPerl::Parser::rperl_ast__dump($subroutine) . "\n");
 
         $cpp_source_subgroup = $subroutine->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
@@ -394,7 +390,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         )
     {
         $cpp_source_subgroup = $operation->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
-#        RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_subgroup = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_subgroup) . "\n");
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
     }
 
@@ -414,8 +410,8 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
     $cpp_source_group_CPP_line_count = ($cpp_source_group->{CPP} =~ tr/\n//) + 1;  # add 1 to count last line which does not have newline
     my integer $operations_line_number = $operation_plus->{children}->[0]->{line_number};
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_group_CPP_line_count = ' . $cpp_source_group_CPP_line_count . "\n");
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $operations_line_number = ' . $operations_line_number . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $cpp_source_group_CPP_line_count = ' . $cpp_source_group_CPP_line_count . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $operations_line_number = ' . $operations_line_number . "\n");
 
     if ( $modes->{label} eq 'ON' ) { 
         my integer $newline_count = (($operations_line_number - $cpp_source_group_CPP_line_count) - (2 + $num_loop_iterators));
@@ -440,8 +436,8 @@ Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.
 #endif
 EOF
 
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), bottom of subroutine, have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
-#    RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), about to return $cpp_source_group = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_group) . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), bottom of subroutine, have $modes->{_symbol_table} = ' . "\n" . Dumper($modes->{_symbol_table}) . "\n");
+#RPerl::diag('in Program->ast_to_cpp__generate__CPPOPS_CPPTYPES(), about to return $cpp_source_group = ' . "\n" . RPerl::Parser::rperl_ast__dump($cpp_source_group) . "\n");
     return $cpp_source_group;
 }
 
