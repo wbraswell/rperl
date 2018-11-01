@@ -9,8 +9,8 @@ use RPerl;
 # DEV NOTE, CORRELATION #rp016: CPAN's underscore-is-beta (NOT RPerl's underscore-is-comma) numbering scheme utilized here, to preserve trailing zeros
 our $VERSION = '4.001000';
 
-#our $VERSION = 20180808;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
-#our $VERSION = 2018.220;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
+#our $VERSION = 20181031;    # NON-RELEASE VERSION NUMBER, OFFICIAL LONGDATE
+#our $VERSION = 2018.304;    # NON-RELEASE VERSION NUMBER, OFFICIAL STARDATE
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -43,8 +43,8 @@ sub accept_and_verify_input_files {
     #    RPerl::diag( 'in rperl::accept_and_verify_input_files(), received $input_file_names_unlabeled = ' . Dumper($input_file_names_unlabeled) . "\n" );
 
     RPerl::diag("\n\n");    # move output away from initial Inline compiler output
-    RPerl::diag( 'in rperl, have $RPerl::DEBUG   = ' . $RPerl::DEBUG   . ', $ENV{RPERL_DEBUG}   = ' . $ENV{RPERL_DEBUG}   . "\n" );
-    RPerl::diag( 'in rperl, have $RPerl::VERBOSE = ' . $RPerl::VERBOSE . ', $ENV{RPERL_VERBOSE} = ' . $ENV{RPERL_VERBOSE} . "\n" );
+    RPerl::diag( 'in rperl, have $RPerl::DEBUG   = ' . $RPerl::DEBUG   . ', $ENV{RPERL_DEBUG}   = ' . ($ENV{RPERL_DEBUG} || '<NOT SET>') . "\n" );
+    RPerl::diag( 'in rperl, have $RPerl::VERBOSE = ' . $RPerl::VERBOSE . ', $ENV{RPERL_VERBOSE} = ' . ($ENV{RPERL_VERBOSE} || '<NOT SET>') . "\n" );
 
     # accept unlabeled input file name(s) if no labeled values specified
     if ( ( scalar @{$input_file_names_unlabeled} ) > 0 ) {
