@@ -1,0 +1,52 @@
+//!/usr/bin/env rperl
+
+
+
+
+
+
+
+
+// [[[ HEADER ]]]
+#include <rperlstandalone.h>
+#ifndef __CPP__INCLUDED__RPerl__Test__Properties__class_20_good_00_cpp
+#define __CPP__INCLUDED__RPerl__Test__Properties__class_20_good_00_cpp 0.000_010
+# ifdef __CPP__TYPES
+
+
+// [[[ INCLUDES ]]]
+#include "RPerl/Test/Properties/Class_20_Good.cpp"
+int main() {
+    // [[[ OPERATIONS HEADER ]]]
+
+// [[[ OPERATIONS ]]]
+    RPerl__Test__Properties__Class_20_Good_ptr test_object(new RPerl__Test__Properties__Class_20_Good);
+    test_object->set_test_property({ {"a", 2}, {"b", 4}, {"c", 6}, {"d", 8} });
+    print string_arrayref_to_string(test_object->get_test_property_keys()) << endl;
+    print integer_hashref_to_string(test_object->get_test_property()) << endl;
+    integer_hashref retval = test_object->test_method(23);
+    print integer_hashref_to_string(retval) << endl;
+    print test_object->get_test_property_entry_value("c") << endl;
+    test_object->set_test_property_entry_value((const string) "c", 23);
+    print integer_hashref_to_string(test_object->get_test_property()) << endl;
+
+
+
+
+
+
+
+
+
+
+
+
+    // [[[ OPERATIONS FOOTER ]]]
+    return 0;
+}
+
+// [[[ FOOTER ]]]
+# elif defined __PERL__TYPES
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+# endif
+#endif

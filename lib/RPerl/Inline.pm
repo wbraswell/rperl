@@ -2,21 +2,21 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.017_000;
+our $VERSION = 0.019_000;
 
-#use RPerl;  # ERROR: Too late to run INIT block at ...
+#use RPerl;         # ERROR: Too late to run INIT block at ...
 #use Config;
+use English;        # for $OLD_PERL_VERSION and $OSNAME
 use RPerl::Config;  # for $RPerl::DEBUG
 use Alien::GMP;     # prerequisite for Math::BigInt::GMP
 #use Alien::GSL;     # prerequisite for Math::GSL
 use Alien::PCRE2;   # for regex support
 use Alien::JPCRE2;  # for regex support
-use File::Spec;  # for splitpath() and catpath()
+use File::Spec;     # for splitpath() and catpath()
 use IPC::Cmd qw(can_run);
 use IPC::Run3 qw(run3);
 
 # DEV NOTE: all 'our' vars below utilized from Compiler.pm and/or generated *.pmc files
-
 
 
 
@@ -108,7 +108,13 @@ our $jpcre2_include_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{include});
 my $is_msvc_compiler = ($Config::Config{cc} =~ /cl/);
 
 our $CCFLAGSEX = $is_msvc_compiler ? '-DNO_XSLOCKS'
-    : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-reserved-user-defined-literal -Wno-literal-suffix';
+    : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-literal-suffix -Wall -Wextra';
+
+# DEV NOTE: Perl v5.18 and older on Macintosh OS X requires -Wno-reserved-user-defined-literal to avoid error:
+# "invalid suffix on literal; C++11 requires a space between literal and identifier"
+if (($OLD_PERL_VERSION <= 5.018000) and ($OSNAME eq 'darwin')) {
+    $CCFLAGSEX .= ' -Wno-reserved-user-defined-literal';
+}
 
 # DEV NOTE, POSSIBLE ALTERNATIVE STRATEGY:  '-L' . $Config{archlibexp} . '/CORE'
 # for support of dynamic linking to libperl.so

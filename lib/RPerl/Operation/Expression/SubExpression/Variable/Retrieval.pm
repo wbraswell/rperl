@@ -3,7 +3,7 @@ package RPerl::Operation::Expression::SubExpression::Variable::Retrieval;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.006_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Expression::SubExpression);
@@ -193,11 +193,13 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                     die 'NEED TEST & IMPLEMENT!!!';
                 }
                 else {                                                                 # hashrefs of scalars
-                    $cpp_source_group->{CPP} .= '[' . $word . ']';
+                    # bare word keys must be wrapped in double-quotes
+                    $cpp_source_group->{CPP} .= '["' . $word . '"]';
                 }
             }
             else {                                                                     # hashref of user-defined data types (objects)
-                $cpp_source_group->{CPP} .= '[' . $word . ']';
+                # bare word keys must be wrapped in double-quotes
+                $cpp_source_group->{CPP} .= '["' . $word . '"]';
             }
         }
         elsif ( exists $rperlnamespaces_generated::RPERL->{ $base_type . '::' } ) {    # scalar

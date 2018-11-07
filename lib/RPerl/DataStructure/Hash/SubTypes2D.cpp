@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp 0.010_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Hash__SubTypes2D_cpp 0.011_000
 
 #include <RPerl/DataStructure/Hash/SubTypes2D.h>  // -> ??? (relies on <unordered_map> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
@@ -9,7 +9,7 @@ using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 // [[[ TYPE-CHECKING ]]]
 // [[[ TYPE-CHECKING ]]]
 
-void integer_arrayref_hashref_CHECK(SV* possible_integer_arrayref_hashref, const char* variable_name, const char* subroutine_name) {
+void integer_arrayref_hashref_CHECK(SV* possible_integer_arrayref_hashref) {
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_CHECK(), top of subroutine\n");
 
     // DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() macro, but with integer-specific error codes
@@ -145,7 +145,7 @@ void integer_arrayref_hashref_CHECKTRACE(SV* possible_integer_arrayref_hashref, 
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_hashref_CHECKTRACE(), bottom of subroutine\n");
 }
 
-void number_arrayref_hashref_CHECK(SV* possible_number_arrayref_hashref, const char* variable_name, const char* subroutine_name) {
+void number_arrayref_hashref_CHECK(SV* possible_number_arrayref_hashref) {
 //    fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_hashref_CHECK(), top of subroutine\n");
 
     // DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() macro, but with number-specific error codes
@@ -282,7 +282,7 @@ void number_arrayref_hashref_CHECKTRACE(SV* possible_number_arrayref_hashref, co
 //    fprintf(stderr, "in CPPOPS_CPPTYPES number_arrayref_hashref_CHECKTRACE(), bottom of subroutine\n");
 }
 
-void string_arrayref_hashref_CHECK(SV* possible_string_arrayref_hashref, const char* variable_name, const char* subroutine_name) {
+void string_arrayref_hashref_CHECK(SV* possible_string_arrayref_hashref) {
 //    fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_hashref_CHECK(), top of subroutine\n");
 
     // DEV NOTE: the following two if() statements are functionally equivalent to the hashref_CHECK() macro, but with string-specific error codes

@@ -750,11 +750,12 @@ sub create_symtab_entries_and_accessors_mutators {
                     if (    ( $property_type =~ /_arrayref$/ )
                         and ( not eval( 'defined &' . $package_name . '::get_' . $property_name . '_element' ) ) )
                     {
+                        # HARD-CODED EXAMPLE
+                        # sub get_foo_size { { my integer::method $RETURN_TYPE }; ( my Foo::Bar $self ) = @ARG; return (scalar @{$self->{foo}}); }
+                        # sub get_foo_element { { my Foo::Quux::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i ) = @ARG; return $self->{foo}->[$i]; }
+                        # sub set_foo_element { { my void::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @ARG; $self->{foo}->[$i] = $foo_element; }
+
 #                        RPerl::diag('in Class::INIT() block, about to create accessors/mutators, have arrayref type' . "\n");
-        # hard-coded examples
-        # sub get_foo_size { { my integer::method $RETURN_TYPE }; ( my Foo::Bar $self ) = @ARG; return (scalar @{$self->{foo}}); }
-        # sub get_foo_element { { my Foo::Quux::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i ) = @ARG; return $self->{foo}->[$i]; }
-        # sub set_foo_element { { my void::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @ARG; $self->{foo}->[$i] = $foo_element; }
                         # DEV NOTE, CORRELATION #rp054: auto-generation of OO property accessors/mutators checks the auto-generated RPerl type list for base data types to determine if the entire data structure can be returned by setting ($return_whole = 1)
                         my $property_element_type = substr $property_type, 0, ( ( length $property_type ) - 9 );    # strip trailing '_arrayref'
                         if ( exists $rperlnamespaces_generated::RPERL->{ $property_element_type . '::' } ) {
@@ -774,7 +775,7 @@ sub create_symtab_entries_and_accessors_mutators {
                                 . $package_name
                                 . ' $self ) = @ARG; return (scalar @{$self->{'
                                 . $property_name
-                                . '}}); };';
+                                . '}}); };' . "\n";
                             $eval_string
                                 .= '*{'
                                 . $package_name
@@ -785,7 +786,7 @@ sub create_symtab_entries_and_accessors_mutators {
                                 . $package_name
                                 . ' $self, my integer $i ) = @ARG; return $self->{'
                                 . $property_name
-                                . '}->[$i]; };';
+                                . '}->[$i]; };' . "\n";
                             $eval_string
                                 .= '*{'
                                 . $package_name
@@ -811,13 +812,14 @@ sub create_symtab_entries_and_accessors_mutators {
 
                     # hash value accessor/mutator
                     elsif ( ( $property_type =~ /_hashref$/ )
-                        and ( not eval( 'defined &' . $package_name . '::get_' . $property_name . '_element' ) ) )
+                        and ( not eval( 'defined &' . $package_name . '::get_' . $property_name . '_entry_value' ) ) )
                     {
+                        # HARD-CODED EXAMPLE
+                        # sub get_foo_keys { { my string_arrayref::method $RETURN_TYPE }; ( my Foo::Bar $self ) = @ARG; return [sort keys %{$self->{foo}}]; }
+                        # sub get_foo_entry_value { { my Foo::Quux::method $RETURN_TYPE }; ( my Foo::Bar $self, my string $key ) = @ARG; return $self->{foo}->{$key}; }
+                        # sub set_foo_entry_value { { my void::method $RETURN_TYPE }; ( my Foo::Bar $self, my string $key, my Foo::Quux $foo_entry_value ) = @ARG; $self->{foo}->{$key} = $foo_entry_value; }
+
 #                        RPerl::diag('in Class::INIT() block, about to create accessors/mutators, have hashref type' . "\n");
-            # hard-coded example
-            # sub get_foo_keys { { my string_arrayref::method $RETURN_TYPE }; ( my Foo::Bar $self ) = @ARG; return [sort keys %{$self->{foo}}]; }
-            # sub get_foo_element { { my Foo::Quux::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i ) = @ARG; return $self->{foo}->{$i}; }
-            # sub set_foo_element { { my void::method $RETURN_TYPE }; ( my Foo::Bar $self, my integer $i, my Foo::Quux $foo_element ) = @ARG; $self->{foo}->{$i} = $foo_element; }
                         # DEV NOTE, CORRELATION #rp054: auto-generation of OO property accessors/mutators checks the auto-generated RPerl type list for base data types to determine if the entire data structure can be returned by setting ($return_whole = 1)
                         my $property_value_type = substr $property_type, 0, ( ( length $property_type ) - 8 );    # strip trailing '_hashref'
 #                        RPerl::diag('in Class::INIT() block, about to create accessors/mutators, have $property_value_type = ' . q{'} . $property_value_type . q{'} . "\n");
@@ -840,34 +842,34 @@ sub create_symtab_entries_and_accessors_mutators {
                                 . $package_name
                                 . ' $self ) = @ARG; return [sort keys %{$self->{'
                                 . $property_name
-                                . '}}]; };';
+                                . '}}]; };' . "\n";
                             $eval_string
                                 .= '*{'
                                 . $package_name
                                 . '::get_'
                                 . $property_name
-                                . '_element'
+                                . '_entry_value'
                                 . '} = sub { ( my '
                                 . $package_name
-                                . ' $self, my integer $i ) = @ARG; return $self->{'
+                                . ' $self, my string $key ) = @ARG; return $self->{'
                                 . $property_name
-                                . '}->{$i}; };';
+                                . '}->{$key}; };' . "\n";
                             $eval_string
                                 .= '*{'
                                 . $package_name
                                 . '::set_'
                                 . $property_name
-                                . '_element'
+                                . '_entry_value'
                                 . '} = sub { ( my '
                                 . $package_name
-                                . ' $self, my integer $i, my '
+                                . ' $self, my string $key, my '
                                 . $property_value_type . ' $'
                                 . $property_name
-                                . '_element ) = @ARG; $self->{'
+                                . '_entry_value ) = @ARG; $self->{'
                                 . $property_name
-                                . '}->{$i} = $'
+                                . '}->{$key} = $'
                                 . $property_name
-                                . '_element; };';
+                                . '_entry_value; };';
 
 #                            RPerl::diag( 'in Class::INIT() block, have user-defined object hash value accessor $eval_string = ' . "\n" . $eval_string . "\n" );
                             eval($eval_string) or croak($EVAL_ERROR);

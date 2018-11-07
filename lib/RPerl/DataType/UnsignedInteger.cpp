@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_cpp
-#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_cpp 0.007_000
+#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_cpp 0.008_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/UnsignedInteger.h>  // -> NULL (relies on native C type)
@@ -86,8 +86,10 @@ SV* unsigned_integer_to_integer(SV* input_unsigned_integer) {
 # elif defined __CPP__TYPES
 
 integer unsigned_integer_to_integer(unsigned_integer input_unsigned_integer) {
-    if (input_unsigned_integer < 0) { return (integer) (input_unsigned_integer * -1); }
-    else { return (integer) input_unsigned_integer; }
+    // DEV NOTE: do not perform comparison with unsigned_integer, "comparison of unsigned expression < 0 is always false"
+//    if (input_unsigned_integer < 0) { return (integer) (input_unsigned_integer * -1); }
+//    else { return (integer) input_unsigned_integer; }
+    return (integer) input_unsigned_integer;
 }
 
 # endif
@@ -179,7 +181,8 @@ string unsigned_integer_to_string_CPPTYPES(unsigned_integer input_unsigned_integ
 //    fprintf(stderr, "in CPPOPS_CPPTYPES unsigned_integer_to_string_CPPTYPES(), have output_string = %s\n", output_string.c_str());
 
     boolean is_negative = 0;
-    if (input_unsigned_integer < 0) { is_negative = 1; }
+    // DEV NOTE: do not perform comparison with unsigned_integer, "comparison of unsigned expression < 0 is always false"
+//    if (input_unsigned_integer < 0) { is_negative = 1; }
 
     std::reverse(output_string.begin(), output_string.end());
 

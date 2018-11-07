@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.018_000;
+our $VERSION = 0.019_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -1047,12 +1047,6 @@ EOL
         delete $modes->{_inside_class_properties};
     }
 
-
-
-
-
-
-
     # generate accessors & mutators for inherited $properties
     foreach my $parent_package_name (@{$parent_package_names}) {
 #        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $parent_package_name = ' . $parent_package_name . "\n" );
@@ -1072,13 +1066,6 @@ EOL
             }
         }
     }
-
-
-
-
-
-
-
 
     if ( exists $properties_declarations->[0] ) {
         if ( $modes->{label} eq 'ON' ) {
@@ -1312,6 +1299,7 @@ sub ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES {
     my string_hashref $cpp_source_group = { H => q{}, _H_initializers => q{} };
 
 #    RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), received $modes = ' . "\n" . Dumper($modes) . "\n" );
+#    RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), received $property_key = ' . q{'} . $property_key . q{'} . "\n" );
 
     # grab RPerl-style type out of symtab, instead of accepting-as-arg now-C++-style type from $property_type in caller
 #    my string $property_type = $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type};
@@ -1321,80 +1309,152 @@ sub ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES {
 
     # array element accessors/mutators
     if ( $property_type =~ /_arrayref$/ ) {
+#        RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), have property type arrayref, $property_element_or_value_type = ' . q{'} . $property_element_or_value_type . q{'} . "\n" );
         $property_element_or_value_type = substr $property_type, 0, ( ( length $property_type ) - 9 );    # strip trailing '_arrayref'
         if ( exists $rperlnamespaces_generated::RPERL->{ $property_element_or_value_type . '::' } ) {
+#            RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), system-defined type arrayref' . "\n" );
 
             # arrayref of RPerl data types
             if ( ( $property_element_or_value_type eq 'object' ) or ( $property_element_or_value_type eq 'hashref' ) ) {
-
                 # arrayref of objects or hashrefs (same as Perl object which is a blessed hashref), set address, return void
+#                RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), system-defined type arrayref of objects or hashrefs' . "\n" );
                 $is_direct = 0;
             }
             elsif ( $property_element_or_value_type eq 'arrayref' ) {
-
                 # arrayref of arrayrefs, set address, return void
+#                RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), system-defined type arrayref of arrayrefs' . "\n" );
                 $is_direct = 0;
             }
             else {
                 # arrayref of scalars, return value
+#                RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), system-defined type arrayref of scalars' . "\n" );
                 $is_direct = 1;
             }
         }
         else {
             # arrayref of user-defined data types (objects), set address, return void
+#            RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), user-defined type arrayref' . "\n" );
             $is_direct = 0;
         }
     }
 
     # hash value accessors/mutators
     elsif ( $property_type =~ /_hashref$/ ) {
+#        RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), have property type hashref' . "\n" );
         $property_element_or_value_type = substr $property_type, 0, ( ( length $property_type ) - 8 );    # strip trailing '_hashref'
+#        RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), have property type hashref, $property_element_or_value_type = ' . q{'} . $property_element_or_value_type . q{'} . "\n" );
         if ( exists $rperlnamespaces_generated::RPERL->{ $property_element_or_value_type . '::' } ) {
 
             # hashref of RPerl data types
             if ( ( $property_element_or_value_type eq 'object' ) or ( $property_element_or_value_type eq 'hashref' ) ) {
-
                 # hashref of objects or hashrefs (same as Perl object which is a blessed hashref), set address, return void
+#                RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), system-defined type hashref of objects or hashrefs' . "\n" );
                 $is_direct = 0;
             }
             elsif ( $property_element_or_value_type eq 'arrayref' ) {
-
                 # hashref of arrayrefs, set address, return void
+#                RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), system-defined type hashref of arrayrefs' . "\n" );
                 $is_direct = 0;
             }
             else {
                 # hashref of scalars, return value
+#                RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), system-defined type hashref of scalars' . "\n" );
                 $is_direct = 1;
             }
         }
         else {
             # hashref of user-defined data types (objects), set address, return void
+#            RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), user-defined type hashref' . "\n" );
             $is_direct = 0;
         }
     }
-
     # scalar accessors/mutators, return value
     else {
+#        RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), have property type scalar' . "\n" );
         $is_direct = 1;
     }
+
+    # always generate arrayref's get_FOO_size() and hashref's get_FOO_keys(), for both $is_direct and not
+    if ( $property_type =~ /_arrayref$/ ) {
+        $cpp_source_group->{H} = 'integer get_' . $property_key . '_size() { return this->' . $property_key . '.size(); }  // call from Perl or C++' . "\n";
+    }
+    elsif ( $property_type =~ /_hashref$/ ) {
+        $cpp_source_group->{H}
+            = 'string_arrayref get_'
+            . $property_key
+            . '_keys() { string_arrayref keys; keys.reserve(this->'
+            . $property_key
+            . '.size()); for(auto hash_entry : this->'
+            . $property_key
+            . ') { keys.push_back(hash_entry.first); } return keys; }  // call from Perl or C++' . "\n";
+    }
+
+    my string $property_element_or_value_type_cpp_nopointerify = RPerl::Generator::type_convert_perl_to_cpp( $property_element_or_value_type, 0 ); # $pointerify_classes = 0
 
     if ($is_direct) {
         my string $inherited_comment = q{};
         if ($is_inherited) { $inherited_comment = '  // inherited from ' . $namespace_from; }
 
         # disabled unnecessary usage of 'this->'
-#        $cpp_source_group->{H} = $property_type . ' get_' . $property_key . '() { return this->' . $property_key . '; }' . "\n";
+#        $cpp_source_group->{H} .= $property_type . ' get_' . $property_key . '() { return this->' . $property_key . '; }' . "\n";
 #        $cpp_source_group->{H} .= 'void set_' . $property_key . '(' . $property_type . q{ } . $property_key . '_new) { this->' . $property_key . ' = ' . $property_key . '_new; }';
 
-        $cpp_source_group->{H} = q{    } . $property_type . ' get_' . $property_key . '() { return ' . $property_key . '; }' . $inherited_comment . "\n";
+        $cpp_source_group->{H} .= q{    } . $property_type . ' get_' . $property_key . '() { return ' . $property_key . '; }' . $inherited_comment . "\n";
         $cpp_source_group->{H} .= q{    } . 'void set_' . $property_key . '(' . $property_type . q{ } . $property_key . '_new) { ' . $property_key . ' = ' . $property_key . '_new; }' . $inherited_comment;
 
         # HARD-CODED EXAMPLE
         # NEW_MyClass02LowRPerlNew& bar(integer bar_init) { wrapped_object->bar = bar_init; return *this; }
         $cpp_source_group->{_H_initializers} .= q{    } . 'NEW_' . $package_name_underscores . '& ' . $property_key . '(' . $property_type . q{ } . $property_key . 
                                                 '_init) { wrapped_object->' . $property_key . ' = ' . $property_key . '_init; return *this; }' . $inherited_comment;
+
+        if ( $property_type =~ /_arrayref$/ ) {
+            # HARD-CODED EXAMPLE
+            # number get_FOO_element(integer i) { return FOO[i]; }
+            # void set_FOO_element(integer i, number value_new) { FOO[i] = value_new; }
+
+            $cpp_source_group->{H}
+                .= $property_element_or_value_type_cpp_nopointerify
+                . ' get_'
+                . $property_key
+                . '_element(integer i) { return '
+                . $property_key
+                . '[i]; }  // call from C++' . "\n";
+            $cpp_source_group->{H}
+                .= 'void set_'
+                . $property_key
+                . '_element(integer i, '
+                . $property_element_or_value_type_cpp_nopointerify
+                . ' value_new ) { '
+                . $property_key
+                . '[i] = value_new; }  // call from C++' . "\n";
+        }
+        elsif ( $property_type =~ /_hashref$/ ) {
+            # HARD-CODED EXAMPLE
+            # number get_FOO_entry_value(string key) { return FOO[key]; }
+            # void set_FOO_entry_value(string key, number value_new) { FOO[key] = value_new; }
+ 
+            $cpp_source_group->{H}
+                .= $property_element_or_value_type_cpp_nopointerify
+                . ' get_'
+                . $property_key
+                . '_entry_value(string key) { return '
+                . $property_key
+                . '[key]; }  // call from C++' . "\n";
+            $cpp_source_group->{H}
+                .= 'void set_'
+                . $property_key
+                . '_entry_value(string key, '
+                . $property_element_or_value_type_cpp_nopointerify
+                . ' value_new ) { '
+                . $property_key
+                . '[key] = value_new; }  // call from C++' . "\n";
+        }
+
+
     }
+
     # NEED UPDATE: remove unnecessary usage of 'this->' below
+
     else {
 # HARD-CODED EXAMPLE:
 #integer get_bodies_size() { return this->bodies.size(); }  // call from Perl or C++
@@ -1410,65 +1470,97 @@ sub ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES {
 #    return $bodies_element;
 #}
 
-        my string $property_element_or_value_type_cpp_nopointerify = RPerl::Generator::type_convert_perl_to_cpp( $property_element_or_value_type, 0 ); # $pointerify_classes = 0
-
         # C++ code
         if ( $property_type =~ /_arrayref$/ ) {
-            $cpp_source_group->{H} = 'integer get_' . $property_key . '_size() { return this->' . $property_key . '.size(); }  // call from Perl or C++' . "\n";
+            $cpp_source_group->{H}
+                .= $property_element_or_value_type_cpp_nopointerify
+                . '_ptr& get_'
+                . $property_key
+                . '_element(integer i) { return this->'
+                . $property_key
+                . '[i]; }  // call from C++' . "\n";
+            $cpp_source_group->{H}
+                .= 'void get_'
+                . $property_key
+                . '_element_indirect(integer i, '
+                . $property_element_or_value_type_cpp_nopointerify
+                . '_rawptr '
+                . $property_key
+                . '_element_rawptr) { *'
+                . $property_key
+                . '_element_rawptr = *(this->'
+                . $property_key
+                . '[i].get_raw()); }  // call from Perl shim' . "\n";
+            $cpp_source_group->{H}
+                .= 'void set_'
+                . $property_key
+                . '_element(integer i, '
+                . $property_element_or_value_type_cpp_nopointerify
+                . '_ptr& '
+                . $property_key
+                . '_element_ptr) { *(this->'
+                . $property_key
+                . '[i].get_raw()) = *('
+                . $property_key
+                . '_element_ptr.get_raw()); }  // call from C++' . "\n";
+            $cpp_source_group->{H}
+                .= 'void set_'
+                . $property_key
+                . '_element(integer i, '
+                . $property_element_or_value_type_cpp_nopointerify
+                . '_rawptr '
+                . $property_key
+                . '_element_rawptr) { *(this->'
+                . $property_key
+                . '[i].get_raw()) = *'
+                . $property_key
+                . '_element_rawptr; }  // call from Perl';
         }
         elsif ( $property_type =~ /_hashref$/ ) {
             $cpp_source_group->{H}
-                = 'string_arrayref get_'
+                .= $property_element_or_value_type_cpp_nopointerify
+                . '_ptr& get_'
                 . $property_key
-                . '_keys() { string_arrayref keys; keys.reserve(this->'
+                . '_entry_value(string key) { return this->'
                 . $property_key
-                . '.size()); for(auto hash_entry : this->'
+                . '[key]; }  // call from C++' . "\n";
+            $cpp_source_group->{H}
+                .= 'void get_'
                 . $property_key
-                . ') { keys.push_back(hash_entry.first); } }  // call from Perl or C++' . "\n";
+                . '_entry_value_indirect(string key, '
+                . $property_element_or_value_type_cpp_nopointerify
+                . '_rawptr '
+                . $property_key
+                . '_entry_value_rawptr) { *'
+                . $property_key
+                . '_entry_value_rawptr = *(this->'
+                . $property_key
+                . '[key].get_raw()); }  // call from Perl shim' . "\n";
+            $cpp_source_group->{H}
+                .= 'void set_'
+                . $property_key
+                . '_entry_value(string key, '
+                . $property_element_or_value_type_cpp_nopointerify
+                . '_ptr& '
+                . $property_key
+                . '_entry_value_ptr) { *(this->'
+                . $property_key
+                . '[key].get_raw()) = *('
+                . $property_key
+                . '_entry_value_ptr.get_raw()); }  // call from C++' . "\n";
+            $cpp_source_group->{H}
+                .= 'void set_'
+                . $property_key
+                . '_entry_value(string key, '
+                . $property_element_or_value_type_cpp_nopointerify
+                . '_rawptr '
+                . $property_key
+                . '_entry_value_rawptr) { *(this->'
+                . $property_key
+                . '[key].get_raw()) = *'
+                . $property_key
+                . '_entry_value_rawptr; }  // call from Perl';
         }
-        $cpp_source_group->{H}
-            .= $property_element_or_value_type_cpp_nopointerify
-            . '_ptr& get_'
-            . $property_key
-            . '_element(integer i) { return this->'
-            . $property_key
-            . '[i]; }  // call from C++' . "\n";
-        $cpp_source_group->{H}
-            .= 'void get_'
-            . $property_key
-            . '_element_indirect(integer i, '
-            . $property_element_or_value_type_cpp_nopointerify
-            . '_rawptr '
-            . $property_key
-            . '_element_rawptr) { *'
-            . $property_key
-            . '_element_rawptr = *(this->'
-            . $property_key
-            . '[i].get_raw()); }  // call from Perl shim' . "\n";
-        $cpp_source_group->{H}
-            .= 'void set_'
-            . $property_key
-            . '_element(integer i, '
-            . $property_element_or_value_type_cpp_nopointerify
-            . '_ptr& '
-            . $property_key
-            . '_element_ptr) { *(this->'
-            . $property_key
-            . '[i].get_raw()) = *('
-            . $property_key
-            . '_element_ptr.get_raw()); }  // call from C++' . "\n";
-        $cpp_source_group->{H}
-            .= 'void set_'
-            . $property_key
-            . '_element(integer i, '
-            . $property_element_or_value_type_cpp_nopointerify
-            . '_rawptr '
-            . $property_key
-            . '_element_rawptr) { *(this->'
-            . $property_key
-            . '[i].get_raw()) = *'
-            . $property_key
-            . '_element_rawptr; }  // call from Perl';
 
 #        RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), have $modes->{subcompile} = ' . "\n" . $modes->{subcompile} . "\n" );
 
@@ -1483,23 +1575,39 @@ sub ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES {
             # undef &PhysicsPerl::Astro::System::get_bodies_element;
             # *PhysicsPerl::Astro::System::get_bodies_element = sub { ... };
 
-#            $cpp_source_group->{PMC} = 'sub get_' . $property_key . '_element {' . "\n";  # DEV NOTE: use alternate syntax to avoid "subroutine redefined" errors
-            $cpp_source_group->{PMC} = 'undef &' . $modes->{_symbol_table}->{_namespace} . 'get_' . $property_key . '_element;' . "\n";
-            $cpp_source_group->{PMC} .= '*' . $modes->{_symbol_table}->{_namespace} . 'get_' . $property_key . '_element = sub {' . "\n";
-            $cpp_source_group->{PMC}
-                .= '( my '
-                . ( substr $modes->{_symbol_table}->{_namespace}, 0, ( ( length $modes->{_symbol_table}->{_namespace} ) - 2 ) )
-                . ' $self, my integer $i ) = @ARG;' . "\n";
-            $cpp_source_group->{PMC}
-                .= 'my ' . $property_element_or_value_type . ' $' . $property_key . '_element = ' . $property_element_or_value_type . '->new();' . "\n";
-            $cpp_source_group->{PMC} .= '$self->get_' . $property_key . '_element_indirect($i, $' . $property_key . '_element);' . "\n";
-            $cpp_source_group->{PMC} .= 'return $' . $property_key . '_element;' . "\n";
-#            $cpp_source_group->{PMC} .= '}';  # DEV NOTE: use alternate syntax to avoid "subroutine redefined" errors
-            $cpp_source_group->{PMC} .= '};';
+            if ( $property_type =~ /_arrayref$/ ) {
+#                $cpp_source_group->{PMC} = 'sub get_' . $property_key . '_element {' . "\n";  # DEV NOTE: use alternate syntax to avoid "subroutine redefined" errors
+                $cpp_source_group->{PMC} = 'undef &' . $modes->{_symbol_table}->{_namespace} . 'get_' . $property_key . '_element;' . "\n";
+                $cpp_source_group->{PMC} .= '*' . $modes->{_symbol_table}->{_namespace} . 'get_' . $property_key . '_element = sub {' . "\n";
+                $cpp_source_group->{PMC}
+                    .= '( my '
+                    . ( substr $modes->{_symbol_table}->{_namespace}, 0, ( ( length $modes->{_symbol_table}->{_namespace} ) - 2 ) )
+                    . ' $self, my integer $i ) = @ARG;' . "\n";
+                $cpp_source_group->{PMC}
+                    .= 'my ' . $property_element_or_value_type . ' $' . $property_key . '_element = ' . $property_element_or_value_type . '->new();' . "\n";
+                $cpp_source_group->{PMC} .= '$self->get_' . $property_key . '_element_indirect($i, $' . $property_key . '_element);' . "\n";
+                $cpp_source_group->{PMC} .= 'return $' . $property_key . '_element;' . "\n";
+#                $cpp_source_group->{PMC} .= '}';  # DEV NOTE: use alternate syntax to avoid "subroutine redefined" errors
+                $cpp_source_group->{PMC} .= '};';
+            }
+            elsif ( $property_type =~ /_hashref$/ ) {
+#                $cpp_source_group->{PMC} = 'sub get_' . $property_key . '_entry_value {' . "\n";  # DEV NOTE: use alternate syntax to avoid "subroutine redefined" errors
+                $cpp_source_group->{PMC} = 'undef &' . $modes->{_symbol_table}->{_namespace} . 'get_' . $property_key . '_entry_value;' . "\n";
+                $cpp_source_group->{PMC} .= '*' . $modes->{_symbol_table}->{_namespace} . 'get_' . $property_key . '_entry_value = sub {' . "\n";
+                $cpp_source_group->{PMC}
+                    .= '( my '
+                    . ( substr $modes->{_symbol_table}->{_namespace}, 0, ( ( length $modes->{_symbol_table}->{_namespace} ) - 2 ) )
+                    . ' $self, my string $key ) = @ARG;' . "\n";
+                $cpp_source_group->{PMC}
+                    .= 'my ' . $property_element_or_value_type . ' $' . $property_key . '_entry_value = ' . $property_element_or_value_type . '->new();' . "\n";
+                $cpp_source_group->{PMC} .= '$self->get_' . $property_key . '_entry_value_indirect($key, $' . $property_key . '_entry_value);' . "\n";
+                $cpp_source_group->{PMC} .= 'return $' . $property_key . '_entry_value;' . "\n";
+#                $cpp_source_group->{PMC} .= '}';  # DEV NOTE: use alternate syntax to avoid "subroutine redefined" errors
+                $cpp_source_group->{PMC} .= '};';
+            }
         }
 #        else { RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), NO PMC SHIMS' . "\n" ); }
-
-#            RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), have $cpp_source_group->{H} = ' . "\n" . $cpp_source_group->{H} . "\n" );
+#        RPerl::diag( 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), have $cpp_source_group->{H} = ' . "\n" . $cpp_source_group->{H} . "\n" );
     }
     return $cpp_source_group;
 }

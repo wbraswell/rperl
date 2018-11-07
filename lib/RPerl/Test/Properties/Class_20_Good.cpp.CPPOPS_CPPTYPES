@@ -1,0 +1,40 @@
+// [[[ HEADER ]]]
+using std::cout;  using std::cerr;  using std::endl;
+
+#ifndef __CPP__INCLUDED__RPerl__Test__Properties__Class_20_Good_cpp
+#define __CPP__INCLUDED__RPerl__Test__Properties__Class_20_Good_cpp 0.001_000
+
+// [[[ INCLUDES ]]]
+#include "RPerl/Test/Properties/Class_20_Good.h"
+
+# ifdef __PERL__TYPES
+
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+
+# elif defined __CPP__TYPES
+
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+// [[[<<< BEGIN CPP TYPES >>>]]]
+
+// [[[ SUBROUTINES & OO METHODS ]]]
+
+integer_hashref RPerl__Test__Properties__Class_20_Good::test_method(integer input_integer) {
+    integer_hashref test_property_shortcut = this->get_test_property();
+    test_property_shortcut["a"] *= input_integer;
+    return this->test_property;
+}
+
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+// [[[<<< END CPP TYPES >>>]]]
+
+# else
+
+Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___CPP__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+
+# endif
+
+#endif
+
+// end of class
