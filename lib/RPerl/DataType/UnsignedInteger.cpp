@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_cpp
-#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_cpp 0.008_000
+#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_cpp 0.009_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/UnsignedInteger.h>  // -> NULL (relies on native C type)
@@ -120,11 +120,13 @@ number unsigned_integer_to_number(unsigned_integer input_unsigned_integer) {
 
 # ifdef __PERL__TYPES
 
+/* DISABLE UNTIL COMPLETE, TO AVOID C++ COMPILER WARNINGS
 SV* unsigned_integer_to_character(SV* input_unsigned_integer) {
 //  unsigned_integer_CHECK(input_unsigned_integer);
     unsigned_integer_CHECKTRACE(input_unsigned_integer, "input_unsigned_integer", "unsigned_integer_to_character()");
     // NEED ADD CODE
 }
+*/
 
 # elif defined __CPP__TYPES
 

@@ -108,8 +108,8 @@ our $jpcre2_include_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{include});
 my $is_msvc_compiler = ($Config::Config{cc} =~ /cl/);
 
 our $CCFLAGSEX = $is_msvc_compiler ? '-DNO_XSLOCKS'
-    : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-literal-suffix';
-#    : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-literal-suffix -Wall -Wextra';
+#    : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-literal-suffix';
+    : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-literal-suffix -Wall -Wextra';
 
 # DEV NOTE: Perl v5.18 and older on Macintosh OS X requires -Wno-reserved-user-defined-literal to avoid error:
 # "invalid suffix on literal; C++11 requires a space between literal and identifier"

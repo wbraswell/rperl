@@ -3,7 +3,7 @@ using std::cerr;
 using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp
-#define __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp 0.004_000
+#define __CPP__INCLUDED__RPerl__DataType__GMPInteger_cpp 0.005_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
@@ -362,7 +362,7 @@ string gmp_integer_to_string_CPPTYPES(gmp_integer_retval input_gmp_integer_retva
 //    fprintf(stderr, "in CPPOPS_CPPTYPES gmp_integer_to_string_CPPTYPES(), have output_string = %s\n", output_string.c_str());
 
     boolean is_negative = 0;
-    if (input_gmp_integer_retval.gmp_integer_unretval() < 0) { is_negative = 1; }
+    if (gmp_get_signed_integer(input_gmp_integer_retval.gmp_integer_unretval()) < 0) { is_negative = 1; }
 
     std::reverse(output_string.begin(), output_string.end());
 

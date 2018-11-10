@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Character_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Character_cpp 0.002_000
+#define __CPP__INCLUDED__RPerl__DataType__Character_cpp 0.003_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
@@ -45,11 +45,13 @@ void XS_pack_character(SV* output_sv, character input_character) {
 
 # ifdef __PERL__TYPES
 
+/* DISABLE UNTIL COMPLETE, TO AVOID C++ COMPILER WARNINGS
 SV* character_to_boolean(SV* input_character) {
 //  character_CHECK(input_character);
     character_CHECKTRACE(input_character, "input_character", "character_to_boolean()");
     // NEED ADD CODE
 }
+*/
 
 # elif defined __CPP__TYPES
 
@@ -66,11 +68,13 @@ boolean character_to_boolean(character input_character) {
 
 # ifdef __PERL__TYPES
 
+/* DISABLE UNTIL COMPLETE, TO AVOID C++ COMPILER WARNINGS
 SV* character_to_unsigned_integer(SV* input_character) {
 //  character_CHECK(input_character);
     character_CHECKTRACE(input_character, "input_character", "character_to_unsigned_integer()");
     // NEED ADD CODE
 }
+*/
 
 # elif defined __CPP__TYPES
 
@@ -86,11 +90,13 @@ unsigned_integer character_to_unsigned_integer(character input_character) {
 
 # ifdef __PERL__TYPES
 
+/* DISABLE UNTIL COMPLETE, TO AVOID C++ COMPILER WARNINGS
 SV* character_to_integer(SV* input_character) {
 //  character_CHECK(input_character);
     character_CHECKTRACE(input_character, "input_character", "character_to_integer()");
     // NEED ADD CODE
 }
+*/
 
 # elif defined __CPP__TYPES
 
@@ -106,11 +112,13 @@ integer character_to_integer(character input_character) {
 
 # ifdef __PERL__TYPES
 
+/* DISABLE UNTIL COMPLETE, TO AVOID C++ COMPILER WARNINGS
 SV* character_to_number(SV* input_character) {
 //  character_CHECK(input_character);
     character_CHECKTRACE(input_character, "input_character", "character_to_number()");
     // NEED ADD CODE
 }
+*/
 
 # elif defined __CPP__TYPES
 

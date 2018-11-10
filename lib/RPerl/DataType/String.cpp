@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_cpp
-#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.011_000
+#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.012_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/String.h>		// -> NULL (relies on native C type)
@@ -97,11 +97,13 @@ void XS_pack_string(SV* output_sv, string input_string) {
 
 # ifdef __PERL__TYPES
 
+/* DISABLE UNTIL COMPLETE, TO AVOID C++ COMPILER WARNINGS
 void string_substitute_global(SV* input_string, const string& find_string, const string& replace_string) {
 //  string_CHECK(input_string);
     string_CHECKTRACE(input_string, "input_string", "string_substitute_global()");
     // NEED ADD CODE
 }
+*/
 
 # elif defined __CPP__TYPES
 
@@ -213,11 +215,13 @@ number string_to_number(string input_string) {
 
 # ifdef __PERL__TYPES
 
+/* DISABLE UNTIL COMPLETE, TO AVOID C++ COMPILER WARNINGS
 SV* string_to_character(SV* input_string) {
 //  string_CHECK(input_string);
     string_CHECKTRACE(input_string, "input_string", "string_to_character()");
     // NEED ADD CODE
 }
+*/
 
 # elif defined __CPP__TYPES
 

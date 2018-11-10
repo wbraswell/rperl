@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.007_000
+#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.008_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/Integer.h>  // -> NULL (relies on native C type)
@@ -144,11 +144,13 @@ number integer_to_number(integer input_integer) { return (number) input_integer;
 
 # ifdef __PERL__TYPES
 
+/* DISABLE UNTIL COMPLETE, TO AVOID C++ COMPILER WARNINGS
 SV* integer_to_character(SV* input_integer) {
 //  integer_CHECK(input_integer);
     integer_CHECKTRACE(input_integer, "input_integer", "integer_to_character()");
     // NEED ADD CODE
 }
+*/
 
 # elif defined __CPP__TYPES
 
