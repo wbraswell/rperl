@@ -34,12 +34,21 @@ public:
     // [[[ OO METHODS ]]]
 
     // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
+    integer get_integer_data_size() { return this->integer_data.size(); }  // call from Perl or C++
     integer_arrayref get_integer_data() { return integer_data; }
     void set_integer_data(integer_arrayref integer_data_new) { integer_data = integer_data_new; }
+    integer get_integer_data_element(integer i) { return integer_data[i]; }  // call from C++
+    void set_integer_data_element(integer i, integer value_new) { integer_data[i] = value_new; }  // call from C++
+
+    integer get_number_data_size() { return this->number_data.size(); }  // call from Perl or C++
     number_arrayref get_number_data() { return number_data; }
     void set_number_data(number_arrayref number_data_new) { number_data = number_data_new; }
+    number get_number_data_element(integer i) { return number_data[i]; }  // call from C++
+    void set_number_data_element(integer i, number value_new) { number_data[i] = value_new; }  // call from C++
+
     string get_foo() { return foo; }  // inherited from RPerl::Algorithm::
     void set_foo(string foo_new) { foo = foo_new; }  // inherited from RPerl::Algorithm::
+
 
     // <<< CONSTRUCTOR & DESTRUCTOR >>>
     RPerl__Algorithm__Sort__Bubble() {}

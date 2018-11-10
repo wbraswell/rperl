@@ -873,6 +873,7 @@ EOL
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}
             = { isa => 'RPerl::DataStructure::Hash::Properties', type => $property_type };
 
+#        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), about to call RPerl::Generator::type_convert_perl_to_cpp() #0, have $property_type = ', q{'}, $property_type, q{'}, "\n" );
         $property_type = RPerl::Generator::type_convert_perl_to_cpp( $property_type, 1 );    # $pointerify_classes = 1
         $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type_cpp} = $property_type; # add converted C++ type to symtab entry
 
@@ -1008,6 +1009,7 @@ EOL
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}
                 = { isa => 'RPerl::DataStructure::Hash::Properties', type => $property_type };
 
+#            RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), about to call RPerl::Generator::type_convert_perl_to_cpp() #1, have $property_type = ', q{'}, $property_type, q{'}, "\n" );
             $property_type = RPerl::Generator::type_convert_perl_to_cpp( $property_type, 1 );    # $pointerify_classes = 1
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type_cpp} = $property_type; # add converted C++ type to symtab entry
 
@@ -1304,13 +1306,22 @@ sub ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES {
     # grab RPerl-style type out of symtab, instead of accepting-as-arg now-C++-style type from $property_type in caller
 #    my string $property_type = $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{_properties}->{$property_key}->{type};
     my string $property_type = $modes->{_symbol_table}->{ $namespace_from }->{_properties}->{$property_key}->{type};
-    my boolean $is_direct    = 0;
-    my $property_element_or_value_type;
+#    RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), have $property_type = ', q{'}, $property_type, q{'}, "\n" );
+
+    my boolean $is_direct = 0;
+
+    # only gets set and utilized for *_arrayref and *_hashref $property_type
+    my string $property_element_or_value_type = undef;
+    my string $property_element_or_value_type_cpp_nopointerify = undef;
 
     # array element accessors/mutators
     if ( $property_type =~ /_arrayref$/ ) {
 #        RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), have property type arrayref, $property_element_or_value_type = ' . q{'} . $property_element_or_value_type . q{'} . "\n" );
         $property_element_or_value_type = substr $property_type, 0, ( ( length $property_type ) - 9 );    # strip trailing '_arrayref'
+
+#        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), about to call RPerl::Generator::type_convert_perl_to_cpp() #2, have $property_element_or_value_type = ', q{'}, $property_element_or_value_type, q{'}, "\n" );
+        $property_element_or_value_type_cpp_nopointerify = RPerl::Generator::type_convert_perl_to_cpp( $property_element_or_value_type, 0 );  # $pointerify_classes = 0
+
         if ( exists $rperlnamespaces_generated::RPERL->{ $property_element_or_value_type . '::' } ) {
 #            RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), system-defined type arrayref' . "\n" );
 
@@ -1342,6 +1353,10 @@ sub ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES {
     elsif ( $property_type =~ /_hashref$/ ) {
 #        RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), have property type hashref' . "\n" );
         $property_element_or_value_type = substr $property_type, 0, ( ( length $property_type ) - 8 );    # strip trailing '_hashref'
+
+#        RPerl::diag( 'in Class::Generator->ast_to_cpp__generate__CPPOPS_CPPTYPES(), about to call RPerl::Generator::type_convert_perl_to_cpp() #2, have $property_element_or_value_type = ', q{'}, $property_element_or_value_type, q{'}, "\n" );
+        $property_element_or_value_type_cpp_nopointerify = RPerl::Generator::type_convert_perl_to_cpp( $property_element_or_value_type, 0 );  # $pointerify_classes = 0
+
 #        RPerl::diag( "\n" . 'in Class::Generator::ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES(), have property type hashref, $property_element_or_value_type = ' . q{'} . $property_element_or_value_type . q{'} . "\n" );
         if ( exists $rperlnamespaces_generated::RPERL->{ $property_element_or_value_type . '::' } ) {
 
@@ -1389,8 +1404,6 @@ sub ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES {
             . ') { keys.push_back(hash_entry.first); } return keys; }  // call from Perl or C++' . "\n";
     }
 
-    my string $property_element_or_value_type_cpp_nopointerify = RPerl::Generator::type_convert_perl_to_cpp( $property_element_or_value_type, 0 ); # $pointerify_classes = 0
-
     if ($is_direct) {
         my string $inherited_comment = q{};
         if ($is_inherited) { $inherited_comment = '  // inherited from ' . $namespace_from; }
@@ -1400,7 +1413,7 @@ sub ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES {
 #        $cpp_source_group->{H} .= 'void set_' . $property_key . '(' . $property_type . q{ } . $property_key . '_new) { this->' . $property_key . ' = ' . $property_key . '_new; }';
 
         $cpp_source_group->{H} .= q{    } . $property_type . ' get_' . $property_key . '() { return ' . $property_key . '; }' . $inherited_comment . "\n";
-        $cpp_source_group->{H} .= q{    } . 'void set_' . $property_key . '(' . $property_type . q{ } . $property_key . '_new) { ' . $property_key . ' = ' . $property_key . '_new; }' . $inherited_comment;
+        $cpp_source_group->{H} .= q{    } . 'void set_' . $property_key . '(' . $property_type . q{ } . $property_key . '_new) { ' . $property_key . ' = ' . $property_key . '_new; }' . $inherited_comment . "\n";
 
         # HARD-CODED EXAMPLE
         # NEW_MyClass02LowRPerlNew& bar(integer bar_init) { wrapped_object->bar = bar_init; return *this; }
@@ -1424,7 +1437,7 @@ sub ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES {
                 . $property_key
                 . '_element(integer i, '
                 . $property_element_or_value_type_cpp_nopointerify
-                . ' value_new ) { '
+                . ' value_new) { '
                 . $property_key
                 . '[i] = value_new; }  // call from C++' . "\n";
         }
@@ -1445,7 +1458,7 @@ sub ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES {
                 . $property_key
                 . '_entry_value(string key, '
                 . $property_element_or_value_type_cpp_nopointerify
-                . ' value_new ) { '
+                . ' value_new) { '
                 . $property_key
                 . '[key] = value_new; }  // call from C++' . "\n";
         }

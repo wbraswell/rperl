@@ -54,13 +54,13 @@ our hashref_hashref $filename_suffixes_supported = {
 sub find_parents {
     { my string_arrayref $RETURN_TYPE };
     ( my string $file_name, my boolean $find_grandparents_recurse, my string_hashref $modes ) = @ARG;
-    RPerl::diag( 'in Compiler::find_parents(), received $file_name = ' . $file_name . "\n" );
+#    RPerl::diag( 'in Compiler::find_parents(), received $file_name = ' . $file_name . "\n" );
 
     # trim unnecessary (and possibly problematic) @INC & absolute & current-directory paths from input file name
     $file_name = post_processor__INC_paths_delete($file_name, 1, 0);  # $leading_slash_delete = 1, $leading_lib_delete = 0
     $file_name = post_processor__absolute_path_delete($file_name);
     $file_name = post_processor__current_directory_path_delete($file_name);
-    RPerl::diag( 'in Compiler::find_parents(), have possibly-trimmed $file_name = ' . $file_name . "\n" );
+#    RPerl::diag( 'in Compiler::find_parents(), have possibly-trimmed $file_name = ' . $file_name . "\n" );
 
     my string_arrayref $parents = [];
 
@@ -153,7 +153,7 @@ sub find_parents {
                     ' in @INC, included from file ', q{'}, $file_name, q{'}, ', dying', "\n";
             }
 
-            RPerl::diag( 'in Compiler::find_parents(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
+#            RPerl::diag( 'in Compiler::find_parents(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
 
             # trim unnecessary (and possibly problematic) @INC & absolute & current-directory paths from input file name
             my string $package_file_name_included_relative = $package_file_name_included;
@@ -161,7 +161,7 @@ sub find_parents {
             $package_file_name_included_relative = post_processor__absolute_path_delete( $package_file_name_included_relative );
             $package_file_name_included_relative = post_processor__current_directory_path_delete( $package_file_name_included_relative );
 
-            RPerl::diag( 'in Compiler::find_parents(), have possibly-trimmed $package_file_name_included_relative = ' . $package_file_name_included_relative . "\n" );
+#            RPerl::diag( 'in Compiler::find_parents(), have possibly-trimmed $package_file_name_included_relative = ' . $package_file_name_included_relative . "\n" );
 
             push @{$parents}, $package_file_name_included_relative;
     
