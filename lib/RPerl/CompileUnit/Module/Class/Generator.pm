@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.019_000;
+our $VERSION = 0.020_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -1399,7 +1399,7 @@ sub ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES {
             . $property_key
             . '_keys() { string_arrayref keys; keys.reserve(this->'
             . $property_key
-            . '.size()); for(auto hash_entry : this->'
+            . '.size()); for(auto const& hash_entry : this->'
             . $property_key
             . ') { keys.push_back(hash_entry.first); } return keys; }  // call from Perl or C++' . "\n";
     }
@@ -1471,7 +1471,7 @@ sub ast_to_cpp__generate_accessors_mutators_initializers__CPPOPS_CPPTYPES {
     else {
 # HARD-CODED EXAMPLE:
 #integer get_bodies_size() { return this->bodies.size(); }  // call from Perl or C++
-#string_arrayref get_bodies_keys() { string_arrayref keys; keys.reserve(this->keys.size()); for(auto hash_entry : this->bodies) { keys.push_back(hash_entry.first); } }  // call from Perl or C++
+#string_arrayref get_bodies_keys() { string_arrayref keys; keys.reserve(this->keys.size()); for(auto const& hash_entry : this->bodies) { keys.push_back(hash_entry.first); } return keys; }  // call from Perl or C++
 #PhysicsPerl__Astro__Body_ptr& get_bodies_element(integer i) { return this->bodies[i]; }  // call from C++
 #void get_bodies_element_indirect(integer i, PhysicsPerl__Astro__Body_rawptr bodies_element_rawptr) { *bodies_element_rawptr = *(this->bodies[i].get_raw()); }  // call from Perl shim
 #void set_bodies_element(integer i, PhysicsPerl__Astro__Body_ptr& bodies_element_ptr) { *(this->bodies[i].get_raw()) = *(bodies_element_ptr.get_raw()); }  // call from C++
