@@ -27,7 +27,7 @@ public:
     // [[[ OO METHODS ]]]
 
     // <<< OO PROPERTIES, ACCESSORS & MUTATORS >>>
-    string_arrayref get_test_property_keys() { string_arrayref keys; keys.reserve(this->test_property.size()); for(auto hash_entry : this->test_property) { keys.push_back(hash_entry.first); } return keys; }  // call from Perl or C++
+    string_arrayref get_test_property_keys() { string_arrayref keys; keys.reserve(this->test_property.size()); for(auto const& hash_entry : this->test_property) { keys.push_back(hash_entry.first); } return keys; }  // call from Perl or C++
     integer_hashref get_test_property() { return test_property; }
     void set_test_property(integer_hashref test_property_new) { test_property = test_property_new; }
     integer get_test_property_entry_value(string key) { return test_property[key]; }  // call from C++
