@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.013_000;
+our $VERSION = 0.017_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -428,11 +428,13 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         if (   ( $opnamed_or_subexp_or_input_scolon_type eq 'OpNamedScolonOrSubExpIn_260' )
             or ( $opnamed_or_subexp_or_input_scolon_type eq 'OpNamedScolonOrSubExpIn_261' ) )
         {
+#            RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $opnamed_or_subexp_or_input_scolon_type = OpNamedScolonOrSubExpIn_260 or OpNamedScolonOrSubExpIn_261' . "\n" );
             # OpNamedScolonOrSubExpIn -> OP01_NAMED_SCOLON
             # OpNamedScolonOrSubExpIn -> OP10_NAMED_UNARY_SCOLON
             $cpp_source_group->{CPP} .= $opnamed_or_subexp_or_input_scolon->{children}->[0];
         }
         elsif ( $opnamed_or_subexp_or_input_scolon_type eq 'OpNamedScolonOrSubExpIn_262' ) {    # OpNamedScolonOrSubExpIn -> SubExpressionOrInput ';'
+#            RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $opnamed_or_subexp_or_input_scolon_type = OpNamedScolonOrSubExpIn_262' . "\n" );
             if (    ( exists $opnamed_or_subexp_or_input_scolon->{children} )
                 and ( exists $opnamed_or_subexp_or_input_scolon->{children}->[0] )
                 and ( blessed( $opnamed_or_subexp_or_input_scolon->{children}->[0] ) )
@@ -446,11 +448,12 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                     ->isa('RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall') )
                 )
             {
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall' . "\n" );
                 my object $constructor_call = $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0];
                 my object $properties_init_optional  = $constructor_call->{children}->[2];
                 my string $constructor_type = $constructor_call->{children}->[0]->{children}->[0];
 
-#                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $constructor_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($constructor_type) . "\n" );
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $constructor_type = ' . "\n" . RPerl::Parser::rperl_ast__dump($constructor_type) . "\n" );
 
                 if ( $type ne $constructor_type ) {
                     die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP020, CODE GENERATOR, ABSTRACT SYNTAX TO C++, TYPE-CHECKING MISMATCH: ' . q{'}
@@ -463,6 +466,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
                 # DEV NOTE, CORRELATION #rp131: constructor call for MongoDB
                 if ( (substr $type, 0, 7) eq 'MongoDB' ) {
+#                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall, MongoDB' . "\n" );
                     if ((not exists $modes->{_enable_mongodb}) or (not defined $modes->{_enable_mongodb}) or (not $modes->{_enable_mongodb})) {
                         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP091a, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Found constructor call for package '
                             . q{'} . $type . q{'}
@@ -481,11 +485,13 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                 }
                 # constructor call with properties to initialize
                 elsif (exists $properties_init_optional->{children}->[0]) {
+#                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall, w/ properties' . "\n" );
                     $is_constructor_call_params = 1;
                     $pointerify_classes = 1;
                 }
                 # constructor call without properties to initialize
                 else {
+#                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have RPerl::Operation::Expression::SubroutineCall::MethodCall::ConstructorCall, w/out properties' . "\n" );
                     $is_constructor_call_normal = 1;
                     $pointerify_classes = 1;
                 }
@@ -502,6 +508,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                 and ( blessed( $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0] ) )
                 and ( $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0]->isa('RPerl::Operation::Expression::SubroutineCall') ) )
             {
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have RPerl::Operation::Expression::SubroutineCall' . "\n" );
                 my string $constructor_name
                     = $opnamed_or_subexp_or_input_scolon->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0]->{children}->[0];
                 if ( $constructor_name =~ m/::new$/xms ) {
@@ -553,11 +560,32 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             $type = RPerl::Generator::type_convert_perl_to_cpp( $type, $pointerify_classes );
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}->{type_cpp} = $type; # add converted C++ type to symtab entry
 
-            $cpp_source_group->{CPP} .= $type . q{ } . $symbol;
+            # detect std::unique_ptr constant reference semantics
+            # NEED ANSWER: does it matter if the RHS is a ConstructorCall?  we are currently ignoring the RHS completely for these semantics
+            # NEED UPGRADE: enable detection logic for non-trivial cases where $type may be in parentheses or otherwise buried deeper in $self?
+            # HARD-CODED EXAMPLE:
+            # my Bat::Bax $quux = $self->{foo}->{$bar};   # Perl
+            # Bat__Bax_ptr        quux = this->foo[bar];  # C++, BAD
+            # Bat__Bax_ptr const& quux = this->foo[bar];  # C++, GOOD
+
+#            RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} = ' . RPerl::Parser::rperl_ast__dump($modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}) . "\n" );
+
+            # check if LHS type is a user-defined class, if so then must take const& constant reference to std::unique_ptr because it is not a std::shared_ptr
+            # (see RPerl::Generator::type_convert_perl_to_cpp() for similar logic)
+            if (( not exists $rperlnamespaces_generated::RPERL->{ $type . '::' } ) and $pointerify_classes ) {
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have std::unique_ptr constant reference semantics semantics, generating LHS type and const& and symbol' . "\n" );
+                $cpp_source_group->{CPP} .= $type . q{ const& } . $symbol;
+            }
+            else {
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have normal semantics, generating LHS type and symbol' . "\n" );
+                $cpp_source_group->{CPP} .= $type . q{ } . $symbol;
+            }
 
             # OO constructor, no params: omit '=' assignment operator and wrap in parentheses
             if ($is_constructor_call_normal) {
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $is_constructor_call_normal' . "\n" );
                 if ( not exists $rperlnamespaces_generated::RPERL->{ $type . '::' } ) {    # not scalar or SSE number pair
+#                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $is_constructor_call_normal, wrapping in parentheses' . "\n" );
                     $cpp_source_group->{CPP} .= '(';
                     $cpp_source_subgroup = $opnamed_or_subexp_or_input_scolon->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);   # subexpression
                     RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
@@ -567,6 +595,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             }
             # OO constructor, yes params: include '=' assignment operator, no additional parentheses
             elsif ($is_constructor_call_params) {
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $is_constructor_call_params' . "\n" );
                 if ( not exists $rperlnamespaces_generated::RPERL->{ $type . '::' } ) {    # not scalar or SSE number pair
                     $cpp_source_group->{CPP} .= q{ } . $assign . q{ };
                     $cpp_source_subgroup = $opnamed_or_subexp_or_input_scolon->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);   # subexpression
@@ -587,6 +616,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             # my integer_arrayref_arrayref $my_2d_set = integer_arrayref_arrayref::new( $y_count,                 $x_count );  # Perl, row-major form (RMF)
             #    integer_arrayref_arrayref  my_2d_set(                                   y_count, integer_arrayref(x_count));  # C++, row-major form (RMF)
             elsif ($is_constructor_call_special) {
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $is_constructor_call_special' . "\n" );
                 if ( exists $rperlnamespaces_generated::RPERL->{ $type . '::' } ) {
                     if (($type eq 'integer_arrayref_arrayref') or ($type eq 'number_arrayref_arrayref') or ($type eq 'string_arrayref_arrayref')) {
                         my string $base_type = (split /_/, $type)[0];
@@ -615,7 +645,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                 }
             }
             else {
-
+#                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have non-constructor' . "\n" );
                 my $subexpression = $opnamed_or_subexp_or_input_scolon->{children}->[0];
 #                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $subexpression = ' . "\n" . RPerl::Parser::rperl_ast__dump($subexpression) . "\n" );
 #                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have (ref $subexpression) = ' . (ref $subexpression) . "\n" );
@@ -657,6 +687,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                     1;  # do nothing
                 }
                 else {
+#                    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have non-constructor, generating' . "\n" );
                     $cpp_source_group->{CPP} .= q{ } . $assign . q{ };
                     $cpp_source_subgroup = $opnamed_or_subexp_or_input_scolon->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);       # subexpression
                     RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
@@ -793,6 +824,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             ' must not include a double-underscore, forbidden by C++ specification as a reserved identifier, dying' . "\n";
     }
 
+#    RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), returning $cpp_source_group = ', "\n", RPerl::Parser::rperl_ast__dump($cpp_source_group), "\n" );
     return $cpp_source_group;
 }
 

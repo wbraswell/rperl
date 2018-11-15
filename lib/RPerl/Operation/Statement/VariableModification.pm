@@ -117,7 +117,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
         # detect object constructor move semantics
         # NEED ANSWER: do we also need to add detection of object constructor move semantics to VariableDeclaration?
-        # HARDCODED EXAMPLE:
+        # HARD-CODED EXAMPLE:
         # $self->{foo}->{$bar} = Bat::Bax->new();  # Perl
         # this->foo[bar] = new Bat__Bax;  # C++, BAD
         # Bat__Bax_ptr this__foo__bar{new Bat__Bax()};  this->foo[bar] = std::move(this__foo__bar);  # C++, GOOD

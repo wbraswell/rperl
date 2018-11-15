@@ -121,7 +121,7 @@ sub arrayref_convert_index_max_to_size {
 
 # convert RPerl types to C++ types
 sub type_convert_perl_to_cpp {
-    { my string $RETURN_TYPE };
+    { my string $RETURN_TYPE };  # big brother looks over little brother LOL
     ( my string $return_type, my boolean $pointerify_classes ) = @ARG;
 
     #    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $return_type = ' . $return_type . "\n");
@@ -144,7 +144,7 @@ sub type_convert_perl_to_cpp {
             }
         }
     }
-    return $return_type;                                                          # much meta
+    return $return_type;                                                          # much meta LOL
 }
 
 # search for dummy source code

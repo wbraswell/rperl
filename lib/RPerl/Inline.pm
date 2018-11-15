@@ -2,7 +2,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.020_000;
+our $VERSION = 0.021_000;
 
 #use RPerl;         # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -107,9 +107,15 @@ our $jpcre2_include_dir = File::Spec->catpath(q{}, $jpcre2_dir, q{include});
 # DEV NOTE: add -Wno-unused-variable to suppress warnings in GCC v4.9
 my $is_msvc_compiler = ($Config::Config{cc} =~ /cl/);
 
+# NEED FIX INLINE: must disable -Wdelete-non-virtual-dtor warnings until Inline::C (or is it Inline::CPP?) destructor issue can be solved
+# eval_XXXX_XXXX.c: In function ‘void XS_RPerl__CompileUnit__Module__Class__CPP_DESTROY(CV*)’:
+# eval_XXXX_XXXX.c:yyyy:z: warning: deleting object of polymorphic class type ‘RPerl__CompileUnit__Module__Class__CPP’ which has non-virtual destructor might cause undefined behaviour [-Wdelete-non-virtual-dtor]
+#   delete THIS;
+#          ^
+
 our $CCFLAGSEX = $is_msvc_compiler ? '-DNO_XSLOCKS'
 #    : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-literal-suffix';
-    : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-literal-suffix -Wall -Wextra';
+    : '-Wno-unused-variable -DNO_XSLOCKS -Wno-deprecated -std=c++11 -Wno-literal-suffix -Wall -Wextra -Wno-delete-non-virtual-dtor';
 
 # DEV NOTE: Perl v5.18 and older on Macintosh OS X requires -Wno-reserved-user-defined-literal to avoid error:
 # "invalid suffix on literal; C++11 requires a space between literal and identifier"
