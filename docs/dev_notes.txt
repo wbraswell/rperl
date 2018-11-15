@@ -275,7 +275,7 @@ $ rm -Rf ~/perl5; curl -L cpanmin.us | perl - -l $HOME/perl5 App::cpanminus loca
 $ script/development/rperl_locallib_uninstall.sh
 	# optionally keep ~/perl5 from previous local::lib single-user installation
 	# selectively delete only RPerl files from ~/perl5
-$ rm RPerl*.tar.gz; rm MANIFEST META.json META.yml MYMETA.json MYMETA.yml
+$ rm RPerl*.tar.gz; rm MANIFEST META.json META.yml MYMETA.json MYMETA.yml  # DO NOT SKIP THIS STEP, REQUIRED TO CLEAR PREVIOUS VERSION IN META.*
 $ perl Makefile.PL; make distclean
 $ perl Makefile.PL; make realclean
 $ inline_clean.sh

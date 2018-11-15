@@ -5,7 +5,7 @@
    ],
    "description" : "RPerl is the optimizing compiler for the Perl 5 programming language.  RPerl compiles slow low-magic Perl 5 code into fast binary code, which can optionally be mixed back into high-magic Perl apps.",
    "dynamic_config" : 0,
-   "generated_by" : "ExtUtils::MakeMaker version 7.0401, CPAN::Meta::Converter version 2.150005",
+   "generated_by" : "ExtUtils::MakeMaker version 7.34, CPAN::Meta::Converter version 2.150005",
    "keywords" : [
       "rperl",
       "perl5",
@@ -116,6 +116,6 @@
       },
       "x_IRC" : "irc://irc.perl.org/#perl11"
    },
-   "version" : "4.001000",
+   "version" : "4.002000",
    "x_serialization_backend" : "JSON::PP version 2.27300"
 }

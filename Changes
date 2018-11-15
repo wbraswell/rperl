@@ -1,5 +1,16 @@
 Revision history for Perl compiler RPerl.
 
+4.002000 2018-11-15
+
+    - Path Handling, Remove Current Dir & @INC Dirs, Avoids Hard-Coding System-Specific Dirs In #include Statements
+    - Perlbrew Compatibility, Add 'env' To All Shebangs
+    - Object Constructor Move Semantics in VariableModification
+    - User-Defined Class std::unique_ptr Constant Reference Semantics In VariableDeclaration
+    - Bug Fix, Front-End Command, Check If Env Vars Are Set, Fixes 'Use of uninitialized value in concatenation'
+    - Bug Fix, Accessors & Mutators For Hash Entries
+    - Bug Fix, Wrap Bare Word Hash Keys In Double Quotes
+    - Bug Fix, '-Wall -Wextra' Warnings
+
 4.001000 2018-08-08
 
     - Pre-Compiled Packages, Makefile.PL, Duplicate CONFIGURE_REQUIRES Items In PREREQ_PM For Proper Dependency Reporting
