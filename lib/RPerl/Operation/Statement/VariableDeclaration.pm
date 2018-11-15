@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.017_000;
+our $VERSION = 0.018_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -560,8 +560,15 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             $type = RPerl::Generator::type_convert_perl_to_cpp( $type, $pointerify_classes );
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}->{type_cpp} = $type; # add converted C++ type to symtab entry
 
+
+
+
+
+
+
+
+
             # detect user-defined class std::unique_ptr constant reference semantics
-            # NEED ANSWER: does it matter if the RHS is a ConstructorCall?  we are currently ignoring the RHS completely for these semantics
             # NEED UPGRADE: enable detection logic for non-trivial cases where $type may be in parentheses or otherwise buried deeper in $self?
             # HARD-CODED EXAMPLE:
             # my Bat::Bax $quux = $self->{foo}->{$bar};   # Perl
@@ -570,9 +577,17 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
 
 #            RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol} = ' . RPerl::Parser::rperl_ast__dump($modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}) . "\n" );
 
-            # check if LHS type is a user-defined class, if so then must take const& constant reference to std::unique_ptr because it is not a std::shared_ptr
-            # (see RPerl::Generator::type_convert_perl_to_cpp() for similar logic)
-            if (( not exists $rperlnamespaces_generated::RPERL->{ $type . '::' } ) and $pointerify_classes ) {
+            # check if LHS type is a user-defined class and RHS is not a ConstructorCall,
+            # if so then must take const& constant reference to std::unique_ptr because it is not a std::shared_ptr
+            # (see RPerl::Generator::type_convert_perl_to_cpp() for original logic to detect user-defined classes)
+            if (
+                ( not exists $rperlnamespaces_generated::RPERL->{ $type . '::' } ) and 
+                $pointerify_classes and
+                ( not $is_constructor_call_normal ) and
+                ( not $is_constructor_call_params ) and
+                ( not $is_constructor_call_mongodb ) and
+                ( not $is_constructor_call_special )
+            ) {
 #                RPerl::diag( 'in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have std::unique_ptr constant reference semantics semantics, generating LHS type and const& and symbol' . "\n" );
                 $cpp_source_group->{CPP} .= $type . q{ const& } . $symbol;
             }

@@ -1,4 +1,4 @@
-//!/usr/bin/rperl
+//!/usr/bin/env rperl
 
 
 
@@ -39,7 +39,7 @@ int main() {
     // [[[ OPERATIONS HEADER ]]]
 
 // [[[ OPERATIONS ]]]
-    RPerl__Test__OO__MyClass01Good_ptr my_object = (NEW_RPerl__Test__OO__MyClass01Good {}).bar(22).NEW();
+    RPerl__Test__OO__MyClass01Good_ptr my_object = (NEW_RPerl__Test__OO__MyClass01Good{}).bar(22).NEW();
     print "have $my_object->get_bar() = " << my_object->get_bar() << endl;
     my_object->double_bar_save();
     print "have $my_object->get_bar() = " << my_object->get_bar() << endl;
