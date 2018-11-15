@@ -560,7 +560,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             $type = RPerl::Generator::type_convert_perl_to_cpp( $type, $pointerify_classes );
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}->{type_cpp} = $type; # add converted C++ type to symtab entry
 
-            # detect std::unique_ptr constant reference semantics
+            # detect user-defined class std::unique_ptr constant reference semantics
             # NEED ANSWER: does it matter if the RHS is a ConstructorCall?  we are currently ignoring the RHS completely for these semantics
             # NEED UPGRADE: enable detection logic for non-trivial cases where $type may be in parentheses or otherwise buried deeper in $self?
             # HARD-CODED EXAMPLE:
