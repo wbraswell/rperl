@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.018_000;
+our $VERSION = 0.019_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -560,14 +560,6 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             $type = RPerl::Generator::type_convert_perl_to_cpp( $type, $pointerify_classes );
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}->{type_cpp} = $type; # add converted C++ type to symtab entry
 
-
-
-
-
-
-
-
-
             # detect user-defined class std::unique_ptr constant reference semantics
             # NEED UPGRADE: enable detection logic for non-trivial cases where $type may be in parentheses or otherwise buried deeper in $self?
             # HARD-CODED EXAMPLE:
@@ -583,6 +575,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             if (
                 ( not exists $rperlnamespaces_generated::RPERL->{ $type . '::' } ) and 
                 $pointerify_classes and
+                ((substr $type, -4) eq '_ptr') and  # do not enable these semantics for *_rawptr
                 ( not $is_constructor_call_normal ) and
                 ( not $is_constructor_call_params ) and
                 ( not $is_constructor_call_mongodb ) and
