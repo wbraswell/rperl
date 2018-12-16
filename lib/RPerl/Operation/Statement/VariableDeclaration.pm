@@ -5,6 +5,14 @@ use warnings;
 use RPerl::AfterSubclass;
 our $VERSION = 0.019_000;
 
+
+
+# START HERE: write tests for new semantics here and in VariableModification
+# START HERE: write tests for new semantics here and in VariableModification
+# START HERE: write tests for new semantics here and in VariableModification
+
+
+
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
 

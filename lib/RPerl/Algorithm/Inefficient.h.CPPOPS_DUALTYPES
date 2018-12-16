@@ -39,7 +39,7 @@ public:
     virtual SV* myclassname() { return newSVpv("RPerl::Algorithm::Inefficient", 0); }
 
     // <<< CONSTANTS, SHIMS >>>
-    const SV* USEFULNESS() { return RPerl__Algorithm__Inefficient__USEFULNESS; }
+    SV* USEFULNESS() { return RPerl__Algorithm__Inefficient__USEFULNESS; }
 
     // <<< USER-DEFINED METHODS >>>
     void inherited_Inefficient(SV* person);
@@ -101,7 +101,7 @@ public:
     virtual string myclassname() { return (const string) "RPerl::Algorithm::Inefficient"; }
 
     // <<< CONSTANTS, SHIMS >>>
-    const string USEFULNESS() { return RPerl__Algorithm__Inefficient__USEFULNESS; }
+    string USEFULNESS() { return RPerl__Algorithm__Inefficient__USEFULNESS; }
 
     // <<< USER-DEFINED METHODS >>>
     void inherited_Inefficient(string person);

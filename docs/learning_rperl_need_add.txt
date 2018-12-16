@@ -1,0 +1,69 @@
+[ GCC Warnings & Errors ]
+
+===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+# GCC WARNING
+comparison between signed and unsigned integer expressions
+
+# EXPLANATION
+Perl `scalar` operation compiles to C++ `size()` function w/ return type unsigned_integer
+index variable `i` must also be unsigned_integer to avoid warning
+
+# PERL INPUT, INCORRECT
+for my integer $i ( 0 .. ( ( scalar @{ $self->{bodies} } ) - 1 ) ) { ... }
+
+# C++ OUTPUT, INCORRECT
+integer i;
+for ( i = 0; i < (this->bodies.size()); i++ ) { ... }
+
+# PERL INPUT, CORRECT
+for my unsigned_integer $i ( 0 .. ( ( scalar @{ $self->{bodies} } ) - 1 ) ) { ... }
+
+# C++ OUTPUT, CORRECT
+unsigned_integer i;
+for ( i = 0; i < (this->bodies.size()); i++ ) { ... }
+
+===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+# GCC WARNING
+
+# EXPLANATION
+
+# PERL INPUT, INCORRECT
+
+# C++ OUTPUT, INCORRECT
+
+# PERL INPUT, CORRECT
+
+# C++ OUTPUT, CORRECT
+
+===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+# GCC WARNING
+
+# EXPLANATION
+
+# PERL INPUT, INCORRECT
+
+# C++ OUTPUT, INCORRECT
+
+# PERL INPUT, CORRECT
+
+# C++ OUTPUT, CORRECT
+
+===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+
+# GCC WARNING
+
+# EXPLANATION
+
+# PERL INPUT, INCORRECT
+
+# C++ OUTPUT, INCORRECT
+
+# PERL INPUT, CORRECT
+
+# C++ OUTPUT, CORRECT
+
+===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+

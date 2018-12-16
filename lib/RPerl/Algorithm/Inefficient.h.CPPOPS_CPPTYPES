@@ -43,7 +43,7 @@ public:
     virtual string myclassname() { return (const string) "RPerl::Algorithm::Inefficient"; }
 
     // <<< CONSTANTS, SHIMS >>>
-    const string USEFULNESS() { return RPerl__Algorithm__Inefficient__USEFULNESS; }
+    string USEFULNESS() { return RPerl__Algorithm__Inefficient__USEFULNESS; }
 
     // <<< USER-DEFINED METHODS >>>
     void inherited_Inefficient(string person);

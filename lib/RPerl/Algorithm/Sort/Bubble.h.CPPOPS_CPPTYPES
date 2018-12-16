@@ -58,10 +58,10 @@ public:
     virtual string myclassname() { return (const string) "RPerl::Algorithm::Sort::Bubble"; }
 
     // <<< CONSTANTS, SHIMS >>>
-    const string TIME_BEST() { return RPerl__Algorithm__Sort__Bubble__TIME_BEST; }
-    const string TIME_AVERAGE() { return RPerl__Algorithm__Sort__Bubble__TIME_AVERAGE; }
-    const string TIME_WORST() { return RPerl__Algorithm__Sort__Bubble__TIME_WORST; }
-    const string SPACE_WORST() { return RPerl__Algorithm__Sort__Bubble__SPACE_WORST; }
+    string TIME_BEST() { return RPerl__Algorithm__Sort__Bubble__TIME_BEST; }
+    string TIME_AVERAGE() { return RPerl__Algorithm__Sort__Bubble__TIME_AVERAGE; }
+    string TIME_WORST() { return RPerl__Algorithm__Sort__Bubble__TIME_WORST; }
+    string SPACE_WORST() { return RPerl__Algorithm__Sort__Bubble__SPACE_WORST; }
 
     // <<< USER-DEFINED METHODS >>>
     void integer_sort();

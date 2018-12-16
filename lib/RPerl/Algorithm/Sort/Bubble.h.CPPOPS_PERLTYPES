@@ -51,10 +51,10 @@ public:
     virtual SV* myclassname() { return newSVpv("RPerl::Algorithm::Sort::Bubble", 0); }
 
     // <<< CONSTANTS, SHIMS >>>
-    const SV* TIME_BEST() { return RPerl__Algorithm__Sort__Bubble__TIME_BEST; }
-    const SV* TIME_AVERAGE() { return RPerl__Algorithm__Sort__Bubble__TIME_AVERAGE; }
-    const SV* TIME_WORST() { return RPerl__Algorithm__Sort__Bubble__TIME_WORST; }
-    const SV* SPACE_WORST() { return RPerl__Algorithm__Sort__Bubble__SPACE_WORST; }
+    SV* TIME_BEST() { return RPerl__Algorithm__Sort__Bubble__TIME_BEST; }
+    SV* TIME_AVERAGE() { return RPerl__Algorithm__Sort__Bubble__TIME_AVERAGE; }
+    SV* TIME_WORST() { return RPerl__Algorithm__Sort__Bubble__TIME_WORST; }
+    SV* SPACE_WORST() { return RPerl__Algorithm__Sort__Bubble__SPACE_WORST; }
 
     // <<< USER-DEFINED METHODS >>>
     void integer_sort();
