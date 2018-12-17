@@ -4,7 +4,7 @@ package RPerl::DataStructure::SSENumberPair;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.002_000;
+our $VERSION = 0.004_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataStructure);
@@ -157,13 +157,43 @@ sub sse_div {
         croak 'Attempt to perform SSE division on non-SSE data ' . q{'} . $argument_right . q{'} . ', croaking';
     }
     my sse_number_pair $retval = sse_number_pair->new();
+
+#print {*STDERR} 'in SSENumberPair::sse_div(), have $argument_left->[0] = ', $argument_left->[0], "\n";
+#print {*STDERR} 'in SSENumberPair::sse_div(), have $argument_left->[1] = ', $argument_left->[1], "\n";
+#print {*STDERR} 'in SSENumberPair::sse_div(), have $argument_right->[0] = ', $argument_right->[0], "\n";
+#print {*STDERR} 'in SSENumberPair::sse_div(), have $argument_right->[1] = ', $argument_right->[1], "\n";
+
     if ($arguments_swap) {
-        $retval->[0] = $argument_right->[0] / $argument_left->[0];
-        $retval->[1] = $argument_right->[1] / $argument_left->[1];
+        if (($argument_left->[0] + 0) == 0) {
+#print {*STDERR} 'in SSENumberPair::sse_div(), have $argument_left->[0] IS ZERO', "\n";
+            $retval->[0] = RPerl::DataType::Scalar::INFINITY();
+        }
+        else {
+            $retval->[0] = $argument_right->[0] / $argument_left->[0];
+        }
+        if (($argument_left->[1] + 0) == 0) {
+#print {*STDERR} 'in SSENumberPair::sse_div(), have $argument_left->[1] IS ZERO', "\n";
+            $retval->[1] = RPerl::DataType::Scalar::INFINITY();
+        }
+        else {
+            $retval->[1] = $argument_right->[1] / $argument_left->[1];
+        }
     }
     else {
-        $retval->[0] = $argument_left->[0] / $argument_right->[0];
-        $retval->[1] = $argument_left->[1] / $argument_right->[1];
+        if (($argument_right->[0] + 0) == 0) {
+#print {*STDERR} 'in SSENumberPair::sse_div(), have $argument_right->[0] IS ZERO', "\n";
+            $retval->[0] = RPerl::DataType::Scalar::INFINITY();
+        }
+        else {
+            $retval->[0] = $argument_left->[0] / $argument_right->[0];
+        }
+        if (($argument_right->[1] + 0) == 0) {
+#print {*STDERR} 'in SSENumberPair::sse_div(), have $argument_right->[1] IS ZERO', "\n";
+            $retval->[1] = RPerl::DataType::Scalar::INFINITY();
+        }
+        else {
+            $retval->[1] = $argument_left->[1] / $argument_right->[1];
+        }
     }
     return $retval; 
 }

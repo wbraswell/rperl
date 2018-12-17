@@ -3,7 +3,7 @@ package RPerl::DataType::Scalar;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.003_000;
+our $VERSION = 0.005_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType);
@@ -13,6 +13,9 @@ use RPerl::DataType;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
+
+# [[[ CONSTANTS ]]]
+use constant INFINITY => my string $TYPED_INFINITY = 'inf';
 
 # [[[ SUB-TYPES ]]]
 # a scalartype is a known, non-void data type, meaning a number or a string
