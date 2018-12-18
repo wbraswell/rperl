@@ -38,8 +38,11 @@ print 'have $x->[1] = ', $x->[1], "\n";
 print 'have $y->[0] = ', $y->[0], "\n";
 print 'have $y->[1] = ', $y->[1], "\n";
 
-my sse_number_pair $squared = ( $x sse_mul $x ) sse_add ( $y sse_mul $y );
-my sse_number_pair $foo =     ( $x sse_div $y ) sse_sub ( $y sse_div $x );
+# PERLTIDY BUG: must use strange formatting instead of clean formatting to avoid PERLOPS_PERLTYPES generation failure to match
+#my sse_number_pair $squared = ( $x sse_mul $x ) sse_add ( $y sse_mul $y );
+#my sse_number_pair $foo =     ( $x sse_div $y ) sse_sub ( $y sse_div $x );
+my sse_number_pair $squared = ( $x sse_mul $x) sse_add( $y sse_mul $y);
+my sse_number_pair $foo = ( $x sse_div $y) sse_sub( $y sse_div $x);
 
 print 'have $squared->[0] = ', $squared->[0], "\n";
 print 'have $squared->[1] = ', $squared->[1], "\n";
