@@ -88,6 +88,11 @@ find(
                 if (m/^\#\s*\<\<\<\s*EXECUTE_SUCCESS\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
                     push @{ $test_files->{$file}->{successes} }, $1;
                 }
+                elsif (m/^\#\s*\<\<\<\s*EXECUTE_SUCCESS_REGEX\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
+                    push @{ $test_files->{$file}->{successes} }, ('[IS_REGEX]' . $1);
+                    RPerl::diag( 'in 09_interpret_execute.t, EXECUTE_SUCCESS_REGEX, have pattern = ', $1, "\n" );
+                    RPerl::diag( 'in 09_interpret_execute.t, EXECUTE_SUCCESS_REGEX, have $test_files->{$file} = ', Dumper($test_files->{$file}), "\n" );
+                }
                 elsif (m/^\#\s*\<\<\<\s*EXECUTE_SUCCESS_INTEGER_32\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
                     push @{ $test_files->{$file}->{successes_integer_32} }, $1;
                 }
@@ -100,6 +105,7 @@ find(
                 elsif (m/^\#\s*\<\<\<\s*EXECUTE_SUCCESS_NUMBER_64\s*\:\s*['"](.*)['"]\s*\>\>\>/xms) {
                     push @{ $test_files->{$file}->{successes_number_64} }, $1;
                 }
+#                else { RPerl::diag( 'in 09_interpret_execute.t, have unrecognized input file line = ', $_, "\n" ); }
                 
                 if (m/^\#\s*\<\<\<\s*EXECUTE\s*\:\s*OFF\s*\>\>\>/xms) {
                     delete $test_files->{$file};
@@ -258,19 +264,19 @@ foreach my $test_file ( sort keys %{$test_files} ) {
 #            RPerl::diag( 'in 09_interpret_execute.t, run success on good code, have $test_files->{$test_file} = ' . Dumper($test_files->{$test_file}) . "\n\n" );
 
             if ( defined $test_files->{$test_file}->{successes} ) {
-               success_match($test_file, $test_files->{$test_file}->{successes}, $stdout_generated_lines);
+                success_match($test_file, $test_files->{$test_file}->{successes}, $stdout_generated_lines);
             }
             elsif ( ( defined $test_files->{$test_file}->{successes_integer_32} ) and ( rperltypessizes::type_integer_bitsize() == 32 ) ) {
-               success_match($test_file, $test_files->{$test_file}->{successes_integer_32}, $stdout_generated_lines);
+                success_match($test_file, $test_files->{$test_file}->{successes_integer_32}, $stdout_generated_lines);
             }
             elsif ( ( defined $test_files->{$test_file}->{successes_integer_64} ) and ( rperltypessizes::type_integer_bitsize() == 64 ) ) {
-               success_match($test_file, $test_files->{$test_file}->{successes_integer_64}, $stdout_generated_lines);
+                success_match($test_file, $test_files->{$test_file}->{successes_integer_64}, $stdout_generated_lines);
             }
             elsif ( ( defined $test_files->{$test_file}->{successes_number_32} ) and ( rperltypessizes::type_number_bitsize() == 32 ) ) {
-               success_match($test_file, $test_files->{$test_file}->{successes_number_32}, $stdout_generated_lines);
+                success_match($test_file, $test_files->{$test_file}->{successes_number_32}, $stdout_generated_lines);
             }
             elsif ( ( defined $test_files->{$test_file}->{successes_number_64} ) and ( rperltypessizes::type_number_bitsize() == 64 ) ) {
-               success_match($test_file, $test_files->{$test_file}->{successes_number_64}, $stdout_generated_lines);
+                success_match($test_file, $test_files->{$test_file}->{successes_number_64}, $stdout_generated_lines);
             }
 
             #DISABLE
@@ -347,24 +353,42 @@ sub success_match {
 #    $RPerl::DEBUG   = 0;
 #    $RPerl::VERBOSE = 0;
 
-    RPerl::diag( 'in 09_interpret_execute.t success_match(), before foreach loop, have successes =' . "\n" . Dumper( $test_file_successes ) . "\n" );
+    RPerl::diag( 'in 09_interpret_execute.t success_match(), before foreach loop, received $test_file_successes =', Dumper( $test_file_successes ) );
 
     my string $success = $test_file_successes->[0];
 
     # match success strings in-order in captured output
 FOREACH_STDOUT_LINE: foreach my string $stdout_generated_line ( @{$stdout_generated_lines} ) {
+        my boolean $is_regex = 0;
+        if ((substr $success, 0, 10) eq '[IS_REGEX]') {
+            substr $success, 0, 10, '';  # discard [IS_REGEX] prefix
+            $is_regex = 1;
+        }
 
-        RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $success = ' . $success . "\n" );
+        RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $is_regex = ' . $is_regex . "\n" );
+        RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $success               = ' . $success . "\n" );
         RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $stdout_generated_line = ' . $stdout_generated_line . "\n" );
 
-        # each stdout line is only allowed to match one success string
-        if ( $stdout_generated_line =~ /\Q$success\E/xms ) {
-            RPerl::diag( 'in 09_interpret_execute.t success_match(), MATCH' . "\n" );
-            shift @{ $test_file_successes };
-            if ( ( scalar @{ $test_file_successes } ) == 0 ) { last FOREACH_STDOUT_LINE; }
-            $success = $test_file_successes->[0];
+        if ($is_regex) {
+            # each stdout line is only allowed to match one success string
+            if ( $stdout_generated_line =~ /$success/ms ) {  # omit quotemeta \Q and \E regex modifiers for regex strings to be matched, also omit /x modifier to correctly match spaces
+                RPerl::diag( 'in 09_interpret_execute.t success_match(), YES REGEX, MATCH' . "\n" );
+                shift @{ $test_file_successes };
+                if ( ( scalar @{ $test_file_successes } ) == 0 ) { last FOREACH_STDOUT_LINE; }
+                $success = $test_file_successes->[0];
+            }
+            else { RPerl::diag( 'in 09_interpret_execute.t success_match(), YES REGEX, NO MATCH' . "\n" ); }
         }
-        else { RPerl::diag( 'in 09_interpret_execute.t success_match(), NO MATCH' . "\n" ); }
+        else {
+            # each stdout line is only allowed to match one success string
+            if ( $stdout_generated_line =~ /\Q$success\E/xms ) {  # include quotemeta \Q and \E regex modifiers for normal literal strings to be matched
+                RPerl::diag( 'in 09_interpret_execute.t success_match(), no regex, MATCH' . "\n" );
+                shift @{ $test_file_successes };
+                if ( ( scalar @{ $test_file_successes } ) == 0 ) { last FOREACH_STDOUT_LINE; }
+                $success = $test_file_successes->[0];
+            }
+            else { RPerl::diag( 'in 09_interpret_execute.t success_match(), no regex, NO MATCH' . "\n" ); }
+        }
     }
     RPerl::diag( 'in 09_interpret_execute.t success_match(), have missing successes =' . "\n" . Dumper( $test_file_successes ) . "\n" );
     ok( ( ( scalar @{ $test_file_successes } ) == 0 ), 'Program interprets and executes without errors & with expected output:' . ( q{ } x 10 ) . $test_file );

@@ -11,8 +11,9 @@
 # <<< EXECUTE_SUCCESS: 'have $divide_by_zero_xy->[1] = 0' >>>
 # <<< EXECUTE_SUCCESS: 'have $divide_by_zero_yx->[0] = 0' >>>
 # <<< EXECUTE_SUCCESS: 'have $divide_by_zero_yx->[1] = inf' >>>
-# <<< EXECUTE_SUCCESS: 'have $subtract_infinity->[0] = Inf' >>>
-# <<< EXECUTE_SUCCESS: 'have $subtract_infinity->[1] = -Inf' >>>
+# DEV NOTE: Perl v5.22 & newer uses 'Inf', older uses 'inf', must use regex to match both
+# <<< EXECUTE_SUCCESS_REGEX: 'have \$subtract_infinity->\[0\] = [iI]nf' >>>
+# <<< EXECUTE_SUCCESS_REGEX: 'have \$subtract_infinity->\[1\] = -[iI]nf' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
