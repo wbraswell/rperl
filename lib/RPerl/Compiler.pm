@@ -7,7 +7,7 @@ package RPerl::Compiler;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.043_000;
+our $VERSION = 0.044_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -197,7 +197,7 @@ sub find_parents {
 sub find_dependencies {
     { my string_arrayref $RETURN_TYPE };
     ( my string $file_name, my boolean $find_subdependencies_recurse, my string_hashref $modes ) = @ARG;
-RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
+#RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_name . "\n" );
 
     # trim unnecessary (and possibly problematic) @INC & absolute & current-directory paths from input file name
     my boolean $leading_lib_delete = 0;
@@ -205,7 +205,7 @@ RPerl::diag( 'in Compiler::find_dependencies(), received $file_name = ' . $file_
     $file_name = post_processor__INC_paths_delete($file_name, 1, $leading_lib_delete);  # $leading_slash_delete = 1, $leading_lib_delete = 0
     $file_name = post_processor__absolute_path_delete($file_name);
     $file_name = post_processor__current_directory_path_delete($file_name);
-RPerl::diag( 'in Compiler::find_dependencies(), have possibly-trimmed $file_name = ' . $file_name . "\n" );
+#RPerl::diag( 'in Compiler::find_dependencies(), have possibly-trimmed $file_name = ' . $file_name . "\n" );
 
     my string_arrayref $dependencies = [];
 #    my string_arrayref $pmc_disable_paths = [];  # DISABLE_DYNAMIC_DEPS_ANALYSIS
@@ -218,10 +218,10 @@ RPerl::diag( 'in Compiler::find_dependencies(), have possibly-trimmed $file_name
         }
         else {
             $file_name = $file_name_nolib;
-RPerl::diag('in Compiler::find_dependencies(), using $file_name_nolib = ' . q{'} . $file_name_nolib . q{'} . "\n");
+#RPerl::diag('in Compiler::find_dependencies(), using $file_name_nolib = ' . q{'} . $file_name_nolib . q{'} . "\n");
         }
     }
-else { RPerl::diag('in Compiler::find_dependencies(), using $file_name = ' . q{'} . $file_name . q{'} . "\n"); }
+#else { RPerl::diag('in Compiler::find_dependencies(), using $file_name = ' . q{'} . $file_name . q{'} . "\n"); }
 
     open my filehandleref $FILE_HANDLE, '<', $file_name
         or die 'ERROR ECOCODE01, COMPILER, FIND DEPENDENCIES: Cannot open file ' . q{'} . $file_name . q{'} . ' for reading, ' . $OS_ERROR . ', dying' . "\n";
@@ -255,7 +255,7 @@ else { RPerl::diag('in Compiler::find_dependencies(), using $file_name = ' . q{'
         # DEV NOTE, CORRELATION #rp050: hard-coded list of RPerl files/packages/namespaces
         # these instances of the 'use' keyword are NOT subdependencies of the current file, do not try to compile them 
         if ( $file_line =~ /^\s*use\s+[\w:]+/xms ) {
-RPerl::diag('in Compiler::find_dependencies(), found use line, have $file_line = ' . $file_line . "\n");
+#RPerl::diag('in Compiler::find_dependencies(), found use line, have $file_line = ' . $file_line . "\n");
             if (( $file_line =~ /use\s+RPerl\s*;/ ) or 
                 ( $file_line =~ /use\s+RPerl::AfterSubclass\s*;/ )) {
                 $use_rperl = 1;
@@ -374,11 +374,11 @@ RPerl::diag('in Compiler::find_dependencies(), found use line, have $file_line =
 
                 # DEV NOTE, CORRELATION #rp055: handle removal of current directory & all @INC directories, so as not to hard-code system-specific dirs in #include statements
                 foreach my string $INC_directory (getcwd, File::Spec->catpath( '', getcwd, 'lib' ), @INC) { # search current directory, current w/ '/lib', and @INC dirs
-RPerl::diag( 'in Compiler::find_dependencies(), top of @INC foreach loop, have $INC_directory = ' . $INC_directory . "\n" );
+#RPerl::diag( 'in Compiler::find_dependencies(), top of @INC foreach loop, have $INC_directory = ' . $INC_directory . "\n" );
                     $package_file_name_included = File::Spec->catpath( '', $INC_directory, $package_file_name );
-RPerl::diag( 'in Compiler::find_dependencies(), inside @INC foreach loop, have $package_file_name_included = ' . $package_file_name_included . "\n" );
+#RPerl::diag( 'in Compiler::find_dependencies(), inside @INC foreach loop, have $package_file_name_included = ' . $package_file_name_included . "\n" );
                     if (-e $package_file_name_included) {
-RPerl::diag( 'in Compiler::find_dependencies(), inside @INC foreach loop, have EXISTING $package_file_name_included = ' . $package_file_name_included . "\n" );
+#RPerl::diag( 'in Compiler::find_dependencies(), inside @INC foreach loop, have EXISTING $package_file_name_included = ' . $package_file_name_included . "\n" );
                         last;
                     }
                     else {
@@ -394,7 +394,7 @@ RPerl::diag( 'in Compiler::find_dependencies(), inside @INC foreach loop, have E
             }
 =cut
 
-RPerl::diag( 'in Compiler::find_dependencies(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
+#RPerl::diag( 'in Compiler::find_dependencies(), have $package_file_name_included = ' . $package_file_name_included . "\n" );
 
             # trim unnecessary (and possibly problematic) @INC & absolute & current-directory paths from input file name
             my string $package_file_name_included_relative = $package_file_name_included;
@@ -403,8 +403,8 @@ RPerl::diag( 'in Compiler::find_dependencies(), have $package_file_name_included
             $package_file_name_included_relative = post_processor__current_directory_path_delete( $package_file_name_included_relative );
             push @{$dependencies}, $package_file_name_included_relative;
 
-RPerl::diag( 'in Compiler::find_dependencies(), have possibly-trimmed $package_file_name_included_relative = ' . $package_file_name_included_relative . "\n" );
-RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
+#RPerl::diag( 'in Compiler::find_dependencies(), have possibly-trimmed $package_file_name_included_relative = ' . $package_file_name_included_relative . "\n" );
+#RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
 
             if ($find_subdependencies_recurse) {
     
@@ -422,7 +422,7 @@ RPerl::diag( 'in Compiler::find_dependencies(), have PRE-SUBDEPS $dependencies =
                 # discard duplicate dependencies that now appear in subdependencies
                 $dependencies = [ uniq @{$subdependencies}, @{$dependencies} ];
     
-RPerl::diag( 'in Compiler::find_dependencies(), have POST-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
+#RPerl::diag( 'in Compiler::find_dependencies(), have POST-SUBDEPS $dependencies = ' . Dumper($dependencies) . "\n" );
             }
         }
     }
@@ -441,7 +441,7 @@ RPerl::diag( 'in Compiler::find_dependencies(), have POST-SUBDEPS $dependencies 
     }
 =cut
 
-RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
+#RPerl::diag( 'in Compiler::find_dependencies(), returning $dependencies = ' . Dumper($dependencies) . "\n" );
 #RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_sse} = ' . Dumper($modes->{_enable_sse}) . "\n");
 #RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gmp} = ' . Dumper($modes->{_enable_gmp}) . "\n");
 #RPerl::diag('in Compiler::find_dependencies(), about to return, have $modes->{_enable_gsl} = ' . Dumper($modes->{_enable_gsl}) . "\n");

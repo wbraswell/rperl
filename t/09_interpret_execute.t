@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.009_000;
+our $VERSION = 0.010_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -353,7 +353,7 @@ sub success_match {
 #    $RPerl::DEBUG   = 0;
 #    $RPerl::VERBOSE = 0;
 
-    RPerl::diag( 'in 09_interpret_execute.t success_match(), before foreach loop, received $test_file_successes =', Dumper( $test_file_successes ) );
+#    RPerl::diag( 'in 09_interpret_execute.t success_match(), before foreach loop, received $test_file_successes =', Dumper( $test_file_successes ) );
 
     my string $success = $test_file_successes->[0];
 
@@ -366,37 +366,37 @@ FOREACH_STDOUT_LINE: foreach my string $stdout_generated_line ( @{$stdout_genera
         }
 
 
-# START HERE: comment out diag statements, copy new regex parts to physicsperl & mathperl
-# START HERE: comment out diag statements, copy new regex parts to physicsperl & mathperl
-# START HERE: comment out diag statements, copy new regex parts to physicsperl & mathperl
+# START HERE: copy new regex parts to physicsperl & mathperl
+# START HERE: copy new regex parts to physicsperl & mathperl
+# START HERE: copy new regex parts to physicsperl & mathperl
 
 
-        RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $is_regex = ' . $is_regex . "\n" );
-        RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $success               = ' . $success . "\n" );
-        RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $stdout_generated_line = ' . $stdout_generated_line . "\n" );
+#        RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $is_regex = ' . $is_regex . "\n" );
+#        RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $success               = ' . $success . "\n" );
+#        RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $stdout_generated_line = ' . $stdout_generated_line . "\n" );
 
         if ($is_regex) {
             # each stdout line is only allowed to match one success string
             if ( $stdout_generated_line =~ /$success/ms ) {  # omit quotemeta \Q and \E regex modifiers for regex strings to be matched, also omit /x modifier to correctly match spaces
-                RPerl::diag( 'in 09_interpret_execute.t success_match(), YES REGEX, MATCH' . "\n" );
+#                RPerl::diag( 'in 09_interpret_execute.t success_match(), YES REGEX, MATCH' . "\n" );
                 shift @{ $test_file_successes };
                 if ( ( scalar @{ $test_file_successes } ) == 0 ) { last FOREACH_STDOUT_LINE; }
                 $success = $test_file_successes->[0];
             }
-            else { RPerl::diag( 'in 09_interpret_execute.t success_match(), YES REGEX, NO MATCH' . "\n" ); }
+#            else { RPerl::diag( 'in 09_interpret_execute.t success_match(), YES REGEX, NO MATCH' . "\n" ); }
         }
         else {
             # each stdout line is only allowed to match one success string
             if ( $stdout_generated_line =~ /\Q$success\E/xms ) {  # include quotemeta \Q and \E regex modifiers for normal literal strings to be matched
-                RPerl::diag( 'in 09_interpret_execute.t success_match(), no regex, MATCH' . "\n" );
+#                RPerl::diag( 'in 09_interpret_execute.t success_match(), no regex, MATCH' . "\n" );
                 shift @{ $test_file_successes };
                 if ( ( scalar @{ $test_file_successes } ) == 0 ) { last FOREACH_STDOUT_LINE; }
                 $success = $test_file_successes->[0];
             }
-            else { RPerl::diag( 'in 09_interpret_execute.t success_match(), no regex, NO MATCH' . "\n" ); }
+#            else { RPerl::diag( 'in 09_interpret_execute.t success_match(), no regex, NO MATCH' . "\n" ); }
         }
     }
-    RPerl::diag( 'in 09_interpret_execute.t success_match(), have missing successes =' . "\n" . Dumper( $test_file_successes ) . "\n" );
+#    RPerl::diag( 'in 09_interpret_execute.t success_match(), have missing successes =' . "\n" . Dumper( $test_file_successes ) . "\n" );
     ok( ( ( scalar @{ $test_file_successes } ) == 0 ), 'Program interprets and executes without errors & with expected output:' . ( q{ } x 10 ) . $test_file );
 #    $number_of_tests_run++;
 }
