@@ -39,8 +39,8 @@ use Config qw(config_re);
 sub accept_and_verify_input_files {
     ( my string_arrayref $input_file_names, my string_arrayref $input_file_names_unlabeled, my string_hashref $modes ) = @_;
 
-    #    RPerl::diag( 'in rperl::accept_and_verify_input_files(), received $input_file_names = ' . Dumper($input_file_names) . "\n" );
-    #    RPerl::diag( 'in rperl::accept_and_verify_input_files(), received $input_file_names_unlabeled = ' . Dumper($input_file_names_unlabeled) . "\n" );
+    RPerl::diag( 'in rperl::accept_and_verify_input_files(), received $input_file_names = ' . Dumper($input_file_names) . "\n" );
+    RPerl::diag( 'in rperl::accept_and_verify_input_files(), received $input_file_names_unlabeled = ' . Dumper($input_file_names_unlabeled) . "\n" );
 
     RPerl::diag("\n\n");    # move output away from initial Inline compiler output
     RPerl::diag( 'in rperl, have $RPerl::DEBUG   = ' . $RPerl::DEBUG   . ', $ENV{RPERL_DEBUG}   = ' . ($ENV{RPERL_DEBUG} || '<NOT SET>') . "\n" );

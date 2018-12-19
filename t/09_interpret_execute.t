@@ -365,6 +365,12 @@ FOREACH_STDOUT_LINE: foreach my string $stdout_generated_line ( @{$stdout_genera
             $is_regex = 1;
         }
 
+
+# START HERE: comment out diag statements, copy new regex parts to physicsperl & mathperl
+# START HERE: comment out diag statements, copy new regex parts to physicsperl & mathperl
+# START HERE: comment out diag statements, copy new regex parts to physicsperl & mathperl
+
+
         RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $is_regex = ' . $is_regex . "\n" );
         RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $success               = ' . $success . "\n" );
         RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $stdout_generated_line = ' . $stdout_generated_line . "\n" );
