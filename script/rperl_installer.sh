@@ -1,7 +1,7 @@
 #!/bin/bash
 # Copyright © 2014, 2015, 2016, 2017, 2018, William N. Braswell, Jr.. All Rights Reserved. This work is Free \& Open Source; you can redistribute it and/or modify it under the same terms as Perl 5.24.0.
 # RPerl Installer Script (directly copied from LAMP Installer Script)
-VERSION='0.460_000'
+VERSION='0.470_000'
 
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
 # IMPORTANT DEV NOTE: do not edit anything in this file without making the exact same changes to LAMP_installer.sh!!!
@@ -1675,7 +1675,9 @@ if [ $SECTION_CHOICE -le 25 ]; then
         export RPERL_DEBUG=$USER_INPUT
         D $RPERL_WARNINGS 'RPERL_WARNINGS additional user & system warnings, 0 for off, 1 for on' '0'
         export RPERL_WARNINGS=$USER_INPUT
-        D $RPERL_INSTALL_DIRECTORY 'directory where RPerl is currently installed (include trailing "/lib" directory if present)' "~/perl5/lib/perl5" "~/repos_github/rperl-latest/lib"
+        # install directory guessing code copied from pm_location.sh, w/ addition of substr() to strip trailing '/RPerl.pm'
+        RPERL_INSTALL_DIRECTORY_GUESS=`export RPERL_DEBUG=0; RPERL_VERBOSE=0; perl -e 'use RPerl; my $s = q{RPerl}; $s =~ s/::/\//g; $s .= q{.pm}; print (substr $INC{$s}, 0, -9);'`
+        D $RPERL_INSTALL_DIRECTORY 'directory where RPerl is currently installed (include trailing "/lib" directory if present)' $RPERL_INSTALL_DIRECTORY_GUESS
         RPERL_INSTALL_DIRECTORY=$USER_INPUT
 
         echo '[ These RPerl Test Commands Must Be Executed From Within The RPerl Installation Directory ]'
