@@ -2,7 +2,7 @@
 package RPerl::Inline;
 use strict;
 use warnings;
-our $VERSION = 0.021_000;
+our $VERSION = 0.022_000;
 
 #use RPerl;         # ERROR: Too late to run INIT block at ...
 #use Config;
@@ -174,7 +174,8 @@ our %ARGS = (
 # NEED UPGRADE: strip C++ incompat CFLAGS
 #  ccflags => $Config::Config{ccflags} . ' -DNO_XSLOCKS -Wno-deprecated -std=c++0x -Wno-reserved-user-defined-literal -Wno-literal-suffix',
 #    force_build => 1,  # debug use only
-    inc               => '-I' . $RPerl::INCLUDE_PATH . ' -I. -Ilib -I' . $pcre2_include_dir . ' -I' . $jpcre2_include_dir,
+    # put . (current dir) last to avoid finding coincidentally-named file './foo' instead of '/SYSTEM/PATH/foo.h' from '#include <foo>' 
+    inc               => '-I' . $RPerl::INCLUDE_PATH . ' -Ilib -I' . $pcre2_include_dir . ' -I' . $jpcre2_include_dir . ' -I.',
     build_noisy       => ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ),  # suppress or display actual g++ compiler commands
     clean_after_build => 0, # used by Inline::C(PP) to cache build, also used by Inline::Filters to save Filters*.c files for use in gdb debugging
     warnings          => (((not defined $ENV{RPERL_WARNINGS}) or $ENV{RPERL_WARNINGS}) and $RPerl::WARNINGS),  # suppress or display Inline warnings
