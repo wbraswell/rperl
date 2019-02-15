@@ -1,0 +1,98 @@
+source: irc.perl.org #toolchain
+user:   BinGOs
+notes:  perl 5.28.1 on Solaris 11.4 X64_86, manually compiled after installing Oracle Developer Studio
+
+USER@MACHINE:~$ /opt/perl-5.28.1/bin/perl -V
+Summary of my perl5 (revision 5 version 28 subversion 1) configuration:
+   
+  Platform:
+    osname=solaris
+    osvers=2.11
+    archname=i86pc-solaris-64
+    uname='sunos MACHINE 5.11 11.4.0.15.0 i86pc i386 i86pc '
+    config_args='-des -Duse64bitall -Dprefix=/opt/perl-5.28.1'
+    hint=recommended
+    useposix=true
+    d_sigaction=define
+    useithreads=undef
+    usemultiplicity=undef
+    use64bitint=define
+    use64bitall=define
+    uselongdouble=undef
+    usemymalloc=n
+    default_inc_excludes_dot=define
+    bincompat5005=undef
+  Compiler:
+    cc='cc'
+    ccflags ='-m64 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DPERL_USE_SAFE_PUTENV'
+    optimize='-O'
+    cppflags='-m64'
+    ccversion='Studio 12.6 Sun C 5.15 SunOS_i386 2017/05/30'
+    gccversion=''
+    gccosandvers=''
+    intsize=4
+    longsize=8
+    ptrsize=8
+    doublesize=8
+    byteorder=12345678
+    doublekind=3
+    d_longlong=define
+    longlongsize=8
+    d_longdbl=define
+    longdblsize=16
+    longdblkind=3
+    ivtype='long'
+    ivsize=8
+    nvtype='double'
+    nvsize=8
+    Off_t='off_t'
+    lseeksize=8
+    alignbytes=8
+    prototype=define
+  Linker and Libraries:
+    ld='cc'
+    ldflags =' -m64 -L/opt/developerstudio12.6/lib/compilers/amd64 -L/lib/64 -L/usr/gnu/lib '
+    libpth=/opt/developerstudio12.6/lib/compilers/amd64 /lib/64 /usr/gnu/lib /usr/lib /usr/ccs/lib
+    libs=-lpthread -lsocket -lnsl -lgdbm -ldb -ldl -lm -lc
+    perllibs=-lpthread -lsocket -lnsl -ldl -lm -lc
+    libc=/lib/libc.so
+    so=so
+    useshrplib=true
+    libperl=libperl.so
+    gnulibc_version=''
+  Dynamic Linking:
+    dlsrc=dl_dlopen.xs
+    dlext=so
+    d_dlsymun=undef
+    ccdlflags='  -R /opt/perl-5.28.1/lib/5.28.1/i86pc-solaris-64/CORE'
+    cccdlflags='-KPIC'
+    lddlflags=' -G -m64 -L/opt/developerstudio12.6/lib/compilers/amd64 -L/lib/64 -L/usr/gnu/lib'
+
+
+Characteristics of this binary (from libperl): 
+  Compile-time options:
+    HAS_TIMES
+    PERLIO_LAYERS
+    PERL_COPY_ON_WRITE
+    PERL_DONT_CREATE_GVSV
+    PERL_MALLOC_WRAP
+    PERL_OP_PARENT
+    PERL_PRESERVE_IVUV
+    PERL_USE_SAFE_PUTENV
+    USE_64_BIT_ALL
+    USE_64_BIT_INT
+    USE_LARGE_FILES
+    USE_LOCALE
+    USE_LOCALE_COLLATE
+    USE_LOCALE_CTYPE
+    USE_LOCALE_NUMERIC
+    USE_LOCALE_TIME
+    USE_PERLIO
+    USE_PERL_ATOF
+  Built under solaris
+  Compiled at Dec  9 2018 14:26:21
+  @INC:
+    /opt/perl-5.28.1/lib/site_perl/5.28.1/i86pc-solaris-64
+    /opt/perl-5.28.1/lib/site_perl/5.28.1
+    /opt/perl-5.28.1/lib/5.28.1/i86pc-solaris-64
+    /opt/perl-5.28.1/lib/5.28.1

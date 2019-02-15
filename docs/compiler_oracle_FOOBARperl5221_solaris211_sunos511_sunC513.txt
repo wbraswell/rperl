@@ -1,0 +1,61 @@
+source: freenode #solaris
+user:   mator
+
+USER@MACHINE:~$ perl -V
+Summary of my perl5 (revision 5 version 22 subversion 1) configuration:
+   
+  Platform:
+    osname=solaris, osvers=2.11, archname=sun4-solaris-thread-multi-64
+    uname='sunos localhost 5.11 sun4v sparc sun4v'
+    config_args='-de -Dmksymlinks -Ulocincpth= -Dbin=/usr/perl5/5.22/bin -Dcc=cc -Dcf_by=perl-bugs -Dlibperl=libperl.so -Dmyhostname=localhost -Dperl_static_inline=static -Dprefix=/usr/perl5/5.22 -Dprivlib=/usr/perl5/5.22/lib -Dsitelib=/usr/perl5/site_perl/5.22 -Dsiteprefix=/usr/perl5/5.22 -Dvendorlib=/usr/perl5/vendor_perl/5.22 -Dvendorprefix=/usr/perl5/5.22 -Duseshrplib -Dusedtrace -Duse64bitall -Dusethreads -Dlibpth=/lib/64 /usr/lib/64 -Dusesitecustomize -Doptimize=-xO3      '
+    hint=recommended, useposix=true, d_sigaction=define
+    useithreads=define, usemultiplicity=define
+    use64bitint=define, use64bitall=define, uselongdouble=undef
+    usemymalloc=n, bincompat5005=undef
+  Compiler:
+    cc='cc', ccflags ='-D_REENTRANT -m64 -D_LARGEFILE64_SOURCE -DPERL_USE_SAFE_PUTENV',
+    optimize='-xO3 ',
+    cppflags='-D_REENTRANT -m64'
+    ccversion='Sun C 5.13 SunOS_sparc Patch 151632-09 2018/01/10', gccversion='', gccosandvers=''
+    intsize=4, longsize=8, ptrsize=8, doublesize=8, byteorder=87654321, doublekind=4
+    d_longlong=define, longlongsize=8, d_longdbl=define, longdblsize=16, longdblkind=2
+    ivtype='long', ivsize=8, nvtype='double', nvsize=8, Off_t='off_t', lseeksize=8
+    alignbytes=8, prototype=define
+  Linker and Libraries:
+    ld='cc', ldflags =' -m64 -L/lib/64 '
+    libpth=/lib/64 /usr/lib/64
+    libs=-lpthread -lsocket -lnsl -lgdbm -ldb -ldl -lm -lc
+    perllibs=-lpthread -lsocket -lnsl -ldl -lm -lc
+    libc=/usr/lib/sparcv9/libc.so, so=so, useshrplib=true, libperl=libperl.so
+    gnulibc_version=''
+  Dynamic Linking:
+    dlsrc=dl_dlopen.xs, dlext=so, d_dlsymun=undef, ccdlflags='  -R /usr/perl5/5.22/lib/sun4-solaris-thread-multi-64/CORE'
+    cccdlflags='-KPIC', lddlflags=' -G -m64 -L/lib/64'
+
+
+Characteristics of this binary (from libperl): 
+  Compile-time options: HAS_TIMES MULTIPLICITY PERLIO_LAYERS
+                        PERL_DONT_CREATE_GVSV
+                        PERL_HASH_FUNC_ONE_AT_A_TIME_HARD
+                        PERL_IMPLICIT_CONTEXT PERL_MALLOC_WRAP
+                        PERL_NEW_COPY_ON_WRITE PERL_PRESERVE_IVUV
+                        PERL_USE_SAFE_PUTENV USE_64_BIT_ALL USE_64_BIT_INT
+                        USE_ITHREADS USE_LARGE_FILES USE_LOCALE
+                        USE_LOCALE_COLLATE USE_LOCALE_CTYPE
+                        USE_LOCALE_NUMERIC USE_LOCALE_TIME USE_PERLIO
+                        USE_PERL_ATOF USE_REENTRANT_API USE_SITECUSTOMIZE
+  Built under solaris
+  Compiled at Aug  9 2018 16:11:56
+  @INC:
+    /usr/perl5/site_perl/5.22/sun4-solaris-thread-multi-64
+    /usr/perl5/site_perl/5.22
+    /usr/perl5/vendor_perl/5.22/sun4-solaris-thread-multi-64
+    /usr/perl5/vendor_perl/5.22
+    /usr/perl5/5.22/lib/sun4-solaris-thread-multi-64
+    /usr/perl5/5.22/lib
+
+USER@MACHINE:~$ which cc  # Solaris Studio AKA Sun Studio, now Oracle Developer Studio
+/opt/solarisstudio12.3/bin/cc
+
+USER@MACHINE:~$ uname -v
+11.4.1.4.0

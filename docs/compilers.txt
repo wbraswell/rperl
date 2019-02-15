@@ -1,0 +1,46 @@
+GNU Compiler Collection aka GCC
+gcc
+
+
+MinGW (based on GCC), Microsoft Windows    https://sourceforge.net/p/mingw-w64/wiki2/GeneralUsageInstructions/
+x86_64-w64-mingw32-gcc.exe  (64-bit)
+i686-w64-mingw32-gcc.exe    (32-bit)
+
+
+Intel C Compiler, Linux    https://software.intel.com/en-us/node/522357
+icc   (C)
+icpc  (C++)
+
+
+Intel C Compiler, Mac OS X, Edison Design Group (EDG)
+icc   (C)
+icpc  (C++)
+
+
+Intel C Compiler, Mac OS X, CLANG
+icl   (C)
+icl++  (C++)
+
+
+Intel C Compiler, Microsoft Windows
+icl.exe
+
+
+Microsoft Visual Studio, Microsoft Windows
+clarm.exe
+
+
+Oracle Developer Studio
+cc
+
+
+Clang    https://clang.llvm.org/docs/UsersManual.html
+clang
+
+
+IBM XL (based on Clang)    https://www.ibm.com/support/knowledgecenter/SSXVZZ_16.1.1/com.ibm.xlcpp1611.lelinux.doc/compiler_ref/tucmpinv.html
+xlc xlc_r
+c99 c99_r
+c89 c89_r
+cc  cc_r  (C)
+xlc++ xlc++_r xlC_r  (C++)
