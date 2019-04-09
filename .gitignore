@@ -76,4 +76,5 @@
 /lib/RPerl/Test/Subclass/MySubclasserCDE_Good.h
 /lib/RPerl/Test/Subclass/MySubclasserCDE_Good.cpp
 /lib/rperltypes_mode.h.orig
+.idea/
 /lib/rperltypes_mode.h.swap
