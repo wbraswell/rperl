@@ -1,5 +1,5 @@
 #ifndef __CPP__INCLUDED__rperloperations_h
-#define __CPP__INCLUDED__rperloperations_h 0.003_004
+#define __CPP__INCLUDED__rperloperations_h 0.004_000
 
 #include <rperltypes_mode.h>
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
@@ -20,6 +20,9 @@
 #define log std::log
 #define sqrt std::sqrt
 #define atan2 std::atan2
+
+// DEV NOTE, CORRELATION #rp070: "logical and" && operator behaves differently in Perl vs C++, accepts strings so must use double-negation trick to convert to boolean, returns operand on right if operator evaluates to true; use ANDl instead of && in C++
+#define ANDl(x,y) (!!x) ? ((!!y) ? y : 0): 0
 
 // [[[ STATEMENTS ]]]
 

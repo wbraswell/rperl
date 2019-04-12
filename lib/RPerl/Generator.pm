@@ -4,7 +4,7 @@ package RPerl::Generator;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.007_000;
+our $VERSION = 0.008_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CompileUnit::Module::Class);
@@ -124,8 +124,8 @@ sub type_convert_perl_to_cpp {
     { my string $RETURN_TYPE };  # big brother looks over little brother LOL
     ( my string $return_type, my boolean $pointerify_classes ) = @ARG;
 
-    #    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $return_type = ' . $return_type . "\n");
-    #    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $pointerify_classes = ' . $pointerify_classes . "\n");
+#    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $return_type = ' . $return_type . "\n");
+#    RPerl::diag('in Generator->type_convert_perl_to_cpp(), received $pointerify_classes = ' . $pointerify_classes . "\n");
 
     if ( exists $rperlnamespaces_generated::RPERL->{ $return_type . '::' } ) {    # RPerl types
         $return_type =~ s/^constant_/const\ /gxms;                                # 'constant_foo' becomes 'const foo'
@@ -563,7 +563,12 @@ sub grammar_rules__map {
         $eval_string
             = q[foreach my $key ( keys %]
             . $RPerl::Grammar::RULES->{$rule}
-            . q[:: ) { if (defined &{ $]
+            . q[:: ) { ] 
+                
+            # DEV NOTE, CORRELATION #rp071: do not copy constant subroutines, avoid error "Not a subroutine reference"
+            . q[next if (($key eq 'NAME') or ($key eq 'NAME_PERLOPS_PERLTYPES') or ($key eq 'NAME_CPPOPS_PERLTYPES') or ($key eq 'NAME_CPPOPS_CPPTYPES') or ($key eq 'ARGUMENTS_MIN') or ($key eq 'ARGUMENTS_MAX'));  ]  
+
+            . q[if (defined &{ $]
             . $RPerl::Grammar::RULES->{$rule}
             . q[::{ $key} } ) { if (not defined eval q<*{]
             . $rule
@@ -571,7 +576,7 @@ sub grammar_rules__map {
             . $RPerl::Grammar::RULES->{$rule}
             . q[::{'> . $key . q<'} }(@_); };>) {die $EVAL_ERROR . "\n";} } }];
 
-        #        RPerl::diag('in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n");
+#        RPerl::diag('in Generator::grammar_rules_map(), have 2nd $eval_string = ' . "\n" . $eval_string . "\n");
         $eval_retval = eval $eval_string;
         if ( ( not defined $eval_retval ) or ( $EVAL_ERROR ne q{} ) ) {
             die 'ERROR ECOGE02, GENERATOR: Grammar rules map, failed copy subroutines into mapped namespace, dying' . "\n" . $EVAL_ERROR . "\n";

@@ -16,22 +16,39 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my number $foo  = 9_123.456_789;
-my string $bar  = 'howdy';
-my integer $bat = $foo and& 22;
-my integer $baz = (9_123.456_789 and $foo);
-my integer $bax = (33 and 0);
+my integer $foo_integer = 9_123;
+my number  $foo_number  = 9_123.456_789;
+my string  $foo_string  = 'howdy';
 
-print 'have $foo = ', $foo, "\n";
-print 'have $bar = ', $bar, "\n";
-print 'have $bat = ', $bat, "\n";
-print 'have $baz = ', $baz, "\n";
-print 'have $bax = ', $bax, "\n";
+print 'have $foo_integer = ', integer_to_string($foo_integer), "\n";
+print 'have $foo_number  = ',  number_to_string($foo_number), "\n";
+print 'have $foo_string  = ',  $foo_string, "\n";
+print "\n";
 
-$bat = ($bar  and q{});
-$baz = ('444' and '222');
-$bax = ('33'  and $bar);
+my boolean $aaa_boolean = (0 and 0);
+my boolean $bbb_boolean = (0 and 1);
+my boolean $ccc_boolean = (1 and 0);
+my boolean $ddd_boolean = (1 and 1);
 
-print 'have $bat = ', $bat, "\n";
-print 'have $baz = ', $baz, "\n";
-print 'have $bax = ', $bax, "\n";
+my integer $aaa_integer = (22 and $foo_integer);
+my integer $bbb_integer = $foo_integer and& 22;
+
+my number  $aaa_number = (-22.3 and $foo_number);
+my number  $bbb_number = ($foo_number and -22.3);
+
+my string  $aaa_string = ('doody' and $foo_string);
+my string  $bbb_string = ($foo_string and 'doody');
+
+print 'have $aaa_boolean = ', $aaa_boolean, "\n";
+print 'have $bbb_boolean = ', $bbb_boolean, "\n";
+print 'have $ccc_boolean = ', $ccc_boolean, "\n";
+print 'have $ddd_boolean = ', $ddd_boolean, "\n";
+
+print 'have $aaa_integer = ', integer_to_string($aaa_integer), "\n";
+print 'have $bbb_integer = ', integer_to_string($bbb_integer), "\n";
+
+print 'have $aaa_number  = ', number_to_string($aaa_number), "\n";
+print 'have $bbb_number  = ', number_to_string($bbb_number), "\n";
+
+print 'have $aaa_string  = ', $aaa_string, "\n";
+print 'have $bbb_string  = ', $bbb_string, "\n";

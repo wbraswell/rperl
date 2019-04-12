@@ -13,6 +13,11 @@ use RPerl::Operation::Expression::Operator::Logical;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
+# [[[ CONSTANTS ]]]
+# DEV NOTE, CORRELATION #rp070: "logical and" && operator behaves differently in Perl vs C++, accepts strings so must use double-negation trick to convert to boolean, returns operand on right if operator evaluates to true; use ANDl instead of && in C++
+# DEV NOTE, CORRELATION #rp071: do not copy constant subroutines, avoid error "Not a subroutine reference"
+use constant NAME_CPPOPS_CPPTYPES => my string $TYPED_NAME = 'ANDl';
+
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
 
@@ -72,11 +77,20 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         or ( $self_class eq 'Operator_128' )    # Operator -> SubExpression OP23_LOGICAL_AND SubExpression
         )
     {
+        # DEV NOTE, CORRELATION #rp070: "logical and" && operator behaves differently in Perl vs C++, accepts strings so must use double-negation trick to convert to boolean, returns operand on right if operator evaluates to true; use ANDl instead of && in C++
+        $cpp_source_group->{CPP} .= NAME_CPPOPS_CPPTYPES() . '(';
+ 
         my string_hashref $cpp_source_subgroup = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
-        $cpp_source_group->{CPP} .= q{ } . $self->{children}->[1] . q{ };
+
+        # NEED OPTIMIZE: normal C++ && operator can be used for boolean-only operands and will be faster, check here if booleans and use && instead of ANDl
+#        $cpp_source_group->{CPP} .= q{ } . $self->{children}->[1] . q{ };
+        $cpp_source_group->{CPP} .= ', ';
+
         $cpp_source_subgroup = $self->{children}->[2]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
         RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+ 
+        $cpp_source_group->{CPP} .= ')';
     }
     else {
         die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule '

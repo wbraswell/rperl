@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use rperlnamespaces;
-our $VERSION = 0.017_000;
+our $VERSION = 0.018_000;
 
 ## no critic qw(ProhibitExplicitStdin)  # USER DEFAULT 4: allow <STDIN>
 
@@ -259,7 +259,7 @@ my $namespaces_rperl_deps = {
     'charnames::'         => 1,
     '_charnames::'         => 1,
     'attributes::'  => 1,
-    'boolean::'  => 1,
+    'boolean::'  => 1,  # NEED FIX: this is also an RPerl data type, duplicate entry below
     'bytes_heavy::'  => 1,
     'deprecate::'  => 1,
     'feature::'      => 1,
@@ -311,8 +311,10 @@ foreach my $namespace ( keys %{$namespaces_rperl} ) {
 
 # remove RPerl dependency namespaces from RPerl namespaces
 foreach my $namespace_rperl_dep ( keys %{$namespaces_rperl_deps} ) {
-    # NEED FIX: allow 'integer::' duplicate entry
-    if (($namespace_rperl_dep ne 'integer::') and ( exists $namespaces_rperl->{$namespace_rperl_dep})) {
+    # NEED FIX: allow 'boolean::' & 'integer::' duplicate entries
+    if (($namespace_rperl_dep ne 'boolean::') and
+        ($namespace_rperl_dep ne 'integer::') and
+        ( exists $namespaces_rperl->{$namespace_rperl_dep})) {
         delete $namespaces_rperl->{$namespace_rperl_dep};
     }
 }

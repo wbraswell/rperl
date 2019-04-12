@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__String_cpp
-#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.012_000
+#define __CPP__INCLUDED__RPerl__DataType__String_cpp 0.013_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/String.h>		// -> NULL (relies on native C type)
@@ -12,6 +12,16 @@ using std::cout;  using std::cerr;  using std::endl;
 #include <RPerl/DataType/Character.cpp>  // -> Character.h
 
 // [[[ GENERAL FUNCTIONS ]]]
+
+// DEV NOTE, CORRELATION #rp070: "logical and" && operator behaves differently in Perl vs C++, accepts strings so must use double-negation trick to convert to boolean, returns operand on right if operator evaluates to true; use ANDl instead of && in C++
+bool operator!(const string& s) {
+
+    // START HERE: should this be returning s.empty() or string_to_boolean()?  need write tests for negation of strings in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES?
+    // START HERE: should this be returning s.empty() or string_to_boolean()?  need write tests for negation of strings in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES?
+    // START HERE: should this be returning s.empty() or string_to_boolean()?  need write tests for negation of strings in PERLOPS_PERLTYPES vs CPPOPS_CPPTYPES?
+
+    return s.empty();
+}
 
 // [[[ TYPE CHECKING ]]]
 // [[[ TYPE CHECKING ]]]

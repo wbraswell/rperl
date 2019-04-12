@@ -1,0 +1,67 @@
+//!/usr/bin/env rperl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// [[[ HEADER ]]]
+#include <rperlstandalone.h>
+#ifndef __CPP__INCLUDED__RPerl__Test__Operator15LogicalAnd__program_00_good_cpp
+#define __CPP__INCLUDED__RPerl__Test__Operator15LogicalAnd__program_00_good_cpp 0.001_000
+# ifdef __CPP__TYPES
+
+
+int main() {
+    // [[[ OPERATIONS HEADER ]]]
+
+// [[[ OPERATIONS ]]]
+    integer foo_integer = 9123;
+    number foo_number = 9123.456789;
+    string foo_string = (const string) "howdy";
+    print "have $foo_integer = " << integer_to_string(foo_integer) << endl;
+    print "have $foo_number  = " << number_to_string(foo_number) << endl;
+    print "have $foo_string  = " << foo_string << endl;
+    print endl;
+    boolean aaa_boolean = ANDl(0, 0);
+    boolean bbb_boolean = ANDl(0, 1);
+    boolean ccc_boolean = ANDl(1, 0);
+    boolean ddd_boolean = ANDl(1, 1);
+    integer aaa_integer = ANDl(22, foo_integer);
+    integer bbb_integer = ANDl(foo_integer, 22);
+    number aaa_number = ANDl(-22.3, foo_number);
+    number bbb_number = ANDl(foo_number, -22.3);
+    string aaa_string = ANDl((const string) "doody", foo_string);
+    string bbb_string = ANDl(foo_string, (const string) "doody");
+    print "have $aaa_boolean = " << aaa_boolean << endl;
+    print "have $bbb_boolean = " << bbb_boolean << endl;
+    print "have $ccc_boolean = " << ccc_boolean << endl;
+    print "have $ddd_boolean = " << ddd_boolean << endl;
+    print "have $aaa_integer = " << integer_to_string(aaa_integer) << endl;
+    print "have $bbb_integer = " << integer_to_string(bbb_integer) << endl;
+    print "have $aaa_number  = " << number_to_string(aaa_number) << endl;
+    print "have $bbb_number  = " << number_to_string(bbb_number) << endl;
+    print "have $aaa_string  = " << aaa_string << endl;
+    print "have $bbb_string  = " << bbb_string << endl;
+
+
+
+    // [[[ OPERATIONS FOOTER ]]]
+    return 0;
+}
+
+// [[[ FOOTER ]]]
+# elif defined __PERL__TYPES
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+# endif
+#endif

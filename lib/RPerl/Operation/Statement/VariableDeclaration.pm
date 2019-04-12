@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableDeclaration;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.019_000;
+our $VERSION = 0.020_000;
 
 
 
@@ -565,7 +565,12 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}
                 = { isa => 'RPerl::Operation::Expression::SubExpression::Variable', type => $type };
 
+#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $pointerify_classes = ' . $pointerify_classes . "\n");
+#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have  pre-type_convert_perl_to_cpp() $type = ' . $type . "\n");
+
             $type = RPerl::Generator::type_convert_perl_to_cpp( $type, $pointerify_classes );
+#            RPerl::diag('in VariableDeclaration->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have post-type_convert_perl_to_cpp() $type = ' . $type . "\n");
+
             $modes->{_symbol_table}->{ $modes->{_symbol_table}->{_namespace} }->{ $modes->{_symbol_table}->{_subroutine} }->{$symbol}->{type_cpp} = $type; # add converted C++ type to symtab entry
 
             # detect user-defined class std::unique_ptr constant reference semantics
