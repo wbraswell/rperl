@@ -3,7 +3,7 @@ package RPerl::Operation::Statement::VariableModification;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.005_000;
+our $VERSION = 0.005_100;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::Operation::Statement);
@@ -250,7 +250,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
                 $rhs_class_underscores =~ s/:/_/g;
             }
             else {
-                die 'ERROR ECOGEASCP070, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Object constructor move semantics detected, but RHS class name not found where expected, dying' . "\n";
+                die 'ERROR ECOGEASCP089, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Object constructor move semantics detected, but RHS class name not found where expected, dying' . "\n";
             }
                 
 #            RPerl::diag( 'in VariableModification->ast_to_cpp__generate__CPPOPS_CPPTYPES(), have $rhs_class_underscores = ', q{'}, $rhs_class_underscores, q{'}, "\n" );

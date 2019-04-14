@@ -565,8 +565,8 @@ sub grammar_rules__map {
             . $RPerl::Grammar::RULES->{$rule}
             . q[:: ) { ] 
                 
-            # DEV NOTE, CORRELATION #rp071: do not copy constant subroutines, avoid error "Not a subroutine reference"
-            . q[next if (($key eq 'NAME') or ($key eq 'NAME_PERLOPS_PERLTYPES') or ($key eq 'NAME_CPPOPS_PERLTYPES') or ($key eq 'NAME_CPPOPS_CPPTYPES') or ($key eq 'ARGUMENTS_MIN') or ($key eq 'ARGUMENTS_MAX'));  ]  
+            # DEV NOTE, CORRELATION #rp079: do not copy constant subroutines, avoid error "Not a subroutine reference"
+            . q[next if (((substr $key, 0, 4) eq 'NAME') or ((substr $key, 0, 9) eq 'ARGUMENTS'));  ]  
 
             . q[if (defined &{ $]
             . $RPerl::Grammar::RULES->{$rule}
