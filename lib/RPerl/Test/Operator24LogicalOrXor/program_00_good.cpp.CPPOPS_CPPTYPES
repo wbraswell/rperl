@@ -17,8 +17,8 @@
 
 // [[[ HEADER ]]]
 #include <rperlstandalone.h>
-#ifndef __CPP__INCLUDED__RPerl__Test__Operator16LogicalOr__program_00_good_cpp
-#define __CPP__INCLUDED__RPerl__Test__Operator16LogicalOr__program_00_good_cpp 0.001_000
+#ifndef __CPP__INCLUDED__RPerl__Test__Operator24LogicalOrXor__program_00_good_cpp
+#define __CPP__INCLUDED__RPerl__Test__Operator24LogicalOrXor__program_00_good_cpp 0.001_000
 # ifdef __CPP__TYPES
 
 
@@ -33,16 +33,16 @@ int main() {
     print "have $foo_number  = " << number_to_string(foo_number) << endl;
     print "have $foo_string  = " << foo_string << endl;
     print endl;
-    boolean aaa_boolean = ORl(0, 0);
-    boolean bbb_boolean = ORl(0, 1);
-    boolean ccc_boolean = ORl(1, 0);
-    boolean ddd_boolean = ORl(1, 1);
-    integer aaa_integer = ORl(22, foo_integer);
-    integer bbb_integer = ORl(foo_integer, 22);
-    number aaa_number = ORl(-22.3, foo_number);
-    number bbb_number = ORl(foo_number, -22.3);
-    string aaa_string = ORl((const string) "doody", foo_string);
-    string bbb_string = ORl(foo_string, (const string) "doody");
+    boolean aaa_boolean = (ORl(0, 0));
+    boolean bbb_boolean = (ORl(0, 1));
+    boolean ccc_boolean = (ORl(1, 0));
+    boolean ddd_boolean = (ORl(1, 1));
+    integer aaa_integer = (ORl(22, foo_integer));
+    integer bbb_integer = (ORl(foo_integer, 22));
+    number aaa_number = (ORl(-22.3, foo_number));
+    number bbb_number = (ORl(foo_number, -22.3));
+    string aaa_string = (ORl((const string) "doody", foo_string));
+    string bbb_string = (ORl(foo_string, (const string) "doody"));
     print "have $aaa_boolean = " << aaa_boolean << endl;
     print "have $bbb_boolean = " << bbb_boolean << endl;
     print "have $ccc_boolean = " << ccc_boolean << endl;

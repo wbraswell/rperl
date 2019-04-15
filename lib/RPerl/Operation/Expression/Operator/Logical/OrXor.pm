@@ -20,9 +20,9 @@ use constant NAME_CPPOPS_CPPTYPES_OR => my string $TYPED_NAME = 'ORl';
 
 
 
-# START HERE: implement lib/RPerl/Test/Operator24LogicalOrXor/*
-# START HERE: implement lib/RPerl/Test/Operator24LogicalOrXor/*
-# START HERE: implement lib/RPerl/Test/Operator24LogicalOrXor/*
+# START HERE: implement XORl macro in rperloperations.h, generate lib/RPerl/Test/Operator24LogicalOrXor/program_01_good.cpp.CPPOPS_CPPTYPES
+# START HERE: implement XORl macro in rperloperations.h, generate lib/RPerl/Test/Operator24LogicalOrXor/program_01_good.cpp.CPPOPS_CPPTYPES
+# START HERE: implement XORl macro in rperloperations.h, generate lib/RPerl/Test/Operator24LogicalOrXor/program_01_good.cpp.CPPOPS_CPPTYPES
 
 
 
