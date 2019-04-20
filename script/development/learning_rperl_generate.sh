@@ -1,5 +1,5 @@
 #!/bin/bash
-# v0.046_000
+# v0.047_000
 
 CURRENT_DIR=`pwd`
 TMP_DIR=/tmp/rperl
@@ -70,13 +70,13 @@ mkdir -p $TMP_DIR/stylesheets
 cd $TMP_DIR/stylesheets
 if [ ! -f metacpan_rperl.css ]
   then
-    wget -q https://raw.githubusercontent.com/wbraswell/rperl/gh-pages/stylesheets/metacpan_rperl.css
+    wget -q https://raw.githubusercontent.com/wbraswell/rperl/gh-pages/learning/stylesheets/metacpan_rperl.css
 fi
 mkdir -p $TMP_DIR/javascripts
 cd $TMP_DIR/javascripts
 if [ ! -f metacpan_rperl.js ]
   then
-    wget -q https://raw.githubusercontent.com/wbraswell/rperl/gh-pages/javascripts/metacpan_rperl.js
+    wget -q https://raw.githubusercontent.com/wbraswell/rperl/gh-pages/learning/javascripts/metacpan_rperl.js
 fi
 cd $CURRENT_DIR
 echo 'DONE'
