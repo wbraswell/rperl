@@ -66,7 +66,7 @@ Learning RPerl
 
 =head1 COPYRIGHT
 
-Learning RPerl is Copyright © 2013, 2014, 2015, 2016, 2017, 2018 William N. Braswell, Jr.
+Learning RPerl is Copyright © 2013, 2014, 2015, 2016, 2017, 2018, 2019 William N. Braswell, Jr.
 All Rights Reserved.
 
 Learning RPerl is part of the RPerl Family of software and documentation.
