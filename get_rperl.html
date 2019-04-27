@@ -54,6 +54,37 @@ All eligible operating systems, use Docker images:<br>
 <p style="padding-left: 2em; font-style: italic; font-weight: bold;">
 $ docker run -it wbraswell/rperl_github
 </p>
+
+Debian &amp; Ubuntu, Install Docker (before running above command):<br><br>
+
+<p style="text-align: left; padding-left: 2em; font-style: italic; font-weight: bold;">
+$ sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+<br>
+$ "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"
+<br>
+<br>
+$ sudo apt-key fingerprint 0EBFCD88
+<br>
+<br>
+pub   4096R/0EBFCD88 2017-02-22
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Key fingerprint = 9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
+<br>
+uid                  Docker Release (CE deb) <docker@docker.com>
+<br>
+sub   4096R/F273FCD8 2017-02-22
+<br>
+<br>
+$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+<br>
+$ sudo apt-get update
+<br>
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+</p>
+
+
+
+
 Browse raw files: <a href="https://hub.docker.com/r/wbraswell/rperl_github/">https://hub.docker.com/r/wbraswell/rperl_github/</a>
 
 <br><br>
