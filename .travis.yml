@@ -1,6 +1,6 @@
 # NEED UPDATE, CORRELATION #rp037: all changes made to this file MUST be propagated to the corresponding .travis.yml files for all other RPerl Family software suites 
 language: perl
-# v0.104_000
+# v0.105_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -79,7 +79,7 @@ before_script:
 #    - cpanm -n INGY/Inline-C-0.62_03.tar.gz
 
     # NEED REMOVE, WHEN INSTALL ISSUES RESOLVED: https://github.com/ingydotnet/inline-c-pm/issues/72
-    - cpanm --dev Inline::C
+    - cpanm --verbose --dev Inline::C
 
     # DEV NOTE: beginning in mid-March 2018, Travis must be forced to use HTTP for file transfers, at least in the case of Alien::GSL; reason unknown
     # EXAMPLE ERROR:  Could not find any matching files at /home/travis/perl5/perlbrew/perls/5.10/lib/site_perl/5.10.1/Alien/Base/ModuleBuild.pm line 404.
