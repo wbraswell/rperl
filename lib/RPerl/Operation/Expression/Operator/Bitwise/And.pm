@@ -80,7 +80,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         $cpp_source_group->{CPP} .= ')';
     }
     else {
-        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . $self_class . ' found where Operator_122 or Operator_128 expected, dying' ) . "\n";
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . $self_class . ' found where Operator_120 expected, dying' ) . "\n";
     }
     return $cpp_source_group;
 }
