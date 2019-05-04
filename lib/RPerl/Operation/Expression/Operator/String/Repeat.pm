@@ -22,6 +22,8 @@ sub ast_to_rperl__generate {
     { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $rperl_source_group = { PMC => q{} };
+    my string_hashref $cpp_source_group = { CPP => q{} };
+
 
 #    RPerl::diag( 'in Operator::String::Repeat->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
@@ -64,6 +66,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
         CPP => q{// <<< RP::O::E::O::S::R __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
             . "\n"
         };
+    my string_hashref $cpp_source_group = { CPP => q{} };
 
     #...
     return $cpp_source_group;
