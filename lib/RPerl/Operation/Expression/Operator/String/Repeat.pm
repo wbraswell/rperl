@@ -24,6 +24,7 @@ sub ast_to_rperl__generate {
     my string_hashref $rperl_source_group = { PMC => q{} };
 
 #    RPerl::diag( 'in Operator::String::Repeat->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+#    RPerl::diag( 'in Operator::String::Repeat->ast_to_rperl__generate() ,  received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
     if ( $self_class eq 'Operator_111' ) {  # Operator -> SubExpression OP07_STRING_REPEAT SubExpression
