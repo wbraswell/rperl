@@ -62,12 +62,26 @@ sub ast_to_cpp__generate__CPPOPS_PERLTYPES {
 sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my string_hashref $modes) = @ARG;
-    my string_hashref $cpp_source_group
-        = { CPP =>
-            q{// <<< RP::O::E::O::B::A __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+    my string_hashref $cpp_source_group = { CPP => q{} };
 
-    #...
+    my string $self_class = ref $self;
+    if ( $self_class eq 'Operator_120' )
+    {
+        $cpp_source_group->{CPP} .= NAME_CPPOPS_CPPTYPES() . '(';
+
+        my string_hashref $cpp_source_subgroup = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+
+        $cpp_source_group->{CPP} .= ', ';
+
+        $cpp_source_subgroup = $self->{children}->[2]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+
+        $cpp_source_group->{CPP} .= ')';
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . $self_class . ' found where Operator_120 expected, dying' ) . "\n";
+    }
     return $cpp_source_group;
 }
 

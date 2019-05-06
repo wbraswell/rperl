@@ -23,7 +23,7 @@ sub ast_to_rperl__generate {
     ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $rperl_source_group = { PMC => q{} };
 
-#    RPerl::diag( 'in Operator::Bitwise::OrXor->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
+    #    RPerl::diag( 'in Operator::Bitwise::OrXor->ast_to_rperl__generate(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 
     my string $self_class = ref $self;
     if ( $self_class eq 'Operator_121' ) { # Operator -> SubExpression OP14_BITWISE_OR_XOR SubExpression
@@ -52,7 +52,7 @@ sub ast_to_cpp__generate__CPPOPS_PERLTYPES {
     ( my object $self, my string_hashref $modes) = @ARG;
     my string_hashref $cpp_source_group
         = { CPP =>
-            q{// <<< RP::O::E::O::B::OX __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
+        q{// <<< RP::O::E::O::B::OX __DUMMY_SOURCE_CODE CPPOPS_PERLTYPES >>>}
             . "\n" };
 
     #...
@@ -62,12 +62,34 @@ sub ast_to_cpp__generate__CPPOPS_PERLTYPES {
 sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my string_hashref $modes) = @ARG;
-    my string_hashref $cpp_source_group
-        = { CPP =>
-            q{// <<< RP::O::E::O::B::OX __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>}
-            . "\n" };
+    my string_hashref $cpp_source_group = { CPP => q{} };
 
-    #...
+    my string $self_class = ref $self;
+    if ( $self_class eq 'Operator_121' )
+    {
+        if ($self->{children}->[1] eq '|')  {
+            $cpp_source_group->{CPP} .= NAME_CPPOPS_CPPTYPES_OR() . '(';
+        }
+        elsif ($self->{children}->[1] eq '^') {
+            $cpp_source_group->{CPP} .= NAME_CPPOPS_CPPTYPES_XOR() . '(';
+        }
+        else {
+            die RPerl::Parser::rperl_rule__replace( q{ERROR ECOGEASCP070, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar token '} . $self->{children}->[1] . q{' found where '^' or '|' expected, dying} ) . "\n";
+        }
+
+        my string_hashref $cpp_source_subgroup = $self->{children}->[0]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+
+        $cpp_source_group->{CPP} .= ', ';
+
+        $cpp_source_subgroup = $self->{children}->[2]->ast_to_cpp__generate__CPPOPS_CPPTYPES($modes);
+        RPerl::Generator::source_group_append( $cpp_source_group, $cpp_source_subgroup );
+
+        $cpp_source_group->{CPP} .= ')';
+    }
+    else {
+        die RPerl::Parser::rperl_rule__replace( 'ERROR ECOGEASCP000, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Grammar rule ' . $self_class . ' found where Operator_121 expected, dying' ) . "\n";
+    }
     return $cpp_source_group;
 }
 
