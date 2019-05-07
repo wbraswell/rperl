@@ -27,11 +27,14 @@
 # are listed as "DEAUTHORIZED".
 # Developers who have had 100% of their contributions removed for any reason
 # are listed as "REDACTED".
+# Developers who have assigned their contributions under a commercial agreement
+# are listed as "WORKS FOR HIRE".
 
 -- 
 
 Anonymous Name           AKA bulk88        <bulkdd at NOSPAM.cpan.org>                    [ AUTHORIZED #2 20160516 ]
-Dmitry Karasik                             <dmitry at NOSPAM.karasik.eu.org>
+Bruce Gray               AKA Util          <bruce.gray at NOSPAM.acm.org>                 [ WORKS FOR HIRE ]
+Dmitry Karasik                             <dmitry at NOSPAM.karasik.eu.org>              [ WORKS FOR HIRE ]
 Felix Tubiana            AKA xxfelixxx     <felixtubiana at NOSPAM.gmail.com>             [ AUTHORIZED #4 20171207 ]
 Mathias Köhler           AKA mako          <ma_ko at NOSPAM.riseup.net>                   [ AUTHORIZED #3 20160722 ]
 Matthew S. Trout         AKA mst           <mst-pause at NOSPAM.shadowcat.co.uk>          [ REDACTED by friendly collaboration to avoid legal assignment ]
