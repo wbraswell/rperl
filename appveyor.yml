@@ -1,5 +1,5 @@
 # NEED UPDATE, CORRELATION #rp038: all changes made to this file MUST be propagated to the corresponding appveyor.yml files for all other RPerl Family software suites 
-# v0.020_000
+# v0.021_000
 version: 1.0.{build}
 pull_requests:
   do_not_increment_build_number: false
@@ -50,6 +50,8 @@ install:
     perl -e"require CPAN;CPAN::Shell->notest('install','App::cpanminus');"
 
     cpanm --verbose --notest IO::Socket::SSL
+
+    cpanm --verbose --notest Alien::GSL
 
     cpanm --verbose --notest git://github.com/wbraswell/math--gsl.git
 
