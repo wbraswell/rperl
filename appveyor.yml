@@ -1,5 +1,5 @@
 # NEED UPDATE, CORRELATION #rp038: all changes made to this file MUST be propagated to the corresponding appveyor.yml files for all other RPerl Family software suites 
-# v0.016_000
+# v0.017_000
 version: 1.0.{build}
 pull_requests:
   do_not_increment_build_number: false
@@ -8,7 +8,7 @@ clone_depth: 1
 clone_folder: C:\projects\rperl
 
 environment:
-  APPVEYOR_RDP_PASSWORD: rperl_public_password
+  APPVEYOR_RDP_PASSWORD: rperl_123!$*
 
 init:
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
