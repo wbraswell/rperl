@@ -1,5 +1,5 @@
 # NEED UPDATE, CORRELATION #rp038: all changes made to this file MUST be propagated to the corresponding appveyor.yml files for all other RPerl Family software suites 
-# v0.018_000
+# v0.019_000
 version: 1.0.{build}
 pull_requests:
   do_not_increment_build_number: false
@@ -24,8 +24,6 @@ on_finish:
 # DEV NOTE: do not test any CPAN dependencies, causes test time to exceed 1 hours AppVeyor maximum
 install:
 - cmd: >-
-
-    choco install gnuwin
 
     choco install astyle
 
