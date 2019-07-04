@@ -1,5 +1,5 @@
 # [[[ EXCLUDE ALL GITHUB, UNUSED, AND AUTOMATICALLY-GENERATED FILES FROM CPAN ]]]
-# v0.101_000
+# v0.110_000
 # [ GitHub & Travis-CI & AppVeyor ]
 ^\.git
 ^\.gitignore$
@@ -55,6 +55,7 @@ swp$
 ^lib\/RPerl\/3rd_party_debugging
 ^script\/3rd_party_debugging
 ^script\/development\/unused
+^docs\/compiler_oracle
 
 # [ RPerl Compile ]
 # NEED UPDATE, CORRELATION #rp013: list of RPerl build files & directories to delete/exclude in Makefile.PL, .gitignore, and MANIFEST.SKIP

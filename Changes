@@ -1,5 +1,17 @@
 Revision history for Perl compiler RPerl.
 
+5.000000 2019-07-04 Codename Skylab
+
+    - HOLIDAY EDITION: Happy Independence Day!
+    - Docker Container, Initial Dockerfile and Docker Hub Support
+    - Logical Or/Xor Operator, Correctly Emulate Perl Behavior
+    - Logical And Operator, Correctly Emulate Perl Behavior
+    - Compiler, Inline -I Include Paths, Move Current Dir To Last
+    - Compiler, Dependency File Names, Allow But Do Not Require Leading 'lib/'
+    - Bug Fix, SSE sse_div(), Support Divide-By-Zero & Create INFINITY() Constant
+    - Bug Fix, '-Wall -Wextra' Warnings, Remove Leading 'const' From Constant Shims
+    - User-Defined Class std::unique_ptr Constant Reference Semantics In VariableDeclaration
+
 4.002000 2018-11-15
 
     - Path Handling, Remove Current Dir & @INC Dirs, Avoids Hard-Coding System-Specific Dirs In #include Statements
