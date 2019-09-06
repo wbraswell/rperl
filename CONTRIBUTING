@@ -1,8 +1,43 @@
-<<<=== OVERVIEW ===>>>
+<<<=== COPYRIGHT CONTRIBUTIONS ===>>>
+
+[ BEGIN, RPERL FAMILY COPYRIGHT ASSIGNMENT AGREEMENT ]
+
+By contributing to this repository, you agree that any and all such Contributions and derivative works thereof shall immediately become part of the RPerl Family of software and documentation, and you accept and agree to the following legally-binding terms and conditions for all Your present and future Contributions:
+
+1. Definitions.
+
+"You" or "Your" shall mean the copyright owner, or legal entity authorized by the copyright owner, that is making this Agreement.  For legal entities, the entity making a Contribution and all other entities that control, are controlled by, or are under common control with that entity are considered to be a single Contributor.  For the purposes of this Agreement, "control" means (i) the power, direct or indirect, to cause the direction or management of such entity, whether by contract or otherwise, or (ii) ownership of fifty percent (50%) or more of the outstanding shares, or (iii) beneficial ownership of such entity.
+
+The "RPerl Family of software and documentation" (hereinafter the "RPerl Family") is defined as all copyrightable works identified as "part of the RPerl Family" immediately following their copyright notice, and includes but is not limited to the RPerl compiler, the MathPerl suite, the PhysicsPerl suite, the SciencePerl suite, other RPerl application suites, application programming interfaces between RPerl and any other technology, and all associated RPerl software.
+
+"Team RPerl" is defined as all duly-authorized contributors to the RPerl Family, including You after making Your first Contribution to the RPerl Family under the terms of this Agreement.
+
+"Team RPerl Leadership" is defined as all duly-authorized administrators and official representatives of the RPerl Family, as listed publicly on the most up-to-date copy of the RPerl.org website.
+
+"Contribution" shall mean any original work of authorship, including any changes or additions or enhancements to an existing work, that is intentionally submitted by You to this repository for inclusion in, or documentation of, any of the products or services which are part of the RPerl Family (hereinafter the "Work").  For the purposes of this Agreement, "submit" or "submitted" means any form of electronic, verbal, or written communication sent to Team RPerl Leadership, including but not limited to communication on electronic mailing lists, source code revision systems, and issue tracking systems that are managed by, or on behalf of, Team RPerl Leadership for the purpose of discussing and improving the Work, but excluding communication that is conspicuously marked or otherwise designated in writing by You as "Not a Contribution".
+
+2. Assignment of Copyright.  Subject to the terms and conditions of this Agreement, and for good and valuable consideration, receipt of which You acknowledge, You hereby transfer to the individual named William N. Braswell, Jr. with a primary place of residence in Cedar Park, Texas, USA (hereinafter "Braswell"), Your entire right, title, and interest (including all rights under copyright) worldwide in all Your Contributions.  The Work hereby assigned shall also include any future versions of these or any other Contributions hereafter made by You.  Any derivative works of this Contribution prepared by You or Team RPerl shall be solely owned by Braswell and shall remain part of the RPerl Family.
+
+You hereby agree that if You have or acquire hereafter any patent or interface copyright or other intellectual property interest dominating the software or documentation contributed to by the Work (or use of that software or documentation), such dominating interest shall not be used to undermine the effect of this assignment, i.e. Braswell and all subsequent licensees shall be licensed to use, in that software or documentation and their derivative works, without royalty or limitation, the subject matter of the dominating interest.  This license provision shall be binding on Your heirs, assignees, or other successors to the dominating interest, as well as on You.
+
+You hereby represent and warrant that You are the sole copyright holder for the Work and that You have the right and power to enter into this legally-binding contractual agreement.  You hereby indemnify and hold harmless Braswell, his heirs, assignees, or other successors and Team RPerl Leadership, the officers, employees, and agents of any organization under the control of Braswell or owned in majority by Braswell, against any and all claims, actions or damages (including attorney's reasonable fees) asserted by or paid to any party on account of a breach or alleged breach of the foregoing warranty.
+
+3. Grant of Patent License.  Subject to the terms and conditions of this Agreement, You hereby grant to Braswell and to recipients of software distributed by Braswell a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable (except as stated in this section) patent license to make, have made, use, offer to sell, sell, import, and otherwise transfer the Work, where such license applies only to those patent claims licensable by You that are necessarily infringed by Your Contribution(s) alone or by combination of Your Contribution(s) with the Work to which such Contribution(s) was submitted.  If any entity institutes patent litigation against You or Braswell or Team RPerl Leadership or any other entity (including a cross-claim or counterclaim in a lawsuit) alleging that your Contribution, or the Work to which you have contributed, constitutes direct or contributory patent infringement, then any patent licenses granted to that entity under this Agreement for that Contribution or Work shall terminate as of the date such litigation is filed.
+
+4. You represent that you are legally entitled to assign the above copyright and grant the above patent license.  If your employer(s) or contractee(s) have rights to intellectual property that you create that includes your Contributions, then you represent that you have received official written permission to make Contributions on behalf of said employer(s) or contractee(s) and that they have waived in writing all such rights for your Contributions to the RPerl Family and that all such written permission(s) and waiver(s) are attached to your first Contribution, or that said employer(s) or contractee(s) have executed Team RPerl's Employer Copyright Disclaimer Agreement and it is attached to your first Contribution.
+
+5. You represent that each of Your Contributions is Your original creation and is not subject to any third-party license or other restriction (including, but not limited to, related patents and trademarks) of which you are personally aware and which are associated with any part of Your Contributions.
+
+6. You agree to submit written notification to Team RPerl Leadership of any facts or circumstances of which you become aware that would make the representations of this Agreement inaccurate in any respect.
+
+[ END, RPERL FAMILY COPYRIGHT ASSIGNMENT AGREEMENT ]
+
+
+<<<=== LEGAL OVERVIEW ===>>>
 
 All RPerl Family software and documentation is legally copyrighted by original RPerl creator William N. Braswell, Jr.
 
-To maintain the legal integrity and defensibility of the RPerl Family of software and documentation, all contributors to the RPerl Family must assign copyright ownership to Mr. Braswell, thereby empowering him to pursue legal action against those who attempt to violate any RPerl Family copyright, license, or other intellectual property rights.
+To maintain the legal integrity and defensibility of the RPerl Family of software and documentation, all contributors to the RPerl Family must assign copyright ownership to William Braswell under the terms of the RPerl Family Copyright Assignment Agreement above, thereby empowering him to pursue legal action against those who attempt to violate any RPerl Family copyright, license, or other intellectual property rights.
 
 This is the same strategy used by the Free Software Foundation for many GNU software projects, as explained below:
 
@@ -17,33 +52,34 @@ http://creativecommons.org/licenses/by-nd/3.0/us/
 
 In order to make sure that all of our copyrights can meet the recordkeeping and other requirements of registration, and in order to be able to enforce the GPL most effectively, FSF requires that each author of code incorporated in FSF projects provide a copyright assignment, and, where appropriate, a disclaimer of any work-for-hire ownership claims by the programmer's employer.  That way we can be sure that all the code in FSF projects is free code, whose freedom we can most effectively protect, and therefore on which other developers can completely rely."
 
+
 <<<=== COMMITMENT TO FREE & OPEN SOURCE SOFTWARE ===>>>
 
-Mr. Braswell is committed to maintaining the free-and-open-source software (FOSS) basis of the RPerl Family.
+William Braswell is committed to maintaining the free-and-open-source software (FOSS) basis of the RPerl Family.
 
-If your RPerl Family contribution is accepted and merged into an official RPerl Family source repository, then your contribution is automatically published on Github with FOSS licensing, currently the same terms as Perl itself (your choice of Artistic or GNU GPL licenses).  
+If your RPerl Family contribution is accepted and merged into an official RPerl Family source repository, then your contribution is automatically published online with FOSS licensing, currently the same terms as Perl itself (your choice of Artistic or GNU GPL licenses).  
 
-<<<=== ASSIGNMENT AGREEMENT ===>>>
 
-The file named ASSIGNMENT.pdf contains the copyright assignment agreement.  Please print the file on one page of paper, then use blue ink to clearly write your full legal name twice (both at the top and bottom), write the date, and sign your signature.  You may then submit the fully-executed ASSIGNMENT document either in original paper form via snail mail, or a high-resolution digital scanned copy via e-mail.  If possible, please execute (sign) the ASSIGNMENT document in the presence of an official Notary Public, and have them notarize the appropriate area at the bottom of the document.
+<<<=== EMPLOYER COPYRIGHT DISCLAIMER AGREEMENT ===>>>
 
-<<<=== EMPLOYER DISCLAIMER ===>>>
+The file named EMPLOYERS.pdf contains the Employer Copyright Disclaimer Agreement.  If you are employed or work as an independent contractor, and either your job involves computer programming or you have executed an agreement giving your employer or contractee rights to the software you create, then we must receive a fully-executed copy of the EMPLOYERS agreement.  Please print the file on one page of paper, and use blue ink to clearly write the entity's full name and address, followed by your full legal name.  Then, have a vice president or general manager in your organization use blue ink to write the date, their full legal name and organizational title, and sign their signature.  You may then submit the fully-executed EMPLOYERS document either in original paper form via snail mail (preferable), or a high-resolution digital scanned copy via e-mail.  If possible, please execute (sign) the EMPLOYERS document in the presence of an official Notary Public, and have them notarize the appropriate area at the bottom of the document.
 
-The file named EMPLOYERS.pdf contains the employer disclaimer agreement.  If you are employed, and either your job involves computer programming or you have executed an agreement giving your employer rights to the software you create, then we must also receive a fully-executed copy of the EMPLOYERS agreement, using the same blue-ink signing and notarization method as the ASSIGNMENT document described above.  Please have the EMPLOYERS agreement signed by a vice president or general manager in your organization.  
 
 <<<=== OTHER CONTRIBUTORS ===>>>
 
-If any other people have written software source code or documentation as part of your RPerl contribution, then they and their respective employers must also all sign and submit their own copies of the ASSIGNMENT and EMPLOYERS agreements.
+If anyone other than yourself has written software source code or documentation as part of your RPerl Family contribution, then they must submit their contributions themselves under the terms of the RPerl Family Copyright Assignment Agreement above, and their respective employer(s) or contractee(s) must also all sign and submit their own copies of the Employer Copyright Disclaimer Agreement.
 
-Please be sure you DO NOT STUDY OR INCLUDE any 3rd-party or public-domain intellectual property as part of your RPerl contribution, including but not limited to: source code; documentation; copyrighted, trademarked, or patented components; or technical concepts.  In other words, don't copy someone else's work and don't study someone else's work while doing your own.  All your work must be 100% original.
+Please be sure you DO NOT STUDY OR INCLUDE any 3rd-party or public-domain intellectual property as part of your RPerl Family contribution, including but not limited to: source code; documentation; copyrighted, trademarked, or patented components; or technical concepts.  In other words, don't copy someone else's work and don't study someone else's work while doing your own.  All your work must be 100% original.
+
 
 <<<=== RECOGNITION ===>>>
 
-Once we have received all necessary assignment agreements and employer disclaimer agreements, then we will begin the process of reviewing any software pull requests you have submitted through the official RPerl repository on Github.  Upon merging of your pull request(s), you will automatically be listed by Github as one of the official RPerl contributors, and you will also be manually added to the AUTHORS file.
+Once we have received your contribution under the terms of the RPerl Family Copyright Assignment Agreement above, as well as any necessary Employer Copyright Disclaimer Agreement(s), then we will begin the process of reviewing any software pull requests you have submitted through the official RPerl Family repositories.  Upon merging of your pull request(s), you should automatically be listed in the repository as one of the official Team RPerl contributors, and you will also be manually added to the AUTHORS file.
+
 
 <<<=== SUBMISSION ===>>>
 
-When you are ready to submit the signed agreement(s), please answer the following 12 questions about yourself and your RPerl contribution, then include your answers in the body of your e-mail or on a separate sheet of paper in snail mail, and send it all to one of the addresses below.
+When you are ready to submit the signed agreement(s), please answer the following 12 questions about yourself and your RPerl Family contribution, then include your answers in the body of your e-mail or on a separate sheet of paper in snail mail, and send it all to one of the addresses below.
 
 1.  Full Legal Name
 2.  Preferred Pseudonym (or "none")
@@ -51,9 +87,9 @@ When you are ready to submit the signed agreement(s), please answer the followin
 4.  Date of Birth (spell full month name)
 5.  Snail Mail Address (include country)
 6.  E-Mail Address
-7.  Names of RPerl Files Modified (or "none")
-8.  Names of RPerl Files Created (or "none")
-9.  Current Employer (or "none")
+7.  Names of RPerl Family Files Modified (or "none")
+8.  Names of RPerl Family Files Created (or "none")
+9.  Current Employer(s) or Contractee(s) (or "none")
 10. Does Your Job Involve Computer Programming? (or "not applicable")
 11. Does Your Job Involve an IP Ownership Agreement? (or "not applicable")
 12. Name(s) & Employer(s) of Additional Contributors (or "none")
@@ -62,7 +98,7 @@ Snail Mail Address:
 
 RPerl Project
 c/o William Braswell
-608 S. Cougar Ave.
+[ CONTACT VIA E-MAIL BELOW FOR STREET ADDRESS ]
 Cedar Park, TX, USA, 78613
 
 E-Mail Address (Remove "NOSPAM." Before Sending):
