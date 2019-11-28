@@ -79,7 +79,25 @@ sub ast_to_cpp__generate__CPPOPS_PERLTYPES {
 sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
     { my string_hashref::method $RETURN_TYPE };
     ( my object $self, my object $operator_named, my string_hashref $modes) = @ARG;
-    my string_hashref $cpp_source_group = { CPP => q{} };
+    my string_hashref $cpp_source_group 
+
+
+
+# VERY FIRST START HERE: disable dummy code, add parentheses to make "keys $foo" into "keys(foo)" & test new template C++ keys()
+# VERY FIRST START HERE: disable dummy code, add parentheses to make "keys $foo" into "keys(foo)" & test new template C++ keys()
+# VERY FIRST START HERE: disable dummy code, add parentheses to make "keys $foo" into "keys(foo)" & test new template C++ keys()
+
+
+
+#        = { CPP => q{} };
+        = { CPP => q{// <<< RP::O::E::O::N::K __DUMMY_SOURCE_CODE CPPOPS_CPPTYPES >>>} . "\n" };
+
+    # TMP DEBUG
+    return $cpp_source_group;
+
+
+
+
 
 #    RPerl::diag( 'in Operator::Named::Keys->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $self = ' . "\n" . RPerl::Parser::rperl_ast__dump($self) . "\n" );
 #    RPerl::diag( 'in Operator::Named::Keys->ast_to_cpp__generate__CPPOPS_CPPTYPES(), received $operator_named = ' . "\n" . RPerl::Parser::rperl_ast__dump($operator_named) . "\n" );

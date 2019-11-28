@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
 
 #ifndef __CPP__INCLUDED__RPerl__Operation__Expression__Operator__Named__Keys_cpp
-#define __CPP__INCLUDED__RPerl__Operation__Expression__Operator__Named__Keys_cpp 0.001_000
+#define __CPP__INCLUDED__RPerl__Operation__Expression__Operator__Named__Keys_cpp 0.002_000
 
 #include <RPerl/Operation/Expression/Operator/Named/Keys.h>  // -> ???
 
@@ -118,6 +118,38 @@ SV* integer_arrayref_hashref_keys(SV* input_avref_hvref) {
 
 # elif defined __CPP__TYPES
 
+template<string, typename HASH_VALUE_TYPE>
+void print_keys_values(std::unordered_map<string, HASH_VALUE_TYPE> const &input_hash)
+{
+    for (auto iterator = input_hash.cbegin(); iterator != input_hash.cend(); ++iterator) {
+        std::cout << "key: " << (*iterator).first << "\n" << "value: " << (*iterator).second << "\n\n";
+    }
+}
+
+// convert from (C++ std::unordered_map of (C++ std::vector of integers)) to (C++ std::vector of strings)
+template<string, typename HASH_VALUE_TYPE>
+string_arrayref keys(std::unordered_map<string, HASH_VALUE_TYPE> const &input_unordered_map) {
+    fprintf(stderr, "in CPPOPS_CPPTYPES keys(), top of subroutine\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES keys(), received format_level = %"INTEGER", indent_level = %"INTEGER"\n", format_level, indent_level);
+
+    // declare local variables
+    string_arrayref output_keys;
+
+    // loop through all hash keys
+    for (auto iterator = input_unordered_map.begin();  iterator != input_unordered_map.end();  ++iterator) {
+        // append key string to output vector
+        output_keys.push_back(iterator->first);
+    }
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES keys(), after for() loop, have output_keys =\n%s\n", (char*)(integer_arrayref_hashref_to_string(output_keys).c_str()));
+    fprintf(stderr, "in CPPOPS_CPPTYPES keys(), bottom of subroutine\n");
+
+    return(output_keys);
+}
+
+
+/* NEED DELETE, TYPE-SPECIFIC CODE REPLACED BY TYPE-INDEPENDENT TEMPLATE CODE
+
 // short-hand, type-dependent; call actual keys routine
 string_arrayref keys(integer_arrayref_hashref input_vector_unordered_map) {
     return integer_arrayref_hashref_keys(input_vector_unordered_map);
@@ -151,6 +183,7 @@ string_arrayref integer_arrayref_hashref_keys(integer_arrayref_hashref input_vec
 
     return(output_keys);
 }
+*/
 
 # else
 
