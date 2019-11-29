@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.039_000;
+our $VERSION = 0.040_000;
 use 5.010;  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 
 use ExtUtils::MakeMaker;
@@ -109,6 +109,7 @@ WriteMakefile(
 
         # RPERL USER DEPENDENCIES
         'ExtUtils::MakeMaker' => '7.04',      # for compatibility with Inline::C >= v0.75
+        'PPI'                 => '1.242',     # avoid endless loop from exponents of 2+ zeroes; https://github.com/adamkennedy/PPI/pull/230
         'Test::Exception'     => '0.43',      # 0.43 needed because Appveyor testing required it
         'Test::CPAN::Changes' => '0.400002',
         'Test::Number::Delta' => '1.06',      # for compatibility with Perls compiled using -Duselongdouble
