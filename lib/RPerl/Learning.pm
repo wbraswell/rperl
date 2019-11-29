@@ -11779,7 +11779,7 @@ X<ENABLE_LIST_SPACING>
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP879, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
+    ERROR ECOGEASCP871, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
 
 =for rperl X</noncode>
 
@@ -18141,7 +18141,7 @@ However, when we try to compile the source code, we experience an error:
 
 =for rperl X<noncode>
 
-    ERROR ECOGEASCP879, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
+    ERROR ECOGEASCP871, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying
 
 =for rperl X</noncode>
 

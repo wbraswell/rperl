@@ -1,5 +1,13 @@
 Revision history for Perl compiler RPerl.
 
+5.002000 2019-11-28 Codename Skylab 2
+
+    - HOLIDAY EDITION: Happy Thanksgiving!
+    - Operator, Keys
+    - Operator, Exists
+    - 2D Data Structure, number_arrayref_arrayref
+    - 2D Data Structure, string_arrayref_arrayref
+
 5.000000 2019-07-04 Codename Skylab
 
     - HOLIDAY EDITION: Happy Independence Day!

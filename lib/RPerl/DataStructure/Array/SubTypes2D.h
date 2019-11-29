@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes2D_h
-#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes2D_h 0.003_500
+#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes2D_h 0.005_000
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
@@ -58,12 +58,10 @@ typedef std::vector<std::unordered_map<string, string>>::const_iterator string_h
 // [[[ ARRAY REF ARRAY REF ]]]
 void integer_arrayref_arrayref_CHECK(SV* possible_integer_arrayref_arrayref);
 void integer_arrayref_arrayref_CHECKTRACE(SV* possible_integer_arrayref_arrayref, const char* variable_name, const char* subroutine_name);
-/* NEED IMPLEMENT IN SubTypes2D.cpp
 void number_arrayref_arrayref_CHECK(SV* possible_number_arrayref_arrayref);
 void number_arrayref_arrayref_CHECKTRACE(SV* possible_number_arrayref_arrayref, const char* variable_name, const char* subroutine_name);
 void string_arrayref_arrayref_CHECK(SV* possible_string_arrayref_arrayref);
 void string_arrayref_arrayref_CHECKTRACE(SV* possible_string_arrayref_arrayref, const char* variable_name, const char* subroutine_name);
-*/
 
 // [[[ HASH REF ARRAY REF ]]]
 /* NEED IMPLEMENT IN SubTypes2D.cpp
@@ -92,12 +90,10 @@ Purposefully_die_from_a_compile-time_error,_due_to_neither___PERL__TYPES_nor___C
 // [[[ ARRAY REF ARRAY REF ]]]
 integer_arrayref_arrayref XS_unpack_integer_arrayref_arrayref(SV* input_avref_avref);
 void XS_pack_integer_arrayref_arrayref(SV* output_avref_avref, integer_arrayref_arrayref input_vector_vector);
-/* NEED IMPLEMENT IN SubTypes2D.cpp
 number_arrayref_arrayref XS_unpack_number_arrayref_arrayref(SV* input_avref_avref);
 void XS_pack_number_arrayref_arrayref(SV* output_avref_avref, number_arrayref_arrayref input_vector_vector);
 string_arrayref_arrayref XS_unpack_string_arrayref_arrayref(SV* input_avref_avref);
 void XS_pack_string_arrayref_arrayref(SV* output_avref_avref, string_arrayref_arrayref input_vector_vector);
-*/
 
 // [[[ HASH REF ARRAY REF ]]]
 /* NEED IMPLEMENT IN SubTypes2D.cpp

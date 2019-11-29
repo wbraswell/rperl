@@ -1,0 +1,47 @@
+//!/usr/bin/env rperl
+
+
+
+
+
+
+// [[[ HEADER ]]]
+#include <rperlstandalone.h>
+#ifndef __CPP__INCLUDED__RPerl__Test__Operator10NamedUnaryExists__program_10_good_cpp
+#define __CPP__INCLUDED__RPerl__Test__Operator10NamedUnaryExists__program_10_good_cpp 0.001_000
+# ifdef __CPP__TYPES
+
+
+int main() {
+    // [[[ OPERATIONS HEADER ]]]
+
+// [[[ OPERATIONS ]]]
+    integer_arrayref_hashref foo = { {"key_0", {0, 1, 2, 3, 4}}, {"key_1", {5, 6, 7, 8, 9}}, {"key_2", {0, -1, -2, -3, -4}}, {"key_3", {-5, -6, -7, -8, -9}} };
+    string key_valid = (const string) "key_0";
+    string key_not_valid = (const string) "key_X";
+    boolean key_does_exist = exists(foo, key_valid);
+    boolean key_does_not_exist = exists(foo, key_not_valid);
+    if ( key_does_exist ) {
+        print "have $key_does_exist = TRUE" << endl;
+    }
+    else {
+        print "have $key_does_exist = FALSE" << endl;
+    }
+    if ( key_does_not_exist ) {
+        print "have $key_does_not_exist = TRUE" << endl;
+    }
+    else {
+        print "have $key_does_not_exist = FALSE" << endl;
+    }
+
+
+
+    // [[[ OPERATIONS FOOTER ]]]
+    return 0;
+}
+
+// [[[ FOOTER ]]]
+# elif defined __PERL__TYPES
+Purposefully_die_from_a_compile-time_error,_due_to____PERL__TYPES_being_defined.__We_need_to_define_only___CPP__TYPES_in_this_file!
+# endif
+#endif

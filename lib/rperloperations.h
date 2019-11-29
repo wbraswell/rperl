@@ -3,6 +3,7 @@
 
 #include <rperltypes_mode.h>
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
+#include <RPerl/Operation/Expression/Operator/Named/Keys.cpp>  // -> Keys.h
 
 # ifdef __PERL__TYPES
 
@@ -26,6 +27,13 @@
 
 // DEV NOTE, CORRELATION #rp071: "logical or" || operator behaves differently in Perl vs C++, accepts strings so must use double-negation trick to convert to boolean, returns operand on left if operator evaluates to true; use ORl instead of || in C++
 #define ORl(x,y) (!!x) ? x : ((!!y) ? y : 0)
+
+// array operations
+#define scalar(array) array.size()
+
+// hash operations
+#define exists(hash,key) ((bool) hash.count(key))
+//#define exists_ref(hashref,key) hashref.NEED_DEREF_BEFORE.count(key)
 
 // [[[ STATEMENTS ]]]
 

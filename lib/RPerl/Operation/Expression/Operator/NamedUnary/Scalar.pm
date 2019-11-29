@@ -18,11 +18,11 @@ use RPerl::Operation::Expression::Operator::NamedUnary;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ CONSTANTS ]]]
-use constant NAME                  => my string $TYPED_NAME                  = 'scalar';
-use constant NAME_CPPOPS_PERLTYPES => my string $TYPED_NAME_CPPOPS_PERLTYPES = 'DUMMY_OP_SCALAR';
-use constant NAME_CPPOPS_CPPTYPES  => my string $TYPED_NAME_CPPOPS_CPPTYPES  = 'size';
-use constant ARGUMENTS_MIN         => my integer $TYPED_ARGUMENTS_MIN        = 1;
-use constant ARGUMENTS_MAX         => my integer $TYPED_ARGUMENTS_MAX        = 1;
+use constant NAME                  => my string  $TYPED_NAME                  = 'scalar';
+use constant NAME_CPPOPS_PERLTYPES => my string  $TYPED_NAME_CPPOPS_PERLTYPES = 'DUMMY_OP_SCALAR';
+use constant NAME_CPPOPS_CPPTYPES  => my string  $TYPED_NAME_CPPOPS_CPPTYPES  = 'size';
+use constant ARGUMENTS_MIN         => my integer $TYPED_ARGUMENTS_MIN         = 1;
+use constant ARGUMENTS_MAX         => my integer $TYPED_ARGUMENTS_MAX         = 1;
 
 # [[[ OO PROPERTIES ]]]
 our hashref $properties = {};
@@ -161,7 +161,7 @@ sub ast_to_cpp__generate__CPPOPS_CPPTYPES {
             }
             else {
                 die RPerl::Parser::rperl_rule__replace(
-                    'ERROR ECOGEASCP879, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying'
+                    'ERROR ECOGEASCP871, CODE GENERATOR, ABSTRACT SYNTAX TO C++: Array dereference of array reference must provide data type for array reference in CPPOPS_CPPTYPES mode, but no data type provided, dying'
                 ) . "\n";
             }
         }

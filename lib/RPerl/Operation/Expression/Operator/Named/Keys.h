@@ -28,16 +28,10 @@ SV* integer_arrayref_hashref_keys(SV* input_avref_hvref);  //  long-hand, type-d
 
 
 
-// NEED TEST: use of 'HASH' below
-// NEED TEST: use of 'HASH' below
-// NEED TEST: use of 'HASH' below
-
-//#  define HASH std::unordered_map
-
 
 
 // template, type-independent
-template<string, typename HASH_VALUE_TYPE>
+template<typename HASH_VALUE_TYPE>
 string_arrayref keys(std::unordered_map<string, HASH_VALUE_TYPE> const &input_unordered_map);
 
 /* NEED DELETE, TYPE-SPECIFIC CODE REPLACED BY TYPE-INDEPENDENT TEMPLATE CODE

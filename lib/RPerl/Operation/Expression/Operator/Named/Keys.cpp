@@ -118,7 +118,7 @@ SV* integer_arrayref_hashref_keys(SV* input_avref_hvref) {
 
 # elif defined __CPP__TYPES
 
-template<string, typename HASH_VALUE_TYPE>
+template<typename HASH_VALUE_TYPE>
 void print_keys_values(std::unordered_map<string, HASH_VALUE_TYPE> const &input_hash)
 {
     for (auto iterator = input_hash.cbegin(); iterator != input_hash.cend(); ++iterator) {
@@ -127,10 +127,9 @@ void print_keys_values(std::unordered_map<string, HASH_VALUE_TYPE> const &input_
 }
 
 // convert from (C++ std::unordered_map of (C++ std::vector of integers)) to (C++ std::vector of strings)
-template<string, typename HASH_VALUE_TYPE>
+template<typename HASH_VALUE_TYPE>
 string_arrayref keys(std::unordered_map<string, HASH_VALUE_TYPE> const &input_unordered_map) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES keys(), top of subroutine\n");
-    fprintf(stderr, "in CPPOPS_CPPTYPES keys(), received format_level = %"INTEGER", indent_level = %"INTEGER"\n", format_level, indent_level);
+//    fprintf(stderr, "in CPPOPS_CPPTYPES keys(), top of subroutine\n");
 
     // declare local variables
     string_arrayref output_keys;
@@ -141,8 +140,8 @@ string_arrayref keys(std::unordered_map<string, HASH_VALUE_TYPE> const &input_un
         output_keys.push_back(iterator->first);
     }
 
-    fprintf(stderr, "in CPPOPS_CPPTYPES keys(), after for() loop, have output_keys =\n%s\n", (char*)(integer_arrayref_hashref_to_string(output_keys).c_str()));
-    fprintf(stderr, "in CPPOPS_CPPTYPES keys(), bottom of subroutine\n");
+//    fprintf(stderr, "in CPPOPS_CPPTYPES keys(), after for() loop, have output_keys =\n%s\n", (char*)(string_arrayref_to_string(output_keys).c_str()));
+//    fprintf(stderr, "in CPPOPS_CPPTYPES keys(), bottom of subroutine\n");
 
     return(output_keys);
 }

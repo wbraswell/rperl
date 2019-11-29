@@ -16,6 +16,8 @@ integer_arrayref    T_PACKED
 number_arrayref     T_PACKED
 string_arrayref     T_PACKED
 integer_arrayref_arrayref   T_PACKED
+number_arrayref_arrayref    T_PACKED
+string_arrayref_arrayref    T_PACKED
 
 # HASH TYPES
 integer_hashref     T_PACKED
