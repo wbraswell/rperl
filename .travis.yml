@@ -1,6 +1,6 @@
 # NEED UPDATE, CORRELATION #rp037: all changes made to this file MUST be propagated to the corresponding .travis.yml files for all other RPerl Family software suites 
 language: perl
-# v0.106_000
+# v0.107_000
 perl:
 # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 # Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
@@ -63,7 +63,8 @@ before_script:
     # Entering IO-Socket-SSL-2.066 ...  Checking if you have Net::SSLeay 1.46 ... Yes (1.65) ... Running Makefile.PL
     # Configuring IO-Socket-SSL-2.066 ... API-different OpenSSL versions compiled in (0x1000100f) vs linked (0x1000207f) at Makefile.PL l68
     # ! Configure failed for IO-Socket-SSL-2.066.
-    - cpanm --verbose --notest --force IO::Socket::SSL
+    - cpanm --verbose --notest --force --reinstall Net::SSLeay
+    - cpanm --verbose --notest --force --reinstall IO::Socket::SSL
 
     # DEV NOTE, CORRELATION #rp060: must force share install of dists which are not available via system install; PCRE2 & JPCRE2 are not readily available via the OS package manager
     # EXAMPLE ERROR:  Configuring Alien-PCRE2-xxx ... Alien::Build::Plugin::PkgConfig::Negotiate> Using PkgConfig plugin: PkgConfig::CommandLine
