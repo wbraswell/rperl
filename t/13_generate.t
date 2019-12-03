@@ -10,7 +10,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.052_000;
+our $VERSION = 0.052_100;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -458,7 +458,7 @@ for my $mode_id ( 2 , 0 ) {    # CPPOPS_CPPTYPES, PERLOPS_PERLTYPES; DEV NOTE: r
             }
         }
 
-        # trim unnecessary (and possibly problematic) absolute paths from reference file names
+        # trim unnecessary (and possibly problematic) @INC & absolute paths from reference file names
         foreach my string $suffix_key (keys %{$reference_file_name_group}) {
             if (defined $reference_file_name_group->{$suffix_key}) {
                 $reference_file_name_group->{$suffix_key} = RPerl::Compiler::post_processor__INC_paths_delete($reference_file_name_group->{$suffix_key}, 1, 0);  # $leading_slash_delete = 1, $leading_lib_delete = 0

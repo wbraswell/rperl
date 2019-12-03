@@ -9,7 +9,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.010_000;
+our $VERSION = 0.010_100;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -364,12 +364,6 @@ FOREACH_STDOUT_LINE: foreach my string $stdout_generated_line ( @{$stdout_genera
             substr $success, 0, 10, '';  # discard [IS_REGEX] prefix
             $is_regex = 1;
         }
-
-
-# START HERE: copy new regex parts to physicsperl & mathperl
-# START HERE: copy new regex parts to physicsperl & mathperl
-# START HERE: copy new regex parts to physicsperl & mathperl
-
 
 #        RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $is_regex = ' . $is_regex . "\n" );
 #        RPerl::diag( 'in 09_interpret_execute.t success_match(), top of foreach loop, have $success               = ' . $success . "\n" );
