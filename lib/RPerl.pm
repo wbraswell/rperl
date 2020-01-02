@@ -290,7 +290,7 @@ __END__
 
 =encoding utf8
 
-=for DEV NOTE: BEGIN INLINE CSS DIV
+=for comment DEV NOTE: BEGIN INLINE CSS DIV
 
 =begin html
 
