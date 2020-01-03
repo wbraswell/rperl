@@ -1,5 +1,7 @@
-# [[[ EXCLUDE ALL AUTOMATICALLY-GENERATED FILES FROM GITHUB ]]]
-# [ GitHub ]
+# [[[ EXCLUDE ALL AUTOMATICALLY-GENERATED FILES FROM GIT ]]]
+# v0.120_000
+
+# [ Git ]
 # .gitignore is not auto-generated, do not exclude self
 
 # [ Inline Build ]
