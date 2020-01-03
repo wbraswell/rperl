@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get @ARG, Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.054_000;
+our $VERSION = 0.055_000;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -203,6 +203,7 @@ sub create_symtab_entries_and_accessors_mutators {
 
     my $module_filename_long;           # string
     my $module_filename_long_processed = {}; # boolean_hashref
+    my $module_file_line_remainder;     # string
     my $use_rperl;                      # boolean
     my $inside_package;                 # boolean
     my $package_name;                   # string
@@ -286,6 +287,7 @@ sub create_symtab_entries_and_accessors_mutators {
             next;
         }
 
+        $module_file_line_remainder  = q{};
         $use_rperl                   = 0;
         $inside_package              = 0;
         $package_name                = q{};
@@ -399,9 +401,9 @@ sub create_symtab_entries_and_accessors_mutators {
                     last;
                 }
 
-#                if ($module_file_line =~ m/sub\s*/xms) {
+                if ($module_file_line =~ m/sub\s*/xms) {
 #                    RPerl::diag("in Class::INIT() block, have \$module_file_line =\n$module_file_line\n");
-#                }
+                }
 
                 # create ops/types reporting subroutine & accessor/mutator object methods for each RPerl package
 
@@ -575,7 +577,7 @@ sub create_symtab_entries_and_accessors_mutators {
 
                     # DEV NOTE, CORRELATION #rp053: even with the upgrade to normal Perl subroutine headers, we must still activate subroutines w/out args or when type-checking is explicitly disabled with CHECK OFF, in order for RPerl::Exporter to work properly, presumably because Exporter.pm runs before Class.pm and thus we can not test for the existence of __CHECKED_*() subroutines in RPerl::Exporter::import()
                     if ( $CHECK eq 'OFF' ) {
-#                        RPerl::diag( q{in Class::INIT() block, CHECK IS OFF, about to call activate_subroutine_args_checking()...} . "\n" );
+##                        RPerl::diag( q{in Class::INIT() block, CHECK IS OFF, about to call activate_subroutine_args_checking()...} . "\n" );
                         activate_subroutine_args_checking( $package_name, $subroutine_name, $subroutine_type, q{}, $module_filename_long );
                     }
                     elsif ( ( $CHECK ne 'ON' ) and ( $CHECK ne 'TRACE' ) ) {
@@ -637,9 +639,20 @@ sub create_symtab_entries_and_accessors_mutators {
                     if ($inside_subroutine_arguments) {
                         $subroutine_arguments_line .= $module_file_line;
                         if ( $subroutine_arguments_line =~ /\@ARG\;/xms ) {    # @ARG; found
-                            if ( not( $subroutine_arguments_line =~ /\@ARG\;$/xms ) ) {    # @ARG; found not at end-of-line
+                            if ( not( $subroutine_arguments_line =~ /\@ARG\;\s*$/xms ) ) {    # @ARG; found not at end-of-line
+#                                RPerl::diag( q{in Class::INIT() block, found @ARG; NOT at end-of-line while inside subroutine } . $subroutine_name . '(), have $subroutine_arguments_line = ' . "\n" . $subroutine_arguments_line . "\n\n" . 'continuing RPerl activation of file' . "\n" );
+
+                                # separate @ARG statement from remainder of line
+                                my $after_arg_index = (index $subroutine_arguments_line, '@ARG;') + 5;
+                                $module_file_line_remainder = substr $subroutine_arguments_line, $after_arg_index;
+                                $subroutine_arguments_line  = substr $subroutine_arguments_line, 0, $after_arg_index;
+
+#                                RPerl::diag( 'in Class::INIT() block, set $subroutine_arguments_line =' . "\n>>>" . $subroutine_arguments_line . "<<<\n" );
+#                                RPerl::diag( 'in Class::INIT() block, set $module_file_line_remainder =' . "\n>>>" . $module_file_line_remainder . "<<<\n" );
+
+                                # DEV NOTE: do not abort if @ARG; found not at end-of-line, separate line and continue
 #                                RPerl::diag( q{in Class::INIT() block, found @ARG; NOT at end-of-line while inside subroutine } . $subroutine_name . '(), have $subroutine_arguments_line = ' . "\n" . $subroutine_arguments_line . "\n\n" . 'aborting RPerl activation of entire file' . "\n" );
-                                last;
+#                                last;
                             }
 
 #                            RPerl::diag( q{in Class::INIT() block, found @ARG; at end-of-line while inside subroutine } . $subroutine_name . '(), have $subroutine_arguments_line = ' . "\n" . $subroutine_arguments_line . "\n" );
@@ -703,6 +716,14 @@ sub create_symtab_entries_and_accessors_mutators {
                             }
                             $inside_subroutine_arguments = 0;
 #                            RPerl::diag( 'in Class::INIT() block, have $subroutine_arguments_check_code =' . "\n" . $subroutine_arguments_check_code . "\n" );
+                        }
+
+                        # enable @ARG; not at end-of-line, continue parsing same input line if it contains more data
+                        if ($module_file_line_remainder ne q{}) {
+#                            RPerl::diag( 'in Class::INIT() block, have non-empty $module_file_line_remainder =' . "\n>>>" . $module_file_line_remainder . "<<<\n" );
+                            $module_file_line = $module_file_line_remainder;
+                            $module_file_line_remainder = q{};
+                            goto MODULE_FILE_LINE_LOOP_INNER;
                         }
 
                         next;    # next file line
