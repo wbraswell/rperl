@@ -13,11 +13,7 @@ our $VERSION = 0.001_000;
 use RPerl::Test::Reserved::Class_01_Good;
 
 # [[[ SUBROUTINES ]]]
-sub foo_subroutine_in_main {
-    { my void $RETURN_TYPE };
-    print 'Howdy from foo_subroutine_in_main()...', "\n";
-    return;
-}
+sub foo_subroutine_in_main { { my void $RETURN_TYPE }; print 'Howdy from foo_subroutine_in_main()...', "\n"; return; }
 
 # [[[ OPERATIONS ]]]
 print 'Hello, World!', "\n";

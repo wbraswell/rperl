@@ -34,11 +34,7 @@ sub multiply_bax_FG {
     return;
 }
 
-sub multiply_return_FG {
-    { my number $RETURN_TYPE };
-    ( my integer $multiplicand, my number $multiplier ) = @ARG;
-    return $multiplicand * $multiplier;
-}
+sub multiply_return_FG { { my number $RETURN_TYPE }; ( my integer $multiplicand, my number $multiplier ) = @ARG; return $multiplicand * $multiplier; }
 
 1;    # end of class
 
@@ -69,11 +65,7 @@ sub multiply_bax_F {
     return;
 }
 
-sub multiply_return_F {
-    { my number $RETURN_TYPE };
-    ( my integer $multiplicand, my number $multiplier ) = @ARG;
-    return $multiplicand * $multiplier;
-}
+sub multiply_return_F { { my number $RETURN_TYPE }; ( my integer $multiplicand, my number $multiplier ) = @ARG; return $multiplicand * $multiplier; }
 
 1;    # end of class
 
@@ -100,10 +92,6 @@ sub multiply_bax_G {
     return;
 }
 
-sub multiply_return_G {
-    { my number $RETURN_TYPE };
-    ( my integer $multiplicand, my number $multiplier ) = @ARG;
-    return $multiplicand * $multiplier;
-}
+sub multiply_return_G { { my number $RETURN_TYPE }; ( my integer $multiplicand, my number $multiplier ) = @ARG; return $multiplicand * $multiplier; }
 
 1;    # end of class

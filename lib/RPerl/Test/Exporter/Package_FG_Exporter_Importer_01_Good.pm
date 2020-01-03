@@ -20,12 +20,7 @@ our @EXPORT = qw(multiply_return_FG);
 
 # [[[ SUBROUTINES ]]]
 
-sub multiply_return_FG {
-    { my number $RETURN_TYPE };
-    ( my integer $multiplicand, my number $multiplier ) = @ARG;
-#    print 'in multiply_return_FG(), about to return', "\n";
-    return $multiplicand * $multiplier;
-}
+sub multiply_return_FG { { my number $RETURN_TYPE }; ( my integer $multiplicand, my number $multiplier ) = @ARG; return $multiplicand * $multiplier; }
 
 1;    # end of class
 
@@ -45,11 +40,7 @@ INIT { RPerl::Test::Exporter::Package_FG_Exporter_Importer_01_Good->import(); }
 
 # [[[ SUBROUTINES ]]]
 
-sub multiply_return_F {
-    { my number $RETURN_TYPE };
-    ( my integer $multiplicand, my number $multiplier ) = @ARG;
-    return $multiplicand * $multiplier;
-}
+sub multiply_return_F { { my number $RETURN_TYPE }; ( my integer $multiplicand, my number $multiplier ) = @ARG; return $multiplicand * $multiplier; }
 
 1;    # end of class
 
@@ -65,10 +56,6 @@ INIT { RPerl::Test::Exporter::Package_F_Exporter_Importer_01_Good->import(qw(mul
 
 # [[[ SUBROUTINES ]]]
 
-sub multiply_return_G {
-    { my number $RETURN_TYPE };
-    ( my integer $multiplicand, my number $multiplier ) = @ARG;
-    return $multiplicand * $multiplier;
-}
+sub multiply_return_G { { my number $RETURN_TYPE }; ( my integer $multiplicand, my number $multiplier ) = @ARG; return $multiplicand * $multiplier; }
 
 1;    # end of class

@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-our $VERSION = 0.040_000;
+our $VERSION = 0.041_000;
 use 5.010;  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
 
 use ExtUtils::MakeMaker;
@@ -115,7 +115,7 @@ WriteMakefile(
         'Test::Number::Delta' => '1.06',      # for compatibility with Perls compiled using -Duselongdouble
         'Test2::Suite'        => '0.000069',  # older versions are broken
         'Perl::Critic'        => '1.121',
-        'Perl::Tidy'          => '20140711',
+        'Perl::Tidy'          => '20191203',  # RT#130394: Allow short nested blocks; had to reformat 19 test files to pass tests again
         'Inline'              => '0.80',
         'Inline::C'           => '0.76',      # wbraswell added CPPFLAGS
         'Inline::CPP'         => '0.74',      # davido & mohawk fixed ntype warnings; davido & wbraswell fixed namespace hack; nanis fixed Win32 filename space bug

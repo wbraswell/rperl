@@ -1,8 +1,9 @@
-# [[[ EXCLUDE ALL GITHUB, UNUSED, AND AUTOMATICALLY-GENERATED FILES FROM CPAN ]]]
-# v0.110_000
-# [ GitHub & Travis-CI & AppVeyor ]
+# [[[ EXCLUDE ALL GIT, UNUSED, AND AUTOMATICALLY-GENERATED FILES FROM CPAN ]]]
+# v0.120_000
+# [ Git & Travis-CI & AppVeyor ]
 ^\.git
 ^\.gitignore$
+^\.gitlab-ci\.yml$
 ^\.travis\.yml$
 ^appveyor\.yml$
 

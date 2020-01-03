@@ -17,6 +17,9 @@ our hashref $properties
     = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
-sub empty_method { { my void::method $RETURN_TYPE }; return 2; }
+sub empty_method {
+    { my void::method $RETURN_TYPE };
+    return 2;
+}
 
 1;                  # end of class

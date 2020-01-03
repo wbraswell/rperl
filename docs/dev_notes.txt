@@ -1,4 +1,4 @@
-# RPerl Developer Notes 20181217 2018.351
+# RPerl Developer Notes 20200102 2020.002
 
 ##########################################################################################
 # WARNING & ERROR CODES
@@ -225,23 +225,25 @@ https://pause.perl.org
 # RELEASE HOLIDAYS
 ##########################################################################################
 
-NEW YEAR'S
-GROUNDHOG
-ST. VALENTINE'S
-PI
-ST. PATRICK'S
-APRIL FOOLS'
-GOOD FRIDAY
-EASTER
-MAY THE 4TH
-CAPTAIN PICARD DAY (JUNE 16)
-INDEPENDENCE
-HALLOWEEN
-THANKSGIVING
-CHRISTMAS
+New Year's
+Groundhog
+St. Valentine's
+Pi
+St. Patrick's
+April Fools'
+Good Friday
+Easter
+May The 4TH
+Captain Picard Day (June 16)
+Independence
+Larry Wall's Birthday AKA St. Wall's Day (September 27, 1954)
+Halloween
+Thanksgiving
+Perl's Birthday AKA Perl Day (December 18, 1987)
+Christmas
 
-MOTHER'S DAY?
-FATHER'S DAY?
+Mother's Day?
+Father's Day?
 
 
 ##########################################################################################
@@ -259,6 +261,10 @@ neither your Makefile.PL nor generated Makefile are involved in installation of 
 ##########################################################################################
 
 # DEV NOTE: Makefile.PL uses ExtUtils::MakeMaker to interface with PAUSE & CPAN
+
+# CHECK POD
+$ podchecker lib/RPerl.pm
+$ podchecker script/rperl
 
 # UPDATE VERSION NUMBERS
 $ vi Changes
@@ -303,7 +309,7 @@ $ make dist
     # produces tarball output
 
 # INSTALL & TEST DIST, LOCAL COPY
-$ cpanm ./RPerl-VERSION.tar.gz
+$ cpanm --verbose ./RPerl-VERSION.tar.gz
     # install from local tarball, ensure tests run & installation is successful
 $ which rperl
 $ perl -e 'use RPerl;'
@@ -311,6 +317,7 @@ $ perl -e 'use RPerl;'
 
 # UPLOAD TO GITHUB & CPAN
 $ mv RPerl*.tar.gz backup/
+$ make realclean
 $ git add -A
 $ git commit -a
 	CPAN Release, vX.Y00000; Codename FOO, BAR Edition

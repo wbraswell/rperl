@@ -1,5 +1,6 @@
 # [[[ HEADER ]]]
 use RPerl;
+
 package RPerl::Test::Constant::Class_00_Good;
 use strict;
 use warnings;
@@ -15,10 +16,12 @@ use constant PI  => my number $TYPED_PI  = 3.141_59;
 use constant PIE => my string $TYPED_PIE = 'pecan';
 
 # [[[ OO PROPERTIES ]]]
-our hashref $properties
-    = { empty_property => my integer $TYPED_empty_property = 2 };
+our hashref $properties = { empty_property => my integer $TYPED_empty_property = 2 };
 
 # [[[ SUBROUTINES & OO METHODS ]]]
-sub empty_method { { my void::method $RETURN_TYPE }; return 2; }
+sub empty_method {
+    { my void::method $RETURN_TYPE };
+    return 2;
+}
 
 1;    # end of class
