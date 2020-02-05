@@ -262,7 +262,7 @@ RPERL.ORG
 
 RPERL COMMAND-LINE FRONT-END
     --noWarnings option does not suppress WEXRP00, `export RPERL_WARNINGS=0` does
-    rperl ./some_program.pl fails to run binary executable after compile, when PATH does not include '.'
+    CORRELATION #rp140: `rperl ./some_program.pl` fails to run binary executable after compile, when PATH does not include '.'
 
 UNSIGNED INTEGER FIX
     full boolean support via Boolean.cpp/h, rperltypes.pm, SvBOKp(), etc.

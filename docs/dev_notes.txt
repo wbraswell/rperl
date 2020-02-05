@@ -1,4 +1,4 @@
-# RPerl Developer Notes 20200204 2020.035
+# RPerl Developer Notes 20200205 2020.036
 
 ##########################################################################################
 # WARNING & ERROR CODES
@@ -338,7 +338,7 @@ $ cpanm RPerl  # full release versions
 
 
 ##########################################################################################
-# DOCKER CONTAINER
+# DOCKER IMAGE
 ##########################################################################################
 
 # BUILD COMMANDS
@@ -347,18 +347,17 @@ $ cpanm RPerl  # full release versions
 $ cd ~/repos_github/rperl-latest/Docker/cpan_auto_deps
 $ sudo docker build -t wbraswell/rperl_cpan . > /tmp/docker_rperl_cpan.out 2>&1
 
-# test image
+# test local image
 $ sudo docker run --name rperl_cpan_instance -ti wbraswell/rperl_cpan
 $ sudo docker rm rperl_cpan_instance
 
-
-# START HERE: commands for docker upload
-# START HERE: commands for docker upload
-# START HERE: commands for docker upload
-
 # upload image
-$ sudo docker ...
+$ sudo docker push wbraswell/rperl_cpan:latest
 
+# test remote image
+$ sudo docker rmi wbraswell/rperl_cpan:latest
+$ sudo docker run --name rperl_cpan_instance -ti wbraswell/rperl_cpan
+$ sudo docker rm rperl_cpan_instance
 
 # EXTRA COMMANDS
 
@@ -373,3 +372,4 @@ $ sudo docker ps -a
 
 # remove container
 $ sudo docker rm <CONTAINER>
+

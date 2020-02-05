@@ -1,4 +1,4 @@
-# VERSION=0.002_000
+# VERSION=0.003_000
 FROM buildpack-deps:stretch-curl
 LABEL maintainer=wbraswell_docker@nym.hush.com
 
@@ -91,5 +91,11 @@ RUN mkdir perl5
 # note that 30 minutes of build time is in the t/{09,12,13}* tests
 # NEED FIX: Test-utf8 is missing dependency Module::Install    https://github.com/2shortplanks/Test-utf8/issues/7
 RUN eval $(perl -Mlocal::lib) && cpanm -v Module::Install && cpanm -v RPerl
+
+# default environmental variables: enable RPerl debug & verbose output;
+# CORRELATION #rp140: include current directory '.' in PATH to enable RPerl binary execution after compile
+ENV RPERL_DEBUG=1
+ENV RPERL_VERBOSE=1
+ENV PATH=".:${PATH}"
 
 CMD ["bash"]
