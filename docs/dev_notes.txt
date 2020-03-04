@@ -1,4 +1,4 @@
-# RPerl Developer Notes 20200205 2020.036
+# RPerl Developer Notes 20200304 2020.064
 
 ##########################################################################################
 # WARNING & ERROR CODES
@@ -166,7 +166,15 @@ replace 'foo->bar23() < 42' with C<foo-E<gt>bar23() E<lt> 42> from lines 3310 to
 :3310,3510s/'\([^']\{-}\)'/C<\1>/g
 
 # [[[ UNINDENT ]]]
+
+unindent lines starting w/ spaces
 :%s/^\ \ \ \ //g
+
+unindent lines starting w/ \\ comment
+:%s/^\/\/\ \ \ \ /\/\//g
+
+unindent lines starting w/ # comment
+:%s/^\#\ \ \ \ /\#/g
 
 
 ##########################################################################################
