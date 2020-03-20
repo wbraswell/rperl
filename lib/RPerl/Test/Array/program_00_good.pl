@@ -18,8 +18,8 @@ our $VERSION = 0.001_000;
 
 print 'before loop', "\n";
 
-my integer_arrayref $i_array = [];
-foreach my integer $i ( @{$i_array} ) {
+my integer_array @i_array = ();
+foreach my integer $i ( @i_array ) {
     print '$i = ', $i, "\n";
 }
 

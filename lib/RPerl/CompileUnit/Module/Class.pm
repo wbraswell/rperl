@@ -3,7 +3,7 @@ package RPerl::CompileUnit::Module::Class;
 use strict;
 use warnings;
 use RPerl::Config;    # get @ARG, Dumper, Carp, English without 'use RPerl;'
-our $VERSION = 0.055_000;
+our $VERSION = 0.055_100;
 
 # [[[ OO INHERITANCE ]]]
 # BASE CLASS HAS NO INHERITANCE
@@ -692,8 +692,13 @@ sub create_symtab_entries_and_accessors_mutators {
                             }
                             elsif ( $CHECK eq 'TRACE' ) {
 #                                RPerl::diag( 'in Class::INIT() block, CHECK IS TRACE' . "\n" );
+#                                RPerl::diag( 'in Class::INIT() block, CHECK IS TRACE, have $subroutine_name = ' . $subroutine_name . "\n" );
+
                                 my $i = 0;    # integer
                                 foreach my $subroutine_argument ( @{$subroutine_arguments} ) {
+#                                    RPerl::diag( 'in Class::INIT() block, CHECK IS TRACE, have $subroutine_argument->[0] = ' . $subroutine_argument->[0] . "\n" );
+#                                    RPerl::diag( 'in Class::INIT() block, CHECK IS TRACE, have $subroutine_argument->[1] = ' . $subroutine_argument->[1] . "\n" );
+ 
                                     # only enable type-checking for arguments of supported type;
                                     # NEED UPGRADE: enable checking of user-defined Class types & all other remaining RPerl types
                                     if (exists $TYPES_SUPPORTED->{$subroutine_argument->[0]}) {

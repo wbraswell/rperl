@@ -21,6 +21,11 @@ our @EXPORT = qw(
     number_arrayref_CHECKTRACE
     string_arrayref_CHECK
     string_arrayref_CHECKTRACE
+    integer_array_to_string_compact
+    integer_array_to_string
+    integer_array_to_string_pretty
+    integer_array_to_string_expand
+    integer_array_to_string_format
     integer_arrayref_to_string_compact
     integer_arrayref_to_string
     integer_arrayref_to_string_pretty
@@ -62,6 +67,37 @@ package    # hide from PAUSE indexing
     character;
 package    # hide from PAUSE indexing
     string;
+
+
+
+
+# [[[ INTEGER ARRAY ]]]
+# [[[ INTEGER ARRAY ]]]
+# [[[ INTEGER ARRAY ]]]
+
+# array of integers
+package  # hide from PAUSE indexing
+    integer_array;
+use strict;
+use warnings;
+use parent -norequire, qw(array);
+use Carp;
+
+# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
+package RPerl::DataStructure::Array::SubTypes1D;
+use strict;
+use warnings;
+
+# [[[ TYPE-CHECKING ]]]
+
+# no type-checking for array types, only arrayref types;
+# DEV NOTE, CORRELATION #rp031: Perl can not pass @array or %hash by value, must always pass scalar $arrayref or $hashref by reference
+
+# [[[ STRINGIFY ]]]
+
+# no stringify for array types, only arrayref types;
+# DEV NOTE, CORRELATION #rp031: Perl can not pass @array or %hash by value, must always pass scalar $arrayref or $hashref by reference
+
 
 # [[[ INTEGER ARRAY REF ]]]
 # [[[ INTEGER ARRAY REF ]]]
@@ -200,7 +236,7 @@ sub integer_arrayref_to_string_format {
     # pre-begin with optional indent, depending on format level
     if ($format_level >= 1) { $output_sv .= $indent; }
 
-    # begin output string with left-square-bracket, as required for all RPerl arrays
+    # begin output string with left-square-bracket
     $output_sv .= '[';
 
     # loop through all valid values of $i for use as index to input array
@@ -231,7 +267,7 @@ sub integer_arrayref_to_string_format {
     if    ($format_level >=  1) { $output_sv .= "\n" . $indent; }
     elsif ($format_level >= -1) { $output_sv .= q{ }; }
 
-    # end output string with right-square-bracket, as required for all RPerl arrays
+    # end output string with right-square-bracket
     $output_sv .= ']';
 
 #    RPerl::diag("in PERLOPS_PERLTYPES integer_arrayref_to_string_format(), after for() loop, have \$output_sv =\n$output_sv\n");
@@ -411,7 +447,7 @@ sub number_arrayref_to_string_format {
     # pre-begin with optional indent, depending on format level
     if ($format_level >= 1) { $output_sv .= $indent; }
 
-    # begin output string with left-square-bracket, as required for all RPerl arrays
+    # begin output string with left-square-bracket
     $output_sv .= '[';
 
     # loop through all valid values of $i for use as index to input array
@@ -442,7 +478,7 @@ sub number_arrayref_to_string_format {
     if    ($format_level >=  1) { $output_sv .= "\n" . $indent; }
     elsif ($format_level >= -1) { $output_sv .= q{ }; }
 
-    # end output string with right-square-bracket, as required for all RPerl arrays
+    # end output string with right-square-bracket
     $output_sv .= ']';
 
 #    RPerl::diag("in PERLOPS_PERLTYPES number_arrayref_to_string_format(), after for() loop, have \$output_sv =\n$output_sv\n");
@@ -629,7 +665,7 @@ sub string_arrayref_to_string_format {
     # pre-begin with optional indent, depending on format level
     if ($format_level >= 1) { $output_sv .= $indent; }
 
-    # begin output string with left-square-bracket, as required for all RPerl arrays
+    # begin output string with left-square-bracket
     $output_sv .= '[';
 
     # loop through all valid values of $i for use as index to input array
@@ -661,7 +697,7 @@ sub string_arrayref_to_string_format {
     if    ($format_level >=  1) { $output_sv .= "\n" . $indent; }
     elsif ($format_level >= -1) { $output_sv .= q{ }; }
 
-    # end output string with right-square-bracket, as required for all RPerl arrays
+    # end output string with right-square-bracket
     $output_sv .= ']';
 
 #    RPerl::diag("in PERLOPS_PERLTYPES string_arrayref_to_string_format(), after for() loop, have \$output_sv =\n$output_sv\n");

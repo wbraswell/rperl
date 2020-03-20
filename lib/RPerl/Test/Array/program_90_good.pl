@@ -1,10 +1,10 @@
 #!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: "in main(), have pre-modify $arrayref_1D = [ 0, 2, 4, 6, 8 ]" >>>
+# <<< EXECUTE_SUCCESS: "in main(), have pre-modify \@array_1D = [ 0, 2, 4, 6, 8 ]" >>>
 # <<< EXECUTE_SUCCESS: "in modify_arrayref(), received $arrayref_1D_input =      [ 0, 2, 4, 6, 8 ]" >>>
 # <<< EXECUTE_SUCCESS: "in modify_arrayref(), have modified $arrayref_1D_input = [ 0, 2, 99, 6, 8 ]" >>>
-# <<< EXECUTE_SUCCESS: "in main(), have post-modify $arrayref_1D = [ 0, 2, 99, 6, 8 ]" >>>
+# <<< EXECUTE_SUCCESS: "in main(), have post-modify \@array_1D = [ 0, 2, 99, 6, 8 ]" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -31,10 +31,10 @@ sub modify_arrayref {
 
 # [[[ OPERATIONS ]]]
 
-my integer_arrayref $arrayref_1D = [ 0, 2, 4, 6, 8 ];
+my integer_array @array_1D = ( 0, 2, 4, 6, 8 );
 
-print 'in main(), have pre-modify $arrayref_1D = ', integer_arrayref_to_string($arrayref_1D), "\n";
+print 'in main(), have pre-modify \@array_1D = ', integer_arrayref_to_string(\@array_1D), "\n";
 
-modify_arrayref($arrayref_1D);
+modify_arrayref(\@array_1D);
 
-print 'in main(), have post-modify $arrayref_1D = ', integer_arrayref_to_string($arrayref_1D), "\n";
+print 'in main(), have post-modify \@array_1D = ', integer_arrayref_to_string(\@array_1D), "\n";

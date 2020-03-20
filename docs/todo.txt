@@ -34,6 +34,8 @@ DOING
         std::vector should be array and std::unique_ptr<std::vector> should be arrayref, etc.
         ArrayDereference & HashDerefence operators should actually dereference (unwrap) std::unique_ptr in CPPOPS_CPPTYPES, deref AVRV to AV in CPPOPS_PERLTYPES, etc. 
         implement pertinent operators: scalar, keys, values
+        stringify functions integer_array_to_string(), number_array_to_string(), integer_hash_to_string(), number_hash_to_string(), etc.
+        somewhere in physicsperl or mathperl, there is a fake reference unwrap function for Perl, possibly for GMP or SSE or some other special C(++) data type 
 
     foreach() loop and keys() operator in CPPOPS_CPPTYPES
 

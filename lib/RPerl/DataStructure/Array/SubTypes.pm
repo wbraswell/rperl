@@ -39,8 +39,8 @@ package    # hide from PAUSE indexing
 # [[[ ARRAY ]]]
 
 # an array is a 1-dimensional list/vector/sequence/set of data types;
-# we never use this type directly, instead we always use the arrayref type,
-# per LMPC #27: Thou Shalt Not Use Direct Access To Arrays & Hashes Stored In @ Or % Non-Scalar Variables
+# DEV NOTE, CORRELATION #rp031: Perl can not pass @array or %hash by value, must always pass scalar $arrayref or $hashref by reference;
+# LMPC #27: Thou Shalt Not Use Direct Access To Arrays & Hashes Stored In @ Or % Non-Scalar Variables
 package  # hide from PAUSE indexing
     array;
 use strict;
