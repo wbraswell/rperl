@@ -255,6 +255,16 @@ use strict;
 use warnings;
 use parent qw(RPerl::CodeBlock::Subroutine::Method);
 
+
+
+
+
+# VERY VERY VERY FIRST START HERE: move all ::method classes below to be in their respective files such as Array/SubTypes1D.pm etc
+# VERY VERY VERY FIRST START HERE: move all ::method classes below to be in their respective files such as Array/SubTypes1D.pm etc
+# VERY VERY VERY FIRST START HERE: move all ::method classes below to be in their respective files such as Array/SubTypes1D.pm etc
+
+
+
 # [[[ SCALAR & SCALAR REF METHODS ]]]
 
 # method with void return type

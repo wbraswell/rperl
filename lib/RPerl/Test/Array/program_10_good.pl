@@ -24,12 +24,12 @@ our $VERSION = 0.001_000;
 print 'before loop', "\n";
 
 # homogeneous 2-dimensional array of arrays, using inner types
-my arrayref_arrayref $array_array = [
+my arrayref_array @array_array = (
     my integer_arrayref $TYPED_array_array_0 = [ 17,   -23, 1_701 ],
     my integer_arrayref $TYPED_array_array_1 = [ -1,   444, 2_987 ],
     my integer_arrayref $TYPED_array_array_2 = [ -321, 7,   24_851 ]
-];
-foreach my arrayref $array ( @{$array_array} ) {
+);
+foreach my arrayref $array ( @array_array ) {
     print '$array = ', integer_arrayref_to_string($array), "\n";
 }
 

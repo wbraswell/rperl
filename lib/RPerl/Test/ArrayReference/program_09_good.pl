@@ -1,4 +1,15 @@
 #!/usr/bin/env perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< EXECUTE_SUCCESS: "before loop" >>>
+# <<< EXECUTE_SUCCESS: "$sc = 17" >>>
+# <<< EXECUTE_SUCCESS: "$sc = 0.02469135802" >>>
+# <<< EXECUTE_SUCCESS: "$sc = strings are scalars, too" >>>
+# <<< EXECUTE_SUCCESS: "$sc = FOOBAZ" >>>
+# <<< EXECUTE_SUCCESS: "after loop" >>>
+
+#!/usr/bin/env perl
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -11,6 +22,8 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
+print 'before loop', "\n";
+
 my scalartype $mystery_scalar = 'FOOBAZ';
 my scalartype_arrayref $sc_array = [
     my integer $TYPED_sc_array_0 = 17,
@@ -21,3 +34,5 @@ my scalartype_arrayref $sc_array = [
 foreach my scalartype $sc ( @{$sc_array} ) {
     print '$sc = ', $sc, "\n";
 }
+
+print 'after loop', "\n";

@@ -2,7 +2,9 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_SUCCESS: "before loop" >>>
-# <<< EXECUTE_SUCCESS: "$i = 17" >>>
+# <<< EXECUTE_SUCCESS: "$n = 0.6736455102" >>>
+# <<< EXECUTE_SUCCESS: "$n = 0.9996951839" >>>
+# <<< EXECUTE_SUCCESS: "$n = -0.7650690644" >>>
 # <<< EXECUTE_SUCCESS: "after loop" >>>
 
 # [[[ HEADER ]]]
@@ -19,9 +21,9 @@ our $VERSION = 0.001_000;
 
 print 'before loop', "\n";
 
-my integer_arrayref $i_array = [ 17 ];
-foreach my integer $i ( @{$i_array} ) {
-    print '$i = ', $i, "\n";
+my number_array @n_array = ( sin( 17 / 23 ), cos( 42 / 1_701 ), -( sin 21.12 ) );
+foreach my number $n ( @n_array ) {
+    print '$n = ', $n, "\n";
 }
 
 print 'after loop', "\n";

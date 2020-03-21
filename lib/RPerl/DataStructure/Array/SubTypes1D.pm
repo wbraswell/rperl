@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes1D;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.021_000;
+our $VERSION = 0.023_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -21,11 +21,6 @@ our @EXPORT = qw(
     number_arrayref_CHECKTRACE
     string_arrayref_CHECK
     string_arrayref_CHECKTRACE
-    integer_array_to_string_compact
-    integer_array_to_string
-    integer_array_to_string_pretty
-    integer_array_to_string_expand
-    integer_array_to_string_format
     integer_arrayref_to_string_compact
     integer_arrayref_to_string
     integer_arrayref_to_string_pretty
@@ -68,9 +63,6 @@ package    # hide from PAUSE indexing
 package    # hide from PAUSE indexing
     string;
 
-
-
-
 # [[[ INTEGER ARRAY ]]]
 # [[[ INTEGER ARRAY ]]]
 # [[[ INTEGER ARRAY ]]]
@@ -83,21 +75,8 @@ use warnings;
 use parent -norequire, qw(array);
 use Carp;
 
-# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
-package RPerl::DataStructure::Array::SubTypes1D;
-use strict;
-use warnings;
-
-# [[[ TYPE-CHECKING ]]]
-
-# no type-checking for array types, only arrayref types;
+# no method-return-type or type-checking or stringify for array types, only arrayref types;
 # DEV NOTE, CORRELATION #rp031: Perl can not pass @array or %hash by value, must always pass scalar $arrayref or $hashref by reference
-
-# [[[ STRINGIFY ]]]
-
-# no stringify for array types, only arrayref types;
-# DEV NOTE, CORRELATION #rp031: Perl can not pass @array or %hash by value, must always pass scalar $arrayref or $hashref by reference
-
 
 # [[[ INTEGER ARRAY REF ]]]
 # [[[ INTEGER ARRAY REF ]]]
@@ -310,6 +289,21 @@ sub integer_arrayref_typetest1 {
     return ($new_array);
 }
 
+# [[[ NUMBER ARRAY ]]]
+# [[[ NUMBER ARRAY ]]]
+# [[[ NUMBER ARRAY ]]]
+
+# array of numbers
+package  # hide from PAUSE indexing
+    number_array;
+use strict;
+use warnings;
+use parent -norequire, qw(array);
+use Carp;
+
+# no method-return-type or type-checking or stringify for array types, only arrayref types;
+# DEV NOTE, CORRELATION #rp031: Perl can not pass @array or %hash by value, must always pass scalar $arrayref or $hashref by reference
+
 # [[[ NUMBER ARRAY REF ]]]
 # [[[ NUMBER ARRAY REF ]]]
 # [[[ NUMBER ARRAY REF ]]]
@@ -521,6 +515,21 @@ sub number_arrayref_typetest1 {
     return ($new_array);
 }
 
+# [[[ CHARACTER ARRAY ]]]
+# [[[ CHARACTER ARRAY ]]]
+# [[[ CHARACTER ARRAY ]]]
+
+# array of characters
+package  # hide from PAUSE indexing
+    character_array;
+use strict;
+use warnings;
+use parent -norequire, qw(array);
+use Carp;
+
+# no method-return-type or type-checking or stringify for array types, only arrayref types;
+# DEV NOTE, CORRELATION #rp031: Perl can not pass @array or %hash by value, must always pass scalar $arrayref or $hashref by reference
+
 # [[[ CHARACTER ARRAY REF ]]]
 # [[[ CHARACTER ARRAY REF ]]]
 # [[[ CHARACTER ARRAY REF ]]]
@@ -531,6 +540,21 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use parent -norequire, qw(arrayref);
+
+# [[[ STRING ARRAY ]]]
+# [[[ STRING ARRAY ]]]
+# [[[ STRING ARRAY ]]]
+
+# array of strings
+package  # hide from PAUSE indexing
+    string_array;
+use strict;
+use warnings;
+use parent -norequire, qw(array);
+use Carp;
+
+# no method-return-type or type-checking or stringify for array types, only arrayref types;
+# DEV NOTE, CORRELATION #rp031: Perl can not pass @array or %hash by value, must always pass scalar $arrayref or $hashref by reference
 
 # [[[ STRING ARRAY REF ]]]
 # [[[ STRING ARRAY REF ]]]
@@ -745,6 +769,21 @@ THIS IS AN EXAMPLE BLOCK COMMENT
 it's purpose is to keep from triggering the UselessNoCritic rule,
 so we can keep the no critic sections at the top of the file for reference
 =cut
+
+# [[[ SCALAR ARRAY ]]]
+# [[[ SCALAR ARRAY ]]]
+# [[[ SCALAR ARRAY ]]]
+
+# array of scalartypes
+package  # hide from PAUSE indexing
+    scalartype_array;
+use strict;
+use warnings;
+use parent -norequire, qw(array);
+use Carp;
+
+# no method-return-type or type-checking or stringify for array types, only arrayref types;
+# DEV NOTE, CORRELATION #rp031: Perl can not pass @array or %hash by value, must always pass scalar $arrayref or $hashref by reference
 
 # [[[ SCALAR ARRAY REF ]]]
 # [[[ SCALAR ARRAY REF ]]]

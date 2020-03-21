@@ -3,7 +3,9 @@
 # [[[ PREPROCESSOR ]]]
 # <<< EXECUTE_SUCCESS: "before loop" >>>
 # <<< EXECUTE_SUCCESS: "$s = [ 'a', 'b', 'c' ]" >>>
+# <<< EXECUTE_SUCCESS: "$s = [ 'howdyhowdyhowdy' ]" >>>
 # <<< EXECUTE_SUCCESS: "$s = [ 'd', 'e', 'f' ]" >>>
+# <<< EXECUTE_SUCCESS: "$s = [ 'doodydoody' ]" >>>
 # <<< EXECUTE_SUCCESS: "$s = [ 'g', 'h', 'i' ]" >>>
 # <<< EXECUTE_SUCCESS: "after loop" >>>
 
@@ -21,11 +23,11 @@ our $VERSION = 0.001_000;
 
 print 'before loop', "\n";
 
-my string_arrayref $s_array_0 = [ 'a', 'b', 'c' ];
-my string_arrayref $s_array_1 = [ 'd', 'e', 'f' ];
-my string_arrayref $s_array_2 = [ 'g', 'h', 'i' ];
-my string_arrayref $s_array_all = [ $s_array_0, $s_array_1, $s_array_2 ];
-foreach my string_arrayref $s ( @{$s_array_all} ) {
+my string_array @s_array_0 = ( 'a', 'b', 'c' );
+my string_array @s_array_1 = ( 'd', 'e', 'f' );
+my string_array @s_array_2 = ( 'g', 'h', 'i' );
+my string_array @s_array_all = ( \@s_array_0, [ 'howdy' x 3 ], \@s_array_1, [ 'doody' x 2 ], \@s_array_2 );
+foreach my string_arrayref $s ( @s_array_all ) {
     print '$s = ', string_arrayref_to_string($s), "\n";
 }
 
