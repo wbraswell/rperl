@@ -3,7 +3,7 @@ package RPerl::DataType::Number;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.013_000;
+our $VERSION = 0.014_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -15,6 +15,7 @@ use RPerl::DataType::Scalar;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ SUB-TYPES ]]]
+
 # DEV NOTE, CORRELATION #rp007:
 # a number is any numeric value, meaning either an integer or a floating-point number;
 # Boolean, Unsigned Integer, and Integer are all sub-classes of Number;
@@ -26,6 +27,13 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use parent qw(RPerl::DataType::Number);
+
+# method with number return type
+package  # hide from PAUSE indexing
+    number::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 package  # hide from PAUSE indexing
     constant_number;

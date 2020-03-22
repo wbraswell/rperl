@@ -3,7 +3,7 @@ package RPerl::DataType::Boolean;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.009_000;
+our $VERSION = 0.010_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -15,12 +15,20 @@ use RPerl::DataType::Scalar;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ SUB-TYPES ]]]
+
 # a boolean is a binary boolean value, the only valid values are 0 (false) or 1 (true)
 package  # hide from PAUSE indexing
     boolean;
 use strict;
 use warnings;
 use parent qw(RPerl::DataType::Boolean);
+
+# method with boolean return type
+package  # hide from PAUSE indexing
+    boolean::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 # [[[ PRE-DECLARED TYPES ]]]
 package    # hide from PAUSE indexing

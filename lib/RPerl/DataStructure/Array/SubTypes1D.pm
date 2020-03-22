@@ -3,7 +3,7 @@ package RPerl::DataStructure::Array::SubTypes1D;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.023_000;
+our $VERSION = 0.024_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -89,6 +89,12 @@ use strict;
 use warnings;
 use parent -norequire, qw(arrayref);
 use Carp;
+
+package  # hide from PAUSE indexing
+    integer_arrayref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
 package RPerl::DataStructure::Array::SubTypes1D;
@@ -316,6 +322,12 @@ use warnings;
 use parent -norequire, qw(arrayref);
 use Carp;
 
+package  # hide from PAUSE indexing
+    number_arrayref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
+
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
 package RPerl::DataStructure::Array::SubTypes1D;
 use strict;
@@ -541,6 +553,12 @@ use strict;
 use warnings;
 use parent -norequire, qw(arrayref);
 
+package  # hide from PAUSE indexing
+    character_arrayref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
+
 # [[[ STRING ARRAY ]]]
 # [[[ STRING ARRAY ]]]
 # [[[ STRING ARRAY ]]]
@@ -567,6 +585,12 @@ use strict;
 use warnings;
 use parent -norequire, qw(arrayref);
 use Carp;
+
+package  # hide from PAUSE indexing
+    string_arrayref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
 package RPerl::DataStructure::Array::SubTypes1D;
@@ -795,5 +819,11 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use parent -norequire, qw(arrayref);
+
+package  # hide from PAUSE indexing
+    scalartype_arrayref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 1;  # end of package

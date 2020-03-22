@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes2D;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.022_000;
+our $VERSION = 0.023_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -66,6 +66,14 @@ use parent -norequire, qw(hashref);
 # [[[ INTEGER ARRAY REF HASH REF ]]]
 # [[[ INTEGER ARRAY REF HASH REF ]]]
 # [[[ INTEGER ARRAY REF HASH REF ]]]
+
+# DEV NOTE, CORRELATION #rp046: FOO::method package declaration must be above FOO package's new() subroutine to avoid error "No such class"
+# method returning (ref to hash) of (refs to (arrays of integers))
+package  # hide from PAUSE indexing
+    integer_arrayref_hashref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 # (ref to hash) of (refs to (arrays of integers))
 package  # hide from PAUSE indexing
@@ -350,6 +358,14 @@ sub integer_arrayref_hashref_typetest1 {
 # [[[ NUMBER ARRAY REF HASH REF ]]]
 # [[[ NUMBER ARRAY REF HASH REF ]]]
 # [[[ NUMBER ARRAY REF HASH REF ]]]
+
+# DEV NOTE, CORRELATION #rp046: FOO::method package declaration must be above FOO package's new() subroutine to avoid error "No such class"
+# method returning (ref to hash) of (refs to (arrays of numbers))
+package  # hide from PAUSE indexing
+    number_arrayref_hashref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 # (ref to hash) of (refs to (arrays of numbers))
 package  # hide from PAUSE indexing
@@ -641,6 +657,14 @@ sub number_arrayref_hashref_typetest1 {
 # [[[ STRING ARRAY REF HASH REF ]]]
 # [[[ STRING ARRAY REF HASH REF ]]]
 
+# DEV NOTE, CORRELATION #rp046: FOO::method package declaration must be above FOO package's new() subroutine to avoid error "No such class"
+# method returning (ref to hash) of (refs to (arrays of strings))
+package  # hide from PAUSE indexing
+    string_arrayref_hashref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
+
 # (ref to hash) of (refs to (arrays of strings))
 package  # hide from PAUSE indexing
     string_arrayref_hashref;
@@ -925,35 +949,91 @@ sub string_arrayref_hashref_typetest1 {
 # [[[ HASH REF HASH REF ]]]
 # [[[ HASH REF HASH REF ]]]
 
-# (ref to hash) of (refs to hashs)
+# DEV NOTE, CORRELATION #rp046: FOO::method package declaration must be above FOO package's new() subroutine to avoid error "No such class"
+# method returning (ref to hash) of (refs to hashes)
+package  # hide from PAUSE indexing
+    hashref_hashref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
+
+# (ref to hash) of (refs to hashes)
 package  # hide from PAUSE indexing
     hashref_hashref;
 use strict;
 use warnings;
 use parent -norequire, qw(hashref);
 
-# (ref to hash) of (refs to (hashs of integers))
+# [[[ INTEGER HASH REF HASH REF ]]]
+# [[[ INTEGER HASH REF HASH REF ]]]
+# [[[ INTEGER HASH REF HASH REF ]]]
+
+# DEV NOTE, CORRELATION #rp046: FOO::method package declaration must be above FOO package's new() subroutine to avoid error "No such class"
+# method returning (ref to hash) of (refs to (hashes of integers))
+package  # hide from PAUSE indexing
+    integer_hashref_hashref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
+
+# (ref to hash) of (refs to (hashes of integers))
 package  # hide from PAUSE indexing
     integer_hashref_hashref;
 use strict;
 use warnings;
 use parent -norequire, qw(hashref_hashref);
 
-# (ref to hash) of (refs to (hashs of numbers))
+# [[[ NUMBER HASH REF HASH REF ]]]
+# [[[ NUMBER HASH REF HASH REF ]]]
+# [[[ NUMBER HASH REF HASH REF ]]]
+
+# DEV NOTE, CORRELATION #rp046: FOO::method package declaration must be above FOO package's new() subroutine to avoid error "No such class"
+# method returning (ref to hash) of (refs to (hashes of numbers))
+package  # hide from PAUSE indexing
+    number_hashref_hashref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
+
+# (ref to hash) of (refs to (hashes of numbers))
 package  # hide from PAUSE indexing
     number_hashref_hashref;
 use strict;
 use warnings;
 use parent -norequire, qw(hashref_hashref);
 
-# (ref to hash) of (refs to (hashs of strings))
+# [[[ STRING HASH REF HASH REF ]]]
+# [[[ STRING HASH REF HASH REF ]]]
+# [[[ STRING HASH REF HASH REF ]]]
+
+# DEV NOTE, CORRELATION #rp046: FOO::method package declaration must be above FOO package's new() subroutine to avoid error "No such class"
+# method returning (ref to hash) of (refs to (hashes of strings))
+package  # hide from PAUSE indexing
+    string_hashref_hashref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
+
+# (ref to hash) of (refs to (hashes of strings))
 package  # hide from PAUSE indexing
     string_hashref_hashref;
 use strict;
 use warnings;
 use parent -norequire, qw(hashref_hashref);
 
-# (ref to hash) of (refs to (hashs of scalars))
+# [[[ SCALAR HASH REF HASH REF ]]]
+# [[[ SCALAR HASH REF HASH REF ]]]
+# [[[ SCALAR HASH REF HASH REF ]]]
+
+# DEV NOTE, CORRELATION #rp046: FOO::method package declaration must be above FOO package's new() subroutine to avoid error "No such class"
+# method returning (ref to hash) of (refs to (hashes of scalars))
+package  # hide from PAUSE indexing
+    scalartype_hashref_hashref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
+
+# (ref to hash) of (refs to (hashes of scalars))
 package  # hide from PAUSE indexing
     scalartype_hashref_hashref;
 use strict;
@@ -963,6 +1043,14 @@ use parent -norequire, qw(hashref_hashref);
 # [[[ OBJECT HASH REF (2-dimensional???) ]]]
 # [[[ OBJECT HASH REF (2-dimensional???) ]]]
 # [[[ OBJECT HASH REF (2-dimensional???) ]]]
+
+# DEV NOTE, CORRELATION #rp046: FOO::method package declaration must be above FOO package's new() subroutine to avoid error "No such class"
+# method returning (ref to hash) of objects
+package  # hide from PAUSE indexing
+    object_hashref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 # (ref to hash) of objects
 package  # hide from PAUSE indexing

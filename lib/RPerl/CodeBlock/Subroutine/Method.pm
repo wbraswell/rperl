@@ -3,7 +3,7 @@ package RPerl::CodeBlock::Subroutine::Method;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.009_000;
+our $VERSION = 0.010_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::CodeBlock::Subroutine);
@@ -254,124 +254,5 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use parent qw(RPerl::CodeBlock::Subroutine::Method);
-
-
-
-
-
-# VERY VERY VERY FIRST START HERE: move all ::method classes below to be in their respective files such as Array/SubTypes1D.pm etc
-# VERY VERY VERY FIRST START HERE: move all ::method classes below to be in their respective files such as Array/SubTypes1D.pm etc
-# VERY VERY VERY FIRST START HERE: move all ::method classes below to be in their respective files such as Array/SubTypes1D.pm etc
-
-
-
-# [[[ SCALAR & SCALAR REF METHODS ]]]
-
-# method with void return type
-package  # hide from PAUSE indexing
-    void::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-# method with integer return type
-package  # hide from PAUSE indexing
-    integer::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-# method with number return type
-package  # hide from PAUSE indexing
-    number::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-# method with character return type
-package  # hide from PAUSE indexing
-    character::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-# method with string return type
-package  # hide from PAUSE indexing
-    string::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-# method with scalartype return type
-package  # hide from PAUSE indexing
-    scalartype::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-# method with unknown return type
-package  # hide from PAUSE indexing
-    unknown::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-# [[[ HASH METHODS ]]]
-
-package  # hide from PAUSE indexing
-    integer_hashref::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-package  # hide from PAUSE indexing
-    number_hashref::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-package  # hide from PAUSE indexing
-    string_hashref::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-package  # hide from PAUSE indexing
-    object_hashref::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-package  # hide from PAUSE indexing
-    hashref_hashref::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-# [[[ ARRAY METHODS ]]]
-
-package  # hide from PAUSE indexing
-    integer_arrayref::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-package  # hide from PAUSE indexing
-    number_arrayref::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-package  # hide from PAUSE indexing
-    string_arrayref::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
-
-package  # hide from PAUSE indexing
-    arrayref_arrayref::method;
-use strict;
-use warnings;
-use parent -norequire, qw(method);
 
 1;

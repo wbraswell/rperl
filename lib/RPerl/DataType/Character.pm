@@ -10,12 +10,20 @@ use parent qw(RPerl::DataType::String);
 use RPerl::DataType::String;
 
 # [[[ SUB-TYPES ]]]
+
 # a character is a string of length 0 or 1, meaning a single letter, digit, or other ASCII (Unicode???) symbol
 package  # hide from PAUSE indexing
     character;
 use strict;
 use warnings;
-use parent qw(RPerl::DataType::Integer);
+use parent qw(RPerl::DataType::Character);
+
+# method with character return type
+package  # hide from PAUSE indexing
+    character::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 # [[[ PRE-DECLARED TYPES ]]]
 package    # hide from PAUSE indexing

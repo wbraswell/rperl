@@ -3,7 +3,7 @@ package RPerl::DataType::String;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.014_000;
+our $VERSION = 0.015_000;
 
 # [[[ OO INHERITANCE ]]]
 use parent qw(RPerl::DataType::Scalar);
@@ -14,12 +14,20 @@ use RPerl::DataType::Scalar;
 ## no critic qw(Capitalization ProhibitMultiplePackages ProhibitReusedNames)  # SYSTEM DEFAULT 3: allow multiple & lower case package names
 
 # [[[ SUB-TYPES ]]]
+
 # a string is 0 or more letters, digits, or other ASCII (Unicode???) symbols
 package  # hide from PAUSE indexing
     string;
 use strict;
 use warnings;
 use parent qw(RPerl::DataType::String);
+
+# method with string return type
+package  # hide from PAUSE indexing
+    string::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 # [[[ PRE-DECLARED TYPES ]]]
 package    # hide from PAUSE indexing

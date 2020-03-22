@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes1D;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.017_000;
+our $VERSION = 0.018_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -60,6 +60,12 @@ use strict;
 use warnings;
 use parent -norequire, qw(hashref);
 use Carp;
+
+package  # hide from PAUSE indexing
+    integer_hashref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
 package RPerl::DataStructure::Hash::SubTypes1D;
@@ -292,6 +298,12 @@ use strict;
 use warnings;
 use parent -norequire, qw(hashref);
 use Carp;
+
+package  # hide from PAUSE indexing
+    number_hashref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
 package RPerl::DataStructure::Hash::SubTypes1D;
@@ -528,6 +540,12 @@ use strict;
 use warnings;
 use parent -norequire, qw(hashref);
 
+package  # hide from PAUSE indexing
+    character_hashref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
+
 # [[[ STRING HASH REF ]]]
 # [[[ STRING HASH REF ]]]
 # [[[ STRING HASH REF ]]]
@@ -539,6 +557,12 @@ use strict;
 use warnings;
 use parent -norequire, qw(hashref);
 use Carp;
+
+package  # hide from PAUSE indexing
+    string_hashref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 # [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
 package RPerl::DataStructure::Hash::SubTypes1D;
@@ -767,5 +791,11 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use parent -norequire, qw(hashref);
+
+package  # hide from PAUSE indexing
+    scalartype_hashref::method;
+use strict;
+use warnings;
+use parent -norequire, qw(method);
 
 1;  # end of package
