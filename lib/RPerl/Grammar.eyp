@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.020_000;
+    our $VERSION = 0.021_000;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -55,9 +55,9 @@
 %token SELF                  = /(\$self)/                                # '$self'
 %token SCALAR_SYMBOL         = /(\$(?:[a-zA-Z_]\w*)?[a-z]\w*(::[a-zA-Z_]\w*)*)/   #            dollar  sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$_foo' or '$Foo::Bar::baz'  # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 %token ARRAY_SYMBOL          = /(\@(?:[a-zA-Z_]\w*)?[a-z]\w*(::[a-zA-Z_]\w*)*)/   #            at sign sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$_foo' or '$Foo::Bar::baz'  # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
-%token ARRAY_SYMBOL_REF      = /(\\\@(?:[a-zA-Z_]\w*)?[a-z]\w*(::[a-zA-Z_]\w*)*)/ # backslash, at sign sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$_foo' or '$Foo::Bar::baz'  # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+%token ARRAY_REF_SYMBOL      = /(\\\@(?:[a-zA-Z_]\w*)?[a-z]\w*(::[a-zA-Z_]\w*)*)/ # backslash, at sign sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$_foo' or '$Foo::Bar::baz'  # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 %token HASH_SYMBOL           = /(\%(?:[a-zA-Z_]\w*)?[a-z]\w*(::[a-zA-Z_]\w*)*)/   #            percent sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$_foo' or '$Foo::Bar::baz'  # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
-%token HASH_SYMBOL_REF       = /(\\\%(?:[a-zA-Z_]\w*)?[a-z]\w*(::[a-zA-Z_]\w*)*)/ # backslash, percent sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$_foo' or '$Foo::Bar::baz'  # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
+%token HASH_REF_SYMBOL       = /(\\\%(?:[a-zA-Z_]\w*)?[a-z]\w*(::[a-zA-Z_]\w*)*)/ # backslash, percent sigil, scoped word with at least one lowercase in the first scope segment; ex. '$foo' or '$_foo' or '$Foo::Bar::baz'  # DEV NOTE, CORRELATION #rp045: identifiers containing underscores may be reserved by C++
 %token FHREF_SYMBOL_IN       = /(\<\$[A-Z][A-Z0-9_]*\>)/                 # less-than, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, greater-than; ex. '<$MY_FILEHANDLE_23>'
 %token FHREF_SYMBOL_BRACES   = /(\{\$[A-Z][A-Z0-9_]*\})/                 # left brace, dollar sigil, uppercase letter, uppercase letters & numbers & underscores, right brace; ex. '{$MY_FILEHANDLE_23}'
 %token FHREF_SYMBOL          = /(\$[A-Z][A-Z0-9_]*)/                     # dollar sigil, uppercase letter, uppercase letters & numbers & underscores; ex. '$MY_FILEHANDLE_23'
@@ -206,10 +206,10 @@ Header:                  'use strict;' 'use warnings;' USE_RPERL_AFTER? OUR VERS
 Critic:                  '## no critic qw(' WORD+ ')' ;
 Exports:                 USE_EXPORTER (OUR_EXPORT OP01_QW ';')? (OUR_EXPORT_OK OP01_QW ';')? ;
 Include:                 USE WordScoped OP01_QW? ';' | 'INIT' LBRACE WordScoped OP02_METHOD_THINARROW_IMP OP01_QW? ')' ';' '}' ;
-Constant:                'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant Literal ';' ;
+Constant:                'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant ScalarLiteral ';' ;
 #Constant:               'use constant' WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant ConstantValue ';' ;  # NEED UPGRADE: constant array & hash refs not read-only as of Perl v5.20
-#ConstantValue:          Literal | LBRACKET TypeInnerConstant? Literal (OP21_LIST_COMMA TypeInnerConstant? Literal)* ']' | 
-#                        LBRACE WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal (OP21_LIST_COMMA WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? Literal)* '}' ;
+#ConstantValue:          ScalarLiteral | LBRACKET TypeInnerConstant? ScalarLiteral (OP21_LIST_COMMA TypeInnerConstant? ScalarLiteral)* ']' | 
+#                        LBRACE WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? ScalarLiteral (OP21_LIST_COMMA WORD_UPPERCASE OP20_HASH_FATARROW TypeInnerConstant? ScalarLiteral)* '}' ;
 Subroutine:              SUB WORD LBRACE LBRACE MY Type '$RETURN_TYPE' '}' ';' SubroutineArguments? Operation* '}' ;
 SubroutineArguments:     LPAREN_MY Type SCALAR_SYMBOL (OP21_LIST_COMMA MY Type SCALAR_SYMBOL)* ')' OP19_VARIABLE_ASSIGN '@ARG;' ;
 Class:                   UseParent WordScoped ')' ';' Include Critic* Exports? Include* Constant* Properties SubroutineOrMethod* LITERAL_NUMBER ';' ;
@@ -223,10 +223,10 @@ SubroutineOrMethod:      Subroutine | Method ;
 # [[[ SYNTAX PRODUCTION RULES, OPERATIONS ]]]
 
 Operation:               Expression ';' | OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | Statement ;
-Operator:                LPAREN OP01_PRINT FHREF_SYMBOL_BRACES ListElements ')' |
-                         OP01_NAMED SubExpression | LPAREN OP01_NAMED ListElement OP21_LIST_COMMA ListElements ')' |
+Operator:                LPAREN OP01_PRINT FHREF_SYMBOL_BRACES SubExpressions ')' |
+                         OP01_NAMED SubExpression | LPAREN OP01_NAMED SubExpression OP21_LIST_COMMA SubExpressions ')' |
                          OP01_OPEN MY TYPE_FHREF FHREF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
-                         OP01_CLOSE FHREF_SYMBOL | OP03_MATH_INC_DEC Variable | Variable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
+                         OP01_CLOSE FHREF_SYMBOL | OP03_MATH_INC_DEC ScalarVariable | ScalarVariable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
                          OP05_BITWISE_NEG_LPAREN SubExpression ')' | OP05_LOGICAL_NEG SubExpression | OP05_MATH_NEG_LPAREN SubExpression ')' |
                          SubExpression OP06_REGEX_BIND OP06_REGEX_PATTERN | SubExpression OP07_STRING_REPEAT SubExpression |
                          SubExpression OP07_MATH_MULT_DIV_MOD SubExpression | SubExpression OP08_MATH_ADD_SUB SubExpression |
@@ -234,15 +234,16 @@ Operator:                LPAREN OP01_PRINT FHREF_SYMBOL_BRACES ListElements ')' 
                          OP10_NAMED_UNARY SubExpression | OP10_NAMED_UNARY | SubExpression OP11_COMPARE_LT_GT SubExpression |
                          SubExpression OP12_COMPARE_EQ_NE SubExpression | SubExpression OP13_BITWISE_AND SubExpression |
                          SubExpression OP14_BITWISE_OR_XOR SubExpression | SubExpression OP15_LOGICAL_AND SubExpression | SubExpression OP16_LOGICAL_OR SubExpression |
-                         SubExpression OP17_LIST_RANGE SubExpression | SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral |
+                         SubExpression OP17_LIST_RANGE SubExpression | LPAREN SubExpression OP18_TERNARY SubExpression COLON SubExpression ')' |
                          OP22_LOGICAL_NEG_LPAREN SubExpression ')' | OP22_LOGICAL_NEG SubExpression |
                          SubExpression OP23_LOGICAL_AND SubExpression | SubExpression OP24_LOGICAL_OR_XOR SubExpression ;
-OperatorVoid:            OP01_PRINT (STDOUT_STDERR)? ListElements ';' | OP01_PRINT FHREF_SYMBOL_BRACES ListElements ';' |
-                         OP01_NAMED_VOID_SCOLON | OP01_NAMED_VOID_LPAREN ListElements? ')' ';' | OP01_NAMED_VOID ListElements ';' | 
-                         OP01_NAMED ListElement OP21_LIST_COMMA ListElements ';' | OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL LoopLabel ';' ;
-Expression:              Operator | WORD_UPPERCASE LPAREN ')' | CONSTANT_CALL_SCOPED | WordScoped LPAREN ListElements? ')' |
-                         Variable OP02_METHOD_THINARROW LPAREN ListElements? ')' | WordScoped OP02_METHOD_THINARROW_NEW HashReference? ')' ;
-SubExpression:           Expression | 'undef' | Literal | Variable | ArrayReference | ArrayDereference | HashReference | HashDereference | LPAREN SubExpression ')' ;
+OperatorVoid:            OP01_PRINT (STDOUT_STDERR)? SubExpressions ';' | OP01_PRINT FHREF_SYMBOL_BRACES SubExpressions ';' |
+                         OP01_NAMED_VOID_SCOLON | OP01_NAMED_VOID_LPAREN SubExpressions? ')' ';' | OP01_NAMED_VOID SubExpressions ';' | 
+                         OP01_NAMED SubExpression OP21_LIST_COMMA SubExpressions ';' | OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL LoopLabel ';' ;
+Expression:              Operator | WORD_UPPERCASE LPAREN ')' | CONSTANT_CALL_SCOPED | WordScoped LPAREN SubExpressions? ')' |
+                         ScalarVariable OP02_METHOD_THINARROW LPAREN SubExpressions? ')' | WordScoped OP02_METHOD_THINARROW_NEW HashReference? ')' ;
+#SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty | Array | ArrayReference |                    Hash | HashReference ;
+SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty | ArrayHashLiteral | Array | ArrayReference | ArrayDereference | Hash | HashReference | HashDereference ;
 SubExpressionOrInput:    SubExpression | FHREF_SYMBOL_IN | STDIN ;
 SubExpressionOrVarMod:   SubExpression | VariableModification ;
 Statement:               Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ';' | POD ;
@@ -250,7 +251,7 @@ Conditional:             'if' LPAREN SubExpression ')' CodeBlock ('elsif' LPAREN
 Loop:                    LoopFor | LoopForEach | LoopWhile ;
 LoopFor:                 'for' MY TYPE_INTEGER SCALAR_SYMBOL LPAREN SubExpression OP17_LIST_RANGE SubExpression ')' CodeBlock |
                          'for' LPAREN_MY TYPE_INTEGER SCALAR_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExp SCALAR_SYMBOL OP11_COMPARE_LT_GT OpNamedScolonOrSubExp SubExpressionOrVarMod ')' CodeBlock ;
-LoopForEach:             'foreach' MY Type SCALAR_SYMBOL LPAREN ListElements ')' CodeBlock ;
+LoopForEach:             'foreach' MY Type SCALAR_SYMBOL LPAREN SubExpressions ')' CodeBlock ;
 LoopWhile:               'while' LPAREN SubExpression ')' CodeBlock | 'while' LPAREN_MY Type SCALAR_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrInput ')' CodeBlock;
 CodeBlock:               LBRACE Operation+ '}' ;
 
@@ -262,49 +263,71 @@ CodeBlock:               LBRACE Operation+ '}' ;
 # START HERE: implement tests for new productions of Variable, VariableRetrieval(Array/Hash), VariableDeclaration, ArrayReference, HashReference
 # START HERE: implement tests for new productions of Variable, VariableRetrieval(Array/Hash), VariableDeclaration, ArrayReference, HashReference
 
+# Operator -> OP18_TERNARY now has SubExpressions and must be wrapped in parens
+# SubExpression now has several new RHSs
+
+# NEED DELETE OLD ListElement & HashEntry & VariableOrLiteral
+# NEED DELETE OLD ListElement & HashEntry & VariableOrLiteral
+# NEED DELETE OLD ListElement & HashEntry & VariableOrLiteral
 
 
-Variable:                ScalarSymbolOrSelf | ScalarSymbolOrSelf VariableRetrievalArrow | ScalarSymbolOrSelf VariableRetrievalArrow VariableRetrieval+ |
-                         ARRAY_SYMBOL       | ARRAY_SYMBOL       VariableRetrievalArray | ARRAY_SYMBOL       VariableRetrievalArray VariableRetrieval+ |
-                         HASH_SYMBOL        | HASH_SYMBOL        VariableRetrievalHash  | HASH_SYMBOL        VariableRetrievalHash  VariableRetrieval+ ;
+Variable:                ScalarVariable | ArrayVariable | ArrayReferenceVariable | HashVariable | HashReferenceVariable ;  # NEED ADD ArrayDereferenceVariable & HashDereferenceVariable???
 VariableRetrievalArrow:  OP02_ARRAY_THINARROW SubExpression ']' | OP02_HASH_THINARROW SubExpression '}' | OP02_HASH_THINARROW WORD '}' ;
-VariableRetrievalArray:  '[' SubExpression ']' ;
-VariableRetrievalHash:   '{' SubExpression '}' | '{' WORD '}' ;
-VariableRetrieval:       VariableRetrievalArrow | VariableRetrievalArray | VariableRetrievalHash ;
+VariableRetrieval:       VariableRetrievalArrow |
+                                     LBRACKET SubExpression ']' |              LBRACE SubExpression '}' |              LBRACE WORD '}' ;
 VariableDeclaration:     MY Type SCALAR_SYMBOL ';' | MY Type SCALAR_SYMBOL OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExpIn | 
                          MY Type SCALAR_SYMBOL OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ';' | 
-                         MY Type ARRAY_SYMBOL ';'  | MY Type ARRAY_SYMBOL  OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExpIn | 
-                         MY Type ARRAY_SYMBOL                   '[' SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ';' | 
-                         MY Type HASH_SYMBOL ';'   | MY Type HASH_SYMBOL   OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExpIn | 
+                         MY Type  ARRAY_SYMBOL ';' | MY Type ARRAY_SYMBOL  OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExpIn | 
+                         MY Type   HASH_SYMBOL ';' | MY Type HASH_SYMBOL   OP19_VARIABLE_ASSIGN OpNamedScolonOrSubExpIn | 
                          MY TYPE_FHREF FHREF_SYMBOL ';' ;
 VariableModification:    Variable OP19_VARIABLE_ASSIGN SubExpressionOrInput | Variable OP19_VARIABLE_ASSIGN_BY SubExpression ;
+Scalar:                  ScalarLiteral         | ScalarVariable ;
+ScalarLiteral:           LITERAL_NUMBER | LITERAL_STRING ;
+ScalarVariable:          ScalarVariableOrSelf | ScalarVariableOrSelf VariableRetrievalArrow | ScalarVariableOrSelf VariableRetrievalArrow VariableRetrieval+ ;
+ScalarVariableOrSelf:    SCALAR_SYMBOL | SELF ;
+ArrayHashLiteral:        LPAREN SubExpressions ')' ;
+SubExpressions:          SubExpression (OP21_LIST_COMMA SubExpression)* ;
+ArrayHashLiteralEmpty:   LPAREN   ')' ;
+BracketsEmpty:           LBRACKET ']' ;
+BracesEmpty:             LBRACE   '}' ;
 ListElements:            ListElement (OP21_LIST_COMMA ListElement)* ;
-ListElement:             SubExpression | TypeInner SubExpression | OP01_QW | ARGV ;
-ArrayReference:          LBRACKET ListElements? ']' | ARRAY_SYMBOL_REF;
-ArrayDereference:        '@{' Variable '}' | '@{' TypeInner? ArrayReference '}' ;
-HashEntry:               VarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | HashDereference | ENV ;
+#ListElement:             SubExpression | TypeInner SubExpression | OP01_QW | ARGV ;  # NEED DELETE
+ListElement:                             TypeInner SubExpression | OP01_QW | ARGV ;
+Array:                   ArrayLiteral          | ArrayVariable ;
+ArrayLiteral:            LPAREN   ListElements  ')' ;
+ArrayVariable:           ARRAY_SYMBOL ;
+ArrayReference:          ArrayReferenceLiteral | ArrayReferenceVariable ;
+ArrayReferenceLiteral:   LBRACKET ListElements  ']' | BracketsEmpty ;
+ArrayReferenceVariable:  ARRAY_REF_SYMBOL ;
+ArrayDereference:        '@{' ScalarVariable '}' | '@{' TypeInner? ArrayReference '}' ;
+HashEntries:             HashEntry (OP21_LIST_COMMA HashEntry)* ;
+#HashEntry:               SubExpression | VarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | ENV ;  # NEED DELETE
+HashEntry:                               VarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | ENV ;
 HashEntryProperties:     OpStringOrWord OP20_HASH_FATARROW TypeInnerProperties ;
-HashReference:           LBRACE HashEntry (OP21_LIST_COMMA HashEntry)* '}' | LBRACE '}' | HASH_SYMBOL_REF ;
-HashDereference:         '%{' Variable '}' | '%{' TypeInner? HashReference '}' ;
+Hash:                    HashLiteral           | HashVariable ;
+HashLiteral:             LPAREN   HashEntries   ')' ;
+HashVariable:            HASH_SYMBOL ;
+HashReference:           HashReferenceLiteral  | HashReferenceVariable ;
+HashReferenceLiteral:    LBRACE   HashEntries   '}' | BracesEmpty ;
+HashReferenceVariable:   HASH_REF_SYMBOL ;
+HashDereference:         '%{' ScalarVariable '}' | '%{' TypeInner? HashReference  '}' ;
 
 # [[[ SYNTAX PRODUCTION RULES, USER-DEFINED WORDS ]]]
 
-WordScoped:              WORD | WORD_SCOPED ;
-LoopLabel:               WORD_UPPERCASE ;
-Type:                    WORD | WORD_SCOPED | TYPE_INTEGER ;
-TypeInner:               MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN ;
-TypeInnerProperties:     MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression | 
-                         MY Type '$TYPED_' OpStringOrWord OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ;
-TypeInnerConstant:       MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN ;
-VariableOrLiteral:       Variable | Literal ;
-VarOrLitOrOpStrOrWord:   Variable | Literal | OpStringOrWord ;
-ScalarSymbolOrSelf:      SCALAR_SYMBOL | SELF ;
-Literal:                 LITERAL_NUMBER | LITERAL_STRING ;
-OpNamedScolonOrSubExp:   OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | SubExpression ';' ;
-OpNamedScolonOrSubExpIn: OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | SubExpressionOrInput ';' ;
-OpStringOrWord:          OP24_LOGICAL_OR_XOR | OP23_LOGICAL_AND | OP22_LOGICAL_NEG | OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL | OP12_COMPARE_EQ_NE |
-                         OP11_COMPARE_LT_GT | OP10_NAMED_UNARY | OP08_MATH_ADD_SUB | OP07_MATH_MULT_DIV_MOD | OP07_STRING_REPEAT | OP01_NAMED | OP01_CLOSE | 
-                         OP01_OPEN | OP01_NAMED_VOID | OP01_PRINT | WORD ;
+WordScoped:               WORD | WORD_SCOPED ;
+LoopLabel:                WORD_UPPERCASE ;
+Type:                     WORD | WORD_SCOPED | TYPE_INTEGER ;
+TypeInner:                MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN ;
+TypeInnerProperties:      MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression | 
+                          MY Type '$TYPED_' OpStringOrWord OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ;
+TypeInnerConstant:        MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN ;
+# VariableOrLiteral:      Variable | Literal ;  # NEED DELETE, UNUSED
+VarOrLitOrOpStrOrWord: ScalarVariable | ScalarLiteral | OpStringOrWord ;
+OpNamedScolonOrSubExp:    OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | SubExpression ';' ;
+OpNamedScolonOrSubExpIn:  OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | SubExpressionOrInput ';' ;
+OpStringOrWord:           OP24_LOGICAL_OR_XOR | OP23_LOGICAL_AND | OP22_LOGICAL_NEG | OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL | OP12_COMPARE_EQ_NE |
+                          OP11_COMPARE_LT_GT | OP10_NAMED_UNARY | OP08_MATH_ADD_SUB | OP07_MATH_MULT_DIV_MOD | OP07_STRING_REPEAT | OP01_NAMED | OP01_CLOSE | 
+                          OP01_OPEN | OP01_NAMED_VOID | OP01_PRINT | WORD ;
 
 %%
 
@@ -425,7 +448,7 @@ LoopForEach_190 => 'RPerl::Operation::Statement::Loop::ForEach',                
 LoopWhile_191 => 'RPerl::Operation::Statement::Loop::While',                                       # LoopWhile -> 'while' LPAREN SubExpression ')' CodeBlock
 LoopWhile_192 => 'RPerl::Operation::Statement::Loop::While',                                       # LoopWhile -> 'while' LPAREN_MY Type SCALAR_SYMBOL OP19_VARIABLE_ASSIGN SubExpressionOrInput ')' CodeBlock
 CodeBlock_195 => 'RPerl::CodeBlock',                                                               # CodeBlock -> LBRACE PLUS-49 '}'
-Variable_198 => 'RPerl::Operation::Expression::SubExpression::Variable',                           # Variable -> ScalarSymbolOrSelf STAR-50
+Variable_198 => 'RPerl::Operation::Expression::SubExpression::Variable',                           # Variable -> ScalarVariableOrSelf STAR-50
 VariableRetrievalArrow_199 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',  # VariableRetrievalArrow -> OP02_ARRAY_THINARROW SubExpression ']'
 VariableRetrievalArrow_200 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',  # VariableRetrievalArrow -> OP02_HASH_THINARROW SubExpression '}'
 VariableRetrievalArrow_201 => 'RPerl::Operation::Expression::SubExpression::Variable::Retrieval',  # VariableRetrievalArrow -> OP02_HASH_THINARROW WORD '}'
@@ -466,8 +489,8 @@ VariableOrLiteral_249 => 'RPerl::Operation::Expression::SubExpression::Literal',
 VarOrLitOrOpStrOrWord_250 => 'RPerl::Operation::Expression::SubExpression::Variable',              # VarOrLitOrOpStrOrWord -> Variable
 VarOrLitOrOpStrOrWord_251 => 'RPerl::Operation::Expression::SubExpression::Literal',               # VarOrLitOrOpStrOrWord -> Literal
 VarOrLitOrOpStrOrWord_252 => 'RPerl::NonGenerator',                                                # VarOrLitOrOpStrOrWord -> OpStringOrWord
-ScalarSymbolOrSelf_253 => 'RPerl::NonGenerator',                                                   # ScalarSymbolOrSelf -> SCALAR_SYMBOL
-ScalarSymbolOrSelf_254 => 'RPerl::NonGenerator',                                                   # ScalarSymbolOrSelf -> SELF
+ScalarVariableOrSelf_253 => 'RPerl::NonGenerator',                                                   # ScalarVariableOrSelf -> SCALAR_SYMBOL
+ScalarVariableOrSelf_254 => 'RPerl::NonGenerator',                                                   # ScalarVariableOrSelf -> SELF
 Literal_255 => 'RPerl::Operation::Expression::SubExpression::Literal::Number',                     # Literal -> LITERAL_NUMBER
 Literal_256 => 'RPerl::Operation::Expression::SubExpression::Literal::String',                     # Literal -> LITERAL_STRING
 OpNamedScolonOrSubExp_257 => 'RPerl::NonGenerator',                                                # OpNamedScolonOrSubExp -> OP01_NAMED_SCOLON
