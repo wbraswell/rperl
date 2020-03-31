@@ -38,7 +38,7 @@ sub foo_subroutine {
 
     print 'in _MyClass_Bad::foo_subroutine(), have $foo_variable = ', $foo_variable, "\n";
 
-    return ($foo_argument * 2);
+    return($foo_argument * 2);
 }
 
 
@@ -49,7 +49,7 @@ sub foo_method {
     print 'in _MyClass_Bad::foo_method(), received $foo_argument = ', $foo_argument, "\n";
     print 'in _MyClass_Bad::foo_method(), have $self->{foo_property} = ', q{'}, $self->{foo_property}, q{'}, "\n";
 
-    return ($foo_argument * -2);
+    return($foo_argument * -2);
 }
 
 1;    # end of class

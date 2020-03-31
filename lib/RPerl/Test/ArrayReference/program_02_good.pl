@@ -51,4 +51,3 @@ print 'have integer_arrayref_to_string($i_array) = ', "\n", integer_arrayref_to_
 print 'have integer_arrayref_to_string_pretty($i_array) = ', "\n", integer_arrayref_to_string_pretty($i_array), "\n";
 
 print 'have integer_arrayref_to_string_expand($i_array) = ', "\n", integer_arrayref_to_string_expand($i_array), "\n";
-

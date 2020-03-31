@@ -7,8 +7,6 @@
 # <<< EXECUTE_SUCCESS: "$array = [ -321, 7, 24_851 ]" >>>
 # <<< EXECUTE_SUCCESS: "after loop" >>>
 
-#!/usr/bin/env perl
-
 # [[[ HEADER ]]]
 use RPerl;
 use strict;

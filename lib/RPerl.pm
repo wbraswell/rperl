@@ -447,7 +447,7 @@ Filename F<My/FooPackage.pm>:
         { my string $RETURN_TYPE };
         ( my integer $arg ) = @ARG;
         print 'in My::FooPackage::foo_exported_ok(), received $arg = ', $arg, "\n";
-        return ('howdy' x $arg);
+        return('howdy' x $arg);
     }
     
     1;    # end of class
@@ -497,7 +497,7 @@ Filename F<My/BarClass.pm>:
         { my number::method $RETURN_TYPE };
         ( my My::BarClass $self, my integer $arg ) = @ARG;
         print 'in My::BarClass->bar_method2(), received $arg = ', $arg, "\n";
-        return ($self->{bar_number} * $arg);
+        return($self->{bar_number} * $arg);
     }
     
     1;    # end of class

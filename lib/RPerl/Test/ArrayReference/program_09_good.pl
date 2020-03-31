@@ -8,8 +8,6 @@
 # <<< EXECUTE_SUCCESS: "$sc = FOOBAZ" >>>
 # <<< EXECUTE_SUCCESS: "after loop" >>>
 
-#!/usr/bin/env perl
-
 # [[[ HEADER ]]]
 use RPerl;
 use strict;

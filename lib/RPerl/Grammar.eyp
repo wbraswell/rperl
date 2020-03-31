@@ -119,7 +119,8 @@
 %token OP19_VARIABLE_ASSIGN      = /(=)/                         # precedence 19 infix: assign '='
 %token OP01_PRINT                = /(print|printf)\s/            # precedence 01 prefix void: 'print' or 'printf' to STDOUT, STDERR, or filehandle
 %token OP01_NAMED_VOID_SCOLON    = /(croak;|die;|exit;|return;)/ # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value; 'croak;', 'die;', 'exit;', 'return;'
-%token OP01_NAMED_VOID_LPAREN    = /(croak\(|exit\(|return\()/   # precedence 01 prefix void: same as above, except w/ parenthesis & w/out semicolon & w/out die; 'croak(', 'exit(', 'return('; ProhibitParensWithBuiltins excepts return() & exit(...); RequireTidyCode & RequireCarping excepts croak() 
+#%token OP01_NAMED_VOID_LPAREN    = /(croak\(|exit\(|return\()/   # precedence 01 prefix void: same as above, except w/ parenthesis & w/out semicolon & w/out die; 'croak(', 'exit(', 'return('; ProhibitParensWithBuiltins excepts return() & exit(...); RequireTidyCode & RequireCarping excepts croak() 
+%token OP01_NAMED_VOID_LPAREN    = /(croak\(|exit\(|return\s*\()/ # precedence 01 prefix void: same as above, except w/ parenthesis & w/out semicolon & w/out die; 'croak(', 'exit(', 'return(', 'return ('; ProhibitParensWithBuiltins excepts return() & exit(...); RequireTidyCode & RequireCarping excepts croak() 
 %token OP01_NAMED_VOID           = /(croak|die|exit|return)\s/   # precedence 01 prefix void: same as above, except accepts argument(s); 'croak', 'die', 'exit', 'return'
 %token OP01_QW                   = /(qw\([^()]*\))/              # precedence 01 closed: quote word; ex. 'qw()' or 'qw(foo bar baz)' or 'qw(Foo23 BarBax Ba_z 123)'
 %token OP01_OPEN                 = /(open)\s/                    # precedence 01 prefix: 'open' filehandle
@@ -182,7 +183,8 @@
 # [[[ LEXICON TOKENS, PUNCTUATION & USER-DEFINED WORDS ]]]
 
 %token COLON                = /(:)/                           # ':'
-%token LPAREN_MY            = /(\(\s*my)/                     # '(my'
+%token LPAREN_TYPE_INNER    = /(\(\s*my\s+(?:[a-z_]\w*|[A-Z]\w*[a-z]\w*|(?:[a-zA-Z_]\w*)?(?:::[a-zA-Z_]\w*)+|integer|unsigned_integer)\s+\$TYPED_)/  # '( my scalartype $TYPED_' == LPAREN_MY Type '$TYPED_' == LPAREN_MY (WORD | WORD_SCOPED | TYPE_INTEGER) '$TYPED'
+%token LPAREN_MY            = /(\(\s*my)/                     # '( my'
 %token LPAREN               = /(\()/                          # '('
 %token LBRACKET             = /(\[)/                          # '['
 %token LBRACE               = /(\{)/                          # '{'
@@ -242,8 +244,10 @@ OperatorVoid:            OP01_PRINT (STDOUT_STDERR)? SubExpressions ';' | OP01_P
                          OP01_NAMED SubExpression OP21_LIST_COMMA SubExpressions ';' | OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL LoopLabel ';' ;
 Expression:              Operator | WORD_UPPERCASE LPAREN ')' | CONSTANT_CALL_SCOPED | WordScoped LPAREN SubExpressions? ')' |
                          ScalarVariable OP02_METHOD_THINARROW LPAREN SubExpressions? ')' | WordScoped OP02_METHOD_THINARROW_NEW HashReference? ')' ;
-#SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty | Array | ArrayReference |                    Hash | HashReference ;
-SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty | ArrayHashLiteral | Array | ArrayReference | ArrayDereference | Hash | HashReference | HashDereference ;
+#SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty |                    Array | ArrayReference |                    Hash | HashReference ;
+#SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty | ArrayHashLiteral | Array | ArrayReference | ArrayDereference | Hash | HashReference | HashDereference ;
+SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty |                    Array | ArrayReference | ArrayDereference | Hash | HashReference | HashDereference ;
+SubExpressions:          SubExpression (OP21_LIST_COMMA SubExpression)* ;
 SubExpressionOrInput:    SubExpression | FHREF_SYMBOL_IN | STDIN ;
 SubExpressionOrVarMod:   SubExpression | VariableModification ;
 Statement:               Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ';' | POD ;
@@ -266,9 +270,9 @@ CodeBlock:               LBRACE Operation+ '}' ;
 # Operator -> OP18_TERNARY now has SubExpressions and must be wrapped in parens
 # SubExpression now has several new RHSs
 
-# NEED DELETE OLD ListElement & HashEntry & VariableOrLiteral
-# NEED DELETE OLD ListElement & HashEntry & VariableOrLiteral
-# NEED DELETE OLD ListElement & HashEntry & VariableOrLiteral
+# NEED DELETE OLD ListElement & HashEntry & VariableOrLiteral & SubExpression
+# NEED DELETE OLD ListElement & HashEntry & VariableOrLiteral & SubExpression
+# NEED DELETE OLD ListElement & HashEntry & VariableOrLiteral & SubExpression
 
 
 Variable:                ScalarVariable | ArrayVariable | ArrayReferenceVariable | HashVariable | HashReferenceVariable ;  # NEED ADD ArrayDereferenceVariable & HashDereferenceVariable???
@@ -285,23 +289,28 @@ Scalar:                  ScalarLiteral         | ScalarVariable ;
 ScalarLiteral:           LITERAL_NUMBER | LITERAL_STRING ;
 ScalarVariable:          ScalarVariableOrSelf | ScalarVariableOrSelf VariableRetrievalArrow | ScalarVariableOrSelf VariableRetrievalArrow VariableRetrieval+ ;
 ScalarVariableOrSelf:    SCALAR_SYMBOL | SELF ;
-ArrayHashLiteral:        LPAREN SubExpressions ')' ;
-SubExpressions:          SubExpression (OP21_LIST_COMMA SubExpression)* ;
+#ArrayHashLiteral:        LPAREN SubExpressions ')' ;  # NEED DELETE
 ArrayHashLiteralEmpty:   LPAREN   ')' ;
 BracketsEmpty:           LBRACKET ']' ;
 BracesEmpty:             LBRACE   '}' ;
-ListElements:            ListElement (OP21_LIST_COMMA ListElement)* ;
-#ListElement:             SubExpression | TypeInner SubExpression | OP01_QW | ARGV ;  # NEED DELETE
-ListElement:                             TypeInner SubExpression | OP01_QW | ARGV ;
-Array:                   ArrayLiteral          | ArrayVariable ;
-ArrayLiteral:            LPAREN   ListElements  ')' ;
+
+ListElements:            ListElement (OP21_LIST_COMMA ListElement)* ;  # NEED DELETE
+#ListElements:            ListElement (OP21_LIST_COMMA ListElement)* | SubExpressions ;  # NEED DELETE???
+
+ListElement:             SubExpression | TypeInner SubExpression | OP01_QW | ARGV ;
+#ListElement:                             TypeInner     SubExpression | OP01_QW | ARGV ;  # NEED DELETE???
+
+Array:                   ArrayLiteralNonEmpty          | ArrayVariable ;
+
+ArrayLiteralNonEmpty:    LPAREN   ListElements  ')' | LPAREN_TYPE_INNER OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression (OP21_LIST_COMMA ListElement)* ')' ;
+
 ArrayVariable:           ARRAY_SYMBOL ;
 ArrayReference:          ArrayReferenceLiteral | ArrayReferenceVariable ;
 ArrayReferenceLiteral:   LBRACKET ListElements  ']' | BracketsEmpty ;
 ArrayReferenceVariable:  ARRAY_REF_SYMBOL ;
 ArrayDereference:        '@{' ScalarVariable '}' | '@{' TypeInner? ArrayReference '}' ;
 HashEntries:             HashEntry (OP21_LIST_COMMA HashEntry)* ;
-#HashEntry:               SubExpression | VarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | ENV ;  # NEED DELETE
+#HashEntry:               SubExpression | VarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | ENV ;  # NEED RE-ENABLE!!!
 HashEntry:                               VarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | ENV ;
 HashEntryProperties:     OpStringOrWord OP20_HASH_FATARROW TypeInnerProperties ;
 Hash:                    HashLiteral           | HashVariable ;

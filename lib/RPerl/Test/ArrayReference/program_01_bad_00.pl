@@ -17,4 +17,3 @@ our $VERSION = 0.001_000;
 # [[[ OPERATIONS ]]]
 
 my integer_arrayref $i_array = [ 17, ];
-

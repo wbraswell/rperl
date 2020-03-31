@@ -33,8 +33,8 @@ sub modify_arrayref {
 
 my integer_array @array_1D = ( 0, 2, 4, 6, 8 );
 
-print 'in main(), have pre-modify \@array_1D = ', integer_arrayref_to_string(\@array_1D), "\n";
+print 'in main(), have pre-modify \\@array_1D = ', integer_arrayref_to_string(\@array_1D), "\n";
 
 modify_arrayref(\@array_1D);
 
-print 'in main(), have post-modify \@array_1D = ', integer_arrayref_to_string(\@array_1D), "\n";
+print 'in main(), have post-modify \\@array_1D = ', integer_arrayref_to_string(\@array_1D), "\n";

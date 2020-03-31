@@ -485,6 +485,7 @@ GRAMMAR
     add WORD_LPAREN & WORD_SCOPED_LPAREN to become WordScopedLParen, and friends, to disallow space between subroutine name and parens in subroutine call
         update Learning RPerl section 4.2.1 & lib/RPerl/Test/Subroutine/program_* accordingly
     should VARIABLE_SYMBOL be allowing scoped variable identifiers, since these are not currently supported by the compiler?
+    should LITERAL_STRING allow single-quote strings which contain an odd number of backslashes?  'howdy \@array' and 'howdy \\@array' are identical in Perl but only the second is allowed in RPerl 
 
 COMPILER
     uncompile, store list of compiled dependencies inside compiled files themselves, for optional use during uncompile

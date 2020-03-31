@@ -33,7 +33,7 @@ sub modify_arrayrefs {
 
     print 'in modify_arrayrefs(), have modified $array_1D_input_0 = ', integer_arrayref_to_string($array_1D_input_0), "\n";
     print 'in modify_arrayrefs(), have modified $array_1D_input_1 = ', integer_arrayref_to_string($array_1D_input_1), "\n";
- 
+
     return;
 }
 
@@ -42,10 +42,10 @@ sub modify_arrayrefs {
 my integer_array @array_1D_0 = ( 0, 2, 4, 6, 8 );
 my integer_array @array_1D_1 = ( 1, 3, 5, 7, 9 );
 
-print 'in main(), have pre-modify \@array_1D_0 = ', integer_arrayref_to_string(\@array_1D_0), "\n";
-print 'in main(), have pre-modify \@array_1D_1 = ', integer_arrayref_to_string(\@array_1D_1), "\n";
+print 'in main(), have pre-modify \\@array_1D_0 = ', integer_arrayref_to_string(\@array_1D_0), "\n";
+print 'in main(), have pre-modify \\@array_1D_1 = ', integer_arrayref_to_string(\@array_1D_1), "\n";
 
 modify_arrayrefs(\@array_1D_0, \@array_1D_1);
 
-print 'in main(), have post-modify \@array_1D_0 = ', integer_arrayref_to_string(\@array_1D_0), "\n";
-print 'in main(), have post-modify \@array_1D_1 = ', integer_arrayref_to_string(\@array_1D_1), "\n";
+print 'in main(), have post-modify \\@array_1D_0 = ', integer_arrayref_to_string(\@array_1D_0), "\n";
+print 'in main(), have post-modify \\@array_1D_1 = ', integer_arrayref_to_string(\@array_1D_1), "\n";

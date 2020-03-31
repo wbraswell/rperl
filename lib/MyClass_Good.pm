@@ -34,7 +34,7 @@ sub foo_subroutine {
 
     print 'in MyClass_Good::foo_subroutine(), have $foo_variable = ', $foo_variable, "\n";
 
-    return ($foo_argument * 2);
+    return($foo_argument * 2);
 }
 
 
