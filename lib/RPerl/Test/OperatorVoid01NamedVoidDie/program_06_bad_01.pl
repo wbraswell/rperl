@@ -2,7 +2,8 @@
 
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  die' >>>
+# <<< PARSE_ERROR: "Unexpected Token:  'ahoy'" >>>
+# <<< PARSE_ERROR: 'Expected Token(s): OP20_HASH_FATARROW' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

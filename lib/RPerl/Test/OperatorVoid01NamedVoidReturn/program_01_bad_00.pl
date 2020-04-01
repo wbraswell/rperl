@@ -1,8 +1,8 @@
 #!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  ,' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
+# <<< PARSE_ERROR: 'near "(;"' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -14,7 +14,8 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
-# [[[ OPERATIONS ]]]
+# [[[ SUBROUTINES ]]]
+sub foo { { my void $RETURN_TYPE }; return(; }
 
-# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'croak ();' not 'croak();'
-croak ( 2, 3, 5, 7 );
+# [[[ OPERATIONS ]]]
+foo();

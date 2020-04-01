@@ -1,8 +1,7 @@
 #!/usr/bin/env perl
 
-# [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  *' >>>
+# <<< EXECUTE_SUCCESS: '$VAR1 = 2;' >>>
+# <<< EXECUTE_SUCCESS: '$VAR2 = 3;' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -14,5 +13,13 @@ our $VERSION = 0.001_000;
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
+# [[[ SUBROUTINES ]]]
+sub foo {
+    { my integer_arrayref $RETURN_TYPE };
+
+# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'return (...);' not 'return(...);'
+    return ( 2, 3 );
+}
+
 # [[[ OPERATIONS ]]]
-croak * 0;
+print Dumper(foo());

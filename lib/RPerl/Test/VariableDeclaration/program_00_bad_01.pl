@@ -3,7 +3,9 @@
 # [[[ PREPROCESSOR ]]]
 # <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
 # <<< PARSE_ERROR: 'Unexpected Token:  $I' >>>
-# <<< PARSE_ERROR: 'Expected Token(s): VARIABLE_SYMBOL' >>>
+# <<< PARSE_ERROR: 'Expected Token(s): ARRAY_SYMBOL' >>>
+# <<< PARSE_ERROR: 'HASH_SYMBOL' >>>
+# <<< PARSE_ERROR: 'SCALAR_SYMBOL' >>>
 
 # [[[ HEADER ]]]
 use RPerl;

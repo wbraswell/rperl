@@ -1,9 +1,4 @@
 #!/usr/bin/env perl
-
-# [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  )' >>>
-
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -15,7 +10,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ SUBROUTINES ]]]
-sub foo { { my void $RETURN_TYPE }; return (); }
+sub foo { { my string $RETURN_TYPE }; return 'ahoy'; }
 
 # [[[ OPERATIONS ]]]
 foo();

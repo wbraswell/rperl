@@ -1,8 +1,8 @@
 #!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< PARSE_ERROR: 'ERROR ECOPARP00' >>>
-# <<< PARSE_ERROR: 'Unexpected Token:  *' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
+# <<< PARSE_ERROR: 'near "(;"' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -15,8 +15,9 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ SUBROUTINES ]]]
-sub foo { { my boolean $RETURN_TYPE }; return * 0; }
+
+# DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'return ();' not 'return();'
+sub foo { { my void $RETURN_TYPE }; return (; }
 
 # [[[ OPERATIONS ]]]
 foo();
-

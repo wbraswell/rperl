@@ -34,6 +34,7 @@ sub foo_subroutine {
 
     print 'in MyClass_Good::foo_subroutine(), have $foo_variable = ', $foo_variable, "\n";
 
+    # DEV NOTE: return() w/out space, test grammar token OP01_NAMED_VOID_LPAREN
     return($foo_argument * 2);
 }
 
@@ -45,6 +46,8 @@ sub foo_method {
     print 'in MyClass_Good::foo_method(), received $foo_argument = ', $foo_argument, "\n";
     print 'in MyClass_Good::foo_method(), have $self->{foo_property} = ', q{'}, $self->{foo_property}, q{'}, "\n";
 
+    # DEV NOTE: return () w/ space, test grammar token OP01_NAMED_VOID_LPAREN
+    # DEV NOTE: DO NOT RUN PERLTIDY ON THIS FILE!  the line below should read 'return (...);' not 'return(...);'
     return ($foo_argument * -2);
 }
 

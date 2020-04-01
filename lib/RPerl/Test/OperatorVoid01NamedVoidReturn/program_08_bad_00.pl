@@ -1,4 +1,9 @@
 #!/usr/bin/env perl
+
+# [[[ PREPROCESSOR ]]]
+# <<< PARSE_ERROR: 'ERROR ECOPAPC02' >>>
+# <<< PARSE_ERROR: 'Perl::Critic::Policy::ValuesAndExpressions::ProhibitMismatchedOperators' >>>
+
 # [[[ HEADER ]]]
 use RPerl;
 use strict;
@@ -10,7 +15,7 @@ our $VERSION = 0.001_000;
 ## no critic qw(RequireInterpolationOfMetachars)  # USER DEFAULT 2: allow single-quoted control characters & sigils
 
 # [[[ SUBROUTINES ]]]
-sub foo { { my integer $RETURN_TYPE }; return -1; }
+sub foo { { my string $RETURN_TYPE }; return - 'ahoy'; }
 
 # [[[ OPERATIONS ]]]
 foo();

@@ -16,4 +16,3 @@ sub foo { { my void $RETURN_TYPE }; return(); }
 
 # [[[ OPERATIONS ]]]
 foo();
-

@@ -119,8 +119,7 @@
 %token OP19_VARIABLE_ASSIGN      = /(=)/                         # precedence 19 infix: assign '='
 %token OP01_PRINT                = /(print|printf)\s/            # precedence 01 prefix void: 'print' or 'printf' to STDOUT, STDERR, or filehandle
 %token OP01_NAMED_VOID_SCOLON    = /(croak;|die;|exit;|return;)/ # precedence 01 prefix void: "terms and list operators (leftward)" [1] AKA builtins, no return value; 'croak;', 'die;', 'exit;', 'return;'
-#%token OP01_NAMED_VOID_LPAREN    = /(croak\(|exit\(|return\()/   # precedence 01 prefix void: same as above, except w/ parenthesis & w/out semicolon & w/out die; 'croak(', 'exit(', 'return('; ProhibitParensWithBuiltins excepts return() & exit(...); RequireTidyCode & RequireCarping excepts croak() 
-%token OP01_NAMED_VOID_LPAREN    = /(croak\(|exit\(|return\s*\()/ # precedence 01 prefix void: same as above, except w/ parenthesis & w/out semicolon & w/out die; 'croak(', 'exit(', 'return(', 'return ('; ProhibitParensWithBuiltins excepts return() & exit(...); RequireTidyCode & RequireCarping excepts croak() 
+%token OP01_NAMED_VOID_LPAREN    = /(croak\(|exit\(|return\()/   # precedence 01 prefix void: same as above, except w/ parenthesis & w/out semicolon & w/out die; 'croak(', 'exit(', 'return('; ProhibitParensWithBuiltins excepts return() & exit(...); RequireTidyCode & RequireCarping excepts croak() 
 %token OP01_NAMED_VOID           = /(croak|die|exit|return)\s/   # precedence 01 prefix void: same as above, except accepts argument(s); 'croak', 'die', 'exit', 'return'
 %token OP01_QW                   = /(qw\([^()]*\))/              # precedence 01 closed: quote word; ex. 'qw()' or 'qw(foo bar baz)' or 'qw(Foo23 BarBax Ba_z 123)'
 %token OP01_OPEN                 = /(open)\s/                    # precedence 01 prefix: 'open' filehandle
@@ -236,7 +235,7 @@ Operator:                LPAREN OP01_PRINT FHREF_SYMBOL_BRACES SubExpressions ')
                          OP10_NAMED_UNARY SubExpression | OP10_NAMED_UNARY | SubExpression OP11_COMPARE_LT_GT SubExpression |
                          SubExpression OP12_COMPARE_EQ_NE SubExpression | SubExpression OP13_BITWISE_AND SubExpression |
                          SubExpression OP14_BITWISE_OR_XOR SubExpression | SubExpression OP15_LOGICAL_AND SubExpression | SubExpression OP16_LOGICAL_OR SubExpression |
-                         SubExpression OP17_LIST_RANGE SubExpression | LPAREN SubExpression OP18_TERNARY SubExpression COLON SubExpression ')' |
+                         SubExpression OP17_LIST_RANGE SubExpression | SubExpression OP18_TERNARY ScalarVariableOrLiteral COLON ScalarVariableOrLiteral |
                          OP22_LOGICAL_NEG_LPAREN SubExpression ')' | OP22_LOGICAL_NEG SubExpression |
                          SubExpression OP23_LOGICAL_AND SubExpression | SubExpression OP24_LOGICAL_OR_XOR SubExpression ;
 OperatorVoid:            OP01_PRINT (STDOUT_STDERR)? SubExpressions ';' | OP01_PRINT FHREF_SYMBOL_BRACES SubExpressions ';' |
@@ -244,10 +243,15 @@ OperatorVoid:            OP01_PRINT (STDOUT_STDERR)? SubExpressions ';' | OP01_P
                          OP01_NAMED SubExpression OP21_LIST_COMMA SubExpressions ';' | OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL LoopLabel ';' ;
 Expression:              Operator | WORD_UPPERCASE LPAREN ')' | CONSTANT_CALL_SCOPED | WordScoped LPAREN SubExpressions? ')' |
                          ScalarVariable OP02_METHOD_THINARROW LPAREN SubExpressions? ')' | WordScoped OP02_METHOD_THINARROW_NEW HashReference? ')' ;
+
+
 #SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty |                    Array | ArrayReference |                    Hash | HashReference ;
-#SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty | ArrayHashLiteral | Array | ArrayReference | ArrayDereference | Hash | HashReference | HashDereference ;
-SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty |                    Array | ArrayReference | ArrayDereference | Hash | HashReference | HashDereference ;
+SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty | ArrayHashLiteral | Array | ArrayReference | ArrayDereference | Hash | HashReference | HashDereference ;
+#SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty |                    Array | ArrayReference | ArrayDereference | Hash | HashReference | HashDereference ;
+
 SubExpressions:          SubExpression (OP21_LIST_COMMA SubExpression)* ;
+
+
 SubExpressionOrInput:    SubExpression | FHREF_SYMBOL_IN | STDIN ;
 SubExpressionOrVarMod:   SubExpression | VariableModification ;
 Statement:               Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ';' | POD ;
@@ -263,16 +267,13 @@ CodeBlock:               LBRACE Operation+ '}' ;
 
 
 
-# START HERE: implement tests for new productions of Variable, VariableRetrieval(Array/Hash), VariableDeclaration, ArrayReference, HashReference
-# START HERE: implement tests for new productions of Variable, VariableRetrieval(Array/Hash), VariableDeclaration, ArrayReference, HashReference
-# START HERE: implement tests for new productions of Variable, VariableRetrieval(Array/Hash), VariableDeclaration, ArrayReference, HashReference
+# START HERE: implement tests for new productions of Variable, etc below & SubExpression new RHSs above; OP01_NAMED_VOID croak/die/exit/return now parses array argument (foo, bar, baz), need modify grammar or add compile-time check to disable exit() & return() w/ multiple return values if not supported in C++ _OR_ exit() & return() w/ array-by-value in C++
+# START HERE: implement tests for new productions of Variable, etc below & SubExpression new RHSs above; OP01_NAMED_VOID croak/die/exit/return now parses array argument (foo, bar, baz), need modify grammar or add compile-time check to disable exit() & return() w/ multiple return values if not supported in C++ _OR_ exit() & return() w/ array-by-value in C++
+# START HERE: implement tests for new productions of Variable, etc below & SubExpression new RHSs above; OP01_NAMED_VOID croak/die/exit/return now parses array argument (foo, bar, baz), need modify grammar or add compile-time check to disable exit() & return() w/ multiple return values if not supported in C++ _OR_ exit() & return() w/ array-by-value in C++
 
-# Operator -> OP18_TERNARY now has SubExpressions and must be wrapped in parens
-# SubExpression now has several new RHSs
-
-# NEED DELETE OLD ListElement & HashEntry & VariableOrLiteral & SubExpression
-# NEED DELETE OLD ListElement & HashEntry & VariableOrLiteral & SubExpression
-# NEED DELETE OLD ListElement & HashEntry & VariableOrLiteral & SubExpression
+# NEED DELETE UNSED & INCORRECT lines below & above
+# NEED DELETE UNSED & INCORRECT lines below & above
+# NEED DELETE UNSED & INCORRECT lines below & above
 
 
 Variable:                ScalarVariable | ArrayVariable | ArrayReferenceVariable | HashVariable | HashReferenceVariable ;  # NEED ADD ArrayDereferenceVariable & HashDereferenceVariable???
@@ -289,35 +290,74 @@ Scalar:                  ScalarLiteral         | ScalarVariable ;
 ScalarLiteral:           LITERAL_NUMBER | LITERAL_STRING ;
 ScalarVariable:          ScalarVariableOrSelf | ScalarVariableOrSelf VariableRetrievalArrow | ScalarVariableOrSelf VariableRetrievalArrow VariableRetrieval+ ;
 ScalarVariableOrSelf:    SCALAR_SYMBOL | SELF ;
-#ArrayHashLiteral:        LPAREN SubExpressions ')' ;  # NEED DELETE
+
+
+#ArrayHashLiteral:        LPAREN SubExpressions ')' ;
+ArrayHashLiteral:        LPAREN ArrayHashLiteralEs ')' ;
+ArrayHashLiteralEs:      ArrayHashLiteralE (OP21_LIST_COMMA ArrayHashLiteralE)* ;
+ArrayLiteralEs:          ArrayLiteralE       (OP21_LIST_COMMA ArrayLiteralE)* ;
+HashLiteralEs:           HashLiteralE        (OP21_LIST_COMMA HashLiteralE)* ;
+#ArrayLiteralEs:          ListElement       (OP21_LIST_COMMA ArrayLiteralE)* | SubExpression (OP21_LIST_COMMA ArrayLiteralE)* (OP21_LIST_COMMA ListElement) (OP21_LIST_COMMA ArrayLiteralE)* ;
+#ArrayLiteralEs:          ListElement       (OP21_LIST_COMMA ArrayLiteralE)* |  # at least 1 at beginning, possibly any others
+#                         SubExpression (OP21_LIST_COMMA ArrayLiteralE)* (OP21_LIST_COMMA ListElement) (OP21_LIST_COMMA ArrayLiteralE)* (OP21_LIST_COMMA SubExpression) |  # not at beginning or at end, at least 1 in middle, possibly others in middle  
+#                         SubExpression (OP21_LIST_COMMA ArrayLiteralE)* (OP21_LIST_COMMA ListElement) ;  # not at beginning, at least 1 at end, possibly others in middle  
+ 
+ 
+ArrayLiteralE:           SubExpression | ListElement ;
+HashLiteralE:           SubExpression | HashEntry ;
+ArrayHashLiteralE:       SubExpression | ListElement | HashEntry ;
+
+
 ArrayHashLiteralEmpty:   LPAREN   ')' ;
 BracketsEmpty:           LBRACKET ']' ;
 BracesEmpty:             LBRACE   '}' ;
 
-ListElements:            ListElement (OP21_LIST_COMMA ListElement)* ;  # NEED DELETE
-#ListElements:            ListElement (OP21_LIST_COMMA ListElement)* | SubExpressions ;  # NEED DELETE???
 
-ListElement:             SubExpression | TypeInner SubExpression | OP01_QW | ARGV ;
-#ListElement:                             TypeInner     SubExpression | OP01_QW | ARGV ;  # NEED DELETE???
+#ListElements:            ListElement (OP21_LIST_COMMA ListElement)* ;
+
+#ListElement:             SubExpression | TypeInner SubExpression | OP01_QW | ARGV ;
+ListElement:                             TypeInner     SubExpression | OP01_QW | ARGV ;
+
 
 Array:                   ArrayLiteralNonEmpty          | ArrayVariable ;
 
-ArrayLiteralNonEmpty:    LPAREN   ListElements  ')' | LPAREN_TYPE_INNER OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression (OP21_LIST_COMMA ListElement)* ')' ;
+#ArrayLiteralNonEmpty:    LPAREN   ListElements  ')' | LPAREN_TYPE_INNER OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression (OP21_LIST_COMMA ListElement)* ')' ;
+ArrayLiteralNonEmpty:                                 LPAREN_TYPE_INNER OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression (OP21_LIST_COMMA ListElement)* ')' ;
 
 ArrayVariable:           ARRAY_SYMBOL ;
 ArrayReference:          ArrayReferenceLiteral | ArrayReferenceVariable ;
-ArrayReferenceLiteral:   LBRACKET ListElements  ']' | BracketsEmpty ;
+
+
+#ArrayReferenceLiteral:   LBRACKET ListElements  ']' | BracketsEmpty ;
+ArrayReferenceLiteral:   LBRACKET ArrayLiteralEs  ']' | BracketsEmpty ;
+
+
 ArrayReferenceVariable:  ARRAY_REF_SYMBOL ;
 ArrayDereference:        '@{' ScalarVariable '}' | '@{' TypeInner? ArrayReference '}' ;
-HashEntries:             HashEntry (OP21_LIST_COMMA HashEntry)* ;
-#HashEntry:               SubExpression | VarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | ENV ;  # NEED RE-ENABLE!!!
-HashEntry:                               VarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | ENV ;
+#HashEntries:             HashEntry (OP21_LIST_COMMA HashEntry)* ;
+
+
+#HashEntry:               SubExpression | ScaVarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | ENV ;
+HashEntry:                               ScaVarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | ENV ;
+
+
 HashEntryProperties:     OpStringOrWord OP20_HASH_FATARROW TypeInnerProperties ;
-Hash:                    HashLiteral           | HashVariable ;
-HashLiteral:             LPAREN   HashEntries   ')' ;
+
+
+#Hash:                    HashLiteral           | HashVariable ;
+Hash:                                            HashVariable ;
+#HashLiteral:             LPAREN   HashEntries   ')' ;
+
+
 HashVariable:            HASH_SYMBOL ;
 HashReference:           HashReferenceLiteral  | HashReferenceVariable ;
-HashReferenceLiteral:    LBRACE   HashEntries   '}' | BracesEmpty ;
+
+
+#HashReferenceLiteral:    LBRACE   HashEntries   '}' | BracesEmpty ;
+#HashReferenceLiteral:    LBRACE   ArrayHashLiteralEs   '}' | BracesEmpty ;
+HashReferenceLiteral:    LBRACE   HashLiteralEs   '}' | BracesEmpty ;
+
+
 HashReferenceVariable:   HASH_REF_SYMBOL ;
 HashDereference:         '%{' ScalarVariable '}' | '%{' TypeInner? HashReference  '}' ;
 
@@ -330,8 +370,8 @@ TypeInner:                MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN 
 TypeInnerProperties:      MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression | 
                           MY Type '$TYPED_' OpStringOrWord OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef' ;
 TypeInnerConstant:        MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN ;
-# VariableOrLiteral:      Variable | Literal ;  # NEED DELETE, UNUSED
-VarOrLitOrOpStrOrWord: ScalarVariable | ScalarLiteral | OpStringOrWord ;
+ScalarVariableOrLiteral:  ScalarVariable | ScalarLiteral ;
+ScaVarOrLitOrOpStrOrWord: ScalarVariable | ScalarLiteral | OpStringOrWord ;
 OpNamedScolonOrSubExp:    OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | SubExpression ';' ;
 OpNamedScolonOrSubExpIn:  OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | SubExpressionOrInput ';' ;
 OpStringOrWord:           OP24_LOGICAL_OR_XOR | OP23_LOGICAL_AND | OP22_LOGICAL_NEG | OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL | OP12_COMPARE_EQ_NE |
@@ -408,7 +448,7 @@ Operator_121 => 'RPerl::Operation::Expression::Operator::Bitwise::OrXor',       
 Operator_122 => 'RPerl::Operation::Expression::Operator::Logical::And',                      # Operator -> SubExpression OP15_LOGICAL_AND SubExpression
 Operator_123 => 'RPerl::Operation::Expression::Operator::Logical::OrXor',                    # Operator -> SubExpression OP16_LOGICAL_OR SubExpression
 Operator_124 => 'RPerl::Operation::Expression::Operator::List::Range',                       # Operator -> SubExpression OP17_LIST_RANGE SubExpression
-Operator_125 => 'RPerl::Operation::Expression::Operator::Ternary',                           # Operator -> SubExpression OP18_TERNARY VariableOrLiteral COLON VariableOrLiteral
+Operator_125 => 'RPerl::Operation::Expression::Operator::Ternary',                           # Operator -> SubExpression OP18_TERNARY ScalarVariableOrLiteral COLON ScalarVariableOrLiteral
 Operator_126 => 'RPerl::Operation::Expression::Operator::Logical::Negation',                 # Operator -> OP22_LOGICAL_NEG_LPAREN SubExpression ')'
 Operator_127 => 'RPerl::Operation::Expression::Operator::Logical::Negation',                 # Operator -> OP22_LOGICAL_NEG SubExpression
 Operator_128 => 'RPerl::Operation::Expression::Operator::Logical::And',                      # Operator -> SubExpression OP23_LOGICAL_AND SubExpression
@@ -475,7 +515,7 @@ ListElement_215 => 'RPerl::DataStructure::Array::ListElement',                  
 ArrayReference_218 => 'RPerl::DataStructure::Array::Reference',                                    # ArrayReference -> LBRACKET OPTIONAL-53 ']'
 ArrayDereference_221 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',           # ArrayDereference -> '@{' Variable '}'
 ArrayDereference_222 => 'RPerl::Operation::Expression::SubExpression::ArrayDereference',           # ArrayDereference -> '@{' OPTIONAL-54 ArrayReference '}'
-HashEntry_225 => 'RPerl::DataStructure::Hash::Entry',                                              # HashEntry -> VarOrLitOrOpStrOrWord OP20_HASH_FATARROW OPTIONAL-55 SubExpression
+HashEntry_225 => 'RPerl::DataStructure::Hash::Entry',                                              # HashEntry -> ScaVarOrLitOrOpStrOrWord OP20_HASH_FATARROW OPTIONAL-55 SubExpression
 HashEntry_226 => 'RPerl::Operation::Expression::SubExpression::HashDereference',                   # HashEntry -> HashDereference
 HashEntry_227 => 'RPerl::DataStructure::Hash::Entry',                                              # HashEntry -> ENV
 HashEntryProperties_228 => 'RPerl::NonGenerator',                                                  # HashEntryProperties -> OpStringOrWord OP20_HASH_FATARROW TypeInnerProperties
@@ -493,11 +533,11 @@ TypeInner_244 => 'RPerl::DataType::TypeInner',                                  
 TypeInnerProperties_245 => 'RPerl::NonGenerator',                                                  # TypeInnerProperties -> MY Type '$TYPED_' OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression
 TypeInnerProperties_246 => 'RPerl::NonGenerator',                                                  # TypeInnerProperties -> MY Type '$TYPED_' OpStringOrWord OP02_ARRAY_THINARROW SubExpression ']' OP19_VARIABLE_ASSIGN 'undef'
 TypeInnerConstant_247 => 'RPerl::NonGenerator',                                                    # TypeInnerConstant -> MY Type '$TYPED_' WORD_UPPERCASE OP19_VARIABLE_ASSIGN
-VariableOrLiteral_248 => 'RPerl::Operation::Expression::SubExpression::Variable',                  # VariableOrLiteral -> Variable
-VariableOrLiteral_249 => 'RPerl::Operation::Expression::SubExpression::Literal',                   # VariableOrLiteral -> Literal
-VarOrLitOrOpStrOrWord_250 => 'RPerl::Operation::Expression::SubExpression::Variable',              # VarOrLitOrOpStrOrWord -> Variable
-VarOrLitOrOpStrOrWord_251 => 'RPerl::Operation::Expression::SubExpression::Literal',               # VarOrLitOrOpStrOrWord -> Literal
-VarOrLitOrOpStrOrWord_252 => 'RPerl::NonGenerator',                                                # VarOrLitOrOpStrOrWord -> OpStringOrWord
+ScalarVariableOrLiteral_248 => 'RPerl::Operation::Expression::SubExpression::Variable',                  # ScalarVariableOrLiteral -> Variable
+ScalarVariableOrLiteral_249 => 'RPerl::Operation::Expression::SubExpression::Literal',                   # ScalarVariableOrLiteral -> Literal
+ScaVarOrLitOrOpStrOrWord_250 => 'RPerl::Operation::Expression::SubExpression::Variable',              # ScaVarOrLitOrOpStrOrWord -> Variable
+ScaVarOrLitOrOpStrOrWord_251 => 'RPerl::Operation::Expression::SubExpression::Literal',               # ScaVarOrLitOrOpStrOrWord -> Literal
+ScaVarOrLitOrOpStrOrWord_252 => 'RPerl::NonGenerator',                                                # ScaVarOrLitOrOpStrOrWord -> OpStringOrWord
 ScalarVariableOrSelf_253 => 'RPerl::NonGenerator',                                                   # ScalarVariableOrSelf -> SCALAR_SYMBOL
 ScalarVariableOrSelf_254 => 'RPerl::NonGenerator',                                                   # ScalarVariableOrSelf -> SELF
 Literal_255 => 'RPerl::Operation::Expression::SubExpression::Literal::Number',                     # Literal -> LITERAL_NUMBER
