@@ -1,11 +1,12 @@
 # NEED UPDATE, CORRELATION #rp037: all changes made to this file MUST be propagated to the corresponding .travis.yml files for all other RPerl Family software suites 
 language: perl
-# v0.107_100
+# v0.108_000
 perl:
-# NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
-# Perl v5.8 causes $CPP_LINKED global symbol errors, currently disabled
+# NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.10 and earlier?
+# Perl v5.8  causes $CPP_LINKED global symbol errors, currently disabled
 #    - "5.8"
-    - "5.10"
+# Perl v5.10 causes "Can't declare class for non-scalar" errors when using RPerl data types on by-value @arrays and %hashes, currently disabled
+#    - "5.10"
     - "5.12"
     - "5.14"
     - "5.16"

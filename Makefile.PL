@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 our $VERSION = 0.041_000;
-use 5.010;  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
+use 5.012;  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.10 and earlier?
 
 use ExtUtils::MakeMaker;
 
@@ -91,7 +91,7 @@ WriteMakefile(
     VERSION_FROM     => 'lib/RPerl.pm',
     LICENSE          => 'perl_5',
     EXE_FILES        => ['script/rperl'],
-    MIN_PERL_VERSION => '5.10.0',  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.8 and earlier?
+    MIN_PERL_VERSION => '5.12.0',  # NEED ANSWER, CORRELATION #rp000: is RPerl truly incompatible with Perl v5.10 and earlier?
 #    MAKE             => 'gmake',   # CORRELATION #rp200, Windows + EU::MM + GNU makef
     CONFIGURE_REQUIRES => {
         # DEV NOTE, CORRELATION #rp061: prioritize installation of all dists which are (or may be) dependencies of other dists or components, CONFIGURE_REQUIRES prioritizes installation, PREREQ_PM creates runtime dependency
