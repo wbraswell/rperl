@@ -1,11 +1,11 @@
 #!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: 'foo-bar-' >>>
-# <<< EXECUTE_SUCCESS: 'quux' >>>
-# <<< EXECUTE_SUCCESS: 'zorg+blop+' >>>
-# <<< EXECUTE_SUCCESS: 'munge/sqap/' >>>
-# <<< EXECUTE_SUCCESS: 'frob*grul*' >>>
+# <<< EXECUTE_SUCCESS: '$s = foo-bar-' >>>
+# <<< EXECUTE_SUCCESS: '$s = quux' >>>
+# <<< EXECUTE_SUCCESS: '$s = zorg+blop+' >>>
+# <<< EXECUTE_SUCCESS: '$s = munge/sqap/' >>>
+# <<< EXECUTE_SUCCESS: '$s = frob*grul*' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -19,7 +19,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string_arrayref $s_array = [qw(foo-bar- quux zorg+blop+ munge/sqap/ frob*grul*)];
-foreach my string $s ( @{$s_array} ) {
+my string_array @s_array = qw(foo-bar- quux zorg+blop+ munge/sqap/ frob*grul*);
+foreach my string $s ( @s_array ) {
     print '$s = ', $s, "\n";
 }

@@ -1,11 +1,9 @@
 #!/usr/bin/env perl
 
+# Learning RPerl, Section 3.1: Lists vs Arrays
+
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: '$s = foo-bar-bat' >>>
-# <<< EXECUTE_SUCCESS: '$s = quux' >>>
-# <<< EXECUTE_SUCCESS: '$s = zorg+blop+frun' >>>
-# <<< EXECUTE_SUCCESS: '$s = munge/sqap/cruft' >>>
-# <<< EXECUTE_SUCCESS: '$s = frob*grul*jick' >>>
+# <<< EXECUTE_SUCCESS: "[ 'a', 'c', 'e' ]" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -19,7 +17,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string_array @s_array = qw(foo-bar-bat quux zorg+blop+frun munge/sqap/cruft frob*grul*jick);
-foreach my string $s ( @s_array ) {
-    print '$s = ', $s, "\n";
-}
+my string_arrayref $foo = [qw(a c e)];
+print string_arrayref_to_string($foo), "\n";

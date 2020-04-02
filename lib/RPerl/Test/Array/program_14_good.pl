@@ -1,11 +1,9 @@
 #!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: '$s = foo-bar-bat' >>>
-# <<< EXECUTE_SUCCESS: '$s = quux' >>>
-# <<< EXECUTE_SUCCESS: '$s = zorg+blop+frun' >>>
-# <<< EXECUTE_SUCCESS: '$s = munge/sqap/cruft' >>>
-# <<< EXECUTE_SUCCESS: '$s = frob*grul*jick' >>>
+# <<< EXECUTE_SUCCESS: '$s = alpha' >>>
+# <<< EXECUTE_SUCCESS: '$s = beta' >>>
+# <<< EXECUTE_SUCCESS: '$s = gamma' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -19,7 +17,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string_array @s_array = qw(foo-bar-bat quux zorg+blop+frun munge/sqap/cruft frob*grul*jick);
+my string_array @s_array = qw(alpha beta gamma);
 foreach my string $s ( @s_array ) {
     print '$s = ', $s, "\n";
 }

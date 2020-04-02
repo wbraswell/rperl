@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.021_000;
+    our $VERSION = 0.023_000;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -182,7 +182,7 @@
 # [[[ LEXICON TOKENS, PUNCTUATION & USER-DEFINED WORDS ]]]
 
 %token COLON                = /(:)/                           # ':'
-%token LPAREN_TYPE_INNER    = /(\(\s*my\s+(?:[a-z_]\w*|[A-Z]\w*[a-z]\w*|(?:[a-zA-Z_]\w*)?(?:::[a-zA-Z_]\w*)+|integer|unsigned_integer)\s+\$TYPED_)/  # '( my scalartype $TYPED_' == LPAREN_MY Type '$TYPED_' == LPAREN_MY (WORD | WORD_SCOPED | TYPE_INTEGER) '$TYPED'
+%token LPAREN_TYPE_INNER    = /(\(\s*my\s+(?:[a-z_]\w*|[A-Z]\w*[a-z]\w*|(?:[a-zA-Z_]\w*)?(?:::[a-zA-Z_]\w*)+|integer|unsigned_integer)\s+\$TYPED_)/  # '( my scalartype $TYPED_' == LPAREN_MY Type '$TYPED_' == LPAREN_MY (WORD | WORD_SCOPED | TYPE_INTEGER) '$TYPED_'
 %token LPAREN_MY            = /(\(\s*my)/                     # '( my'
 %token LPAREN               = /(\()/                          # '('
 %token LBRACKET             = /(\[)/                          # '['
@@ -224,7 +224,14 @@ SubroutineOrMethod:      Subroutine | Method ;
 # [[[ SYNTAX PRODUCTION RULES, OPERATIONS ]]]
 
 Operation:               Expression ';' | OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | Statement ;
-Operator:                LPAREN OP01_PRINT FHREF_SYMBOL_BRACES SubExpressions ')' |
+
+
+
+#Operator:                LPAREN OP01_PRINT FHREF_SYMBOL_BRACES SubExpressions ')' |
+Operator:                LPAREN OP01_PRINT FHREF_SYMBOL_BRACES SubExpressions ')'| OP01_QW |
+
+
+
                          OP01_NAMED SubExpression | LPAREN OP01_NAMED SubExpression OP21_LIST_COMMA SubExpressions ')' |
                          OP01_OPEN MY TYPE_FHREF FHREF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
                          OP01_CLOSE FHREF_SYMBOL | OP03_MATH_INC_DEC ScalarVariable | ScalarVariable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
@@ -243,15 +250,8 @@ OperatorVoid:            OP01_PRINT (STDOUT_STDERR)? SubExpressions ';' | OP01_P
                          OP01_NAMED SubExpression OP21_LIST_COMMA SubExpressions ';' | OP19_LOOP_CONTROL_SCOLON | OP19_LOOP_CONTROL LoopLabel ';' ;
 Expression:              Operator | WORD_UPPERCASE LPAREN ')' | CONSTANT_CALL_SCOPED | WordScoped LPAREN SubExpressions? ')' |
                          ScalarVariable OP02_METHOD_THINARROW LPAREN SubExpressions? ')' | WordScoped OP02_METHOD_THINARROW_NEW HashReference? ')' ;
-
-
-#SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty |                    Array | ArrayReference |                    Hash | HashReference ;
 SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty | ArrayHashLiteral | Array | ArrayReference | ArrayDereference | Hash | HashReference | HashDereference ;
-#SubExpression:           Expression | 'undef' | Scalar | ArrayHashLiteralEmpty |                    Array | ArrayReference | ArrayDereference | Hash | HashReference | HashDereference ;
-
 SubExpressions:          SubExpression (OP21_LIST_COMMA SubExpression)* ;
-
-
 SubExpressionOrInput:    SubExpression | FHREF_SYMBOL_IN | STDIN ;
 SubExpressionOrVarMod:   SubExpression | VariableModification ;
 Statement:               Conditional | (LoopLabel COLON)? Loop | OperatorVoid | VariableDeclaration | VariableModification ';' | POD ;
@@ -271,12 +271,14 @@ CodeBlock:               LBRACE Operation+ '}' ;
 # START HERE: implement tests for new productions of Variable, etc below & SubExpression new RHSs above; OP01_NAMED_VOID croak/die/exit/return now parses array argument (foo, bar, baz), need modify grammar or add compile-time check to disable exit() & return() w/ multiple return values if not supported in C++ _OR_ exit() & return() w/ array-by-value in C++
 # START HERE: implement tests for new productions of Variable, etc below & SubExpression new RHSs above; OP01_NAMED_VOID croak/die/exit/return now parses array argument (foo, bar, baz), need modify grammar or add compile-time check to disable exit() & return() w/ multiple return values if not supported in C++ _OR_ exit() & return() w/ array-by-value in C++
 
-# NEED DELETE UNSED & INCORRECT lines below & above
-# NEED DELETE UNSED & INCORRECT lines below & above
-# NEED DELETE UNSED & INCORRECT lines below & above
+
+# NEED ADD ArrayDereferenceVariable & HashDereferenceVariable to Variable line below???
+# NEED ADD ArrayDereferenceVariable & HashDereferenceVariable to Variable line below???
+# NEED ADD ArrayDereferenceVariable & HashDereferenceVariable to Variable line below???
+
+Variable:                ScalarVariable | ArrayVariable | ArrayReferenceVariable | HashVariable | HashReferenceVariable ;
 
 
-Variable:                ScalarVariable | ArrayVariable | ArrayReferenceVariable | HashVariable | HashReferenceVariable ;  # NEED ADD ArrayDereferenceVariable & HashDereferenceVariable???
 VariableRetrievalArrow:  OP02_ARRAY_THINARROW SubExpression ']' | OP02_HASH_THINARROW SubExpression '}' | OP02_HASH_THINARROW WORD '}' ;
 VariableRetrieval:       VariableRetrievalArrow |
                                      LBRACKET SubExpression ']' |              LBRACE SubExpression '}' |              LBRACE WORD '}' ;
@@ -290,74 +292,61 @@ Scalar:                  ScalarLiteral         | ScalarVariable ;
 ScalarLiteral:           LITERAL_NUMBER | LITERAL_STRING ;
 ScalarVariable:          ScalarVariableOrSelf | ScalarVariableOrSelf VariableRetrievalArrow | ScalarVariableOrSelf VariableRetrievalArrow VariableRetrieval+ ;
 ScalarVariableOrSelf:    SCALAR_SYMBOL | SELF ;
-
-
-#ArrayHashLiteral:        LPAREN SubExpressions ')' ;
 ArrayHashLiteral:        LPAREN ArrayHashLiteralEs ')' ;
 ArrayHashLiteralEs:      ArrayHashLiteralE (OP21_LIST_COMMA ArrayHashLiteralE)* ;
-ArrayLiteralEs:          ArrayLiteralE       (OP21_LIST_COMMA ArrayLiteralE)* ;
-HashLiteralEs:           HashLiteralE        (OP21_LIST_COMMA HashLiteralE)* ;
-#ArrayLiteralEs:          ListElement       (OP21_LIST_COMMA ArrayLiteralE)* | SubExpression (OP21_LIST_COMMA ArrayLiteralE)* (OP21_LIST_COMMA ListElement) (OP21_LIST_COMMA ArrayLiteralE)* ;
-#ArrayLiteralEs:          ListElement       (OP21_LIST_COMMA ArrayLiteralE)* |  # at least 1 at beginning, possibly any others
-#                         SubExpression (OP21_LIST_COMMA ArrayLiteralE)* (OP21_LIST_COMMA ListElement) (OP21_LIST_COMMA ArrayLiteralE)* (OP21_LIST_COMMA SubExpression) |  # not at beginning or at end, at least 1 in middle, possibly others in middle  
-#                         SubExpression (OP21_LIST_COMMA ArrayLiteralE)* (OP21_LIST_COMMA ListElement) ;  # not at beginning, at least 1 at end, possibly others in middle  
- 
- 
+ArrayLiteralEs:          ArrayLiteralE     (OP21_LIST_COMMA ArrayLiteralE)* ;
+HashLiteralEs:           HashLiteralE      (OP21_LIST_COMMA HashLiteralE)* ;
 ArrayLiteralE:           SubExpression | ListElement ;
-HashLiteralE:           SubExpression | HashEntry ;
+HashLiteralE:            SubExpression | HashEntry ;
 ArrayHashLiteralE:       SubExpression | ListElement | HashEntry ;
-
-
 ArrayHashLiteralEmpty:   LPAREN   ')' ;
-BracketsEmpty:           LBRACKET ']' ;
-BracesEmpty:             LBRACE   '}' ;
+ArrayRefLiteralEmpty:    LBRACKET ']' ;
+HashRefLiteralEmpty:     LBRACE   '}' ;
 
 
-#ListElements:            ListElement (OP21_LIST_COMMA ListElement)* ;
+# VERY FIRST START HERE: delete unused lines below & above from removal of OP01_QW & ARGV & ENV below; continue copying tests from ArrayReference to Array
+# VERY FIRST START HERE: delete unused lines below & above from removal of OP01_QW & ARGV & ENV below; continue copying tests from ArrayReference to Array
+# VERY FIRST START HERE: delete unused lines below & above from removal of OP01_QW & ARGV & ENV below; continue copying tests from ArrayReference to Array
 
-#ListElement:             SubExpression | TypeInner SubExpression | OP01_QW | ARGV ;
-ListElement:                             TypeInner     SubExpression | OP01_QW | ARGV ;
+
+#ListElement:             TypeInner SubExpression | OP01_QW | ARGV ;
+ListElement:             TypeInner SubExpression  ;
 
 
-Array:                   ArrayLiteralNonEmpty          | ArrayVariable ;
 
-#ArrayLiteralNonEmpty:    LPAREN   ListElements  ')' | LPAREN_TYPE_INNER OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression (OP21_LIST_COMMA ListElement)* ')' ;
-ArrayLiteralNonEmpty:                                 LPAREN_TYPE_INNER OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression (OP21_LIST_COMMA ListElement)* ')' ;
+Array:                   LPAREN_TYPE_INNER OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression (OP21_LIST_COMMA ListElement)* ')' | ArrayVariable ;  # ArrayHashLiteral produced by SubExpresion instead of ArrayLiteral produced here
 
-ArrayVariable:           ARRAY_SYMBOL ;
+
+
+#ArrayVariable:           ARRAY_SYMBOL ;
+ArrayVariable:           ARRAY_SYMBOL | ARGV ;
+
+
+
 ArrayReference:          ArrayReferenceLiteral | ArrayReferenceVariable ;
-
-
-#ArrayReferenceLiteral:   LBRACKET ListElements  ']' | BracketsEmpty ;
-ArrayReferenceLiteral:   LBRACKET ArrayLiteralEs  ']' | BracketsEmpty ;
-
-
+ArrayReferenceLiteral:   LBRACKET ArrayLiteralEs  ']' | ArrayRefLiteralEmpty ;
 ArrayReferenceVariable:  ARRAY_REF_SYMBOL ;
 ArrayDereference:        '@{' ScalarVariable '}' | '@{' TypeInner? ArrayReference '}' ;
-#HashEntries:             HashEntry (OP21_LIST_COMMA HashEntry)* ;
 
 
-#HashEntry:               SubExpression | ScaVarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | ENV ;
-HashEntry:                               ScaVarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | ENV ;
+
+#HashEntry:               ScaVarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | ENV ;
+HashEntry:               ScaVarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression ;
+
 
 
 HashEntryProperties:     OpStringOrWord OP20_HASH_FATARROW TypeInnerProperties ;
+Hash:                    HashVariable ;  # ArrayHashLiteral produced by SubExpresion instead of HashLiteral produced here
 
 
-#Hash:                    HashLiteral           | HashVariable ;
-Hash:                                            HashVariable ;
-#HashLiteral:             LPAREN   HashEntries   ')' ;
+
+#HashVariable:            HASH_SYMBOL ;
+HashVariable:            HASH_SYMBOL | ENV ;
 
 
-HashVariable:            HASH_SYMBOL ;
+
 HashReference:           HashReferenceLiteral  | HashReferenceVariable ;
-
-
-#HashReferenceLiteral:    LBRACE   HashEntries   '}' | BracesEmpty ;
-#HashReferenceLiteral:    LBRACE   ArrayHashLiteralEs   '}' | BracesEmpty ;
-HashReferenceLiteral:    LBRACE   HashLiteralEs   '}' | BracesEmpty ;
-
-
+HashReferenceLiteral:    LBRACE   HashLiteralEs   '}' | HashRefLiteralEmpty ;
 HashReferenceVariable:   HASH_REF_SYMBOL ;
 HashDereference:         '%{' ScalarVariable '}' | '%{' TypeInner? HashReference  '}' ;
 

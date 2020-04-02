@@ -1,11 +1,8 @@
 #!/usr/bin/env perl
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: '$s = foo-bar-bat' >>>
-# <<< EXECUTE_SUCCESS: '$s = quux' >>>
-# <<< EXECUTE_SUCCESS: '$s = zorg+blop+frun' >>>
-# <<< EXECUTE_SUCCESS: '$s = munge/sqap/cruft' >>>
-# <<< EXECUTE_SUCCESS: '$s = frob*grul*jick' >>>
+# <<< PARSE_ERROR: 'ERROR ECOPAPL02' >>>
+# <<< PARSE_ERROR: 'Possible attempt to put comments in qw() list' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -19,7 +16,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string_array @s_array = qw(foo-bar-bat quux zorg+blop+frun munge/sqap/cruft frob*grul*jick);
-foreach my string $s ( @s_array ) {
+my string_array @s_array = (qw(foo-1bar-5bat qu23ux zorg0+blop+0frun munge4/4sqap6/6cruft 88frob*99grul99*jick88 w`~!@#$%^&*_=[]{}|;:'",.<>?));
+foreach my string $s ( $s_array ) {
     print '$s = ', $s, "\n";
 }

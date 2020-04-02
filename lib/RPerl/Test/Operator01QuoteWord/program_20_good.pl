@@ -1,9 +1,11 @@
 #!/usr/bin/env perl
 
-# Learning RPerl, Section 3.1: Lists vs Arrays
-
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: "[ 'a', 'c', 'e' ]" >>>
+# <<< EXECUTE_SUCCESS: '$s = foo' >>>
+# <<< EXECUTE_SUCCESS: '$s = quux' >>>
+# <<< EXECUTE_SUCCESS: '$s = zorg' >>>
+# <<< EXECUTE_SUCCESS: '$s = munge' >>>
+# <<< EXECUTE_SUCCESS: '$s = frob' >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -17,5 +19,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string_arrayref $foo = [qw(a c e)];
-print string_arrayref_to_string($foo), "\n";
+my string_array @s_array = (qw(foo quux zorg munge frob));
+foreach my string $s ( @s_array ) {
+    print '$s = ', $s, "\n";
+}

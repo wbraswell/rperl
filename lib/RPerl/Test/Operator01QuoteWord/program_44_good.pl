@@ -19,7 +19,7 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string_array @s_array = qw(foo-bar-bat quux zorg+blop+frun munge/sqap/cruft frob*grul*jick);
-foreach my string $s ( @s_array ) {
+my string_arrayref $s_array = [qw(foo-bar-bat quux zorg+blop+frun munge/sqap/cruft frob*grul*jick)];
+foreach my string $s ( @{$s_array} ) {
     print '$s = ', $s, "\n";
 }
