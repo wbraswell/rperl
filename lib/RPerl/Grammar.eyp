@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.023_000;
+    our $VERSION = 0.023_100;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -224,14 +224,7 @@ SubroutineOrMethod:      Subroutine | Method ;
 # [[[ SYNTAX PRODUCTION RULES, OPERATIONS ]]]
 
 Operation:               Expression ';' | OP01_NAMED_SCOLON | OP10_NAMED_UNARY_SCOLON | Statement ;
-
-
-
-#Operator:                LPAREN OP01_PRINT FHREF_SYMBOL_BRACES SubExpressions ')' |
 Operator:                LPAREN OP01_PRINT FHREF_SYMBOL_BRACES SubExpressions ')'| OP01_QW |
-
-
-
                          OP01_NAMED SubExpression | LPAREN OP01_NAMED SubExpression OP21_LIST_COMMA SubExpressions ')' |
                          OP01_OPEN MY TYPE_FHREF FHREF_SYMBOL OP21_LIST_COMMA LITERAL_STRING OP21_LIST_COMMA SubExpression |
                          OP01_CLOSE FHREF_SYMBOL | OP03_MATH_INC_DEC ScalarVariable | ScalarVariable OP03_MATH_INC_DEC | SubExpression OP04_MATH_POW SubExpression |
@@ -267,9 +260,9 @@ CodeBlock:               LBRACE Operation+ '}' ;
 
 
 
-# START HERE: implement tests for new productions of Variable, etc below & SubExpression new RHSs above; OP01_NAMED_VOID croak/die/exit/return now parses array argument (foo, bar, baz), need modify grammar or add compile-time check to disable exit() & return() w/ multiple return values if not supported in C++ _OR_ exit() & return() w/ array-by-value in C++
-# START HERE: implement tests for new productions of Variable, etc below & SubExpression new RHSs above; OP01_NAMED_VOID croak/die/exit/return now parses array argument (foo, bar, baz), need modify grammar or add compile-time check to disable exit() & return() w/ multiple return values if not supported in C++ _OR_ exit() & return() w/ array-by-value in C++
-# START HERE: implement tests for new productions of Variable, etc below & SubExpression new RHSs above; OP01_NAMED_VOID croak/die/exit/return now parses array argument (foo, bar, baz), need modify grammar or add compile-time check to disable exit() & return() w/ multiple return values if not supported in C++ _OR_ exit() & return() w/ array-by-value in C++
+# START HERE: implement tests for @ARGV & %ENV & new productions of Variable, Hash, etc below & SubExpression new RHSs above; OP01_NAMED_VOID croak/die/exit/return now parses array argument (foo, bar, baz), need modify grammar or add compile-time check to disable exit() & return() w/ multiple return values if not supported in C++ _OR_ exit() & return() w/ array-by-value in C++
+# START HERE: implement tests for @ARGV & %ENV & new productions of Variable, Hash, etc below & SubExpression new RHSs above; OP01_NAMED_VOID croak/die/exit/return now parses array argument (foo, bar, baz), need modify grammar or add compile-time check to disable exit() & return() w/ multiple return values if not supported in C++ _OR_ exit() & return() w/ array-by-value in C++
+# START HERE: implement tests for @ARGV & %ENV & new productions of Variable, Hash, etc below & SubExpression new RHSs above; OP01_NAMED_VOID croak/die/exit/return now parses array argument (foo, bar, baz), need modify grammar or add compile-time check to disable exit() & return() w/ multiple return values if not supported in C++ _OR_ exit() & return() w/ array-by-value in C++
 
 
 # NEED ADD ArrayDereferenceVariable & HashDereferenceVariable to Variable line below???
@@ -277,6 +270,13 @@ CodeBlock:               LBRACE Operation+ '}' ;
 # NEED ADD ArrayDereferenceVariable & HashDereferenceVariable to Variable line below???
 
 Variable:                ScalarVariable | ArrayVariable | ArrayReferenceVariable | HashVariable | HashReferenceVariable ;
+
+
+
+# VERY FIRST START HERE: continue copying tests from ArrayReference to Array
+# VERY FIRST START HERE: continue copying tests from ArrayReference to Array
+# VERY FIRST START HERE: continue copying tests from ArrayReference to Array
+
 
 
 VariableRetrievalArrow:  OP02_ARRAY_THINARROW SubExpression ']' | OP02_HASH_THINARROW SubExpression '}' | OP02_HASH_THINARROW WORD '}' ;
@@ -302,49 +302,17 @@ ArrayHashLiteralE:       SubExpression | ListElement | HashEntry ;
 ArrayHashLiteralEmpty:   LPAREN   ')' ;
 ArrayRefLiteralEmpty:    LBRACKET ']' ;
 HashRefLiteralEmpty:     LBRACE   '}' ;
-
-
-# VERY FIRST START HERE: delete unused lines below & above from removal of OP01_QW & ARGV & ENV below; continue copying tests from ArrayReference to Array
-# VERY FIRST START HERE: delete unused lines below & above from removal of OP01_QW & ARGV & ENV below; continue copying tests from ArrayReference to Array
-# VERY FIRST START HERE: delete unused lines below & above from removal of OP01_QW & ARGV & ENV below; continue copying tests from ArrayReference to Array
-
-
-#ListElement:             TypeInner SubExpression | OP01_QW | ARGV ;
 ListElement:             TypeInner SubExpression  ;
-
-
-
 Array:                   LPAREN_TYPE_INNER OpStringOrWord OP19_VARIABLE_ASSIGN SubExpression (OP21_LIST_COMMA ListElement)* ')' | ArrayVariable ;  # ArrayHashLiteral produced by SubExpresion instead of ArrayLiteral produced here
-
-
-
-#ArrayVariable:           ARRAY_SYMBOL ;
 ArrayVariable:           ARRAY_SYMBOL | ARGV ;
-
-
-
 ArrayReference:          ArrayReferenceLiteral | ArrayReferenceVariable ;
 ArrayReferenceLiteral:   LBRACKET ArrayLiteralEs  ']' | ArrayRefLiteralEmpty ;
 ArrayReferenceVariable:  ARRAY_REF_SYMBOL ;
 ArrayDereference:        '@{' ScalarVariable '}' | '@{' TypeInner? ArrayReference '}' ;
-
-
-
-#HashEntry:               ScaVarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression | ENV ;
 HashEntry:               ScaVarOrLitOrOpStrOrWord OP20_HASH_FATARROW TypeInner? SubExpression ;
-
-
-
 HashEntryProperties:     OpStringOrWord OP20_HASH_FATARROW TypeInnerProperties ;
 Hash:                    HashVariable ;  # ArrayHashLiteral produced by SubExpresion instead of HashLiteral produced here
-
-
-
-#HashVariable:            HASH_SYMBOL ;
 HashVariable:            HASH_SYMBOL | ENV ;
-
-
-
 HashReference:           HashReferenceLiteral  | HashReferenceVariable ;
 HashReferenceLiteral:    LBRACE   HashLiteralEs   '}' | HashRefLiteralEmpty ;
 HashReferenceVariable:   HASH_REF_SYMBOL ;
