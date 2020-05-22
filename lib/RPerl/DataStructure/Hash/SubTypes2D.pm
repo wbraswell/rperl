@@ -3,7 +3,7 @@ package RPerl::DataStructure::Hash::SubTypes2D;
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.023_000;
+our $VERSION = 0.024_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
