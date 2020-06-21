@@ -85,6 +85,18 @@ string string_arrayref_to_string(string_arrayref input_vector);
 string string_arrayref_to_string_pretty(string_arrayref input_vector);
 string string_arrayref_to_string_extend(string_arrayref input_vector);
 string string_arrayref_to_string_format(string_arrayref input_vector, integer format_level, integer indent_level);
+
+template <class CLASSNAME>
+string arrayref_to_string_compact(CLASSNAME input_vector);
+template <class CLASSNAME>
+string arrayref_to_string(CLASSNAME input_vector);
+template <class CLASSNAME>
+string arrayref_to_string_pretty(CLASSNAME input_vector);
+template <class CLASSNAME>
+string arrayref_to_string_extend(CLASSNAME input_vector);
+template <class CLASSNAME>
+string arrayref_to_string_format(CLASSNAME input_vector, integer format_level, integer indent_level);
+
 # endif
 
 // [[[ TYPE TESTING ]]]
@@ -103,5 +115,8 @@ number_arrayref number_arrayref_typetest1(integer my_size);
 string string_arrayref_typetest0(string_arrayref people);
 string_arrayref string_arrayref_typetest1(integer my_size);
 # endif
+
+// DEV NOTE, CORRELATION #rp310: separate declaration & implementation of templates
+#include <RPerl/DataStructure/Array/SubTypes1D.tpp>  // -> ??? (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm ???)
 
 #endif

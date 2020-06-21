@@ -1,4 +1,4 @@
-using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
+using std::cout;  using std::cerr;  using std::endl;  //using std::to_string;  // NEED DELETE, PRE-TEMPLATE C++
 
 #ifndef __CPP__INCLUDED__RPerl__Operation__Expression__Operator__Named__Keys_cpp
 #define __CPP__INCLUDED__RPerl__Operation__Expression__Operator__Named__Keys_cpp 0.002_000

@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_h
-#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.008_000
+#define __CPP__INCLUDED__RPerl__DataType__Integer_h 0.009_000
 
 // [[[ TYPEDEFS ]]]
 // DEV NOTE: must use "integer" typedef because "int" is already defined by Inline's default typemap, even if we put our own integer entry into typemap.rperl;
@@ -203,6 +203,7 @@ character integer_to_character(integer input_integer);
 # ifdef __PERL__TYPES
 SV* integer_to_string(SV* input_integer);
 # elif defined __CPP__TYPES
+string         to_string(integer input_integer);
 string integer_to_string(integer input_integer);
 # endif
 string integer_to_string_CPPTYPES(integer input_integer);

@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.008_000
+#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.009_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/Integer.h>  // -> NULL (relies on native C type)
@@ -181,8 +181,14 @@ SV* integer_to_string(SV* input_integer) {
 
 # elif defined __CPP__TYPES
 
+string to_string(integer input_integer) {
+    fprintf(stderr, "in CPPOPS_CPPTYPES to_string(), about to call integer_to_string & return value...\n");
+    return(integer_to_string(input_integer));
+}
+
 // DEV NOTE, CORRELATION #rp010: shim CPPTYPES sub
 string integer_to_string(integer input_integer) {
+    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string(), about to call integer_to_string_CPPTYPES() & return value...\n");
     return(integer_to_string_CPPTYPES(input_integer));
 }
 
@@ -193,7 +199,7 @@ string integer_to_string(integer input_integer) {
 // DEV NOTE, CORRELATION #rp010: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
 string integer_to_string_CPPTYPES(integer input_integer)
 {
-//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES(), top of subroutine, received unformatted input_integer = %"INTEGER"\n", input_integer);
+    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES(), top of subroutine, received unformatted input_integer = %"INTEGER"\n", input_integer);
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES()...\n");
 
     std::ostringstream output_stream;

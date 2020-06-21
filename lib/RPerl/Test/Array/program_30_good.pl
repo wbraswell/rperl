@@ -3,7 +3,7 @@
 # Learning RPerl, Section 3.1: Lists vs Arrays
 
 # [[[ PREPROCESSOR ]]]
-# <<< EXECUTE_SUCCESS: "@variable_storing_array = ( 'list', 'enclosed', 'within', 'square', 'brackets' )" >>>
+# <<< EXECUTE_SUCCESS: "@variable_storing_array = ( 'list', 'enclosed', 'within', 'round', 'parentheses' )" >>>
 
 # [[[ HEADER ]]]
 use RPerl;
@@ -18,5 +18,5 @@ our $VERSION = 0.001_000;
 
 # [[[ OPERATIONS ]]]
 
-my string_array @variable_storing_array = ('list', 'enclosed', 'within', 'square', 'brackets');
+my string_array @variable_storing_array = ('list', 'enclosed', 'within', 'round', 'parentheses');
 print '@variable_storing_array = ', string_array_to_string(@variable_storing_array), "\n";

@@ -1,4 +1,4 @@
-using std::cout;  using std::cerr;  using std::endl;  using std::to_string;
+using std::cout;  using std::cerr;  using std::endl;  //using std::to_string;  // NEED DELETE, PRE-TEMPLATE C++
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp
 #define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp 0.022_000
@@ -696,32 +696,45 @@ SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
 // call actual stringify routine, format level -2 (compact), indent level 0
 string integer_arrayref_to_string_compact(integer_arrayref input_vector)
 {
-    return integer_arrayref_to_string_format(input_vector, -2, 0);
+//    return integer_arrayref_to_string_format(input_vector, -2, 0);  // NEED DELETE, PRE-TEMPLATE C++
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string_compact(), about to call arrayref_to_string_format() & return value...\n");
+    return arrayref_to_string_format(input_vector, -2, 0);
 }
 
 // call actual stringify routine, format level -1 (normal), indent level 0, DEFAULT
 string integer_arrayref_to_string(integer_arrayref input_vector)
 {
-    return integer_arrayref_to_string_format(input_vector, -1, 0);
+//    return integer_arrayref_to_string_format(input_vector, -1, 0);  // NEED DELETE, PRE-TEMPLATE C++
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), about to call arrayref_to_string_format() & return value...\n");
+    return arrayref_to_string_format(input_vector, -1, 0);
 }
 
 // call actual stringify routine, format level 0 (pretty), indent level 0
 string integer_arrayref_to_string_pretty(integer_arrayref input_vector)
 {
-    return integer_arrayref_to_string_format(input_vector, 0, 0);
+//    return integer_arrayref_to_string_format(input_vector, 0, 0);  // NEED DELETE, PRE-TEMPLATE C++
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string_pretty(), about to call arrayref_to_string_format() & return value...\n");
+    return arrayref_to_string_format(input_vector, 0, 0);
 }
 
 // call actual stringify routine, format level 1 (expand), indent level 0
 string integer_arrayref_to_string_expand(integer_arrayref input_vector)
 {
-    return integer_arrayref_to_string_format(input_vector, 1, 0);
+//    return integer_arrayref_to_string_format(input_vector, 1, 0);  // NEED DELETE, PRE-TEMPLATE C++
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string_expand(), about to call arrayref_to_string_format() & return value...\n");
+    return arrayref_to_string_format(input_vector, 1, 0);
 }
 
 // convert from (C++ std::vector of integers) to Perl-parsable (C++ std::string)
 string integer_arrayref_to_string_format(integer_arrayref input_vector, integer format_level, integer indent_level)
 {
-//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), top of subroutine...\n");
-//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), received format_level = %"INTEGER", indent_level = %"INTEGER"\n", format_level, indent_level);
+/* NEED DELETE, PRE-TEMPLATE C++
+//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string_format(), top of subroutine...\n");
+//    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string_format(), received format_level = %"INTEGER", indent_level = %"INTEGER"\n", format_level, indent_level);
 
     // declare local variables
     ostringstream output_stream;
@@ -734,7 +747,7 @@ string integer_arrayref_to_string_format(integer_arrayref input_vector, integer 
     string indent = "";
     for (i = 0; i < indent_level; i++) { indent += "    "; }
 
-//  fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), have input_vector_length = %"INTEGER"\n", input_vector_length);
+//  fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string_format(), have input_vector_length = %"INTEGER"\n", input_vector_length);
 
     // pre-begin with optional indent, depending on format level
     if (format_level >= 1) { output_stream << indent; }
@@ -767,10 +780,14 @@ string integer_arrayref_to_string_format(integer_arrayref input_vector, integer 
     // end output string with right-square-bracket, as required for all RPerl arrays
     output_stream << ']';
 
-//  fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
-//  fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string(), bottom of subroutine\n");
+//  fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string_format(), after for() loop, have output_stream =\n%s\n", (char *)(output_stream.str().c_str()));
+//  fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string_format(), bottom of subroutine\n");
 
     return(output_stream.str());
+*/
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES integer_arrayref_to_string_format(), about to call arrayref_to_string_format() & return value...\n");
+    return arrayref_to_string_format(input_vector, format_level, indent_level);
 }
 
 // DEV NOTE: 1-D format levels are 1 less than 2-D format levels
@@ -1184,7 +1201,14 @@ string_arrayref string_arrayref_typetest1(integer my_size)
     people.resize((size_t)my_size);
     for (i = 0;  i < my_size;  ++i)
     {
-        people[i] = "Jeffy Ten! " + std::to_string(i) + "/" + std::to_string(my_size - 1) + " CPPOPS_CPPTYPES";
+
+// VERY VERY VERY VERY VERY
+// VERY VERY VERY VERY VERY
+// VERY VERY VERY VERY VERY
+
+//        people[i] = to_string(i);  // NEED DELETE, TMP DEBUG
+        people[i] = "Jeffy Ten! " + to_string(i) + "/" + to_string(my_size - 1) + " CPPOPS_CPPTYPES";  // NEED RE-ENABLE
+//        people[i] = "Jeffy Ten! " + std::to_string(i) + "/" + std::to_string(my_size - 1) + " CPPOPS_CPPTYPES";  // NEED DELETE, PRE-TEMPLATE C++
 //      fprintf(stderr, "in CPPOPS_CPPTYPES string_arrayref_typetest1(), bottom of for() loop, have i = %"INTEGER", (my_size - 1) = %"INTEGER", just set another Jeffy, BARBAR\n", i, (my_size - 1));
     }
     return(people);
