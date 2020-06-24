@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.008_000
+#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.011_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/Number.h>  // -> NULL (relies on native C type)
@@ -73,12 +73,6 @@ void XS_pack_number(SV* output_sv, number input_number) {
 }
 
 //# endif
-
-
-
-
-
-
 
 // [[[ BOOLEANIFY ]]]
 // [[[ BOOLEANIFY ]]]
@@ -198,8 +192,14 @@ SV* number_to_string(SV* input_number)
 
 # elif defined __CPP__TYPES
 
+string to_string(number input_number) {
+    fprintf(stderr, "in CPPOPS_CPPTYPES to_string(), about to call number_to_string & return value...\n");
+    return(number_to_string(input_number));
+}
+
 // DEV NOTE, CORRELATION #rp010: shim CPPTYPES sub
 string number_to_string(number input_number) {
+    fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string(), about to call number_to_string_CPPTYPES() & return value...\n");
     return number_to_string_CPPTYPES(input_number);
 }
 
@@ -210,8 +210,8 @@ string number_to_string(number input_number) {
 // DEV NOTE, CORRELATION #rp010: the real CPPTYPES sub (below) is called by the wrapper PERLTYPES sub and shim CPPTYPES subs (above), moved outside #ifdef blocks
 string number_to_string_CPPTYPES(number input_number)
 {
-//fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), top of subroutine, received unformatted input_number = %f\n", input_number);
-//fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES()...\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES(), top of subroutine, received unformatted input_number = %f\n", input_number);
+//    fprintf(stderr, "in CPPOPS_CPPTYPES number_to_string_CPPTYPES()...\n");
 
     std::ostringstream output_stream;
     output_stream.precision(std::numeric_limits<double>::digits10);
@@ -219,6 +219,9 @@ string number_to_string_CPPTYPES(number input_number)
 
     // DEV NOTE: disable old stringify w/out underscores
 //  return(output_stream.str());
+
+// [ INTENTIONALLY LEFT BLANK TO ALIGN WITH Integer.cpp ]
+
 
     boolean is_negative = 0;
     if (input_number < 0) { is_negative = 1; }

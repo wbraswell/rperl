@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.009_000
+#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.011_000
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/Integer.h>  // -> NULL (relies on native C type)
@@ -215,6 +215,17 @@ string integer_to_string_CPPTYPES(integer input_integer)
     boolean is_negative = 0;
     if (input_integer < 0) { is_negative = 1; }
 
+// [ INTENTIONALLY LEFT BLANK TO ALIGN WITH Number.cpp ]
+
+
+
+
+
+
+
+
+// [ INTENTIONALLY LEFT BLANK TO ALIGN WITH Number.cpp ]
+
     std::reverse(output_string.begin(), output_string.end());
 
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES(), have reversed output_string = %s\n", output_string.c_str());
@@ -239,6 +250,20 @@ string integer_to_string_CPPTYPES(integer input_integer)
     }
 
 //    fprintf(stderr, "in CPPOPS_CPPTYPES integer_to_string_CPPTYPES(), have unreversed output_string_underscores = %s\n", output_string_underscores.c_str());
+
+// [ INTENTIONALLY LEFT BLANK TO ALIGN WITH Number.cpp ]
+
+
+
+
+
+
+
+
+
+
+
+// [ INTENTIONALLY LEFT BLANK TO ALIGN WITH Number.cpp ]
 
     if (is_negative) { output_string_underscores = '-' + output_string_underscores; }
 

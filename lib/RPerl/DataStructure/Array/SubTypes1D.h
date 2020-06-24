@@ -2,7 +2,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_h
-#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_h 0.020_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_h 0.023_000
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 

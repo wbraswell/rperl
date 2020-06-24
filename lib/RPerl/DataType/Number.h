@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_h
-#define __CPP__INCLUDED__RPerl__DataType__Number_h 0.009_000
+#define __CPP__INCLUDED__RPerl__DataType__Number_h 0.011_000
 
 // [[[ TYPEDEFS ]]]
 # ifndef __CPP__INCLUDED__RPerl__DataType__Number_h__typedefs
@@ -201,9 +201,9 @@ character number_to_character(number input_number);
 # ifdef __PERL__TYPES
 SV* number_to_string(SV* input_number);
 # elif defined __CPP__TYPES
+string        to_string(number input_number);
 string number_to_string(number input_number);
 # endif
-//string number_to_string_CPPTYPES(number input_number);
 string number_to_string_CPPTYPES(number input_number);
 
 // [[[ TYPE TESTING ]]]
