@@ -1,5 +1,5 @@
 #ifndef __CPP__INCLUDED__RPerl__HelperFunctions_h
-#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.006_000
+#define __CPP__INCLUDED__RPerl__HelperFunctions_h 0.007_000
 
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
@@ -19,6 +19,9 @@
 #define SV_REFERENCE_COUNT(sv) (SvREFCNT(sv))
 #define class(sv) HvNAME(SvSTASH(SvRV(sv)))  // NEED ADDRESS: does this actually match the functionality of PERLOPS class() which is a wrapper around blessed()?
 
+#define  is_defined(sv) ( SvOK(sv) && (sv != &PL_sv_undef))  // error: "defined" cannot be used as a macro name
+#define not_defined(sv) (!SvOK(sv) || (sv == &PL_sv_undef))
+
 // MS Windows OS, need not() macro in MSVC
 #ifdef _MSC_VER
 #  include <iso646.h>
@@ -34,7 +37,7 @@ int RPerl_SvPOKp(SV* input_sv);
 int RPerl_SvAROKp(SV* input_avref);
 int RPerl_SvHROKp(SV* input_hvref);
 
-void RPerl_object_property_init(SV* initee); // NEED ANSWER: what in the hades does this property init function even do?  why do we need it???
+void RPerl_object_property_init(SV* initee); // NEED ANSWER, DEEP BLACK MAGIC: what in the Hades does this property init function even do?  why do we need it???
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 # ifdef __PERL__TYPES

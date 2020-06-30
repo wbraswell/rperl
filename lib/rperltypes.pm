@@ -215,6 +215,22 @@ sub class {
     return blessed($object);
 }
 
+# a short-circuited, non-recursive version of type() subroutine
+sub type_fast {
+    { my string $RETURN_TYPE };
+    ( my unknown $variable ) = @ARG;
+    if ( not defined $variable ) { return 'unknown'; }
+
+    # DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
+    # do NOT report non-core types boolean, unsigned_integer, char, etc.
+    # DEV NOTE: Perl's implicit casting can cause 1 constant or variable to report multiple types, 
+    # always report number before integer to avoid incorrect to_string() formatting
+    if    ( main::RPerl_SvNOKp($variable) ) { return 'number'; }
+    elsif ( main::RPerl_SvIOKp($variable) ) { return 'integer'; }
+    elsif ( main::RPerl_SvPOKp($variable) ) { return 'string'; }
+    else                                    { return 'unknown'; }
+}
+
 # DEV NOTE: type() and types() are more powerful replacements for ref(), and ref() is not supported in RPerl
 sub type {
     { my string $RETURN_TYPE };

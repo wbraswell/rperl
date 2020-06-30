@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Integer_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.011_000
+#define __CPP__INCLUDED__RPerl__DataType__Integer_cpp 0.011_100
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/Integer.h>  // -> NULL (relies on native C type)
@@ -176,6 +176,7 @@ SV* integer_to_string(SV* input_integer) {
     // DEV NOTE: disable old stringify w/out underscores
 //	return(newSVpvf("%"INTEGER"", (integer)SvIV(input_integer)));
 
+    fprintf(stderr, "in CPPOPS_PERLTYPES integer_to_string(), about to call integer_to_string_CPPTYPES() & return value...\n");
     return(newSVpv((const char *)((integer_to_string_CPPTYPES((integer)SvIV(input_integer))).c_str()), 0));
 }
 

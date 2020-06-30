@@ -4,6 +4,11 @@ using std::cout;  using std::cerr;  using std::endl;
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_h
 #define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_h 0.023_000
 
+
+
+
+
+//* NEED DELETE, PRE-TEMPLATE C++; replaced by <rperltypes.h> below
 #include <rperltypes_mode.h> // for definitions of __PERL__TYPES or __CPP__TYPES
 
 // for type-checking subroutines & macros
@@ -13,6 +18,12 @@ using std::cout;  using std::cerr;  using std::endl;
 #include <RPerl/DataType/Integer.cpp>
 #include <RPerl/DataType/Number.cpp>
 #include <RPerl/DataType/String.cpp>
+//*/
+
+//#include <rperltypes.h>  // for dynamic dispatch AKA multiple dispatch; -> (rperltypes_mode.h; HelperFunctions.cpp; Boolean.cpp; UnsignedInteger.cpp; Integer.cpp; Number.cpp; Character.cpp; String.cpp; Array.cpp; Hash.cpp)
+
+
+
 
 // [[[ TYPEDEFS ]]]
 typedef std::vector<integer> integer_arrayref;
@@ -54,49 +65,52 @@ void XS_pack_string_arrayref(SV* output_avref, string_arrayref input_vector);
 
 // [[[ STRINGIFY ]]]
 # ifdef __PERL__TYPES
+SV*         arrayref_to_string_compact(SV* input_avref);
+SV*         arrayref_to_string(SV* input_avref);
+SV*         arrayref_to_string_pretty(SV* input_avref);
+SV*         arrayref_to_string_extend(SV* input_avref);
+SV*         arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level);
 SV* integer_arrayref_to_string_compact(SV* input_avref);
 SV* integer_arrayref_to_string(SV* input_avref);
 SV* integer_arrayref_to_string_pretty(SV* input_avref);
 SV* integer_arrayref_to_string_extend(SV* input_avref);
 SV* integer_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level);
-SV* number_arrayref_to_string_compact(SV* input_avref);
-SV* number_arrayref_to_string(SV* input_avref);
-SV* number_arrayref_to_string_pretty(SV* input_avref);
-SV* number_arrayref_to_string_extend(SV* input_avref);
-SV* number_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level);
-SV* string_arrayref_to_string_compact(SV* input_avref);
-SV* string_arrayref_to_string(SV* input_avref);
-SV* string_arrayref_to_string_pretty(SV* input_avref);
-SV* string_arrayref_to_string_extend(SV* input_avref);
-SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level);
+SV*  number_arrayref_to_string_compact(SV* input_avref);
+SV*  number_arrayref_to_string(SV* input_avref);
+SV*  number_arrayref_to_string_pretty(SV* input_avref);
+SV*  number_arrayref_to_string_extend(SV* input_avref);
+SV*  number_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level);
+SV*  string_arrayref_to_string_compact(SV* input_avref);
+SV*  string_arrayref_to_string(SV* input_avref);
+SV*  string_arrayref_to_string_pretty(SV* input_avref);
+SV*  string_arrayref_to_string_extend(SV* input_avref);
+SV*  string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level);
 # elif defined __CPP__TYPES
+template <class CLASSNAME>
+string         arrayref_to_string_compact(CLASSNAME input_vector);
+template <class CLASSNAME>
+string         arrayref_to_string(CLASSNAME input_vector);
+template <class CLASSNAME>
+string         arrayref_to_string_pretty(CLASSNAME input_vector);
+template <class CLASSNAME>
+string         arrayref_to_string_extend(CLASSNAME input_vector);
+template <class CLASSNAME>
+string         arrayref_to_string_format(CLASSNAME input_vector, integer format_level, integer indent_level);
 string integer_arrayref_to_string_compact(integer_arrayref input_vector);
 string integer_arrayref_to_string(integer_arrayref input_vector);
 string integer_arrayref_to_string_pretty(integer_arrayref input_vector);
 string integer_arrayref_to_string_extend(integer_arrayref input_vector);
 string integer_arrayref_to_string_format(integer_arrayref input_vector, integer format_level, integer indent_level);
-string number_arrayref_to_string_compact(number_arrayref input_vector);
-string number_arrayref_to_string(number_arrayref input_vector);
-string number_arrayref_to_string_pretty(number_arrayref input_vector);
-string number_arrayref_to_string_extend(number_arrayref input_vector);
-string number_arrayref_to_string_format(number_arrayref input_vector, integer format_level, integer indent_level);
-string string_arrayref_to_string_compact(string_arrayref input_vector);
-string string_arrayref_to_string(string_arrayref input_vector);
-string string_arrayref_to_string_pretty(string_arrayref input_vector);
-string string_arrayref_to_string_extend(string_arrayref input_vector);
-string string_arrayref_to_string_format(string_arrayref input_vector, integer format_level, integer indent_level);
-
-template <class CLASSNAME>
-string arrayref_to_string_compact(CLASSNAME input_vector);
-template <class CLASSNAME>
-string arrayref_to_string(CLASSNAME input_vector);
-template <class CLASSNAME>
-string arrayref_to_string_pretty(CLASSNAME input_vector);
-template <class CLASSNAME>
-string arrayref_to_string_extend(CLASSNAME input_vector);
-template <class CLASSNAME>
-string arrayref_to_string_format(CLASSNAME input_vector, integer format_level, integer indent_level);
-
+string  number_arrayref_to_string_compact(number_arrayref input_vector);
+string  number_arrayref_to_string(number_arrayref input_vector);
+string  number_arrayref_to_string_pretty(number_arrayref input_vector);
+string  number_arrayref_to_string_extend(number_arrayref input_vector);
+string  number_arrayref_to_string_format(number_arrayref input_vector, integer format_level, integer indent_level);
+string  string_arrayref_to_string_compact(string_arrayref input_vector);
+string  string_arrayref_to_string(string_arrayref input_vector);
+string  string_arrayref_to_string_pretty(string_arrayref input_vector);
+string  string_arrayref_to_string_extend(string_arrayref input_vector);
+string  string_arrayref_to_string_format(string_arrayref input_vector, integer format_level, integer indent_level);
 # endif
 
 // [[[ TYPE TESTING ]]]

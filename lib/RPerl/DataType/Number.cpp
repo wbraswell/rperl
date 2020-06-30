@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__Number_cpp
-#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.011_000
+#define __CPP__INCLUDED__RPerl__DataType__Number_cpp 0.011_100
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/Number.h>  // -> NULL (relies on native C type)
@@ -181,6 +181,7 @@ SV* number_to_string(SV* input_number)
     output_stream << (double)SvNV(input_number);
     return(newSVpv((const char *)((output_stream.str()).c_str()), 0)); */
 
+    fprintf(stderr, "in CPPOPS_PERLTYPES number_to_string(), about to call number_to_string_CPPTYPES() & return value...\n");
 	return newSVpv((const char *)((number_to_string_CPPTYPES((double)SvNV(input_number))).c_str()), 0);
 
 	// DEV NOTE: none of these fprintf(stderr, )-type solutions count significant digits both before and after the decimal point,

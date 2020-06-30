@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;
 
 #ifndef __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_cpp
-#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_cpp 0.009_000
+#define __CPP__INCLUDED__RPerl__DataType__UnsignedInteger_cpp 0.009_100
 
 // [[[ INCLUDES ]]]
 #include <RPerl/DataType/UnsignedInteger.h>  // -> NULL (relies on native C type)
@@ -152,6 +152,7 @@ SV* unsigned_integer_to_string(SV* input_unsigned_integer) {
     // DEV NOTE: disable old stringify w/out underscores
 //	return(newSVpvf("%"INTEGER"", (unsigned_integer)SvIV(input_unsigned_integer)));
 
+    fprintf(stderr, "in CPPOPS_PERLTYPES unsigned_integer_to_string(), about to call unsigned_integer_to_string_CPPTYPES() & return value...\n");
     return(newSVpv((const char *)((unsigned_integer_to_string_CPPTYPES((unsigned_integer)SvIV(input_unsigned_integer))).c_str()), 0));
 }
 

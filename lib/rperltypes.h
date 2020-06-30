@@ -19,6 +19,15 @@
 
 # ifdef __PERL__TYPES
 
+
+
+// VERY VERY VERY VERY VERY VERY: move dynamic dispatch & type_fast*() code back into this location
+// VERY VERY VERY VERY VERY VERY: move dynamic dispatch & type_fast*() code back into this location
+// VERY VERY VERY VERY VERY VERY: move dynamic dispatch & type_fast*() code back into this location
+
+
+
+
 // NEED ADD CODE
 
 # elif defined __CPP__TYPES
