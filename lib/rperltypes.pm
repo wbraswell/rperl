@@ -143,7 +143,7 @@ our string_arrayref $SUPPORTED_SPECIAL = [
     )
 ];
 
-# DEV NOTE, CORRELATION #rp008: export to_string(), class(), type() and types() to main:: namespace;
+# DEV NOTE, CORRELATION #rp008: export to_number() and to_string() to main:: namespace;
 # can't achieve via Exporter due to circular dependency issue caused by Exporter in Config.pm and solved by 'require rperltypes;' in RPerl.pm
 package main;
 use RPerl::Config;
@@ -207,6 +207,22 @@ sub to_string {
     return;
 }
 
+# [[[ TYPE DETERMINATION ]]]
+# [[[ TYPE DETERMINATION ]]]
+# [[[ TYPE DETERMINATION ]]]
+
+# enumeration of RPerl types
+package  # hide from PAUSE indexing
+    type_enum;
+use strict;
+use warnings;
+use parent -norequire, qw(integer);
+
+# [[[ SWITCH CONTEXT BACK TO PRIMARY PACKAGE FOR EXPORT TO WORK ]]]
+# DEV NOTE, CORRELATION #rp008: export class() and type*() and types() to main:: namespace;
+# can't achieve via Exporter due to circular dependency issue caused by Exporter in Config.pm and solved by 'require rperltypes;' in RPerl.pm
+package main;
+
 # DEV NOTE: class() is a wrapper around blessed() from Scalar::Util, class() is preferred for readability, 
 # blessed() and class() both generate as classname() in C++ to avoid conflict with 'class' C++ reserved word
 sub class {
@@ -215,11 +231,65 @@ sub class {
     return blessed($object);
 }
 
+# DEV NOTE, CORRELATION #xyz: list order of type_enum must exactly match LIST_OF_TYPES_ARRAYREF & type_enum_arrayref
+use constant {
+    TYPE_void             => 0,
+#   TYPE_boolean          => x,
+#   TYPE_unsigned_integer => x,
+    TYPE_integer          => 1,
+    TYPE_number           => 2,
+#   TYPE_character        => x,
+    TYPE_string           => 3,
+#   TYPE_scalar           => x,
+    TYPE_unknown          => 4
+};
+
+# DEV NOTE, CORRELATION #xyz: list order of type_enum must exactly match LIST_OF_TYPES_ARRAYREF & type_enum_arrayref
+my string_hashref $string_to_type_enum = {
+    TYPE_void             => 0,
+#   TYPE_boolean          => x,
+#   TYPE_unsigned_integer => x,
+    TYPE_integer          => 1,
+    TYPE_number           => 2,
+#   TYPE_character        => x,
+    TYPE_string           => 3,
+#   TYPE_scalar           => x,
+    TYPE_unknown          => 4
+};
+
+# DEV NOTE, CORRELATION #xyz: list order of type_enum must exactly match LIST_OF_TYPES_ARRAYREF & type_enum_arrayref
+my string_arrayref $type_enum_to_string = [ qw(
+    TYPE_void
+
+
+    TYPE_integer
+    TYPE_number
+
+    TYPE_string
+
+    TYPE_unknown
+)];
+
+=NEED DELETE, UNUSED???
+# DEV NOTE, CORRELATION #xyz: list order of type_enum must exactly match LIST_OF_TYPES_ARRAYREF & type_enum_arrayref
+my $type_enum = [
+    TYPE_void(),
+#    TYPE_boolean(),
+#    TYPE_unsigned_integer(),
+    TYPE_integer(),
+    TYPE_number(),
+#    TYPE_character(),
+    TYPE_string(),
+#    TYPE_scalar(),
+    TYPE_unknown()
+];
+=cut
+
 # a short-circuited, non-recursive version of type() subroutine
 sub type_fast {
     { my string $RETURN_TYPE };
     ( my unknown $variable ) = @ARG;
-    if ( not defined $variable ) { return 'unknown'; }
+    if ( not defined $variable ) { return 'void'; }
 
     # DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
     # do NOT report non-core types boolean, unsigned_integer, char, etc.
@@ -231,11 +301,47 @@ sub type_fast {
     else                                    { return 'unknown'; }
 }
 
+# a short-circuited, non-recursive version of type() subroutine; returns type enum raw value instead of type name string
+sub type_fast_enum {
+    { my type_enum $RETURN_TYPE };
+    ( my unknown $variable ) = @ARG;
+    RPerl::diag("in rperltypes::type_fast_enum(), top of subroutine\n");
+    RPerl::diag('in rperltypes::type_fast_enum(), received $variable = ' . $variable . "\n");
+
+    if (not defined($variable))      { return TYPE_void(); }
+
+    # DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
+    # do NOT report non-core types boolean, unsigned_integer, char, etc.
+    # DEV NOTE: Perl's implicit casting can cause 1 constant or variable to report multiple types,
+    # always report number before integer to avoid incorrect to_string() formatting
+    if    ( RPerl_SvNOKp($variable) ) { return TYPE_number();  }
+    elsif ( RPerl_SvIOKp($variable) ) { return TYPE_integer(); }
+    elsif ( RPerl_SvPOKp($variable) ) { return TYPE_string();  }
+    else                             { return TYPE_unknown(); }
+}
+
+# upgrade TYPE_integer to TYPE_number, to avoid finding an integer element at index 0 and incorrectly assuming other number elements are also integers
+sub type_fast_enum__upgrade_integer_to_number {
+    { my type_enum $RETURN_TYPE };
+    ( my unknown $variable ) = @ARG;
+    RPerl::diag("in rperltypes::type_fast_enum__upgrade_integer_to_number(), top of subroutine\n");
+
+    my type_enum $retval = type_fast_enum($variable);
+    if ($retval == TYPE_integer()) {
+        RPerl::diag("in rperltypes::type_fast_enum__upgrade_integer_to_number(), YES UPGRADE\n");
+        return TYPE_number();
+    }
+
+    RPerl::diag("in rperltypes::type_fast_enum__upgrade_integer_to_number(), NO UPGRADE\n");
+    return $retval;
+}
+
+
 # DEV NOTE: type() and types() are more powerful replacements for ref(), and ref() is not supported in RPerl
 sub type {
     { my string $RETURN_TYPE };
     ( my unknown $variable, my integer $recurse_level ) = @ARG;
-    if ( not defined $variable ) { return 'unknown'; }
+    if ( not defined $variable ) { return 'void'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
 #    RPerl::diag('in rperltypes::type(), have $is_type = ' . Dumper($is_type) . "\n");
@@ -256,7 +362,7 @@ sub type {
 sub types {
     { my string_hashref $RETURN_TYPE };
     ( my unknown $variable, my integer $recurse_level ) = @ARG;
-    if ( not defined $variable ) { return 'unknown'; }
+    if ( not defined $variable ) { return 'void'; }
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
     # DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
@@ -316,7 +422,7 @@ sub types_recurse {
 
     # DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
     # do NOT report non-core types boolean, unsigned_integer, character, etc.
-    if    ( not defined $variable ) { $type = 'unknown'; }
+    if    ( not defined $variable ) { $type = 'void'; }
     elsif ( $is_type->{integer} )   { $type = 'integer'; }
     elsif ( $is_type->{number} )    { $type = 'number'; }
     elsif ( $is_type->{string} )    { $type = 'string'; }

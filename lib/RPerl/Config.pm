@@ -4,7 +4,7 @@
 package RPerl::Config;
 use strict;
 use warnings;
-our $VERSION = 0.012_000;
+our $VERSION = 0.013_000;
 our $IS_RPERL_CONFIG = 1;  # DEV NOTE, CORRELATION #rp027: RPerl::Config, MathPerl::Config, PhysicsPerl::Config, etc
 
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -177,6 +177,30 @@ EOL
 #    return Dumper($dumpee);
 #}
 
+# do not directly print all of @ARG, only print defined arguments, if one or more arguments are undef then it will give a confusing error message:
+# Use of uninitialized value $RPerl::ARG[1] in print at lib/RPerl/Config.pm line XYZ
+sub print_defined_args {
+    my $OUTPUT_STREAM = shift @ARG;
+    my $elements_bad = [];
+    for (my $i = 0; $i < (scalar @ARG); $i++) {
+        my $arg_element = $ARG[$i];
+        if (defined $arg_element) {
+            print {$OUTPUT_STREAM} $arg_element;
+        }
+        else {
+            push @{$elements_bad}, $i;
+        }
+    }
+    if ((scalar @{$elements_bad}) > 0) {
+        if ($OUTPUT_STREAM eq *STDOUT) {
+            print {$OUTPUT_STREAM} q{WARNING WRPDB00: RPerl verbose() or verbose_pause() statement received undefined argument(s) at index number(s): } . Dumper($elements_bad) . "\n" ;
+        }
+        else {
+            print {$OUTPUT_STREAM} q{WARNING WRPVB00: RPerl diag() or diag_pause() or debug() or debug_pause() or warning() statement received undefined argument(s) at index number(s): } . Dumper($elements_bad) . "\n" ;
+        }
+    }
+}
+
 # DEV NOTE: to make diag*() & debug*() & verbose*() & warning() truly variadic, do not accept args as first line in subroutine
 
 # DEV NOTE: diag() is simply a wrapper around debug(), they are 100% equivalent; likewise diag_pause() and debug_pause()
@@ -188,7 +212,10 @@ sub debug {
 #    print {*STDERR} 'in debug(), have $ENV{RPERL_DEBUG} = ' . $ENV{RPERL_DEBUG} . "\n";
 
     # DEV NOTE, CORRELATION #rp017: default to off; if either variable is set to true, then do emit messages
-    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} @ARG; }
+    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { 
+        #print {*STDERR} @ARG;
+        print_defined_args(*STDERR, @ARG);
+    }
 
 #    if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) { print {*STDERR} "\e[1;31m $message \e[0m"; }  # print in red
     return 1;    # DEV NOTE: this must be here to avoid 'at -e line 0. INIT failed--call queue aborted.'... BUT WHY???
@@ -197,7 +224,8 @@ sub debug {
 # same as debug(), except require <ENTER> to continue
 sub debug_pause {
     if ( $ENV{RPERL_DEBUG} or $RPerl::DEBUG ) {
-        print {*STDERR} @ARG;
+#        print {*STDERR} @ARG;
+        print_defined_args(*STDERR, @ARG);
         my $stdin_ignore = <STDIN>;
     }
     return 1;
@@ -207,7 +235,8 @@ sub debug_pause {
 sub verbose {
     # DEV NOTE, CORRELATION #rp017: default to off; if either variable is set to true, then do emit messages
     if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) {
-        print {*STDOUT} @ARG;
+#        print {*STDOUT} @ARG;
+        print_defined_args(*STDOUT, @ARG);
     }
     return 1;
 }
@@ -215,7 +244,8 @@ sub verbose {
 # same as verbose(), except require <ENTER> to continue
 sub verbose_pause {
     if ( $ENV{RPERL_VERBOSE} or $RPerl::VERBOSE ) {
-        print {*STDOUT} @ARG;
+#        print {*STDOUT} @ARG;
+        print_defined_args(*STDOUT, @ARG);
         my $stdin_ignore = <STDIN>;
     }
     return 1;
@@ -250,10 +280,10 @@ sub warning {
     if ( ( ( not defined $ENV{RPERL_WARNINGS} ) or $ENV{RPERL_WARNINGS} )
         and $RPerl::WARNINGS )
     {
-        # NEED ADDRESS? the two following lines should be equivalent, but warn causes false ECOPAPL03
-        print {*STDERR} @ARG;
-
-        #        warn $message . "\n";
+        # NEED ADDRESS? the 2 following lines should be equivalent, but warn causes false ECOPAPL03
+#        print {*STDERR} @ARG;
+#        warn $message . "\n";
+        print_defined_args(*STDERR, @ARG);
     }
     return 1;
 }

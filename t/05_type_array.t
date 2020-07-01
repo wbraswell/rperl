@@ -17,7 +17,7 @@ our $VERSION = 0.010_000;
 
 # [[[ INCLUDES ]]]
 use RPerl::Test;
-use Test::More tests => 232;
+use Test::More tests => 238;
 #use Test::More tests => 155;  # TMP DEBUG PERLOPS_PERLTYPES & CPPOPS_PERLTYPES
 #use Test::More tests => 78;    # TMP DEBUG, ONE MODE ONLY
 use Test::Exception;
@@ -224,27 +224,27 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
     throws_ok(                                                                # TNVAVRV01
         sub { number_arrayref_to_string(undef) },
-        "/ENVAVRV00.*$mode_tagline/",
+        "/E(NV)?AVRV00.*$mode_tagline/",
         q{TNVAVRV01 number_arrayref_to_string(undef) throws correct exception}
     );
     throws_ok(                                                                # TNVAVRV02
         sub { number_arrayref_to_string(2) },
-        "/ENVAVRV01.*$mode_tagline/",
+        "/E(NV)?AVRV01.*$mode_tagline/",
         q{TNVAVRV02 number_arrayref_to_string(2) throws correct exception}
     );
     throws_ok(                                                                # TNVAVRV03
         sub { number_arrayref_to_string(2.3) },
-        "/ENVAVRV01.*$mode_tagline/",
+        "/E(NV)?AVRV01.*$mode_tagline/",
         q{TNVAVRV03 number_arrayref_to_string(2.3) throws correct exception}
     );
     throws_ok(                                                                # TNVAVRV04
         sub { number_arrayref_to_string('2') },
-        "/ENVAVRV01.*$mode_tagline/",
+        "/E(NV)?AVRV01.*$mode_tagline/",
         q{TNVAVRV04 number_arrayref_to_string('2') throws correct exception}
     );
     throws_ok(                                                                # TNVAVRV05
         sub { number_arrayref_to_string( { a_key => 23 } ) },
-        "/ENVAVRV01.*$mode_tagline/",
+        "/E(NV)?AVRV01.*$mode_tagline/",
         q{TNVAVRV05 number_arrayref_to_string({a_key => 23}) throws correct exception}
     );
     throws_ok(                                                                # TNVAVRV10
@@ -281,6 +281,10 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TNVAVRV20 number_arrayref_to_string([ 23 ]) lives}
     );
+
+
+
+
     lives_and(                                                                # TNVAVRV21
         sub {
             is( number_arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
@@ -290,6 +294,31 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TNVAVRV21 number_arrayref_to_string([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) lives}
     );
+
+    lives_and(                                                                # TNVAVRV21a
+        sub {
+            is( number_arrayref_to_string( my number_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TNVAVRV21a number_arrayref_to_string([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) returns correct value}
+            );
+        },
+        q{TNVAVRV21a number_arrayref_to_string([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) lives}
+    );
+
+    lives_and(                                                                # TNVAVRV21b
+        sub {
+            is(        arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'number_arrayref' ),
+                '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TNVAVRV21b        arrayref_to_string([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) returns correct value}
+            );
+        },
+        q{TNVAVRV21b        arrayref_to_string([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) lives}
+    );
+
+
+
+
+
     lives_and(                                                                # TNVAVRV22
         sub {
             is( number_arrayref_to_string( [ 23.2 ] ), '[ 23.2 ]', q{TNVAVRV22 number_arrayref_to_string([ 23.2 ]) returns correct value} );
