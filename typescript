@@ -1,0 +1,3 @@
+Script started on Wed 01 Jul 2020 10:25:27 PM CDT
+bin   cdrom  dev  home	   initrd.img	   lib	  lib64   lost+found  mnt	    opt   root	sbin  srv  tmp	var	 vmlinuz.old
+boot  core   etc  include  initrd.img.old  lib32  libx32  media       nfs_imported  proc  run	snap  sys  usr	vmlinuz

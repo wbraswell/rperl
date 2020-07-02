@@ -742,82 +742,65 @@ SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
 
 # elif defined __CPP__TYPES
 
-// DEV NOTE: create wrappers for TEMPLATE_arrayref_to_string*(), because TEMPLATE functions are not automatically linked by Inline::CPP to be callable from Perl
+// DEV NOTE, CORRELATION #rp320: create DYNAMIC DISPATCH wrappers for TEMPLATE_arrayref_to_string*(), because Inline::CPP does not create Perl bindings for TEMPLATE functions
+// use elipses to create dynamic dispatch functions which receive their arguments on the Perl stack instead of via the C stack
+// https://metacpan.org/pod/Inline::CPP#Example-5-Elipses-Revisited-(and-Overloading-or-Templates)
 
-string arrayref_to_string_compact(integer_arrayref input_vector) {
+string arrayref_to_string_compact(SV* input_avref, ...) {
     fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_compact(integer_arrayref), about to call TEMPLATE_arrayref_to_string_compact() & return value...\n");
-    return TEMPLATE_arrayref_to_string_compact(input_vector);
+
+    dXSARGS;  // creates a variable 'items' that contains a parameter count
+    try{
+        switch ( items ) {
+
+
+
+
+// VERY x 7: finish converting this return value to find the type of input_avref, call appropriate XS_unpack_*_arrayref(), and pass to TEMPLATE_arrayref_to_string_compact() appropriately; rename TEMPLATE_arrayref_to_string*() to arrayref_to_string*() so it can be called directly from compiled C++ again, will be ignored by Inline::CPP due to use of C++ templates
+// VERY x 7: finish converting this return value to find the type of input_avref, call appropriate XS_unpack_*_arrayref(), and pass to TEMPLATE_arrayref_to_string_compact() appropriately; rename TEMPLATE_arrayref_to_string*() to arrayref_to_string*() so it can be called directly from compiled C++ again, will be ignored by Inline::CPP due to use of C++ templates
+// VERY x 7: finish converting this return value to find the type of input_avref, call appropriate XS_unpack_*_arrayref(), and pass to TEMPLATE_arrayref_to_string_compact() appropriately; rename TEMPLATE_arrayref_to_string*() to arrayref_to_string*() so it can be called directly from compiled C++ again, will be ignored by Inline::CPP due to use of C++ templates
+
+// ORIGINAL LINE
+// return TEMPLATE_arrayref_to_string_compact(input_vector);
+
+            case 1:  return SvIV(ST(0));
+
+
+
+
+            default: throw std::runtime_error(
+                "ERROR Exyz320: Too many arguments in call to function __func__"
+            );
+        }
+    }
+    catch ( std::runtime_error msg ) {
+        croak( msg.what() );  // Perl likes croak for exceptions
+    }
+
+
 };
 
-string arrayref_to_string_compact(number_arrayref input_vector) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_compact(number_arrayref), about to call TEMPLATE_arrayref_to_string_compact() & return value...\n");
-    return TEMPLATE_arrayref_to_string_compact(input_vector);
-};
-
-string arrayref_to_string_compact(string_arrayref input_vector) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_compact(string_arrayref), about to call TEMPLATE_arrayref_to_string_compact() & return value...\n");
-    return TEMPLATE_arrayref_to_string_compact(input_vector);
-};
-
-string arrayref_to_string(integer_arrayref input_vector) {
+string arrayref_to_string(SV* input_avref, ...) {
     fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string(integer_arrayref), about to call TEMPLATE_arrayref_to_string() & return value...\n");
     return TEMPLATE_arrayref_to_string(input_vector);
 };
 
-string arrayref_to_string(number_arrayref input_vector) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string(number_arrayref), about to call TEMPLATE_arrayref_to_string() & return value...\n");
-    return TEMPLATE_arrayref_to_string(input_vector);
-};
-
-string arrayref_to_string(string_arrayref input_vector) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string(string_arrayref), about to call TEMPLATE_arrayref_to_string() & return value...\n");
-    return TEMPLATE_arrayref_to_string(input_vector);
-};
-
-string arrayref_to_string_pretty(integer_arrayref input_vector) {
+string arrayref_to_string_pretty(SV* input_avref, ...) {
     fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_pretty(integer_arrayref), about to call TEMPLATE_arrayref_to_string_pretty() & return value...\n");
     return TEMPLATE_arrayref_to_string_pretty(input_vector);
 };
 
-string arrayref_to_string_pretty(number_arrayref input_vector) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_pretty(number_arrayref), about to call TEMPLATE_arrayref_to_string_pretty() & return value...\n");
-    return TEMPLATE_arrayref_to_string_pretty(input_vector);
-};
-
-string arrayref_to_string_pretty(string_arrayref input_vector) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_pretty(string_arrayref), about to call TEMPLATE_arrayref_to_string_pretty() & return value...\n");
-    return TEMPLATE_arrayref_to_string_pretty(input_vector);
-};
-
-string arrayref_to_string_extend(integer_arrayref input_vector) {
+string arrayref_to_string_extend(SV* input_avref, ...) {
     fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_extend(integer_arrayref), about to call TEMPLATE_arrayref_to_string_extend() & return value...\n");
     return TEMPLATE_arrayref_to_string_extend(input_vector);
 };
 
-string arrayref_to_string_extend(number_arrayref input_vector) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_extend(number_arrayref), about to call TEMPLATE_arrayref_to_string_extend() & return value...\n");
-    return TEMPLATE_arrayref_to_string_extend(input_vector);
-};
-
-string arrayref_to_string_extend(string_arrayref input_vector) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_extend(string_arrayref), about to call TEMPLATE_arrayref_to_string_extend() & return value...\n");
-    return TEMPLATE_arrayref_to_string_extend(input_vector);
-};
-
-string arrayref_to_string_format(integer_arrayref input_vector, integer format_level, integer indent_level) {
+string arrayref_to_string_format(SV* input_avref, ...) {
     fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_format(integer_arrayref), about to call TEMPLATE_arrayref_to_string_format() & return value...\n");
     return TEMPLATE_arrayref_to_string_format(input_vector, format_level, indent_level);
 };
 
-string arrayref_to_string_format(number_arrayref input_vector, integer format_level, integer indent_level) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_format(number_arrayref), about to call TEMPLATE_arrayref_to_string_format() & return value...\n");
-    return TEMPLATE_arrayref_to_string_format(input_vector, format_level, indent_level);
-};
 
-string arrayref_to_string_format(string_arrayref input_vector, integer format_level, integer indent_level) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_format(string_arrayref), about to call TEMPLATE_arrayref_to_string_format() & return value...\n");
-    return TEMPLATE_arrayref_to_string_format(input_vector, format_level, indent_level);
-};
 
 // DEV NOTE: 1-D format levels are 1 less than 2-D format levels
 

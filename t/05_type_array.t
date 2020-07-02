@@ -17,11 +17,12 @@ our $VERSION = 0.010_000;
 
 # [[[ INCLUDES ]]]
 use RPerl::Test;
-use Test::More tests => 238;
+use Test::More tests => 247;
 #use Test::More tests => 155;  # TMP DEBUG PERLOPS_PERLTYPES & CPPOPS_PERLTYPES
 #use Test::More tests => 78;    # TMP DEBUG, ONE MODE ONLY
 use Test::Exception;
 use Test::Number::Delta;
+
 use RPerl::DataStructure::Array::SubTypes1D qw(integer_arrayref_typetest0 integer_arrayref_typetest1 number_arrayref_typetest0 number_arrayref_typetest1 string_arrayref_typetest0 string_arrayref_typetest1);
 
 # [[[ OPERATIONS ]]]
@@ -285,34 +286,64 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
 
 
 
-    lives_and(                                                                # TNVAVRV21
+    lives_and(  # TNVAVRV21a
         sub {
-            is( number_arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
-                '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
-                q{TNVAVRV21 number_arrayref_to_string([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) returns correct value}
+            is(              number_arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                                                      '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TNVAVRV21a number_arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
             );
         },
-        q{TNVAVRV21 number_arrayref_to_string([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) lives}
+                q{TNVAVRV21a number_arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
     );
 
-    lives_and(                                                                # TNVAVRV21a
+    lives_and(  # TNVAVRV21b
         sub {
-            is( number_arrayref_to_string( my number_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
-                '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
-                q{TNVAVRV21a number_arrayref_to_string([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) returns correct value}
+            is(              number_arrayref_to_string( my number_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                                                                                 '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TNVAVRV21b number_arrayref_to_string( my number_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
             );
         },
-        q{TNVAVRV21a number_arrayref_to_string([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) lives}
+                q{TNVAVRV21b number_arrayref_to_string( my number_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
     );
 
-    lives_and(                                                                # TNVAVRV21b
+    lives_and(  # TNVAVRV21c
         sub {
-            is(        arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'number_arrayref' ),
-                '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
-                q{TNVAVRV21b        arrayref_to_string([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) returns correct value}
+            is(              number_arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'number_arrayref' ),
+                                                             '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TNVAVRV21c number_arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'number_arrayref' ) returns correct value}
             );
         },
-        q{TNVAVRV21b        arrayref_to_string([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) lives}
+                q{TNVAVRV21c number_arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'number_arrayref' ) lives}
+    );
+
+    lives_and(  # TNVAVRV21d
+        sub {
+            is(                     arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                                                       '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TNVAVRV21d        arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TNVAVRV21d        arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+    );
+
+    lives_and(  # TNVAVRV21e
+        sub {
+            is(                     arrayref_to_string( my number_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                                                                                 '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TNVAVRV21e        arrayref_to_string( my number_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TNVAVRV21e        arrayref_to_string( my number_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+    );
+
+    lives_and(  # TNVAVRV21f
+        sub {
+            is(                     arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'number_arrayref' ),
+                                                             '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TNVAVRV21f        arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'number_arrayref' ) returns correct value}
+            );
+        },
+                q{TNVAVRV21f        arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'number_arrayref' ) lives}
     );
 
 

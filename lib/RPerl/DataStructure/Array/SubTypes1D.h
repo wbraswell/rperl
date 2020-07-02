@@ -95,22 +95,12 @@ string TEMPLATE_arrayref_to_string_extend(CLASSNAME input_vector);
 template <class CLASSNAME>
 string TEMPLATE_arrayref_to_string_format(CLASSNAME input_vector, integer format_level, integer indent_level);
 
-// DEV NOTE: create wrappers for TEMPLATE_arrayref_to_string*(), because TEMPLATE functions are not automatically linked by Inline::CPP to be callable from Perl
-string         arrayref_to_string_compact(integer_arrayref input_vector);
-string         arrayref_to_string_compact(number_arrayref  input_vector);
-string         arrayref_to_string_compact(string_arrayref  input_vector);
-string         arrayref_to_string(integer_arrayref input_vector);
-string         arrayref_to_string(number_arrayref  input_vector);
-string         arrayref_to_string(string_arrayref  input_vector);
-string         arrayref_to_string_pretty(integer_arrayref input_vector);
-string         arrayref_to_string_pretty(number_arrayref  input_vector);
-string         arrayref_to_string_pretty(string_arrayref  input_vector);
-string         arrayref_to_string_extend(integer_arrayref input_vector);
-string         arrayref_to_string_extend(number_arrayref  input_vector);
-string         arrayref_to_string_extend(string_arrayref  input_vector);
-string         arrayref_to_string_format(integer_arrayref input_vector);
-string         arrayref_to_string_format(number_arrayref  input_vector);
-string         arrayref_to_string_format(string_arrayref  input_vector);
+// DEV NOTE, CORRELATION #rp320: create DYNAMIC DISPATCH wrappers for TEMPLATE_arrayref_to_string*(), because Inline::CPP does not create Perl bindings for TEMPLATE functions
+string         arrayref_to_string_compact(SV* input_avref, ...);
+string         arrayref_to_string(SV* input_avref, ...);
+string         arrayref_to_string_pretty(SV* input_avref, ...);
+string         arrayref_to_string_extend(SV* input_avref, ...);
+string         arrayref_to_string_format(SV* input_avref, ...);
 
 string integer_arrayref_to_string_compact(integer_arrayref input_vector);
 string integer_arrayref_to_string(integer_arrayref input_vector);
