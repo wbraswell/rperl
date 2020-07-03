@@ -19,11 +19,11 @@ using std::cout;  using std::cerr;  using std::endl;  //using std::to_string;  /
 // [[[ TYPE-CHECKING ]]]
 
 // DEV NOTE: for() loops are statements not expressions, so they can't be embedded in ternary operators, and thus this type-checking must be done with subroutines instead of macros
-void integer_arrayref_CHECK(SV* possible_integer_arrayref)
+boolean integer_arrayref_CHECK(SV* possible_integer_arrayref, const boolean no_croak)
 {
     // DEV NOTE: the following two if() statements are functionally equivalent to the arrayref_CHECK() macro, but with integer-specific error codes
-    if ( not( SvOK(possible_integer_arrayref) ) ) { croak( "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref value expected but undefined/null value found,\ncroaking" ); }
-    if ( not( SvAROKp(possible_integer_arrayref) ) ) { croak( "\nERROR EIVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref value expected but non-arrayref value found,\ncroaking" ); }
+    if ( not( SvOK(possible_integer_arrayref) ) ) { CROAK_OR_RETURN(no_croak, "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref value expected but undefined/null value found,\ncroaking") }
+    if ( not( SvAROKp(possible_integer_arrayref) ) ) { CROAK_OR_RETURN(no_croak, "\nERROR EIVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref value expected but non-arrayref value found,\ncroaking") }
 
     AV* possible_integer_array;
     integer possible_integer_array_length;
@@ -38,15 +38,17 @@ void integer_arrayref_CHECK(SV* possible_integer_arrayref)
         possible_integer_array_element = av_fetch(possible_integer_array, i, 0);
 
         // DEV NOTE: the following two if() statements are functionally equivalent to the integer_CHECK() macro & subroutine, but with array-specific error codes
-        if (not(SvOK(*possible_integer_array_element))) { croak("\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found at index %"INTEGER",\ncroaking", i); }
-        if (not(SvIOKp(*possible_integer_array_element))) { croak("\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found at index %"INTEGER",\ncroaking", i); }
+        if (not(SvOK(*possible_integer_array_element))) { CROAK_OR_RETURN(no_croak, "\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but undefined/null value found at index %"INTEGER",\ncroaking", i) }
+        if (not(SvIOKp(*possible_integer_array_element))) { CROAK_OR_RETURN(no_croak, "\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found at index %"INTEGER",\ncroaking", i) }
     }
+
+    return 1;
 }
 
-void integer_arrayref_CHECKTRACE(SV* possible_integer_arrayref, const char* variable_name, const char* subroutine_name)
+boolean integer_arrayref_CHECKTRACE(SV* possible_integer_arrayref, const char* variable_name, const char* subroutine_name, const boolean no_croak)
 {
-    if ( not( SvOK(possible_integer_arrayref) ) ) { croak( "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
-    if ( not( SvAROKp(possible_integer_arrayref) ) ) { croak( "\nERROR EIVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref value expected but non-arrayref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
+    if ( not( SvOK(possible_integer_arrayref) ) ) { CROAK_OR_RETURN(no_croak, "\nERROR EIVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) }
+    if ( not( SvAROKp(possible_integer_arrayref) ) ) { CROAK_OR_RETURN(no_croak, "\nERROR EIVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger_arrayref value expected but non-arrayref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) }
 
     AV* possible_integer_array;
     integer possible_integer_array_length;
@@ -60,15 +62,17 @@ void integer_arrayref_CHECKTRACE(SV* possible_integer_arrayref, const char* vari
     {
         possible_integer_array_element = av_fetch(possible_integer_array, i, 0);
 
-        if (not(SvOK(*possible_integer_array_element))) { croak("\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger expected but undefined/null value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
-        if (not(SvIOKp(*possible_integer_array_element))) { croak("\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+        if (not(SvOK(*possible_integer_array_element))) { CROAK_OR_RETURN(no_croak, "\nERROR EIVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger expected but undefined/null value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name) }
+        if (not(SvIOKp(*possible_integer_array_element))) { CROAK_OR_RETURN(no_croak, "\nERROR EIVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\ninteger value expected but non-integer value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name) }
     }
+
+    return 1;
 }
 
-void number_arrayref_CHECK(SV* possible_number_arrayref)
+boolean number_arrayref_CHECK(SV* possible_number_arrayref, const boolean no_croak)
 {
-    if ( not( SvOK(possible_number_arrayref) ) ) { croak( "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref value expected but undefined/null value found,\ncroaking" ); }
-    if ( not( SvAROKp(possible_number_arrayref) ) ) { croak( "\nERROR ENVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref value expected but non-arrayref value found,\ncroaking" ); }
+    if ( not( SvOK(possible_number_arrayref) ) ) { CROAK_OR_RETURN(no_croak, "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref value expected but undefined/null value found,\ncroaking") }
+    if ( not( SvAROKp(possible_number_arrayref) ) ) { CROAK_OR_RETURN(no_croak, "\nERROR ENVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref value expected but non-arrayref value found,\ncroaking") }
 
     AV* possible_number_array;
     integer possible_number_array_length;
@@ -82,15 +86,17 @@ void number_arrayref_CHECK(SV* possible_number_arrayref)
     {
         possible_number_array_element = av_fetch(possible_number_array, i, 0);
 
-        if (not(SvOK(*possible_number_array_element))) { croak("\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found at index %"INTEGER",\ncroaking", i); }
-        if (not(SvNOKp(*possible_number_array_element) || SvIOKp(*possible_number_array_element))) { croak("\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found at index %"INTEGER",\ncroaking", i); }
+        if (not(SvOK(*possible_number_array_element))) { CROAK_OR_RETURN(no_croak, "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found at index %"INTEGER",\ncroaking", i) }
+        if (not(SvNOKp(*possible_number_array_element) || SvIOKp(*possible_number_array_element))) { CROAK_OR_RETURN(no_croak, "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found at index %"INTEGER",\ncroaking", i) }
     }
+
+    return 1;
 }
 
-void number_arrayref_CHECKTRACE(SV* possible_number_arrayref, const char* variable_name, const char* subroutine_name)
+boolean number_arrayref_CHECKTRACE(SV* possible_number_arrayref, const char* variable_name, const char* subroutine_name, const boolean no_croak)
 {
-    if ( not( SvOK(possible_number_arrayref) ) ) { croak( "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
-    if ( not( SvAROKp(possible_number_arrayref) ) ) { croak( "\nERROR ENVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref value expected but non-arrayref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
+    if ( not( SvOK(possible_number_arrayref) ) ) { CROAK_OR_RETURN(no_croak, "\nERROR ENVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) }
+    if ( not( SvAROKp(possible_number_arrayref) ) ) { CROAK_OR_RETURN(no_croak, "\nERROR ENVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber_arrayref value expected but non-arrayref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) }
 
     AV* possible_number_array;
     integer possible_number_array_length;
@@ -104,15 +110,17 @@ void number_arrayref_CHECKTRACE(SV* possible_number_arrayref, const char* variab
     {
         possible_number_array_element = av_fetch(possible_number_array, i, 0);
 
-        if (not(SvOK(*possible_number_array_element))) { croak("\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
-        if (not(SvNOKp(*possible_number_array_element) || SvIOKp(*possible_number_array_element))) { croak("\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+        if (not(SvOK(*possible_number_array_element))) { CROAK_OR_RETURN(no_croak, "\nERROR ENVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but undefined/null value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name) }
+        if (not(SvNOKp(*possible_number_array_element) || SvIOKp(*possible_number_array_element))) { CROAK_OR_RETURN(no_croak, "\nERROR ENVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nnumber value expected but non-number value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name) }
     }
+
+    return 1;
 }
 
-void string_arrayref_CHECK(SV* possible_string_arrayref)
+boolean string_arrayref_CHECK(SV* possible_string_arrayref, const boolean no_croak)
 {
-    if ( not( SvOK(possible_string_arrayref) ) ) { croak( "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref value expected but undefined/null value found,\ncroaking" ); }
-    if ( not( SvAROKp(possible_string_arrayref) ) ) { croak( "\nERROR EPVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref value expected but non-arrayref value found,\ncroaking" ); }
+    if ( not( SvOK(possible_string_arrayref) ) ) { CROAK_OR_RETURN(no_croak, "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref value expected but undefined/null value found,\ncroaking") }
+    if ( not( SvAROKp(possible_string_arrayref) ) ) { CROAK_OR_RETURN(no_croak, "\nERROR EPVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref value expected but non-arrayref value found,\ncroaking") }
 
     AV* possible_string_array;
     integer possible_string_array_length;
@@ -126,15 +134,17 @@ void string_arrayref_CHECK(SV* possible_string_arrayref)
     {
         possible_string_array_element = av_fetch(possible_string_array, i, 0);
 
-        if (not(SvOK(*possible_string_array_element))) { croak("\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found at index %"INTEGER",\ncroaking", i); }
-        if (not(SvPOKp(*possible_string_array_element))) { croak("\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found at index %"INTEGER",\ncroaking", i); }
+        if (not(SvOK(*possible_string_array_element))) { CROAK_OR_RETURN(no_croak, "\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found at index %"INTEGER",\ncroaking", i) }
+        if (not(SvPOKp(*possible_string_array_element))) { CROAK_OR_RETURN(no_croak, "\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found at index %"INTEGER",\ncroaking", i) }
     }
+
+    return 1;
 }
 
-void string_arrayref_CHECKTRACE(SV* possible_string_arrayref, const char* variable_name, const char* subroutine_name)
+boolean string_arrayref_CHECKTRACE(SV* possible_string_arrayref, const char* variable_name, const char* subroutine_name, const boolean no_croak)
 {
-    if ( not( SvOK(possible_string_arrayref) ) ) { croak( "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
-    if ( not( SvAROKp(possible_string_arrayref) ) ) { croak( "\nERROR EPVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref value expected but non-arrayref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name ); }
+    if ( not( SvOK(possible_string_arrayref) ) ) { CROAK_OR_RETURN(no_croak, "\nERROR EPVAVRV00, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref value expected but undefined/null value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) }
+    if ( not( SvAROKp(possible_string_arrayref) ) ) { CROAK_OR_RETURN(no_croak, "\nERROR EPVAVRV01, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring_arrayref value expected but non-arrayref value found,\nin variable %s from subroutine %s,\ncroaking", variable_name, subroutine_name) }
 
     AV* possible_string_array;
     integer possible_string_array_length;
@@ -148,9 +158,11 @@ void string_arrayref_CHECKTRACE(SV* possible_string_arrayref, const char* variab
     {
         possible_string_array_element = av_fetch(possible_string_array, i, 0);
 
-        if (not(SvOK(*possible_string_array_element))) { croak("\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
-        if (not(SvPOKp(*possible_string_array_element))) { croak("\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name); }
+        if (not(SvOK(*possible_string_array_element))) { CROAK_OR_RETURN(no_croak, "\nERROR EPVAVRV02, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but undefined/null value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name) }
+        if (not(SvPOKp(*possible_string_array_element))) { CROAK_OR_RETURN(no_croak, "\nERROR EPVAVRV03, TYPE-CHECKING MISMATCH, CPPOPS_PERLTYPES & CPPOPS_CPPTYPES:\nstring value expected but non-string value found at index %"INTEGER",\nin variable %s from subroutine %s,\ncroaking", i, variable_name, subroutine_name) }
     }
+
+    return 1;
 }
 
 // [[[ TYPEMAP PACK/UNPACK FOR __CPP__TYPES ]]]
@@ -162,7 +174,7 @@ void string_arrayref_CHECKTRACE(SV* possible_string_arrayref, const char* variab
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to (C++ std::vector of integers)
 integer_arrayref XS_unpack_integer_arrayref(SV* input_avref)
 {
-//  fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_arrayref(), top of subroutine\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_integer_arrayref(), top of subroutine\n");
 //  integer_arrayref_CHECK(input_avref);
     integer_arrayref_CHECKTRACE(input_avref, "input_avref", "XS_unpack_integer_arrayref()");
 
@@ -250,7 +262,7 @@ void XS_pack_integer_arrayref(SV* output_avref, integer_arrayref input_vector)
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing NVs))) to (C++ std::vector of numbers)
 number_arrayref XS_unpack_number_arrayref(SV* input_avref)
 {
-//  fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number_arrayref(), top of subroutine\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_number_arrayref(), top of subroutine\n");
 //  number_arrayref_CHECK(input_avref);
     number_arrayref_CHECKTRACE(input_avref, "input_avref", "XS_unpack_number_arrayref()");
 
@@ -308,7 +320,7 @@ void XS_pack_number_arrayref(SV* output_avref, number_arrayref input_vector)
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to (C++ std::vector of std::strings)
 string_arrayref XS_unpack_string_arrayref(SV* input_avref)
 {
-//  fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string_arrayref(), top of subroutine\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES XS_unpack_string_arrayref(), top of subroutine\n");
 //  string_arrayref_CHECK(input_avref);
     string_arrayref_CHECKTRACE(input_avref, "input_avref", "XS_unpack_string_arrayref()");
 
@@ -742,62 +754,67 @@ SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
 
 # elif defined __CPP__TYPES
 
+
+
+
+
+
+// VERY x 7: rename TEMPLATE_arrayref_to_string*() to arrayref_to_string*() so it can be called directly from compiled C++ again, will be ignored by Inline::CPP due to use of C++ templates
+// VERY x 7: rename TEMPLATE_arrayref_to_string*() to arrayref_to_string*() so it can be called directly from compiled C++ again, will be ignored by Inline::CPP due to use of C++ templates
+// VERY x 7: rename TEMPLATE_arrayref_to_string*() to arrayref_to_string*() so it can be called directly from compiled C++ again, will be ignored by Inline::CPP due to use of C++ templates
+
+
+
 // DEV NOTE, CORRELATION #rp320: create DYNAMIC DISPATCH wrappers for TEMPLATE_arrayref_to_string*(), because Inline::CPP does not create Perl bindings for TEMPLATE functions
 // use elipses to create dynamic dispatch functions which receive their arguments on the Perl stack instead of via the C stack
 // https://metacpan.org/pod/Inline::CPP#Example-5-Elipses-Revisited-(and-Overloading-or-Templates)
 
+// DYNAMIC DISPATCH: call TEMPLATE_arrayref_to_string_compact(), passing input_avref via DYNAMIC XS_unpack_*_arrayref()
 string arrayref_to_string_compact(SV* input_avref, ...) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_compact(integer_arrayref), about to call TEMPLATE_arrayref_to_string_compact() & return value...\n");
-
-    dXSARGS;  // creates a variable 'items' that contains a parameter count
-    try{
-        switch ( items ) {
-
-
-
-
-// VERY x 7: finish converting this return value to find the type of input_avref, call appropriate XS_unpack_*_arrayref(), and pass to TEMPLATE_arrayref_to_string_compact() appropriately; rename TEMPLATE_arrayref_to_string*() to arrayref_to_string*() so it can be called directly from compiled C++ again, will be ignored by Inline::CPP due to use of C++ templates
-// VERY x 7: finish converting this return value to find the type of input_avref, call appropriate XS_unpack_*_arrayref(), and pass to TEMPLATE_arrayref_to_string_compact() appropriately; rename TEMPLATE_arrayref_to_string*() to arrayref_to_string*() so it can be called directly from compiled C++ again, will be ignored by Inline::CPP due to use of C++ templates
-// VERY x 7: finish converting this return value to find the type of input_avref, call appropriate XS_unpack_*_arrayref(), and pass to TEMPLATE_arrayref_to_string_compact() appropriately; rename TEMPLATE_arrayref_to_string*() to arrayref_to_string*() so it can be called directly from compiled C++ again, will be ignored by Inline::CPP due to use of C++ templates
-
-// ORIGINAL LINE
-// return TEMPLATE_arrayref_to_string_compact(input_vector);
-
-            case 1:  return SvIV(ST(0));
-
-
-
-
-            default: throw std::runtime_error(
-                "ERROR Exyz320: Too many arguments in call to function __func__"
-            );
-        }
-    }
-    catch ( std::runtime_error msg ) {
-        croak( msg.what() );  // Perl likes croak for exceptions
-    }
-
-
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_compact(integer_arrayref), about to call TEMPLATE_arrayref_to_string_compact() & return value...\n");
+    return "NEED CODE HERE!!!";
 };
 
+// DYNAMIC DISPATCH: call TEMPLATE_arrayref_to_string(), passing input_avref via DYNAMIC XS_unpack_*_arrayref()
 string arrayref_to_string(SV* input_avref, ...) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string(integer_arrayref), about to call TEMPLATE_arrayref_to_string() & return value...\n");
-    return TEMPLATE_arrayref_to_string(input_vector);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(integer_arrayref), top of subroutine\n");
+
+    dXSARGS;  // creates a variable 'items' that contains a parameter count
+    if (items > 1) { croak("ERROR EDD320: DYNAMIC DISPATCH; Too many arguments in call to function " + __func__ + ", croaking"); }
+
+    // NEED ANSWER: is this line necessary, since input_avref is declared in the function header?
+    input_avref = ST(0);
+
+    // determine input_avref type
+    enum_type input_avref_type = type_fast_enum(input_avref);
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(integer_arrayref), about to call TEMPLATE_arrayref_to_string() & return value...\n");
+
+    // DYNAMIC DISPATCH based on input_avref_type
+    switch (input_avref_type) {
+        case TYPE_integer_arrayref: return TEMPLATE_arrayref_to_string(XS_unpack_integer_arrayref(input_avref));
+        case TYPE_number_arrayref:  return TEMPLATE_arrayref_to_string(XS_unpack_number_arrayref( input_avref));
+        case TYPE_string_arrayref:  return TEMPLATE_arrayref_to_string(XS_unpack_string_arrayref( input_avref));
+        default: croak("ERROR EDD321: DYNAMIC DISPATCH; Unrecognized or invalid input_avref_type = " + input_avref_type + ", croaking");
+    }
 };
 
 string arrayref_to_string_pretty(SV* input_avref, ...) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_pretty(integer_arrayref), about to call TEMPLATE_arrayref_to_string_pretty() & return value...\n");
-    return TEMPLATE_arrayref_to_string_pretty(input_vector);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_pretty(integer_arrayref), about to call TEMPLATE_arrayref_to_string_pretty() & return value...\n");
+//    return TEMPLATE_arrayref_to_string_pretty(input_vector);
+    return "NEED CODE HERE!!!";
 };
 
 string arrayref_to_string_extend(SV* input_avref, ...) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_extend(integer_arrayref), about to call TEMPLATE_arrayref_to_string_extend() & return value...\n");
-    return TEMPLATE_arrayref_to_string_extend(input_vector);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_extend(integer_arrayref), about to call TEMPLATE_arrayref_to_string_extend() & return value...\n");
+//    return TEMPLATE_arrayref_to_string_extend(input_vector);
+    return "NEED CODE HERE!!!";
 };
 
 string arrayref_to_string_format(SV* input_avref, ...) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES arrayref_to_string_format(integer_arrayref), about to call TEMPLATE_arrayref_to_string_format() & return value...\n");
-    return TEMPLATE_arrayref_to_string_format(input_vector, format_level, indent_level);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_format(integer_arrayref), about to call TEMPLATE_arrayref_to_string_format() & return value...\n");
+//    return TEMPLATE_arrayref_to_string_format(input_vector, format_level, indent_level);
+    return "NEED CODE HERE!!!";
 };
 
 

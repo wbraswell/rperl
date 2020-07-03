@@ -10,6 +10,7 @@ using std::cout;  using std::cerr;  using std::endl;
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
 
 // [[[ DATA TYPES ]]]
+#include <RPerl/DataType/Boolean.h>    // for boolean type used in type-checking macros; -> NULL (relies on native C type)
 #include <RPerl/DataType/Integer.cpp>  // for integer type used in OPS & TYPES REPORTER
 
 // [[[ TYPE-CHECKING MACROS ]]]

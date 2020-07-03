@@ -15,6 +15,7 @@ using std::cout;  using std::cerr;  using std::endl;
 #include <RPerl/HelperFunctions.cpp>  // -> HelperFunctions.h
 
 // [[[ DATA TYPES ]]]
+#include <RPerl/DataType/Boolean.h>  // for boolean type used in type-checking subroutines; -> NULL (relies on native C type)
 #include <RPerl/DataType/Integer.cpp>
 #include <RPerl/DataType/Number.cpp>
 #include <RPerl/DataType/String.cpp>
@@ -37,12 +38,12 @@ typedef std::vector<string>::iterator string_arrayref_iterator;
 typedef std::vector<string>::const_iterator string_arrayref_const_iterator;
 
 // [[[ TYPE-CHECKING SUBROUTINES ]]]
-void integer_arrayref_CHECK(SV* possible_integer_arrayref);
-void integer_arrayref_CHECKTRACE(SV* possible_integer_arrayref, const char* variable_name, const char* subroutine_name);
-void number_arrayref_CHECK(SV* possible_number_arrayref);
-void number_arrayref_CHECKTRACE(SV* possible_number_arrayref, const char* variable_name, const char* subroutine_name);
-void string_arrayref_CHECK(SV* possible_string_arrayref);
-void string_arrayref_CHECKTRACE(SV* possible_string_arrayref, const char* variable_name, const char* subroutine_name);
+boolean integer_arrayref_CHECK(SV* possible_integer_arrayref, const boolean no_croak = 0);
+boolean integer_arrayref_CHECKTRACE(SV* possible_integer_arrayref, const char* variable_name, const char* subroutine_name, const boolean no_croak = 0);
+boolean number_arrayref_CHECK(SV* possible_number_arrayref, const boolean no_croak = 0);
+boolean number_arrayref_CHECKTRACE(SV* possible_number_arrayref, const char* variable_name, const char* subroutine_name, const boolean no_croak = 0);
+boolean string_arrayref_CHECK(SV* possible_string_arrayref, const boolean no_croak = 0);
+boolean string_arrayref_CHECKTRACE(SV* possible_string_arrayref, const char* variable_name, const char* subroutine_name, const boolean no_croak = 0);
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]
 # ifdef __PERL__TYPES

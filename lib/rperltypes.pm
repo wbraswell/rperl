@@ -231,7 +231,7 @@ sub class {
     return blessed($object);
 }
 
-# DEV NOTE, CORRELATION #xyz: list order of type_enum must exactly match LIST_OF_TYPES_ARRAYREF & type_enum_arrayref
+# DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
 use constant {
     TYPE_void             => 0,
 #   TYPE_boolean          => x,
@@ -244,7 +244,7 @@ use constant {
     TYPE_unknown          => 4
 };
 
-# DEV NOTE, CORRELATION #xyz: list order of type_enum must exactly match LIST_OF_TYPES_ARRAYREF & type_enum_arrayref
+# DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
 my string_hashref $string_to_type_enum = {
     TYPE_void             => 0,
 #   TYPE_boolean          => x,
@@ -257,7 +257,7 @@ my string_hashref $string_to_type_enum = {
     TYPE_unknown          => 4
 };
 
-# DEV NOTE, CORRELATION #xyz: list order of type_enum must exactly match LIST_OF_TYPES_ARRAYREF & type_enum_arrayref
+# DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
 my string_arrayref $type_enum_to_string = [ qw(
     TYPE_void
 
@@ -271,7 +271,7 @@ my string_arrayref $type_enum_to_string = [ qw(
 )];
 
 =NEED DELETE, UNUSED???
-# DEV NOTE, CORRELATION #xyz: list order of type_enum must exactly match LIST_OF_TYPES_ARRAYREF & type_enum_arrayref
+# DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
 my $type_enum = [
     TYPE_void(),
 #    TYPE_boolean(),

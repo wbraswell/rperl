@@ -1,12 +1,187 @@
 using std::cout;  using std::cerr;  using std::endl;  //using std::to_string;  // NEED DELETE, PRE-TEMPLATE C++
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_tpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_tpp 0.003_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_tpp 0.004_000
 
 
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]
 // [[[ STRINGIFY ]]]
+
+
+
+// DYNAMIC DISPATCH aka MULTIPLE DISPATCH
+// https://en.wikipedia.org/wiki/Multiple_dispatch#Emulating_multiple_dispatch
+
+// X MACRO
+// X macro allows us to specify LIST_OF_TYPES_* once, then automatically generate both type_enum & type_enum_to_string;
+// provides string_to_type_enum() for converting stringified type name to enum type name, utilized as index in dynamic dispatch function reference table
+// https://en.wikipedia.org/wiki/X_Macro
+
+// [[[ DYNAMIC DISPATCH, scalar types, via X macros ]]]
+
+// DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
+// prefix "TYPE_" to avoid error: ‘integer’ redeclared as different kind of symbol
+#define LIST_OF_TYPES_SCALAR \
+    X(TYPE_void) \
+/*    X(TYPE_boolean) */ \
+/*    X(TYPE_unsigned_integer) */ \
+    X(TYPE_integer) \
+    X(TYPE_number) \
+/*    X(TYPE_character) */ \
+    X(TYPE_string) \
+/*    X(TYPE_scalar) */ \
+    X(TYPE_unknown)
+
+
+// [[[ DYNAMIC DISPATCH, arrayref types, via X macros ]]]
+
+// DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
+// prefix "TYPE_" to avoid error: ‘integer_arrayref’ redeclared as different kind of symbol
+#define LIST_OF_TYPES_ARRAYREF \
+    X(TYPE_arrayref) /* no such type as void_arrayref */ \
+/*    X(TYPE_boolean_arrayref) */ \
+/*    X(TYPE_unsigned_integer_arrayref) */ \
+    X(TYPE_integer_arrayref) \
+    X(TYPE_number_arrayref) \
+/*    X(TYPE_character_arrayref) */ \
+    X(TYPE_string_arrayref) \
+/*    X(TYPE_scalar_arrayref) */ \
+    X(TYPE_unknown_arrayref)
+
+
+// [[[ DYNAMIC DISPATCH, type_enum typedef, via X macros ]]]
+
+// enum of all RPerl types
+#define X(name) name,
+typedef enum {
+    TYPE_NONE = -2,
+    TYPE_ERROR = -1,
+    TYPE_COUNT_SCALAR_BEFORE,
+    LIST_OF_TYPES_SCALAR
+    TYPE_COUNT_SCALAR_AFTER,
+    TYPE_COUNT_ARRAYREF_BEFORE,
+    LIST_OF_TYPES_ARRAYREF
+    TYPE_COUNT_ARRAYREF_AFTER,
+    TYPE_COUNT_MAX // not a type itself, instead used to find number of types
+} type_enum;
+#undef X
+
+// used to convert from type_enum to string, also used for reverse converstion in string_to_type_enum()
+// #name below is the preprocessor stringification operator, it wraps the word in double quotes, so integer becomes "integer";
+// https://gcc.gnu.org/onlinedocs/gcc-4.8.5/cpp/Stringification.html
+#define X(name) #name,
+char const * const type_enum_to_string[] = { 
+    LIST_OF_TYPES_SCALAR
+    LIST_OF_TYPES_ARRAYREF
+};
+#undef X
+
+// used to convert from string to type_enum
+type_enum string_to_type_enum(char const *type_name)
+{
+    fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES string_to_type_enum(), top of subroutine\n");
+    fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES string_to_type_enum(), received type_name = %s\n", type_name);
+ 
+//    const char* type_name_prefixed = (const char*)(string("TYPE_") + string(type_name)).c_str();  // WRONG: causes corrupted strings, why?
+    char type_name_prefixed[100];  // NEED ANSWER: how to avoid hard-coded size?
+    strcpy(type_name_prefixed, "TYPE_");
+    strcat(type_name_prefixed, type_name);
+    fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES string_to_type_enum(), have type_name_prefixed = %s\n", type_name_prefixed);
+
+    for (integer i = 0; i < (integer)(sizeof(type_enum_to_string) / sizeof(*type_enum_to_string)); i++) {
+        fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES string_to_type_enum(), top of for() loop, have i = %ld\n", i);
+
+        if (strcmp(type_enum_to_string[i], type_name_prefixed) == 0) {
+            fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES string_to_type_enum(), returning i = %ld\n", i);
+
+            return (type_enum)i;  // cast integer i as type_enum, and return
+        }
+    }
+    return TYPE_ERROR;
+}
+
+
+// [[[ DYNAMIC DISPATCH, type determination ]]]
+
+// NEED UPGRADE: convert type_fast*() functions into equivalent macros
+
+// a short-circuited, non-recursive version of type() subroutine
+SV* type_fast(SV* variable) {
+    if (NOT_DEFINED(variable))    { return newSVpv("void", 0); }
+
+    // DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
+    // do NOT report non-core types boolean, unsigned_integer, char, etc.
+    // DEV NOTE: Perl's implicit casting can cause 1 constant or variable to report multiple types,
+    // always report number before integer to avoid incorrect to_string() formatting
+    if      ( SvNOKp(variable) )  { return newSVpv("number",  0); }
+    else if ( SvIOKp(variable) )  { return newSVpv("integer", 0); }
+    else if ( SvPOKp(variable) )  { return newSVpv("string",  0); }
+
+    else if ( number_arrayref_CHECK(variable, 1) )
+                                  { return newSVpv("number_arrayref",  0); }
+    else if ( integer_arrayref_CHECK(variable, 1) )
+                                  { return newSVpv("integer_arrayref",  0); }
+    else if ( string_arrayref_CHECK(variable, 1) )
+                                  { return newSVpv("string_arrayref",  0); }
+    else if ( SvOK(variable) && 
+              SvAROKp(variable) ) { return newSVpv("arrayref",  0); }
+
+    else                          { return newSVpv("unknown", 0); }
+}
+
+// a short-circuited, non-recursive version of type() subroutine; returns type enum raw value instead of type name string
+type_enum type_fast_enum(SV* variable) {
+    fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES type_fast_enum(), top of subroutine\n");
+
+    // NEED DELETE, TMP DEBUG
+    struct timeval current_time;  gettimeofday(&current_time, NULL);
+    fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES type_fast_enum(), have current_time seconds = %ld, micro seconds = %ld\n", current_time.tv_sec, current_time.tv_usec);
+
+    if (NOT_DEFINED(variable))    { return TYPE_void; }
+
+    // DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
+    // do NOT report non-core types boolean, unsigned_integer, char, etc.
+    // DEV NOTE: Perl's implicit casting can cause 1 constant or variable to report multiple types,
+    // always report number before integer to avoid incorrect to_string() formatting
+    if      ( SvNOKp(variable) )  { return TYPE_number;  }
+    else if ( SvIOKp(variable) )  { return TYPE_integer; }
+    else if ( SvPOKp(variable) )  { return TYPE_string;  }
+
+    else if ( number_arrayref_CHECK(variable, 1) )
+                                  { return TYPE_number_arrayref; }
+    else if ( integer_arrayref_CHECK(variable, 1) )
+                                  { return TYPE_integer_arrayref; }
+    else if ( string_arrayref_CHECK(variable, 1) )
+                                  { return TYPE_string_arrayref; }
+    else if ( SvOK(variable) && 
+              SvAROKp(variable) ) { return TYPE_arrayref; }
+    
+    else                          { return TYPE_unknown; }
+}
+
+// upgrade TYPE_integer to TYPE_number, to avoid finding an integer element at index 0 and incorrectly assuming other number elements are also integers
+type_enum type_fast_enum__upgrade_integer_to_number(SV* variable) {
+    type_enum variable_type = type_fast_enum(variable);
+    if (variable_type == TYPE_integer) {
+        return TYPE_number;
+    }
+    else if (variable_type == TYPE_integer_arrayref) {
+        return TYPE_number_arrayref;
+    }
+/* NEED ENABLE, hashref types
+    else if (variable_type == TYPE_integer_hashref) {
+        return TYPE_number_hashref;
+    }
+*/
+    return variable_type;
+}
+
+
+
+
+
+
 
 # ifdef __PERL__TYPES
 
@@ -18,77 +193,9 @@ using std::cout;  using std::cerr;  using std::endl;  //using std::to_string;  /
 // VERY VERY VERY VERY VERY: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
 // VERY VERY VERY VERY VERY: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
 
-// DYNAMIC DISPATCH aka MULTIPLE DISPATCH
-// https://en.wikipedia.org/wiki/Multiple_dispatch#Emulating_multiple_dispatch
-
-// [[[ DYNAMIC DISPATCH, types ]]]
-
-// DEV NOTE, CORRELATION #xyz: list order of type_enum must exactly match LIST_OF_TYPES_ARRAYREF & type_enum_arrayref
-typedef enum {
-    TYPE_void,
-//    TYPE_boolean,
-//    TYPE_unsigned_integer,
-    TYPE_integer,
-    TYPE_number,
-//    TYPE_character,
-    TYPE_string,
-//    TYPE_scalar,
-    TYPE_unknown,
-    TYPE_COUNT // not a type itself, instead used to find number of types
-} type_enum;
 
 
 
-// [[[ DYNAMIC DISPATCH, X-macro for arrayref types ]]]
-// https://en.wikipedia.org/wiki/X_Macro
-
-// X-macro allows us to specify LIST_OF_TYPES_ARRAYREF once, then automatically generate both type_enum_arrayref & type_enum_arrayref_to_string;
-// provides string_to_type_enum_arrayref() for converting stringified type name to enum type name, utilized as index in dynamic dispatch function reference table
-
-// DEV NOTE, CORRELATION #xyz: list order of type_enum must exactly match LIST_OF_TYPES_ARRAYREF & type_enum_arrayref
-// prefix "TYPE_" to avoid error: ‘integer_arrayref’ redeclared as different kind of symbol
-#define LIST_OF_TYPES_ARRAYREF \
-    X(TYPE_void_arrayref) /* NEED FIX: no such type, need to replace w/ TYPE_VOID instead? */ \
-/*    X(TYPE_boolean_arrayref) */ \
-/*    X(TYPE_unsigned_integer_arrayref) */ \
-    X(TYPE_integer_arrayref) \
-    X(TYPE_number_arrayref) \
-/*    X(TYPE_character_arrayref) */ \
-    X(TYPE_string_arrayref) \
-/*    X(TYPE_scalar_arrayref) */ \
-    X(TYPE_unknown_arrayref)
-
-#define X(name) name,
-typedef enum { TYPE_NONE = -2, TYPE_ERROR = -1, LIST_OF_TYPES_ARRAYREF } type_enum_arrayref;
-#undef X
-
-// #name below is the preprocessor stringification operator, it wraps the word in double quotes, so number_arrayref becomes "number_arrayref";  https://gcc.gnu.org/onlinedocs/gcc-4.8.5/cpp/Stringification.html
-#define X(name) #name,
-char const * const type_enum_arrayref_to_string[] = { LIST_OF_TYPES_ARRAYREF };
-#undef X
-
-type_enum_arrayref string_to_type_enum_arrayref(char const *type_name)
-{
-    fprintf(stderr, "in CPPOPS_PERLTYPES string_to_type_enum_arrayref(), top of subroutine\n");
-    fprintf(stderr, "in CPPOPS_PERLTYPES string_to_type_enum_arrayref(), received type_name = %s\n", type_name);
- 
-//    const char* type_name_prefixed = (const char*)(string("TYPE_") + string(type_name)).c_str();  // WRONG: causes corrupted strings, why?
-    char type_name_prefixed[100];  // NEED ANSWER: how to avoid hard-coded size?
-    strcpy(type_name_prefixed, "TYPE_");
-    strcat(type_name_prefixed, type_name);
-    fprintf(stderr, "in CPPOPS_PERLTYPES string_to_type_enum_arrayref(), have type_name_prefixed = %s\n", type_name_prefixed);
-
-    for (integer i = 0; i < (integer)(sizeof(type_enum_arrayref_to_string) / sizeof(*type_enum_arrayref_to_string)); i++) {
-        fprintf(stderr, "in CPPOPS_PERLTYPES string_to_type_enum_arrayref(), top of for() loop, have i = %ld\n", i);
-
-        if (strcmp(type_enum_arrayref_to_string[i], type_name_prefixed) == 0) {
-            fprintf(stderr, "in CPPOPS_PERLTYPES string_to_type_enum_arrayref(), returning i = %ld\n", i);
-
-            return (type_enum_arrayref)i;  // cast integer i as type_enum_arrayref, and return
-        }
-    }
-    return TYPE_ERROR;
-}
 
 
 
@@ -96,7 +203,9 @@ type_enum_arrayref string_to_type_enum_arrayref(char const *type_name)
 
 typedef SV* (*TYPE_CASE_to_string)(SV*);
 
-TYPE_CASE_to_string TYPED_to_string[TYPE_COUNT] = {
+// DYNAMIC DISPATCH, function reference dispatch table, *_to_string()
+// DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
+TYPE_CASE_to_string TYPED_to_string[(TYPE_COUNT_SCALAR_AFTER - TYPE_COUNT_SCALAR_BEFORE) - 1] = {
 //    { fprintf(stderr, "in CPPOPS_PERLTYPES TYPED_to_string, case = TYPE_VOID, performing NOP\n") },  // NOP (no operation), &void_to_string does not need to exist
 //    {},  // NOP (no operation), &void_arrayref_CHECKTRACE does not need to exist
     &string_to_string,  // NEED UPGRADE: implement void_to_string()???
@@ -118,6 +227,7 @@ SV* DYNAMIC_to_string(SV* input_sv, SV* input_sv_type) {
 }
 */
 
+// DYNAMIC DISPATCH, retrieve *_to_string() function from function reference dispatch table, call function & return value
 SV* DYNAMIC_to_string(SV* input_sv, type_enum input_sv_type) {
     fprintf(stderr, "in CPPOPS_PERLTYPES DYNAMIC_to_string(), received input_sv_type = %d\n", input_sv_type);
 
@@ -125,18 +235,21 @@ SV* DYNAMIC_to_string(SV* input_sv, type_enum input_sv_type) {
     struct timeval current_time;  gettimeofday(&current_time, NULL);
     fprintf(stderr, "in CPPOPS_PERLTYPES DYNAMIC_to_string(), have current_time seconds = %ld, micro seconds = %ld\n", current_time.tv_sec, current_time.tv_usec);
 
-    return (*TYPED_to_string[input_sv_type])(input_sv);
+    return (*TYPED_to_string[(input_sv_type - TYPE_COUNT_SCALAR_BEFORE) - 1])(input_sv);
 }
 
 
 
 // [[[ DYNAMIC DISPATCH, arrayref_CHECKTRACE ]]]
 
-typedef void (*TYPE_CASE_arrayref_CHECKTRACE)(SV*, const char*, const char*);
+// must match return type & argument type(s) of *_arrayref_CHECKTRACE() functions
+typedef boolean (*TYPE_CASE_arrayref_CHECKTRACE)(SV*, const char*, const char*, const boolean);
 
-TYPE_CASE_arrayref_CHECKTRACE TYPED_arrayref_CHECKTRACE[TYPE_COUNT] = {
-//    { fprintf(stderr, "in CPPOPS_PERLTYPES TYPED_arrayref_CHECKTRACE, case = TYPE_VOID, performing NOP\n") },  // NOP (no operation), &void_arrayref_CHECKTRACE does not need to exist
-//    {},  // NOP (no operation), &void_arrayref_CHECKTRACE does not need to exist
+// DYNAMIC DISPATCH, function reference dispatch table, *_arrayref_CHECKTRACE()
+// DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
+TYPE_CASE_arrayref_CHECKTRACE TYPED_arrayref_CHECKTRACE[(TYPE_COUNT_ARRAYREF_AFTER - TYPE_COUNT_ARRAYREF_BEFORE) - 1] = {
+//    { fprintf(stderr, "in CPPOPS_PERLTYPES TYPED_arrayref_CHECKTRACE, case = TYPE_VOID, performing NOP\n") },  // NOP (no operation), &void_arrayref_CHECKTRACE does not need to exist; DOES THIS WORK???
+//    {},  // NOP (no operation), &void_arrayref_CHECKTRACE does not need to exist; DOES THIS WORK???
     &string_arrayref_CHECKTRACE,  // NEED UPGRADE: implement void_arrayref_CHECKTRACE()???
 //    &boolean_arrayref_CHECKTRACE,
 //    &unsigned_integer_arrayref_CHECKTRACE,
@@ -147,9 +260,10 @@ TYPE_CASE_arrayref_CHECKTRACE TYPED_arrayref_CHECKTRACE[TYPE_COUNT] = {
     &string_arrayref_CHECKTRACE,  // NEED UPGRADE: implement unknown_arrayref_CHECKTRACE()???
 };
 
+// DYNAMIC DISPATCH, retrieve *_arrayref_CHECKTRACE() function from function reference dispatch table, call function & return value
 /*
-void number_arrayref_CHECKTRACE(SV* possible_number_arrayref, const char* variable_name, const char* subroutine_name);    // example definition
-     number_arrayref_CHECKTRACE(    input_avref,             "input_avref",              "number_arrayref_to_string()");  // example call
+void  number_arrayref_CHECKTRACE(SV* possible_number_arrayref, const char* variable_name, const char* subroutine_name);    // example definition
+      number_arrayref_CHECKTRACE(    input_avref,             "input_avref",              "number_arrayref_to_string()");  // example call
 */
 void DYNAMIC_arrayref_CHECKTRACE(SV* input_avref,              const char* variable_name, const char* subroutine_name, type_enum input_avref_element_type) {
     fprintf(stderr, "in CPPOPS_PERLTYPES DYNAMIC_arrayref_CHECKTRACE(), received input_avref_element_type = %d\n", input_avref_element_type);
@@ -158,7 +272,12 @@ void DYNAMIC_arrayref_CHECKTRACE(SV* input_avref,              const char* varia
     struct timeval current_time;  gettimeofday(&current_time, NULL);
     fprintf(stderr, "in CPPOPS_PERLTYPES DYNAMIC_arrayref_CHECKTRACE(), have current_time seconds = %ld, micro seconds = %ld\n", current_time.tv_sec, current_time.tv_usec);
 
-    (*TYPED_arrayref_CHECKTRACE[input_avref_element_type])(input_avref, variable_name, subroutine_name);
+
+    // VERY x 8: figure out correct arithmetic for accessing function reference dispatch table
+    // VERY x 8: figure out correct arithmetic for accessing function reference dispatch table
+    // VERY x 8: figure out correct arithmetic for accessing function reference dispatch table
+
+    (*TYPED_arrayref_CHECKTRACE[TYPE_COUNT_ARRAYREF_BEFORE + (input_avref_element_type - TYPE_COUNT_SCALAR_BEFORE)])(input_avref, variable_name, subroutine_name, 0);  // no_croak = 0
 }
 
 
@@ -170,52 +289,6 @@ void DYNAMIC_arrayref_CHECKTRACE(SV* input_avref,              const char* varia
 
 
 
-// [[[ DYNAMIC DISPATCH, type determination ]]]
-
-// NEED UPGRADE: convert type_fast*() functions into equivalent macros
-
-// a short-circuited, non-recursive version of type() subroutine
-SV* type_fast(SV* variable) {
-    if (not_defined(variable))   { return newSVpv("void", 0); }
-
-    // DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
-    // do NOT report non-core types boolean, unsigned_integer, char, etc.
-    // DEV NOTE: Perl's implicit casting can cause 1 constant or variable to report multiple types,
-    // always report number before integer to avoid incorrect to_string() formatting
-    if      ( SvNOKp(variable) ) { return newSVpv("number",  0); }
-    else if ( SvIOKp(variable) ) { return newSVpv("integer", 0); }
-    else if ( SvPOKp(variable) ) { return newSVpv("string",  0); }
-    else                         { return newSVpv("unknown", 0); }
-}
-
-// a short-circuited, non-recursive version of type() subroutine; returns type enum raw value instead of type name string
-type_enum type_fast_enum(SV* variable) {
-    fprintf(stderr, "in CPPOPS_PERLTYPES type_fast_enum(), top of subroutine\n");
-
-    // NEED DELETE, TMP DEBUG
-    struct timeval current_time;  gettimeofday(&current_time, NULL);
-    fprintf(stderr, "in CPPOPS_PERLTYPES type_fast_enum(), have current_time seconds = %ld, micro seconds = %ld\n", current_time.tv_sec, current_time.tv_usec);
-
-    if (not_defined(variable))   { return TYPE_void; }
-
-    // DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
-    // do NOT report non-core types boolean, unsigned_integer, char, etc.
-    // DEV NOTE: Perl's implicit casting can cause 1 constant or variable to report multiple types,
-    // always report number before integer to avoid incorrect to_string() formatting
-    if      ( SvNOKp(variable) ) { return TYPE_number;  }
-    else if ( SvIOKp(variable) ) { return TYPE_integer; }
-    else if ( SvPOKp(variable) ) { return TYPE_string;  }
-    else                         { return TYPE_unknown; }
-}
-
-// upgrade TYPE_integer to TYPE_number, to avoid finding an integer element at index 0 and incorrectly assuming other number elements are also integers
-type_enum type_fast_enum__upgrade_integer_to_number(SV* variable) {
-    type_enum retval = type_fast_enum(variable);
-    if (retval == TYPE_integer) {
-        return TYPE_number;
-    }
-    return retval;
-}
 
 
 // [[[ STRINGIFY, declarations ]]]
@@ -228,7 +301,10 @@ SV*         arrayref_to_string_compact(SV* input_avref);
 SV*         arrayref_to_string(SV* input_avref);
 SV*         arrayref_to_string_pretty(SV* input_avref);
 SV*         arrayref_to_string_extend(SV* input_avref);
-SV*         arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level, type_enum_arrayref input_avref_type);
+SV*         arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level, type_enum input_avref_type);
+
+
+
 
 
 // [[[ STRINGIFY, convenience wrapper functions ]]]
@@ -261,8 +337,9 @@ SV* arrayref_to_string_expand(SV* input_avref) {
 
 // [[[ STRINGIFY, real function ]]]
 
-// convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing (IVs or NVs or PVs)))) to Perl-parsable (Perl SV containing PV)
-SV* arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level, type_enum_arrayref input_avref_type)
+// convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing (IVs or NVs or PVs)))) to Perl-parsable (Perl SV containing PV);
+// provide default value TYPE_NONE to final input_avref_type argument, thereby allowing arrayref_to_string_format() to be called with either 3 or 4 arguments
+SV* arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level, type_enum input_avref_type = TYPE_NONE)
 {
     fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, top of subroutine\n");
     fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, have __func__ = %s\n", __func__);
@@ -277,7 +354,7 @@ SV* arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_leve
         (input_avref_type != TYPE_ERROR)) {
         fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, checkpoint 000a\n");
 
-        // DEV NOTE, CORRELATION #xyz: list order of type_enum must exactly match LIST_OF_TYPES_ARRAYREF & type_enum_arrayref;
+        // DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
         // perform dynamic dispatch based on type argument, received from named subroutines such as integer_arrayref_to_string*(), number_arrayref_to_string*(), etc.
         DYNAMIC_arrayref_CHECKTRACE(input_avref, "input_avref", __func__, (type_enum)input_avref_type);
         CHECK_done = 1;
@@ -300,20 +377,18 @@ SV* arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_leve
         fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, have input_avref_package_name = %s\n", input_avref_package_name);
         fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, checkpoint 001c\n");
 
-        type_enum_arrayref input_avref_package_enum = string_to_type_enum_arrayref(input_avref_package_name);
+        type_enum input_avref_package_enum = string_to_type_enum(input_avref_package_name);
         fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, have input_avref_package_enum = %i\n", input_avref_package_enum);
         fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, checkpoint 001d\n");
  
-        const char* input_avref_package_name_verify = type_enum_arrayref_to_string[input_avref_package_enum];
+        const char* input_avref_package_name_verify = type_enum_to_string[input_avref_package_enum];
         fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, have input_avref_package_name_verify = %s\n", input_avref_package_name_verify);
         fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, checkpoint 001e\n");
 
         if (input_avref_package_enum != TYPE_ERROR) {
-            // DEV NOTE, CORRELATION #xyz: list order of type_enum must exactly match LIST_OF_TYPES_ARRAYREF & type_enum_arrayref;
-            // perform dynamic dispatch based on blessed reference's package name,
-            // which, in type_enum_arrayref form, matches the type_enum used for dynamic dispatch;
-            // must explicitly cast input_avref_package_enum to type_enum to avoid error: cannot convert ‘type_enum_arrayref’ to ‘type_enum’
-            DYNAMIC_arrayref_CHECKTRACE(input_avref, "input_avref", __func__, (type_enum)input_avref_package_enum);
+            // DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
+            // perform dynamic dispatch based on blessed reference's package name
+            DYNAMIC_arrayref_CHECKTRACE(input_avref, "input_avref", __func__, input_avref_package_enum);
             CHECK_done = 1;
         }
         fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, checkpoint 001f\n");

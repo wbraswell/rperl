@@ -19,8 +19,10 @@
 #define SV_REFERENCE_COUNT(sv) (SvREFCNT(sv))
 #define class(sv) HvNAME(SvSTASH(SvRV(sv)))  // NEED ADDRESS: does this actually match the functionality of PERLOPS class() which is a wrapper around blessed()?
 
-#define  is_defined(sv) ( SvOK(sv) && (sv != &PL_sv_undef))  // error: "defined" cannot be used as a macro name
-#define not_defined(sv) (!SvOK(sv) || (sv == &PL_sv_undef))
+#define  IS_DEFINED(sv) ( SvOK(sv) && (sv != &PL_sv_undef))  // error: "defined" cannot be used as a macro name
+#define NOT_DEFINED(sv) (!SvOK(sv) || (sv == &PL_sv_undef))
+
+#define CROAK_OR_RETURN(no_croak, ...) if (no_croak) { return 0; } else { croak(__VA_ARGS__); }
 
 // MS Windows OS, need not() macro in MSVC
 #ifdef _MSC_VER
@@ -37,6 +39,7 @@ int RPerl_SvPOKp(SV* input_sv);
 int RPerl_SvAROKp(SV* input_avref);
 int RPerl_SvHROKp(SV* input_hvref);
 
+SV*  RPerl_AV_ELEMENT(pTHX_ AV* av, SSize_t index);
 void RPerl_object_property_init(SV* initee); // NEED ANSWER, DEEP BLACK MAGIC: what in the Hades does this property init function even do?  why do we need it???
 
 // [[[ OPERATIONS & DATA TYPES REPORTER ]]]

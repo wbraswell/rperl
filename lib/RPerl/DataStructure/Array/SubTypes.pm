@@ -102,7 +102,7 @@ sub arrayref_CHECKTRACE {
 
 # [[[ STRINGIFY ]]]
 
-# DEV NOTE, CORRELATION #xyz: list order of type_enum must exactly match LIST_OF_TYPES_ARRAYREF & type_enum_arrayref
+# DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
 my $TYPED_arrayref_to_string_format = [
     \&main::string_arrayref_to_string_format,  # NEED UPGRADE: implement void_to_string()???
 #   \&main::boolean_arrayref_to_string_format,
