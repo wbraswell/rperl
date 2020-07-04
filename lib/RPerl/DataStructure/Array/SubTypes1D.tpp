@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  //using std::to_string;  // NEED DELETE, PRE-TEMPLATE C++
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_tpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_tpp 0.004_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_tpp 0.005_000
 
 
 // [[[ STRINGIFY ]]]
@@ -19,6 +19,12 @@ using std::cout;  using std::cerr;  using std::endl;  //using std::to_string;  /
 // https://en.wikipedia.org/wiki/X_Macro
 
 // [[[ DYNAMIC DISPATCH, scalar types, via X macros ]]]
+
+// DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
+// special type codes, not actually real types
+#define LIST_OF_TYPES_NEGATIVE \
+    X(TYPE_NONE) \
+    X(TYPE_ERROR)
 
 // DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
 // prefix "TYPE_" to avoid error: ‘integer’ redeclared as different kind of symbol
@@ -52,12 +58,13 @@ using std::cout;  using std::cerr;  using std::endl;  //using std::to_string;  /
 
 // [[[ DYNAMIC DISPATCH, type_enum typedef, via X macros ]]]
 
+// DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
 // enum of all RPerl types
 #define X(name) name,
 typedef enum {
-    TYPE_NONE = -2,
-    TYPE_ERROR = -1,
-    TYPE_COUNT_SCALAR_BEFORE,
+    TYPE_COUNT_MIN = -4,  /* setting this to -4 allows the following 2 LIST_OF_TYPES_NEGATIVE to avoid their own hard-coded values & be re-used in type_enum_to_string_NEGATIVES below */
+    LIST_OF_TYPES_NEGATIVE
+    TYPE_COUNT_SCALAR_BEFORE = -1,  /* setting this to -1 allows the scalar types to begin at index 0, for ease of index arithmetic */
     LIST_OF_TYPES_SCALAR
     TYPE_COUNT_SCALAR_AFTER,
     TYPE_COUNT_ARRAYREF_BEFORE,
@@ -67,17 +74,28 @@ typedef enum {
 } type_enum;
 #undef X
 
-// used to convert from type_enum to string, also used for reverse converstion in string_to_type_enum()
+// DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
 // #name below is the preprocessor stringification operator, it wraps the word in double quotes, so integer becomes "integer";
 // https://gcc.gnu.org/onlinedocs/gcc-4.8.5/cpp/Stringification.html
 #define X(name) #name,
-char const * const type_enum_to_string[] = { 
+char const * const type_enum_to_string_NEGATIVES[] = { 
+    X(TYPE_COUNT_MIN)
+    LIST_OF_TYPES_NEGATIVE
+    X(TYPE_COUNT_SCALAR_BEFORE)
     LIST_OF_TYPES_SCALAR
+    X(TYPE_COUNT_SCALAR_AFTER)
+    X(TYPE_COUNT_ARRAYREF_BEFORE)
     LIST_OF_TYPES_ARRAYREF
+    X(TYPE_COUNT_ARRAYREF_AFTER)
+    X(TYPE_COUNT_MAX)
 };
 #undef X
 
-// used to convert from string to type_enum
+// convert from type_enum to string, also used for reverse converstion in string_to_type_enum();
+// pointer to corrected zero-index of type_enum_to_string_NEGATIVES[], allows negative indexing such as type_enum_to_string[-1]
+char const * const * type_enum_to_string = &type_enum_to_string_NEGATIVES[abs(TYPE_COUNT_MIN)];
+
+// convert from string to type_enum
 type_enum string_to_type_enum(char const *type_name)
 {
     fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES string_to_type_enum(), top of subroutine\n");
@@ -89,7 +107,8 @@ type_enum string_to_type_enum(char const *type_name)
     strcat(type_name_prefixed, type_name);
     fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES string_to_type_enum(), have type_name_prefixed = %s\n", type_name_prefixed);
 
-    for (integer i = 0; i < (integer)(sizeof(type_enum_to_string) / sizeof(*type_enum_to_string)); i++) {
+//    for (integer i = 0; i < (integer)(sizeof(type_enum_to_string) / sizeof(*type_enum_to_string)); i++) {
+    for (integer i = 0; i < (integer)TYPE_COUNT_MAX; i++) {  // should be faster than calls to sizeof()
         fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES string_to_type_enum(), top of for() loop, have i = %ld\n", i);
 
         if (strcmp(type_enum_to_string[i], type_name_prefixed) == 0) {
@@ -99,6 +118,38 @@ type_enum string_to_type_enum(char const *type_name)
         }
     }
     return TYPE_ERROR;
+}
+
+// NEED UPGRADE: convert to macro for speed
+// convert from scalar type_enum to equivalent arrayref type_enum;
+// TYPE_integer becomes TYPE_integer_arrayref, TYPE_number becomes TYPE_number_arrayref, etc
+type_enum scalar_to_arrayref_type_enum(type_enum scalar_type) {
+    fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES scalar_to_arrayref_type_enum(), received scalar_type = %d\n", scalar_type);
+    fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES scalar_to_arrayref_type_enum(), have type_enum_to_string[scalar_type] = %s\n", type_enum_to_string[scalar_type]);
+
+    // can't do arithmetic directly on enums, allow "+ 1" to implicitly cast them all to int, then explicitly cas the whole thing back to type_enum
+    type_enum arrayref_type = (type_enum)(scalar_type + (TYPE_COUNT_ARRAYREF_BEFORE + 1));
+
+    fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES scalar_to_arrayref_type_enum(), have arrayref_type = %d\n", arrayref_type);
+    fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES scalar_to_arrayref_type_enum(), have type_enum_to_string[arrayref_type] = %s\n", type_enum_to_string[arrayref_type]);
+
+    return arrayref_type;
+}
+
+// NEED UPGRADE: convert to macro for speed
+// convert from arrayref type_enum to equivalent scalar type_enum;
+// TYPE_integer_arrayref becomes TYPE_integer, TYPE_number_arrayref becomes TYPE_number, etc
+type_enum arrayref_to_scalar_type_enum(type_enum arrayref_type) {
+    fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES arrayref_to_scalar_type_enum(), received arrayref_type = %d\n", arrayref_type);
+    fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES arrayref_to_scalar_type_enum(), have type_enum_to_string[arrayref_type] = %s\n", type_enum_to_string[arrayref_type]);
+
+    // can't do arithmetic directly on enums, allow "+ 1" to implicitly cast them all to int, then explicitly cas the whole thing back to type_enum
+    type_enum scalar_type = (type_enum)(arrayref_type - (TYPE_COUNT_ARRAYREF_BEFORE + 1));
+
+    fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES arrayref_to_scalar_type_enum(), have scalar_type = %d\n", scalar_type);
+    fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES arrayref_to_scalar_type_enum(), have type_enum_to_string[scalar_type] = %s\n", type_enum_to_string[scalar_type]);
+
+    return scalar_type;
 }
 
 
@@ -118,11 +169,11 @@ SV* type_fast(SV* variable) {
     else if ( SvIOKp(variable) )  { return newSVpv("integer", 0); }
     else if ( SvPOKp(variable) )  { return newSVpv("string",  0); }
 
-    else if ( number_arrayref_CHECK(variable, 1) )
+    else if ( number_arrayref_CHECK( variable, 1) )  // no_croak = 1
                                   { return newSVpv("number_arrayref",  0); }
-    else if ( integer_arrayref_CHECK(variable, 1) )
+    else if ( integer_arrayref_CHECK(variable, 1) )  // no_croak = 1
                                   { return newSVpv("integer_arrayref",  0); }
-    else if ( string_arrayref_CHECK(variable, 1) )
+    else if ( string_arrayref_CHECK( variable, 1) )  // no_croak = 1
                                   { return newSVpv("string_arrayref",  0); }
     else if ( SvOK(variable) && 
               SvAROKp(variable) ) { return newSVpv("arrayref",  0); }
@@ -148,11 +199,11 @@ type_enum type_fast_enum(SV* variable) {
     else if ( SvIOKp(variable) )  { return TYPE_integer; }
     else if ( SvPOKp(variable) )  { return TYPE_string;  }
 
-    else if ( number_arrayref_CHECK(variable, 1) )
+    else if ( number_arrayref_CHECK( variable, 1) )  // no_croak = 1
                                   { return TYPE_number_arrayref; }
-    else if ( integer_arrayref_CHECK(variable, 1) )
+    else if ( integer_arrayref_CHECK(variable, 1) )  // no_croak = 1
                                   { return TYPE_integer_arrayref; }
-    else if ( string_arrayref_CHECK(variable, 1) )
+    else if ( string_arrayref_CHECK( variable, 1) )  // no_croak = 1
                                   { return TYPE_string_arrayref; }
     else if ( SvOK(variable) && 
               SvAROKp(variable) ) { return TYPE_arrayref; }
@@ -230,12 +281,13 @@ SV* DYNAMIC_to_string(SV* input_sv, SV* input_sv_type) {
 // DYNAMIC DISPATCH, retrieve *_to_string() function from function reference dispatch table, call function & return value
 SV* DYNAMIC_to_string(SV* input_sv, type_enum input_sv_type) {
     fprintf(stderr, "in CPPOPS_PERLTYPES DYNAMIC_to_string(), received input_sv_type = %d\n", input_sv_type);
+    fprintf(stderr, "in CPPOPS_PERLTYPES DYNAMIC_to_string(), have type_enum_to_string[input_sv_type] = %s\n", type_enum_to_string[input_sv_type]);
 
     // NEED DELETE, TMP DEBUG
     struct timeval current_time;  gettimeofday(&current_time, NULL);
     fprintf(stderr, "in CPPOPS_PERLTYPES DYNAMIC_to_string(), have current_time seconds = %ld, micro seconds = %ld\n", current_time.tv_sec, current_time.tv_usec);
 
-    return (*TYPED_to_string[(input_sv_type - TYPE_COUNT_SCALAR_BEFORE) - 1])(input_sv);
+    return (*TYPED_to_string[input_sv_type])(input_sv);
 }
 
 
@@ -265,22 +317,16 @@ TYPE_CASE_arrayref_CHECKTRACE TYPED_arrayref_CHECKTRACE[(TYPE_COUNT_ARRAYREF_AFT
 void  number_arrayref_CHECKTRACE(SV* possible_number_arrayref, const char* variable_name, const char* subroutine_name);    // example definition
       number_arrayref_CHECKTRACE(    input_avref,             "input_avref",              "number_arrayref_to_string()");  // example call
 */
-void DYNAMIC_arrayref_CHECKTRACE(SV* input_avref,              const char* variable_name, const char* subroutine_name, type_enum input_avref_element_type) {
-    fprintf(stderr, "in CPPOPS_PERLTYPES DYNAMIC_arrayref_CHECKTRACE(), received input_avref_element_type = %d\n", input_avref_element_type);
+void DYNAMIC_arrayref_CHECKTRACE(SV* input_avref,              const char* variable_name, const char* subroutine_name, type_enum input_avref_type) {
+    fprintf(stderr, "in CPPOPS_PERLTYPES DYNAMIC_arrayref_CHECKTRACE(), received input_avref_type = %d\n", input_avref_type);
+    fprintf(stderr, "in CPPOPS_PERLTYPES DYNAMIC_arrayref_CHECKTRACE(), have type_enum_to_string[input_avref_type] = %s\n", type_enum_to_string[input_avref_type]);
 
     // NEED DELETE, TMP DEBUG
     struct timeval current_time;  gettimeofday(&current_time, NULL);
     fprintf(stderr, "in CPPOPS_PERLTYPES DYNAMIC_arrayref_CHECKTRACE(), have current_time seconds = %ld, micro seconds = %ld\n", current_time.tv_sec, current_time.tv_usec);
 
-
-    // VERY x 8: figure out correct arithmetic for accessing function reference dispatch table
-    // VERY x 8: figure out correct arithmetic for accessing function reference dispatch table
-    // VERY x 8: figure out correct arithmetic for accessing function reference dispatch table
-
-    (*TYPED_arrayref_CHECKTRACE[TYPE_COUNT_ARRAYREF_BEFORE + (input_avref_element_type - TYPE_COUNT_SCALAR_BEFORE)])(input_avref, variable_name, subroutine_name, 0);  // no_croak = 0
+    (*TYPED_arrayref_CHECKTRACE[arrayref_to_scalar_type_enum(input_avref_type)])(input_avref, variable_name, subroutine_name, 0);  // no_croak = 0
 }
-
-
 
 
 
@@ -342,6 +388,9 @@ SV* arrayref_to_string_expand(SV* input_avref) {
 SV* arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level, type_enum input_avref_type = TYPE_NONE)
 {
     fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, top of subroutine\n");
+    fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, received input_avref_type = %d\n", input_avref_type);
+    fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, have type_enum_to_string[input_avref_type] = %s\n", type_enum_to_string[input_avref_type]);
+
     fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, have __func__ = %s\n", __func__);
     fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, have sv_dump(input_avref) =\n");
     sv_dump(input_avref);
@@ -356,7 +405,7 @@ SV* arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_leve
 
         // DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
         // perform dynamic dispatch based on type argument, received from named subroutines such as integer_arrayref_to_string*(), number_arrayref_to_string*(), etc.
-        DYNAMIC_arrayref_CHECKTRACE(input_avref, "input_avref", __func__, (type_enum)input_avref_type);
+        DYNAMIC_arrayref_CHECKTRACE(input_avref, "input_avref", __func__, input_avref_type);
         CHECK_done = 1;
 
         fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, checkpoint 000b\n");
@@ -394,7 +443,8 @@ SV* arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_leve
         fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, checkpoint 001f\n");
     }
 
-    // no type argument provided; and SV is not a blessed reference, or SV is a blessed reference w/ unrecognized TYPE_ERROR
+    // no type argument provided; and SV is not a blessed reference, or SV is a blessed reference w/ unrecognized TYPE_ERROR;
+    // use data type of 0th element to determine type of entire arrayref
     if (!(CHECK_done)) {
 
 
@@ -434,10 +484,12 @@ SV* arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_leve
         fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, checkpoint 002g\n");
 
         DYNAMIC_arrayref_CHECKTRACE(input_avref, "input_avref", __func__, 
-            type_fast_enum__upgrade_integer_to_number(
-                *input_av_element_TMP
-            )
-        );  // find type of 0th element of arrayref
+            scalar_to_arrayref_type_enum(
+                type_fast_enum__upgrade_integer_to_number(
+                    *input_av_element_TMP
+                )
+            ) 
+        );  // find type of 0th element of arrayref, convert from scalar to arrayref type_enum
 
     }
 

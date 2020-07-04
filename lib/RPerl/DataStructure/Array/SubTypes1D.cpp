@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  //using std::to_string;  // NEED DELETE, PRE-TEMPLATE C++
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp 0.023_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp 0.024_000
 
 #include <RPerl/DataStructure/Array/SubTypes1D.h>  // -> ??? (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
@@ -771,49 +771,62 @@ SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
 
 // DYNAMIC DISPATCH: call TEMPLATE_arrayref_to_string_compact(), passing input_avref via DYNAMIC XS_unpack_*_arrayref()
 string arrayref_to_string_compact(SV* input_avref, ...) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_compact(integer_arrayref), about to call TEMPLATE_arrayref_to_string_compact() & return value...\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_compact(input_avref), top of subroutine\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_compact(input_avref), have sv_dump(input_avref) =\n");
+    sv_dump(input_avref);
+
     return "NEED CODE HERE!!!";
 };
 
 // DYNAMIC DISPATCH: call TEMPLATE_arrayref_to_string(), passing input_avref via DYNAMIC XS_unpack_*_arrayref()
 string arrayref_to_string(SV* input_avref, ...) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(integer_arrayref), top of subroutine\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(input_avref), top of subroutine\n");
 
-    dXSARGS;  // creates a variable 'items' that contains a parameter count
-    if (items > 1) { croak("ERROR EDD320: DYNAMIC DISPATCH; Too many arguments in call to function " + __func__ + ", croaking"); }
+    dXSARGS;  // creates a variable 'items' containing a parameter count
+    // NEED ANSWER: do we still need to check for (items < 1), because explicit declaration of argument input_avref tells C++ what to expect but does not tell Perl what to pass?
+    if (items < 1) { croak("ERROR EDD320: DYNAMIC DISPATCH; Too few arguments in call to function ", __func__, ", croaking"); }
+    if (items > 1) { croak("ERROR EDD321: DYNAMIC DISPATCH; Too many arguments in call to function ", __func__, ", croaking"); }
 
     // NEED ANSWER: is this line necessary, since input_avref is declared in the function header?
     input_avref = ST(0);
 
     // determine input_avref type
-    enum_type input_avref_type = type_fast_enum(input_avref);
+    type_enum input_avref_type = type_fast_enum(input_avref);
 
-    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(integer_arrayref), about to call TEMPLATE_arrayref_to_string() & return value...\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(input_avref), about to call TEMPLATE_arrayref_to_string() & return value...\n");
 
     // DYNAMIC DISPATCH based on input_avref_type
     switch (input_avref_type) {
         case TYPE_integer_arrayref: return TEMPLATE_arrayref_to_string(XS_unpack_integer_arrayref(input_avref));
         case TYPE_number_arrayref:  return TEMPLATE_arrayref_to_string(XS_unpack_number_arrayref( input_avref));
         case TYPE_string_arrayref:  return TEMPLATE_arrayref_to_string(XS_unpack_string_arrayref( input_avref));
-        default: croak("ERROR EDD321: DYNAMIC DISPATCH; Unrecognized or invalid input_avref_type = " + input_avref_type + ", croaking");
+        default: croak("ERROR EDD322: DYNAMIC DISPATCH; Unrecognized or invalid input_avref_type = ", input_avref_type, ", croaking");
     }
+
+    return "ERROR EDD322";
 };
 
 string arrayref_to_string_pretty(SV* input_avref, ...) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_pretty(integer_arrayref), about to call TEMPLATE_arrayref_to_string_pretty() & return value...\n");
-//    return TEMPLATE_arrayref_to_string_pretty(input_vector);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_pretty(input_avref), top of subroutine\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_pretty(input_avref), have sv_dump(input_avref) =\n");
+    sv_dump(input_avref);
+
     return "NEED CODE HERE!!!";
 };
 
 string arrayref_to_string_extend(SV* input_avref, ...) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_extend(integer_arrayref), about to call TEMPLATE_arrayref_to_string_extend() & return value...\n");
-//    return TEMPLATE_arrayref_to_string_extend(input_vector);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_extend(input_avref), top of subroutine\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_extend(input_avref), have sv_dump(input_avref) =\n");
+    sv_dump(input_avref);
+
     return "NEED CODE HERE!!!";
 };
 
 string arrayref_to_string_format(SV* input_avref, ...) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_format(integer_arrayref), about to call TEMPLATE_arrayref_to_string_format() & return value...\n");
-//    return TEMPLATE_arrayref_to_string_format(input_vector, format_level, indent_level);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_format(input_avref), top of subroutine\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_format(input_avref), have sv_dump(input_avref) =\n");
+    sv_dump(input_avref);
+
     return "NEED CODE HERE!!!";
 };
 

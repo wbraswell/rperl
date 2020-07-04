@@ -18,8 +18,8 @@ our $VERSION = 0.010_000;
 # [[[ INCLUDES ]]]
 use RPerl::Test;
 use Test::More tests => 247;
-#use Test::More tests => 155;  # TMP DEBUG PERLOPS_PERLTYPES & CPPOPS_PERLTYPES
-#use Test::More tests => 78;    # TMP DEBUG, ONE MODE ONLY
+#use Test::More tests => 168;  # TMP DEBUG PERLOPS_PERLTYPES & CPPOPS_PERLTYPES
+#use Test::More tests => 84;    # TMP DEBUG, ONE MODE ONLY
 use Test::Exception;
 use Test::Number::Delta;
 
