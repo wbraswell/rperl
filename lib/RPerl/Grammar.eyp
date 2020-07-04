@@ -6,7 +6,7 @@
     # [[[ HEADER ]]]
     use strict;
     use warnings;
-    our $VERSION = 0.023_100;
+    our $VERSION = 0.024_000;
 
     use Carp;
     use rperlrules;  # affirmative, it totally does
@@ -290,8 +290,17 @@ VariableDeclaration:     MY Type SCALAR_SYMBOL ';' | MY Type SCALAR_SYMBOL OP19_
 VariableModification:    Variable OP19_VARIABLE_ASSIGN SubExpressionOrInput | Variable OP19_VARIABLE_ASSIGN_BY SubExpression ;
 Scalar:                  ScalarLiteral         | ScalarVariable ;
 ScalarLiteral:           LITERAL_NUMBER | LITERAL_STRING ;
-ScalarVariable:          ScalarVariableOrSelf | ScalarVariableOrSelf VariableRetrievalArrow | ScalarVariableOrSelf VariableRetrievalArrow VariableRetrieval+ ;
-ScalarVariableOrSelf:    SCALAR_SYMBOL | SELF ;
+
+
+# VERY VERY FIRST, NEED DELETE: remove old ScalarVariable & ScalarVariableOrSelf, after ensuring all tests pass correctly
+# VERY VERY FIRST, NEED DELETE: remove old ScalarVariable & ScalarVariableOrSelf, after ensuring all tests pass correctly
+# VERY VERY FIRST, NEED DELETE: remove old ScalarVariable & ScalarVariableOrSelf, after ensuring all tests pass correctly
+
+#ScalarVariable:          ScalarVariableOrSelf | ScalarVariableOrSelf VariableRetrievalArrow | ScalarVariableOrSelf VariableRetrievalArrow VariableRetrieval+ ;
+ScalarVariable:          SCALAR_SYMBOL | SCALAR_SYMBOL VariableRetrieval+ | SELF | SELF VariableRetrievalArrow | SELF VariableRetrievalArrow VariableRetrieval+ ;
+#ScalarVariableOrSelf:    SCALAR_SYMBOL | SELF ;
+
+
 ArrayHashLiteral:        LPAREN ArrayHashLiteralEs ')' ;
 ArrayHashLiteralEs:      ArrayHashLiteralE (OP21_LIST_COMMA ArrayHashLiteralE)* ;
 ArrayLiteralEs:          ArrayLiteralE     (OP21_LIST_COMMA ArrayLiteralE)* ;

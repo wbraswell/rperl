@@ -780,7 +780,7 @@ string arrayref_to_string_compact(SV* input_avref, ...) {
 
 // DYNAMIC DISPATCH: call TEMPLATE_arrayref_to_string(), passing input_avref via DYNAMIC XS_unpack_*_arrayref()
 string arrayref_to_string(SV* input_avref, ...) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(input_avref), top of subroutine\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(), top of subroutine\n");
 
     dXSARGS;  // creates a variable 'items' containing a parameter count
     // NEED ANSWER: do we still need to check for (items < 1), because explicit declaration of argument input_avref tells C++ what to expect but does not tell Perl what to pass?
@@ -793,7 +793,7 @@ string arrayref_to_string(SV* input_avref, ...) {
     // determine input_avref type
     type_enum input_avref_type = type_fast_enum(input_avref);
 
-    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(input_avref), about to call TEMPLATE_arrayref_to_string() & return value...\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(), about to call TEMPLATE_arrayref_to_string() & return value...\n");
 
     // DYNAMIC DISPATCH based on input_avref_type
     switch (input_avref_type) {

@@ -159,7 +159,10 @@ type_enum arrayref_to_scalar_type_enum(type_enum arrayref_type) {
 
 // a short-circuited, non-recursive version of type() subroutine
 SV* type_fast(SV* variable) {
-    if (NOT_DEFINED(variable))    { return newSVpv("void", 0); }
+
+    // DEV NOTE, CORRELATION #rp322: only subroutines/functions can have a void return value; variables can not be type void; no such types as void_arrayref, void_hashref, etc
+//    if (NOT_DEFINED(variable))    { return newSVpv("void", 0); }
+    if (NOT_DEFINED(variable))    { return newSVpv("unknown", 0); }
 
     // DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
     // do NOT report non-core types boolean, unsigned_integer, char, etc.
@@ -189,7 +192,9 @@ type_enum type_fast_enum(SV* variable) {
     struct timeval current_time;  gettimeofday(&current_time, NULL);
     fprintf(stderr, "in CPPOPS_PERLTYPES & CPPOPS_CPPTYPES type_fast_enum(), have current_time seconds = %ld, micro seconds = %ld\n", current_time.tv_sec, current_time.tv_usec);
 
-    if (NOT_DEFINED(variable))    { return TYPE_void; }
+    // DEV NOTE, CORRELATION #rp322: only subroutines/functions can have a void return value; variables can not be type void; no such types as void_arrayref, void_hashref, etc
+//    if (NOT_DEFINED(variable))    { return TYPE_void; }
+    if (NOT_DEFINED(variable))    { return TYPE_unknown; }
 
     // DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
     // do NOT report non-core types boolean, unsigned_integer, char, etc.

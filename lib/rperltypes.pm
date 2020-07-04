@@ -5,7 +5,7 @@ package  # hide from PAUSE indexing
 use strict;
 use warnings;
 use RPerl::Config;
-our $VERSION = 0.017_000;
+our $VERSION = 0.018_000;
 
 # NEED UPGRADE: create GrammarComponents
 #use parent qw(RPerl::GrammarComponent)
@@ -289,7 +289,10 @@ my $type_enum = [
 sub type_fast {
     { my string $RETURN_TYPE };
     ( my unknown $variable ) = @ARG;
-    if ( not defined $variable ) { return 'void'; }
+
+    # DEV NOTE, CORRELATION #rp322: only subroutines/functions can have a void return value; variables can not be type void; no such types as void_arrayref, void_hashref, etc
+#    if ( not defined $variable ) { return 'void'; }
+    if ( not defined $variable ) { return 'unknown'; }
 
     # DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
     # do NOT report non-core types boolean, unsigned_integer, char, etc.
@@ -308,7 +311,9 @@ sub type_fast_enum {
     RPerl::diag("in rperltypes::type_fast_enum(), top of subroutine\n");
     RPerl::diag('in rperltypes::type_fast_enum(), received $variable = ' . $variable . "\n");
 
-    if (not defined($variable))      { return TYPE_void(); }
+    # DEV NOTE, CORRELATION #rp322: only subroutines/functions can have a void return value; variables can not be type void; no such types as void_arrayref, void_hashref, etc
+#    if (not defined($variable))      { return TYPE_void(); }
+    if (not defined($variable))      { return TYPE_unknown(); }
 
     # DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
     # do NOT report non-core types boolean, unsigned_integer, char, etc.
@@ -326,14 +331,21 @@ sub type_fast_enum__upgrade_integer_to_number {
     ( my unknown $variable ) = @ARG;
     RPerl::diag("in rperltypes::type_fast_enum__upgrade_integer_to_number(), top of subroutine\n");
 
-    my type_enum $retval = type_fast_enum($variable);
-    if ($retval == TYPE_integer()) {
+    my type_enum $variable_type = type_fast_enum($variable);
+    if ($variable_type == TYPE_integer()) {
         RPerl::diag("in rperltypes::type_fast_enum__upgrade_integer_to_number(), YES UPGRADE\n");
         return TYPE_number();
     }
+    elsif ($variable_type == TYPE_integer_arrayref()) {
+        return TYPE_number_arrayref();
+    }
+# NEED ENABLE, hashref types
+#    elsif ($variable_type == TYPE_integer_hashref()) {
+#        return TYPE_number_hashref();
+#    }
 
     RPerl::diag("in rperltypes::type_fast_enum__upgrade_integer_to_number(), NO UPGRADE\n");
-    return $retval;
+    return $variable_type;
 }
 
 
@@ -341,7 +353,11 @@ sub type_fast_enum__upgrade_integer_to_number {
 sub type {
     { my string $RETURN_TYPE };
     ( my unknown $variable, my integer $recurse_level ) = @ARG;
-    if ( not defined $variable ) { return 'void'; }
+
+    # DEV NOTE, CORRELATION #rp322: only subroutines/functions can have a void return value; variables can not be type void; no such types as void_arrayref, void_hashref, etc
+#    if ( not defined $variable ) { return 'void'; }
+    if ( not defined $variable ) { return 'unknown'; }
+
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
 #    RPerl::diag('in rperltypes::type(), have $is_type = ' . Dumper($is_type) . "\n");
@@ -362,7 +378,11 @@ sub type {
 sub types {
     { my string_hashref $RETURN_TYPE };
     ( my unknown $variable, my integer $recurse_level ) = @ARG;
-    if ( not defined $variable ) { return 'void'; }
+ 
+    # DEV NOTE, CORRELATION #rp322: only subroutines/functions can have a void return value; variables can not be type void; no such types as void_arrayref, void_hashref, etc
+#    if ( not defined $variable ) { return 'void'; }
+    if ( not defined $variable ) { return 'unknown'; }
+
     if ( not defined $recurse_level ) { $recurse_level = 10; }    # default to limited recursion
     my integer_hashref $is_type = build_is_type($variable);
     # DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
@@ -422,7 +442,11 @@ sub types_recurse {
 
     # DEV NOTE, CORRELATION #rp025: only report core types integer, number, string, arrayref, hashref, object;
     # do NOT report non-core types boolean, unsigned_integer, character, etc.
-    if    ( not defined $variable ) { $type = 'void'; }
+
+    # DEV NOTE, CORRELATION #rp322: only subroutines/functions can have a void return value; variables can not be type void; no such types as void_arrayref, void_hashref, etc
+#    if    ( not defined $variable ) { $type = 'void'; }
+    if    ( not defined $variable ) { $type = 'unknown'; }
+    
     elsif ( $is_type->{integer} )   { $type = 'integer'; }
     elsif ( $is_type->{number} )    { $type = 'number'; }
     elsif ( $is_type->{string} )    { $type = 'string'; }
