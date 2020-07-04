@@ -233,28 +233,69 @@ sub class {
 
 # DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
 use constant {
-    TYPE_void             => 0,
-#   TYPE_boolean          => x,
-#   TYPE_unsigned_integer => x,
-    TYPE_integer          => 1,
-    TYPE_number           => 2,
-#   TYPE_character        => x,
-    TYPE_string           => 3,
-#   TYPE_scalar           => x,
-    TYPE_unknown          => 4
+    TYPE_COUNT_MIN  => -4,
+    TYPE_NONE       => -3,
+    TYPE_ERROR      => -2,
+
+    TYPE_COUNT_SCALAR_BEFORE    => -1,
+    TYPE_void                   => 0,
+#   TYPE_boolean                => x,
+#   TYPE_unsigned_integer       => x,
+    TYPE_integer                => 1,
+    TYPE_number                 => 2,
+#   TYPE_character              => x,
+    TYPE_string                 => 3,
+#   TYPE_scalar                 => x,
+    TYPE_unknown                => 4,
+    TYPE_COUNT_SCALAR_AFTER     => 5,
+
+    TYPE_COUNT_ARRAYREF_BEFORE      => 6,
+    TYPE_arrayref                   => 7,
+#   TYPE_boolean_arrayref           => x,
+#   TYPE_unsigned_integer_arrayref  => x,
+    TYPE_integer_arrayref           => 8,
+    TYPE_number_arrayref            => 9,
+#   TYPE_character_arrayref         => x,
+    TYPE_string_arrayref            => 10,
+#   TYPE_scalar_arrayref            => x,
+    TYPE_unknown_arrayref           => 11,
+    TYPE_COUNT_ARRAYREF_AFTER       => 12,
+
+    TYPE_COUNT_MAX                  => 13
 };
+
 
 # DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
 my string_hashref $string_to_type_enum = {
-    TYPE_void             => 0,
-#   TYPE_boolean          => x,
-#   TYPE_unsigned_integer => x,
-    TYPE_integer          => 1,
-    TYPE_number           => 2,
-#   TYPE_character        => x,
-    TYPE_string           => 3,
-#   TYPE_scalar           => x,
-    TYPE_unknown          => 4
+    TYPE_COUNT_MIN  => -4,
+    TYPE_NONE       => -3,
+    TYPE_ERROR      => -2,
+
+    TYPE_COUNT_SCALAR_BEFORE    => -1,
+    TYPE_void                   => 0,
+#   TYPE_boolean                => x,
+#   TYPE_unsigned_integer       => x,
+    TYPE_integer                => 1,
+    TYPE_number                 => 2,
+#   TYPE_character              => x,
+    TYPE_string                 => 3,
+#   TYPE_scalar                 => x,
+    TYPE_unknown                => 4,
+    TYPE_COUNT_SCALAR_AFTER     => 5,
+
+    TYPE_COUNT_ARRAYREF_BEFORE      => 6,
+    TYPE_arrayref                   => 7,
+#   TYPE_boolean_arrayref           => x,
+#   TYPE_unsigned_integer_arrayref  => x,
+    TYPE_integer_arrayref           => 8,
+    TYPE_number_arrayref            => 9,
+#   TYPE_character_arrayref         => x,
+    TYPE_string_arrayref            => 10,
+#   TYPE_scalar_arrayref            => x,
+    TYPE_unknown_arrayref           => 11,
+    TYPE_COUNT_ARRAYREF_AFTER       => 12,
+
+    TYPE_COUNT_MAX                  => 13
 };
 
 # DEV NOTE, CORRELATION #rp321, DYNAMIC DISPATCH: list order must match exactly between LIST_OF_TYPES_SCALAR & LIST_OF_TYPES_ARRAYREF & LIST_OF_TYPES_HASHREF
@@ -268,6 +309,21 @@ my string_arrayref $type_enum_to_string = [ qw(
     TYPE_string
 
     TYPE_unknown
+    TYPE_COUNT_SCALAR_AFTER
+
+    TYPE_COUNT_ARRAYREF_BEFORE
+    TYPE_arrayref
+
+
+    TYPE_integer_arrayref
+    TYPE_number_arrayref
+
+    TYPE_string_arrayref
+
+    TYPE_unknown_arrayref
+    TYPE_COUNT_ARRAYREF_AFTER
+
+    TYPE_COUNT_MAX
 )];
 
 =NEED DELETE, UNUSED???

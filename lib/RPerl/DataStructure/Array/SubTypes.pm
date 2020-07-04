@@ -116,11 +116,11 @@ my $TYPED_arrayref_to_string_format = [
 
 sub DYNAMIC_arrayref_to_string_format {
     { my string $RETURN_TYPE };
-    ( my arrayref $input_avref, my integer $format_level, my integer $indent_level, my boolean $is_reference, my type_enum $input_avref_type) = @ARG;
-    RPerl::diag('in PERLOPS_PERLTYPES DYNAMIC_arrayref_to_string_format(), received $input_avref_type = ', $input_avref_type, "\n");
-#    RPerl::diag('in PERLOPS_PERLTYPES DYNAMIC_arrayref_to_string_format(), have $main::string_to_type_enum->{$input_avref_type} = ', $main::string_to_type_enum->{$input_avref_type}, "\n");  # DOES NOT WORK: string_to_type_enum() is in rperltypes, rperltypes uses this file, not vice-versa
+    ( my arrayref $input_avref, my integer $format_level, my integer $indent_level, my boolean $is_reference, my type_enum $input_avref_element_type) = @ARG;
+    RPerl::diag('in PERLOPS_PERLTYPES DYNAMIC_arrayref_to_string_format(), received $input_avref_element_type = ', $input_avref_element_type, "\n");
+#    RPerl::diag('in PERLOPS_PERLTYPES DYNAMIC_arrayref_to_string_format(), have $main::string_to_type_enum->{$input_avref_element_type} = ', $main::string_to_type_enum->{$input_avref_element_type}, "\n");  # DOES NOT WORK: string_to_type_enum() is in rperltypes, rperltypes uses this file, not vice-versa
 
-    return &{$TYPED_arrayref_to_string_format->[$input_avref_type]}($input_avref, $format_level, $indent_level, $is_reference);
+    return &{$TYPED_arrayref_to_string_format->[$input_avref_element_type]}($input_avref, $format_level, $indent_level, $is_reference);
 }
 
 # call DYNAMIC stringify routine, format level -2 (compact), indent level 0, is reference 1 (true)
