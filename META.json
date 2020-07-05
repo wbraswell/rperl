@@ -85,10 +85,11 @@
             "Module::Refresh" : "0.17",
             "Module::ScanDeps" : "1.19",
             "MongoDB" : "v1.8.0",
+            "PPI" : "1.242",
             "PadWalker" : "2.1",
             "Parse::Eyapp" : "1.21",
             "Perl::Critic" : "1.121",
-            "Perl::Tidy" : "20140711",
+            "Perl::Tidy" : "20191203",
             "Pod::PseudoPod" : "0.18",
             "Test2::Suite" : "0.000069",
             "Test::CPAN::Changes" : "0.400002",
@@ -96,7 +97,7 @@
             "Test::Number::Delta" : "1.06",
             "Text::ASCIITable" : "0.20",
             "Time::HiRes" : "1.9726",
-            "perl" : "5.010000"
+            "perl" : "5.012000"
          }
       }
    },
@@ -116,6 +117,6 @@
       },
       "x_IRC" : "irc://irc.perl.org/#perl11"
    },
-   "version" : "5.002000",
+   "version" : "7.000000",
    "x_serialization_backend" : "JSON::PP version 2.27300"
 }

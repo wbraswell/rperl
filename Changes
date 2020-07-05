@@ -1,5 +1,17 @@
 Revision history for Perl compiler RPerl.
 
+7.000000 2020-07-04 Codename Nova
+
+    - HOLIDAY EDITION: Happy Independence Day!
+    - Arrays & Hashes By Value, Grammar Update
+    - Dynamic Dispatch, Array Types, PERLOPS_PERLTYPES & CPPOPS_PERLTYPES & CPPOPS_CPPTYPES
+
+6.000000 2020-12-25 Codename Vapor
+
+    - HOLIDAY EDITION: Merry Christmas??? (They Never Said Which One!)
+    - Not An Actual Release
+    - Skipped To Align With New Perl v7 Version Numbering
+
 5.002000 2019-11-28 Codename Skylab 2
 
     - HOLIDAY EDITION: Happy Thanksgiving!
