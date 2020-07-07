@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.011_000;
+our $VERSION = 0.011_100;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -567,16 +567,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         "/EPVAVRV03.*$mode_tagline/",
         q{TPVAVRV14 string_arrayref_to_string([ 'Superman', 'Batman', {a_subkey => 'Wonder Woman'}, ..., 'Martian Manhunter' ]) throws correct exception}
     );
-
-
-
-
-
-
-
-
-
-
     lives_and(                                                                # TPVAVRV20
         sub {
             is( string_arrayref_to_string(
@@ -588,11 +578,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TPVAVRV20 string_arrayref_to_string([ 'Howard The Duck' ]) lives}
     );
-
-
-
-
-
     lives_and(  # TPVAVRV21a
         sub {
             is(              string_arrayref_to_string( [ 'Howard The Duck', 'Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter' ] ),
@@ -647,14 +632,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
                 q{TPVAVRV21f        arrayref_to_string( bless [ 'Howard The Duck', 'Superman', 'Batman', 'Wonder Woman', ..., 'Martian Manhunter' ], 'string_arrayref' ) lives}
     );
-
-
-
-
-
-
-
-
     lives_and(                                                                # TPVAVRV22
         sub {
             is( string_arrayref_to_string( [ 'Superman', 'Martian Manhunter', 'undef' ] ),

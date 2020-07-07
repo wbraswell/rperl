@@ -10,6 +10,12 @@ using std::cout;  using std::cerr;  using std::endl;  //using std::to_string;  /
 
 
 
+// VERY VERY VERY VERY VERY: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
+// VERY VERY VERY VERY VERY: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
+// VERY VERY VERY VERY VERY: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
+
+
+
 // DYNAMIC DISPATCH aka MULTIPLE DISPATCH
 // https://en.wikipedia.org/wiki/Multiple_dispatch#Emulating_multiple_dispatch
 
@@ -80,12 +86,12 @@ typedef enum {
 #define X(name) #name,
 char const * const type_enum_to_string_NEGATIVES[] = { 
     X(TYPE_COUNT_MIN)
-    LIST_OF_TYPES_NEGATIVE
+      LIST_OF_TYPES_NEGATIVE
     X(TYPE_COUNT_SCALAR_BEFORE)
-    LIST_OF_TYPES_SCALAR
+      LIST_OF_TYPES_SCALAR
     X(TYPE_COUNT_SCALAR_AFTER)
     X(TYPE_COUNT_ARRAYREF_BEFORE)
-    LIST_OF_TYPES_ARRAYREF
+      LIST_OF_TYPES_ARRAYREF
     X(TYPE_COUNT_ARRAYREF_AFTER)
     X(TYPE_COUNT_MAX)
 };

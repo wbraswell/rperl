@@ -171,6 +171,15 @@ boolean string_arrayref_CHECKTRACE(SV* possible_string_arrayref, const char* var
 
 # ifdef __CPP__TYPES
 
+
+
+
+// VERY x 4: create TEMPLATE XS_*pack_arrayref(), disable type-specific code in XS_*pack_*_arrayref() and replace w/ wrapper calls to TEMPLATE XS_*pack_arrayref()
+// VERY x 4: create TEMPLATE XS_*pack_arrayref(), disable type-specific code in XS_*pack_*_arrayref() and replace w/ wrapper calls to TEMPLATE XS_*pack_arrayref()
+// VERY x 4: create TEMPLATE XS_*pack_arrayref(), disable type-specific code in XS_*pack_*_arrayref() and replace w/ wrapper calls to TEMPLATE XS_*pack_arrayref()
+
+
+
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to (C++ std::vector of integers)
 integer_arrayref XS_unpack_integer_arrayref(SV* input_avref)
 {
@@ -423,7 +432,7 @@ SV* integer_arrayref_to_string_expand(SV* input_avref) {
 //void integer_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level)
 SV* integer_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level)
 {
-//* NEED DELETE, PRE-TEMPLATE C++
+/* NEED DELETE, PRE-TEMPLATE C++
 //  Inline_Stack_Vars;
 //define Inline_Stack_Vars  dXSARGS  // from INLINE.h
 //  dXSARGS;
@@ -508,7 +517,7 @@ SV* integer_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* ind
 //  Inline_Stack_Return(1);
 //define Inline_Stack_Return(x) XSRETURN(x)  // from INLINE.h
 //  XSRETURN(1);
-// */
+*/
 
     fprintf(stderr, "in CPPOPS_PERLTYPES integer_arrayref_to_string_format(), about to call arrayref_to_string_format() DYNAMIC DISPATCH & return value...\n");
     return arrayref_to_string_format(input_avref, format_level, indent_level, TYPE_integer_arrayref);
@@ -663,7 +672,7 @@ SV* string_arrayref_to_string_expand(SV* input_avref) {
 // convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing PVs))) to Perl-parsable (Perl SV containing PV)
 SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level)
 {
-//* NEED DELETE, PRE-TEMPLATE C++
+/* NEED DELETE, PRE-TEMPLATE C++
 //  fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref_to_string(), top of subroutine\n");
 //  string_arrayref_CHECK(input_avref);
     string_arrayref_CHECKTRACE(input_avref, "input_avref", "string_arrayref_to_string()");
@@ -746,7 +755,7 @@ SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
 //  fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref_to_string(), bottom of subroutine\n");
 
     return(output_sv);
-//*/
+*/
 
     fprintf(stderr, "in CPPOPS_PERLTYPES string_arrayref_to_string_format(), about to call arrayref_to_string_format() DYNAMIC DISPATCH & return value...\n");
     return arrayref_to_string_format(input_avref, format_level, indent_level, TYPE_string_arrayref);
@@ -763,6 +772,10 @@ SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
 // VERY x 7: rename TEMPLATE_arrayref_to_string*() to arrayref_to_string*() so it can be called directly from compiled C++ again, will be ignored by Inline::CPP due to use of C++ templates
 // VERY x 7: rename TEMPLATE_arrayref_to_string*() to arrayref_to_string*() so it can be called directly from compiled C++ again, will be ignored by Inline::CPP due to use of C++ templates
 
+
+// VERY x 6: finish DYNAMIC arrayref_to_string_*() functions below
+// VERY x 6: finish DYNAMIC arrayref_to_string_*() functions below
+// VERY x 6: finish DYNAMIC arrayref_to_string_*() functions below
 
 
 // DEV NOTE, CORRELATION #rp320: create DYNAMIC DISPATCH wrappers for TEMPLATE_arrayref_to_string*(), because Inline::CPP does not create Perl bindings for TEMPLATE functions
@@ -787,13 +800,30 @@ string arrayref_to_string(SV* input_avref, ...) {
     if (items < 1) { croak("ERROR EDD320: DYNAMIC DISPATCH; Too few arguments in call to function ", __func__, ", croaking"); }
     if (items > 1) { croak("ERROR EDD321: DYNAMIC DISPATCH; Too many arguments in call to function ", __func__, ", croaking"); }
 
-    // NEED ANSWER: is this line necessary, since input_avref is declared in the function header?
-    input_avref = ST(0);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(), before call to ST(0), received sv_dump(input_avref) =\n");
+    sv_dump(input_avref);
+
+    // this line does not appear to be necessary, since input_avref is declared in the function header
+//    input_avref = ST(0);
+
+//    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(), after call to ST(0), have sv_dump(input_avref) =\n");
+//    sv_dump(input_avref);
 
     // determine input_avref type
     type_enum input_avref_type = type_fast_enum(input_avref);
 
     fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(), about to call TEMPLATE_arrayref_to_string() & return value...\n");
+
+
+
+
+    // VERY x 4: collapse all 3 calls to XS_unpack_*_arrayref() below into one call to new TEMPLATE XS_unpack_arrayref()
+    // VERY x 4: collapse all 3 calls to XS_unpack_*_arrayref() below into one call to new TEMPLATE XS_unpack_arrayref()
+    // VERY x 4: collapse all 3 calls to XS_unpack_*_arrayref() below into one call to new TEMPLATE XS_unpack_arrayref()
+
+
+
+    // DEV NOTE: must use switch/case below instead of function reference dispatch table, because XS_unpack_*() each returns a different type, and dispatch tables require same return types
 
     // DYNAMIC DISPATCH based on input_avref_type
     switch (input_avref_type) {
