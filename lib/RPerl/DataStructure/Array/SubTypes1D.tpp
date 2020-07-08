@@ -357,7 +357,7 @@ void DYNAMIC_arrayref_CHECKTRACE(SV* input_avref,              const char* varia
 SV*         arrayref_to_string_compact(SV* input_avref);
 SV*         arrayref_to_string(SV* input_avref);
 SV*         arrayref_to_string_pretty(SV* input_avref);
-SV*         arrayref_to_string_extend(SV* input_avref);
+SV*         arrayref_to_string_expand(SV* input_avref);
 SV*         arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_level, type_enum input_avref_type);
 
 

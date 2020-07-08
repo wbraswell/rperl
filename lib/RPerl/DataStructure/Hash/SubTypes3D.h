@@ -184,17 +184,17 @@ void XS_pack_string_arrayref_hashref_hashref(SV* output_avref_hvref_hvref, strin
 SV* integer_arrayref_hashref_hashref_to_string_compact(SV* input_avref_hvref_hvref);
 SV* integer_arrayref_hashref_hashref_to_string(SV* input_avref_hvref_hvref);
 SV* integer_arrayref_hashref_hashref_to_string_pretty(SV* input_avref_hvref_hvref);
-SV* integer_arrayref_hashref_hashref_to_string_extend(SV* input_avref_hvref_hvref);
+SV* integer_arrayref_hashref_hashref_to_string_expand(SV* input_avref_hvref_hvref);
 SV* integer_arrayref_hashref_hashref_to_string_format(SV* input_avref_hvref_hvref, SV* format_level, SV* indent_level);
 SV* number_arrayref_hashref_hashref_to_string_compact(SV* input_avref_hvref_hvref);
 SV* number_arrayref_hashref_hashref_to_string(SV* input_avref_hvref_hvref);
 SV* number_arrayref_hashref_hashref_to_string_pretty(SV* input_avref_hvref_hvref);
-SV* number_arrayref_hashref_hashref_to_string_extend(SV* input_avref_hvref_hvref);
+SV* number_arrayref_hashref_hashref_to_string_expand(SV* input_avref_hvref_hvref);
 SV* number_arrayref_hashref_hashref_to_string_format(SV* input_avref_hvref_hvref, SV* format_level, SV* indent_level);
 SV* string_arrayref_hashref_hashref_to_string_compact(SV* input_avref_hvref_hvref);
 SV* string_arrayref_hashref_hashref_to_string(SV* input_avref_hvref_hvref);
 SV* string_arrayref_hashref_hashref_to_string_pretty(SV* input_avref_hvref_hvref);
-SV* string_arrayref_hashref_hashref_to_string_extend(SV* input_avref_hvref_hvref);
+SV* string_arrayref_hashref_hashref_to_string_expand(SV* input_avref_hvref_hvref);
 SV* string_arrayref_hashref_hashref_to_string_format(SV* input_avref_hvref_hvref, SV* format_level, SV* indent_level);
 
 // [[[ HASH REF ARRAY REF HASH REF ]]]

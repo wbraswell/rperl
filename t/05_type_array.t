@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.011_100;
+our $VERSION = 0.012_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -17,11 +17,12 @@ our $VERSION = 0.011_100;
 
 # [[[ INCLUDES ]]]
 use RPerl::Test;
-use Test::More tests => 280;
+use Test::More tests => 352;
 #use Test::More tests => xyz;  # TMP DEBUG PERLOPS_PERLTYPES & CPPOPS_PERLTYPES
 #use Test::More tests => xyz;  # TMP DEBUG, ONE MODE ONLY
 use Test::Exception;
 use Test::Number::Delta;
+use Time::HiRes qw(usleep);
 
 use RPerl::DataStructure::Array::SubTypes1D qw(integer_arrayref_typetest0 integer_arrayref_typetest1 number_arrayref_typetest0 number_arrayref_typetest1 string_arrayref_typetest0 string_arrayref_typetest1);
 
@@ -165,98 +166,445 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
         q{TIVAVRV20 integer_arrayref_to_string([ 23 ]) lives}
     );
-    lives_and(  # TIVAVRV21a
+
+
+
+
+    lives_and(  # TIVAVRV30a
+        sub {
+            is(              integer_arrayref_to_string_compact( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                                                                '[2,2_112,42,23,-877,-33,1_701]',
+                q{TIVAVRV30a integer_arrayref_to_string_compact( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV30a integer_arrayref_to_string_compact( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV30b
+        sub {
+            is(              integer_arrayref_to_string_compact( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                                                                                           '[2,2_112,42,23,-877,-33,1_701]',
+                q{TIVAVRV30b integer_arrayref_to_string_compact( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV30b integer_arrayref_to_string_compact( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV30c
+        sub {
+            is(              integer_arrayref_to_string_compact( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ),
+                                                                      '[2,2_112,42,23,-877,-33,1_701]',
+                q{TIVAVRV30c integer_arrayref_to_string_compact( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) returns correct value}
+            );
+        },
+                q{TIVAVRV30c integer_arrayref_to_string_compact( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+
+
+
+
+    lives_and(  # TIVAVRV31a
         sub {
             is(              integer_arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
                                                         '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
-                q{TIVAVRV21a integer_arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+                q{TIVAVRV31a integer_arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
             );
         },
-                q{TIVAVRV21a integer_arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+                q{TIVAVRV31a integer_arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
     );
-    lives_and(  # TIVAVRV21b
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV31b
         sub {
             is(              integer_arrayref_to_string( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
                                                                                    '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
-                q{TIVAVRV21b integer_arrayref_to_string( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+                q{TIVAVRV31b integer_arrayref_to_string( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
             );
         },
-                q{TIVAVRV21b integer_arrayref_to_string( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+                q{TIVAVRV31b integer_arrayref_to_string( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
     );
-    lives_and(  # TIVAVRV21c
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV31c
         sub {
             is(              integer_arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ),
                                                               '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
-                q{TIVAVRV21c integer_arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) returns correct value}
+                q{TIVAVRV31c integer_arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) returns correct value}
             );
         },
-                q{TIVAVRV21c integer_arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) lives}
+                q{TIVAVRV31c integer_arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) lives}
     );
-    lives_and(  # TIVAVRV21d, DYNAMIC DISPATCH
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+
+
+
+
+    lives_and(  # TIVAVRV32a
         sub {
-            is(                     arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+            is(              integer_arrayref_to_string_pretty( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                                                               '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TIVAVRV32a integer_arrayref_to_string_pretty( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV32a integer_arrayref_to_string_pretty( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV32b
+        sub {
+            is(              integer_arrayref_to_string_pretty( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                                                                                          '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TIVAVRV32b integer_arrayref_to_string_pretty( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV32b integer_arrayref_to_string_pretty( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV32c
+        sub {
+            is(              integer_arrayref_to_string_pretty( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ),
+                                                                     '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TIVAVRV32c integer_arrayref_to_string_pretty( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) returns correct value}
+            );
+        },
+                q{TIVAVRV32c integer_arrayref_to_string_pretty( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+
+
+
+
+    lives_and(  # TIVAVRV33a
+        sub {
+            is(              integer_arrayref_to_string_expand( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+'[
+    2,
+    2_112,
+    42,
+    23,
+    -877,
+    -33,
+    1_701
+]',
+                q{TIVAVRV33a integer_arrayref_to_string_expand( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV33a integer_arrayref_to_string_expand( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV33b
+        sub {
+            is(              integer_arrayref_to_string_expand( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+'[
+    2,
+    2_112,
+    42,
+    23,
+    -877,
+    -33,
+    1_701
+]',
+                q{TIVAVRV33b integer_arrayref_to_string_expand( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV33b integer_arrayref_to_string_expand( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV33c
+        sub {
+            is(              integer_arrayref_to_string_expand( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ),
+'[
+    2,
+    2_112,
+    42,
+    23,
+    -877,
+    -33,
+    1_701
+]',
+                q{TIVAVRV33c integer_arrayref_to_string_expand( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) returns correct value}
+            );
+        },
+                q{TIVAVRV33c integer_arrayref_to_string_expand( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+
+
+
+
+    lives_and(  # TIVAVRV34a
+        sub {
+            is(              integer_arrayref_to_string_format( [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 0, 0 ),
+                                                               '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TIVAVRV34a integer_arrayref_to_string_format( [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 0, 0 ) returns correct value}
+            );
+        },
+                q{TIVAVRV34a integer_arrayref_to_string_format( [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 0, 0 ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV34b
+        sub {
+            is(              integer_arrayref_to_string_format( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 0, 0 ),
+                                                                                          '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TIVAVRV34b integer_arrayref_to_string_format( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 0, 0 ) returns correct value}
+            );
+        },
+                q{TIVAVRV34b integer_arrayref_to_string_format( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 0, 0 ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV34c
+        sub {
+            is(              integer_arrayref_to_string_format( ( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ), 0, 0 ),
+                                                                       '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TIVAVRV34c integer_arrayref_to_string_format( ( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ), 0, 0 ) returns correct value}
+            );
+        },
+                q{TIVAVRV34c integer_arrayref_to_string_format( ( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ), 0, 0 ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+
+
+
+
+
+
+
+    lives_and(  # TIVAVRV40a, DYNAMIC DISPATCH
+        sub {
+            is(              arrayref_to_string_compact( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                                                        '[2,2_112,42,23,-877,-33,1_701]',
+                q{TIVAVRV40a arrayref_to_string_compact( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV40a arrayref_to_string_compact( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV40b, DYNAMIC DISPATCH
+        sub {
+            is(              arrayref_to_string_compact( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                                                                                   '[2,2_112,42,23,-877,-33,1_701]',
+                q{TIVAVRV40b arrayref_to_string_compact( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV40b arrayref_to_string_compact( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV40c, DYNAMIC DISPATCH
+        sub {
+            is(              arrayref_to_string_compact( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ),
+                                                              '[2,2_112,42,23,-877,-33,1_701]',
+                q{TIVAVRV40c arrayref_to_string_compact( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) returns correct value}
+            );
+        },
+                q{TIVAVRV40c arrayref_to_string_compact( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+
+
+
+    lives_and(  # TIVAVRV41a, DYNAMIC DISPATCH
+        sub {
+            is(              arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                                                '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TIVAVRV41a arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV41a arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV41b, DYNAMIC DISPATCH
+        sub {
+            is(              arrayref_to_string( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+                                                                           '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TIVAVRV41b arrayref_to_string( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV41b arrayref_to_string( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV41c, DYNAMIC DISPATCH
+        sub {
+            is(              arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ),
+                                                      '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TIVAVRV41c arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) returns correct value}
+            );
+        },
+                q{TIVAVRV41c arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+
+
+
+
+    lives_and(  # TIVAVRV42a, DYNAMIC DISPATCH
+        sub {
+            is(              arrayref_to_string_pretty( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
                                                        '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
-                q{TIVAVRV21d        arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+                q{TIVAVRV42a arrayref_to_string_pretty( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
             );
         },
-                q{TIVAVRV21d        arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+                q{TIVAVRV42a arrayref_to_string_pretty( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
     );
-    lives_and(  # TIVAVRV21e, DYNAMIC DISPATCH
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV42b, DYNAMIC DISPATCH
         sub {
-            is(                     arrayref_to_string( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+            is(              arrayref_to_string_pretty( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
                                                                                   '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
-                q{TIVAVRV21e        arrayref_to_string( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+                q{TIVAVRV42b arrayref_to_string_pretty( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
             );
         },
-                q{TIVAVRV21e        arrayref_to_string( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+                q{TIVAVRV42b arrayref_to_string_pretty( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
     );
-    lives_and(  # TIVAVRV21f, DYNAMIC DISPATCH
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV42c, DYNAMIC DISPATCH
         sub {
-            is(                     arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ),
+            is(              arrayref_to_string_pretty( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ),
                                                              '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
-                q{TIVAVRV21f        arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) returns correct value}
+                q{TIVAVRV42c arrayref_to_string_pretty( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) returns correct value}
             );
         },
-                q{TIVAVRV21f        arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) lives}
+                q{TIVAVRV42c arrayref_to_string_pretty( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) lives}
     );
-    throws_ok(                                                                 # TIVAVRV30
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+
+
+
+
+    lives_and(  # TIVAVRV43a, DYNAMIC DISPATCH
+        sub {
+            is(              arrayref_to_string_expand( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+'[
+    2,
+    2_112,
+    42,
+    23,
+    -877,
+    -33,
+    1_701
+]',
+                q{TIVAVRV43a arrayref_to_string_expand( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV43a arrayref_to_string_expand( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV43b, DYNAMIC DISPATCH
+        sub {
+            is(              arrayref_to_string_expand( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
+'[
+    2,
+    2_112,
+    42,
+    23,
+    -877,
+    -33,
+    1_701
+]',
+                q{TIVAVRV43b arrayref_to_string_expand( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV43b arrayref_to_string_expand( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV43c, DYNAMIC DISPATCH
+        sub {
+            is(              arrayref_to_string_expand( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ),
+'[
+    2,
+    2_112,
+    42,
+    23,
+    -877,
+    -33,
+    1_701
+]',
+                q{TIVAVRV43c arrayref_to_string_expand( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) returns correct value}
+            );
+        },
+                q{TIVAVRV43c arrayref_to_string_expand( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+
+
+
+
+
+    lives_and(  # TIVAVRV44a
+        sub {
+            is(              arrayref_to_string_format( [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 0, 0 ),
+                                                       '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TIVAVRV44a arrayref_to_string_format( [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 0, 0 ) returns correct value}
+            );
+        },
+                q{TIVAVRV44a arrayref_to_string_format( [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 0, 0 ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV44b
+        sub {
+            is(              arrayref_to_string_format( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 0, 0 ),
+                                                                                  '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TIVAVRV44b arrayref_to_string_format( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 0, 0 ) returns correct value}
+            );
+        },
+                q{TIVAVRV44b arrayref_to_string_format( my integer_arrayref $foo = [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 0, 0 ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+    lives_and(  # TIVAVRV44c
+        sub {
+            is(              arrayref_to_string_format( ( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ), 0, 0 ),
+                                                               '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]',
+                q{TIVAVRV44c arrayref_to_string_format( ( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ), 0, 0 ) returns correct value}
+            );
+        },
+                q{TIVAVRV44c arrayref_to_string_format( ( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ), 0, 0 ) lives}
+    );
+    usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
+
+
+
+
+
+
+
+
+
+    throws_ok(  # TIVAVRV50
         sub { integer_arrayref_typetest0() },
         "/(EIVAVRV00.*$mode_tagline)|(Usage.*integer_arrayref_typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C
-        q{TIVAVRV30 integer_arrayref_typetest0() throws correct exception}
+                q{TIVAVRV50 integer_arrayref_typetest0() throws correct exception}
     );
-    throws_ok(                                                                  # TIVAVRV31
+    throws_ok(  # TIVAVRV51
         sub { integer_arrayref_typetest0(2) },
         "/EIVAVRV01.*$mode_tagline/",
-        q{TIVAVRV31 integer_arrayref_typetest0(2) throws correct exception}
+                q{TIVAVRV51 integer_arrayref_typetest0(2) throws correct exception}
     );
-    throws_ok(                                                                  # TIVAVRV32
+    throws_ok(  # TIVAVRV52
         sub {
             integer_arrayref_typetest0( [ 2, 2_112, undef, 23, -877, -33, 1_701 ] );
         },
         "/EIVAVRV02.*$mode_tagline/",
-        q{TIVAVRV32 integer_arrayref_typetest0([ 2, 2_112, undef, 23, -877, -33, 1_701 ]) throws correct exception}
+                q{TIVAVRV52 integer_arrayref_typetest0([ 2, 2_112, undef, 23, -877, -33, 1_701 ]) throws correct exception}
     );
-    throws_ok(                                                                  # TIVAVRV33
+    throws_ok(  # TIVAVRV53
         sub {
             integer_arrayref_typetest0( [ 2, 2_112, 42, 'abcdefg', -877, -33, 1_701 ] );
         },
         "/EIVAVRV03.*$mode_tagline/",
-        q{TIVAVRV33 integer_arrayref_typetest0([ 2, 2_112, 42, 'abcdefg', -877, -33, 1_701 ]) throws correct exception}
+                q{TIVAVRV53 integer_arrayref_typetest0([ 2, 2_112, 42, 'abcdefg', -877, -33, 1_701 ]) throws correct exception}
     );
-    lives_and(                                                                  # TIVAVRV34
+    lives_and(  # TIVAVRV54
         sub {
             is( integer_arrayref_typetest0( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
                 '[ 2, 2_112, 42, 23, -877, -33, 1_701 ]' . $mode_tagline,
-                q{TIVAVRV34 integer_arrayref_typetest0([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) returns correct value}
+                q{TIVAVRV54 integer_arrayref_typetest0([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) returns correct value}
             );
         },
-        q{TIVAVRV34 integer_arrayref_typetest0([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) lives}
+                q{TIVAVRV54 integer_arrayref_typetest0([ 2, 2_112, 42, 23, -877, -33, 1_701 ]) lives}
     );
-    lives_and(                                                                  # TIVAVRV40
+    lives_and(  # TIVAVRV60
         sub {
-            is_deeply( integer_arrayref_typetest1(5), [ 0, 5, 10, 15, 20 ], q{TIVAVRV40 integer_arrayref_typetest1(5) returns correct value} );
+            is_deeply( integer_arrayref_typetest1(5), [ 0, 5, 10, 15, 20 ], 
+                q{TIVAVRV60 integer_arrayref_typetest1(5) returns correct value} );
         },
-        q{TIVAVRV40 integer_arrayref_typetest1(5) lives}
+                q{TIVAVRV60 integer_arrayref_typetest1(5) lives}
     );
 
     # [[[ NUMBER ARRAY TESTS ]]]

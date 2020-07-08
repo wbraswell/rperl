@@ -123,17 +123,17 @@ SV* string_hashref_hashref_to_string(SV* input_hvref_hvref);
 SV* integer_arrayref_hashref_to_string_compact(SV* input_avref_hvref);
 SV* integer_arrayref_hashref_to_string(SV* input_avref_hvref);
 SV* integer_arrayref_hashref_to_string_pretty(SV* input_avref_hvref);
-SV* integer_arrayref_hashref_to_string_extend(SV* input_avref_hvref);
+SV* integer_arrayref_hashref_to_string_expand(SV* input_avref_hvref);
 SV* integer_arrayref_hashref_to_string_format(SV* input_avref_hvref, SV* format_level, SV* indent_level);
 SV* number_arrayref_hashref_to_string_compact(SV* input_avref_hvref);
 SV* number_arrayref_hashref_to_string(SV* input_avref_hvref);
 SV* number_arrayref_hashref_to_string_pretty(SV* input_avref_hvref);
-SV* number_arrayref_hashref_to_string_extend(SV* input_avref_hvref);
+SV* number_arrayref_hashref_to_string_expand(SV* input_avref_hvref);
 SV* number_arrayref_hashref_to_string_format(SV* input_avref_hvref, SV* format_level, SV* indent_level);
 SV* string_arrayref_hashref_to_string_compact(SV* input_avref_hvref);
 SV* string_arrayref_hashref_to_string(SV* input_avref_hvref);
 SV* string_arrayref_hashref_to_string_pretty(SV* input_avref_hvref);
-SV* string_arrayref_hashref_to_string_extend(SV* input_avref_hvref);
+SV* string_arrayref_hashref_to_string_expand(SV* input_avref_hvref);
 SV* string_arrayref_hashref_to_string_format(SV* input_avref_hvref, SV* format_level, SV* indent_level);
 
 # elif defined __CPP__TYPES

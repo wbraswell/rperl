@@ -116,47 +116,47 @@ my $TYPED_arrayref_to_string_format = [
 
 sub DYNAMIC_arrayref_to_string_format {
     { my string $RETURN_TYPE };
-    ( my arrayref $input_avref, my integer $format_level, my integer $indent_level, my boolean $is_reference, my type_enum $input_avref_element_type) = @ARG;
+    ( my arrayref $input_avref, my integer $format_level, my integer $indent_level, my type_enum $input_avref_element_type) = @ARG;
     RPerl::diag('in PERLOPS_PERLTYPES DYNAMIC_arrayref_to_string_format(), received $input_avref_element_type = ', $input_avref_element_type, "\n");
 #    RPerl::diag('in PERLOPS_PERLTYPES DYNAMIC_arrayref_to_string_format(), have $main::string_to_type_enum->{$input_avref_element_type} = ', $main::string_to_type_enum->{$input_avref_element_type}, "\n");  # DOES NOT WORK: string_to_type_enum() is in rperltypes, rperltypes uses this file, not vice-versa
 
-    return &{$TYPED_arrayref_to_string_format->[$input_avref_element_type]}($input_avref, $format_level, $indent_level, $is_reference);
+    return &{$TYPED_arrayref_to_string_format->[$input_avref_element_type]}($input_avref, $format_level, $indent_level);
 }
 
-# call DYNAMIC stringify routine, format level -2 (compact), indent level 0, is reference 1 (true)
+# call DYNAMIC stringify routine, format level -2 (compact), indent level 0
 sub arrayref_to_string_compact {
     { my string $RETURN_TYPE };
     ( my arrayref $input_avref ) = @ARG;
     RPerl::diag("in PERLOPS_PERLTYPES arrayref_to_string_compact(), about to call DYNAMIC_arrayref_to_string_format() & return value\n");
 
-    return DYNAMIC_arrayref_to_string_format($input_avref, -2, 0, 1, main::type_fast_enum__upgrade_integer_to_number($input_avref->[0]));
+    return DYNAMIC_arrayref_to_string_format($input_avref, -2, 0, main::type_fast_enum__upgrade_integer_to_number($input_avref->[0]));
 }
 
-# call DYNAMIC stringify routine, format level -1 (normal), indent level 0, is reference 1 (true); DEFAULT
+# call DYNAMIC stringify routine, format level -1 (normal), indent level 0; DEFAULT
 sub arrayref_to_string {
     { my string $RETURN_TYPE };
     ( my arrayref $input_avref ) = @ARG;
     RPerl::diag("in PERLOPS_PERLTYPES arrayref_to_string(), about to call DYNAMIC_arrayref_to_string_format() & return value\n");
 
-    return DYNAMIC_arrayref_to_string_format($input_avref, -1, 0, 1, main::type_fast_enum__upgrade_integer_to_number($input_avref->[0]));
+    return DYNAMIC_arrayref_to_string_format($input_avref, -1, 0, main::type_fast_enum__upgrade_integer_to_number($input_avref->[0]));
 }
 
-# call DYNAMIC stringify routine, format level 0 (pretty), indent level 0, is reference 1 (true)
+# call DYNAMIC stringify routine, format level 0 (pretty), indent level 0
 sub arrayref_to_string_pretty {
     { my string $RETURN_TYPE };
     ( my arrayref $input_avref ) = @ARG;
     RPerl::diag("in PERLOPS_PERLTYPES arrayref_to_string_pretty(), about to call DYNAMIC_arrayref_to_string_format() & return value\n");
 
-    return DYNAMIC_arrayref_to_string_format($input_avref, 0, 0, 1, main::type_fast_enum__upgrade_integer_to_number($input_avref->[0]));
+    return DYNAMIC_arrayref_to_string_format($input_avref, 0, 0, main::type_fast_enum__upgrade_integer_to_number($input_avref->[0]));
 }
 
-# call DYNAMIC stringify routine, format level 1 (expand), indent level 0, is reference 1 (true)
+# call DYNAMIC stringify routine, format level 1 (expand), indent level 0
 sub arrayref_to_string_expand {
     { my string $RETURN_TYPE };
     ( my arrayref $input_avref ) = @ARG;
     RPerl::diag("in PERLOPS_PERLTYPES arrayref_to_string_expand(), about to call DYNAMIC_arrayref_to_string_format() & return value\n");
 
-    return DYNAMIC_arrayref_to_string_format($input_avref, 1, 0, 1, main::type_fast_enum__upgrade_integer_to_number($input_avref->[0]));
+    return DYNAMIC_arrayref_to_string_format($input_avref, 1, 0, main::type_fast_enum__upgrade_integer_to_number($input_avref->[0]));
 }
 
 # convert from (Perl SV containing RV to (Perl AV of (Perl SVs containing IVs))) to Perl-parsable (Perl SV containing PV)
@@ -170,7 +170,7 @@ sub arrayref_to_string_format {
 #    RPerl::diag('in PERLOPS_PERLTYPES arrayref_to_string_format(), received $indent_level = ', $indent_level, "\n");
     RPerl::diag("in PERLOPS_PERLTYPES arrayref_to_string_format(), about to call DYNAMIC_arrayref_to_string_format() & return value\n");
 
-    return DYNAMIC_arrayref_to_string_format($input_avref, $format_level, $indent_level, 1, main::type_fast_enum__upgrade_integer_to_number($input_avref->[0]));
+    return DYNAMIC_arrayref_to_string_format($input_avref, $format_level, $indent_level, main::type_fast_enum__upgrade_integer_to_number($input_avref->[0]));
 }
 
 1;  # end of package

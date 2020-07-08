@@ -1,7 +1,7 @@
 using std::cout;  using std::cerr;  using std::endl;  //using std::to_string;  // NEED DELETE, PRE-TEMPLATE C++
 
 #ifndef __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp
-#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp 0.024_000
+#define __CPP__INCLUDED__RPerl__DataStructure__Array__SubTypes1D_cpp 0.025_000
 
 #include <RPerl/DataStructure/Array/SubTypes1D.h>  // -> ??? (relies on <vector> being included via Inline::CPP's AUTO_INCLUDE config option in RPerl/Inline.pm)
 
@@ -773,10 +773,6 @@ SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
 // VERY x 7: rename TEMPLATE_arrayref_to_string*() to arrayref_to_string*() so it can be called directly from compiled C++ again, will be ignored by Inline::CPP due to use of C++ templates
 
 
-// VERY x 6: finish DYNAMIC arrayref_to_string_*() functions below
-// VERY x 6: finish DYNAMIC arrayref_to_string_*() functions below
-// VERY x 6: finish DYNAMIC arrayref_to_string_*() functions below
-
 
 // DEV NOTE, CORRELATION #rp320: create DYNAMIC DISPATCH wrappers for TEMPLATE_arrayref_to_string*(), because Inline::CPP does not create Perl bindings for TEMPLATE functions
 // use elipses to create dynamic dispatch functions which receive their arguments on the Perl stack instead of via the C stack
@@ -785,10 +781,31 @@ SV* string_arrayref_to_string_format(SV* input_avref, SV* format_level, SV* inde
 // DYNAMIC DISPATCH: call TEMPLATE_arrayref_to_string_compact(), passing input_avref via DYNAMIC XS_unpack_*_arrayref()
 string arrayref_to_string_compact(SV* input_avref, ...) {
     fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_compact(input_avref), top of subroutine\n");
-    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_compact(input_avref), have sv_dump(input_avref) =\n");
+
+    dXSARGS;  // creates a variable 'items' containing a parameter count
+    // NEED ANSWER: do we still need to check for (items < 1), because explicit declaration of argument input_avref tells C++ what to expect but does not tell Perl what to pass?
+    if (items < 1) { croak("ERROR EDD320a: DYNAMIC DISPATCH; Too few arguments in call to function ", __func__, ", croaking"); }
+    if (items > 1) { croak("ERROR EDD321a: DYNAMIC DISPATCH; Too many arguments in call to function ", __func__, ", croaking"); }
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_compact(), received sv_dump(input_avref) =\n");
     sv_dump(input_avref);
 
-    return "NEED CODE HERE!!!";
+    // determine input_avref type
+    type_enum input_avref_type = type_fast_enum(input_avref);
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_compact(), have input_avref_type = %d\n", input_avref_type);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_compact(), have type_enum_to_string[input_avref_type] = %s\n", type_enum_to_string[input_avref_type]);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_compact(), about to call TEMPLATE_arrayref_to_string() & return value...\n");
+
+    // DYNAMIC DISPATCH based on input_avref_type
+    switch (input_avref_type) {
+        case TYPE_integer_arrayref: return TEMPLATE_arrayref_to_string_compact(XS_unpack_integer_arrayref(input_avref));
+        case TYPE_number_arrayref:  return TEMPLATE_arrayref_to_string_compact(XS_unpack_number_arrayref( input_avref));
+        case TYPE_string_arrayref:  return TEMPLATE_arrayref_to_string_compact(XS_unpack_string_arrayref( input_avref));
+        default: croak("ERROR EDD322a: DYNAMIC DISPATCH; Unrecognized or invalid input_avref_type = ", input_avref_type, " in function ", __func__, ", croaking");
+    }
+
+    return "ERROR EDD322a";
 };
 
 // DYNAMIC DISPATCH: call TEMPLATE_arrayref_to_string(), passing input_avref via DYNAMIC XS_unpack_*_arrayref()
@@ -797,10 +814,10 @@ string arrayref_to_string(SV* input_avref, ...) {
 
     dXSARGS;  // creates a variable 'items' containing a parameter count
     // NEED ANSWER: do we still need to check for (items < 1), because explicit declaration of argument input_avref tells C++ what to expect but does not tell Perl what to pass?
-    if (items < 1) { croak("ERROR EDD320: DYNAMIC DISPATCH; Too few arguments in call to function ", __func__, ", croaking"); }
-    if (items > 1) { croak("ERROR EDD321: DYNAMIC DISPATCH; Too many arguments in call to function ", __func__, ", croaking"); }
+    if (items < 1) { croak("ERROR EDD320b: DYNAMIC DISPATCH; Too few arguments in call to function ", __func__, ", croaking"); }
+    if (items > 1) { croak("ERROR EDD321b: DYNAMIC DISPATCH; Too many arguments in call to function ", __func__, ", croaking"); }
 
-    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(), before call to ST(0), received sv_dump(input_avref) =\n");
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(), received sv_dump(input_avref) =\n");
     sv_dump(input_avref);
 
     // this line does not appear to be necessary, since input_avref is declared in the function header
@@ -812,14 +829,16 @@ string arrayref_to_string(SV* input_avref, ...) {
     // determine input_avref type
     type_enum input_avref_type = type_fast_enum(input_avref);
 
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(), have input_avref_type = %d\n", input_avref_type);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(), have type_enum_to_string[input_avref_type] = %s\n", type_enum_to_string[input_avref_type]);
     fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string(), about to call TEMPLATE_arrayref_to_string() & return value...\n");
 
 
 
 
-    // VERY x 4: collapse all 3 calls to XS_unpack_*_arrayref() below into one call to new TEMPLATE XS_unpack_arrayref()
-    // VERY x 4: collapse all 3 calls to XS_unpack_*_arrayref() below into one call to new TEMPLATE XS_unpack_arrayref()
-    // VERY x 4: collapse all 3 calls to XS_unpack_*_arrayref() below into one call to new TEMPLATE XS_unpack_arrayref()
+    // VERY x 4: combine all 3 calls to XS_unpack_*_arrayref() below into one call to new TEMPLATE XS_unpack_arrayref(); repeat for arrayref_to_string_*() functions
+    // VERY x 4: combine all 3 calls to XS_unpack_*_arrayref() below into one call to new TEMPLATE XS_unpack_arrayref(); repeat for arrayref_to_string_*() functions
+    // VERY x 4: combine all 3 calls to XS_unpack_*_arrayref() below into one call to new TEMPLATE XS_unpack_arrayref(); repeat for arrayref_to_string_*() functions
 
 
 
@@ -830,34 +849,109 @@ string arrayref_to_string(SV* input_avref, ...) {
         case TYPE_integer_arrayref: return TEMPLATE_arrayref_to_string(XS_unpack_integer_arrayref(input_avref));
         case TYPE_number_arrayref:  return TEMPLATE_arrayref_to_string(XS_unpack_number_arrayref( input_avref));
         case TYPE_string_arrayref:  return TEMPLATE_arrayref_to_string(XS_unpack_string_arrayref( input_avref));
-        default: croak("ERROR EDD322: DYNAMIC DISPATCH; Unrecognized or invalid input_avref_type = ", input_avref_type, ", croaking");
+        default: croak("ERROR EDD322b: DYNAMIC DISPATCH; Unrecognized or invalid input_avref_type = ", input_avref_type, " in function ", __func__, ", croaking");
     }
 
-    return "ERROR EDD322";
+    return "ERROR EDD322b";
 };
 
+// DYNAMIC DISPATCH: call TEMPLATE_arrayref_to_string_pretty(), passing input_avref via DYNAMIC XS_unpack_*_arrayref()
 string arrayref_to_string_pretty(SV* input_avref, ...) {
     fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_pretty(input_avref), top of subroutine\n");
-    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_pretty(input_avref), have sv_dump(input_avref) =\n");
+
+    dXSARGS;  // creates a variable 'items' containing a parameter count
+    // NEED ANSWER: do we still need to check for (items < 1), because explicit declaration of argument input_avref tells C++ what to expect but does not tell Perl what to pass?
+    if (items < 1) { croak("ERROR EDD320c: DYNAMIC DISPATCH; Too few arguments in call to function ", __func__, ", croaking"); }
+    if (items > 1) { croak("ERROR EDD321c: DYNAMIC DISPATCH; Too many arguments in call to function ", __func__, ", croaking"); }
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_pretty(), received sv_dump(input_avref) =\n");
     sv_dump(input_avref);
 
-    return "NEED CODE HERE!!!";
+    // determine input_avref type
+    type_enum input_avref_type = type_fast_enum(input_avref);
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_pretty(), have input_avref_type = %d\n", input_avref_type);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_pretty(), have type_enum_to_string[input_avref_type] = %s\n", type_enum_to_string[input_avref_type]);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_pretty(), about to call TEMPLATE_arrayref_to_string() & return value...\n");
+
+    // DYNAMIC DISPATCH based on input_avref_type
+    switch (input_avref_type) {
+        case TYPE_integer_arrayref: return TEMPLATE_arrayref_to_string_pretty(XS_unpack_integer_arrayref(input_avref));
+        case TYPE_number_arrayref:  return TEMPLATE_arrayref_to_string_pretty(XS_unpack_number_arrayref( input_avref));
+        case TYPE_string_arrayref:  return TEMPLATE_arrayref_to_string_pretty(XS_unpack_string_arrayref( input_avref));
+        default: croak("ERROR EDD322c: DYNAMIC DISPATCH; Unrecognized or invalid input_avref_type = ", input_avref_type, " in function ", __func__, ", croaking");
+    }
+
+    return "ERROR EDD322c";
 };
 
-string arrayref_to_string_extend(SV* input_avref, ...) {
-    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_extend(input_avref), top of subroutine\n");
-    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_extend(input_avref), have sv_dump(input_avref) =\n");
+
+// DYNAMIC DISPATCH: call TEMPLATE_arrayref_to_string_expand(), passing input_avref via DYNAMIC XS_unpack_*_arrayref()
+string arrayref_to_string_expand(SV* input_avref, ...) {
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_expand(input_avref), top of subroutine\n");
+
+    dXSARGS;  // creates a variable 'items' containing a parameter count
+    // NEED ANSWER: do we still need to check for (items < 1), because explicit declaration of argument input_avref tells C++ what to expect but does not tell Perl what to pass?
+    if (items < 1) { croak("ERROR EDD320d: DYNAMIC DISPATCH; Too few arguments in call to function ", __func__, ", croaking"); }
+    if (items > 1) { croak("ERROR EDD321d: DYNAMIC DISPATCH; Too many arguments in call to function ", __func__, ", croaking"); }
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_expand(), received sv_dump(input_avref) =\n");
     sv_dump(input_avref);
 
-    return "NEED CODE HERE!!!";
+    // determine input_avref type
+    type_enum input_avref_type = type_fast_enum(input_avref);
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_expand(), have input_avref_type = %d\n", input_avref_type);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_expand(), have type_enum_to_string[input_avref_type] = %s\n", type_enum_to_string[input_avref_type]);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_expand(), about to call TEMPLATE_arrayref_to_string() & return value...\n");
+
+    // DYNAMIC DISPATCH based on input_avref_type
+    switch (input_avref_type) {
+        case TYPE_integer_arrayref: return TEMPLATE_arrayref_to_string_expand(XS_unpack_integer_arrayref(input_avref));
+        case TYPE_number_arrayref:  return TEMPLATE_arrayref_to_string_expand(XS_unpack_number_arrayref( input_avref));
+        case TYPE_string_arrayref:  return TEMPLATE_arrayref_to_string_expand(XS_unpack_string_arrayref( input_avref));
+        default: croak("ERROR EDD322d: DYNAMIC DISPATCH; Unrecognized or invalid input_avref_type = ", input_avref_type, " in function ", __func__, ", croaking");
+    }
+
+    return "ERROR EDD322d";
 };
 
+
+// DYNAMIC DISPATCH: call TEMPLATE_arrayref_to_string_format(), passing input_avref via DYNAMIC XS_unpack_*_arrayref()
 string arrayref_to_string_format(SV* input_avref, ...) {
     fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_format(input_avref), top of subroutine\n");
-    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_format(input_avref), have sv_dump(input_avref) =\n");
-    sv_dump(input_avref);
 
-    return "NEED CODE HERE!!!";
+    dXSARGS;  // creates a variable 'items' containing a parameter count
+    // NEED ANSWER: do we still need to check for (items < 1), because explicit declaration of argument input_avref tells C++ what to expect but does not tell Perl what to pass?
+    if (items < 3) { croak("ERROR EDD320e: DYNAMIC DISPATCH; Too few arguments in call to function ", __func__, ", croaking"); }
+    if (items > 3) { croak("ERROR EDD321e: DYNAMIC DISPATCH; Too many arguments in call to function ", __func__, ", croaking"); }
+
+    // this line does not appear to be necessary, since input_avref is declared in the function header
+//    input_avref = ST(0);
+    integer format_level = SvIV(ST(1));
+    integer indent_level = SvIV(ST(2));
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_format(), received sv_dump(input_avref) =\n");
+    sv_dump(input_avref);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_format(), received format_level = %ld\n", format_level);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_format(), received indent_level = %ld\n", indent_level);
+
+    // determine input_avref type
+    type_enum input_avref_type = type_fast_enum(input_avref);
+
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_format(), have input_avref_type = %d\n", input_avref_type);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_format(), have type_enum_to_string[input_avref_type] = %s\n", type_enum_to_string[input_avref_type]);
+    fprintf(stderr, "in CPPOPS_CPPTYPES DYNAMIC arrayref_to_string_format(), about to call TEMPLATE_arrayref_to_string() & return value...\n");
+
+    // DYNAMIC DISPATCH based on input_avref_type
+    switch (input_avref_type) {
+        case TYPE_integer_arrayref: return TEMPLATE_arrayref_to_string_format(XS_unpack_integer_arrayref(input_avref), format_level, indent_level);
+        case TYPE_number_arrayref:  return TEMPLATE_arrayref_to_string_format(XS_unpack_number_arrayref( input_avref), format_level, indent_level);
+        case TYPE_string_arrayref:  return TEMPLATE_arrayref_to_string_format(XS_unpack_string_arrayref( input_avref), format_level, indent_level);
+        default: croak("ERROR EDD322e: DYNAMIC DISPATCH; Unrecognized or invalid input_avref_type = ", input_avref_type, " in function ", __func__, ", croaking");
+    }
+
+    return "ERROR EDD322e";
 };
 
 
