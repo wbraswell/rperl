@@ -292,9 +292,9 @@ Scalar:                  ScalarLiteral         | ScalarVariable ;
 ScalarLiteral:           LITERAL_NUMBER | LITERAL_STRING ;
 
 
-# VERY VERY FIRST, NEED DELETE: remove old ScalarVariable & ScalarVariableOrSelf, after ensuring all tests pass correctly
-# VERY VERY FIRST, NEED DELETE: remove old ScalarVariable & ScalarVariableOrSelf, after ensuring all tests pass correctly
-# VERY VERY FIRST, NEED DELETE: remove old ScalarVariable & ScalarVariableOrSelf, after ensuring all tests pass correctly
+# VERY x 2 FIRST, NEED DELETE: remove old ScalarVariable & ScalarVariableOrSelf, after ensuring all tests pass correctly
+# VERY x 2 FIRST, NEED DELETE: remove old ScalarVariable & ScalarVariableOrSelf, after ensuring all tests pass correctly
+# VERY x 2 FIRST, NEED DELETE: remove old ScalarVariable & ScalarVariableOrSelf, after ensuring all tests pass correctly
 
 #ScalarVariable:          ScalarVariableOrSelf | ScalarVariableOrSelf VariableRetrievalArrow | ScalarVariableOrSelf VariableRetrievalArrow VariableRetrieval+ ;
 ScalarVariable:          SCALAR_SYMBOL | SCALAR_SYMBOL VariableRetrieval+ | SELF | SELF VariableRetrievalArrow | SELF VariableRetrievalArrow VariableRetrieval+ ;

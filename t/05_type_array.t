@@ -168,8 +168,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
 
 
-
-
     lives_and(  # TIVAVRV30a
         sub {
             is(              integer_arrayref_to_string_compact( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
@@ -200,8 +198,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 q{TIVAVRV30c integer_arrayref_to_string_compact( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) lives}
     );
     usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
-
-
 
 
     lives_and(  # TIVAVRV31a
@@ -236,8 +232,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
 
 
-
-
     lives_and(  # TIVAVRV32a
         sub {
             is(              integer_arrayref_to_string_pretty( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
@@ -268,8 +262,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 q{TIVAVRV32c integer_arrayref_to_string_pretty( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) lives}
     );
     usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
-
-
 
 
     lives_and(  # TIVAVRV33a
@@ -328,8 +320,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
 
 
-
-
     lives_and(  # TIVAVRV34a
         sub {
             is(              integer_arrayref_to_string_format( [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 0, 0 ),
@@ -362,11 +352,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
 
 
-
-
-
-
-
     lives_and(  # TIVAVRV40a, DYNAMIC DISPATCH
         sub {
             is(              arrayref_to_string_compact( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
@@ -397,8 +382,7 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 q{TIVAVRV40c arrayref_to_string_compact( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) lives}
     );
     usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
-
-
+ 
 
     lives_and(  # TIVAVRV41a, DYNAMIC DISPATCH
         sub {
@@ -432,8 +416,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
 
 
-
-
     lives_and(  # TIVAVRV42a, DYNAMIC DISPATCH
         sub {
             is(              arrayref_to_string_pretty( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
@@ -464,8 +446,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 q{TIVAVRV42c arrayref_to_string_pretty( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ) lives}
     );
     usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
-
-
 
 
     lives_and(  # TIVAVRV43a, DYNAMIC DISPATCH
@@ -524,9 +504,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
 
 
-
-
-
     lives_and(  # TIVAVRV44a
         sub {
             is(              arrayref_to_string_format( [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 0, 0 ),
@@ -557,13 +534,6 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
                 q{TIVAVRV44c arrayref_to_string_format( ( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'integer_arrayref' ), 0, 0 ) lives}
     );
     usleep(100_000);  # TMP DEBUG, give output time to catch up before starting another operation
-
-
-
-
-
-
-
 
 
     throws_ok(  # TIVAVRV50
@@ -669,6 +639,14 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         "/ENVAVRV03.*$mode_tagline/",
         q{TNVAVRV13 number_arrayref_to_string([ 2, 2_112, 42, {a_subkey => 23}, -877, -33, 1_701 ]) throws correct exception}
     );
+
+
+
+
+# VERY x 8: enable all variations & dynamic tests from integer type above
+# VERY x 8: enable all variations & dynamic tests from integer type above
+# VERY x 8: enable all variations & dynamic tests from integer type above
+
     lives_and(                                                                # TNVAVRV20
         sub {
             is( number_arrayref_to_string( [ 23 ] ), '[ 23 ]', q{TNVAVRV20 number_arrayref_to_string([ 23 ]) returns correct value} );
@@ -915,6 +893,14 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         "/EPVAVRV03.*$mode_tagline/",
         q{TPVAVRV14 string_arrayref_to_string([ 'Superman', 'Batman', {a_subkey => 'Wonder Woman'}, ..., 'Martian Manhunter' ]) throws correct exception}
     );
+
+
+
+
+# VERY x 8: enable all variations & dynamic tests from integer type above
+# VERY x 8: enable all variations & dynamic tests from integer type above
+# VERY x 8: enable all variations & dynamic tests from integer type above
+
     lives_and(                                                                # TPVAVRV20
         sub {
             is( string_arrayref_to_string(

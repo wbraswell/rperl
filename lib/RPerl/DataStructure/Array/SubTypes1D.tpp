@@ -10,9 +10,9 @@ using std::cout;  using std::cerr;  using std::endl;  //using std::to_string;  /
 
 
 
-// VERY VERY VERY VERY VERY: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
-// VERY VERY VERY VERY VERY: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
-// VERY VERY VERY VERY VERY: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
+// VERY x 5: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
+// VERY x 5: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
+// VERY x 5: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
 
 
 
@@ -251,9 +251,9 @@ type_enum type_fast_enum__upgrade_integer_to_number(SV* variable) {
 
 
 
-// VERY VERY VERY VERY VERY: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
-// VERY VERY VERY VERY VERY: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
-// VERY VERY VERY VERY VERY: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
+// VERY x 5: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
+// VERY x 5: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
+// VERY x 5: need move DYNAMIC DISPATCH & type_fast*() code back to rperltypes.h or similar location
 
 
 
@@ -350,9 +350,9 @@ void DYNAMIC_arrayref_CHECKTRACE(SV* input_avref,              const char* varia
 
 // [[[ STRINGIFY, declarations ]]]
 
-// VERY VERY VERY VERY VERY: need move stringify declarations back into Subtypes1D.h, right above declarations of integer_arrayref_to_string*() & friends
-// VERY VERY VERY VERY VERY: need move stringify declarations back into Subtypes1D.h, right above declarations of integer_arrayref_to_string*() & friends
-// VERY VERY VERY VERY VERY: need move stringify declarations back into Subtypes1D.h, right above declarations of integer_arrayref_to_string*() & friends
+// VERY x 5: need move stringify declarations back into Subtypes1D.h, right above declarations of integer_arrayref_to_string*() & friends
+// VERY x 5: need move stringify declarations back into Subtypes1D.h, right above declarations of integer_arrayref_to_string*() & friends
+// VERY x 5: need move stringify declarations back into Subtypes1D.h, right above declarations of integer_arrayref_to_string*() & friends
 
 SV*         arrayref_to_string_compact(SV* input_avref);
 SV*         arrayref_to_string(SV* input_avref);
@@ -484,9 +484,9 @@ SV* arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_leve
         fprintf(stderr, "in CPPOPS_PERLTYPES arrayref_to_string_format() DYNAMIC DISPATCH, checkpoint 002e\n");
 
 
-// VERY VERY VERY VERY VERY: ensure (input_av_length_TMP > 0) before calling av_fetch() below
-// VERY VERY VERY VERY VERY: ensure (input_av_length_TMP > 0) before calling av_fetch() below
-// VERY VERY VERY VERY VERY: ensure (input_av_length_TMP > 0) before calling av_fetch() below
+// VERY x 5: ensure (input_av_length_TMP > 0) before calling av_fetch() below
+// VERY x 5: ensure (input_av_length_TMP > 0) before calling av_fetch() below
+// VERY x 5: ensure (input_av_length_TMP > 0) before calling av_fetch() below
         
         
         SV** input_av_element_TMP;
@@ -588,9 +588,9 @@ SV* arrayref_to_string_format(SV* input_avref, SV* format_level, SV* indent_leve
 
 
 
-// VERY VERY VERY VERY VERY: implement manual DYNAMIC for CHECKTRACE() above; re-enable integer_arrayref_to_string*() & string_arrayref_to_string*() in SubTypes.1D.cpp; generalize DYNAMIC; remove duplicate DYNAMIC; move DYNAMIC to rperltypes.h or similar; enable DYNAMIC for boolean & unsigned_integer & character???
-// VERY VERY VERY VERY VERY: implement manual DYNAMIC for CHECKTRACE() above; re-enable integer_arrayref_to_string*() & string_arrayref_to_string*() in SubTypes.1D.cpp; generalize DYNAMIC; remove duplicate DYNAMIC; move DYNAMIC to rperltypes.h or similar; enable DYNAMIC for boolean & unsigned_integer & character???
-// VERY VERY VERY VERY VERY: implement manual DYNAMIC for CHECKTRACE() above; re-enable integer_arrayref_to_string*() & string_arrayref_to_string*() in SubTypes.1D.cpp; generalize DYNAMIC; remove duplicate DYNAMIC; move DYNAMIC to rperltypes.h or similar; enable DYNAMIC for boolean & unsigned_integer & character???
+// VERY x 5: implement manual DYNAMIC for CHECKTRACE() above; re-enable integer_arrayref_to_string*() & string_arrayref_to_string*() in SubTypes.1D.cpp; generalize DYNAMIC; remove duplicate DYNAMIC; move DYNAMIC to rperltypes.h or similar; enable DYNAMIC for boolean & unsigned_integer & character???
+// VERY x 5: implement manual DYNAMIC for CHECKTRACE() above; re-enable integer_arrayref_to_string*() & string_arrayref_to_string*() in SubTypes.1D.cpp; generalize DYNAMIC; remove duplicate DYNAMIC; move DYNAMIC to rperltypes.h or similar; enable DYNAMIC for boolean & unsigned_integer & character???
+// VERY x 5: implement manual DYNAMIC for CHECKTRACE() above; re-enable integer_arrayref_to_string*() & string_arrayref_to_string*() in SubTypes.1D.cpp; generalize DYNAMIC; remove duplicate DYNAMIC; move DYNAMIC to rperltypes.h or similar; enable DYNAMIC for boolean & unsigned_integer & character???
 
 
 
@@ -679,9 +679,9 @@ string TEMPLATE_arrayref_to_string_expand(ARRAYREF_TYPENAME input_vector)
 
 
 
-// VERY VERY VERY VERY VERY: determine if corresponding PERLOPS_PERLTYPES stringify code and/or tests need to be updated to match to_string() calling convention; what about To_string() vs to_string()??? 
-// VERY VERY VERY VERY VERY: determine if corresponding PERLOPS_PERLTYPES stringify code and/or tests need to be updated to match to_string() calling convention; what about To_string() vs to_string()??? 
-// VERY VERY VERY VERY VERY: determine if corresponding PERLOPS_PERLTYPES stringify code and/or tests need to be updated to match to_string() calling convention; what about To_string() vs to_string()??? 
+// VERY x 5: determine if corresponding PERLOPS_PERLTYPES stringify code and/or tests need to be updated to match to_string() calling convention; what about To_string() vs to_string()??? 
+// VERY x 5: determine if corresponding PERLOPS_PERLTYPES stringify code and/or tests need to be updated to match to_string() calling convention; what about To_string() vs to_string()??? 
+// VERY x 5: determine if corresponding PERLOPS_PERLTYPES stringify code and/or tests need to be updated to match to_string() calling convention; what about To_string() vs to_string()??? 
 
 
 

@@ -21,9 +21,9 @@
 
 
 
-// VERY VERY VERY VERY VERY VERY: move dynamic dispatch & type_fast*() code back into this location
-// VERY VERY VERY VERY VERY VERY: move dynamic dispatch & type_fast*() code back into this location
-// VERY VERY VERY VERY VERY VERY: move dynamic dispatch & type_fast*() code back into this location
+// VERY x 6: move dynamic dispatch & type_fast*() code back into this location
+// VERY x 6: move dynamic dispatch & type_fast*() code back into this location
+// VERY x 6: move dynamic dispatch & type_fast*() code back into this location
 
 
 
