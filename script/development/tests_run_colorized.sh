@@ -4,6 +4,9 @@
 reset
 inline_clean.sh
 
+export RPERL_DEBUG=1
+export RPERL_VERBOSE=1
+
 for argument in "$@"
 do
     # assume argument is one word, only the test file path

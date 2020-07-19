@@ -8,7 +8,7 @@ BEGIN { $ENV{RPERL_WARNINGS} = 0; }
 use strict;
 use warnings;
 use RPerl::AfterSubclass;
-our $VERSION = 0.012_000;
+our $VERSION = 0.013_000;
 
 # [[[ CRITICS ]]]
 ## no critic qw(ProhibitUselessNoCritic ProhibitMagicNumbers RequireCheckedSyscalls)  # USER DEFAULT 1: allow numeric values & print operator
@@ -17,7 +17,7 @@ our $VERSION = 0.012_000;
 
 # [[[ INCLUDES ]]]
 use RPerl::Test;
-use Test::More tests => 352;
+use Test::More tests => 490;
 #use Test::More tests => xyz;  # TMP DEBUG PERLOPS_PERLTYPES & CPPOPS_PERLTYPES
 #use Test::More tests => xyz;  # TMP DEBUG, ONE MODE ONLY
 use Test::Exception;
@@ -160,12 +160,79 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         "/EIVAVRV03.*$mode_tagline/",
         q{TIVAVRV14 integer_arrayref_to_string([ 2, 2_112, 42, {a_subkey => 23}, -877, -33, 1_701 ]) throws correct exception}
     );
-    lives_and(                                                                 # TIVAVRV20
+
+
+# VERY x 8: implement PERLOPS_PERLTYPES & CPPOPS_CPPTYPES dynamic error checking for blessed objects
+# VERY x 8: implement PERLOPS_PERLTYPES & CPPOPS_CPPTYPES dynamic error checking for blessed objects
+# VERY x 8: implement PERLOPS_PERLTYPES & CPPOPS_CPPTYPES dynamic error checking for blessed objects
+
+
+    throws_ok(  # TIVAVRV15, DYNAMIC DISPATCH
         sub {
-            is( integer_arrayref_to_string( [ 23 ] ), '[ 23 ]', q{TIVAVRV20 integer_arrayref_to_string([ 23 ]) returns correct value} );
+            arrayref_to_string( bless [ 23 ], 'string_arrayref' );
         },
-        q{TIVAVRV20 integer_arrayref_to_string([ 23 ]) lives}
+        "/EPVAVRV03.*$mode_tagline/",
+        q{TIVAVRV15 arrayref_to_string( bless [ 23 ], 'string_arrayref' ) throws correct exception}
     );
+
+
+    lives_and(  # TIVAVRV20a
+        sub {
+            is(              integer_arrayref_to_string( [ 23 ] ),
+                                                        '[ 23 ]',
+                q{TIVAVRV20a integer_arrayref_to_string( [ 23 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV20a integer_arrayref_to_string( [ 23 ] ) lives}
+    );
+    lives_and(  # TIVAVRV20b
+        sub {
+            is(              integer_arrayref_to_string( my integer_arrayref $foo = [ 23 ] ),
+                                                                                   '[ 23 ]',
+                q{TIVAVRV20b integer_arrayref_to_string( my integer_arrayref $foo = [ 23 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV20b integer_arrayref_to_string( my integer_arrayref $foo = [ 23 ] ) lives}
+    );
+    lives_and(  # TIVAVRV20c
+        sub {
+            is(              integer_arrayref_to_string( bless [ 23 ], 'integer_arrayref' ),
+                                                              '[ 23 ]',
+                q{TIVAVRV20c integer_arrayref_to_string( bless [ 23 ], 'integer_arrayref' ) returns correct value}
+            );
+        },
+                q{TIVAVRV20c integer_arrayref_to_string( bless [ 23 ], 'integer_arrayref' ) lives}
+    );
+    # DEV NOTE: TIVAVRV20d and TNVAVRV20d are identical, disable TNVAVRV20d
+    lives_and(  # TIVAVRV20d, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string( [ 23 ] ),
+                                                       '[ 23 ]',
+                q{TIVAVRV20d        arrayref_to_string( [ 23 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV20d        arrayref_to_string( [ 23 ] ) lives}
+    );
+    lives_and(  # TIVAVRV20e, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string( my integer_arrayref $foo = [ 23 ] ),
+                                                                                  '[ 23 ]',
+                q{TIVAVRV20e        arrayref_to_string( my integer_arrayref $foo = [ 23 ] ) returns correct value}
+            );
+        },
+                q{TIVAVRV20e        arrayref_to_string( my integer_arrayref $foo = [ 23 ] ) lives}
+    );
+    lives_and(  # TIVAVRV20f, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string( bless [ 23 ], 'integer_arrayref' ),
+                                                             '[ 23 ]',
+                q{TIVAVRV20f        arrayref_to_string( bless [ 23 ], 'integer_arrayref' ) returns correct value}
+            );
+        },
+                q{TIVAVRV20f        arrayref_to_string( bless [ 23 ], 'integer_arrayref' ) lives}
+    );
+
+
 
 
     lives_and(  # TIVAVRV30a
@@ -641,18 +708,79 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
 
 
-
-
-# VERY x 8: enable all variations & dynamic tests from integer type above
-# VERY x 8: enable all variations & dynamic tests from integer type above
-# VERY x 8: enable all variations & dynamic tests from integer type above
-
-    lives_and(                                                                # TNVAVRV20
+    throws_ok(  # TNVAVRV15, DYNAMIC DISPATCH
         sub {
-            is( number_arrayref_to_string( [ 23 ] ), '[ 23 ]', q{TNVAVRV20 number_arrayref_to_string([ 23 ]) returns correct value} );
+            arrayref_to_string( bless [ 23.2 ], 'integer_arrayref' );
         },
-        q{TNVAVRV20 number_arrayref_to_string([ 23 ]) lives}
+        "/EIVAVRV03.*$mode_tagline/",
+        q{TNVAVRV15 arrayref_to_string( bless [ 23.2 ], 'integer_arrayref' ) throws correct exception}
     );
+    throws_ok(  # TNVAVRV16, DYNAMIC DISPATCH
+        sub {
+            arrayref_to_string( bless [ 23.2 ], 'string_arrayref' );
+        },
+        "/EPVAVRV03.*$mode_tagline/",
+        q{TNVAVRV16 arrayref_to_string( bless [ 23.2 ], 'string_arrayref' ) throws correct exception}
+    );
+
+
+    lives_and(  # TNVAVRV20a
+        sub {
+            is(              number_arrayref_to_string( [ 23 ] ),
+                                                       '[ 23 ]',
+                q{TNVAVRV20a number_arrayref_to_string( [ 23 ] ) returns correct value}
+            );
+        },
+                q{TNVAVRV20a number_arrayref_to_string( [ 23 ] ) lives}
+    );
+    lives_and(  # TNVAVRV20b
+        sub {
+            is(              number_arrayref_to_string( my number_arrayref $foo = [ 23 ] ),
+                                                                                 '[ 23 ]',
+                q{TNVAVRV20b number_arrayref_to_string( my number_arrayref $foo = [ 23 ] ) returns correct value}
+            );
+        },
+                q{TNVAVRV20b number_arrayref_to_string( my number_arrayref $foo = [ 23 ] ) lives}
+    );
+    lives_and(  # TNVAVRV20c
+        sub {
+            is(              number_arrayref_to_string( bless [ 23 ], 'number_arrayref' ),
+                                                             '[ 23 ]',
+                q{TNVAVRV20c number_arrayref_to_string( bless [ 23 ], 'number_arrayref' ) returns correct value}
+            );
+        },
+                q{TNVAVRV20c number_arrayref_to_string( bless [ 23 ], 'number_arrayref' ) lives}
+    );
+    # DEV NOTE: TIVAVRV20d and TNVAVRV20d are identical, disable TNVAVRV20d
+#    lives_and(  # TNVAVRV20d, DYNAMIC DISPATCH
+#        sub {
+#            is(                     arrayref_to_string( [ 23 ] ),
+#                                                       '[ 23 ]',
+#                q{TNVAVRV20d        arrayref_to_string( [ 23 ] ) returns correct value}
+#            );
+#        },
+#                q{TNVAVRV20d        arrayref_to_string( [ 23 ] ) lives}
+#    );
+    lives_and(  # TNVAVRV20e, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string( my number_arrayref $foo = [ 23 ] ),
+                                                                                 '[ 23 ]',
+                q{TNVAVRV20e        arrayref_to_string( my number_arrayref $foo = [ 23 ] ) returns correct value}
+            );
+        },
+                q{TNVAVRV20e        arrayref_to_string( my number_arrayref $foo = [ 23 ] ) lives}
+    );
+    lives_and(  # TNVAVRV20f, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string( bless [ 23 ], 'number_arrayref' ),
+                                                             '[ 23 ]',
+                q{TNVAVRV20f        arrayref_to_string( bless [ 23 ], 'number_arrayref' ) returns correct value}
+            );
+        },
+                q{TNVAVRV20f        arrayref_to_string( bless [ 23 ], 'number_arrayref' ) lives}
+    );
+
+
     lives_and(  # TNVAVRV21a
         sub {
             is(              number_arrayref_to_string( [ 2, 2_112, 42, 23, -877, -33, 1_701 ] ),
@@ -707,49 +835,186 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
                 q{TNVAVRV21f        arrayref_to_string( bless [ 2, 2_112, 42, 23, -877, -33, 1_701 ], 'number_arrayref' ) lives}
     );
-    lives_and(                                                                # TNVAVRV22
+
+
+    lives_and(  # TNVAVRV22a
         sub {
-            is( number_arrayref_to_string( [ 23.2 ] ), '[ 23.2 ]', q{TNVAVRV22 number_arrayref_to_string([ 23.2 ]) returns correct value} );
-        },
-        q{TNVAVRV22 number_arrayref_to_string([ 23.2 ]) lives}
-    );
-    lives_and(                                                                # TNVAVRV23
-        sub {
-            is( number_arrayref_to_string( [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ] ),
-                '[ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ]',
-                q{TNVAVRV23 number_arrayref_to_string([ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ]) returns correct value}
+            is(              number_arrayref_to_string( [ 23.2 ] ),
+                                                       '[ 23.2 ]',
+                q{TNVAVRV22a number_arrayref_to_string( [ 23.2 ] ) returns correct value}
             );
         },
-        q{TNVAVRV23 number_arrayref_to_string([ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ]) lives}
+                q{TNVAVRV22a number_arrayref_to_string( [ 23.2 ] ) lives}
+    );
+    lives_and(  # TNVAVRV22b
+        sub {
+            is(              number_arrayref_to_string( my number_arrayref $foo = [ 23.2 ] ),
+                                                                                 '[ 23.2 ]',
+                q{TNVAVRV22b number_arrayref_to_string( my number_arrayref $foo = [ 23.2 ] ) returns correct value}
+            );
+        },
+                q{TNVAVRV22b number_arrayref_to_string( my number_arrayref $foo = [ 23.2 ] ) lives}
+    );
+    lives_and(  # TNVAVRV22c
+        sub {
+            is(              number_arrayref_to_string( bless [ 23.2 ], 'number_arrayref' ),
+                                                             '[ 23.2 ]',
+                q{TNVAVRV22c number_arrayref_to_string( bless [ 23.2 ], 'number_arrayref' ) returns correct value}
+            );
+        },
+                q{TNVAVRV22c number_arrayref_to_string( bless [ 23.2 ], 'number_arrayref' ) lives}
+    );
+    lives_and(  # TNVAVRV22d, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string( [ 23.2 ] ),
+                                                       '[ 23.2 ]',
+                q{TNVAVRV22d        arrayref_to_string( [ 23.2 ] ) returns correct value}
+            );
+        },
+                q{TNVAVRV22d        arrayref_to_string( [ 23.2 ] ) lives}
+    );
+    lives_and(  # TNVAVRV22e, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string( my number_arrayref $foo = [ 23.2 ] ),
+                                                                                 '[ 23.2 ]',
+                q{TNVAVRV22e        arrayref_to_string( my number_arrayref $foo = [ 23.2 ] ) returns correct value}
+            );
+        },
+                q{TNVAVRV22e        arrayref_to_string( my number_arrayref $foo = [ 23.2 ] ) lives}
+    );
+    lives_and(  # TNVAVRV22f, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string( bless [ 23.2 ], 'number_arrayref' ),
+                                                             '[ 23.2 ]',
+                q{TNVAVRV22f        arrayref_to_string( bless [ 23.2 ], 'number_arrayref' ) returns correct value}
+            );
+        },
+                q{TNVAVRV22f        arrayref_to_string( bless [ 23.2 ], 'number_arrayref' ) lives}
     );
 
-    # NEED DELETE OLD CODE
+
+    lives_and(  # TNVAVRV23a
+        sub {
+            is(              number_arrayref_to_string( [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ] ),
+                                                       '[ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ]',
+                q{TNVAVRV23a number_arrayref_to_string( [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TNVAVRV23a number_arrayref_to_string( [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ] ) lives}
+    );
+    lives_and(  # TNVAVRV23b
+        sub {
+            is(              number_arrayref_to_string( my number_arrayref $foo = [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ] ),
+                                                                                 '[ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ]',
+                q{TNVAVRV23b number_arrayref_to_string( my number_arrayref $foo = [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TNVAVRV23b number_arrayref_to_string( my number_arrayref $foo = [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ] ) lives}
+    );
+    lives_and(  # TNVAVRV23c
+        sub {
+            is(              number_arrayref_to_string( bless [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ], 'number_arrayref' ),
+                                                             '[ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ]',
+                q{TNVAVRV23c number_arrayref_to_string( bless [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ], 'number_arrayref' ) returns correct value}
+            );
+        },
+                q{TNVAVRV23c number_arrayref_to_string( bless [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ], 'number_arrayref' ) lives}
+    );
+    lives_and(  # TNVAVRV23d, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string( [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ] ),
+                                                       '[ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ]',
+                q{TNVAVRV23d        arrayref_to_string( [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TNVAVRV23d        arrayref_to_string( [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ] ) lives}
+    );
+    lives_and(  # TNVAVRV23e, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string( my number_arrayref $foo = [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ] ),
+                                                                                 '[ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ]',
+                q{TNVAVRV23e        arrayref_to_string( my number_arrayref $foo = [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ] ) returns correct value}
+            );
+        },
+                q{TNVAVRV23e        arrayref_to_string( my number_arrayref $foo = [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ] ) lives}
+    );
+    lives_and(  # TNVAVRV23f, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string( bless [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ], 'number_arrayref' ),
+                                                             '[ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ]',
+                q{TNVAVRV23f        arrayref_to_string( bless [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ], 'number_arrayref' ) returns correct value}
+            );
+        },
+                q{TNVAVRV23f        arrayref_to_string( bless [ 2.1, 2_112.2, 42.3, 23, -877, -33, 1_701 ], 'number_arrayref' ) lives}
+    );
+
+
+# OLD CODE: high precision numbers, causes failure on systems with different precision than original development system 
 #    lives_and(                                                                # TNVAVRV24
 #        sub {
 #            is( number_arrayref_to_string( [ 2.123_443_211_234_432_1, 2_112.432_1, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] ),
 #                '[ 2.123_443_211_234_43, 2_112.432_1, 42.456_7, 23.765_444_444_444_4, -877.567_8, -33.876_587_658_765_9, 1_701.678_9 ]',
-#                q{TNVAVRV24 number_arrayref_to_string([ 2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9 ]) returns correct value}
+#                q{TNVAVRV24 number_arrayref_to_string([ 2.123_443_211_234_432_1, ... ]) returns correct value}
 #            );
 #        },
-#        q{TNVAVRV24 number_arrayref_to_string([ 2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9 ]) lives}
+#        q{TNVAVRV24 number_arrayref_to_string([ 2.123_443_211_234_432_1, ... ]) lives}
 #    );
 
-    lives_and(                                                                 # TNVAVRV24
+    lives_and(                                        # TNVAVRV24a
         sub {
-            my string $tmp_retval = number_arrayref_to_string( [ 2.123_443_211_234_432_1, 2_112.432_1, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
-            like(
-                $tmp_retval,
-                qr/\[ 2\.123_443_211/,
-                q{TNVAVRV24a number_arrayref_to_string([ 2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9 ]) returns correct value, array beginning}
-            );
-            like(
-                $tmp_retval,
-                qr/, 1_701\.678_9 \]/,
-                q{TNVAVRV24b number_arrayref_to_string([ 2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9 ]) returns correct value, array end}
-            );
+            my string $tmp_retval = number_arrayref_to_string(                                [ 2.123_443_211_234_432_1, 2_112.432_1, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
+            like( $tmp_retval, qr/\[ 2\.123_443_211/, q{TNVAVRV24a1 number_arrayref_to_string([ 2.123_443_211_234_432_1, ... ]) returns correct value, array beginning} );
+            like( $tmp_retval, qr/, -33\.876_587/,    q{TNVAVRV24a2 number_arrayref_to_string([ 2.123_443_211_234_432_1, ... ]) returns correct value, array middle} );
+            like( $tmp_retval, qr/, 1_701\.678_9 \]/, q{TNVAVRV24a3 number_arrayref_to_string([ 2.123_443_211_234_432_1, ... ]) returns correct value, array end} );
         },
-        q{TNVAVRV24 number_arrayref_to_string([ 2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9 ]) lives}
+                                                      q{TNVAVRV24a  number_arrayref_to_string([ 2.123_443_211_234_432_1, ... ]) lives}
     );
+    lives_and(                                        # TNVAVRV24b
+        sub {
+            my string $tmp_retval = number_arrayref_to_string(                                my number_arrayref $foo = [ 2.123_443_211_234_432_1, 2_112.432_1, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
+            like( $tmp_retval, qr/\[ 2\.123_443_211/, q{TNVAVRV24b1 number_arrayref_to_string(my number_arrayref $foo = [ 2.123_443_211_234_432_1, ... ]) returns correct value, array beginning} );
+            like( $tmp_retval, qr/, -33\.876_587/,    q{TNVAVRV24b2 number_arrayref_to_string(my number_arrayref $foo = [ 2.123_443_211_234_432_1, ... ]) returns correct value, array middle} );
+            like( $tmp_retval, qr/, 1_701\.678_9 \]/, q{TNVAVRV24b3 number_arrayref_to_string(my number_arrayref $foo = [ 2.123_443_211_234_432_1, ... ]) returns correct value, array end} );
+        },
+                                                      q{TNVAVRV24b  number_arrayref_to_string(my number_arrayref $foo = [ 2.123_443_211_234_432_1, ... ]) lives}
+    );
+    lives_and(                                        # TNVAVRV24c
+        sub {
+            my string $tmp_retval = number_arrayref_to_string(                                bless [ 2.123_443_211_234_432_1, 2_112.432_1, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ], 'number_arrayref' );
+            like( $tmp_retval, qr/\[ 2\.123_443_211/, q{TNVAVRV24c1 number_arrayref_to_string(bless [ 2.123_443_211_234_432_1, ... ], 'number_arrayref') returns correct value, array beginning} );
+            like( $tmp_retval, qr/, -33\.876_587/,    q{TNVAVRV24c2 number_arrayref_to_string(bless [ 2.123_443_211_234_432_1, ... ], 'number_arrayref') returns correct value, array middle} );
+            like( $tmp_retval, qr/, 1_701\.678_9 \]/, q{TNVAVRV24c3 number_arrayref_to_string(bless [ 2.123_443_211_234_432_1, ... ], 'number_arrayref') returns correct value, array end} );
+        },
+                                                      q{TNVAVRV24c  number_arrayref_to_string(bless [ 2.123_443_211_234_432_1, ... ], 'number_arrayref') lives}
+    );
+    lives_and(                                        # TNVAVRV24d
+        sub {
+            my string $tmp_retval = number_arrayref_to_string(                                [ 2.123_443_211_234_432_1, 2_112.432_1, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
+            like( $tmp_retval, qr/\[ 2\.123_443_211/, q{TNVAVRV24d1 arrayref_to_string([ 2.123_443_211_234_432_1, ... ]) returns correct value, array beginning} );
+            like( $tmp_retval, qr/, -33\.876_587/,    q{TNVAVRV24d2 arrayref_to_string([ 2.123_443_211_234_432_1, ... ]) returns correct value, array middle} );
+            like( $tmp_retval, qr/, 1_701\.678_9 \]/, q{TNVAVRV24d3 arrayref_to_string([ 2.123_443_211_234_432_1, ... ]) returns correct value, array end} );
+        },
+                                                      q{TNVAVRV24d  arrayref_to_string([ 2.123_443_211_234_432_1, ... ]) lives}
+    );
+    lives_and(                                        # TNVAVRV24e
+        sub {
+            my string $tmp_retval = arrayref_to_string(                                my number_arrayref $foo = [ 2.123_443_211_234_432_1, 2_112.432_1, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] );
+            like( $tmp_retval, qr/\[ 2\.123_443_211/, q{TNVAVRV24e1 arrayref_to_string(my number_arrayref $foo = [ 2.123_443_211_234_432_1, ... ]) returns correct value, array beginning} );
+            like( $tmp_retval, qr/, -33\.876_587/,    q{TNVAVRV24e2 arrayref_to_string(my number_arrayref $foo = [ 2.123_443_211_234_432_1, ... ]) returns correct value, array middle} );
+            like( $tmp_retval, qr/, 1_701\.678_9 \]/, q{TNVAVRV24e3 arrayref_to_string(my number_arrayref $foo = [ 2.123_443_211_234_432_1, ... ]) returns correct value, array end} );
+        },
+                                                      q{TNVAVRV24e  arrayref_to_string(my number_arrayref $foo = [ 2.123_443_211_234_432_1, ... ]) lives}
+    );
+    lives_and(                                        # TNVAVRV24f
+        sub {
+            my string $tmp_retval = arrayref_to_string(                                bless [ 2.123_443_211_234_432_1, 2_112.432_1, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ], 'number_arrayref' );
+            like( $tmp_retval, qr/\[ 2\.123_443_211/, q{TNVAVRV24f1 arrayref_to_string(bless [ 2.123_443_211_234_432_1, ... ], 'number_arrayref') returns correct value, array beginning} );
+            like( $tmp_retval, qr/, -33\.876_587/,    q{TNVAVRV24f2 arrayref_to_string(bless [ 2.123_443_211_234_432_1, ... ], 'number_arrayref') returns correct value, array middle} );
+            like( $tmp_retval, qr/, 1_701\.678_9 \]/, q{TNVAVRV24f3 arrayref_to_string(bless [ 2.123_443_211_234_432_1, ... ], 'number_arrayref') returns correct value, array end} );
+        },
+                                                      q{TNVAVRV24f  arrayref_to_string(bless [ 2.123_443_211_234_432_1, ... ], 'number_arrayref') lives}
+    );
+
 
     throws_ok(                                                                # TNVAVRV30
         sub { number_arrayref_typetest0() },
@@ -777,16 +1042,16 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         q{TNVAVRV33 number_arrayref_typetest0([ 2.123_443_211_234_432_1, ..., 'abcdefg', -33.876_587_658_765_875_687_658_765, 1_701.678_9 ]) throws correct exception}
     );
     
-    # NEED DELETE OLD CODE
+# OLD CODE: high precision numbers, causes failure on systems with different precision than original development system 
 #    lives_and(                                                                 # TNVAVRV34
 #        sub {
 #            is( 
 #                number_arrayref_typetest0( [ 2.123_443_211_234_432_1, 2_112.432_1, 42.456_7, 23.765_444_444_444_444_444, -877.567_8, -33.876_587_658_765_875_687_658_765, 1_701.678_9 ] ),
 #                '[ 2.123_443_211_234_43, 2_112.432_1, 42.456_7, 23.765_444_444_444_4, -877.567_8, -33.876_587_658_765_9, 1_701.678_9 ]' . $mode_tagline,
-#                q{TNVAVRV34 number_arrayref_typetest0([ 2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9 ]) returns correct value}
+#                q{TNVAVRV34 number_arrayref_typetest0([ 2.123_443_211_234_432_1, ... ]) returns correct value}
 #            );
 #        },
-#        q{TNVAVRV34 number_arrayref_typetest0([ 2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9 ]) lives}
+#        q{TNVAVRV34 number_arrayref_typetest0([ 2.123_443_211_234_432_1, ... ]) lives}
 #    );
     lives_and(                                                                 # TNVAVRV34
         sub {
@@ -794,20 +1059,20 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
             like(
                 $tmp_retval,
                 qr/\[ 2\.123_443_211/,
-                q{TNVAVRV34a number_arrayref_typetest0([ 2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9 ]) returns correct value, array beginning}
+                q{TNVAVRV34a number_arrayref_typetest0([ 2.123_443_211_234_432_1, ... ]) returns correct value, array beginning}
             );
             like(
                 $tmp_retval,
                 qr/, 1_701\.678_9 \]/,
-                q{TNVAVRV34b number_arrayref_typetest0([ 2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9 ]) returns correct value, array end}
+                q{TNVAVRV34b number_arrayref_typetest0([ 2.123_443_211_234_432_1, ... ]) returns correct value, array end}
             );
             like(
                 $tmp_retval,
                 qr/$mode_tagline/,
-                q{TNVAVRV34c number_arrayref_typetest0([ 2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9 ]) returns correct value, mode tagline}
+                q{TNVAVRV34c number_arrayref_typetest0([ 2.123_443_211_234_432_1, ... ]) returns correct value, mode tagline}
             );
         },
-        q{TNVAVRV34 number_arrayref_typetest0([ 2.123_443_211_234_432_1, 2_112.432_1, ..., 1_701.678_9 ]) lives}
+        q{TNVAVRV34 number_arrayref_typetest0([ 2.123_443_211_234_432_1, ... ]) lives}
     );
 
     lives_and(                                                                 # TNVAVRV40
@@ -895,23 +1160,78 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
     );
 
 
-
-
-# VERY x 8: enable all variations & dynamic tests from integer type above
-# VERY x 8: enable all variations & dynamic tests from integer type above
-# VERY x 8: enable all variations & dynamic tests from integer type above
-
-    lives_and(                                                                # TPVAVRV20
+    throws_ok(  # TPVAVRV15, DYNAMIC DISPATCH
         sub {
-            is( string_arrayref_to_string(
-                    [ 'Howard The Duck' ]
-                ),
-                q{[ 'Howard The Duck' ]},
-                q{TPVAVRV20 string_arrayref_to_string([ 'Howard The Duck' ]) returns correct value}
+            arrayref_to_string( bless [ 'Howard The Duck' ], 'integer_arrayref' );
+        },
+        "/EIVAVRV03.*$mode_tagline/",
+        q{TPVAVRV15 arrayref_to_string( bless [ 'Howard The Duck' ], 'integer_arrayref' ) throws correct exception}
+    );
+    throws_ok(  # TPVAVRV16, DYNAMIC DISPATCH
+        sub {
+            arrayref_to_string( bless [ 'Howard The Duck' ], 'number_arrayref' );
+        },
+        "/ENVAVRV03.*$mode_tagline/",
+        q{TPVAVRV16 arrayref_to_string( bless [ 'Howard The Duck' ], 'number_arrayref' ) throws correct exception}
+    );
+
+
+    lives_and(  # TPVAVRV20a
+        sub {
+            is(              string_arrayref_to_string([ 'Howard The Duck' ]),
+                                                     q{[ 'Howard The Duck' ]},
+                q{TPVAVRV20a string_arrayref_to_string([ 'Howard The Duck' ]) returns correct value}
             );
         },
-        q{TPVAVRV20 string_arrayref_to_string([ 'Howard The Duck' ]) lives}
+                q{TPVAVRV20a string_arrayref_to_string([ 'Howard The Duck' ]) lives}
     );
+    lives_and(  # TPVAVRV20b
+        sub {
+            is(              string_arrayref_to_string( my string_arrayref $foo = [ 'Howard The Duck' ] ),
+                                                                                q{[ 'Howard The Duck' ]},
+                q{TPVAVRV20b string_arrayref_to_string( my string_arrayref $foo = [ 'Howard The Duck' ] ) returns correct value}
+            );
+        },
+                q{TPVAVRV20b string_arrayref_to_string( my string_arrayref $foo = [ 'Howard The Duck' ] ) lives}
+    );
+    lives_and(  # TPVAVRV20c
+        sub {
+            is(              string_arrayref_to_string( bless [ 'Howard The Duck' ], 'string_arrayref' ),
+                                                            q{[ 'Howard The Duck' ]},
+                q{TPVAVRV20c string_arrayref_to_string( bless [ 'Howard The Duck' ], 'string_arrayref' ) returns correct value}
+            );
+        },
+                q{TPVAVRV20c string_arrayref_to_string( bless [ 'Howard The Duck' ], 'string_arrayref' ) lives}
+    );
+    lives_and(  # TPVAVRV20d, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string([ 'Howard The Duck' ]),
+                                                     q{[ 'Howard The Duck' ]},
+                q{TPVAVRV20d        arrayref_to_string([ 'Howard The Duck' ]) returns correct value}
+            );
+        },
+                q{TPVAVRV20d        arrayref_to_string([ 'Howard The Duck' ]) lives}
+    );
+    lives_and(  # TPVAVRV20e, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string( my string_arrayref $foo = [ 'Howard The Duck' ] ),
+                                                                                q{[ 'Howard The Duck' ]},
+                q{TPVAVRV20e        arrayref_to_string( my string_arrayref $foo = [ 'Howard The Duck' ] ) returns correct value}
+            );
+        },
+                q{TPVAVRV20e        arrayref_to_string( my string_arrayref $foo = [ 'Howard The Duck' ] ) lives}
+    );
+    lives_and(  # TPVAVRV20f, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string( bless [ 'Howard The Duck' ], 'string_arrayref' ),
+                                                            q{[ 'Howard The Duck' ]},
+                q{TPVAVRV20f        arrayref_to_string( bless [ 'Howard The Duck' ], 'string_arrayref' ) returns correct value}
+            );
+        },
+                q{TPVAVRV20f        arrayref_to_string( bless [ 'Howard The Duck' ], 'string_arrayref' ) lives}
+    );
+
+
     lives_and(  # TPVAVRV21a
         sub {
             is(              string_arrayref_to_string( [ 'Howard The Duck', 'Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter' ] ),
@@ -966,51 +1286,65 @@ foreach my integer $mode_id ( sort keys %{$RPerl::MODES} ) {
         },
                 q{TPVAVRV21f        arrayref_to_string( bless [ 'Howard The Duck', 'Superman', 'Batman', 'Wonder Woman', ..., 'Martian Manhunter' ], 'string_arrayref' ) lives}
     );
-    lives_and(                                                                # TPVAVRV22
+
+
+    # tests to ensure string parsing does not incorrectly detect void or number or array or hash when inside quotes
+    lives_and(  # TPVAVRV22a
         sub {
-            is( string_arrayref_to_string( [ 'Superman', 'Martian Manhunter', 'undef' ] ),
-                q{[ 'Superman', 'Martian Manhunter', 'undef' ]},
-                q{TPVAVRV22 string_arrayref_to_string([ 'Superman', 'Martian Manhunter', 'undef' ]) returns correct value}
+            is(              string_arrayref_to_string([ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ]),
+                                                     q{[ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', '[\\\\\'Tonto\'\\\\]', '{buzz => 5}' ]},
+                q{TPVAVRV22a string_arrayref_to_string([ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ]) returns correct value}
             );
         },
-        q{TPVAVRV22 string_arrayref_to_string([ 'Superman', 'Martian Manhunter', 'undef' ]) lives}
+                q{TPVAVRV22a string_arrayref_to_string([ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ]) lives}
     );
-    lives_and(                                                                # TPVAVRV23
+    lives_and(  # TPVAVRV22b
         sub {
-            is( string_arrayref_to_string( [ 'Superman', 'Martian Manhunter', '23' ] ),
-                q{[ 'Superman', 'Martian Manhunter', '23' ]},
-                q{TPVAVRV23 string_arrayref_to_string([ 'Superman', 'Martian Manhunter', '23' ]) returns correct value}
+            is(              string_arrayref_to_string( my string_arrayref $foo = [ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ] ),
+                                                                                 q{[ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', '[\\\\\'Tonto\'\\\\]', '{buzz => 5}' ]},
+                q{TPVAVRV22b string_arrayref_to_string( my string_arrayref $foo = [ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ] ) returns correct value}
             );
         },
-        q{TPVAVRV23 string_arrayref_to_string([ 'Superman', 'Martian Manhunter', '23' ]) lives}
+                q{TPVAVRV22b string_arrayref_to_string( my string_arrayref $foo = [ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ] ) lives}
     );
-    lives_and(                                                                # TPVAVRV24
+    lives_and(  # TPVAVRV22c
         sub {
-            is( string_arrayref_to_string( [ 'Superman', 'Martian Manhunter', '-2_112.23' ] ),
-                q{[ 'Superman', 'Martian Manhunter', '-2_112.23' ]},
-                q{TPVAVRV24 string_arrayref_to_string([ 'Superman', 'Martian Manhunter', '-2_112.23' ]) returns correct value}
+            is(              string_arrayref_to_string( bless [ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ], 'string_arrayref' ),
+                                                            q{[ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', '[\\\\\'Tonto\'\\\\]', '{buzz => 5}' ]},
+                q{TPVAVRV22c string_arrayref_to_string( bless [ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ], 'string_arrayref' ) returns correct value}
             );
         },
-        q{TPVAVRV24 string_arrayref_to_string([ 'Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', 'Martian Manhunter', '-2_112.23' ]) lives}
+                q{TPVAVRV22c string_arrayref_to_string( bless [ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ], 'string_arrayref' ) lives}
     );
-    lives_and(                                                                # TPVAVRV25
+    lives_and(  # TPVAVRV22d, DYNAMIC DISPATCH
         sub {
-            is( string_arrayref_to_string( [ 'Superman', 'Martian Manhunter', "[\\'Tonto'\\]" ] ),
-                q{[ 'Superman', 'Martian Manhunter', '[\\\\\'Tonto\'\\\\]' ]},
-                q{TPVAVRV25 string_arrayref_to_string([ 'Superman', 'Martian Manhunter', "[\\'Tonto'\\]" ]) returns correct value}
+            is(                     arrayref_to_string([ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ]),
+                                                     q{[ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', '[\\\\\'Tonto\'\\\\]', '{buzz => 5}' ]},
+                q{TPVAVRV22d        arrayref_to_string([ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ]) returns correct value}
             );
         },
-        q{TPVAVRV25 string_arrayref_to_string([ 'Superman', 'Batman', 'Wonder Woman', 'Flash', 'Green Lantern', 'Aquaman', "Martian Manhunter", "-2_112.23" ]) lives}
+                q{TPVAVRV22d        arrayref_to_string([ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ]) lives}
     );
-    lives_and(                                                                # TPVAVRV26
+    lives_and(  # TPVAVRV22e, DYNAMIC DISPATCH
         sub {
-            is( string_arrayref_to_string( [ 'Superman', 'Martian Manhunter', '{buzz => 5}' ] ),
-                q{[ 'Superman', 'Martian Manhunter', '{buzz => 5}' ]},
-                q{TPVAVRV26 string_arrayref_to_string([ 'Superman', 'Martian Manhunter', '{buzz => 5}' ]) returns correct value}
+            is(                     arrayref_to_string( my string_arrayref $foo = [ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ] ),
+                                                                                 q{[ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', '[\\\\\'Tonto\'\\\\]', '{buzz => 5}' ]},
+                q{TPVAVRV22e        arrayref_to_string( my string_arrayref $foo = [ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ] ) returns correct value}
             );
         },
-        q{TPVAVRV26 string_arrayref_to_string([ 'Superman', 'Martian Manhunter', '{buzz => 5}' ]) lives}
+                q{TPVAVRV22e        arrayref_to_string( my string_arrayref $foo = [ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ] ) lives}
     );
+    lives_and(  # TPVAVRV22f, DYNAMIC DISPATCH
+        sub {
+            is(                     arrayref_to_string( bless [ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ], 'string_arrayref' ),
+                                                            q{[ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', '[\\\\\'Tonto\'\\\\]', '{buzz => 5}' ]},
+                q{TPVAVRV22f        arrayref_to_string( bless [ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ], 'string_arrayref' ) returns correct value}
+            );
+        },
+                q{TPVAVRV22f        arrayref_to_string( bless [ 'Superman', 'Martian Manhunter', 'undef', '23', '-2_112.23', "[\\'Tonto'\\]", '{buzz => 5}' ], 'string_arrayref' ) lives}
+    );
+
+
     throws_ok(                                                                # TPVAVRV30
         sub { string_arrayref_typetest0() },
         "/(EPVAVRV00.*$mode_tagline)|(Usage.*string_arrayref_typetest0)/",    # DEV NOTE: 2 different error messages, RPerl & C

@@ -25,6 +25,9 @@ our @EXPORT = qw(
 );
 our @EXPORT_OK = qw();
 
+# [[[ INCLUDES ]]]
+use Scalar::Util qw(blessed);
+
 # [[[ PRE-DECLARED TYPES ]]]
 package    # hide from PAUSE indexing
     boolean;
@@ -138,6 +141,29 @@ sub arrayref_to_string {
     ( my arrayref $input_avref ) = @ARG;
     RPerl::diag("in PERLOPS_PERLTYPES arrayref_to_string(), about to call DYNAMIC_arrayref_to_string_format() & return value\n");
 
+    my string $package_name = blessed($input_avref);
+    if (defined $package_name) {
+        RPerl::diag('in PERLOPS_PERLTYPES arrayref_to_string(), $input_avref is blessed object, have $package_name = ', $package_name, "\n");
+
+        my integer $package_name_to_type_enum = $main::string_to_type_enum->{'TYPE_' . $package_name};
+        RPerl::diag('in PERLOPS_PERLTYPES arrayref_to_string(), have $package_name_to_type_enum = ', $package_name_to_type_enum, "\n");
+
+
+# VERY x 9: upgrade remaining arrayref_to_string*() subroutines to include correct blessed object logic as in this subroutine
+# VERY x 9: upgrade remaining arrayref_to_string*() subroutines to include correct blessed object logic as in this subroutine
+# VERY x 9: upgrade remaining arrayref_to_string*() subroutines to include correct blessed object logic as in this subroutine
+
+# VERY x 10: create and call DYNAMIC_arrayref_CHECKTRACE() plus other type logic, as with usage of sv_isobject() in arrayref_to_string_format() in SubTypes1D.tpp
+# VERY x 10: create and call DYNAMIC_arrayref_CHECKTRACE() plus other type logic, as with usage of sv_isobject() in arrayref_to_string_format() in SubTypes1D.tpp
+# VERY x 10: create and call DYNAMIC_arrayref_CHECKTRACE() plus other type logic, as with usage of sv_isobject() in arrayref_to_string_format() in SubTypes1D.tpp
+
+
+#        return DYNAMIC_arrayref_to_string_format($input_avref, -1, 0, FOOBAR);
+
+
+
+
+    }
     return DYNAMIC_arrayref_to_string_format($input_avref, -1, 0, main::type_fast_enum__upgrade_integer_to_number($input_avref->[0]));
 }
 
