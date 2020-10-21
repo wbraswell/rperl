@@ -1,5 +1,5 @@
 # VERSION=0.003_000
-FROM buildpack-deps:stretch-curl
+FROM buildpack-deps:stretch-curl AS builder
 LABEL maintainer=wbraswell_docker@nym.hush.com
 
 # these packages are prerequisites for RPerl or Pluto;
@@ -88,10 +88,16 @@ WORKDIR /home/rperluser/
 RUN mkdir perl5
 
 # RPerl is the main software we are installing; all the above was just to support this;
+# Start a new stage to prevent the build artifacts from propagating to the final stage
+FROM builder AS builder-rperl
 # note that 30 minutes of build time is in the t/{09,12,13}* tests
 # NEED FIX: Test-utf8 is missing dependency Module::Install    https://github.com/2shortplanks/Test-utf8/issues/7
 RUN eval $(perl -Mlocal::lib) && cpanm -v Module::Install && cpanm -v RPerl
 
+# Start a new stage based on the initial stage1 build thus omitting the rperl build artifacts
+FROM builder
+# Copy the files installed by rperl to our final stage
+COPY --from=builder-rperl /home/rperluser/perl5 perl5
 # default environmental variables: enable RPerl debug & verbose output;
 # CORRELATION #rp140: include current directory '.' in PATH to enable RPerl binary execution after compile
 ENV RPERL_DEBUG=1
