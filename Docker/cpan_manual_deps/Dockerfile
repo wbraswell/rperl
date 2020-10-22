@@ -1,5 +1,6 @@
+# VERSION=0.004_000
 FROM buildpack-deps:stretch-curl AS builder
-LABEL maintainer=bruce.gray@acm.org
+LABEL maintainer=wbraswell_docker@nym.hush.com
 
 # When building from scratch:
 #   docker build -t rperl-image .

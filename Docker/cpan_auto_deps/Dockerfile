@@ -1,4 +1,4 @@
-# VERSION=0.003_000
+# VERSION=0.004_000
 FROM buildpack-deps:stretch-curl AS builder
 LABEL maintainer=wbraswell_docker@nym.hush.com
 
