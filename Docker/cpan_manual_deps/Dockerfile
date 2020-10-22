@@ -1,4 +1,4 @@
-FROM buildpack-deps:stretch-curl
+FROM buildpack-deps:stretch-curl AS builder
 LABEL maintainer=bruce.gray@acm.org
 
 # When building from scratch:
@@ -22,6 +22,7 @@ RUN set -x \
      gcc \
      git \
      make \
+     pkg-config \
      perltidy \
      texinfo \
      libc6-dev \
@@ -132,8 +133,14 @@ RUN eval $(perl -Mlocal::lib) && cpanm \
      Alien::astyle
 
 # Main software we are installing; all the above was just to support this.
+FROM builder as builder-rperl
+# Build rperl inside a second layer so we can delete its build artifacts later
 # Note that 30 minutes of build time is in the t/{09,12,13}* tests.
 RUN eval $(perl -Mlocal::lib) && cpanm -v RPerl
+
+# Build the final image without the build artifacts
+FROM builder
+COPY --from=builder-rperl /home/rperl/perl5 perl5
 
 # Copy examples from the RPerl book to a hackable location.
 # RUN cp -irp /usr/local/share/perl/5.24.1/RPerl/Learning/ .
