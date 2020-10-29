@@ -92,7 +92,7 @@ RUN mkdir perl5
 FROM builder AS builder-rperl
 # note that 30 minutes of build time is in the t/{09,12,13}* tests
 # NEED FIX: Test-utf8 is missing dependency Module::Install    https://github.com/2shortplanks/Test-utf8/issues/7
-RUN eval $(perl -Mlocal::lib) && cpanm -v Module::Install && cpanm -v RPerl
+RUN eval $(perl -Mlocal::lib) && cpanm -v Module::Install && cpanm -n RPerl@5.002000
 
 # Start a new stage based on the initial stage1 build thus omitting the rperl build artifacts
 FROM builder
