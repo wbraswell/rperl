@@ -1,5 +1,5 @@
 # VERSION=0.004_000
-FROM buildpack-deps:stretch-curl AS builder
+FROM buildpack-deps:stable-curl AS builder
 LABEL maintainer=wbraswell_docker@nym.hush.com
 
 # these packages are prerequisites for RPerl or Pluto;
