@@ -1,5 +1,5 @@
 # VERSION=0.004_000
-FROM buildpack-deps:stretch-curl AS builder
+FROM buildpack-deps:stable-curl AS builder
 LABEL maintainer=wbraswell_docker@nym.hush.com
 
 # these packages are prerequisites for RPerl or Pluto;
@@ -98,6 +98,24 @@ RUN eval $(perl -Mlocal::lib) && cpanm -v Module::Install && cpanm -n RPerl@5.00
 FROM builder
 # Copy the files installed by rperl to our final stage
 COPY --from=builder-rperl /home/rperluser/perl5 perl5
+
+# Install example applications
+RUN git clone https://github.com/wbraswell/physicsperl.git \
+    && cd physicsperl \
+    && eval $(perl -Mlocal::lib) \
+    && perl Makefile.PL \
+    && make && make test && make install \
+    && cd .. && rm -rf physicsperl
+
+RUN git clone https://github.com/wbraswell/mathperl.git \
+    && cd mathperl \
+    && eval $(perl -Mlocal::lib) \
+    && perl Makefile.PL \
+    && make && make test && make install \
+    && cd .. && rm -rf mathperl
+
+RUN eval $(perl -Mlocal::lib) && cpanm MLPerl
+
 # default environmental variables: enable RPerl debug & verbose output;
 # CORRELATION #rp140: include current directory '.' in PATH to enable RPerl binary execution after compile
 ENV RPERL_DEBUG=1
