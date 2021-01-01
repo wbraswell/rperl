@@ -96,6 +96,9 @@ RUN eval $(perl -Mlocal::lib) && cpanm -v Module::Install && cpanm -n RPerl@5.00
 
 # Start a new stage based on the initial stage1 build thus omitting the rperl build artifacts
 FROM builder
+
+USER rperluser:rperluser
+WORKDIR /home/rperluser/
 # Copy the files installed by rperl to our final stage
 COPY --from=builder-rperl /home/rperluser/perl5 perl5
 
