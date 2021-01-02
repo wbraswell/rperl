@@ -81,9 +81,6 @@ RUN mkdir /root/pluto_build \
 RUN useradd --create-home --shell /bin/bash rperluser \
  && echo 'eval $( perl -Mlocal::lib )' >> ~rperluser/.bashrc
 
-USER rperluser:rperluser
-WORKDIR /home/rperluser/
-
 # needed for local::lib
 RUN mkdir perl5
 
@@ -97,10 +94,11 @@ RUN eval $(perl -Mlocal::lib) && cpanm -v Module::Install && cpanm -n RPerl@5.00
 # Start a new stage based on the initial stage1 build thus omitting the rperl build artifacts
 FROM builder
 
-USER rperluser:rperluser
-WORKDIR /home/rperluser/
 # Copy the files installed by rperl to our final stage
-COPY --from=builder-rperl /home/rperluser/perl5 perl5
+COPY --from=builder-rperl /root/perl5 /home/rperluser/perl5
+WORKDIR /home/rperluser/
+RUN chown -R rperluser:rperluser /home/rperluser/perl5
+USER rperluser:rperluser
 
 # Install example applications
 RUN git clone https://github.com/wbraswell/physicsperl.git \
@@ -119,8 +117,10 @@ RUN git clone https://github.com/wbraswell/mathperl.git \
 
 RUN eval $(perl -Mlocal::lib) && cpanm MLPerl
 
+
 # default environmental variables: enable RPerl debug & verbose output;
 # CORRELATION #rp140: include current directory '.' in PATH to enable RPerl binary execution after compile
+
 ENV RPERL_DEBUG=1
 ENV RPERL_VERBOSE=1
 ENV PATH=".:${PATH}"
