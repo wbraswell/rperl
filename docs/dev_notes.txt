@@ -1,4 +1,4 @@
-# RPerl Developer Notes 20200304 2020.064
+# RPerl Developer Notes 20210101 2021.001
 
 ##########################################################################################
 # WARNING & ERROR CODES
@@ -353,33 +353,33 @@ $ cpanm RPerl  # full release versions
 
 # BUILD COMMANDS
 
-# build image
-$ cd ~/repos_github/rperl-latest/Docker/cpan_auto_deps
-$ sudo docker build -t wbraswell/rperl_cpan . > /tmp/docker_rperl_cpan.out 2>&1
+# build image, CPAN automatic dependencies LTS
+$ docker build -t wbraswell/rperl_cpan ./Docker/cpan_auto_deps_lts/ > /tmp/docker_build_rperl_cpan_auto_deps_lts.out 2>&1
 
 # test local image
-$ sudo docker run --name rperl_cpan_instance -ti wbraswell/rperl_cpan
-$ sudo docker rm rperl_cpan_instance
+$ docker run --name rperl_cpan_instance -ti wbraswell/rperl_cpan
+$ docker rm rperl_cpan_instance
 
 # upload image
-$ sudo docker push wbraswell/rperl_cpan:latest
+$ docker push wbraswell/rperl_cpan:latest
 
 # test remote image
-$ sudo docker rmi wbraswell/rperl_cpan:latest
-$ sudo docker run --name rperl_cpan_instance -ti wbraswell/rperl_cpan
-$ sudo docker rm rperl_cpan_instance
+$ docker rmi wbraswell/rperl_cpan:latest
+$ docker run --name rperl_cpan_instance -ti wbraswell/rperl_cpan
+$ docker rm rperl_cpan_instance
 
 # EXTRA COMMANDS
 
-# list all images
-$ sudo docker images
-
-# remove image
-$ sudo docker rmi <IMAGE>
-
 # list all containers, both running & stopped
-$ sudo docker ps -a
+$ docker ps -a
 
 # remove container
-$ sudo docker rm <CONTAINER>
+$ docker rm <CONTAINER>
 
+# list all images
+$ docker images
+
+# remove image
+$ docker image rm <IMAGE>
+# OR
+$ docker rmi <IMAGE>
